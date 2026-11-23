@@ -51,7 +51,7 @@ struct MecanicaColocarTilde: View {
                 } label: {
                     ficha(letra, conTilde: conTilde, vocal: true, tonica: false, mal: false)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.pulsable)
                 .accessibilityLabel("Vocal \(String(letra))")
                 .accessibilityValue(conTilde ? "con tilde" : "sin tilde")
                 .accessibilityHint(conTilde ? "Toca para quitar la tilde" : "Toca para poner la tilde aquí")
@@ -81,22 +81,23 @@ struct MecanicaColocarTilde: View {
             .overlay(alignment: .top) {
                 if conTilde {
                     MarcaTilde()
-                        .fill(mal ? Paleta.fallo : (ctx.corregido ? Paleta.exito : ctx.tinta))
+                        .fill(mal ? Paleta.fallo : (ctx.corregido ? Paleta.exito : Paleta.contorno))
                         .frame(width: 14, height: 18)
                         .padding(.top, 3)
                         .transition(reducir ? .opacity : .asymmetric(insertion: .move(edge: .top).combined(with: .opacity), removal: .opacity))
                         .accessibilityHidden(true)
                 }
             }
-            .background(fondoFicha(vocal: vocal), in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous)
-                    .strokeBorder(mal ? Paleta.fallo : (vocal ? Paleta.borde : .clear), lineWidth: mal ? 2 : 1)
-            )
-            // Sílaba tónica: barra en la tinta del área bajo sus letras (no es un error).
+            // Vocales: superficie pulsable (contorno de tinta y sombra dura mientras se puede tocar).
+            .superficiePulsable(fondoFicha(vocal: vocal), radio: Radio.ficha,
+                                borde: mal ? Paleta.fallo : (vocal ? Paleta.contorno : .clear),
+                                grosor: mal ? 3 : Trazo.grueso, sombra: vocal && !ctx.corregido)
+            // Sílaba tónica: barra del color del área con contorno bajo sus letras (no es un error).
             .overlay(alignment: .bottom) {
                 if tonica {
-                    Capsule().fill(ctx.tinta).frame(height: 4).padding(.horizontal, 2).offset(y: 8).accessibilityHidden(true)
+                    Capsule().fill(ctx.acento)
+                        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                        .frame(height: 7).padding(.horizontal, 2).offset(y: 10).accessibilityHidden(true)
                 }
             }
             .animation(reducir ? .easeInOut(duration: 0.2) : .spring(response: 0.3, dampingFraction: 0.6), value: conTilde)
@@ -123,7 +124,7 @@ struct MecanicaColocarTilde: View {
         } label: {
             Ficha(texto: "Sin tilde", estado: elegido ? .seleccionada : .normal, acento: ctx.acento)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pulsable)
         .accessibilityAddTraits(elegido ? .isSelected : [])
         .accessibilityHint("Responde que la palabra no lleva tilde")
         .accessibilityIdentifier("botonSinTilde")
@@ -218,11 +219,11 @@ struct MecanicaFraccionBarras: View {
 
     private var colorRelleno: Color {
         guard let r = ctx.resultado else { return ctx.acento }
-        return r.correcto ? Paleta.exito : Paleta.fallo
+        return r.correcto ? Paleta.exitoRelleno : Paleta.fallo
     }
 
     private var colorBorde: Color {
-        guard let r = ctx.resultado else { return Paleta.borde }
+        guard let r = ctx.resultado else { return Paleta.contorno }
         return r.correcto ? Paleta.exito : Paleta.fallo
     }
 
@@ -272,11 +273,12 @@ struct MecanicaFraccionBarras: View {
         Button(action: accion) {
             Image(systemName: icono)
                 .font(.title3.weight(.semibold))
-                .foregroundStyle(activo ? ctx.tinta : Paleta.textoSecundario)
+                .foregroundStyle(activo ? Paleta.textoPrincipal : Paleta.textoSecundario)
                 .frame(width: Medidas.fichaMinima, height: Medidas.fichaMinima)
-                .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+                .superficiePulsable(activo ? ctx.acento : Paleta.superficie, radio: Radio.ficha,
+                                    borde: activo ? Paleta.contorno : Paleta.borde, sombra: activo)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pulsable)
         .allowsHitTesting(activo)
         .accessibilityLabel(etiqueta)
         .accessibilityIdentifier(id)
@@ -286,7 +288,7 @@ struct MecanicaFraccionBarras: View {
         let (partesSol, coloreadasSol) = p.solucion
         return VStack(spacing: Espacio.s) {
             Text("Solución").font(.subheadline.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
-            Barra(partes: partesSol, coloreadas: Set(0..<coloreadasSol), color: Paleta.exito, borde: Paleta.exito,
+            Barra(partes: partesSol, coloreadas: Set(0..<coloreadasSol), color: Paleta.exitoRelleno, borde: Paleta.contorno,
                   interactiva: false, reducir: reducir) { _ in }
             Text(DescripcionSolucion.texto(.fraccionBarras(p)))
                 .font(.redondeada(.title3, peso: .semibold))
@@ -297,7 +299,8 @@ struct MecanicaFraccionBarras: View {
     }
 }
 
-/// Barra dividida en celdas iguales (radio 4); cada celda es un botón accesible.
+/// Barra dividida en celdas iguales (radio 6) con contorno de tinta; cada celda es un botón
+/// accesible. Las celdas no llevan sombra dura (en barras de 12 se solaparían): la barra entera sí.
 struct Barra: View {
     let partes: Int
     let coloreadas: Set<Int>
@@ -316,12 +319,14 @@ struct Barra: View {
                 } label: {
                     RoundedRectangle(cornerRadius: Radio.celda, style: .continuous)
                         .fill(llena ? color : Paleta.superficie)
-                        .overlay(RoundedRectangle(cornerRadius: Radio.celda, style: .continuous).strokeBorder(llena ? color : borde, lineWidth: 1))
+                        .overlay(RoundedRectangle(cornerRadius: Radio.celda, style: .continuous)
+                            .strokeBorder(borde, lineWidth: partes > 8 ? Trazo.fino : 2))
                         .frame(maxWidth: .infinity)
                         .frame(height: 72)
+                        .estiramiento(llena)
                         .contentShape(Rectangle())
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.pulsable)
                 .allowsHitTesting(interactiva)
                 .accessibilityLabel("celda \(i + 1) de \(partes)")
                 .accessibilityValue(llena ? "coloreada" : "sin colorear")

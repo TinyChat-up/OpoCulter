@@ -162,10 +162,10 @@ struct MecanicaSegmentar: View {
                         }
                         .padding(.horizontal, Espacio.m)
                         .frame(minHeight: Medidas.tactilMinimo)
-                        .background(Paleta.superficie, in: Capsule())
-                        .overlay(Capsule().strokeBorder(rangoPendiente == nil ? Paleta.borde : colorEtiqueta(e.id), lineWidth: rangoPendiente == nil ? 1 : 2))
+                        .superficiePulsable(Paleta.superficie, radio: 22, borde: rangoPendiente == nil ? Paleta.borde : Paleta.contorno,
+                                            sombra: rangoPendiente != nil)
                     }
-                    .buttonStyle(.plain)
+                    .buttonStyle(.pulsable)
                     .accessibilityLabel("Etiquetar como \(e.nombre)")
                     .accessibilityHint(rangoPendiente == nil ? "Primero marca el inicio y el final del tramo" : "")
                     .accessibilityIdentifier("etiqueta_\(e.id)")
@@ -193,7 +193,7 @@ struct MecanicaSegmentar: View {
                 .frame(minHeight: Medidas.tactilMinimo)
                 .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.pulsable)
             .accessibilityLabel("Tu análisis, \(segmentos.count) tramos")
             .accessibilityValue(arbolPlegado ? "plegado" : "desplegado")
             .accessibilityHint(arbolPlegado ? "Despliega el árbol" : "Pliega el árbol")
@@ -221,7 +221,7 @@ struct MecanicaSegmentar: View {
                                 .foregroundStyle(Paleta.textoSecundario)
                                 .frame(width: Medidas.tactilMinimo, height: Medidas.tactilMinimo)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.pulsable)
                         .accessibilityLabel("Borrar \(nombreEtiqueta(s.etiqueta)): \(texto)")
                         .accessibilityIdentifier("borrar_\(s.id)")
                     }
@@ -235,7 +235,7 @@ struct MecanicaSegmentar: View {
         }
         .padding(Espacio.m)
         .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(Paleta.borde))
+        .contornoTinta(radio: Radio.tarjeta)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("arbolSegmentos")
     }

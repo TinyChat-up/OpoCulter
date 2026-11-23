@@ -77,12 +77,12 @@ struct TecladoNumerico: View {
                 }
             }
             .font(.redondeada(.title2))
-            .foregroundStyle(esAccion(tecla) ? acento : Paleta.textoPrincipal)
+            .foregroundStyle(Paleta.textoPrincipal)
             .frame(maxWidth: .infinity, minHeight: 52)
-            .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous).strokeBorder(Paleta.borde))
+            // Teclas de acción con el relleno del área y texto en tinta (D-059).
+            .superficiePulsable(esAccion(tecla) ? acento : Paleta.superficie, radio: Radio.ficha)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pulsable)
         .accessibilityLabel(tecla.nombreAccesible)
         .accessibilityIdentifier(tecla.identificador)
     }

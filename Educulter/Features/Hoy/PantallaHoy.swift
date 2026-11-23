@@ -133,9 +133,9 @@ struct PantallaHoy: View {
     private var botonAvatar: some View {
         if let avatar = Avatar.con(id: modelo.estado?.avatar) {
             Button { mostrarPerfil = true } label: {
-                VistaAvatar(avatar: avatar, tamano: Medidas.tactilMinimo)
+                VistaAvatar(avatar: avatar, tamano: 52)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.pulsable)
             .accessibilityLabel("Perfil")
             .accessibilityValue(avatar.nombre)
             .accessibilityHint("Cambia tu avatar")
@@ -145,7 +145,7 @@ struct PantallaHoy: View {
 
     private var titulo: some View {
         Text("Hoy")
-            .font(.largeTitle.weight(.semibold))
+            .font(.exhibicion(.largeTitle))
             .foregroundStyle(Paleta.textoPrincipal)
             .accessibilityAddTraits(.isHeader)
             #if DEBUG
@@ -166,10 +166,11 @@ struct PantallaHoy: View {
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Capsule().fill(Paleta.superficie)
-                    Capsule().fill(Paleta.recompensa).frame(width: geo.size.width * estado.fraccionNivel)
+                    Capsule().fill(Paleta.recompensa).frame(width: max(10, geo.size.width * estado.fraccionNivel))
+                    Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino)
                 }
             }
-            .frame(height: 6)
+            .frame(height: 10)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Nivel \(estado.nivel)")
@@ -207,6 +208,7 @@ struct PantallaHoy: View {
         .padding(Espacio.m)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+        .contornoTinta(radio: Radio.ficha)
         .accessibilityElement(children: .combine)
         .accessibilityIdentifier("avisoRacha")
     }
@@ -235,7 +237,7 @@ struct PantallaHoy: View {
                                 .foregroundStyle(Paleta.tinta(area: area))
                                 .accessibilityHidden(true)
                             Text(p.competencia.nombre)
-                                .font(.title2.weight(.semibold))
+                                .font(.exhibicion(.title2))
                                 .foregroundStyle(Paleta.textoPrincipal)
                                 .fixedSize(horizontal: false, vertical: true)
                                 .accessibilityIdentifier("competenciaPanel")
@@ -256,7 +258,7 @@ struct PantallaHoy: View {
         .accessibilityIdentifier("panelRonda")
     }
 
-    /// Baldosas neutras compactas: dos modos activos y dos que llegan en la 05C (desactivados
+    /// Baldosas neutras compactas: dos modos activos y dos que llegan en la 05D (desactivados
     /// con su motivo, no botones falsos).
     private func baldosas(_ estado: EstadoHoy) -> some View {
         // Pilas normales (no `LazyVGrid`, que no reajusta el texto al cambiar su tamaño): dos
@@ -277,15 +279,15 @@ struct PantallaHoy: View {
                     activa: estado.rescatesPendientes > 0, id: "botonRescate") { modelo.empezar(.rescate) },
             Baldosa(titulo: "Ortografía exprés", icono: "character.cursor.ibeam", detalle: "5 ítems de ortografía y tildes",
                     activa: estado.itemsOrtografia > 0, id: "botonOrtografia") { modelo.empezar(.ortografiaExpres) },
-            Baldosa(titulo: "Supervivencia", icono: "heart", detalle: "Llega en 05C", activa: false, id: "baldosaSupervivencia") {},
-            Baldosa(titulo: "Tribunal", icono: "checkmark.seal", detalle: "Llega en 05C", activa: false, id: "baldosaTribunal") {},
+            Baldosa(titulo: "Supervivencia", icono: "heart", detalle: "Llega en 05D", activa: false, id: "baldosaSupervivencia") {},
+            Baldosa(titulo: "Tribunal", icono: "checkmark.seal", detalle: "Llega en 05D", activa: false, id: "baldosaTribunal") {},
         ]
     }
 
     /// Misiones del día como filas (sin tarjetas).
     private func misiones(_ estado: EstadoHoy) -> some View {
         VStack(alignment: .leading, spacing: 0) {
-            Text("Misiones de hoy").font(.title3.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
+            Text("Misiones de hoy").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
                 .padding(.bottom, Espacio.s)
             ForEach(Array(estado.misiones.enumerated()), id: \.element.id) { i, mision in
                 if i > 0 { Divider().overlay(Paleta.borde) }
@@ -332,7 +334,7 @@ struct PantallaHoy: View {
     private var vacio: some View {
         VStack(spacing: Espacio.l) {
             VistaPersonaje(companero: .tilde, estado: ReglasPersonaje.estado(para: .estadoVacio))
-            Text("Aún no hay contenido").font(.title3.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+            Text("Aún no hay contenido").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
             Text("Cuando el banco de ejercicios esté listo, aquí aparecerá tu ronda del día.")
                 .font(.body).foregroundStyle(Paleta.textoSecundario)
         }
@@ -356,7 +358,7 @@ struct Baldosa: View {
             VStack(alignment: .leading, spacing: Espacio.xs) {
                 HStack(spacing: Espacio.s) {
                     Image(systemName: icono).font(.body.weight(.semibold)).accessibilityHidden(true)
-                    Text(titulo).font(.headline)
+                    Text(titulo).font(.exhibicion(.headline))
                     Spacer(minLength: 0)
                     if activa {
                         Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(Paleta.textoSecundario).accessibilityHidden(true)
@@ -368,10 +370,10 @@ struct Baldosa: View {
             }
             .padding(Espacio.m)
             .frame(maxWidth: .infinity, minHeight: 76, alignment: .topLeading)
-            .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-            .contentShape(RoundedRectangle(cornerRadius: Radio.ficha))
+            // Activa: contorno de tinta y sombra dura. Desactivada: plana y con borde suave.
+            .superficiePulsable(Paleta.superficie, radio: Radio.ficha, borde: activa ? Paleta.contorno : Paleta.borde, sombra: activa)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pulsable)
         .allowsHitTesting(activa)
         .accessibilityElement(children: .combine)
         .accessibilityAddTraits(activa ? .isButton : [])
@@ -396,6 +398,7 @@ struct VistaPreviaMecanica: View {
         .padding(Espacio.s)
         .frame(maxWidth: .infinity, alignment: .leading)
         .background(Paleta.fondo, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+        .contornoTinta(radio: Radio.ficha, grosor: Trazo.fino)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Mecánica: \(mecanica.nombreVisible)")
         .accessibilityIdentifier("vistaPreviaMecanica")
@@ -409,20 +412,21 @@ struct VistaPreviaMecanica: View {
             HStack(spacing: 2) {
                 ForEach(0..<4, id: \.self) { i in
                     RoundedRectangle(cornerRadius: Radio.celda).fill(i < 3 ? color : Paleta.superficie)
-                        .overlay(RoundedRectangle(cornerRadius: Radio.celda).strokeBorder(Paleta.borde))
+                        .overlay(RoundedRectangle(cornerRadius: Radio.celda).strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
                 }
             }
         case .colocarTilde:
             HStack(spacing: 2) {
                 ForEach(Array("café".enumerated()), id: \.offset) { i, letra in
                     Text(String(letra)).font(.redondeada(.headline, peso: .semibold))
-                        .foregroundStyle(i == 3 ? color : Paleta.textoPrincipal)
+                        .foregroundStyle(i == 3 ? Paleta.tinta(area: area) : Paleta.textoPrincipal)
                         .frame(width: 20, height: 30)
-                        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: 4))
+                        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.celda))
+                        .overlay(RoundedRectangle(cornerRadius: Radio.celda).strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
                 }
             }
         default:
-            Image(systemName: mecanica.simbolo).font(.title2.weight(.semibold)).foregroundStyle(color)
+            Image(systemName: mecanica.simbolo).font(.title2.weight(.semibold)).foregroundStyle(Paleta.tinta(area: area))
         }
     }
 }

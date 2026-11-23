@@ -161,7 +161,7 @@ struct CatalogoPersonajes: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Espacio.l) {
                 ForEach(Companero.allCases, id: \.self) { c in
-                    Text(c.nombre).font(.title3.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    Text(c.nombre).font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: Espacio.m) {
                         ForEach(EstadoPersonaje.allCases, id: \.self) { e in
                             VStack(spacing: Espacio.xs) {
@@ -178,14 +178,14 @@ struct CatalogoPersonajes: View {
     }
 }
 
-/// Lámina de los 12 avatares con su nombre.
+/// Lámina de los 6 avatares del propietario con su etiqueta de VoiceOver.
 struct CatalogoAvatares: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: Espacio.l) {
                 ForEach(Avatar.todos) { a in
                     VStack(spacing: Espacio.xs) {
-                        VistaAvatar(avatar: a, tamano: 64)
+                        VistaAvatar(avatar: a, tamano: 96)
                         Text("\(a.id) · \(a.nombre)").font(.caption).foregroundStyle(Paleta.textoSecundario).multilineTextAlignment(.center)
                     }
                 }

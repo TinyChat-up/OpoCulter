@@ -1,32 +1,47 @@
 import SwiftUI
 
-/// Cuadrícula de los 12 avatares (bienvenida y Perfil).
+/// Cuadrícula de 3 × 2 con los 6 avatares del propietario (bienvenida y Perfil). Todos llevan
+/// contorno de tinta; el elegido, además, sombra dura, fondo mostaza y una marca ✓ (el estado no
+/// depende solo del color).
 struct SelectorAvatar: View {
     @Binding var seleccion: Int?
-    @Environment(\.dynamicTypeSize) private var tamano
 
     var body: some View {
-        let columnas = Array(repeating: GridItem(.flexible(), spacing: Espacio.m), count: tamano.isAccessibilitySize ? 3 : 4)
-        LazyVGrid(columns: columnas, spacing: Espacio.m) {
-            ForEach(Avatar.todos) { avatar in
-                let elegido = seleccion == avatar.id
-                Button {
-                    seleccion = avatar.id
-                } label: {
-                    VistaAvatar(avatar: avatar, tamano: 52)
-                        .padding(Espacio.s)
-                        .frame(maxWidth: .infinity, minHeight: 72)
-                        .background(elegido ? Paleta.matematicasTinte : Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-                        .overlay(RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous)
-                            .strokeBorder(elegido ? Paleta.matematicasTinta : .clear, lineWidth: 2))
+        VStack(spacing: Espacio.l) {
+            ForEach(0..<2, id: \.self) { fila in
+                HStack(spacing: Espacio.l) {
+                    ForEach(Avatar.todos[(fila * 3)..<(fila * 3 + 3)]) { celda($0) }
                 }
-                .buttonStyle(.plain)
-                .accessibilityLabel(avatar.nombre)
-                .accessibilityAddTraits(elegido ? .isSelected : [])
-                .accessibilityIdentifier("avatar_\(avatar.id)")
             }
         }
         .sensoryFeedback(.selection, trigger: seleccion)
+    }
+
+    private func celda(_ avatar: Avatar) -> some View {
+        let elegido = seleccion == avatar.id
+        return Button {
+            seleccion = avatar.id
+        } label: {
+            VistaAvatar(avatar: avatar, tamano: 76)
+                .padding(Espacio.s)
+                .frame(maxWidth: .infinity, minHeight: 92)
+                .superficiePulsable(elegido ? Paleta.recompensa : Paleta.superficie, radio: Radio.ficha, sombra: elegido)
+                .overlay(alignment: .topTrailing) {
+                    if elegido {
+                        Image(systemName: "checkmark.circle.fill")
+                            .font(.title3)
+                            .symbolRenderingMode(.palette)
+                            .foregroundStyle(Paleta.fondo, Paleta.contorno)
+                            .offset(x: 6, y: -6)
+                            .accessibilityHidden(true)
+                    }
+                }
+                .estiramiento(elegido)
+        }
+        .buttonStyle(.pulsable)
+        .accessibilityLabel("Avatar con \(avatar.nombre)")
+        .accessibilityAddTraits(elegido ? .isSelected : [])
+        .accessibilityIdentifier("avatar_\(avatar.id)")
     }
 }
 
@@ -45,7 +60,7 @@ struct PantallaBienvenida: View {
                     }
                     VStack(alignment: .leading, spacing: Espacio.s) {
                         Text("Te damos la bienvenida")
-                            .font(.largeTitle.weight(.semibold))
+                            .font(.exhibicion(.largeTitle))
                             .foregroundStyle(Paleta.textoPrincipal)
                             .accessibilityAddTraits(.isHeader)
                         Text("Rondas cortas de Lengua y Matemáticas para la prueba A1. Tilde te acompaña en Lengua y Cuarto en Matemáticas.")
@@ -54,7 +69,7 @@ struct PantallaBienvenida: View {
                             .fixedSize(horizontal: false, vertical: true)
                     }
                     VStack(alignment: .leading, spacing: Espacio.m) {
-                        Text("Elige tu avatar").font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                        Text("Elige tu avatar").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
                         SelectorAvatar(seleccion: $seleccion)
                     }
                 }
@@ -85,11 +100,11 @@ struct PantallaPerfil: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
-                    Text("Perfil").font(.title2.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
+                    Text("Perfil").font(.exhibicion(.title2)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
                     if let actual = Avatar.con(id: seleccion) {
                         HStack(spacing: Espacio.m) {
                             VistaAvatar(avatar: actual, tamano: 64)
-                            Text(actual.nombre).font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                            Text("Avatar con \(actual.nombre)").font(.headline).foregroundStyle(Paleta.textoPrincipal)
                                 .fixedSize(horizontal: false, vertical: true)
                         }
                     }
