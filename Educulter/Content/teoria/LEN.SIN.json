@@ -1,0 +1,15 @@
+[
+  {
+    "id": "LEN.SIN.SUJPRED.T01",
+    "competencia": "LEN.SIN.SUJPRED",
+    "titulo": "Sujeto y predicado",
+    "bloques": [
+      { "tipo": "texto", "contenido": "La oración tiene dos partes: el sujeto, de quien se dice algo, y el predicado, lo que se dice de él." },
+      { "tipo": "regla", "contenido": "El núcleo del sujeto concuerda en número y persona con el verbo." },
+      { "tipo": "ejemplo", "contenido": "[El gato] sujeto · [duerme] predicado" },
+      { "tipo": "esquema", "contenido": "Oración → Sujeto (SN) + Predicado (SV)" }
+    ],
+    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
+    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" }
+  }
+]

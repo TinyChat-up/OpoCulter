@@ -54,3 +54,47 @@ El requisito es "SDK de iOS 26 o superior"; 27.2 lo cumple. No se instala el run
 
 ### D-016 · 2026-11-23 · Fase 00 · Vigente
 **Firma:** firma automática con el equipo personal del propietario. El `DEVELOPMENT_TEAM` (Team ID) es un identificador público, no un secreto, y se guarda en el proyecto. Los certificados y perfiles los gestiona Xcode en el llavero y nunca entran en el repositorio (`.gitignore`).
+
+## Fase 04 — Núcleo del producto
+
+### D-017 · 2026-11-23 · Fase 04 · Vigente (cierra D-011)
+**No se activa el aislamiento por defecto en MainActor.** El núcleo (`Core/Comun`, `Content`, `Learning`, `Gamification`) es Swift puro con tipos valor `Sendable` y `nonisolated`: así se puede cargar y validar el contenido o construir rondas fuera del hilo principal, y los tests no necesitan saltos de actor. Con el aislamiento por defecto, cada tipo del núcleo quedaría atado al MainActor y habría que marcarlo `nonisolated` uno a uno, que es justo lo que se quiere por defecto. Son `@MainActor` de forma explícita el repositorio de progreso (porque `ModelContext` no es `Sendable`) y, en la Fase 05, los modelos de vista (las vistas de SwiftUI ya lo son).
+
+### D-018 · 2026-11-23 · Fase 04 · Vigente
+**`Content/` se empaqueta como carpeta explícita** (`explicitFolders` del grupo sincronizado). Los grupos sincronizados copian los recursos aplanados en la raíz del bundle, y `items/LEN.SIN.json` y `teoria/LEN.SIN.json` colisionaban. Con la carpeta explícita el bundle conserva `Content/items`, `Content/teoria` y `Content/simulacros`, y los archivos nuevos siguen entrando sin tocar el `.pbxproj`. Se descartó excluir la carpeta del grupo (Xcode 27 no respeta la exclusión de carpetas completas) y renombrar los archivos con prefijos.
+
+### D-019 · 2026-11-23 · Fase 04 · Vigente
+**Formato de identificadores y archivos de contenido:** archivos `items/<id de bloque>.json` y `teoria/<id de bloque>.json` (p. ej. `LEN.SIN.json`); competencia `<bloque>.CODIGO` (2–16 mayúsculas o dígitos); ítem `<competencia>.NNNN`; tarjeta `<competencia>.TNN`; simulacro `SIM.NN`; referencia a examen `AAAA-L9`/`AAAA-M9`. Detalle en CONTENIDOS.md §2.1.
+
+### D-020 · 2026-11-23 · Fase 04 · Vigente
+**Extensiones compatibles del esquema v1** (ningún campo pedido cambia de nombre): `numerico.exigeIrreducible` (opcional) para pedir fracción irreducible; `pistas`, `erroresHabituales` y `referencia` opcionales en el JSON (por defecto vacíos); `textoBase` del simulacro opcional y `autor`/`obra` admiten `null`. `Resultado.errores` contiene ids de elementos del ítem (o el texto tecleado en `numerico`), y con ellos se elige el feedback de `erroresHabituales` (tabla en CONTENIDOS.md §2.5).
+
+### D-021 · 2026-11-23 · Fase 04 · Vigente
+**Días civiles (`DiaCivil`)** para todo lo que depende del día (racha, Leitner, misiones): año, mes y día del calendario gregoriano en la zona horaria del usuario, persistidos como entero `AAAAMMDD`. La aritmética de días se hace en UTC, de modo que el horario de verano y la medianoche no crean días de 23 o 25 horas. Si el usuario tiene otro calendario (budista, japonés…), se usa igualmente el gregoriano.
+
+### D-022 · 2026-11-23 · Fase 04 · Vigente (resuelve la parte técnica de D-004)
+**CloudKit: no en el MVP; modelos preparados.** Modelos SwiftData planos (sin relaciones), con valores por defecto u opcionales y sin `.unique`; los valores compuestos (misiones, métricas, diagnóstico) se guardan como JSON. El contenedor se crea con `cloudKitDatabase: .none`. El acceso pasa por el protocolo `RepositorioProgreso` con implementaciones SwiftData y en memoria; ante registros duplicados (posibles tras sincronizar), se toma el más avanzado. Activar CloudKit exigirá la membresía de pago y una decisión nueva.
+
+### D-023 · 2026-11-23 · Fase 04 · Vigente
+**Leitner por competencia:** el primer intento de una competencia la coloca en la caja 1 con repaso al día siguiente. Después, solo el **primer intento de un día en que está vencida** mueve la caja (acierto +1, fallo −2, mínimo 1); los demás intentos de ese día no la mueven. Sin esta regla, una sola ronda subiría una competencia hasta la caja 5.
+
+### D-024 · 2026-11-23 · Fase 04 · Vigente
+**Escalera:** solo cuentan los intentos con ítems del peldaño actual (los repasos de peldaños inferiores no hacen subir). Con 4 aciertos entre los 5 últimos intentos (o 4 de 4) se sube y la ventana se vacía. "Dominada" = peldaño 5 alcanzado. La regla es configurable en general y por peldaño (p. ej. el peldaño 1, que solo tiene 1–2 ítems guiados).
+
+### D-025 · 2026-11-23 · Fase 04 · Vigente
+**Rondas:** objetivo de 7 ítems (mínimo 6, máximo 8); como mucho 3 repasos, para no desplazar la competencia en curso; el peldaño 5 no entra en rondas (va a simulacros y Retos de bloque); si una competencia no tiene ítems de su peldaño, se usa el inferior más cercano. La competencia en curso solo usa ítems no vistos en 24 h; si faltan, se rellena con otras competencias empezadas y, solo como último recurso, se repiten ítems recientes. En el peldaño 1 la ronda incluye las tarjetas de teoría de la competencia.
+
+### D-026 · 2026-11-23 · Fase 04 · Vigente
+**Racha:** los días se cierran de uno en uno, así que el resultado no depende de cuántas veces se consulte. Un día cerrado sin ronda consume un protector; si no quedan, la racha se rompe (se conserva el récord). Los días protegidos mantienen la racha pero no la aumentan. El día 1 de cada mes los protectores se **rellenan hasta 2** (no se suman). "Semana completa" = cada 7 días activos de racha, +1 protector; máximo 3 acumulados. Se empieza con 2.
+
+### D-027 · 2026-11-23 · Fase 04 · Vigente
+**XP y niveles:** acierto sin pista = 10 + 5; +10 en el peldaño 4; +5 al rescatar un error ("Rescatar da XP extra"); 0 si se usó pista o si se falla. Multiplicador de combo ×(1 + 0,1·(n − 1)), hasta ×1,5 desde el 6.º acierto seguido; se redondea al entero más cercano. Curva de niveles: XP acumulada del nivel n = 100·(n − 1)^1,5 (nivel 2 = 100, nivel 10 = 2 700), con un máximo de 100 niveles.
+
+### D-028 · 2026-11-23 · Fase 04 · Vigente
+**Diagnóstico:** primer ítem de cada bloque ★★★ con dificultad lo más cercana posible a 2, de los peldaños 2–4, alternando Lengua y Matemáticas. Nivel por bloque: 0, 0,5 o 1 (ver DISENO_PEDAGOGICO.md §2). El plan incluye solo los bloques con contenido; los no evaluados cuentan con debilidad 0,5. Empates: mayor prioridad y después el orden del catálogo.
+
+### D-029 · 2026-11-23 · Fase 04 · Provisional
+**Prioridades de bloque provisionales**, a la espera de la dirección: ★★★ LEN SIN, ORT, CLA, VER, LIT, COM y MAT UNI, GEO, POR, NUM, DIV, OPE (12 bloques, unos 12–24 ítems de diagnóstico); ★★ el resto. El catálogo incluye solo las competencias que necesita el contenido de prueba.
+
+### D-030 · 2026-11-23 · Fase 04 · Vigente
+**Reglas del validador además de las pedidas:** 2–4 opciones en `eleccion` y 2–4 categorías en `clasificar` (según el catálogo de mecánicas); 1–5 ruedas; la licencia debe ser coherente con el tipo (`original` → `propia`, `dominioPublico` → `dominio publico`); un elemento `aprobado` exige `revisor` y `fecha` `AAAA-MM-DD`; los errores habituales de `eleccion` deben ser opciones incorrectas; formato de las referencias a exámenes.

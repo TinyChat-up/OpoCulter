@@ -1,0 +1,40 @@
+{
+  "id": "SIM.01",
+  "titulo": "Simulacro de prueba",
+  "duracionMin": 90,
+  "textoBase": {
+    "texto": "La biblioteca del barrio abre por las tardes. Allí los niños leen cuentos y descubren el gusto por los libros.",
+    "autor": null,
+    "obra": null,
+    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Texto de prueba de la Fase 04." }
+  },
+  "preguntas": [
+    {
+      "numero": 1,
+      "area": "LEN",
+      "enunciado": "Señala el sujeto de la oración «Los niños leen cuentos».",
+      "solucionModelo": "El sujeto es «Los niños».",
+      "puntos": 1,
+      "rubrica": {
+        "bien": "Identifica «Los niños» como sujeto completo.",
+        "regular": "Identifica solo el núcleo «niños».",
+        "mal": "Señala otra parte de la oración o no responde."
+      },
+      "competencias": ["LEN.SIN.SUJPRED"]
+    },
+    {
+      "numero": 2,
+      "area": "MAT",
+      "enunciado": "Calcula 1/2 + 1/4 y expresa el resultado como fracción irreducible.",
+      "solucionModelo": "1/2 + 1/4 = 2/4 + 1/4 = 3/4.",
+      "puntos": 1,
+      "rubrica": {
+        "bien": "Obtiene 3/4 con el procedimiento correcto.",
+        "regular": "Obtiene una fracción equivalente sin simplificar (6/8) o comete un error de cálculo menor con buen planteamiento.",
+        "mal": "Suma numeradores y denominadores por separado o no responde."
+      },
+      "competencias": ["MAT.NUM.FRACSUM"]
+    }
+  ],
+  "validacion": { "estado": "borrador", "revisor": "", "fecha": "" }
+}

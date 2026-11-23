@@ -1,0 +1,29 @@
+[
+  {
+    "id": "LEN.CLA.SUSTADJ.0001",
+    "competencia": "LEN.CLA.SUSTADJ",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Distinguir sustantivos de adjetivos.",
+    "mecanica": "clasificar",
+    "enunciado": "Arrastra cada palabra a su caja.",
+    "payload": {
+      "categorias": [
+        { "id": "SUS", "nombre": "Sustantivo" },
+        { "id": "ADJ", "nombre": "Adjetivo" }
+      ],
+      "fichas": [
+        { "id": "f1", "texto": "gato", "categoria": "SUS" },
+        { "id": "f2", "texto": "mesa", "categoria": "SUS" },
+        { "id": "f3", "texto": "hermoso", "categoria": "ADJ" },
+        { "id": "f4", "texto": "feliz", "categoria": "ADJ" }
+      ]
+    },
+    "pistas": ["El sustantivo nombra; el adjetivo dice cómo es lo nombrado."],
+    "explicacion": "«Gato» y «mesa» nombran seres u objetos (sustantivos); «hermoso» y «feliz» expresan cualidades (adjetivos).",
+    "erroresHabituales": [],
+    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
+    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "version": 1
+  }
+]

@@ -20,7 +20,18 @@ xcodebuild test -project Educulter.xcodeproj -scheme Educulter \
 ```
 
 ## 4. Validación de contenidos
-<!-- Tests que validan el JSON empaquetado (D-003) -->
+- `ContenidoEmpaquetadoTests.todoElContenidoPasaElValidador`: **todo el contenido del bundle debe pasar el validador**. Protege el contenido real.
+- `ContenidoEmpaquetadoTests.releaseNoCargaBorradores`: con la política de Release no se carga ningún elemento que no esté aprobado.
+- Reglas del validador: [CONTENIDOS.md §2](CONTENIDOS.md#2-formato-de-contenido-esquema-v1).
+
+## 4 bis. Cobertura
+```sh
+xcodebuild test -project Educulter.xcodeproj -scheme Educulter \
+  -destination 'platform=iOS Simulator,name=iPhone 16' \
+  -enableCodeCoverage YES -resultBundlePath build/Tests.xcresult
+xcrun xccov view --report --json build/Tests.xcresult   # se agrega por archivo de Core/
+```
+Objetivo: cobertura de `Core/` ≥ 80 %. Reloj, calendario y aleatoriedad se inyectan (`RelojFijo`, `Fx.madrid`, `GeneradorConSemilla`) para que los tests sean deterministas.
 
 ## 5. Accesibilidad
 <!-- Auditorías de VoiceOver, Dynamic Type y contraste -->

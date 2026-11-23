@@ -1,0 +1,56 @@
+[
+  {
+    "id": "LEN.LIT.CRONO.0001",
+    "competencia": "LEN.LIT.CRONO",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Ordenar autores de la literatura española en el tiempo.",
+    "mecanica": "ordenar",
+    "enunciado": "Ordena a estos autores del más antiguo al más reciente.",
+    "payload": {
+      "fichas": [
+        { "id": "a1", "texto": "Gustavo Adolfo Bécquer" },
+        { "id": "a2", "texto": "Gonzalo de Berceo" },
+        { "id": "a3", "texto": "Federico García Lorca" },
+        { "id": "a4", "texto": "Garcilaso de la Vega" }
+      ],
+      "ordenCorrecto": ["a2", "a4", "a1", "a3"],
+      "etiquetaInicio": "Más antiguo",
+      "etiquetaFin": "Más reciente"
+    },
+    "pistas": ["Berceo es el primer poeta castellano de nombre conocido."],
+    "explicacion": "Berceo (s. XIII, mester de clerecía), Garcilaso (s. XVI, Renacimiento), Bécquer (s. XIX, Romanticismo) y Lorca (s. XX, Generación del 27).",
+    "erroresHabituales": [],
+    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
+    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.AUTOBRA.0001",
+    "competencia": "LEN.LIT.AUTOBRA",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Relacionar autores con sus obras.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada autor con su obra.",
+    "payload": {
+      "izquierda": [
+        { "id": "i1", "texto": "Miguel de Cervantes" },
+        { "id": "i2", "texto": "Federico García Lorca" },
+        { "id": "i3", "texto": "Gustavo Adolfo Bécquer" }
+      ],
+      "derecha": [
+        { "id": "d1", "texto": "Rimas" },
+        { "id": "d2", "texto": "Don Quijote de la Mancha" },
+        { "id": "d3", "texto": "Bodas de sangre" }
+      ],
+      "pares": [["i1", "d2"], ["i2", "d3"], ["i3", "d1"]]
+    },
+    "pistas": [],
+    "explicacion": "Cervantes escribió el Quijote; Lorca, Bodas de sangre; y Bécquer, las Rimas.",
+    "erroresHabituales": [],
+    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
+    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "version": 1
+  }
+]
