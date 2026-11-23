@@ -55,6 +55,11 @@ struct PantallaHoy: View {
             }
             .padding(Espacio.l)
         }
+        // Margen inferior extra: la barra de pestañas flotante no debe tapar el final del
+        // contenido (Rescate y Ortografía exprés quedan siempre visibles al desplazar).
+        .contentMargins(.bottom, Espacio.xxl * 2, for: .scrollContent)
+        // Solo para capturas (Debug): escena desplazada hasta el final.
+        .defaultScrollAnchor(entorno.opciones.captura == "hoy:final" ? .bottom : .top)
         .background(Paleta.fondo.ignoresSafeArea())
         .onAppear { modelo.cargar() }
         .fullScreenCover(item: $modelo.rondaActiva) { ronda in
@@ -96,7 +101,8 @@ struct PantallaHoy: View {
     @ViewBuilder
     private var chip: some View {
         if let estado = modelo.estado {
-            ChipRacha(dias: estado.racha.actual, protectores: estado.racha.protectores, record: estado.racha.record)
+            ChipRacha(dias: estado.racha.actual, protectores: estado.racha.protectores, record: estado.racha.record,
+                      abrirAyudaAlAparecer: entorno.opciones.captura == "hoy:globo")
         }
     }
 
@@ -110,9 +116,16 @@ struct PantallaHoy: View {
             VStack(alignment: .leading, spacing: Espacio.l) {
                 VStack(alignment: .leading, spacing: Espacio.xs) {
                     Text("Ronda recomendada").font(.caption.bold()).foregroundStyle(acento).textCase(.uppercase)
-                    Text(estado.competenciaEnCurso?.nombre ?? "Repaso general")
-                        .font(.title2.bold())
-                        .foregroundStyle(Paleta.textoPrincipal)
+                    HStack(alignment: .firstTextBaseline, spacing: Espacio.s) {
+                        Image(systemName: estado.competenciaEnCurso.map { SimboloBloque.de(competencia: $0.id) } ?? "sparkles")
+                            .font(.title3.bold())
+                            .foregroundStyle(acento)
+                            .accessibilityHidden(true)
+                        Text(estado.competenciaEnCurso?.nombre ?? "Repaso general")
+                            .font(.title2.bold())
+                            .foregroundStyle(Paleta.textoPrincipal)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
                     Text("6–8 ítems · 2–5 minutos").font(.subheadline).foregroundStyle(Paleta.textoSecundario)
                 }
                 BotonPrincipal(titulo: "Empezar ronda", icono: "play.fill", acento: acento) {
@@ -135,7 +148,7 @@ struct PantallaHoy: View {
                             (estado.rescatesPendientes == 1 ? "1 error por rescatar" : "\(estado.rescatesPendientes) errores por rescatar"),
                           boton: "Rescatar", activo: estado.rescatesPendientes > 0, id: "botonRescate") { modelo.empezar(.rescate) }
             tarjetaAccion(titulo: "Ortografía exprés", icono: "textformat.abc", color: Paleta.lengua,
-                          detalle: "5 ítems de tildes", boton: "Empezar", activo: estado.itemsOrtografia > 0,
+                          detalle: "5 ítems de ortografía y tildes", boton: "Empezar", activo: estado.itemsOrtografia > 0,
                           id: "botonOrtografia") { modelo.empezar(.ortografiaExpres) }
         }
     }

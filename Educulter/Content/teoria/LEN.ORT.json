@@ -1,20 +1,24 @@
 [
   {
-    "id": "LEN.ORT.TILDES.T01",
-    "competencia": "LEN.ORT.TILDES",
-    "titulo": "Reglas generales de acentuación",
+    "id": "LEN.ORT.AGU.T01",
+    "competencia": "LEN.ORT.AGU",
+    "titulo": "Agudas, llanas y esdrújulas",
     "bloques": [
       {
         "tipo": "texto",
-        "contenido": "Según dónde está la sílaba tónica, las palabras son agudas, llanas o esdrújulas, y cada tipo tiene su regla."
+        "contenido": "La sílaba tónica es la que suena más fuerte. Según dónde esté, la palabra es aguda, llana, esdrújula o sobresdrújula, y eso decide si lleva tilde."
       },
       {
         "tipo": "esquema",
-        "contenido": "Agudas: tilde si acaban en vocal, n o s\nLlanas: tilde si no acaban en vocal, n o s\nEsdrújulas: siempre llevan tilde\nSílaba tónica → tipo de palabra → regla"
+        "contenido": "Aguda: tónica en la última; tilde si acaba en vocal, -n o -s\nLlana: tónica en la penúltima; tilde si NO acaba en vocal, -n o -s\nEsdrújula: tónica en la antepenúltima; tilde siempre\nSobresdrújula: antes de la antepenúltima; tilde siempre"
       },
       {
         "tipo": "ejemplo",
-        "contenido": "camión (aguda) · árbol (llana) · música (esdrújula)"
+        "contenido": "camión (aguda en -n) · árbol (llana en -l) · música (esdrújula) · dígaselo (sobresdrújula)"
+      },
+      {
+        "tipo": "regla",
+        "contenido": "Excepción: si terminan en -n o -s precedida de otra consonante, las agudas no llevan tilde (robots) y las llanas sí (bíceps)."
       }
     ],
     "procedencia": {
@@ -23,12 +27,136 @@
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 05A."
+      "notas": "Redacción original de la dirección del proyecto."
     },
     "validacion": {
-      "estado": "borrador",
-      "revisor": "",
-      "fecha": ""
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    }
+  },
+  {
+    "id": "LEN.ORT.DIA.T01",
+    "competencia": "LEN.ORT.DIA",
+    "titulo": "Tilde diacrítica",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Los monosílabos no llevan tilde (fue, dio, vio, fui), salvo los que la necesitan para distinguirse de otra palabra igual con distinta función."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "tú / tu: pronombre / posesivo\nél / el: pronombre / artículo\nmí / mi: pronombre / posesivo\nsí / si: afirmación o pronombre / condicional\nté / te: bebida / pronombre\ndé / de: verbo dar / preposición\nsé / se: verbo saber o ser / pronombre\nmás / mas: cantidad / 'pero'"
+      },
+      {
+        "tipo": "ejemplo",
+        "contenido": "Tú tienes tu libro. · Él compró el pan. · Para mí, mi casa."
+      },
+      {
+        "tipo": "regla",
+        "contenido": "Aún (con tilde) = todavía. Aun (sin tilde) = incluso, hasta, siquiera."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    }
+  },
+  {
+    "id": "LEN.ORT.HIA.T01",
+    "competencia": "LEN.ORT.HIA",
+    "titulo": "Diptongo, hiato y tilde",
+    "bloques": [
+      {
+        "tipo": "texto",
+        "contenido": "Vocales abiertas: a, e, o. Cerradas: i, u. Cuando dos vocales van juntas, pueden quedarse en la misma sílaba (diptongo) o separarse (hiato)."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Diptongo: abierta + cerrada átona, o dos cerradas (ai-re, ciu-dad)\nHiato: dos abiertas (po-e-ta, le-ón)\nHiato con cerrada tónica: siempre tilde (pa-ís, rí-o, bú-ho)"
+      },
+      {
+        "tipo": "regla",
+        "contenido": "La h entre vocales no impide la tilde: búho, prohíbe. Guion, truhan o fie no llevan tilde: son monosílabos ortográficos."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    }
+  },
+  {
+    "id": "LEN.ORT.PQ.T01",
+    "competencia": "LEN.ORT.PQ",
+    "titulo": "Por qué, porque, porqué y por que",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "por qué: pregunta directa o indirecta (¿Por qué vienes? / No sé por qué vino)\nporque: causa, 'ya que' (Vino porque quiso)\nporqué: sustantivo, 'el motivo' (Explícame el porqué)\npor que: 'por el que', 'por la que' (La razón por que vino)"
+      },
+      {
+        "tipo": "regla",
+        "contenido": "Truco: si puedes poner «el» delante, es «porqué». Si cabe «por la que», es «por que»."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    }
+  },
+  {
+    "id": "LEN.ORT.HOM.T01",
+    "competencia": "LEN.ORT.HOM",
+    "titulo": "Homófonos frecuentes",
+    "bloques": [
+      {
+        "tipo": "texto",
+        "contenido": "Los homófonos suenan igual pero se escriben distinto y significan cosas distintas. En el examen se penalizan como faltas de ortografía."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "hay: verbo haber (Hay pan)\nahí: adverbio de lugar (Está ahí)\nay: interjección (¡Ay, qué daño!)\ntuvo: verbo tener (Tuvo suerte)\ntubo: cilindro hueco (El tubo del agua)\na ver: preposición + ver (Vamos a ver)\nhaber: verbo (Debe haber más)"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
     }
   }
 ]

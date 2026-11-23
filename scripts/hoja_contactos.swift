@@ -23,7 +23,14 @@ NSGraphicsContext.saveGraphicsState()
 NSGraphicsContext.current = NSGraphicsContext(bitmapImageRep: rep)
 NSColor(white: 0.93, alpha: 1).setFill()
 NSRect(x: 0, y: 0, width: ancho, height: alto).fill()
-let titulo = "Educulter · Fase 05A · \(imagenes.count) capturas (iPhone 16)" as NSString
+// Título a partir de la carpeta: "fase05a1" → "Fase 05A.1".
+let nombreCarpeta = carpeta.lastPathComponent
+var fase = nombreCarpeta
+if nombreCarpeta.hasPrefix("fase") {
+    let codigo = String(nombreCarpeta.dropFirst(4)).uppercased()
+    fase = "Fase " + (codigo.count > 3 ? String(codigo.prefix(3)) + "." + String(codigo.dropFirst(3)) : codigo)
+}
+let titulo = "Educulter · \(fase) · \(imagenes.count) capturas (iPhone 16)" as NSString
 titulo.draw(at: NSPoint(x: margen, y: alto - 44), withAttributes: [.font: NSFont.boldSystemFont(ofSize: 22), .foregroundColor: NSColor.black])
 let estilo = NSMutableParagraphStyle(); estilo.alignment = .center
 for (i, (nombre, imagen)) in imagenes.enumerated() {

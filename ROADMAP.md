@@ -8,6 +8,7 @@
 | 03 | Diseño pedagógico y UX | Completadas (integradas en el diseño v1) | Modelo de aprendizaje, tipos de ejercicio y flujos |
 | 04 | Arquitectura y núcleo | Terminada | Núcleo Swift testeado: contenido, validador, motor de aprendizaje, gamificación y persistencia |
 | 05A | Sistema de diseño, mecánicas y ronda | Terminada | App jugable: Hoy, ronda, 10 mecánicas, feedback y resumen |
+| 05A.1 | Pulido visual y lote 01 de contenido | Terminada | Recompensas y más peso táctil; 38 ítems y 5 tarjetas reales de LEN.ORT |
 | 05B | Desarrollo (resto del MVP) | Siguiente | Bienvenida, diagnóstico, Mapa, Examen, Progreso, sonido y contenido real |
 | 06 | Monetización | Pendiente | Suscripción con StoreKit 2 y muro de pago |
 | 07 | Calidad | Pendiente | Tests, accesibilidad, rendimiento, iOS 17 |

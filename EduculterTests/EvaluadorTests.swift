@@ -75,11 +75,11 @@ struct EvaluadorTests {
 
     @Test("Marcar texto")
     func marcarTexto() throws {
-        let i = try item("LEN.ORT.TILDES.0001")
-        #expect(Evaluador.evaluar(.marcarTexto(["t2", "t3"]), para: i).correcto)
-        let mal = Evaluador.evaluar(.marcarTexto(["t2", "t4", "tZ"]), para: i)
+        let i = try item("LEN.CLA.VERBO.0001")
+        #expect(Evaluador.evaluar(.marcarTexto(["t2", "t5"]), para: i).correcto)
+        let mal = Evaluador.evaluar(.marcarTexto(["t2", "t8", "tZ"]), para: i)
         #expect(!mal.correcto)
-        #expect(mal.errores == ["t3", "t4", "tZ"])
+        #expect(Set(mal.errores) == ["t5", "t8", "tZ"])
         #expect(abs(mal.fraccionCorrecta - 0.25) < 1e-9)
         #expect(Evaluador.feedback(para: mal, item: i).count == 1)
         #expect(Evaluador.evaluar(.marcarTexto([]), para: i).fraccionCorrecta == 0)
@@ -120,9 +120,9 @@ struct EvaluadorTests {
         #expect(r.errores == ["tiempo"] && r.fraccionCorrecta == 0.75)
         #expect(Evaluador.feedback(para: r, item: v).count == 1)
 
-        let c = try item("LEN.ORT.TILDES.0002")
-        #expect(Evaluador.evaluar(.construir(["h1": "p1", "h2": "p4"]), para: c).correcto)
-        #expect(Evaluador.evaluar(.construir(["h1": "p2", "h2": "p4"]), para: c).errores == ["h1"])
+        let c = try item("LEN.ORT.AGU.0009")
+        #expect(Evaluador.evaluar(.construir(["h1": "p1", "h2": "p3"]), para: c).correcto)
+        #expect(Evaluador.evaluar(.construir(["h1": "p2", "h2": "p3"]), para: c).errores == ["h1"])
         #expect(Evaluador.evaluar(.construir([:]), para: c).fraccionCorrecta == 0)
     }
 

@@ -125,7 +125,10 @@ struct VistaCaptura: View {
         if partes.first == "item", partes.count >= 2 {
             let modelo = RondaViewModel(servicio: servicio, tipo: .items([partes[1]]))
             let modo = partes.count >= 3 ? partes[2] : "antes"
-            if modo != "antes" {
+            if modo == "relleno" {
+                // Respuesta correcta puesta pero sin comprobar.
+                modelo.rellenarParaPruebas(correcta: true)
+            } else if modo != "antes" {
                 modelo.rellenarParaPruebas(correcta: modo == "correcto")
                 modelo.comprobar()
             }

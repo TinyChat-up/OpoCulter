@@ -158,3 +158,35 @@ El requisito es "SDK de iOS 26 o superior"; 27.2 lo cumple. No se instala el run
 
 ### D-048 · 2026-11-23 · Fase 05A · Vigente
 **Auditoría de accesibilidad sin incidencias.** `performAccessibilityAudit()` se ejecuta en Hoy, la teoría previa, cada mecánica (antes y después de comprobar) y el resumen, y el test falla si queda alguna incidencia. Para lograrlo: los cambios de disposición por Dynamic Type usan `AnyLayout` (no `ViewThatFits`, que la auditoría marca); no se limita `dynamicTypeSize`; los controles inactivos no se atenúan (`allowsHitTesting` en lugar de `.disabled`, y botón desactivado con contorno y texto secundario); las fichas corregidas conservan el texto en color principal y llevan borde e icono de color. **Única excepción justificada:** en Hoy se ignoran las incidencias de contraste de los elementos que el scroll deja bajo la barra de pestañas translúcida, porque dependen de la posición del scroll y del material del sistema, no de nuestros colores.
+
+> **Revisión en la Fase 05A.1.** Se añadió el margen inferior que pedía la dirección (`contentMargins` de 64 pt): ahora todo el contenido de Hoy se puede desplazar hasta quedar por encima de la barra, y se audita también desplazado hasta el final. **La excepción no desaparece**: la barra de pestañas flotante y el efecto de borde superior del sistema se dibujan *sobre* el contenido del scroll por diseño, y la auditoría mide los elementos por su marco en pantalla aunque estén recortados (se probó `.clipped()` sin efecto). Por eso, en Hoy, solo se ignoran las incidencias de contraste de los elementos que tocan la franja de la barra inferior (90 pt) o la del borde superior (130 pt). Se añade una segunda excepción acotada: con el globo de la racha abierto, el contenido de Hoy queda visible tras el popover modal y VoiceOver lo ignora (es lo correcto), lo que la auditoría marca como "texto potencialmente inaccesible" sin elemento asociado. Tercera excepción acotada, para cualquier pantalla: se ignora el contraste de un elemento **del contenido del scroll que queda fuera de su área visible** (oculto o recortado por el borde; p. ej. la fila "Modo" de ruedas cuando aparece el panel de feedback), porque la auditoría lo mide sobre píxeles que no son suyos. En cuanto se desplaza y queda entero a la vista, vuelve a contar. Los elementos de fuera del scroll (cabecera, pie y botones) nunca se excusan. Cualquier otra incidencia hace fallar el test.
+
+## Fase 05A.1 — Pulido visual y lote 01 de contenido
+
+### D-049 · 2026-11-23 · Fase 05A.1 · Vigente
+**Más "juego" y menos "formulario".**
+- **Tamaño:** fichas y opciones de al menos 52 pt (`Medidas.fichaMinima`), con texto `.body` y relleno 16 × 12. La mecánica se reparte en el espacio libre: el contenido del ítem ocupa como mínimo el alto visible y la mecánica queda centrada entre dos espaciadores.
+- **Fallar no castiga:** tras un fallo, el rojo queda solo en el icono, el título ("No es correcto") y el borde del panel. "Continuar" y "Ver regla" usan el color del área.
+- **Recompensa al acertar:**
+  - un pulso de escala (1,03) y brillo verde sobre la mecánica;
+  - la cápsula "+N XP" vuela desde el panel hasta un nuevo contador de XP en la cabecera, unidos con `anchorPreference`;
+  - hitos de combo en ×3, ×5, ×10 y cada 10 más: salto con destello de la cápsula, rebote del rayo e impacto fuerte;
+  - el XP del resumen sube contando.
+  - Con "Reducir movimiento", todo se queda en fundidos y vibración.
+- **Pista y Comprobar** se apilan a todo el ancho con texto de accesibilidad.
+- **Construir:** la puntuación pegada a un hueco («{h2}.») viaja con él y no queda sola en una línea.
+
+### D-050 · 2026-11-23 · Fase 05A.1 · Vigente
+**Símbolo SF por bloque** (`SimboloBloque`, tabla en UX_UI.md §4.7). Se usa junto al nombre de la competencia en la cabecera de la ronda, en la tarjeta "Ronda recomendada" y, en la 05B, en el Mapa. Un test comprueba que cada bloque del catálogo tiene un símbolo propio y distinto.
+
+### D-051 · 2026-11-23 · Fase 05A.1 · Vigente
+**Segmentar:**
+- Las etiquetas pasan a una fila de chips justo encima de las palabras.
+- El árbol "Tu análisis (n)" se puede plegar; tras corregir, siempre está desplegado.
+- **Iluminación en vivo:** tras el primer toque, al pulsar la palabra final el tramo completo se tiñe (estado de ficha `enTramo`) antes de soltar, mediante un `ButtonStyle` que informa de la pulsación. Se descarta seleccionar el tramo arrastrando: competiría con el desplazamiento vertical del `ScrollView` y no tendría alternativa accesible equivalente.
+
+### D-052 · 2026-11-23 · Fase 05A.1 · Vigente
+**Lote 01 (LEN.ORT):**
+- Las 5 competencias del bloque sustituyen a `LEN.ORT.TILDES`. Sus 5 borradores y su tarjeta se eliminan porque el lote real cubre las mismas mecánicas (en Debug sigue habiendo al menos 3 ítems por mecánica).
+- Los ítems de demostración por mecánica (`-rondaDemostracion`, capturas y test de UI) pasan a ser una lista fija (`EntornoApp.demostracionPreferida`); `construir` usa `LEN.ORT.AGU.0008`.
+- "Ortografía exprés" toma ya sus 5 ítems del lote real.

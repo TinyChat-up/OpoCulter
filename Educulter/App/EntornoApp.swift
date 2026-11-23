@@ -70,9 +70,21 @@ final class EntornoApp {
         return .items(Self.itemsDemostracion(banco))
     }
 
-    /// Primer ítem de cada mecánica, en el orden del catálogo de mecánicas.
+    /// Ítem fijo de demostración por mecánica (estable para tests de UI y capturas).
+    static let demostracionPreferida: [Mecanica: String] = [
+        .eleccion: "LEN.REC.FIGURAS.0001", .verdaderoFalso: "LEN.CLA.SUSTADJ.0002", .clasificar: "LEN.CLA.SUSTADJ.0001",
+        .ordenar: "LEN.LIT.CRONO.0001", .emparejar: "LEN.LEX.SINON.0001", .marcarTexto: "LEN.CLA.VERBO.0001",
+        .segmentar: "LEN.SIN.COMPL.0001", .ruedas: "LEN.VER.ANALISIS.0001", .construir: "LEN.ORT.AGU.0008",
+        .numerico: "MAT.NUM.FRACSUM.0001",
+    ]
+
+    /// Un ítem por mecánica, en el orden del catálogo de mecánicas: el preferido si existe y, si no,
+    /// el primero de esa mecánica.
     static func itemsDemostracion(_ banco: BancoContenido) -> [String] {
-        Mecanica.allCases.compactMap { m in banco.items.first { $0.mecanica == m && $0.peldano <= 4 }?.id }
+        Mecanica.allCases.compactMap { m in
+            if let id = demostracionPreferida[m], banco.item(id: id)?.mecanica == m { return id }
+            return banco.items.first { $0.mecanica == m && $0.peldano <= 4 }?.id
+        }
     }
 
     /// Servicio aislado (en memoria) para revisar contenido sin alterar el progreso real.

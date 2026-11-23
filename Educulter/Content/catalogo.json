@@ -30,9 +30,29 @@
           "orden": 2,
           "competencias": [
             {
-              "id": "LEN.ORT.TILDES",
-              "nombre": "Reglas generales de acentuación",
+              "id": "LEN.ORT.AGU",
+              "nombre": "Agudas, llanas y esdrújulas",
               "orden": 1
+            },
+            {
+              "id": "LEN.ORT.DIA",
+              "nombre": "Tilde diacrítica",
+              "orden": 2
+            },
+            {
+              "id": "LEN.ORT.HIA",
+              "nombre": "Diptongo, hiato y tilde",
+              "orden": 3
+            },
+            {
+              "id": "LEN.ORT.PQ",
+              "nombre": "Por qué, porque, porqué y por que",
+              "orden": 4
+            },
+            {
+              "id": "LEN.ORT.HOM",
+              "nombre": "Homófonos frecuentes",
+              "orden": 5
             }
           ]
         },

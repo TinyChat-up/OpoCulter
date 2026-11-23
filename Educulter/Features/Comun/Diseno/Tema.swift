@@ -52,6 +52,41 @@ enum Radio {
 enum Medidas {
     /// Área táctil mínima (HIG).
     static let tactilMinimo: CGFloat = 44
+    /// Alto mínimo de fichas y opciones de las mecánicas (más peso táctil, D-049).
+    static let fichaMinima: CGFloat = 52
+}
+
+/// Símbolo SF que identifica cada bloque del temario (cabecera de ronda, Ronda recomendada
+/// y, en la 05B, el Mapa). Tabla en UX_UI.md §4.7.
+enum SimboloBloque {
+    static let porBloque: [String: String] = [
+        "LEN.SIN": "point.3.connected.trianglepath.dotted",
+        "LEN.ORT": "character.cursor.ibeam",
+        "LEN.CLA": "tag",
+        "LEN.VER": "clock.arrow.circlepath",
+        "LEN.LIT": "books.vertical",
+        "LEN.COM": "text.magnifyingglass",
+        "LEN.REC": "theatermasks",
+        "LEN.MET": "music.quarternote.3",
+        "LEN.LEX": "character.book.closed",
+        "LEN.FOR": "puzzlepiece",
+        "MAT.UNI": "ruler",
+        "MAT.GEO": "triangle",
+        "MAT.POR": "percent",
+        "MAT.NUM": "divide.circle",
+        "MAT.DIV": "square.grid.3x3",
+        "MAT.OPE": "plus.forwardslash.minus",
+        "MAT.ROM": "building.columns",
+        "MAT.EST": "chart.bar",
+        "MAT.PRO": "dice",
+    ]
+
+    static func de(bloque: String) -> String { porBloque[bloque] ?? "square.stack" }
+
+    /// Símbolo a partir de un id de competencia o de ítem (`LEN.ORT.AGU`, `LEN.ORT.AGU.0001`).
+    static func de(competencia: String) -> String {
+        de(bloque: competencia.split(separator: ".").prefix(2).joined(separator: "."))
+    }
 }
 
 extension Font {

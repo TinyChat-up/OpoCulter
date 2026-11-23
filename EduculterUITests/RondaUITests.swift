@@ -18,16 +18,50 @@ final class RondaUITests: XCTestCase {
     /// Incidencias de accesibilidad acumuladas en el test (se informa de todas al final).
     private var incidencias: [String] = []
 
-    /// Excepción justificada: en Hoy, el contenido que el scroll deja bajo la barra de pestañas
-    /// (material translúcido) da falsos positivos de contraste que dependen de la posición.
+    /// Excepciones justificadas (D-048):
+    /// - `bordesDelScroll`: en Hoy, el contenido que el scroll deja bajo la barra de pestañas
+    ///   flotante o bajo el efecto de borde superior (material del sistema) da falsos positivos
+    ///   de contraste que dependen de la posición del scroll.
+    /// - `trasPopover`: con el globo de la racha abierto, el contenido de Hoy sigue visible
+    ///   detrás del popover modal y VoiceOver lo ignora (correcto), lo que la auditoría marca
+    ///   como "texto potencialmente inaccesible" sin elemento asociado.
+    /// - Siempre: el contraste de un elemento del contenido del scroll que queda fuera de su
+    ///   área visible (oculto o recortado por el borde) se mide sobre píxeles que no son suyos; se
+    ///   ignora solo en ese caso. Si está entero a la vista, cuenta.
     @MainActor
-    private func auditar(_ app: XCUIApplication, _ pantalla: String, ignorarBajoBarraPestanas: Bool = false) throws {
-        let limite = app.windows.firstMatch.frame.maxY - 90
+    private func auditar(_ app: XCUIApplication, _ pantalla: String, bordesDelScroll: Bool = false, trasPopover: Bool = false) throws {
+        let alto = app.windows.firstMatch.frame.maxY
         // Se espera a que terminen las transiciones (los fundidos bajan el contraste temporalmente).
         Thread.sleep(forTimeInterval: 1)
+        let scroll = app.scrollViews.firstMatch.exists ? app.scrollViews.firstMatch.frame : .null
+        // Si el simulador va lento, la auditoría puede agotar su tiempo (código -56): se repite
+        // una sola vez. Las incidencias reales nunca se reintentan.
+        do {
+            try auditarUnaVez(app, pantalla, alto: alto, scroll: scroll, bordesDelScroll: bordesDelScroll, trasPopover: trasPopover)
+        } catch let error as NSError where error.code == -56 {
+            print("AUDITORIA-REINTENTO [\(pantalla)] \(error.localizedDescription)")
+            Thread.sleep(forTimeInterval: 2)
+            try auditarUnaVez(app, pantalla, alto: alto, scroll: scroll, bordesDelScroll: bordesDelScroll, trasPopover: trasPopover)
+        }
+    }
+
+    @MainActor
+    private func auditarUnaVez(_ app: XCUIApplication, _ pantalla: String, alto: CGFloat, scroll: CGRect,
+                               bordesDelScroll: Bool, trasPopover: Bool) throws {
         try app.performAccessibilityAudit { incidencia in
-            if ignorarBajoBarraPestanas, incidencia.auditType == .contrast, let e = incidencia.element, e.frame.maxY > limite {
-                print("AUDITORIA-EXCEPCION [\(pantalla)] contraste bajo la barra de pestañas: \(e.label)")
+            if incidencia.auditType == .contrast, let e = incidencia.element, !scroll.isNull,
+               e.frame.maxY > scroll.maxY + 0.5 || e.frame.minY < scroll.minY - 0.5,
+               Self.perteneceAlScroll(e, app) {
+                print("AUDITORIA-EXCEPCION [\(pantalla)] oculto o recortado por el borde del scroll: \(e.label)")
+                return true
+            }
+            if bordesDelScroll, incidencia.auditType == .contrast, let e = incidencia.element,
+               e.frame.maxY > alto - 90 || e.frame.minY < 130 {
+                print("AUDITORIA-EXCEPCION [\(pantalla)] contraste bajo una barra del sistema: \(e.label)")
+                return true
+            }
+            if trasPopover, incidencia.element == nil, incidencia.compactDescription.contains("inaccessible text") {
+                print("AUDITORIA-EXCEPCION [\(pantalla)] texto de Hoy tras el popover modal")
                 return true
             }
             let texto = "[\(pantalla)] \(incidencia.compactDescription) · \(incidencia.element?.debugDescription.prefix(160) ?? "-")"
@@ -35,6 +69,14 @@ final class RondaUITests: XCTestCase {
             print("AUDITORIA \(texto)")
             return true
         }
+    }
+
+    /// El elemento forma parte del contenido del scroll (no es, p. ej., un botón del pie).
+    @MainActor
+    private static func perteneceAlScroll(_ e: XCUIElement, _ app: XCUIApplication) -> Bool {
+        let candidatos = app.scrollViews.firstMatch.descendants(matching: e.elementType)
+            .matching(NSPredicate(format: "label == %@", e.label))
+        return candidatos.allElementsBoundByIndex.contains { $0.frame == e.frame }
     }
 
     override func tearDownWithError() throws {
@@ -63,7 +105,22 @@ final class RondaUITests: XCTestCase {
     @MainActor
     func testRondaRecomendadaCompleta() throws {
         let app = lanzar()
-        try auditar(app, "Hoy", ignorarBajoBarraPestanas: true)
+        // Hoy arriba y desplazado hasta el final (el margen inferior deja ver todo el contenido).
+        try auditar(app, "Hoy", bordesDelScroll: true)
+        app.scrollViews.firstMatch.swipeUp(velocity: .slow)
+        Thread.sleep(forTimeInterval: 3)
+        try auditar(app, "Hoy (final)", bordesDelScroll: true)
+        app.scrollViews.firstMatch.swipeDown(velocity: .slow)
+        Thread.sleep(forTimeInterval: 3)
+        // Globo explicativo de la racha.
+        app.buttons["chipRacha"].tap()
+        XCTAssertTrue(app.descendants(matching: .any)["globoRacha"].waitForExistence(timeout: 5))
+        try auditar(app, "Globo de racha", bordesDelScroll: true, trasPopover: true)
+        let globo = app.descendants(matching: .any)["globoRacha"]
+        let fuera = app.otherElements["PopoverDismissRegion"].firstMatch
+        if fuera.exists { fuera.tap() } else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.9)).tap() }
+        XCTAssertTrue(globo.waitForNonExistence(timeout: 5), "El globo debería cerrarse al tocar fuera")
+        XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 5))
         app.buttons["botonEmpezarRonda"].tap()
         if app.buttons["botonEmpezarTrasTeoria"].waitForExistence(timeout: 5) {
             try auditar(app, "Teoría previa")
@@ -71,7 +128,7 @@ final class RondaUITests: XCTestCase {
         }
         var vueltas = 0
         while !app.descendants(matching: .any)["resumenRonda"].exists && vueltas < 10 {
-            XCTAssertTrue(app.buttons["botonRellenarDebug"].waitForExistence(timeout: 10))
+            XCTAssertTrue(app.buttons["botonRellenarDebug"].waitForExistence(timeout: 10), app.debugDescription)
             app.buttons["botonRellenarDebug"].tap()
             app.buttons["botonComprobar"].tap()
             XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 5))
@@ -96,7 +153,7 @@ final class RondaUITests: XCTestCase {
         let app = lanzar(["-rondaDemostracion"])
         app.buttons["botonEmpezarRonda"].tap()
 
-        // Toques por mecánica (ítems de demostración: el primero de cada mecánica en el banco).
+        // Toques por mecánica (ítems de demostración fijos: `EntornoApp.demostracionPreferida`).
         let toques: [String: [String]] = [
             "eleccion": ["opcion_a"],
             "verdaderoFalso": ["botonFalso"],
@@ -107,7 +164,7 @@ final class RondaUITests: XCTestCase {
                           "seg_token_t1", "seg_token_t1", "etiqueta_NV",
                           "seg_token_t2", "seg_token_t6", "etiqueta_CCL",
                           "seg_token_t5", "seg_token_t6", "etiqueta_CN"],
-            "construir": ["pieza_p1", "pieza_p4"],
+            "construir": ["pieza_p1", "pieza_p3"],
             "numerico": ["tecla3", "teclaFraccion", "tecla4"],
         ]
         var vistas: [String] = []

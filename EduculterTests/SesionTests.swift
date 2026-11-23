@@ -61,10 +61,10 @@ struct SolucionesTests {
         #expect(try texto("LEN.CLA.SUSTADJ.0001") == "Sustantivo: gato, mesa · Adjetivo: hermoso, feliz")
         #expect(try texto("MAT.OPE.JERARQ.0001").hasPrefix("Resolver el paréntesis"))
         #expect(try texto("LEN.LIT.AUTOBRA.0001").contains("Miguel de Cervantes — Don Quijote de la Mancha"))
-        #expect(try texto("LEN.ORT.TILDES.0001") == "camión, llegó")
+        #expect(try texto("LEN.ORT.AGU.0006") == "arbol, jardin, fragiles")
         #expect(try texto("LEN.SIN.COMPL.0001") == "[Vive en la casa de Ana] Predicado · [Vive] Núcleo verbal · [en la casa de Ana] CC de lugar · [de Ana] Compl. del nombre")
         #expect(try texto("LEN.VER.ANALISIS.0001").hasPrefix("Persona: primera"))
-        #expect(try texto("LEN.ORT.TILDES.0002") == "«Camión» lleva tilde porque es una palabra aguda terminada en -n.")
+        #expect(try texto("LEN.ORT.AGU.0009") == "«Canción» lleva tilde porque es aguda y termina en -n.")
         #expect(try texto("MAT.POR.PORCENT.0002") == "17 €")
         #expect(try texto("MAT.OPE.JERARQ.0002") == "15")
     }
@@ -99,7 +99,7 @@ struct ServicioSesionTests {
         let s = servicio()
         let e = try s.estadoHoy()
         #expect(e.misiones.count == 3)
-        #expect(e.hayContenido && e.itemsOrtografia == 5)
+        #expect(e.hayContenido && e.itemsOrtografia == 38, "Lote 01 completo de LEN.ORT")
         #expect(e.competenciaEnCurso?.id == "LEN.SIN.SUJPRED", "Primer bloque ★★★ del catálogo")
         #expect(e.nivel == 1 && e.xpTotal == 0 && e.racha.actual == 0)
         // Las misiones no cambian el mismo día.
@@ -145,8 +145,8 @@ struct ServicioSesionTests {
     @Test("Subida de peldaño y dominio")
     func subida() throws {
         let s = servicio()
-        try repo.guardar(EstadoCompetencia(competenciaId: "LEN.ORT.TILDES", escalera: .init(peldano: 4, ventana: [true, true, true])))
-        let item = try #require(banco.item(id: "LEN.ORT.TILDES.0002"))
+        try repo.guardar(EstadoCompetencia(competenciaId: "LEN.ORT.AGU", escalera: .init(peldano: 4, ventana: [true, true, true])))
+        let item = try #require(banco.item(id: "LEN.ORT.AGU.0009"))
         let e = try s.registrar(item: item, resultado: Evaluador.evaluar(RespuestaEjemplo.correcta(item.payload), para: item),
                                 usoPista: false, combo: 1, motivo: .enCurso)
         #expect(e.subioPeldano && e.peldanoNuevo == 5 && e.acabaDeDominarse && e.xp == 25)
