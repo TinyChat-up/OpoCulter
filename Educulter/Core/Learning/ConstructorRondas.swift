@@ -116,17 +116,25 @@ struct ConstructorRondas: Sendable {
 
         // Relleno hasta el mínimo: competencias empezadas y, después, cualquier ítem. Primero
         // sin repetir ítems recientes; solo si no basta, se admiten.
-        let empezadas = estados.values.sorted { $0.competenciaId < $1.competenciaId }
+        // Se prefiere el área de la competencia en curso (D-055): una ronda de Matemáticas se
+        // completa con Matemáticas mientras haya contenido.
+        let area = enCurso.map(Catalogo.area(de:))
+        let empezadas = estados.values.sorted {
+            ($0.competenciaId.hasPrefix(area ?? "") ? 0 : 1, $0.competenciaId) < ($1.competenciaId.hasPrefix(area ?? "") ? 0 : 1, $1.competenciaId)
+        }
         let resto = banco.items.filter { $0.peldano <= config.peldanoMaximoEnRonda }
+        let restoArea = area.map { a in resto.filter { Catalogo.area(de: $0.competencia) == a } } ?? []
         for permitirRecientes in [false, true] where elegidos.count < config.minimo {
             for estado in empezadas where elegidos.count < config.minimo {
                 let candidatos = candidatos(competencia: estado.competenciaId, peldano: estado.escalera.peldano)
                 _ = anadir(elegir(candidatos, usados: usados, esReciente: esReciente,
                                   permitirRecientes: permitirRecientes, rng: &rng), .relleno)
             }
-            while elegidos.count < config.minimo,
-                  let item = elegir(resto, usados: usados, esReciente: esReciente, permitirRecientes: permitirRecientes, rng: &rng) {
-                _ = anadir(item, .relleno)
+            for grupo in [restoArea, resto] {
+                while elegidos.count < config.minimo,
+                      let item = elegir(grupo, usados: usados, esReciente: esReciente, permitirRecientes: permitirRecientes, rng: &rng) {
+                    _ = anadir(item, .relleno)
+                }
             }
         }
 

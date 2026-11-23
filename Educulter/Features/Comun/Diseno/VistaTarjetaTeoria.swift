@@ -3,13 +3,14 @@ import SwiftUI
 /// Tarjeta de teoría: texto, regla destacada, ejemplo y esquema maquetado (D-034).
 struct VistaTarjetaTeoria: View {
     let tarjeta: TarjetaTeoria
-    var acento: Color = Paleta.lengua
+    /// Tinta del área (texto y marcas con color de área; AA sobre fondo y superficie).
+    var acento: Color = Paleta.lenguaTinta
 
     var body: some View {
         TarjetaSuperficie {
             VStack(alignment: .leading, spacing: Espacio.l) {
                 Text(tarjeta.titulo)
-                    .font(.title2.bold())
+                    .font(.title2.weight(.semibold))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .accessibilityAddTraits(.isHeader)
                 ForEach(Array(tarjeta.bloques.enumerated()), id: \.offset) { _, bloque in
@@ -33,7 +34,7 @@ struct VistaTarjetaTeoria: View {
             HStack(alignment: .top, spacing: Espacio.m) {
                 Rectangle().fill(acento).frame(width: 4).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: Espacio.xs) {
-                    Text("Regla").font(.caption.bold()).foregroundStyle(acento).textCase(.uppercase)
+                    Text("Regla").font(.caption.weight(.semibold)).foregroundStyle(acento).textCase(.uppercase)
                     Text(bloque.contenido).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -41,7 +42,7 @@ struct VistaTarjetaTeoria: View {
             .accessibilityElement(children: .combine)
         case .ejemplo:
             VStack(alignment: .leading, spacing: Espacio.xs) {
-                Text("Ejemplo").font(.caption.bold()).foregroundStyle(Paleta.textoSecundario).textCase(.uppercase)
+                Text("Ejemplo").font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario).textCase(.uppercase)
                 Text(bloque.contenido).font(.body.italic()).foregroundStyle(Paleta.textoPrincipal)
                     .fixedSize(horizontal: false, vertical: true)
             }
@@ -63,13 +64,13 @@ struct VistaEsquema: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: Espacio.s) {
-            Text("Esquema").font(.caption.bold()).foregroundStyle(Paleta.textoSecundario).textCase(.uppercase)
+            Text("Esquema").font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario).textCase(.uppercase)
             ForEach(Array(filas.enumerated()), id: \.offset) { _, fila in
                 switch fila {
                 case .par(let etiqueta, let valor):
                     let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: Espacio.m))
                     disposicion {
-                        Text(etiqueta).font(.subheadline.bold()).foregroundStyle(acento)
+                        Text(etiqueta).font(.subheadline.weight(.semibold)).foregroundStyle(acento)
                             .frame(minWidth: tamano.isAccessibilitySize ? nil : 90, alignment: .leading)
                         Text(valor).font(.subheadline).foregroundStyle(Paleta.textoPrincipal)
                             .fixedSize(horizontal: false, vertical: true)
@@ -80,7 +81,7 @@ struct VistaEsquema: View {
                         ForEach(Array(partes.enumerated()), id: \.offset) { i, parte in
                             if i > 0 {
                                 Image(systemName: "arrow.right")
-                                    .font(.subheadline.bold())
+                                    .font(.subheadline.weight(.semibold))
                                     .foregroundStyle(acento)
                                     .frame(minHeight: 32)
                             }

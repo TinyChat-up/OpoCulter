@@ -59,16 +59,17 @@ struct EstiloBotonSecundario: ButtonStyle {
 
 // MARK: - Tarjeta de superficie
 
+/// Baldosa neutra (v2): superficie sin borde ni sombra. Dentro del panel tintado usa el fondo.
 struct TarjetaSuperficie<Contenido: View>: View {
     var relleno: CGFloat = Espacio.l
     @ViewBuilder let contenido: () -> Contenido
+    @Environment(\.enPanelTintado) private var enPanel
 
     var body: some View {
         contenido()
             .padding(relleno)
             .frame(maxWidth: .infinity, alignment: .leading)
-            .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(Paleta.borde, lineWidth: 1))
+            .background(enPanel ? Paleta.fondo : Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
     }
 }
 
@@ -94,10 +95,11 @@ struct Ficha: View {
     var acento: Color = Paleta.matematicas
     var anchoCompleto = false
     var alineacion: Alignment = .center
+    @Environment(\.enPanelTintado) private var enPanel
 
     var body: some View {
         HStack(spacing: Espacio.s) {
-            if let icono { Image(systemName: icono).font(.subheadline.bold()).foregroundStyle(colorBorde).accessibilityHidden(true) }
+            if let icono { Image(systemName: icono).font(.subheadline.weight(.semibold)).foregroundStyle(colorBorde).accessibilityHidden(true) }
             Text(texto)
                 .font(.body)
                 .multilineTextAlignment(alineacion == .leading ? .leading : .center)
@@ -139,7 +141,7 @@ struct Ficha: View {
         switch estado {
         case .seleccionada: acento
         case .enTramo: acento.opacity(0.18)
-        default: Paleta.superficie
+        default: enPanel ? Paleta.fondo : Paleta.superficie
         }
     }
 
@@ -213,7 +215,7 @@ struct IndicadorCombo: View {
                 .symbolEffect(.bounce, options: .speed(1.5), value: reducir ? 0 : hitos)
                 .accessibilityHidden(true)
             Text("×\(combo)")
-                .font(.redondeada(.subheadline, peso: .bold))
+                .font(.redondeada(.subheadline, peso: .semibold))
                 .contentTransition(.numericText())
         }
         .foregroundStyle(activo ? Paleta.textoSobreRecompensa : Paleta.textoSecundario)
@@ -221,24 +223,18 @@ struct IndicadorCombo: View {
         .frame(minHeight: Medidas.tactilMinimo)
         .background(activo ? Paleta.recompensa : Paleta.superficie, in: Capsule())
         .overlay(Capsule().strokeBorder(activo ? Color.clear : Paleta.borde))
-        .background {
-            Capsule()
-                .fill(Paleta.recompensa)
-                .blur(radius: 10)
-                .opacity(destello)
-                .scaleEffect(reducir ? 1 : 1 + destello * 0.4)
-                .accessibilityHidden(true)
-        }
+        .opacity(1 - destello * 0.4)
         .scaleEffect(escala)
         .animacionApp(combo)
         .onChange(of: hitos) { _, nuevo in
             guard nuevo > 0 else { return }
+            // Confirma el hito en ≤ 0,35 s; con "Reducir movimiento", un fundido breve.
             if reducir {
-                withAnimation(.easeOut(duration: 0.2)) { destello = 0.9 }
-                withAnimation(.easeIn(duration: 0.35).delay(0.2)) { destello = 0 }
+                withAnimation(.easeOut(duration: 0.15)) { destello = 1 }
+                withAnimation(.easeIn(duration: 0.2).delay(0.15)) { destello = 0 }
             } else {
-                withAnimation(.spring(response: 0.22, dampingFraction: 0.45)) { escala = 1.3; destello = 1 }
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.7).delay(0.22)) { escala = 1; destello = 0 }
+                withAnimation(.spring(response: 0.15, dampingFraction: 0.5)) { escala = 1.3 }
+                withAnimation(.spring(response: 0.2, dampingFraction: 0.8).delay(0.15)) { escala = 1 }
             }
         }
         .accessibilityElement(children: .ignore)
@@ -307,7 +303,8 @@ struct ChipRacha: View {
         let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(spacing: Espacio.m))
         return disposicion {
             Label {
-                Text(dias == 1 ? "1 día" : "\(dias) días").font(.redondeada(.headline, peso: .bold))
+                Text(dias == 1 ? "1 día" : "\(dias) días").font(.redondeada(.headline, peso: .semibold))
+                    .fixedSize()
             } icon: {
                 Image(systemName: "flame.fill").foregroundStyle(dias > 0 ? Paleta.recompensaTexto : Paleta.textoSecundario)
             }
@@ -380,6 +377,10 @@ struct HojaFeedback: View {
     var xp: Int = 0
     /// Color del área: "Continuar" y "Ver regla" lo usan también tras un fallo (fallar no castiga).
     var acento: Color = Paleta.matematicas
+    /// Compañero del área del ítem: celebra al acertar y anima tras un fallo (D-054).
+    var companero: Companero?
+    /// Tinta del área para el texto de "Ver regla" (AA sobre superficie).
+    var tinta: Color = Paleta.textoPrincipal
     var subioPeldano = false
     var puedeVerRegla = false
     var verRegla: () -> Void = {}
@@ -407,17 +408,21 @@ struct HojaFeedback: View {
     private var contenido: some View {
         VStack(alignment: .leading, spacing: Espacio.m) {
             HStack(spacing: Espacio.s) {
+                if let companero {
+                    VistaPersonaje(companero: companero, estado: ReglasPersonaje.estado(para: .feedback(correcto: correcto)), tamano: 44)
+                        .accessibilityIdentifier("personajeFeedback")
+                }
                 Image(systemName: correcto ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(.title2)
                     .accessibilityHidden(true)
                 Text(correcto ? "¡Correcto!" : "No es correcto")
-                    .font(.title3.bold())
+                    .font(.title3.weight(.semibold))
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader)
                 Spacer(minLength: Espacio.s)
                 if xp > 0 {
                     Text("+\(xp) XP")
-                        .font(.redondeada(.subheadline, peso: .bold))
+                        .font(.redondeada(.subheadline, peso: .semibold))
                         .foregroundStyle(Paleta.textoSobreRecompensa)
                         .padding(.horizontal, Espacio.s)
                         .padding(.vertical, Espacio.xs)
@@ -429,7 +434,7 @@ struct HojaFeedback: View {
 
             if subioPeldano {
                 Label("¡Subes de peldaño!", systemImage: "arrow.up.circle.fill")
-                    .font(.subheadline.bold())
+                    .font(.subheadline.weight(.semibold))
                     .foregroundStyle(Paleta.recompensaTexto)
             }
             if let solucion, !correcto {
@@ -463,7 +468,7 @@ struct HojaFeedback: View {
     private var botones: some View {
         if puedeVerRegla {
             Button("Ver regla", action: verRegla)
-                .buttonStyle(EstiloBotonSecundario(acento: acento))
+                .buttonStyle(EstiloBotonSecundario(acento: tinta))
                 .accessibilityIdentifier("botonVerRegla")
         }
         Button("Continuar", action: continuar)

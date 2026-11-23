@@ -33,7 +33,7 @@
         "regular": "Obtiene una fracción equivalente sin simplificar (6/8) o comete un error de cálculo menor con buen planteamiento.",
         "mal": "Suma numeradores y denominadores por separado o no responde."
       },
-      "competencias": ["MAT.NUM.FRACSUM"]
+      "competencias": ["MAT.OPE.FRACSUM"]
     }
   ],
   "validacion": { "estado": "borrador", "revisor": "", "fecha": "" }

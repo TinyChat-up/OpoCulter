@@ -128,7 +128,7 @@ struct EvaluadorTests {
 
     @Test("Numérico: fracciones, decimales, tolerancia y formato")
     func numerico() throws {
-        let i = try item("MAT.NUM.FRACSUM.0001")
+        let i = try item("MAT.OPE.FRACSUM.0001")
         #expect(Evaluador.evaluar(.numerico("3/4"), para: i).correcto)
         #expect(!Evaluador.evaluar(.numerico("6/8"), para: i).correcto, "Se exige fracción irreducible")
         #expect(!Evaluador.evaluar(.numerico("0,75"), para: i).correcto, "Se pide una fracción, no un decimal")

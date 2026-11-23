@@ -28,7 +28,7 @@ struct PantallaRevision: View {
                         Section("Teoría · \(tarjetas.count)") {
                             ForEach(tarjetas) { t in
                                 NavigationLink {
-                                    ScrollView { VistaTarjetaTeoria(tarjeta: t, acento: Paleta.acento(competencia: t.competencia)).padding() }
+                                    ScrollView { VistaTarjetaTeoria(tarjeta: t, acento: Paleta.tinta(competencia: t.competencia)).padding() }
                                         .background(Paleta.fondo)
                                         .navigationTitle(t.id)
                                 } label: {
@@ -64,7 +64,7 @@ struct PantallaRevision: View {
             } else {
                 ForEach(Array(errores.enumerated()), id: \.offset) { _, e in
                     VStack(alignment: .leading) {
-                        Text(e.elemento).font(.caption.bold()).foregroundStyle(Paleta.fallo)
+                        Text(e.elemento).font(.caption.weight(.semibold)).foregroundStyle(Paleta.fallo)
                         Text(e.mensaje).font(.footnote)
                     }
                 }
@@ -103,15 +103,23 @@ struct VistaCaptura: View {
             case "teoria":
                 ScrollView {
                     if let t = entorno.banco?.teoria.first(where: { $0.id == partes.dropFirst().first }) {
-                        VistaTarjetaTeoria(tarjeta: t, acento: Paleta.acento(competencia: t.competencia)).padding(Espacio.l)
+                        VistaTarjetaTeoria(tarjeta: t, acento: Paleta.tinta(competencia: t.competencia)).padding(Espacio.l)
                     }
                 }
                 .background(Paleta.fondo.ignoresSafeArea())
             case "revision":
                 PantallaRevision()
             case "mapa":
-                VistaLlegaPronto(titulo: "Mapa", icono: "map",
-                                 texto: "Las rutas de Lengua y Matemáticas, con el dominio de cada competencia y los Retos de bloque.")
+                VistaLlegaPronto(titulo: "Camino", icono: "point.topleft.down.to.point.bottomright.curvepath",
+                                 texto: "Las rutas de Lengua y Matemáticas, competencia a competencia, con tu dominio y los Retos de bloque.")
+            case "bienvenida":
+                PantallaBienvenida { _ in }
+            case "perfil":
+                PantallaPerfil(avatar: 0) { _ in }
+            case "personajes":
+                CatalogoPersonajes()
+            case "avatares":
+                CatalogoAvatares()
             default:
                 VistaRaiz()
             }
@@ -144,6 +152,47 @@ struct VistaCaptura: View {
             }
             ronda = modelo
         }
+    }
+}
+
+/// Lámina de los dos compañeros en sus 6 estados (capturas y documentación).
+struct CatalogoPersonajes: View {
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: Espacio.l) {
+                ForEach(Companero.allCases, id: \.self) { c in
+                    Text(c.nombre).font(.title3.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: Espacio.m) {
+                        ForEach(EstadoPersonaje.allCases, id: \.self) { e in
+                            VStack(spacing: Espacio.xs) {
+                                VistaPersonaje(companero: c, estado: e, tamano: 80)
+                                Text(e.rawValue).font(.footnote).foregroundStyle(Paleta.textoSecundario)
+                            }
+                        }
+                    }
+                }
+            }
+            .padding(Espacio.l)
+        }
+        .background(Paleta.fondo.ignoresSafeArea())
+    }
+}
+
+/// Lámina de los 12 avatares con su nombre.
+struct CatalogoAvatares: View {
+    var body: some View {
+        ScrollView {
+            LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: Espacio.l) {
+                ForEach(Avatar.todos) { a in
+                    VStack(spacing: Espacio.xs) {
+                        VistaAvatar(avatar: a, tamano: 64)
+                        Text("\(a.id) · \(a.nombre)").font(.caption).foregroundStyle(Paleta.textoSecundario).multilineTextAlignment(.center)
+                    }
+                }
+            }
+            .padding(Espacio.l)
+        }
+        .background(Paleta.fondo.ignoresSafeArea())
     }
 }
 #endif

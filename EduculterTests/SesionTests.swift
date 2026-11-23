@@ -43,7 +43,7 @@ struct SolucionesTests {
         let clasificar = try #require(banco.item(id: "LEN.CLA.SUSTADJ.0001"))
         #expect(!Respuesta.clasificar(["f1": "SUS"]).esCompleta(para: clasificar.payload))
         #expect(!Respuesta.eleccion("a").esCompleta(para: clasificar.payload), "Otra mecánica")
-        let numerico = try #require(banco.item(id: "MAT.NUM.FRACSUM.0001"))
+        let numerico = try #require(banco.item(id: "MAT.OPE.FRACSUM.0001"))
         #expect(!Respuesta.numerico("3/").esCompleta(para: numerico.payload))
         #expect(Respuesta.numerico("3/4").esCompleta(para: numerico.payload))
         let emparejar = try #require(banco.item(id: "LEN.LIT.AUTOBRA.0001"))
@@ -99,7 +99,7 @@ struct ServicioSesionTests {
         let s = servicio()
         let e = try s.estadoHoy()
         #expect(e.misiones.count == 3)
-        #expect(e.hayContenido && e.itemsOrtografia == 38, "Lote 01 completo de LEN.ORT")
+        #expect(e.hayContenido && e.itemsOrtografia == 50, "Lote 01 y piloto 05B de LEN.ORT")
         #expect(e.competenciaEnCurso?.id == "LEN.SIN.SUJPRED", "Primer bloque ★★★ del catálogo")
         #expect(e.nivel == 1 && e.xpTotal == 0 && e.racha.actual == 0)
         // Las misiones no cambian el mismo día.

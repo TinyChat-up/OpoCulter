@@ -134,6 +134,16 @@ struct ValidadorContenido: Sendable {
                 }
             }
         }
+        if item.mecanica == .colocarTilde {
+            for error in item.erroresHabituales where !["sinTilde", "conTilde", "posicion"].contains(error.respuesta) {
+                mensajes.append("el error habitual «\(error.respuesta)» no es sinTilde, conTilde ni posicion")
+            }
+        }
+        if item.mecanica == .fraccionBarras {
+            for error in item.erroresHabituales where !["partes", "coloreadas"].contains(error.respuesta) {
+                mensajes.append("el error habitual «\(error.respuesta)» no es partes ni coloreadas")
+            }
+        }
         for examen in item.referencia?.examenes ?? [] where !Self.coincide(examen, "[0-9]{4}-[LM][0-9]{1,2}") {
             mensajes.append("referencia de examen «\(examen)» no válida (formato AAAA-L9 o AAAA-M9)")
         }
@@ -155,6 +165,8 @@ struct ValidadorContenido: Sendable {
         case .ruedas(let p): validarRuedas(p)
         case .construir(let p): validarConstruir(p)
         case .numerico(let p): validarNumerico(p)
+        case .colocarTilde(let p): validarColocarTilde(p)
+        case .fraccionBarras(let p): validarFraccionBarras(p)
         }
     }
 
@@ -301,6 +313,52 @@ struct ValidadorContenido: Sendable {
             m.append("la respuesta «\(p.respuesta)» no es una fracción irreducible")
         }
         if let t = p.tolerancia, t < 0 || !t.isFinite { m.append("tolerancia no válida") }
+        return m
+    }
+
+    private func validarColocarTilde(_ p: Payload.ColocarTilde) -> [String] {
+        var m: [String] = []
+        if p.palabra.isEmpty { m.append("palabra vacía") }
+        if p.palabra != p.palabra.lowercased() { m.append("la palabra «\(p.palabra)» debe ir en minúsculas") }
+        if p.palabra.contains(where: { "áéíóúÁÉÍÓÚ".contains($0) }) { m.append("la palabra «\(p.palabra)» no debe llevar tildes") }
+        if !p.palabra.allSatisfy({ $0.isLetter }) { m.append("la palabra «\(p.palabra)» solo puede tener letras") }
+        if let i = p.indiceTilde {
+            if !p.letras.indices.contains(i) {
+                m.append("indiceTilde \(i) fuera de la palabra")
+            } else if !Payload.ColocarTilde.vocales.contains(p.letras[i]) {
+                m.append("indiceTilde \(i) no apunta a una vocal (a, e, i, o, u)")
+            }
+        }
+        return m
+    }
+
+    private func validarFraccionBarras(_ p: Payload.FraccionBarras) -> [String] {
+        var m: [String] = []
+        guard let (n, d) = p.fraccionObjetivo else {
+            return ["el objetivo «\(p.objetivo)» no tiene la forma n/d"]
+        }
+        if !(n > 0 && n < d) { m.append("el objetivo «\(p.objetivo)» no es una fracción propia") }
+        if !Payload.FraccionBarras.rangoPartes.contains(d) { m.append("el denominador del objetivo debe estar entre 2 y 12") }
+        switch p.modo {
+        case .colorear:
+            if let partes = p.partes {
+                if !Payload.FraccionBarras.rangoPartes.contains(partes) { m.append("partes debe estar entre 2 y 12") }
+                if partes * n % d != 0 { m.append("con \(partes) partes no se puede colorear exactamente \(p.objetivo)") }
+                if !p.aceptarEquivalentes, partes != d { m.append("sin aceptar equivalentes, partes debe ser el denominador del objetivo") }
+            } else {
+                m.append("en el modo colorear, partes es obligatorio")
+            }
+            if p.particionesPermitidas != nil { m.append("particionesPermitidas solo es válido en dividirYColorear") }
+        case .dividirYColorear:
+            if p.partes != nil { m.append("en el modo dividirYColorear, partes debe ser null") }
+            if let permitidas = p.particionesPermitidas {
+                if permitidas.isEmpty { m.append("particionesPermitidas está vacío") }
+                for k in permitidas where !Payload.FraccionBarras.rangoPartes.contains(k) || k * n % d != 0 {
+                    m.append("la partición \(k) no permite representar \(p.objetivo)")
+                }
+                if !p.aceptarEquivalentes, permitidas != [d] { m.append("sin aceptar equivalentes, la única partición válida es \(d)") }
+            }
+        }
         return m
     }
 

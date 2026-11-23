@@ -15,6 +15,8 @@ enum RespuestaEjemplo {
         case .ruedas(let p): .ruedas(Dictionary(p.ruedas.map { ($0.id, $0.correcta) }, uniquingKeysWith: { a, _ in a }))
         case .construir(let p): .construir(Dictionary(p.huecos.map { ($0.id, $0.correcta) }, uniquingKeysWith: { a, _ in a }))
         case .numerico(let p): .numerico(p.respuesta)
+        case .colocarTilde(let p): .colocarTilde(p.indiceTilde)
+        case .fraccionBarras(let p): .fraccionBarras(partes: p.solucion.partes, coloreadas: Set(0..<p.solucion.coloreadas))
         }
     }
 
@@ -59,6 +61,13 @@ enum RespuestaEjemplo {
         case .numerico(let p):
             let habitual = erroresHabituales.map(\.respuesta).first { Racional.interpretar($0) != nil && $0 != p.respuesta }
             return .numerico(habitual ?? (p.respuesta == "0" ? "1" : "0"))
+        case .colocarTilde(let p):
+            if p.indiceTilde != nil { return .colocarTilde(nil) }
+            return .colocarTilde(p.letras.firstIndex { Payload.ColocarTilde.vocales.contains($0) })
+        case .fraccionBarras(let p):
+            let (partes, coloreadas) = p.solucion
+            let otra = coloreadas > 1 ? coloreadas - 1 : coloreadas + 1
+            return .fraccionBarras(partes: partes, coloreadas: Set(0..<otra))
         }
     }
 }
@@ -104,6 +113,12 @@ enum DescripcionSolucion {
             return texto
         case .numerico(let p):
             return [p.respuesta, p.unidad].compactMap { $0 }.filter { !$0.isEmpty }.joined(separator: " ")
+        case .colocarTilde(let p):
+            return p.indiceTilde == nil ? "«\(p.palabra)», sin tilde" : "«\(p.correcta)»"
+        case .fraccionBarras(let p):
+            let (partes, coloreadas) = p.solucion
+            let escrita = "\(coloreadas)/\(partes)"
+            return escrita == p.objetivo ? p.objetivo : "\(escrita) = \(p.objetivo)"
         }
     }
 }
@@ -122,7 +137,21 @@ extension Respuesta {
         case (.ruedas(let p), .ruedas(let r)): p.ruedas.allSatisfy { r[$0.id] != nil }
         case (.construir(let p), .construir(let r)): p.huecos.allSatisfy { r[$0.id] != nil }
         case (.numerico, .numerico(let t)): Racional.interpretar(t) != nil
+        case (.colocarTilde, .colocarTilde): true
+        case (.fraccionBarras, .fraccionBarras(let partes, let coloreadas)):
+            Payload.FraccionBarras.rangoPartes.contains(partes) && !coloreadas.isEmpty
         default: false
         }
+    }
+}
+
+extension Payload.FraccionBarras {
+    /// Solución de referencia: partes de la barra y número de celdas coloreadas. En
+    /// `colorear`, las partes son las dadas; en `dividirYColorear`, la primera partición
+    /// permitida o el denominador del objetivo.
+    var solucion: (partes: Int, coloreadas: Int) {
+        guard let (n, d) = fraccionObjetivo else { return (partes ?? 1, 0) }
+        let total = modo == .colorear ? (partes ?? d) : (particionesPermitidas?.first ?? d)
+        return (total, total * n / d)
     }
 }

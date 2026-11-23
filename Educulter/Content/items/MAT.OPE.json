@@ -88,5 +88,131 @@
       "fecha": ""
     },
     "version": 1
+  },
+  {
+    "id": "MAT.OPE.EQUIV.0001",
+    "competencia": "MAT.OPE.EQUIV",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Relacionar fracciones y decimales.",
+    "mecanica": "verdaderoFalso",
+    "enunciado": "¿Verdadero o falso?",
+    "payload": {
+      "afirmacion": "0,5 y 1/2 representan el mismo número.",
+      "esVerdadera": true
+    },
+    "pistas": [
+      "Divide el numerador entre el denominador."
+    ],
+    "explicacion": "1/2 = 1 : 2 = 0,5. Son dos formas de escribir la misma cantidad.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A. Movido de MAT.NUM a MAT.OPE en la Fase 05B."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.EQUIV.0002",
+    "competencia": "MAT.OPE.EQUIV",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Ordenar fracciones y decimales.",
+    "mecanica": "ordenar",
+    "enunciado": "Ordena de menor a mayor.",
+    "payload": {
+      "fichas": [
+        {
+          "id": "a",
+          "texto": "0,5"
+        },
+        {
+          "id": "b",
+          "texto": "1/4"
+        },
+        {
+          "id": "c",
+          "texto": "0,75"
+        },
+        {
+          "id": "d",
+          "texto": "2/3"
+        }
+      ],
+      "ordenCorrecto": [
+        "b",
+        "a",
+        "d",
+        "c"
+      ],
+      "etiquetaInicio": "Menor",
+      "etiquetaFin": "Mayor"
+    },
+    "pistas": [
+      "Convierte las fracciones a decimal."
+    ],
+    "explicacion": "Pasando todo a decimal: 1/4 = 0,25; 0,5; 2/3 ≈ 0,67; 0,75.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A. Movido de MAT.NUM a MAT.OPE en la Fase 05B."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.FRACSUM.0001",
+    "competencia": "MAT.OPE.FRACSUM",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Sumar fracciones con distinto denominador.",
+    "mecanica": "numerico",
+    "enunciado": "Calcula 1/2 + 1/4 y escribe el resultado como fracción irreducible.",
+    "payload": {
+      "respuesta": "3/4",
+      "formato": "fraccion",
+      "tolerancia": 0,
+      "unidad": null,
+      "exigeIrreducible": true
+    },
+    "pistas": [],
+    "explicacion": "Común denominador 4: 1/2 = 2/4, y 2/4 + 1/4 = 3/4, que ya es irreducible.",
+    "erroresHabituales": [
+      {
+        "respuesta": "2/6",
+        "feedback": "No se suman los denominadores: primero se reduce a común denominador."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 04. Movido de MAT.NUM a MAT.OPE en la Fase 05B."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
   }
 ]

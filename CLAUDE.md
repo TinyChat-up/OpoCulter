@@ -6,6 +6,8 @@
 
 App nativa de iPhone para preparar la prueba común A1 (Lengua Castellana y Literatura + Matemáticas) de las oposiciones de Maestros de la Comunidad de Madrid. Contexto completo en [CONTEXTO.md](CONTEXTO.md).
 
+**Misión premium (vinculante):** [docs/MISION_PREMIUM.md](docs/MISION_PREMIUM.md). Nada simulado ni decorativo; cuatro modos sobre el mismo motor (Camino, Supervivencia, Rescate y Tribunal); dirección visual C "Laboratorio táctil" con personajes y avatares originales; no se reescribe lo que funciona.
+
 ## Roles
 
 - **Dirección del proyecto:** otra instancia de Claude (web). Define fases y aprueba alcance.

@@ -69,7 +69,7 @@ struct MecanicaClasificar: View {
                 if let seleccion { colocar(seleccion, en: categoria.id) }
             } label: {
                 VStack(alignment: .leading, spacing: 2) {
-                    Text(categoria.nombre).font(.subheadline.bold()).foregroundStyle(ctx.acento)
+                    Text(categoria.nombre).font(.subheadline.weight(.semibold)).foregroundStyle(ctx.tinta)
                     if dentro.isEmpty || activa {
                         Text(activa ? "Toca para colocar aquí" : "Vacía")
                             .font(.footnote)
@@ -143,7 +143,7 @@ struct MecanicaOrdenar: View {
                 Instruccion(texto: "Arrastra para reordenar, o toca una ficha y después el puesto al que quieres moverla.")
             }
             if let inicio = p.etiquetaInicio {
-                Label(inicio, systemImage: "arrow.down").font(.footnote.bold()).foregroundStyle(ctx.acento)
+                Label(inicio, systemImage: "arrow.down").font(.footnote.weight(.semibold)).foregroundStyle(ctx.tinta)
             }
             ForEach(Array(orden.enumerated()), id: \.element) { indice, id in
                 let estado: EstadoFicha = ctx.corregido
@@ -155,7 +155,7 @@ struct MecanicaOrdenar: View {
                     HStack(spacing: Espacio.m) {
                         Text("\(indice + 1)")
                             .font(.redondeada(.headline))
-                            .foregroundStyle(ctx.acento)
+                            .foregroundStyle(ctx.tinta)
                             .frame(minWidth: 28)
                         Ficha(texto: textos[id] ?? id, estado: estado, acento: ctx.acento, anchoCompleto: true, alineacion: .leading)
                         Image(systemName: "line.3.horizontal")
@@ -180,7 +180,7 @@ struct MecanicaOrdenar: View {
                 .accessibilityIdentifier("orden_\(id)")
             }
             if let fin = p.etiquetaFin {
-                Label(fin, systemImage: "flag.checkered").font(.footnote.bold()).foregroundStyle(ctx.acento)
+                Label(fin, systemImage: "flag.checkered").font(.footnote.weight(.semibold)).foregroundStyle(ctx.tinta)
             }
         }
         .onAppear { if respuesta == nil { respuesta = .ordenar(Self.ordenInicial(p)) } }
@@ -267,7 +267,7 @@ struct MecanicaEmparejar: View {
         return HStack(spacing: Espacio.s) {
             if let indicePar, let color {
                 Text("\(indicePar + 1)")
-                    .font(.redondeada(.caption, peso: .bold))
+                    .font(.redondeada(.caption, peso: .semibold))
                     .foregroundStyle(Paleta.superficie)
                     .frame(width: 24, height: 24)
                     .background(color, in: Circle())
