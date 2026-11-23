@@ -183,6 +183,7 @@ Preguntas numeradas 1, 2, 3… en orden; `area` es `LEN` o `MAT`; las competenci
 | Lote | Bloque | Ítems | Tarjetas | Estado | Archivos |
 |---|---|---|---|---|---|
 | Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
+| Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 
@@ -195,4 +196,9 @@ Preguntas numeradas 1, 2, 3… en orden; `area` es `LEN` o `MAT`; las competenci
 | LEN.ORT.HOM Homófonos frecuentes | 8 | 1/3/3/1 | elección, marcar texto, construir |
 
 Validación técnica: el lote pasa el validador sin cambios; en Release se cargan exactamente estos 38 ítems y 5 tarjetas y ningún borrador (`ContenidoEmpaquetadoTests.releaseNoCargaBorradores`). Las observaciones de contenido para la dirección figuran en el informe de la Fase 05A.1.
+
+**Errata 1 del lote 01 (23/11/2026, versión 2 de 3 ítems)**, a partir de las observaciones de la 05A.1:
+- `LEN.ORT.HIA.0003`: el ejemplo «reloj» (termina en -j) pasa a ser «nariz».
+- `LEN.ORT.DIA.0003`: se emparejan las palabras con frases donde encajan («___ canta muy bien.», «A ___ me encanta.»…), de modo que cada frase admite una sola palabra (se elimina la ambigüedad él/mí).
+- `LEN.ORT.DIA.0008`: se adopta la terminología de la NGLE, «determinante posesivo».
 

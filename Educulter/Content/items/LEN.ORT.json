@@ -686,7 +686,7 @@
     "dificultad": 2,
     "objetivo": "Relacionar cada monosílabo con su función.",
     "mecanica": "emparejar",
-    "enunciado": "Une cada palabra con su función.",
+    "enunciado": "Une cada palabra con la frase en la que encaja.",
     "payload": {
       "izquierda": [
         {
@@ -717,27 +717,27 @@
       "derecha": [
         {
           "id": "d1",
-          "texto": "pronombre personal"
+          "texto": "___ canta muy bien."
         },
         {
           "id": "d2",
-          "texto": "artículo"
+          "texto": "___ perro ladra."
         },
         {
           "id": "d3",
-          "texto": "pronombre tras preposición"
+          "texto": "A ___ me encanta."
         },
         {
           "id": "d4",
-          "texto": "posesivo"
+          "texto": "___ casa es pequeña."
         },
         {
           "id": "d5",
-          "texto": "adverbio de afirmación"
+          "texto": "Le pregunté y dijo que ___."
         },
         {
           "id": "d6",
-          "texto": "conjunción condicional"
+          "texto": "___ llueve, no salgo."
         }
       ],
       "pares": [
@@ -770,7 +770,7 @@
     "pistas": [
       "Piensa en un ejemplo: «para mí» / «mi casa»."
     ],
-    "explicacion": "La tilde diacrítica distingue palabras iguales con distinta función: él/el, mí/mi, sí/si, tú/tu, té/te, dé/de, sé/se, más/mas.",
+    "explicacion": "Él (pronombre) canta; el (artículo) perro; a mí (pronombre); mi (posesivo) casa; dijo que sí (afirmación); si (condición) llueve.",
     "erroresHabituales": [],
     "referencia": {
       "tipoPregunta": "LEN-ORTOGRAFIA",
@@ -792,7 +792,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-23"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.ORT.DIA.0004",
@@ -1051,7 +1051,7 @@
         },
         {
           "id": "p2",
-          "texto": "adjetivo posesivo"
+          "texto": "determinante posesivo"
         },
         {
           "id": "p3",
@@ -1064,7 +1064,7 @@
       ]
     },
     "pistas": [],
-    "explicacion": "«Mí» con tilde es pronombre personal y va tras preposición («a mí», «para mí»). «Mi» es posesivo: «mi libro».",
+    "explicacion": "«Mí» con tilde es pronombre personal y va tras preposición («a mí», «para mí»). «Mi» es determinante posesivo: «mi libro».",
     "erroresHabituales": [
       {
         "respuesta": "h1",
@@ -1095,7 +1095,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-23"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.ORT.DIA.0009",
@@ -1319,7 +1319,7 @@
     "erroresHabituales": [
       {
         "respuesta": "verdadero",
-        "feedback": "Las agudas en -z no llevan tilde («feliz», «reloj»). Aquí la tilde marca el hiato."
+        "feedback": "Las agudas en -z no llevan tilde («feliz», «nariz»). Aquí la tilde marca el hiato."
       }
     ],
     "referencia": {
@@ -1342,7 +1342,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-23"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.ORT.HIA.0004",
