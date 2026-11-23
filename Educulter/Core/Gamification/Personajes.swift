@@ -71,35 +71,32 @@ enum ReglasPersonaje {
     }
 }
 
-/// Avatar del usuario: 12 combinaciones geométricas originales de forma, color y accesorio.
+/// Avatar del usuario: las 6 ilustraciones del propietario (D-061), recortadas de
+/// `docs/arte/avatares_propietario.png` con `scripts/recortar_avatares.swift` y guardadas en
+/// `Assets.xcassets/Avatares/avatar_01…06`. Los ids 0–5 son los nuevos avatares.
 struct Avatar: Sendable, Equatable, Identifiable {
-    enum Forma: String, Sendable, CaseIterable { case circulo, cuadrado, triangulo, hexagono }
-    enum Tono: String, Sendable, CaseIterable { case indigo, coral, verde, ambar }
-    enum Accesorio: String, Sendable, CaseIterable { case gafas, gorro, auriculares }
-
     let id: Int
-    let forma: Forma
-    let tono: Tono
-    let accesorio: Accesorio
+    /// Rasgo que lo distingue, para VoiceOver ("Avatar con …").
+    let nombre: String
 
-    /// Descripción para VoiceOver y la pantalla de elección.
-    var nombre: String {
-        let f = ["circulo": "Círculo", "cuadrado": "Cuadrado", "triangulo": "Triángulo", "hexagono": "Hexágono"][forma.rawValue] ?? ""
-        let t = ["indigo": "índigo", "coral": "coral", "verde": "verde", "ambar": "ámbar"][tono.rawValue] ?? ""
-        let a = ["gafas": "con gafas", "gorro": "con gorro", "auriculares": "con auriculares"][accesorio.rawValue] ?? ""
-        return "\(f) \(t) \(a)"
+    /// Nombre del recurso en el Asset Catalog.
+    var recurso: String { String(format: "avatar_%02d", id + 1) }
+
+    static let todos: [Avatar] = [
+        "gorra roja y blanca",
+        "pelo rizado y gafas redondas",
+        "cinta deportiva",
+        "pañuelo rojo y aros",
+        "boina y pelo naranja",
+        "gafas de aviador",
+    ].enumerated().map { Avatar(id: $0.offset, nombre: $0.element) }
+
+    static func con(id: Int?) -> Avatar? { migrar(id).flatMap { i in todos.first { $0.id == i } } }
+
+    /// Migración de los 12 avatares geométricos de la Fase 05B: los ids 6–11 pasan a 0–5
+    /// (`id % 6`); los negativos o desconocidos se descartan (el usuario vuelve a elegir).
+    static func migrar(_ id: Int?) -> Int? {
+        guard let id, id >= 0, id < 12 else { return nil }
+        return id % todos.count
     }
-
-    /// Cada forma aparece 3 veces, cada tono 3 y cada accesorio 4; no hay dos iguales.
-    static let todos: [Avatar] = {
-        let combinaciones: [(Forma, Tono, Accesorio)] = [
-            (.circulo, .indigo, .gafas), (.circulo, .coral, .gorro), (.circulo, .verde, .auriculares),
-            (.cuadrado, .ambar, .gafas), (.cuadrado, .indigo, .gorro), (.cuadrado, .coral, .auriculares),
-            (.triangulo, .verde, .gafas), (.triangulo, .ambar, .gorro), (.triangulo, .indigo, .auriculares),
-            (.hexagono, .coral, .gafas), (.hexagono, .verde, .gorro), (.hexagono, .ambar, .auriculares),
-        ]
-        return combinaciones.enumerated().map { Avatar(id: $0.offset, forma: $0.element.0, tono: $0.element.1, accesorio: $0.element.2) }
-    }()
-
-    static func con(id: Int?) -> Avatar? { id.flatMap { i in todos.first { $0.id == i } } }
 }

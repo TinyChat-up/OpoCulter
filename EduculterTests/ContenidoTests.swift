@@ -14,7 +14,10 @@ struct ContenidoEmpaquetadoTests {
     func cargaCompleta() throws {
         let banco = try cargador.cargar(politica: .todos)
         // 25 borradores de prueba + LEN.ORT (50 ítems y 5 tarjetas) + MAT.NUM (9 ítems y 2 tarjetas).
-        #expect(banco.items.count == 84)
+        #expect(banco.numeroEstaticos == 84)
+        // Fase 05C: 23 plantillas de prueba (borrador) con sus variantes materializadas.
+        #expect(banco.plantillas.count == 23)
+        #expect(banco.items.count > 84)
         #expect(banco.teoria.count == 9)
         #expect(banco.simulacros.count == 1)
         #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber ítems de todas las mecánicas")
@@ -77,7 +80,9 @@ struct ContenidoEmpaquetadoTests {
 
     @Test("Índices del banco")
     func indices() throws {
-        let banco = try cargador.cargar(politica: .todos)
+        // Índices sobre los ítems estáticos (las variantes generadas se prueban en GeneradoresTests).
+        let completo = try cargador.cargar(politica: .todos)
+        let banco = BancoContenido(catalogo: completo.catalogo, items: Array(completo.itemsEstaticos), teoria: completo.teoria)
         #expect(banco.item(id: "LEN.SIN.SUJPRED.0001")?.mecanica == .segmentar)
         #expect(banco.item(id: "NO.EXISTE") == nil)
         #expect(banco.items(competencia: "LEN.ORT.AGU").count == 21)
@@ -89,7 +94,8 @@ struct ContenidoEmpaquetadoTests {
         #expect(banco.teoria(competencia: "MAT.OPE.FRACSUM").count == 1)
         #expect(banco.catalogo.bloque(deCompetencia: "MAT.GEO.TRIANG")?.id == "MAT.GEO")
         #expect(Catalogo.area(de: "MAT.GEO.TRIANG") == "MAT")
-        #expect(banco.catalogo.todasLasCompetencias.count == 24)
+        // 24 + MAT.OPE.ECUAC, MAT.EST.CENTRAL y MAT.PRO.LAPLACE (Fase 05C).
+        #expect(banco.catalogo.todasLasCompetencias.count == 27)
     }
 }
 

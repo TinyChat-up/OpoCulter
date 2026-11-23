@@ -19,7 +19,7 @@ struct VistaRaiz: View {
                                  texto: "Tu dominio por bloque, tu evolución, tus logros y los ajustes.")
                     .tabItem { Label("Progreso", systemImage: "chart.bar.fill") }
             }
-            .tint(Paleta.matematicas)
+            .tint(Paleta.contorno)
         } else {
             VistaLlegaPronto(titulo: "No se ha podido cargar el contenido", icono: "exclamationmark.triangle",
                              texto: entorno.errorCarga ?? "Error desconocido.")
@@ -37,7 +37,7 @@ struct VistaLlegaPronto: View {
         VStack(spacing: Espacio.l) {
             VistaPersonaje(companero: .cuarto, estado: ReglasPersonaje.estado(para: .estadoVacio))
             Text(titulo)
-                .font(.title2.weight(.semibold))
+                .font(.exhibicion(.title2))
                 .foregroundStyle(Paleta.textoPrincipal)
                 .accessibilityAddTraits(.isHeader)
             Text("Llega pronto")

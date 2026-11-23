@@ -48,7 +48,7 @@ struct MecanicaClasificar: View {
         } label: {
             Ficha(texto: ficha.texto, estado: estado, acento: ctx.acento)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pulsable)
         .draggable(ficha.id)
         .accessibilityValue(estado.descripcionAccesible ?? (colocada ? "colocada" : "sin colocar"))
         .accessibilityHint(colocada ? "Toca para devolverla al montón" : "Toca para seleccionarla y después toca una caja")
@@ -79,7 +79,7 @@ struct MecanicaClasificar: View {
                 .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo, alignment: .leading)
                 .contentShape(Rectangle())
             }
-            .buttonStyle(.plain)
+            .buttonStyle(.pulsable)
             .accessibilityLabel("Caja \(categoria.nombre)")
             .accessibilityValue(dentro.isEmpty ? "vacía" : dentro.map(\.texto).joined(separator: ", "))
             .accessibilityHint("Toca para colocar aquí la ficha seleccionada")
@@ -92,11 +92,14 @@ struct MecanicaClasificar: View {
         }
         .padding(Espacio.m)
         .frame(maxWidth: .infinity, minHeight: 88, alignment: .topLeading)
-        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        // Caja de papel con contorno de tinta; mientras espera una ficha, contorno discontinuo y
+        // sombra dura (se puede tocar).
+        .background(activa ? ctx.tinte : Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous)
-                .strokeBorder(activa ? ctx.acento : Paleta.borde, style: StrokeStyle(lineWidth: activa ? 2 : 1, dash: activa ? [6, 4] : []))
+                .strokeBorder(Paleta.contorno, style: StrokeStyle(lineWidth: Trazo.grueso, dash: activa ? [7, 5] : []))
         )
+        .sombraDura(radio: Radio.tarjeta, activa: activa)
         .dropDestination(for: String.self) { ids, _ in
             guard let id = ids.first else { return false }
             colocar(id, en: categoria.id)
@@ -163,7 +166,7 @@ struct MecanicaOrdenar: View {
                             .accessibilityHidden(true)
                     }
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.pulsable)
                 .draggable(id)
                 .dropDestination(for: String.self) { ids, _ in
                     guard let origen = ids.first else { return false }
@@ -245,7 +248,7 @@ struct MecanicaEmparejar: View {
                 } label: {
                     elementoVista(e.texto, indicePar: indicePar, seleccionado: seleccionado, estado: estado(e.id, izquierda: izquierda))
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.pulsable)
                 .accessibilityLabel(e.texto)
                 .accessibilityValue(valorAccesible(e.id, izquierda: izquierda, indicePar: indicePar))
                 .accessibilityAddTraits(seleccionado ? .isSelected : [])
@@ -288,19 +291,16 @@ struct MecanicaEmparejar: View {
         .padding(.horizontal, Espacio.m)
         .padding(.vertical, Espacio.s)
         .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo, alignment: .leading)
-        .background(seleccionado ? ctx.acento : Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous)
-                .strokeBorder(borde(estado: estado, color: color, seleccionado: seleccionado), lineWidth: indicePar == nil ? 1 : 2)
-        )
-        .contentShape(Rectangle())
+        .superficiePulsable(seleccionado ? ctx.acento : Paleta.superficie, radio: Radio.ficha,
+                            borde: borde(estado: estado, color: color, seleccionado: seleccionado),
+                            grosor: indicePar == nil ? Trazo.grueso : 3, sombra: estado == nil)
     }
 
     private func borde(estado: EstadoFicha?, color: Color?, seleccionado: Bool) -> Color {
         if estado == .correcta { return Paleta.exito }
         if estado == .incorrecta { return Paleta.fallo }
-        if seleccionado { return ctx.acento }
-        return color ?? Paleta.borde
+        if seleccionado { return Paleta.contorno }
+        return color ?? Paleta.contorno
     }
 
     private func estado(_ id: String, izquierda: Bool) -> EstadoFicha? {
@@ -415,7 +415,7 @@ struct MecanicaConstruir: View {
                         } label: {
                             Ficha(texto: pieza.texto, acento: ctx.acento)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.pulsable)
                         .draggable(pieza.id)
                         .accessibilityHint("Toca para colocarla en el hueco seleccionado")
                         .accessibilityActions {
@@ -446,14 +446,11 @@ struct MecanicaConstruir: View {
                 huecoSeleccionado = seleccionado ? nil : id
             }
         } label: {
-            Ficha(texto: texto ?? "    \(numero)    ", estado: texto == nil && estado == .normal ? .normal : estado, acento: ctx.acento)
-                .overlay {
-                    if texto == nil, !seleccionado {
-                        RoundedRectangle(cornerRadius: Radio.ficha).strokeBorder(ctx.acento, style: StrokeStyle(lineWidth: 1.5, dash: [5, 4]))
-                    }
-                }
+            // Hueco vacío: contorno discontinuo de tinta.
+            Ficha(texto: texto ?? "    \(numero)    ", estado: texto == nil && estado == .normal ? .normal : estado, acento: ctx.acento,
+                  discontinua: texto == nil && !seleccionado)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pulsable)
         .dropDestination(for: String.self) { ids, _ in
             guard let pieza = ids.first else { return false }
             colocar(pieza, en: id)

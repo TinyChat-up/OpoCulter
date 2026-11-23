@@ -139,7 +139,7 @@ final class PerfilRegistro {
                                 ultimoDiaProcesado: ultimoDiaProcesado.flatMap(DiaCivil.init(clave:)))
         return PerfilJugador(xpTotal: xpTotal, racha: racha, misiones: misiones,
                              diaMisiones: diaMisiones.flatMap(DiaCivil.init(clave:)), metricas: metricas,
-                             competenciaEnCurso: competenciaEnCurso, avatar: avatar)
+                             competenciaEnCurso: competenciaEnCurso, avatar: Avatar.migrar(avatar))
     }
 }
 

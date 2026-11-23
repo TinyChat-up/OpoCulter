@@ -137,7 +137,7 @@ final class ServicioSesion {
 
     /// Guarda el avatar elegido en el perfil.
     func elegirAvatar(_ id: Int) throws {
-        guard Avatar.con(id: id) != nil else { return }
+        guard Avatar.todos.contains(where: { $0.id == id }) else { return }
         var perfil = try repositorio.perfil()
         perfil.avatar = id
         try repositorio.guardar(perfil)

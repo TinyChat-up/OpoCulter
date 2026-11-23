@@ -1,0 +1,24 @@
+[
+  {
+    "id": "MAT.NUM.FRAREP.G01",
+    "competencia": "MAT.NUM.FRAREP",
+    "peldano": 2,
+    "dificultad": 4,
+    "mecanica": "fraccionBarras",
+    "tipo": "fraccionBarras",
+    "enunciados": [
+      "Divide la barra y colorea {{fraccion}}.",
+      "Representa {{fraccion}}: elige en cuántas partes dividir la barra y colorea."
+    ],
+    "objetivo": "Representar fracciones en una barra",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

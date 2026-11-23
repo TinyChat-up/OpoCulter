@@ -5,6 +5,7 @@
 #   05a1   → pantallas que cambian en la Fase 05A.1
 #   lote01 → los 38 ítems del lote 01 (LEN.ORT) antes de responder, para revisar el contenido
 #   05b    → piloto premium (v2): claro, oscuro y AX5
+#   05c    → estilo Rubber Hose, avatares del propietario y generadores: claro, oscuro y AX5
 set -euo pipefail
 APP="$1"; SALIDA="$2"; CONJUNTO="${3:-05a}"
 UDID=$(xcrun simctl list devices available | grep -E "^ +iPhone 16 \(" | head -1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
@@ -30,6 +31,69 @@ if [[ "$CONJUNTO" == "lote01" ]]; then
   for id in $(python3 -c "import json,sys; print(' '.join(i['id'] for i in json.load(open(sys.argv[1]))))" "${0:A:h}/../Educulter/Content/items/LEN.ORT.json"); do
     captura "${id}" "item:${id}:antes"
   done
+  xcrun simctl status_bar "$UDID" clear
+  exit 0
+fi
+
+if [[ "$CONJUNTO" == "05c" ]]; then
+  xcrun simctl ui "$UDID" content_size large
+  xcrun simctl ui "$UDID" appearance light
+  echo "Modo claro"
+  captura 00_bienvenida bienvenida
+  captura 01_hoy hoy
+  captura 02_hoy_matematicas "hoy:mates"
+  captura 03_globo_racha "hoy:globo"
+  captura 04_perfil perfil
+  captura 05_avatares avatares
+  captura 06_personajes personajes
+  captura 07_eleccion "item:LEN.ORT.AGU.0001:antes"
+  captura 08_verdadero_falso "item:LEN.CLA.SUSTADJ.0002:antes"
+  captura 09_clasificar "item:LEN.CLA.SUSTADJ.0001:relleno"
+  captura 10_emparejar "item:LEN.LEX.SINON.0001:relleno"
+  captura 11_marcar_texto "item:LEN.CLA.VERBO.0001:relleno"
+  captura 12_segmentar "item:LEN.SIN.COMPL.0001:relleno"
+  captura 13_ruedas_fallo "item:MAT.UNI.LONG.0002:despues"
+  captura 14_construir "item:LEN.ORT.AGU.0008:antes"
+  captura 15_numerico "item:MAT.POR.PORCENT.0002:antes"
+  captura 16_colocar_tilde "item:LEN.ORT.AGU.0017:antes"
+  captura 17_tilde_fallo "item:LEN.ORT.AGU.0010:despues"
+  captura 18_barras_dividir "item:MAT.NUM.FRAREP.0003:relleno"
+  captura 19_barras_fallo "item:MAT.NUM.FRAEQ.0003:despues"
+  captura 20_ordenar_correcto "item:MAT.OPE.JERARQ.0001:correcto"
+  captura 21_resumen resumen
+  captura 22_teoria "teoria:MAT.NUM.FRAEQ.T01"
+  captura 23_camino_llega_pronto mapa
+  echo "Ítems generados"
+  captura 30_gen_porcentaje_eleccion "item:MAT.POR.PORCENT.G02#7:antes"
+  captura 31_gen_romanos_construir "item:MAT.ROM.LECTURA.G02#3:relleno"
+  captura 32_gen_pasos_ordenar "item:MAT.OPE.JERARQ.G01#2:antes"
+  captura 33_gen_ecuacion_fallo "item:MAT.OPE.ECUAC.G01#4:despues"
+  captura 34_gen_oracion_segmentar "item:LEN.SIN.COMPL.G01#4:relleno"
+  captura 35_gen_analisis_verbal "item:LEN.VER.ANALISIS.G01#5:relleno"
+  captura 36_gen_frase_hueco "item:LEN.ORT.DIA.G01#1:antes"
+  captura 37_gen_silaba_tonica "item:LEN.ORT.AGU.G03#2:antes"
+  captura 38_revision_plantilla "plantilla:MAT.OPE.JERARQ.G02"
+  captura 39_revision_recuentos recuentos
+  echo "Modo oscuro"
+  xcrun simctl ui "$UDID" appearance dark
+  captura 50_oscuro_bienvenida bienvenida
+  captura 51_oscuro_hoy hoy
+  captura 52_oscuro_tilde_fallo "item:LEN.ORT.AGU.0010:despues"
+  captura 53_oscuro_barras_fallo "item:MAT.NUM.FRAEQ.0003:despues"
+  captura 54_oscuro_clasificar "item:LEN.CLA.SUSTADJ.0001:relleno"
+  captura 55_oscuro_resumen resumen
+  captura 56_oscuro_personajes personajes
+  captura 57_oscuro_perfil perfil
+  echo "Texto de accesibilidad máximo"
+  xcrun simctl ui "$UDID" appearance light
+  xcrun simctl ui "$UDID" content_size accessibility-extra-extra-extra-large
+  captura 60_ax_bienvenida bienvenida
+  captura 61_ax_hoy hoy
+  captura 62_ax_tilde "item:LEN.ORT.AGU.0017:antes"
+  captura 63_ax_feedback "item:MAT.NUM.FRAEQ.0003:despues"
+  captura 64_ax_perfil perfil
+  captura 65_ax_teclado "item:MAT.POR.PORCENT.0002:antes"
+  xcrun simctl ui "$UDID" content_size large
   xcrun simctl status_bar "$UDID" clear
   exit 0
 fi

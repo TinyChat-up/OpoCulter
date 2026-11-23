@@ -1,8 +1,32 @@
 # Estado del proyecto
 
-**Fase actual:** 05B — Transformación premium: piloto vertical · **Terminada**
-**Siguiente:** Fase 05C, a la espera de instrucciones de la dirección.
+**Fase actual:** 05C — Estilo Rubber Hose, avatares del propietario, generadores y matriz de exámenes · **Terminada**
+**Siguiente:** Fase 05D (modos de juego) y lotes de contenido 02 y 02b, a la espera de instrucciones de la dirección.
 **Última actualización:** 2026-11-23
+
+## Fase 05C — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| Plan de contenidos (anexo A) | ✅ | [docs/PLAN_CONTENIDOS.md](docs/PLAN_CONTENIDOS.md) |
+| Matriz de exámenes | ✅ 7 cuadernillos, 139 preguntas; condiciones de reutilización y textos protegidos señalados | [MATRIZ.md](docs/examenes/MATRIZ.md), [FUENTES.md](docs/examenes/FUENTES.md), D-067 |
+| Estilo Rubber Hose, Fredoka y personajes | ✅ AA comprobado (ajustes registrados) | UX_UI §4, D-059, D-060 |
+| Avatares del propietario | ✅ 6, migración `id % 6` guardada | D-061 |
+| Generadores, dificultad 1–6, léxico, gramática y catálogo | ✅ 16 tipos y 23 plantillas de prueba (borrador) | D-062–D-066 |
+| Tests unitarios + UI | ✅ 152 unitarios (33 suites) y 9 de UI, 0 fallos | `** TEST SUCCEEDED **` |
+| Auditoría de accesibilidad | ✅ Sin incidencias nuevas | `RondaUITests`, `PilotoUITests` |
+| Cobertura | ✅ Core **96,2 %** (generadores 95,2 %) · Features 83,4 % | `xccov` |
+| Avisos del compilador | ✅ 0 | logs |
+| Rendimiento | ✅ Arranque en el iPhone 0,70 s; 0 tirones en las 3 medidas de fluidez en el dispositivo; ronda de 8 ítems en < 50 ms | [TESTING.md §10](TESTING.md) |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada y medida | `xcodebuild test` en el dispositivo |
+| Capturas | ✅ [docs/capturas/fase05c](docs/capturas/fase05c/) (48 + HOJA.png: claro, oscuro, AX5) | `scripts/capturas.sh … 05c` |
+| Catálogo de preguntas | Release **59** (contenido aprobado); Debug **≥ 55 943** con las plantillas de prueba | `CatalogoPreguntas` |
+
+## Pendiente
+1. Revisar las 33 competencias que propone la matriz en el lote de contenido correspondiente (no se añaden todavía).
+2. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
+3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
 
 ## Fase 05B — Resultado
 

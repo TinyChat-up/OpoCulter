@@ -1,0 +1,30 @@
+[
+  {
+    "id": "MAT.DIV.MCD.G01",
+    "competencia": "MAT.DIV.MCD",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "mcmMcd",
+    "enunciados": [
+      "{{contexto}}"
+    ],
+    "objetivo": "Resolver repartos con el m.c.d.",
+    "parametros": {
+      "operacion": "mcd"
+    },
+    "contextos": [
+      "Queremos repartir {{a}} caramelos de fresa y {{b}} de limón en bolsas iguales (todas con los mismos caramelos de cada sabor) sin que sobre ninguno. ¿Cuántas bolsas, como máximo, podemos hacer?",
+      "Se cortan dos cintas de {{a}} cm y {{b}} cm en trozos iguales lo más largos posible, sin que sobre cinta. ¿Cuánto mide cada trozo?"
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

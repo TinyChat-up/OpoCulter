@@ -5,8 +5,9 @@ import SwiftUI
 struct EstiloBotonPrincipal: ButtonStyle {
     var acento: Color = Paleta.matematicas
     @Environment(\.isEnabled) private var activo
-    @Environment(\.accessibilityReduceMotion) private var reducir
 
+    /// Relleno de color con texto en tinta, contorno y sombra dura; se hunde al pulsar.
+    /// Desactivado: superficie plana, sin sombra, con texto secundario.
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.headline)
@@ -15,12 +16,9 @@ struct EstiloBotonPrincipal: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: 52)
             .padding(.horizontal, Espacio.l)
             .padding(.vertical, Espacio.xs)
-            .background(activo ? acento : Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-            .overlay {
-                if !activo { RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(Paleta.borde, lineWidth: 1.5) }
-            }
-            .scaleEffect(configuration.isPressed && !reducir ? 0.97 : 1)
-            .animation(Movimiento.animacion(reducir: reducir), value: configuration.isPressed)
+            .superficiePulsable(activo ? acento : Paleta.superficie, radio: Radio.tarjeta,
+                                borde: activo ? Paleta.contorno : Paleta.borde)
+            .environment(\.pulsado, configuration.isPressed)
     }
 }
 
@@ -41,7 +39,8 @@ struct BotonPrincipal: View {
     }
 }
 
-/// Botón secundario: contorno, sin relleno.
+/// Botón secundario: superficie de papel con texto en tinta, contorno y sombra dura.
+/// `acento` se conserva por compatibilidad: el texto es siempre tinta (D-059).
 struct EstiloBotonSecundario: ButtonStyle {
     var acento: Color = Paleta.matematicas
     @Environment(\.isEnabled) private var activo
@@ -49,17 +48,19 @@ struct EstiloBotonSecundario: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.headline)
-            .foregroundStyle(activo ? acento : Paleta.textoSecundario)
+            .multilineTextAlignment(.center)
+            .foregroundStyle(activo ? Paleta.textoPrincipal : Paleta.textoSecundario)
             .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
             .padding(.horizontal, Espacio.l)
-            .background(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(activo ? acento : Paleta.borde, lineWidth: 1.5))
-            .opacity(configuration.isPressed ? 0.7 : 1)
+            .padding(.vertical, Espacio.xs)
+            .superficiePulsable(Paleta.superficie, radio: Radio.tarjeta, borde: activo ? Paleta.contorno : Paleta.borde)
+            .environment(\.pulsado, configuration.isPressed)
     }
 }
 
 // MARK: - Tarjeta de superficie
 
-/// Baldosa neutra (v2): superficie sin borde ni sombra. Dentro del panel tintado usa el fondo.
+/// Tarjeta de papel con contorno de tinta (sin sombra: no se pulsa). Dentro del panel tintado usa el fondo.
 struct TarjetaSuperficie<Contenido: View>: View {
     var relleno: CGFloat = Espacio.l
     @ViewBuilder let contenido: () -> Contenido
@@ -70,6 +71,7 @@ struct TarjetaSuperficie<Contenido: View>: View {
             .padding(relleno)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(enPanel ? Paleta.fondo : Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+            .contornoTinta(radio: Radio.tarjeta)
     }
 }
 
@@ -95,6 +97,8 @@ struct Ficha: View {
     var acento: Color = Paleta.matematicas
     var anchoCompleto = false
     var alineacion: Alignment = .center
+    /// Contorno discontinuo (hueco vacío de `construir`).
+    var discontinua = false
     @Environment(\.enPanelTintado) private var enPanel
 
     var body: some View {
@@ -110,12 +114,17 @@ struct Ficha: View {
         .padding(.horizontal, Espacio.l)
         .padding(.vertical, Espacio.m)
         .frame(minWidth: Medidas.fichaMinima, maxWidth: anchoCompleto ? .infinity : nil, minHeight: Medidas.fichaMinima, alignment: alineacion)
-        .background(colorFondo, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-        .overlay(
-            RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous)
-                .strokeBorder(colorBorde, style: StrokeStyle(lineWidth: estado == .normal ? 1 : 2, dash: estado == .faltante ? [6, 4] : []))
-        )
-        .contentShape(RoundedRectangle(cornerRadius: Radio.ficha))
+        .superficiePulsable(colorFondo, radio: Radio.ficha, borde: colorBorde,
+                            grosor: estado == .correcta || estado == .incorrecta ? 3 : Trazo.grueso,
+                            discontinuo: estado == .faltante || discontinua, sombra: pulsable)
+    }
+
+    /// Solo lo que aún se puede tocar lleva sombra dura; lo corregido queda plano.
+    private var pulsable: Bool {
+        switch estado {
+        case .normal, .seleccionada, .enTramo: true
+        default: false
+        }
     }
 
     private var icono: String? {
@@ -140,17 +149,17 @@ struct Ficha: View {
     private var colorFondo: Color {
         switch estado {
         case .seleccionada: acento
-        case .enTramo: acento.opacity(0.18)
+        case .enTramo: acento.opacity(0.35)
         default: enPanel ? Paleta.fondo : Paleta.superficie
         }
     }
 
     private var colorBorde: Color {
         switch estado {
-        case .seleccionada, .enTramo: acento
         case .correcta, .faltante: Paleta.exito
         case .incorrecta: Paleta.fallo
-        default: Paleta.borde
+        case .desactivada: Paleta.borde
+        default: Paleta.contorno
         }
     }
 }
@@ -182,8 +191,9 @@ struct BarraProgresoRonda: View {
             HStack(spacing: Espacio.xs) {
                 ForEach(0..<max(total, 1), id: \.self) { i in
                     Capsule()
-                        .fill(i < actual ? acento : Paleta.borde)
-                        .frame(height: 8)
+                        .fill(i < actual ? acento : Paleta.superficie)
+                        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                        .frame(height: 12)
                 }
             }
         }
@@ -222,7 +232,7 @@ struct IndicadorCombo: View {
         .padding(.horizontal, Espacio.m)
         .frame(minHeight: Medidas.tactilMinimo)
         .background(activo ? Paleta.recompensa : Paleta.superficie, in: Capsule())
-        .overlay(Capsule().strokeBorder(activo ? Color.clear : Paleta.borde))
+        .overlay(Capsule().strokeBorder(activo ? Paleta.contorno : Paleta.borde, lineWidth: Trazo.fino))
         .opacity(1 - destello * 0.4)
         .scaleEffect(escala)
         .animacionApp(combo)
@@ -253,7 +263,9 @@ struct AnilloDominio: View {
 
     var body: some View {
         ZStack {
-            Circle().stroke(Paleta.borde, lineWidth: grosor)
+            Circle().stroke(Paleta.superficie, lineWidth: grosor)
+            Circle().stroke(Paleta.contorno, lineWidth: Trazo.fino).padding(-grosor / 2)
+            Circle().stroke(Paleta.contorno, lineWidth: Trazo.fino).padding(grosor / 2)
             Circle()
                 .trim(from: 0, to: min(max(fraccion, 0), 1))
                 .stroke(acento, style: StrokeStyle(lineWidth: grosor, lineCap: .round))
@@ -280,7 +292,7 @@ struct ChipRacha: View {
 
     var body: some View {
         Button { mostrarAyuda = true } label: { chip }
-            .buttonStyle(.plain)
+            .buttonStyle(.pulsable)
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Racha")
             .accessibilityValue("\(dias == 1 ? "1 día" : "\(dias) días"). \(protectores) protectores. Récord: \(record)")
@@ -312,7 +324,7 @@ struct ChipRacha: View {
             Label {
                 Text("\(protectores)").font(.redondeada(.subheadline))
             } icon: {
-                Image(systemName: "shield.fill").foregroundStyle(Paleta.matematicas)
+                Image(systemName: "shield.fill").foregroundStyle(Paleta.matematicasTinta)
             }
             Label {
                 Text("\(record)").font(.redondeada(.subheadline))
@@ -324,9 +336,7 @@ struct ChipRacha: View {
         .padding(.horizontal, Espacio.l)
         .padding(.vertical, tamano.isAccessibilitySize ? Espacio.m : 0)
         .frame(minHeight: Medidas.tactilMinimo)
-        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).strokeBorder(Paleta.borde))
-        .contentShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .superficiePulsable(Paleta.superficie, radio: 22)
     }
 }
 
@@ -341,7 +351,7 @@ struct GloboRacha: View {
             VStack(alignment: .leading, spacing: Espacio.m) {
                 fila("flame.fill", Paleta.recompensaTexto, "Racha",
                      "Días seguidos completando al menos una ronda. Llevas \(dias == 1 ? "1 día" : "\(dias) días").")
-                fila("shield.fill", Paleta.matematicas, "Protectores",
+                fila("shield.fill", Paleta.matematicasTinta, "Protectores",
                      "Salvan tu racha si un día no juegas. Se reponen a 2 cada mes y ganas uno más por cada semana completa (máximo 3). Tienes \(protectores).")
                 fila("trophy.fill", Paleta.recompensaTexto, "Récord",
                      "Tu racha más larga hasta ahora: \(record == 1 ? "1 día" : "\(record) días").")
@@ -400,7 +410,14 @@ struct HojaFeedback: View {
             }
         }
         .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(color, lineWidth: 2))
+        .overlay(alignment: .top) {
+            // Franja de estado (verde o roja) bajo el contorno: el estado también va en icono y texto.
+            UnevenRoundedRectangle(topLeadingRadius: Radio.tarjeta, topTrailingRadius: Radio.tarjeta, style: .continuous)
+                .fill(correcto ? Paleta.exito : Paleta.fallo)
+                .frame(height: 8)
+                .accessibilityHidden(true)
+        }
+        .contornoTinta(radio: Radio.tarjeta)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hojaFeedback")
     }
@@ -416,7 +433,7 @@ struct HojaFeedback: View {
                     .font(.title2)
                     .accessibilityHidden(true)
                 Text(correcto ? "¡Correcto!" : "No es correcto")
-                    .font(.title3.weight(.semibold))
+                    .font(.exhibicion(.title3))
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader)
                 Spacer(minLength: Espacio.s)
@@ -427,6 +444,7 @@ struct HojaFeedback: View {
                         .padding(.horizontal, Espacio.s)
                         .padding(.vertical, Espacio.xs)
                         .background(Paleta.recompensa, in: Capsule())
+                        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
                         .anchorPreference(key: AnclasVueloXP.self, value: .bounds) { ["origen": $0] }
                 }
             }
@@ -461,6 +479,7 @@ struct HojaFeedback: View {
             disposicion { botones }
         }
         .padding(Espacio.l)
+        .padding(.top, Espacio.xs)
         .frame(maxWidth: .infinity, alignment: .leading)
     }
 
@@ -472,7 +491,7 @@ struct HojaFeedback: View {
                 .accessibilityIdentifier("botonVerRegla")
         }
         Button("Continuar", action: continuar)
-            .buttonStyle(EstiloBotonPrincipal(acento: correcto ? Paleta.exito : acento))
+            .buttonStyle(EstiloBotonPrincipal(acento: correcto ? Paleta.exitoRelleno : acento))
             .accessibilityIdentifier("botonContinuar")
     }
 }

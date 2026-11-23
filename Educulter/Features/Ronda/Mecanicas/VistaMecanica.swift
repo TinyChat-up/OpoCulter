@@ -90,7 +90,7 @@ struct MecanicaEleccion: View {
                 } label: {
                     Ficha(texto: opcion.texto, estado: estado, acento: ctx.acento, anchoCompleto: true, alineacion: .leading)
                 }
-                .buttonStyle(.plain)
+                .buttonStyle(.pulsable)
                 .accessibilityValue(estado.descripcionAccesible ?? "")
                 .accessibilityAddTraits(elegida == opcion.id ? .isSelected : [])
                 .accessibilityIdentifier("opcion_\(opcion.id)")
@@ -133,7 +133,8 @@ struct MecanicaVerdaderoFalso: View {
                 .padding(Espacio.xl)
                 .frame(maxWidth: .infinity, minHeight: 160)
                 .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-                .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(colorBorde, lineWidth: 2))
+                .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(colorBorde, lineWidth: ctx.corregido ? 3 : Trazo.grueso))
+                .sombraDura(radio: Radio.tarjeta, activa: !ctx.corregido)
                 .offset(x: desplazamiento)
                 .rotationEffect(.degrees(reducir ? 0 : Double(desplazamiento) / 25))
                 .gesture(
@@ -159,9 +160,9 @@ struct MecanicaVerdaderoFalso: View {
     }
 
     private var colorBorde: Color {
-        guard let elegida else { return Paleta.borde }
+        guard let elegida else { return Paleta.contorno }
         if ctx.corregido { return elegida == p.esVerdadera ? Paleta.exito : Paleta.fallo }
-        return ctx.acento
+        return Paleta.contorno
     }
 
     private func boton(valor: Bool, titulo: String, icono: String) -> some View {
@@ -177,7 +178,7 @@ struct MecanicaVerdaderoFalso: View {
         } label: {
             Ficha(texto: titulo, estado: estado, acento: ctx.acento, anchoCompleto: true)
         }
-        .buttonStyle(.plain)
+        .buttonStyle(.pulsable)
         .accessibilityAddTraits(elegida == valor ? .isSelected : [])
         .accessibilityValue(estado.descripcionAccesible ?? "")
         .accessibilityIdentifier(valor ? "botonVerdadero" : "botonFalso")
@@ -210,7 +211,7 @@ struct MecanicaMarcarTexto: View {
                         } label: {
                             Ficha(texto: token.texto, estado: estado, acento: ctx.acento)
                         }
-                        .buttonStyle(.plain)
+                        .buttonStyle(.pulsable)
                         .accessibilityAddTraits(marcados.contains(token.id) ? .isSelected : [])
                         .accessibilityValue(estado.descripcionAccesible ?? "")
                         .accessibilityIdentifier("token_\(token.id)")
@@ -268,7 +269,7 @@ struct MecanicaNumerico: View {
             .frame(maxWidth: .infinity, minHeight: 72)
             .padding(.horizontal, Espacio.l)
             .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-            .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(colorBorde, lineWidth: 2))
+            .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(colorBorde, lineWidth: ctx.corregido ? 3 : Trazo.grueso))
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Tu resultado")
             .accessibilityValue(texto.wrappedValue.isEmpty ? "vacío" : "\(texto.wrappedValue) \(p.unidad ?? "")")
@@ -282,7 +283,7 @@ struct MecanicaNumerico: View {
     }
 
     private var colorBorde: Color {
-        guard let r = ctx.resultado else { return texto.wrappedValue.isEmpty ? Paleta.borde : ctx.acento }
+        guard let r = ctx.resultado else { return Paleta.contorno }
         return r.correcto ? Paleta.exito : Paleta.fallo
     }
 
@@ -336,7 +337,7 @@ struct MecanicaRuedas: View {
             respuesta = .ruedas(v)
         }
         let error = ctx.esError(rueda.id)
-        let borde: Color = ctx.corregido ? (error ? Paleta.fallo : Paleta.exito) : (valores[rueda.id] == nil ? Paleta.borde : ctx.acento)
+        let borde: Color = ctx.corregido ? (error ? Paleta.fallo : Paleta.exito) : Paleta.contorno
         let corto = rueda.opciones.count <= 3 && rueda.opciones.allSatisfy { $0.count <= 10 } && !tamano.isAccessibilitySize
         return VStack(alignment: .leading, spacing: Espacio.s) {
             HStack {
@@ -369,7 +370,7 @@ struct MecanicaRuedas: View {
         }
         .padding(Espacio.m)
         .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous).strokeBorder(borde, lineWidth: 1.5))
+        .overlay(RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous).strokeBorder(borde, lineWidth: ctx.corregido ? 3 : Trazo.grueso))
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("rueda_\(rueda.id)")
     }

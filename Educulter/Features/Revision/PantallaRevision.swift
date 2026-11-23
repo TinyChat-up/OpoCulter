@@ -15,6 +15,7 @@ struct PantallaRevision: View {
             List {
                 if let banco = entorno.banco {
                     seccionValidacion(banco)
+                    seccionGeneradores(banco)
                     ForEach(banco.catalogo.todosLosBloques) { bloque in
                         let items = banco.items(bloque: bloque.id).filter { filtro.isEmpty || $0.id.localizedCaseInsensitiveContains(filtro) }
                         if !items.isEmpty {
@@ -72,6 +73,32 @@ struct PantallaRevision: View {
         }
     }
 
+    /// Plantillas de generador (con selector de semilla) y recuento del catálogo de preguntas.
+    private func seccionGeneradores(_ banco: BancoContenido) -> some View {
+        Section("Plantillas · \(banco.plantillas.count)") {
+            NavigationLink {
+                RevisionRecuentos(banco: banco)
+            } label: {
+                Label("Recuentos del catálogo de preguntas", systemImage: "number")
+            }
+            .accessibilityIdentifier("revisionRecuentos")
+            ForEach(banco.plantillas) { p in
+                NavigationLink {
+                    RevisionPlantilla(plantilla: p, banco: banco) { id in
+                        if let servicio = entorno.servicioDeRevision() { ronda = RondaViewModel(servicio: servicio, tipo: .items([id])) }
+                    }
+                } label: {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text("\(p.id) · \(p.tipo)").font(.body.weight(.medium))
+                        Text("\(p.mecanica.rawValue) · peldaño \(p.peldano) · dificultad \(p.dificultad) · \(p.validacion.estado.rawValue)")
+                            .font(.caption).foregroundStyle(Paleta.textoSecundario)
+                    }
+                }
+                .accessibilityIdentifier("plantilla_\(p.id)")
+            }
+        }
+    }
+
     private func fila(_ item: Item) -> some View {
         Button {
             if let servicio = entorno.servicioDeRevision() {
@@ -85,6 +112,98 @@ struct PantallaRevision: View {
             }
         }
         .accessibilityIdentifier("revision_\(item.id)")
+    }
+}
+
+/// Una plantilla con selector de semilla: muestra el ítem generado y lo abre en su mecánica real.
+struct RevisionPlantilla: View {
+    let plantilla: Plantilla
+    let banco: BancoContenido
+    let abrir: (String) -> Void
+    @State private var semilla: Int = 0
+
+    var body: some View {
+        let generado = Result { try MotorGeneradores.generar(plantilla, semilla: UInt64(semilla), recursos: banco.recursos) }
+        let muestra = try? MotorGeneradores.muestra(plantilla, semilla: UInt64(semilla), recursos: banco.recursos)
+        List {
+            Section("Semilla") {
+                Stepper("Semilla \(semilla)", value: $semilla, in: 0...999_999)
+                    .accessibilityIdentifier("selectorSemilla")
+                HStack {
+                    Button("−100") { semilla = max(0, semilla - 100) }
+                    Spacer()
+                    Button("Aleatoria") { semilla = Int.random(in: 0...999_999) }
+                    Spacer()
+                    Button("+100") { semilla = min(999_999, semilla + 100) }
+                }
+                .buttonStyle(.borderless)
+            }
+            switch generado {
+            case .success(let item):
+                Section("Ítem \(item.id)") {
+                    Text(item.enunciado).font(.body)
+                    if let muestra {
+                        LabeledContent("Clave canónica", value: muestra.clave)
+                        LabeledContent("Complejidad", value: String(format: "%.2f", muestra.complejidad))
+                    }
+                    Text(item.explicacion).font(.footnote).foregroundStyle(Paleta.textoSecundario)
+                    ForEach(Array(item.erroresHabituales.enumerated()), id: \.offset) { _, e in
+                        Text("\(e.respuesta): \(e.feedback)").font(.caption).foregroundStyle(Paleta.textoSecundario)
+                    }
+                    let errores = ValidadorContenido().validar(item: item, competencias: Set(banco.catalogo.todasLasCompetencias.map(\.id)))
+                    Label(errores.isEmpty ? "Pasa el validador" : "\(errores.count) errores", systemImage: errores.isEmpty ? "checkmark.seal.fill" : "exclamationmark.triangle.fill")
+                        .foregroundStyle(errores.isEmpty ? Paleta.exito : Paleta.fallo)
+                    Button("Abrir en su mecánica") { abrir(item.id) }
+                        .accessibilityIdentifier("abrirPlantilla")
+                }
+            case .failure(let error):
+                Section("Error") { Text(String(describing: error)).foregroundStyle(Paleta.fallo) }
+            }
+        }
+        .navigationTitle(plantilla.id)
+        .accessibilityIdentifier("revisionPlantilla")
+    }
+}
+
+/// Tabla de recuentos del catálogo de preguntas (ítems estáticos + variantes únicas).
+struct RevisionRecuentos: View {
+    let banco: BancoContenido
+    @State private var recuento: RecuentoCatalogo?
+
+    var body: some View {
+        List {
+            if let r = recuento {
+                Section("Total") {
+                    LabeledContent("Preguntas únicas", value: "\(r.exacto ? "" : "≥ ")\(r.total)")
+                    LabeledContent("Estáticas", value: "\(r.estaticos)")
+                    LabeledContent("Generadas", value: "\(r.generados)")
+                }
+                Section("Por área") { filas(r.porArea) }
+                Section("Por bloque") { filas(r.porBloque) }
+                Section("Por dificultad") { filas(Dictionary(uniqueKeysWithValues: r.porDificultad.map { ("Dificultad \($0.key)", $0.value) })) }
+                Section("Por peldaño") { filas(Dictionary(uniqueKeysWithValues: r.porPeldano.map { ("Peldaño \($0.key)", $0.value) })) }
+                Section("Por plantilla") {
+                    ForEach(r.plantillas, id: \.id) { p in
+                        VStack(alignment: .leading, spacing: 2) {
+                            LabeledContent("\(p.id) · \(p.tipo)", value: "\(p.exacto ? "" : "≥ ")\(p.variantes)")
+                            if let nota = p.nota { Text(nota).font(.caption).foregroundStyle(Paleta.textoSecundario) }
+                        }
+                    }
+                }
+            } else {
+                ProgressView("Contando…")
+            }
+        }
+        .navigationTitle("Recuentos")
+        .accessibilityIdentifier("revisionRecuentosTabla")
+        .task {
+            let banco = banco
+            recuento = await Task.detached { CatalogoPreguntas.recuento(banco) }.value
+        }
+    }
+
+    private func filas(_ d: [String: Int]) -> some View {
+        ForEach(d.sorted { $0.key < $1.key }, id: \.key) { k, v in LabeledContent(k, value: "\(v)") }
     }
 }
 
@@ -120,6 +239,12 @@ struct VistaCaptura: View {
                 CatalogoPersonajes()
             case "avatares":
                 CatalogoAvatares()
+            case "plantilla":
+                if let banco = entorno.banco, let p = banco.plantilla(id: partes.dropFirst().first ?? "") {
+                    NavigationStack { RevisionPlantilla(plantilla: p, banco: banco) { _ in } }
+                }
+            case "recuentos":
+                if let banco = entorno.banco { NavigationStack { RevisionRecuentos(banco: banco) } }
             default:
                 VistaRaiz()
             }
@@ -161,7 +286,7 @@ struct CatalogoPersonajes: View {
         ScrollView {
             VStack(alignment: .leading, spacing: Espacio.l) {
                 ForEach(Companero.allCases, id: \.self) { c in
-                    Text(c.nombre).font(.title3.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    Text(c.nombre).font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
                     LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: Espacio.m) {
                         ForEach(EstadoPersonaje.allCases, id: \.self) { e in
                             VStack(spacing: Espacio.xs) {
@@ -178,14 +303,14 @@ struct CatalogoPersonajes: View {
     }
 }
 
-/// Lámina de los 12 avatares con su nombre.
+/// Lámina de los 6 avatares del propietario con su etiqueta de VoiceOver.
 struct CatalogoAvatares: View {
     var body: some View {
         ScrollView {
             LazyVGrid(columns: Array(repeating: GridItem(.flexible()), count: 3), spacing: Espacio.l) {
                 ForEach(Avatar.todos) { a in
                     VStack(spacing: Espacio.xs) {
-                        VistaAvatar(avatar: a, tamano: 64)
+                        VistaAvatar(avatar: a, tamano: 96)
                         Text("\(a.id) · \(a.nombre)").font(.caption).foregroundStyle(Paleta.textoSecundario).multilineTextAlignment(.center)
                     }
                 }

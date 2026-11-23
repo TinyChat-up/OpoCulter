@@ -61,9 +61,12 @@ final class EntornoApp {
     static func crear(argumentos: [String] = ProcessInfo.processInfo.arguments) -> EntornoApp {
         let opciones = OpcionesArranque.desde(argumentos)
         do {
+            // Variantes de las plantillas: distintas en cada sesión; fijas con `-semilla`.
+            var semillas = SystemRandomNumberGenerator()
+            let semillaBase = opciones.semilla.map { UInt64($0) } ?? semillas.next() % 1_000_000
             let banco = opciones.politicaRelease
-                ? try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-                : try CargadorContenido.desdeBundle().cargar()
+                ? try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados, semillaBase: semillaBase)
+                : try CargadorContenido.desdeBundle().cargar(semillaBase: semillaBase)
             let repositorio: any RepositorioProgreso
             if opciones.enMemoria {
                 repositorio = RepositorioEnMemoria()

@@ -1,0 +1,24 @@
+[
+  {
+    "id": "MAT.EST.CENTRAL.G01",
+    "competencia": "MAT.EST.CENTRAL",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "numerico",
+    "tipo": "estadisticaBasica",
+    "enunciados": [
+      "Calcula la {{medida}} de estos datos: {{datos}}.",
+      "Estos son los puntos de un equipo en {{n}} partidos: {{datos}}. ¿Cuál es la {{medida}}?"
+    ],
+    "objetivo": "Calcular medidas de centralización",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

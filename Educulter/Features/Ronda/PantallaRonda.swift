@@ -249,7 +249,7 @@ struct PantallaRonda: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
-                    Text("Antes de empezar").font(.title2.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    Text("Antes de empezar").font(.exhibicion(.title2)).foregroundStyle(Paleta.textoPrincipal)
                     ForEach(modelo.tarjetasPrevias) { tarjeta in
                         VistaTarjetaTeoria(tarjeta: tarjeta, acento: Paleta.tinta(competencia: tarjeta.competencia))
                     }
@@ -265,7 +265,7 @@ struct PantallaRonda: View {
     private var estadoVacio: some View {
         VStack(spacing: Espacio.l) {
             VistaPersonaje(companero: .tilde, estado: ReglasPersonaje.estado(para: .estadoVacio))
-            Text("No hay ítems para esta ronda").font(.title3.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+            Text("No hay ítems para esta ronda").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
             Text("Vuelve más tarde o prueba otra ronda.").font(.body).foregroundStyle(Paleta.textoSecundario)
             Button("Volver", action: cerrar).buttonStyle(EstiloBotonSecundario())
         }
@@ -295,7 +295,7 @@ struct PantallaResumen: View {
                                        estado: ReglasPersonaje.estado(para: .resumenRonda(aciertos: resumen.aciertos, total: resumen.total)),
                                        tamano: 80)
                         Text("¡Ronda completada!")
-                            .font(.redondeada(.largeTitle, peso: .semibold))
+                            .font(.exhibicion(.largeTitle))
                             .foregroundStyle(Paleta.textoPrincipal)
                             .multilineTextAlignment(.center)
                             .accessibilityAddTraits(.isHeader)
@@ -312,6 +312,7 @@ struct PantallaResumen: View {
                     // Los tres datos comparten una sola baldosa neutra (sin tarjetas repetidas).
                     .padding(Espacio.m)
                     .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+                    .contornoTinta(radio: Radio.tarjeta)
 
                     VStack(spacing: Espacio.s) {
                         ChipRacha(dias: resumen.racha.actual, protectores: resumen.racha.protectores, record: resumen.racha.record)
@@ -435,7 +436,7 @@ struct ContadorXP: View {
         .padding(.horizontal, Espacio.m)
         .frame(minHeight: Medidas.tactilMinimo)
         .background(Paleta.superficie, in: Capsule())
-        .overlay(Capsule().strokeBorder(Paleta.borde))
+        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
         .anchorPreference(key: AnclasVueloXP.self, value: .bounds) { ["destino": $0] }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("XP de la ronda")
@@ -463,6 +464,7 @@ struct VueloXP: View {
             .padding(.horizontal, Espacio.s)
             .padding(.vertical, Espacio.xs)
             .background(Paleta.recompensa, in: Capsule())
+            .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
             .scaleEffect(llegado ? 0.6 : 1.1)
             .opacity(llegado ? 0 : 1)
             .position(llegado ? fin : inicio)

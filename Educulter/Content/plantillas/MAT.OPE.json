@@ -1,0 +1,89 @@
+[
+  {
+    "id": "MAT.OPE.EQUIV.G01",
+    "competencia": "MAT.OPE.EQUIV",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "ordenar",
+    "tipo": "ordenarNumeros",
+    "enunciados": [
+      "Ordena {{orden}}.",
+      "Ordena estos números {{orden}}."
+    ],
+    "objetivo": "Comparar fracciones y decimales",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.JERARQ.G01",
+    "competencia": "MAT.OPE.JERARQ",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "ordenar",
+    "tipo": "operacionesCombinadas",
+    "enunciados": [
+      "Ordena los pasos para calcular {{expresion}}."
+    ],
+    "objetivo": "Aplicar la jerarquía de operaciones",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.JERARQ.G02",
+    "competencia": "MAT.OPE.JERARQ",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "numerico",
+    "tipo": "operacionesCombinadas",
+    "enunciados": [
+      "Calcula: {{expresion}}",
+      "Resuelve la operación combinada {{expresion}}."
+    ],
+    "objetivo": "Resolver operaciones combinadas",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.ECUAC.G01",
+    "competencia": "MAT.OPE.ECUAC",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "ecuacionLineal",
+    "enunciados": [
+      "Resuelve la ecuación: {{ecuacion}}",
+      "Halla x: {{ecuacion}}"
+    ],
+    "objetivo": "Resolver ecuaciones de primer grado",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

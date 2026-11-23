@@ -1,5 +1,5 @@
 {
-  "version": 1,
+  "version": 2,
   "areas": [
     {
       "id": "LEN",
@@ -248,6 +248,11 @@
               "id": "MAT.OPE.EQUIV",
               "nombre": "Fracciones y decimales equivalentes",
               "orden": 3
+            },
+            {
+              "id": "MAT.OPE.ECUAC",
+              "nombre": "Ecuaciones de primer grado",
+              "orden": 4
             }
           ]
         },
@@ -269,14 +274,26 @@
           "nombre": "Estadística",
           "prioridad": 2,
           "orden": 8,
-          "competencias": []
+          "competencias": [
+            {
+              "id": "MAT.EST.CENTRAL",
+              "nombre": "Media, mediana, moda y rango",
+              "orden": 1
+            }
+          ]
         },
         {
           "id": "MAT.PRO",
           "nombre": "Probabilidad",
           "prioridad": 2,
           "orden": 9,
-          "competencias": []
+          "competencias": [
+            {
+              "id": "MAT.PRO.LAPLACE",
+              "nombre": "Probabilidad de un suceso",
+              "orden": 1
+            }
+          ]
         }
       ]
     }

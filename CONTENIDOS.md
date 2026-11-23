@@ -171,6 +171,52 @@ Preguntas numeradas 1, 2, 3… en orden; `area` es `LEN` o `MAT`; las competenci
 - **Debug**: se carga todo el contenido.
 - **Release**: solo los elementos con `validacion.estado == "aprobado"`. Un test comprueba que en Release no se carga ningún borrador.
 
+### 2.10 Plantillas de generador (Fase 05C, D-062)
+Plan de volumen y fuentes: [docs/PLAN_CONTENIDOS.md](docs/PLAN_CONTENIDOS.md). Matriz de exámenes oficiales: [docs/examenes/MATRIZ.md](docs/examenes/MATRIZ.md).
+
+`Content/plantillas/<bloque>.json` (array). Campos:
+
+| Campo | Descripción |
+|---|---|
+| `id` | `<competencia>.Gnn` (p. ej. `MAT.POR.PORCENT.G01`). Los ítems generados son `<id>#<semilla>` |
+| `competencia`, `peldano` (1–5), `dificultad` (1–6) | Como en los ítems; 6 = "Experto" (D-063) |
+| `mecanica`, `tipo` | Mecánica y generador de código que la implementa (tabla siguiente) |
+| `parametros` | Opcional. Restringe lo que el generador usa por defecto: listas (`["a","b"]`), números o rangos (`{"min":1,"max":9}`) |
+| `enunciados` | Varias redacciones con marcadores `{{…}}` del generador; se elige una con la semilla |
+| `contextos` | Opcional. Redacciones de problema; la elegida se inserta como `{{contexto}}` |
+| `objetivo`, `pistas` | Opcionales (pistas solo en peldaños 1–2) |
+| `procedencia`, `validacion`, `version` | Como en los ítems; `borrador` no se carga en Release |
+
+| `tipo` | Mecánicas | Marcadores | Parámetros |
+|---|---|---|---|
+| `porcentajeDe` | numerico, eleccion | pregunta, p, p2, base, parte, unidad | `variantes` (porcentajeDe, aumento, descuento, cantidadDesde, sucesivos), `unidad` |
+| `conversionUnidades` | numerico, ruedas | cantidad, desde, hasta, resultado, magnitud | `magnitudes` (longitud, masa, capacidad, superficie, volumen) |
+| `fraccionBarras` | fraccionBarras | fraccion, partes, particiones | — |
+| `ordenarNumeros` | ordenar | orden, numeros | `orden` (mayorAMenor, menorAMayor) |
+| `romanos` | numerico (romano → arábigo), construir (arábigo → romano) | numero, romano | — |
+| `operacionesCombinadas` | ordenar (pasos), numerico (resultado) | expresion | — |
+| `mcmMcd` | numerico | a, b, c, numeros, operacion, min, max | `operacion` (mcm, mcd) |
+| `estadisticaBasica` | numerico | medida, datos, n | `medidas` (media, mediana, moda, rango) |
+| `probabilidadSimple` | numerico (fracción) | experimento, suceso | — |
+| `ecuacionLineal` | numerico | ecuacion | — |
+| `colocarTilde` | colocarTilde | — | (léxico) |
+| `clasificarAcentuacion` | eleccion | palabra | (léxico) |
+| `silabaTonica` | marcarTexto (sílabas) | palabra | (léxico) |
+| `oracionSimple` | segmentar, clasificar, eleccion | oracion, sintagma | (piezas de gramática) |
+| `analisisVerbal` | ruedas | forma, infinitivo | (verbos) |
+| `fraseHueco` | eleccion, construir | frase | `familias` |
+
+La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas de error está documentada en su código (`Core/Content/Generadores`). La solución y los distractores los calcula siempre el código. Cada distractor sale de una regla de error típico y lleva su `erroresHabituales` con el feedback de esa regla.
+
+### 2.11 Recursos de los generadores de Lengua
+- **`lexico/palabras.json`**: `[{"palabra": "canción"}, {"palabra": "robots", "tonica": 1}, {"palabra": "él", "diacritica": true}]`. Solo `palabra` es obligatoria. `tonica` es el índice de la sílaba (desde 0) cuando las reglas no lo deducen. Las palabras incoherentes con las reglas de la RAE salen como errores del validador (D-065).
+- **`gramatica/piezas.json`**: `sujetos` (tokens `[texto, clase]`, `genero`, `numero`); `verbos` (`infinitivo`, `regimen`: intransitivo, transitivo o copulativo; `cd` compatibles; `ci`); `complementos` (`CI`, `CCL`, `CCT` (con `tiempo` opcional), `CCM`); `atributos` (formas `ms`, `fs`, `mp`, `fp`). Clases: det, sust, verbo, adj, prep, adv, pron.
+- **`gramatica/verbos.json`**: `regulares` (infinitivos) e `irregulares` (`infinitivo`, `participio`, `formas` por `"Modo|Tiempo"` con 6 personas).
+- **`gramatica/frases.json`**: `familias` (formas con su uso) y `frases` (`id`, `familia`, `texto` con `___`, `correcta`, `dificultad`).
+
+### 2.12 Catálogo de preguntas (D-064)
+`CatalogoPreguntas` suma los ítems estáticos y las variantes únicas de las plantillas (sin duplicados, por clave canónica). Lo hace por área, bloque, competencia, peldaño y dificultad, y marca como cota inferior ("≥") los espacios que se muestrean. La tabla está en Revisión → "Recuentos del catálogo de preguntas".
+
 ## 3. Registro de procedencia
 
 | ID | Tipo | Autoría u origen | Licencia | Fecha |
@@ -213,3 +259,6 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 - Los borradores de prueba de MAT.NUM (FRACSUM y EQUIV) pasan a MAT.OPE (D-057).
 - Pasa el validador sin cambios. En Release se cargan 50 ítems de LEN.ORT, 9 de MAT.NUM, 5 tarjetas de LEN.ORT y 2 de MAT.NUM, y ningún borrador.
 
+
+### Fase 05C · Plantillas de prueba (borrador)
+23 plantillas en borrador (`Content/plantillas/*.json`) que cubren los 16 tipos y todas sus mecánicas, más un léxico de 15 palabras, piezas de gramática, 14 verbos regulares y 6 irregulares, y 19 frases de 10 familias. Todo es original y **no se carga en Release**: sirve para probar el motor hasta que llegue el contenido real del lote 02. Se añaden las competencias `MAT.OPE.ECUAC`, `MAT.EST.CENTRAL` y `MAT.PRO.LAPLACE` (catálogo v2, D-068).

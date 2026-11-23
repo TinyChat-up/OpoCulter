@@ -10,7 +10,7 @@ struct VistaTarjetaTeoria: View {
         TarjetaSuperficie {
             VStack(alignment: .leading, spacing: Espacio.l) {
                 Text(tarjeta.titulo)
-                    .font(.title2.weight(.semibold))
+                    .font(.exhibicion(.title2))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .accessibilityAddTraits(.isHeader)
                 ForEach(Array(tarjeta.bloques.enumerated()), id: \.offset) { _, bloque in
@@ -32,9 +32,9 @@ struct VistaTarjetaTeoria: View {
                 .fixedSize(horizontal: false, vertical: true)
         case .regla:
             HStack(alignment: .top, spacing: Espacio.m) {
-                Rectangle().fill(acento).frame(width: 4).accessibilityHidden(true)
+                RoundedRectangle(cornerRadius: 3).fill(acento).overlay(RoundedRectangle(cornerRadius: 3).strokeBorder(Paleta.contorno, lineWidth: Trazo.fino)).frame(width: 8).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: Espacio.xs) {
-                    Text("Regla").font(.caption.weight(.semibold)).foregroundStyle(acento).textCase(.uppercase)
+                    Text("Regla").font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).textCase(.uppercase)
                     Text(bloque.contenido).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
                         .fixedSize(horizontal: false, vertical: true)
                 }
@@ -49,6 +49,7 @@ struct VistaTarjetaTeoria: View {
             .padding(Espacio.m)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(Paleta.fondo, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+            .contornoTinta(radio: Radio.ficha, grosor: Trazo.fino)
             .accessibilityElement(children: .combine)
         case .esquema:
             VistaEsquema(filas: FilaEsquema.filas(de: bloque.contenido), acento: acento)
@@ -70,7 +71,7 @@ struct VistaEsquema: View {
                 case .par(let etiqueta, let valor):
                     let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: Espacio.m))
                     disposicion {
-                        Text(etiqueta).font(.subheadline.weight(.semibold)).foregroundStyle(acento)
+                        Text(etiqueta).font(.subheadline.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
                             .frame(minWidth: tamano.isAccessibilitySize ? nil : 90, alignment: .leading)
                         Text(valor).font(.subheadline).foregroundStyle(Paleta.textoPrincipal)
                             .fixedSize(horizontal: false, vertical: true)
@@ -82,7 +83,7 @@ struct VistaEsquema: View {
                             if i > 0 {
                                 Image(systemName: "arrow.right")
                                     .font(.subheadline.weight(.semibold))
-                                    .foregroundStyle(acento)
+                                    .foregroundStyle(Paleta.textoPrincipal)
                                     .frame(minHeight: 32)
                             }
                             Text(parte)
@@ -102,6 +103,6 @@ struct VistaEsquema: View {
         }
         .padding(Espacio.m)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .overlay(RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous).strokeBorder(Paleta.borde))
+        .overlay(RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous).strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
     }
 }

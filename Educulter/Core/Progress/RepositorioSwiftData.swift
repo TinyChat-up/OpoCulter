@@ -65,6 +65,11 @@ final class RepositorioSwiftData: RepositorioProgreso {
 
     func perfil() throws -> PerfilJugador {
         let registros = try contexto.fetch(FetchDescriptor<PerfilRegistro>(sortBy: [SortDescriptor(\.xpTotal, order: .reverse)]))
+        // Migración de avatares 05B → 05C (D-061): ids 6–11 → 0–5, persistida la primera vez.
+        if let registro = registros.first, registro.avatar != Avatar.migrar(registro.avatar) {
+            registro.avatar = Avatar.migrar(registro.avatar)
+            try contexto.save()
+        }
         return try registros.first?.valor() ?? PerfilJugador()
     }
 
