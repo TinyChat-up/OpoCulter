@@ -27,6 +27,8 @@ final class RondaViewModel: Identifiable {
         var cambiosRacha: EstadoRacha.Cambios
         var misionesCompletadas: [Mision]
         var logros: [Logro]
+        /// Área con más ítems en la ronda (`LEN` o `MAT`): da color a "Otra ronda".
+        var areaPredominante: String = "LEN"
     }
 
     let id = UUID()
@@ -44,7 +46,8 @@ final class RondaViewModel: Identifiable {
     private(set) var pistasVisibles = 0
 
     private(set) var combo = ContadorCombo()
-    /// Aumenta cada 3 aciertos seguidos (dispara la respuesta háptica del combo).
+    /// Aumenta en cada hito de combo (×3, ×5, ×10 y cada 10 más): dispara la animación y la
+    /// vibración de impacto.
     private(set) var hitosCombo = 0
     private(set) var aciertos = 0
     private(set) var respondidos = 0
@@ -102,6 +105,16 @@ final class RondaViewModel: Identifiable {
         itemActual.flatMap { banco.teoria(competencia: $0.competencia).first }
     }
 
+    static func esHitoCombo(_ combo: Int) -> Bool {
+        combo == 3 || combo == 5 || (combo >= 10 && combo % 10 == 0)
+    }
+
+    /// Área con más ítems en la ronda (en empate, Lengua).
+    var areaPredominante: String {
+        let mat = items.filter { Catalogo.area(de: $0.competencia) == "MAT" }.count
+        return mat > items.count - mat ? "MAT" : "LEN"
+    }
+
     func nombreCompetencia(_ id: String) -> String {
         banco.catalogo.todasLasCompetencias.first { $0.id == id }?.nombre ?? id
     }
@@ -127,7 +140,7 @@ final class RondaViewModel: Identifiable {
         respondidos += 1
         if r.correcto {
             aciertos += 1
-            if comboActual > 0, comboActual % 3 == 0 { hitosCombo += 1 }
+            if Self.esHitoCombo(comboActual) { hitosCombo += 1 }
         }
         do {
             let e = try servicio.registrar(item: item, resultado: r, usoPista: usoPista, combo: comboActual,
@@ -213,7 +226,7 @@ final class RondaViewModel: Identifiable {
         logros += efectoRonda.logrosNuevos
         resumen = Resumen(aciertos: aciertos, total: items.count, xp: xpRonda, comboMaximo: combo.maximo,
                           subidas: subidas, racha: efectoRonda.racha, cambiosRacha: efectoRonda.cambiosRacha,
-                          misionesCompletadas: misionesCompletadas, logros: logros)
+                          misionesCompletadas: misionesCompletadas, logros: logros, areaPredominante: areaPredominante)
         fase = .resumen
     }
 

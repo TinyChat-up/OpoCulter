@@ -1,12 +1,314 @@
 [
   {
-    "id": "LEN.ORT.TILDES.0001",
-    "competencia": "LEN.ORT.TILDES",
+    "id": "LEN.ORT.AGU.0001",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Reconocer una palabra aguda por su sílaba tónica.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Qué tipo de palabra es «canción»?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "Aguda"
+        },
+        {
+          "id": "o2",
+          "texto": "Llana"
+        },
+        {
+          "id": "o3",
+          "texto": "Esdrújula"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Sepárala en sílabas: can-ción. ¿Cuál suena más fuerte?"
+    ],
+    "explicacion": "Can-ción: la sílaba tónica es la última («ción»), así que es aguda. Lleva tilde porque termina en -n.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "Llana sería si sonara más fuerte «can». Pronúnciala despacio: can-CIÓN."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0002",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Clasificar palabras según la posición de la sílaba tónica.",
+    "mecanica": "clasificar",
+    "enunciado": "Coloca cada palabra en su grupo.",
+    "payload": {
+      "categorias": [
+        {
+          "id": "c1",
+          "nombre": "Aguda"
+        },
+        {
+          "id": "c2",
+          "nombre": "Llana"
+        },
+        {
+          "id": "c3",
+          "nombre": "Esdrújula"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "café",
+          "categoria": "c1"
+        },
+        {
+          "id": "f2",
+          "texto": "reloj",
+          "categoria": "c1"
+        },
+        {
+          "id": "f3",
+          "texto": "lápiz",
+          "categoria": "c2"
+        },
+        {
+          "id": "f4",
+          "texto": "examen",
+          "categoria": "c2"
+        },
+        {
+          "id": "f5",
+          "texto": "pájaro",
+          "categoria": "c3"
+        },
+        {
+          "id": "f6",
+          "texto": "teléfono",
+          "categoria": "c3"
+        }
+      ]
+    },
+    "pistas": [
+      "Que lleve tilde o no, no importa aquí: fíjate solo en qué sílaba suena más fuerte."
+    ],
+    "explicacion": "Aguda: tónica en la última (ca-FÉ, re-LOJ). Llana: en la penúltima (LÁ-piz, e-XA-men). Esdrújula: en la antepenúltima (PÁ-ja-ro, te-LÉ-fo-no).",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0003",
+    "competencia": "LEN.ORT.AGU",
     "peldano": 2,
     "dificultad": 1,
-    "objetivo": "Reconocer las palabras que llevan tilde.",
+    "objetivo": "Localizar la sílaba tónica en una palabra sin tilde.",
     "mecanica": "marcarTexto",
-    "enunciado": "Toca las palabras que llevan tilde.",
+    "enunciado": "Toca la sílaba tónica.",
+    "payload": {
+      "unidad": "silaba",
+      "tokens": [
+        {
+          "id": "t1",
+          "texto": "ca"
+        },
+        {
+          "id": "t2",
+          "texto": "mi"
+        },
+        {
+          "id": "t3",
+          "texto": "se"
+        },
+        {
+          "id": "t4",
+          "texto": "ta"
+        }
+      ],
+      "correctos": [
+        "t3"
+      ]
+    },
+    "pistas": [
+      "Di la palabra como si llamaras a alguien desde lejos: la sílaba que alargas es la tónica."
+    ],
+    "explicacion": "Ca-mi-SE-ta: la tónica es la penúltima. Es llana y termina en vocal, por eso no lleva tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0004",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Aplicar la regla de las llanas terminadas en -n.",
+    "mecanica": "verdaderoFalso",
+    "enunciado": "¿Verdadero o falso?",
+    "payload": {
+      "afirmacion": "«Examen» lleva tilde porque es llana.",
+      "esVerdadera": false
+    },
+    "pistas": [
+      "¿Cuándo llevan tilde las llanas?"
+    ],
+    "explicacion": "«Examen» es llana y termina en -n, y las llanas en -n, -s o vocal no llevan tilde. Su plural, «exámenes», sí la lleva: es esdrújula.",
+    "erroresHabituales": [
+      {
+        "respuesta": "verdadero",
+        "feedback": "Es llana, sí, pero las llanas terminadas en -n no llevan tilde. Cuidado con confundirla con «exámenes»."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0005",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Reconocer la forma correcta de una llana terminada en consonante.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Cuál está bien escrita?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "árbol"
+        },
+        {
+          "id": "o2",
+          "texto": "arbol"
+        },
+        {
+          "id": "o3",
+          "texto": "arból"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "ÁR-bol es llana y termina en -l (no en vocal, -n ni -s): lleva tilde en la a.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o3",
+        "feedback": "La tónica es «ár», no «bol»: la tilde va en la sílaba tónica."
+      },
+      {
+        "respuesta": "o2",
+        "feedback": "Las llanas que no terminan en vocal, -n o -s llevan tilde."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0006",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Detectar palabras a las que les falta la tilde.",
+    "mecanica": "marcarTexto",
+    "enunciado": "Toca las palabras que deberían llevar tilde.",
     "payload": {
       "unidad": "palabra",
       "tokens": [
@@ -16,57 +318,129 @@
         },
         {
           "id": "t2",
-          "texto": "camión"
+          "texto": "arbol"
         },
         {
           "id": "t3",
-          "texto": "llegó"
+          "texto": "del"
         },
         {
           "id": "t4",
-          "texto": "tarde"
+          "texto": "jardin"
+        },
+        {
+          "id": "t5",
+          "texto": "tiene"
+        },
+        {
+          "id": "t6",
+          "texto": "ramas"
+        },
+        {
+          "id": "t7",
+          "texto": "fragiles"
         }
       ],
       "correctos": [
         "t2",
-        "t3"
+        "t4",
+        "t7"
       ]
     },
-    "pistas": [
-      "Busca las palabras agudas terminadas en vocal, n o s."
-    ],
-    "explicacion": "«Camión» y «llegó» son agudas terminadas en n y en vocal, por eso llevan tilde. «Tarde» es llana terminada en vocal: no la lleva.",
-    "erroresHabituales": [
-      {
-        "respuesta": "t4",
-        "feedback": "«Tarde» es llana y termina en vocal: las llanas solo llevan tilde si no terminan en vocal, n o s."
-      }
-    ],
+    "pistas": [],
+    "explicacion": "Árbol: llana en -l. Jardín: aguda en -n. Frágiles: esdrújula, siempre lleva tilde. «El» es artículo y no lleva tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
     "procedencia": {
       "tipo": "original",
       "autorTexto": null,
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 04."
+      "notas": "Redacción original de la dirección del proyecto."
     },
     "validacion": {
-      "estado": "borrador",
-      "revisor": "",
-      "fecha": ""
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
     },
     "version": 1
   },
   {
-    "id": "LEN.ORT.TILDES.0002",
-    "competencia": "LEN.ORT.TILDES",
+    "id": "LEN.ORT.AGU.0007",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Aplicar la excepción de las agudas en -s tras consonante.",
+    "mecanica": "eleccion",
+    "enunciado": "«Robots» no lleva tilde porque…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "es aguda terminada en -s precedida de otra consonante"
+        },
+        {
+          "id": "o2",
+          "texto": "es una palabra llana"
+        },
+        {
+          "id": "o3",
+          "texto": "es un monosílabo"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Ro-BOTS es aguda, pero termina en -s precedida de consonante (-ts): en ese caso no lleva tilde. Igual que «tictacs».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "La tónica es la última sílaba, «bots»: es aguda."
+      },
+      {
+        "respuesta": "o3",
+        "feedback": "Tiene dos sílabas: ro-bots."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0008",
+    "competencia": "LEN.ORT.AGU",
     "peldano": 4,
     "dificultad": 2,
-    "objetivo": "Justificar la tilde de una palabra aguda.",
+    "objetivo": "Justificar la tilde de una palabra llana.",
     "mecanica": "construir",
     "enunciado": "Completa la justificación con las piezas.",
     "payload": {
-      "plantilla": "«Camión» lleva tilde porque es una palabra {h1} terminada en {h2}.",
+      "plantilla": "«Lápiz» lleva tilde porque es {h1} y {h2}.",
       "huecos": [
         {
           "id": "h1",
@@ -74,7 +448,80 @@
         },
         {
           "id": "h2",
-          "correcta": "p4"
+          "correcta": "p3"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "llana"
+        },
+        {
+          "id": "p2",
+          "texto": "aguda"
+        },
+        {
+          "id": "p3",
+          "texto": "no termina en vocal, -n ni -s"
+        },
+        {
+          "id": "p4",
+          "texto": "termina en vocal"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "LÁ-piz: tónica en la penúltima (llana). Las llanas llevan tilde cuando no terminan en vocal, -n ni -s; «lápiz» termina en -z.",
+    "erroresHabituales": [
+      {
+        "respuesta": "h1",
+        "feedback": "La tónica es «lá», la penúltima: es llana."
+      },
+      {
+        "respuesta": "h2",
+        "feedback": "Termina en -z, no en vocal."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0009",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 4,
+    "dificultad": 2,
+    "objetivo": "Justificar la tilde de una palabra aguda.",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación con las piezas.",
+    "payload": {
+      "plantilla": "«Canción» lleva tilde porque es {h1} y termina en {h2}.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p3"
         }
       ],
       "piezas": [
@@ -88,223 +535,1801 @@
         },
         {
           "id": "p3",
-          "texto": "esdrújula"
-        },
-        {
-          "id": "p4",
           "texto": "-n"
         },
         {
-          "id": "p5",
-          "texto": "-l"
+          "id": "p4",
+          "texto": "-z"
         }
       ]
     },
     "pistas": [],
-    "explicacion": "La sílaba tónica de «camión» es la última (aguda), y las agudas llevan tilde cuando terminan en vocal, n o s.",
+    "explicacion": "Can-CIÓN: tónica en la última (aguda). Las agudas llevan tilde si terminan en vocal, -n o -s.",
     "erroresHabituales": [
       {
         "respuesta": "h1",
-        "feedback": "La sílaba tónica es «-mión», la última: es aguda, no llana."
+        "feedback": "La sílaba tónica es la última: es aguda."
       }
     ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
     "procedencia": {
       "tipo": "original",
       "autorTexto": null,
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 04."
+      "notas": "Redacción original de la dirección del proyecto."
     },
     "validacion": {
-      "estado": "borrador",
-      "revisor": "",
-      "fecha": ""
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
     },
     "version": 1
   },
   {
-    "id": "LEN.ORT.TILDES.0003",
-    "competencia": "LEN.ORT.TILDES",
+    "id": "LEN.ORT.DIA.0001",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Distinguir el posesivo «tu» del pronombre «tú».",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «___ hermano llega mañana».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "Tu"
+        },
+        {
+          "id": "o2",
+          "texto": "Tú"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "¿Acompaña a un sustantivo o funciona como sujeto él solo?"
+    ],
+    "explicacion": "Aquí acompaña a un sustantivo («hermano»): es posesivo y va sin tilde. «Tú» con tilde es pronombre: «Tú llegas mañana».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Tú» con tilde es el pronombre personal. Delante de un sustantivo va el posesivo, sin tilde."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.0002",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Distinguir el sustantivo «té» del pronombre «te».",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «¿Quieres un ___ con limón?».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "té"
+        },
+        {
+          "id": "o2",
+          "texto": "te"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Aquí la palabra nombra una bebida."
+    ],
+    "explicacion": "«Té» es la bebida (sustantivo) y lleva tilde para distinguirse del pronombre «te» («te llamo»).",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Te» sin tilde es pronombre: «te espero». La bebida es «té»."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.0003",
+    "competencia": "LEN.ORT.DIA",
     "peldano": 2,
     "dificultad": 2,
-    "objetivo": "Clasificar palabras por su sílaba tónica.",
+    "objetivo": "Relacionar cada monosílabo con su función.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada palabra con su función.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "él"
+        },
+        {
+          "id": "i2",
+          "texto": "el"
+        },
+        {
+          "id": "i3",
+          "texto": "mí"
+        },
+        {
+          "id": "i4",
+          "texto": "mi"
+        },
+        {
+          "id": "i5",
+          "texto": "sí"
+        },
+        {
+          "id": "i6",
+          "texto": "si"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "pronombre personal"
+        },
+        {
+          "id": "d2",
+          "texto": "artículo"
+        },
+        {
+          "id": "d3",
+          "texto": "pronombre tras preposición"
+        },
+        {
+          "id": "d4",
+          "texto": "posesivo"
+        },
+        {
+          "id": "d5",
+          "texto": "adverbio de afirmación"
+        },
+        {
+          "id": "d6",
+          "texto": "conjunción condicional"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ],
+        [
+          "i5",
+          "d5"
+        ],
+        [
+          "i6",
+          "d6"
+        ]
+      ]
+    },
+    "pistas": [
+      "Piensa en un ejemplo: «para mí» / «mi casa»."
+    ],
+    "explicacion": "La tilde diacrítica distingue palabras iguales con distinta función: él/el, mí/mi, sí/si, tú/tu, té/te, dé/de, sé/se, más/mas.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.0004",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Saber que los monosílabos no llevan tilde salvo la diacrítica.",
+    "mecanica": "verdaderoFalso",
+    "enunciado": "¿Verdadero o falso?",
+    "payload": {
+      "afirmacion": "«Fue» lleva tilde porque es una forma verbal en pasado.",
+      "esVerdadera": false
+    },
+    "pistas": [],
+    "explicacion": "Los monosílabos no llevan tilde, salvo los que tienen tilde diacrítica. «Fue», «dio», «vio» o «fui» se escriben sin tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "verdadero",
+        "feedback": "El tiempo verbal no influye: «fue» es monosílabo y no tiene pareja diacrítica, así que va sin tilde."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.0005",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Identificar tildes diacríticas en una oración.",
+    "mecanica": "marcarTexto",
+    "enunciado": "Toca las palabras que llevan tilde diacrítica.",
+    "payload": {
+      "unidad": "palabra",
+      "tokens": [
+        {
+          "id": "t1",
+          "texto": "Él"
+        },
+        {
+          "id": "t2",
+          "texto": "dice"
+        },
+        {
+          "id": "t3",
+          "texto": "que"
+        },
+        {
+          "id": "t4",
+          "texto": "sí,"
+        },
+        {
+          "id": "t5",
+          "texto": "pero"
+        },
+        {
+          "id": "t6",
+          "texto": "tu"
+        },
+        {
+          "id": "t7",
+          "texto": "amigo"
+        },
+        {
+          "id": "t8",
+          "texto": "no"
+        },
+        {
+          "id": "t9",
+          "texto": "sabe"
+        },
+        {
+          "id": "t10",
+          "texto": "si"
+        },
+        {
+          "id": "t11",
+          "texto": "vendrá."
+        }
+      ],
+      "correctos": [
+        "t1",
+        "t4"
+      ]
+    },
+    "pistas": [],
+    "explicacion": "«Él» (pronombre) y «sí» (afirmación) llevan tilde diacrítica. «Vendrá» lleva tilde por ser aguda en vocal, no diacrítica. «Tu» y «si» van sin tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.0006",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Usar «aún» con el valor de 'todavía'.",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «___ no ha llegado el tren».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "Aún"
+        },
+        {
+          "id": "o2",
+          "texto": "Aun"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Significa 'todavía': «Todavía no ha llegado el tren». Con ese valor se escribe con tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Aun» sin tilde significa 'incluso'. Prueba a sustituir: «Todavía no ha llegado» encaja."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.0007",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Usar «aun» con el valor de 'incluso'.",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «Ni ___ así consiguió aprobar».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "aun"
+        },
+        {
+          "id": "o2",
+          "texto": "aún"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Equivale a 'ni siquiera así' / 'incluso así': con ese valor se escribe sin tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Aún» con tilde significa 'todavía', y «ni todavía así» no tiene sentido."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.0008",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 4,
+    "dificultad": 2,
+    "objetivo": "Justificar la tilde diacrítica de «mí».",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación con las piezas.",
+    "payload": {
+      "plantilla": "En «Dámelo a mí», «mí» lleva tilde porque es {h1}; «mi», sin tilde, es {h2}.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p2"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "pronombre personal"
+        },
+        {
+          "id": "p2",
+          "texto": "adjetivo posesivo"
+        },
+        {
+          "id": "p3",
+          "texto": "adverbio"
+        },
+        {
+          "id": "p4",
+          "texto": "artículo"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "«Mí» con tilde es pronombre personal y va tras preposición («a mí», «para mí»). «Mi» es posesivo: «mi libro».",
+    "erroresHabituales": [
+      {
+        "respuesta": "h1",
+        "feedback": "Va después de la preposición «a» y sustituye a la persona: es pronombre."
+      },
+      {
+        "respuesta": "h2",
+        "feedback": "«Mi» acompaña a un sustantivo («mi casa»): es posesivo."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.0009",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 4,
+    "dificultad": 3,
+    "objetivo": "Justificar la diferencia entre «aún» y «aun».",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación con las piezas.",
+    "payload": {
+      "plantilla": "«Aún» lleva tilde cuando significa {h1}; sin tilde, «aun» significa {h2}.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p2"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "todavía"
+        },
+        {
+          "id": "p2",
+          "texto": "incluso"
+        },
+        {
+          "id": "p3",
+          "texto": "nunca"
+        },
+        {
+          "id": "p4",
+          "texto": "además"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Con tilde = 'todavía' («Aún es pronto»). Sin tilde = 'incluso, hasta, siquiera' («Aun así, vino»).",
+    "erroresHabituales": [
+      {
+        "respuesta": "h1",
+        "feedback": "Prueba a sustituir en «Aún es pronto»: «Todavía es pronto»."
+      },
+      {
+        "respuesta": "h2",
+        "feedback": "«Aun así» equivale a «incluso así»."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HIA.0001",
+    "competencia": "LEN.ORT.HIA",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Distinguir hiato de diptongo.",
+    "mecanica": "eleccion",
+    "enunciado": "En «río», las vocales «í-o» forman…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "un hiato"
+        },
+        {
+          "id": "o2",
+          "texto": "un diptongo"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Sepárala en sílabas. ¿Las dos vocales quedan en la misma sílaba?"
+    ],
+    "explicacion": "Rí-o: la i es tónica y se separa de la o, así que forman hiato. Por eso lleva tilde aunque sea llana terminada en vocal.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "En un diptongo las vocales van en la misma sílaba. Aquí se separan: rí-o."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HIA.0002",
+    "competencia": "LEN.ORT.HIA",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Clasificar palabras con diptongo o hiato.",
     "mecanica": "clasificar",
-    "enunciado": "Clasifica cada palabra según su sílaba tónica.",
+    "enunciado": "Coloca cada palabra en su grupo.",
     "payload": {
       "categorias": [
         {
-          "id": "AG",
-          "nombre": "Aguda"
+          "id": "c1",
+          "nombre": "Diptongo"
         },
         {
-          "id": "LL",
-          "nombre": "Llana"
-        },
-        {
-          "id": "ES",
-          "nombre": "Esdrújula"
+          "id": "c2",
+          "nombre": "Hiato"
         }
       ],
       "fichas": [
         {
           "id": "f1",
-          "texto": "café",
-          "categoria": "AG"
+          "texto": "aire",
+          "categoria": "c1"
         },
         {
           "id": "f2",
-          "texto": "árbol",
-          "categoria": "LL"
+          "texto": "ciudad",
+          "categoria": "c1"
         },
         {
           "id": "f3",
-          "texto": "música",
-          "categoria": "ES"
+          "texto": "cuento",
+          "categoria": "c1"
         },
         {
           "id": "f4",
-          "texto": "canción",
-          "categoria": "AG"
+          "texto": "país",
+          "categoria": "c2"
         },
         {
           "id": "f5",
-          "texto": "lápiz",
-          "categoria": "LL"
+          "texto": "poeta",
+          "categoria": "c2"
         },
         {
           "id": "f6",
-          "texto": "pájaro",
-          "categoria": "ES"
+          "texto": "tío",
+          "categoria": "c2"
         }
       ]
     },
     "pistas": [
-      "Di la palabra en voz alta y busca la sílaba que suena más fuerte."
+      "Dos vocales abiertas (a, e, o) juntas siempre forman hiato."
     ],
-    "explicacion": "Agudas: tónica en la última sílaba (ca-FÉ). Llanas: en la penúltima (ÁR-bol). Esdrújulas: en la antepenúltima (MÚ-si-ca).",
+    "explicacion": "Diptongo: dos vocales en la misma sílaba (ai-re, ciu-dad, cuen-to). Hiato: en sílabas distintas (pa-ís, po-e-ta, tí-o).",
     "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
     "procedencia": {
       "tipo": "original",
       "autorTexto": null,
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 05A."
+      "notas": "Redacción original de la dirección del proyecto."
     },
     "validacion": {
-      "estado": "borrador",
-      "revisor": "",
-      "fecha": ""
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
     },
     "version": 1
   },
   {
-    "id": "LEN.ORT.TILDES.0004",
-    "competencia": "LEN.ORT.TILDES",
-    "peldano": 1,
-    "dificultad": 1,
-    "objetivo": "Localizar la sílaba tónica.",
-    "mecanica": "marcarTexto",
-    "enunciado": "Toca la sílaba tónica de «música».",
+    "id": "LEN.ORT.HIA.0003",
+    "competencia": "LEN.ORT.HIA",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Reconocer la tilde de hiato frente a la regla general.",
+    "mecanica": "verdaderoFalso",
+    "enunciado": "¿Verdadero o falso?",
     "payload": {
-      "unidad": "silaba",
-      "tokens": [
+      "afirmacion": "«Maíz» lleva tilde porque es aguda terminada en -z.",
+      "esVerdadera": false
+    },
+    "pistas": [],
+    "explicacion": "Una aguda en -z no llevaría tilde por la regla general. «Maíz» la lleva porque la í tónica forma hiato con la a: ma-íz.",
+    "erroresHabituales": [
+      {
+        "respuesta": "verdadero",
+        "feedback": "Las agudas en -z no llevan tilde («feliz», «reloj»). Aquí la tilde marca el hiato."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HIA.0004",
+    "competencia": "LEN.ORT.HIA",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Explicar la tilde de «búho».",
+    "mecanica": "eleccion",
+    "enunciado": "¿Por qué lleva tilde «búho»?",
+    "payload": {
+      "opciones": [
         {
-          "id": "t1",
-          "texto": "mú"
+          "id": "o1",
+          "texto": "Porque hay hiato con vocal cerrada tónica"
         },
         {
-          "id": "t2",
-          "texto": "si"
+          "id": "o2",
+          "texto": "Porque es llana terminada en vocal"
         },
         {
-          "id": "t3",
-          "texto": "ca"
+          "id": "o3",
+          "texto": "Porque es esdrújula"
         }
       ],
-      "correctos": [
-        "t1"
-      ]
+      "correcta": "o1"
     },
-    "pistas": [
-      "Es la sílaba que lleva la tilde."
+    "pistas": [],
+    "explicacion": "Bú-ho: la u tónica forma hiato con la o. La h intercalada no impide el hiato ni la tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "Una llana en vocal no llevaría tilde por la regla general."
+      },
+      {
+        "respuesta": "o3",
+        "feedback": "Tiene dos sílabas, bú-ho: es llana."
+      }
     ],
-    "explicacion": "En «música» la sílaba que suena más fuerte es «mú»: es esdrújula y por eso lleva tilde.",
-    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
     "procedencia": {
       "tipo": "original",
       "autorTexto": null,
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 05A."
+      "notas": "Redacción original de la dirección del proyecto."
     },
     "validacion": {
-      "estado": "borrador",
-      "revisor": "",
-      "fecha": ""
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
     },
     "version": 1
   },
   {
-    "id": "LEN.ORT.TILDES.0005",
-    "competencia": "LEN.ORT.TILDES",
+    "id": "LEN.ORT.HIA.0005",
+    "competencia": "LEN.ORT.HIA",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Aplicar la norma de 2010 sobre «guion» y palabras similares.",
+    "mecanica": "verdaderoFalso",
+    "enunciado": "¿Verdadero o falso?",
+    "payload": {
+      "afirmacion": "«Guion» se escribe sin tilde porque, a efectos ortográficos, es un monosílabo.",
+      "esVerdadera": true
+    },
+    "pistas": [],
+    "explicacion": "Desde la Ortografía de 2010, «guion», «truhan», «fie» o «lie» se consideran monosílabos ortográficos y se escriben sin tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "falso",
+        "feedback": "La forma «guión» con tilde dejó de ser válida con la Ortografía de 2010."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HIA.0006",
+    "competencia": "LEN.ORT.HIA",
     "peldano": 4,
     "dificultad": 2,
-    "objetivo": "Justificar la tilde de una palabra llana.",
+    "objetivo": "Justificar la tilde de hiato.",
     "mecanica": "construir",
     "enunciado": "Completa la justificación con las piezas.",
     "payload": {
-      "plantilla": "«Árbol» lleva tilde porque es una palabra {h1} terminada en {h2}.",
+      "plantilla": "«País» lleva tilde porque la {h1} es tónica y forma {h2} con la a.",
       "huecos": [
         {
           "id": "h1",
-          "correcta": "p2"
+          "correcta": "p1"
         },
         {
           "id": "h2",
-          "correcta": "p4"
+          "correcta": "p3"
         }
       ],
       "piezas": [
         {
           "id": "p1",
-          "texto": "aguda"
+          "texto": "i"
         },
         {
           "id": "p2",
-          "texto": "llana"
+          "texto": "a"
         },
         {
           "id": "p3",
-          "texto": "esdrújula"
+          "texto": "hiato"
         },
         {
           "id": "p4",
-          "texto": "-l"
-        },
-        {
-          "id": "p5",
-          "texto": "-n"
+          "texto": "diptongo"
         }
       ]
     },
     "pistas": [],
-    "explicacion": "La tónica de «árbol» es «ár», la penúltima: es llana. Las llanas llevan tilde si no acaban en vocal, n o s, y «árbol» acaba en l.",
-    "erroresHabituales": [],
+    "explicacion": "Pa-ís: vocal cerrada tónica (í) junto a vocal abierta (a) forma hiato, y ese hiato siempre lleva tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "h2",
+        "feedback": "Si fuera diptongo, irían en la misma sílaba. Aquí se separan: pa-ís."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
     "procedencia": {
       "tipo": "original",
       "autorTexto": null,
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 05A."
+      "notas": "Redacción original de la dirección del proyecto."
     },
     "validacion": {
-      "estado": "borrador",
-      "revisor": "",
-      "fecha": ""
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.PQ.0001",
+    "competencia": "LEN.ORT.PQ",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Usar «por qué» en preguntas directas.",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «¿___ no viniste ayer?».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "Por qué"
+        },
+        {
+          "id": "o2",
+          "texto": "Porque"
+        },
+        {
+          "id": "o3",
+          "texto": "Porqué"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Hay signos de interrogación."
+    ],
+    "explicacion": "Es una pregunta: se escribe separado y con tilde, «por qué».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Porque» junto y sin tilde expresa causa y se usa para responder, no para preguntar."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.PQ.0002",
+    "competencia": "LEN.ORT.PQ",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Usar «porque» para expresar causa.",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «No vino ___ estaba enfermo».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "porque"
+        },
+        {
+          "id": "o2",
+          "texto": "por qué"
+        },
+        {
+          "id": "o3",
+          "texto": "porqué"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "¿Podrías decir «ya que» en su lugar?"
+    ],
+    "explicacion": "Introduce la causa ('ya que'): junto y sin tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Por qué» se usa en preguntas, directas o indirectas."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.PQ.0003",
+    "competencia": "LEN.ORT.PQ",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Usar «porqué» como sustantivo.",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «Nadie entiende el ___ de su decisión».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "porqué"
+        },
+        {
+          "id": "o2",
+          "texto": "por qué"
+        },
+        {
+          "id": "o3",
+          "texto": "porque"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Va precedido de «el»."
+    ],
+    "explicacion": "Lleva artículo («el») y significa 'el motivo': es sustantivo, junto y con tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o3",
+        "feedback": "Si puedes poner «el» delante y equivale a 'motivo', es el sustantivo «porqué»."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.PQ.0004",
+    "competencia": "LEN.ORT.PQ",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Usar «por qué» en preguntas indirectas.",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «Dime ___ te vas».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "por qué"
+        },
+        {
+          "id": "o2",
+          "texto": "porque"
+        },
+        {
+          "id": "o3",
+          "texto": "porqué"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Es una pregunta indirecta ('¿Por qué te vas?'): separado y con tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "No expresa causa: está preguntando, aunque no haya signos de interrogación."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.PQ.0005",
+    "competencia": "LEN.ORT.PQ",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Usar «por que» (preposición + relativo).",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «Esa es la razón ___ lo hizo».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "por que"
+        },
+        {
+          "id": "o2",
+          "texto": "porque"
+        },
+        {
+          "id": "o3",
+          "texto": "porqué"
+        },
+        {
+          "id": "o4",
+          "texto": "por qué"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Equivale a «por la que»: preposición «por» + relativo «que», separado y sin tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "Prueba a sustituir por «por la que»: «la razón por la que lo hizo». Si encaja, va separado."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.PQ.0006",
+    "competencia": "LEN.ORT.PQ",
+    "peldano": 4,
+    "dificultad": 3,
+    "objetivo": "Justificar la escritura de «por qué» en interrogativa indirecta.",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación con las piezas.",
+    "payload": {
+      "plantilla": "En «No sé por qué llora», «por qué» va separado y con tilde porque introduce una {h1}.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "interrogativa indirecta"
+        },
+        {
+          "id": "p2",
+          "texto": "oración causal"
+        },
+        {
+          "id": "p3",
+          "texto": "exclamación"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "«No sé por qué llora» encierra la pregunta «¿Por qué llora?». Es interrogativa indirecta: separado y con tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "h1",
+        "feedback": "No da la causa: la desconoce y la plantea como pregunta."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.0001",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Distinguir «hay», «ahí» y «ay».",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «___ muchas personas en la plaza».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "Hay"
+        },
+        {
+          "id": "o2",
+          "texto": "Ahí"
+        },
+        {
+          "id": "o3",
+          "texto": "Ay"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "¿Puedes cambiarlo por «existen»?"
+    ],
+    "explicacion": "Es el verbo haber ('existen'): se escribe «hay».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Ahí» es un adverbio de lugar: «Está ahí»."
+      },
+      {
+        "respuesta": "o3",
+        "feedback": "«Ay» es una interjección de dolor o sorpresa."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA-HOMOFONOS",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I (letras) y DPD"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.0002",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Usar la interjección «ay».",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «¡___, me he pillado el dedo!».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "Ay"
+        },
+        {
+          "id": "o2",
+          "texto": "Hay"
+        },
+        {
+          "id": "o3",
+          "texto": "Ahí"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Expresa dolor: es la interjección «ay».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Hay» es del verbo haber."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA-HOMOFONOS",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I (letras) y DPD"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.0003",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Usar el adverbio «ahí».",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «Deja la caja ___, junto a la puerta».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "ahí"
+        },
+        {
+          "id": "o2",
+          "texto": "hay"
+        },
+        {
+          "id": "o3",
+          "texto": "ay"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Indica lugar: es el adverbio «ahí» (a-hí, con tilde).",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Hay» es del verbo haber; aquí se habla de un lugar."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA-HOMOFONOS",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I (letras) y DPD"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.0004",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Distinguir «tuvo» (verbo tener) de «tubo» (objeto).",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «El fontanero cambió el ___ del lavabo».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "tubo"
+        },
+        {
+          "id": "o2",
+          "texto": "tuvo"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Lleva artículo («el»): es un sustantivo."
+    ],
+    "explicacion": "Se refiere a la pieza cilíndrica hueca: «tubo», con b. «Tuvo» es del verbo tener.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Tuvo» es una forma del verbo tener: «tuvo suerte»."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA-HOMOFONOS",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I (letras) y DPD"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.0005",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Distinguir «a ver» de «haber».",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «Vamos ___ qué ha pasado».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "a ver"
+        },
+        {
+          "id": "o2",
+          "texto": "haber"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Es la preposición «a» + el verbo «ver» ('vamos a mirar').",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Haber» es un verbo («debe haber») o un sustantivo («en su haber»)."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA-HOMOFONOS",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I (letras) y DPD"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.0006",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Usar el infinitivo «haber».",
+    "mecanica": "eleccion",
+    "enunciado": "Completa: «Tiene que ___ otra solución».",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "haber"
+        },
+        {
+          "id": "o2",
+          "texto": "a ver"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Es el infinitivo del verbo haber ('existir'): «tiene que haber».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«A ver» significa 'vamos a mirar'; aquí no encaja."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA-HOMOFONOS",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I (letras) y DPD"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.0007",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Detectar errores de homófonos en una oración.",
+    "mecanica": "marcarTexto",
+    "enunciado": "Toca las palabras mal escritas.",
+    "payload": {
+      "unidad": "palabra",
+      "tokens": [
+        {
+          "id": "t1",
+          "texto": "Ayer"
+        },
+        {
+          "id": "t2",
+          "texto": "tubo"
+        },
+        {
+          "id": "t3",
+          "texto": "fiebre"
+        },
+        {
+          "id": "t4",
+          "texto": "y"
+        },
+        {
+          "id": "t5",
+          "texto": "hoy"
+        },
+        {
+          "id": "t6",
+          "texto": "no"
+        },
+        {
+          "id": "t7",
+          "texto": "ai"
+        },
+        {
+          "id": "t8",
+          "texto": "clase."
+        }
+      ],
+      "correctos": [
+        "t2",
+        "t7"
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Debe ser «tuvo» (verbo tener) y «hay» (verbo haber). «Ayer» está bien escrito.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA-HOMOFONOS",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I (letras) y DPD"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.0008",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 4,
+    "dificultad": 2,
+    "objetivo": "Justificar la escritura de «hay» y «ahí».",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación con las piezas.",
+    "payload": {
+      "plantilla": "Se escribe «hay» porque es una forma del verbo {h1}; «ahí» es un {h2} de lugar.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p3"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "haber"
+        },
+        {
+          "id": "p2",
+          "texto": "tener"
+        },
+        {
+          "id": "p3",
+          "texto": "adverbio"
+        },
+        {
+          "id": "p4",
+          "texto": "sustantivo"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "«Hay» = verbo haber («hay pan»). «Ahí» = adverbio de lugar («está ahí»). «Ay» = interjección.",
+    "erroresHabituales": [
+      {
+        "respuesta": "h1",
+        "feedback": "«Hay» equivale a 'existe(n)': es del verbo haber."
+      },
+      {
+        "respuesta": "h2",
+        "feedback": "«Ahí» responde a «¿dónde?»: es adverbio."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA-HOMOFONOS",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I (letras) y DPD"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
     },
     "version": 1
   }

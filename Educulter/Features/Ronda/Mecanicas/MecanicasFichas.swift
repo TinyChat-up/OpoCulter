@@ -362,16 +362,20 @@ struct MecanicaConstruir: View {
         return [:]
     }
 
-    /// Partes de la plantilla: palabras sueltas (para que el texto fluya) y huecos.
-    private enum Parte: Hashable { case palabra(String), hueco(String) }
+    /// Partes de la plantilla: palabras sueltas (para que el texto fluya) y huecos. La
+    /// puntuación pegada a un hueco («{h2}.», «{h1};») viaja con él y no queda sola en una línea.
+    private enum Parte: Hashable { case palabra(String), hueco(String, cola: String) }
 
     private var partes: [Parte] {
         var resultado: [Parte] = []
         var resto = Substring(p.plantilla)
         while let abre = resto.firstIndex(of: "{"), let cierra = resto[abre...].firstIndex(of: "}") {
             resultado += resto[..<abre].split(separator: " ").map { .palabra(String($0)) }
-            resultado.append(.hueco(String(resto[resto.index(after: abre)..<cierra])))
+            let id = String(resto[resto.index(after: abre)..<cierra])
             resto = resto[resto.index(after: cierra)...]
+            let cola = resto.prefix { $0 != " " && $0 != "{" }
+            resto = resto.dropFirst(cola.count)
+            resultado.append(.hueco(id, cola: String(cola)))
         }
         resultado += resto.split(separator: " ").map { .palabra(String($0)) }
         return resultado
@@ -387,8 +391,13 @@ struct MecanicaConstruir: View {
                         switch parte {
                         case .palabra(let palabra):
                             Text(palabra).font(.body).foregroundStyle(Paleta.textoPrincipal).frame(minHeight: Medidas.tactilMinimo)
-                        case .hueco(let id):
-                            huecoVista(id, numero: numeros[id] ?? 0, texto: colocadas[id].flatMap { textos[$0] })
+                        case .hueco(let id, let cola):
+                            HStack(spacing: 2) {
+                                huecoVista(id, numero: numeros[id] ?? 0, texto: colocadas[id].flatMap { textos[$0] })
+                                if !cola.isEmpty {
+                                    Text(cola).font(.body).foregroundStyle(Paleta.textoPrincipal)
+                                }
+                            }
                         }
                     }
                 }

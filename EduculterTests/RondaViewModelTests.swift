@@ -94,7 +94,7 @@ struct RondaViewModelTests {
 
     @Test("Feedback específico, solución, Ver regla y otra ronda")
     func feedbackYOtraRonda() throws {
-        let m = RondaViewModel(servicio: servicio(), tipo: .items(["MAT.ROM.LECTURA.0001", "LEN.ORT.TILDES.0001"]))
+        let m = RondaViewModel(servicio: servicio(), tipo: .items(["MAT.ROM.LECTURA.0001", "LEN.ORT.AGU.0006"]))
         #expect(m.feedbackEspecifico.isEmpty && m.teoriaDelItem == nil)
         m.comprobar()
         #expect(m.fase == .respondiendo, "Sin respuesta no se comprueba")
@@ -105,9 +105,9 @@ struct RondaViewModelTests {
         m.continuar()
         m.rellenarParaPruebas()
         m.comprobar()
-        #expect(m.teoriaDelItem?.id == "LEN.ORT.TILDES.T01")
+        #expect(m.teoriaDelItem?.id == "LEN.ORT.AGU.T01")
         m.verRegla()
-        #expect(m.teoriaAbierta?.id == "LEN.ORT.TILDES.T01")
+        #expect(m.teoriaAbierta?.id == "LEN.ORT.AGU.T01")
         m.continuar()
         #expect(m.fase == .resumen && m.nombreCompetencia("MAT.ROM.LECTURA") == "Lectura de números romanos")
         m.otraRonda()
@@ -117,10 +117,10 @@ struct RondaViewModelTests {
 
     @Test("Teoría previa en el peldaño 1 y ronda vacía")
     func teoriaYVacia() throws {
-        try repo.guardar(PerfilJugador(competenciaEnCurso: "LEN.ORT.TILDES"))
+        try repo.guardar(PerfilJugador(competenciaEnCurso: "LEN.ORT.AGU"))
         let m = RondaViewModel(servicio: servicio(), tipo: .recomendada)
         #expect(m.fase == .teoria)
-        #expect(m.tarjetasPrevias.map(\.id) == ["LEN.ORT.TILDES.T01"])
+        #expect(m.tarjetasPrevias.map(\.id) == ["LEN.ORT.AGU.T01"])
         m.empezarTrasTeoria()
         #expect(m.fase == .respondiendo)
         let vacia = RondaViewModel(servicio: servicio(), tipo: .rescate)
@@ -152,5 +152,28 @@ struct RondaViewModelTests {
         if case .items(let ids) = entorno.tipoRondaPrincipal { #expect(ids.count == 10) } else { Issue.record("Debería ser la ronda de demostración") }
         #expect(EntornoApp.crear(argumentos: ["app", "-enMemoria"]).tipoRondaPrincipal == .recomendada)
         #expect(entorno.servicioDeRevision() != nil)
+    }
+
+    @Test("Hitos de combo (×3, ×5, ×10…) y área predominante del resumen")
+    func hitosYArea() throws {
+        #expect([1, 2, 3, 4, 5, 6, 9, 10, 15, 20].filter(RondaViewModel.esHitoCombo) == [3, 5, 10, 20])
+        // Demostración: 9 ítems de Lengua y 1 de Matemáticas, todo acertado → hitos en ×3, ×5 y ×10.
+        let m = RondaViewModel(servicio: servicio(), tipo: .items(EntornoApp.itemsDemostracion(banco)))
+        jugar(m)
+        #expect(m.hitosCombo == 3)
+        #expect(m.resumen?.areaPredominante == "LEN")
+        let mates = RondaViewModel(servicio: servicio(), tipo: .items(["MAT.NUM.FRACSUM.0001", "MAT.ROM.LECTURA.0001", "LEN.ORT.AGU.0001"]))
+        #expect(mates.areaPredominante == "MAT")
+    }
+
+    @Test("Símbolo SF por bloque")
+    func simbolos() {
+        #expect(SimboloBloque.de(competencia: "LEN.ORT.AGU") == "character.cursor.ibeam")
+        #expect(SimboloBloque.de(competencia: "MAT.GEO.TRIANG.0001") == "triangle")
+        #expect(SimboloBloque.de(bloque: "XXX.YYY") == "square.stack")
+        // Todos los bloques del catálogo tienen símbolo propio y distinto.
+        let bloques = banco.catalogo.areas.flatMap(\.bloques).map(\.id)
+        #expect(bloques.allSatisfy { SimboloBloque.porBloque[$0] != nil })
+        #expect(Set(bloques.compactMap { SimboloBloque.porBloque[$0] }).count == bloques.count)
     }
 }

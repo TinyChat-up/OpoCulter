@@ -6,7 +6,10 @@ import SwiftUI
 /// misma otra vez para un tramo de una palabra) y elegir la etiqueta. Si el tramo queda
 /// dentro de otro, se anida automáticamente; si envuelve tramos existentes, pasan a ser
 /// sus hijos. Los tramos se dibujan como corchetes de color por niveles bajo las palabras,
-/// y se listan en forma de árbol, donde se pueden borrar.
+/// y se listan en forma de árbol (plegable), donde se pueden borrar.
+///
+/// Tras el primer toque, el tramo se ilumina en vivo: mientras se pulsa la palabra final,
+/// se tiñe todo el tramo desde el inicio hasta ella, antes de soltar (D-049).
 struct MecanicaSegmentar: View {
     let p: Payload.Segmentar
     let ctx: ContextoMecanica
@@ -14,6 +17,9 @@ struct MecanicaSegmentar: View {
     @State private var inicio: Int?
     @State private var fin: Int?
     @State private var aviso: String?
+    /// Palabra que se está pulsando (vista previa del tramo antes del segundo toque).
+    @State private var previa: Int?
+    @State private var arbolPlegado = false
     @ScaledMetric(relativeTo: .caption2) private var altoBarra: CGFloat = 6
 
     private var segmentos: [Respuesta.SegmentoRespuesta] {
@@ -46,6 +52,12 @@ struct MecanicaSegmentar: View {
         return min(inicio, fin)...max(inicio, fin)
     }
 
+    /// Tramo en vivo: del inicio a la palabra pulsada, mientras no hay segundo toque.
+    private var rangoPrevio: ClosedRange<Int>? {
+        guard let inicio, fin == nil, let previa else { return nil }
+        return min(inicio, previa)...max(inicio, previa)
+    }
+
     private func colorEtiqueta(_ id: String) -> Color {
         let i = p.etiquetas.firstIndex { $0.id == id } ?? 0
         return Paleta.pares[i % Paleta.pares.count]
@@ -63,14 +75,13 @@ struct MecanicaSegmentar: View {
                     .foregroundStyle(aviso == nil ? Paleta.textoPrincipal : Paleta.fallo)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .accessibilityIdentifier("instruccionSegmentar")
+                // Etiquetas justo encima de las palabras: se ven sin desplazarse.
+                etiquetas
             }
             TarjetaSuperficie {
                 DisposicionFlujo(espacioH: Espacio.s, espacioV: Espacio.m) {
                     ForEach(Array(p.tokens.enumerated()), id: \.element.id) { i, token in tokenVista(i, token) }
                 }
-            }
-            if !ctx.corregido {
-                etiquetas
             }
             if !segmentos.isEmpty {
                 arbol
@@ -92,14 +103,18 @@ struct MecanicaSegmentar: View {
     private func tokenVista(_ i: Int, _ token: ElementoTexto) -> some View {
         let niveles = (segmentos.map(nivel).max() ?? -1) + 1
         let enPendiente = rangoPendiente?.contains(i) ?? (inicio == i)
+        let enPrevia = !enPendiente && (rangoPrevio?.contains(i) ?? false)
         let contiene = segmentos.filter { rango($0).contains(i) }
         return VStack(alignment: .leading, spacing: 2) {
             Button {
                 tocar(i)
             } label: {
-                Ficha(texto: token.texto, estado: enPendiente ? .seleccionada : .normal, acento: ctx.acento)
+                Ficha(texto: token.texto, estado: enPendiente ? .seleccionada : (enPrevia ? .enTramo : .normal), acento: ctx.acento)
             }
-            .buttonStyle(.plain)
+            .buttonStyle(EstiloPulsacion { pulsado in
+                if pulsado { previa = i } else if previa == i { previa = nil }
+            })
+            .animation(.easeOut(duration: 0.12), value: rangoPrevio)
             .accessibilityLabel(token.texto)
             .accessibilityValue(valorToken(i, enPendiente: enPendiente, contiene: contiene))
             .accessibilityHint(inicio == nil || fin != nil ? "Marca el inicio del tramo" : "Marca el final del tramo")
@@ -136,7 +151,6 @@ struct MecanicaSegmentar: View {
 
     private var etiquetas: some View {
         VStack(alignment: .leading, spacing: Espacio.s) {
-            Text("Etiquetas").font(.footnote.bold()).foregroundStyle(Paleta.textoSecundario)
             DisposicionFlujo {
                 ForEach(p.etiquetas, id: \.id) { e in
                     Button {
@@ -164,7 +178,27 @@ struct MecanicaSegmentar: View {
 
     private var arbol: some View {
         VStack(alignment: .leading, spacing: Espacio.s) {
-            Text("Tu análisis").font(.footnote.bold()).foregroundStyle(Paleta.textoSecundario)
+            Button {
+                withAnimation(.easeInOut(duration: 0.2)) { arbolPlegado.toggle() }
+            } label: {
+                HStack {
+                    Text("Tu análisis (\(segmentos.count))").font(.footnote.bold()).foregroundStyle(Paleta.textoSecundario)
+                    Spacer()
+                    Image(systemName: "chevron.down")
+                        .font(.footnote.bold())
+                        .foregroundStyle(Paleta.textoSecundario)
+                        .rotationEffect(.degrees(arbolPlegado ? -90 : 0))
+                        .accessibilityHidden(true)
+                }
+                .frame(minHeight: Medidas.tactilMinimo)
+                .contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Tu análisis, \(segmentos.count) tramos")
+            .accessibilityValue(arbolPlegado ? "plegado" : "desplegado")
+            .accessibilityHint(arbolPlegado ? "Despliega el árbol" : "Pliega el árbol")
+            .accessibilityIdentifier("plegarArbol")
+            if !arbolPlegado || ctx.corregido {
             ForEach(segmentos.sorted { (rango($0).lowerBound, -rango($0).upperBound, nivel($0)) < (rango($1).lowerBound, -rango($1).upperBound, nivel($1)) }, id: \.id) { s in
                 let texto = p.tokens[rango(s)].map(\.texto).joined(separator: " ")
                 HStack(spacing: Espacio.s) {
@@ -197,6 +231,7 @@ struct MecanicaSegmentar: View {
                 .accessibilityElement(children: .combine)
                 .accessibilityValue(ctx.corregido ? (esCorrecto(s) ? "correcto" : "incorrecto") : "")
             }
+            }
         }
         .padding(Espacio.m)
         .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
@@ -214,6 +249,7 @@ struct MecanicaSegmentar: View {
 
     private func tocar(_ i: Int) {
         aviso = nil
+        previa = nil
         if inicio == nil || fin != nil {
             inicio = i
             fin = nil
@@ -267,5 +303,15 @@ struct MecanicaSegmentar: View {
             return hijo
         }
         respuesta = resto.isEmpty ? nil : .segmentar(resto)
+    }
+}
+
+/// Estilo sin decoración que avisa de cuándo se pulsa y se suelta (vista previa en vivo).
+struct EstiloPulsacion: ButtonStyle {
+    let alCambiar: @MainActor (Bool) -> Void
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .onChange(of: configuration.isPressed) { _, pulsado in alCambiar(pulsado) }
     }
 }

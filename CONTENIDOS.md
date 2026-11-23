@@ -9,7 +9,7 @@
 
 ### Bloques y prioridad (catálogo v1)
 
-La prioridad va de 1 (★) a 3 (★★★). Los bloques ★★★ entran en el diagnóstico. **Las prioridades actuales son provisionales (D-029)** y debe confirmarlas la dirección.
+La prioridad va de 1 (★) a 3 (★★★). Los bloques ★★★ entran en el diagnóstico. Prioridades definitivas de la dirección (D-031).
 
 | Lengua (LEN) | Prioridad | Matemáticas (MAT) | Prioridad |
 |---|---|---|---|
@@ -171,8 +171,28 @@ Preguntas numeradas 1, 2, 3… en orden; `area` es `LEN` o `MAT`; las competenci
 
 | ID | Tipo | Autoría u origen | Licencia | Fecha |
 |---|---|---|---|---|
-| 10 ítems, 2 tarjetas y SIM.01 de prueba (Fase 04) | original | Claude Code, solo para tests (estado `borrador`) | propia | 2026-11-23 |
+| Ítems, tarjetas y SIM.01 de prueba (Fases 04 y 05A) | original | Claude Code, solo para tests y desarrollo (estado `borrador`, solo Debug) | propia | 2026-11-23 |
+| Lote 01 · `LEN.ORT.*` (38 ítems y 5 tarjetas) | original | Redacción original de la dirección del proyecto | propia | 2026-11-23 |
 
 ## 4. Proceso de revisión y calidad
 
 `borrador` → `revisado` → `aprobado` (con revisor y fecha). Solo lo aprobado llega a Release. El test «Todo el contenido del bundle pasa el validador» se ejecuta en cada verificación de fase.
+
+## 5. Registro de lotes
+
+| Lote | Bloque | Ítems | Tarjetas | Estado | Archivos |
+|---|---|---|---|---|---|
+| Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
+
+**Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
+
+| Competencia | Ítems | Peldaños 1/2/3/4 | Mecánicas |
+|---|---|---|---|
+| LEN.ORT.AGU Agudas, llanas y esdrújulas | 9 | 2/3/2/2 | elección, clasificar, marcar texto (sílabas y palabras), verdadero/falso, construir |
+| LEN.ORT.DIA Tilde diacrítica | 9 | 2/2/3/2 | elección, emparejar, verdadero/falso, marcar texto, construir |
+| LEN.ORT.HIA Diptongo, hiato y tilde | 6 | 1/2/2/1 | elección, clasificar, verdadero/falso, construir |
+| LEN.ORT.PQ Por qué, porque, porqué y por que | 6 | 1/2/2/1 | elección, construir |
+| LEN.ORT.HOM Homófonos frecuentes | 8 | 1/3/3/1 | elección, marcar texto, construir |
+
+Validación técnica: el lote pasa el validador sin cambios; en Release se cargan exactamente estos 38 ítems y 5 tarjetas y ningún borrador (`ContenidoEmpaquetadoTests.releaseNoCargaBorradores`). Las observaciones de contenido para la dirección figuran en el informe de la Fase 05A.1.
+

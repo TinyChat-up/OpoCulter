@@ -78,6 +78,8 @@ struct TarjetaSuperficie<Contenido: View>: View {
 enum EstadoFicha: Equatable {
     case normal
     case seleccionada
+    /// Dentro del tramo que se está marcando (segmentar): tinte suave del acento.
+    case enTramo
     case correcta
     case incorrecta
     /// Elemento que el usuario no marcó pero formaba parte de la solución.
@@ -85,7 +87,7 @@ enum EstadoFicha: Equatable {
     case desactivada
 }
 
-/// Ficha táctil (palabra, opción, pieza…). Mínimo 44 × 44 pt.
+/// Ficha táctil (palabra, opción, pieza…). Mínimo 52 pt de alto (D-049).
 struct Ficha: View {
     let texto: String
     var estado: EstadoFicha = .normal
@@ -103,9 +105,9 @@ struct Ficha: View {
                 .layoutPriority(1)
         }
         .foregroundStyle(colorTexto)
-        .padding(.horizontal, Espacio.m)
-        .padding(.vertical, Espacio.s)
-        .frame(minWidth: Medidas.tactilMinimo, maxWidth: anchoCompleto ? .infinity : nil, minHeight: Medidas.tactilMinimo, alignment: alineacion)
+        .padding(.horizontal, Espacio.l)
+        .padding(.vertical, Espacio.m)
+        .frame(minWidth: Medidas.fichaMinima, maxWidth: anchoCompleto ? .infinity : nil, minHeight: Medidas.fichaMinima, alignment: alineacion)
         .background(colorFondo, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
         .overlay(
             RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous)
@@ -129,20 +131,21 @@ struct Ficha: View {
         // fondo tintado); el estado lo indican el icono y el borde.
         case .seleccionada: Paleta.textoSobreAcento
         case .desactivada: Paleta.textoSecundario
-        case .normal, .correcta, .incorrecta, .faltante: Paleta.textoPrincipal
+        case .normal, .enTramo, .correcta, .incorrecta, .faltante: Paleta.textoPrincipal
         }
     }
 
     private var colorFondo: Color {
         switch estado {
         case .seleccionada: acento
+        case .enTramo: acento.opacity(0.18)
         default: Paleta.superficie
         }
     }
 
     private var colorBorde: Color {
         switch estado {
-        case .seleccionada: acento
+        case .seleccionada, .enTramo: acento
         case .correcta, .faltante: Paleta.exito
         case .incorrecta: Paleta.fallo
         default: Paleta.borde
@@ -155,6 +158,7 @@ extension EstadoFicha {
     var descripcionAccesible: String? {
         switch self {
         case .seleccionada: "seleccionada"
+        case .enTramo: "en el tramo"
         case .correcta: "correcta"
         case .incorrecta: "incorrecta"
         case .faltante: "faltaba marcarla"
@@ -192,14 +196,22 @@ struct BarraProgresoRonda: View {
 
 // MARK: - Indicador de combo
 
+/// Cápsula del combo. En los hitos (×3, ×5, ×10…) da un salto con destello; con "Reducir
+/// movimiento", solo un fundido del destello.
 struct IndicadorCombo: View {
     let combo: Int
+    /// Aumenta en cada hito de combo (dispara la animación).
+    var hitos: Int = 0
     @Environment(\.accessibilityReduceMotion) private var reducir
+    @State private var escala: CGFloat = 1
+    @State private var destello = 0.0
 
     var body: some View {
         let activo = combo >= 2
         HStack(spacing: Espacio.xs) {
-            Image(systemName: "bolt.fill").accessibilityHidden(true)
+            Image(systemName: "bolt.fill")
+                .symbolEffect(.bounce, options: .speed(1.5), value: reducir ? 0 : hitos)
+                .accessibilityHidden(true)
             Text("×\(combo)")
                 .font(.redondeada(.subheadline, peso: .bold))
                 .contentTransition(.numericText())
@@ -209,8 +221,26 @@ struct IndicadorCombo: View {
         .frame(minHeight: Medidas.tactilMinimo)
         .background(activo ? Paleta.recompensa : Paleta.superficie, in: Capsule())
         .overlay(Capsule().strokeBorder(activo ? Color.clear : Paleta.borde))
-        .scaleEffect(activo && !reducir && combo % 3 == 0 ? 1.08 : 1)
+        .background {
+            Capsule()
+                .fill(Paleta.recompensa)
+                .blur(radius: 10)
+                .opacity(destello)
+                .scaleEffect(reducir ? 1 : 1 + destello * 0.4)
+                .accessibilityHidden(true)
+        }
+        .scaleEffect(escala)
         .animacionApp(combo)
+        .onChange(of: hitos) { _, nuevo in
+            guard nuevo > 0 else { return }
+            if reducir {
+                withAnimation(.easeOut(duration: 0.2)) { destello = 0.9 }
+                withAnimation(.easeIn(duration: 0.35).delay(0.2)) { destello = 0 }
+            } else {
+                withAnimation(.spring(response: 0.22, dampingFraction: 0.45)) { escala = 1.3; destello = 1 }
+                withAnimation(.spring(response: 0.3, dampingFraction: 0.7).delay(0.22)) { escala = 1; destello = 0 }
+            }
+        }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Combo")
         .accessibilityValue(activo ? "\(combo) aciertos seguidos" : "sin combo")
@@ -246,12 +276,36 @@ struct ChipRacha: View {
     let dias: Int
     let protectores: Int
     let record: Int
+    /// Solo para capturas (Debug): abre el globo al aparecer.
+    var abrirAyudaAlAparecer = false
 
     @Environment(\.dynamicTypeSize) private var tamano
+    @State private var mostrarAyuda = false
 
     var body: some View {
+        Button { mostrarAyuda = true } label: { chip }
+            .buttonStyle(.plain)
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel("Racha")
+            .accessibilityValue("\(dias == 1 ? "1 día" : "\(dias) días"). \(protectores) protectores. Récord: \(record)")
+            .accessibilityHint("Explica qué significa cada icono")
+            .accessibilityAddTraits(.isButton)
+            .accessibilityIdentifier("chipRacha")
+            .popover(isPresented: $mostrarAyuda, arrowEdge: .top) {
+                GloboRacha(dias: dias, protectores: protectores, record: record)
+                    .presentationCompactAdaptation(.popover)
+            }
+            .task {
+                if abrirAyudaAlAparecer {
+                    try? await Task.sleep(for: .seconds(1))
+                    mostrarAyuda = true
+                }
+            }
+    }
+
+    private var chip: some View {
         let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(spacing: Espacio.m))
-        disposicion {
+        return disposicion {
             Label {
                 Text(dias == 1 ? "1 día" : "\(dias) días").font(.redondeada(.headline, peso: .bold))
             } icon: {
@@ -275,10 +329,44 @@ struct ChipRacha: View {
         .frame(minHeight: Medidas.tactilMinimo)
         .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
         .overlay(RoundedRectangle(cornerRadius: 22, style: .continuous).strokeBorder(Paleta.borde))
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Racha")
-        .accessibilityValue("\(dias == 1 ? "1 día" : "\(dias) días"). \(protectores) protectores. Récord: \(record)")
-        .accessibilityIdentifier("chipRacha")
+        .contentShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+    }
+}
+
+/// Globo que explica la racha, los protectores y el récord.
+struct GloboRacha: View {
+    let dias: Int
+    let protectores: Int
+    let record: Int
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: Espacio.m) {
+                fila("flame.fill", Paleta.recompensaTexto, "Racha",
+                     "Días seguidos completando al menos una ronda. Llevas \(dias == 1 ? "1 día" : "\(dias) días").")
+                fila("shield.fill", Paleta.matematicas, "Protectores",
+                     "Salvan tu racha si un día no juegas. Se reponen a 2 cada mes y ganas uno más por cada semana completa (máximo 3). Tienes \(protectores).")
+                fila("trophy.fill", Paleta.recompensaTexto, "Récord",
+                     "Tu racha más larga hasta ahora: \(record == 1 ? "1 día" : "\(record) días").")
+            }
+            .padding(Espacio.l)
+        }
+        .frame(idealWidth: 320, maxWidth: 360)
+        .background(Paleta.superficie)
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("globoRacha")
+    }
+
+    private func fila(_ icono: String, _ color: Color, _ titulo: String, _ texto: String) -> some View {
+        HStack(alignment: .top, spacing: Espacio.m) {
+            Image(systemName: icono).font(.title3).foregroundStyle(color).frame(width: 28).accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: Espacio.xs) {
+                Text(titulo).font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                Text(texto).font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+        }
+        .accessibilityElement(children: .combine)
     }
 }
 
@@ -290,6 +378,8 @@ struct HojaFeedback: View {
     var feedbackEspecifico: [String] = []
     var solucion: String?
     var xp: Int = 0
+    /// Color del área: "Continuar" y "Ver regla" lo usan también tras un fallo (fallar no castiga).
+    var acento: Color = Paleta.matematicas
     var subioPeldano = false
     var puedeVerRegla = false
     var verRegla: () -> Void = {}
@@ -320,7 +410,7 @@ struct HojaFeedback: View {
                 Image(systemName: correcto ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(.title2)
                     .accessibilityHidden(true)
-                Text(correcto ? "¡Correcto!" : "Incorrecto")
+                Text(correcto ? "¡Correcto!" : "No es correcto")
                     .font(.title3.bold())
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader)
@@ -332,6 +422,7 @@ struct HojaFeedback: View {
                         .padding(.horizontal, Espacio.s)
                         .padding(.vertical, Espacio.xs)
                         .background(Paleta.recompensa, in: Capsule())
+                        .anchorPreference(key: AnclasVueloXP.self, value: .bounds) { ["origen": $0] }
                 }
             }
             .foregroundStyle(color)
@@ -370,13 +461,23 @@ struct HojaFeedback: View {
 
     @ViewBuilder
     private var botones: some View {
-                if puedeVerRegla {
-                    Button("Ver regla", action: verRegla)
-                        .buttonStyle(EstiloBotonSecundario(acento: color))
-                        .accessibilityIdentifier("botonVerRegla")
-                }
-                Button("Continuar", action: continuar)
-                    .buttonStyle(EstiloBotonPrincipal(acento: color))
-                    .accessibilityIdentifier("botonContinuar")
+        if puedeVerRegla {
+            Button("Ver regla", action: verRegla)
+                .buttonStyle(EstiloBotonSecundario(acento: acento))
+                .accessibilityIdentifier("botonVerRegla")
+        }
+        Button("Continuar", action: continuar)
+            .buttonStyle(EstiloBotonPrincipal(acento: correcto ? Paleta.exito : acento))
+            .accessibilityIdentifier("botonContinuar")
+    }
+}
+
+// MARK: - Vuelo de la XP
+
+/// Anclas del vuelo de "+N XP": "origen" (cápsula del panel) y "destino" (contador de la cabecera).
+struct AnclasVueloXP: PreferenceKey {
+    static let defaultValue: [String: Anchor<CGRect>] = [:]
+    static func reduce(value: inout [String: Anchor<CGRect>], nextValue: () -> [String: Anchor<CGRect>]) {
+        value.merge(nextValue()) { $1 }
     }
 }
