@@ -1,0 +1,49 @@
+# --- macOS ---
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# --- Xcode ---
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+DerivedData/
+build/
+*.moved-aside
+*.hmap
+*.ipa
+*.dSYM
+*.dSYM.zip
+*.xcarchive
+*.xcresult
+timeline.xctimeline
+playground.xcworkspace
+
+# --- Swift Package Manager ---
+.build/
+.swiftpm/
+Packages/
+Package.resolved
+
+# --- Secretos y firma (NUNCA al repositorio) ---
+*.p12
+*.p8
+*.pem
+*.key
+*.cer
+*.certSigningRequest
+*.mobileprovision
+*.provisionprofile
+.env
+.env.*
+*.secret
+AuthKey_*.p8
+ExportOptions.plist
+
+# --- Editores ---
+.vscode/
+.idea/
+*.swp
+*~
