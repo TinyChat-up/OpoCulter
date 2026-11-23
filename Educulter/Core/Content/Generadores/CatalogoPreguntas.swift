@@ -15,6 +15,8 @@ struct RecuentoCatalogo: Sendable, Equatable {
         var competencia: String
         var variantes: Int
         var exacto: Bool
+        /// Aclaración del recuento (p. ej., aportación limitada por decisión de la dirección).
+        var nota: String? = nil
     }
 
     var estaticos = 0
@@ -33,6 +35,9 @@ struct RecuentoCatalogo: Sendable, Equatable {
 
 enum CatalogoPreguntas {
     static let limitePorPlantilla = 20_000
+    /// `ordenarNumeros` no cuenta para el objetivo de volumen (D-064): su espacio combinatorio
+    /// (millones de combinaciones) inflaría la cifra. Aporta como mucho 2000 variantes representativas.
+    static let maximoOrdenarNumeros = 2_000
 
     private final class Cache: @unchecked Sendable {
         let cerrojo = NSLock()
@@ -53,8 +58,8 @@ enum CatalogoPreguntas {
         return r
     }
 
-    /// Recuento sin caché.
-    static func contar(_ banco: BancoContenido, limitePorPlantilla: Int = limitePorPlantilla) -> RecuentoCatalogo {
+    /// Recuento sin caché. `paralelo: false` enumera en serie (el test comprueba que dan lo mismo).
+    static func contar(_ banco: BancoContenido, limitePorPlantilla: Int = limitePorPlantilla, paralelo: Bool = true) -> RecuentoCatalogo {
         var r = RecuentoCatalogo()
         func anotar(competencia: String, peldano: Int, dificultad: Int, cantidad: Int) {
             let partes = competencia.split(separator: ".")
@@ -75,9 +80,16 @@ enum CatalogoPreguntas {
         let listas = Listas(plantillas.count)
         let cerrojo = NSLock()
         let recursos = banco.recursos
-        DispatchQueue.concurrentPerform(iterations: plantillas.count) { i in
-            let lista = MotorGeneradores.generador(plantillas[i].tipo)?.enumerar(plantillas[i], recursos: recursos, limite: limitePorPlantilla) ?? []
+        let enumerar: @Sendable (Int) -> Void = { i in
+            let p = plantillas[i]
+            let limite = p.tipo == "ordenarNumeros" ? min(limitePorPlantilla, maximoOrdenarNumeros) : limitePorPlantilla
+            let lista = MotorGeneradores.generador(p.tipo)?.enumerar(p, recursos: recursos, limite: limite) ?? []
             cerrojo.lock(); listas.valores[i] = lista; cerrojo.unlock()
+        }
+        if paralelo {
+            DispatchQueue.concurrentPerform(iterations: plantillas.count, execute: enumerar)
+        } else {
+            for i in plantillas.indices { enumerar(i) }
         }
         var claves = Set<String>()
         for (i, p) in plantillas.enumerated() {
@@ -87,8 +99,10 @@ enum CatalogoPreguntas {
             for c in lista where claves.insert("\(p.tipo)|\(c)").inserted { nuevas += 1 }
             r.generados += nuevas
             let muestreo = ["operacionesCombinadas", "estadisticaBasica", "oracionSimple"].contains(p.tipo)
+            let limitado = p.tipo == "ordenarNumeros"
             r.plantillas.append(.init(id: p.id, tipo: p.tipo, competencia: p.competencia, variantes: nuevas,
-                                      exacto: !muestreo && lista.count < limitePorPlantilla))
+                                      exacto: !muestreo && !limitado && lista.count < limitePorPlantilla,
+                                      nota: limitado ? "Aportación limitada a \(maximoOrdenarNumeros) variantes representativas; no cuenta para el objetivo de volumen (D-064)" : nil))
             anotar(competencia: p.competencia, peldano: p.peldano, dificultad: p.dificultad, cantidad: nuevas)
         }
         return r

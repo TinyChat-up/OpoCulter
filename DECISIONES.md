@@ -287,7 +287,8 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 **`CatalogoPreguntas`: cifra real de preguntas únicas.**
 - **Qué se cuenta**: los ítems estáticos (por id) más las claves canónicas únicas de cada plantilla (`tipo|clave`). Dos plantillas que comparten caso no cuentan doble. La mecánica no forma parte de la clave, por prudencia: el mismo caso en dos mecánicas cuenta una vez.
 - **Exacto o cota inferior**: los espacios finitos y abarcables se enumeran enteros (porcentajes, unidades, romanos, m.c.m./m.c.d., probabilidad, ecuaciones, fracciones, léxico, verbos y frases). Los combinatorios enormes (operaciones combinadas, estadística y oraciones) se recorren con semillas consecutivas hasta 3000 claves, y el resultado se marca como cota inferior ("≥"). La enumeración por plantilla se corta en 20 000 claves.
-- **Rendimiento**: el recuento completo tarda menos de 2 s (lo comprueba un test). Se cachea por versión de contenido y nunca se calcula al arrancar: solo en Revisión.
+- **Rendimiento**: el recuento completo tarda menos de 2 s en la pasada sin cobertura; con cobertura el test solo registra el tiempo (resolución de la dirección). Las plantillas se enumeran en paralelo y la deduplicación se hace después, en orden; un test comprueba que el resultado es idéntico al secuencial. Se cachea por versión de contenido y nunca se calcula al arrancar: solo en Revisión.
+- **`ordenarNumeros` no cuenta para el objetivo de 30 000** (resolución de la dirección): su espacio combinatorio (millones de combinaciones) inflaría la cifra. Aporta como mucho 2000 variantes representativas, marcadas con "≥" y una nota. La generación en las rondas no cambia.
 
 ### D-065 · 2026-11-23 · Fase 05C · Vigente (dirección)
 **Léxico con acentuación deducida.**

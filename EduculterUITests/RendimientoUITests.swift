@@ -19,17 +19,28 @@ final class RendimientoUITests: XCTestCase {
         }
     }
 
+    /// Elementos cuyo identificador empieza por `prefijo`, ordenados de izquierda a derecha por su
+    /// posición en pantalla (no por índice fijo: con texto grande en el dispositivo cambia el reparto).
+    @MainActor
+    private func ordenados(_ app: XCUIApplication, _ prefijo: String) -> [XCUIElement] {
+        app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH %@", prefijo)).allElementsBoundByIndex
+            .filter { $0.exists && $0.isHittable }
+            .sorted { ($0.frame.minY, $0.frame.minX) < ($1.frame.minY, $1.frame.minX) }
+    }
+
     @MainActor
     @available(iOS 26.0, *)
     func testFluidezFraccionBarras() throws {
         let app = XCUIApplication()
         app.launchArguments = ["-enMemoria", "-avatar", "0", "-captura", "item:MAT.NUM.FRAEQ.0003:antes"]
         app.launch()
-        XCTAssertTrue(app.buttons["celda_0"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'celda_'")).firstMatch.waitForExistence(timeout: 30))
+        let celdas = ordenados(app, "celda_")
+        XCTAssertGreaterThanOrEqual(celdas.count, 2)
         measure(metrics: [XCTHitchMetric(application: app), XCTCPUMetric(application: app), XCTClockMetric()], options: opciones) {
-            // Colorear y descolorear 12 celdas (cada toque anima la celda).
-            for i in 0..<12 { app.buttons["celda_\(i)"].tap() }
-            for i in 0..<12 { app.buttons["celda_\(i)"].tap() }
+            // Colorear y descolorear todas las celdas (cada toque anima la celda).
+            for c in celdas { c.tap() }
+            for c in celdas { c.tap() }
         }
     }
 
@@ -53,10 +64,13 @@ final class RendimientoUITests: XCTestCase {
         let app = XCUIApplication()
         app.launchArguments = ["-enMemoria", "-avatar", "0", "-captura", "item:LEN.ORT.AGU.0017:antes"]
         app.launch()
-        XCTAssertTrue(app.buttons["letra_3"].waitForExistence(timeout: 30))
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'letra_'")).firstMatch.waitForExistence(timeout: 30))
+        let vocales = ordenados(app, "letra_")
+        XCTAssertGreaterThanOrEqual(vocales.count, 2)
         measure(metrics: [XCTHitchMetric(application: app), XCTCPUMetric(application: app), XCTClockMetric()], options: opciones) {
-            // «telefono»: la tilde cae en cada vocal y se quita.
-            for i in [1, 3, 5, 7, 3, 3] { app.buttons["letra_\(i)"].tap() }
+            // La tilde cae en cada vocal (de izquierda a derecha) y se quita.
+            for v in vocales { v.tap() }
+            vocales[min(1, vocales.count - 1)].tap()
             app.buttons["botonSinTilde"].tap()
         }
     }

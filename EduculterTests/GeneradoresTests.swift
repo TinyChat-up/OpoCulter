@@ -517,7 +517,16 @@ struct CatalogoPreguntasTests {
         let inicio = Date()
         let r = CatalogoPreguntas.contar(bancoGeneradores)
         let segundos = Date().timeIntervalSince(inicio)
-        #expect(segundos < 2, "El recuento tarda \(segundos) s")
+        // El límite de 2 s se aplica sin cobertura; con cobertura (instrumentación) solo se registra.
+        let conCobertura = ProcessInfo.processInfo.environment["LLVM_PROFILE_FILE"] != nil
+        if conCobertura {
+            print("Recuento del catálogo con cobertura: \(segundos) s")
+        } else {
+            #expect(segundos < 2, "El recuento tarda \(segundos) s")
+        }
+        #expect(CatalogoPreguntas.contar(bancoGeneradores, paralelo: false) == r, "Paralelo y secuencial dan el mismo recuento")
+        let ordenar = r.plantillas.first { $0.tipo == "ordenarNumeros" }
+        #expect(ordenar?.variantes == CatalogoPreguntas.maximoOrdenarNumeros && ordenar?.exacto == false && ordenar?.nota != nil)
         #expect(r.estaticos == bancoGeneradores.numeroEstaticos)
         #expect(r.generados == r.plantillas.map(\.variantes).reduce(0, +))
         #expect(r.porArea.values.reduce(0, +) == r.total)

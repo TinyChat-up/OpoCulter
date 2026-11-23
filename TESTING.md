@@ -32,7 +32,7 @@ xcodebuild test -project Educulter.xcodeproj -scheme Educulter \
   -enableCodeCoverage YES -resultBundlePath build/Tests.xcresult
 xcrun xccov view --report --json build/Tests.xcresult   # se agrega por archivo de Core/
 ```
-Objetivo: cobertura de `Core/` ≥ 90 % (desde la 05A). Última medición (Fase 05B): **Core 97,1 %** (2 521 / 2 597 líneas) y **Features 87,2 %** (6 077 / 6 969; incluye los tests de UI). En la 05A.1: Core 97,2 % y Features 86,3 %. Reloj, calendario y aleatoriedad se inyectan (`RelojFijo`, `Fx.madrid`, `GeneradorConSemilla`) para que los tests sean deterministas.
+Objetivo: cobertura de `Core/` ≥ 90 % (desde la 05A). Última medición (Fase 05C): **Core 96,2 %** (4 561 / 4 739 líneas; generadores 95,2 %, 1 954 / 2 053), **Features 83,4 %** (6 307 / 7 558; incluye los tests de UI) y App 94,7 %. En la 05B: Core 97,1 % y Features 87,2 %. Reloj, calendario y aleatoriedad se inyectan (`RelojFijo`, `Fx.madrid`, `GeneradorConSemilla`) para que los tests sean deterministas.
 
 ## 5. Accesibilidad
 - **Auditoría automática** (`XCUIApplication.performAccessibilityAudit()`, todas las categorías) en los tests de UI: Hoy (arriba y desplazado hasta el final), globo de la racha, teoría previa, cada una de las 10 mecánicas antes y después de comprobar, y resumen. Cada incidencia se registra con la pantalla en la que aparece y hace fallar el test.
@@ -91,3 +91,41 @@ Una tarea está terminada solo si se ha compilado o ejecutado y se ha comprobado
 
 Conclusión: el arranque (≈ 0,6 s en el simulador desde el inicio del proceso y 0,60 s en el iPhone) cumple el objetivo de < 1,5 s. En el dispositivo no hay tirones al redibujar la barra; los otros dos gestos quedan pendientes de medir en el dispositivo (05C).
 
+
+
+## 10. Fase 05C: generadores y verificación
+
+**Tests nuevos** (`EduculterTests/GeneradoresTests.swift`, 152 tests unitarios en total, 33 suites):
+- **Propiedades**: 1000 semillas por cada una de las 23 plantillas de prueba. En cada ítem se comprueba:
+  - que pasa el validador y no deja marcadores sin rellenar;
+  - el **oráculo independiente** de su tipo (fórmulas propias, parser de romanos, evaluador de expresiones, fuerza bruta para ecuaciones, m.c.m./m.c.d. y probabilidad, tablas escritas a mano para el léxico y las formas verbales, y concordancia de las oraciones);
+  - que los distractores no se repiten ni coinciden con la solución;
+  - el determinismo;
+  - que la clave pertenece al espacio enumerado.
+- **Dificultad 1–6**: la complejidad media de 200 semillas crece con el nivel para cada tipo y mecánica.
+- **Motor, validador y conjugación**: ids `#semilla` y regeneración, Release sin plantillas en borrador, plantillas mal formadas, dificultad 6 y formas ambiguas.
+- **Léxico**: coherencia con la RAE, informe de discrepancias y deducción de sílabas y tónica.
+- **Catálogo**:
+  - Recuento completo en menos de 2 s sin cobertura; con cobertura solo se registra (0,99 s).
+  - Igualdad entre el recuento paralelo y el secuencial.
+  - Duplicados entre plantillas.
+  - `ordenarNumeros` limitado a 2000.
+- **Ronda y Rescate**: una ronda de 8 ítems con plantillas se genera en **menos de 50 ms**, y Rescate reproduce el ítem por id y encuentra variantes con otras semillas.
+- **Avatares y fuente**: 6 avatares, migración `id % 6` en SwiftData guardada en el perfil, y Fredoka registrada y escalada con Dynamic Type.
+- **Opcional** (`TEST_RUNNER_ESTIMAR=1`): estimación del espacio de cada generador y recuento del catálogo para el informe.
+
+**Resultado del cierre (23/11/2026, iPhone 16, iOS 27.2):**
+- `** TEST SUCCEEDED **`: 152 tests unitarios y 9 de interfaz. El de Instruments se omite a propósito.
+- Auditoría de accesibilidad sin incidencias nuevas (`testTodasLasMecanicasConAuditoria` y Piloto).
+- Archive Release correcto y sin avisos.
+
+**Rendimiento:**
+
+| Medida | Resultado |
+|---|---|
+| Arranque en frío en el iPhone 16 físico (`XCTApplicationLaunchMetric`, 5 iteraciones) | **0,70 s** de media (0,59–0,94) |
+| Arranque en el simulador (incluye el lanzamiento de XCTest) | 3,32 s de media |
+| Fluidez en el iPhone (`XCTHitchMetric`, 5 iteraciones): colorear todas las celdas, dividir la barra de 2 a 12 y volver, y `colocarTilde` | **0 tirones** en las tres (Hitch Time Ratio 0 ms/s) |
+| Generar una ronda de 8 ítems con plantillas | < 50 ms (test) |
+
+Los tests de fluidez localizan ahora celdas y vocales **por su posición en pantalla** (ordenadas de arriba abajo y de izquierda a derecha), no por un índice fijo. El primer intento en el dispositivo falló porque el iPhone se bloqueó durante el test; con el bloqueo automático desactivado, pasaron los tres.

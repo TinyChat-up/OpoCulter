@@ -184,7 +184,10 @@ struct RevisionRecuentos: View {
                 Section("Por peldaño") { filas(Dictionary(uniqueKeysWithValues: r.porPeldano.map { ("Peldaño \($0.key)", $0.value) })) }
                 Section("Por plantilla") {
                     ForEach(r.plantillas, id: \.id) { p in
-                        LabeledContent("\(p.id) · \(p.tipo)", value: "\(p.exacto ? "" : "≥ ")\(p.variantes)")
+                        VStack(alignment: .leading, spacing: 2) {
+                            LabeledContent("\(p.id) · \(p.tipo)", value: "\(p.exacto ? "" : "≥ ")\(p.variantes)")
+                            if let nota = p.nota { Text(nota).font(.caption).foregroundStyle(Paleta.textoSecundario) }
+                        }
                     }
                 }
             } else {
