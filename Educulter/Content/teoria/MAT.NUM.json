@@ -1,13 +1,66 @@
 [
   {
-    "id": "MAT.NUM.FRACSUM.T01",
-    "competencia": "MAT.NUM.FRACSUM",
-    "titulo": "Suma de fracciones",
+    "id": "MAT.NUM.FRAREP.T01",
+    "competencia": "MAT.NUM.FRAREP",
+    "titulo": "Qué es una fracción",
     "bloques": [
-      { "tipo": "regla", "contenido": "Para sumar fracciones con distinto denominador, se reducen a común denominador y se suman los numeradores." },
-      { "tipo": "ejemplo", "contenido": "1/2 + 1/4 = 2/4 + 1/4 = 3/4" }
+      {
+        "tipo": "texto",
+        "contenido": "Una fracción indica partes iguales de un todo. El denominador dice en cuántas partes iguales se divide; el numerador, cuántas se toman."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Numerador: partes que se toman\nDenominador: partes iguales en que se divide\n3/4: se divide en 4 y se toman 3"
+      },
+      {
+        "tipo": "ejemplo",
+        "contenido": "Una pizza en 8 porciones; comes 3: has comido 3/8."
+      }
     ],
-    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
-    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" }
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    }
+  },
+  {
+    "id": "MAT.NUM.FRAEQ.T01",
+    "competencia": "MAT.NUM.FRAEQ",
+    "titulo": "Fracciones equivalentes",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Dos fracciones son equivalentes si representan la misma cantidad. Se obtienen multiplicando o dividiendo numerador y denominador por el mismo número."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Ampliar: 1/2 = 2/4 = 3/6 (× 2, × 3)\nSimplificar: 6/9 = 2/3 (÷ 3)\nComprobar: 1 × 6 = 2 × 3, productos cruzados iguales"
+      },
+      {
+        "tipo": "ejemplo",
+        "contenido": "3/4 = 9/12, porque 3 × 3 = 9 y 4 × 3 = 12."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    }
   }
 ]

@@ -25,6 +25,8 @@ struct PerfilJugador: Codable, Sendable, Equatable {
     var metricas: [Metrica: Int] = [:]
     /// Competencia que se está trabajando en las rondas recomendadas.
     var competenciaEnCurso: String?
+    /// Avatar elegido (índice en `Avatar.todos`); `nil` hasta la bienvenida.
+    var avatar: Int?
 }
 
 struct LogroObtenido: Codable, Sendable, Equatable {

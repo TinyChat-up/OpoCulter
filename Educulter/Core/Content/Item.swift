@@ -12,6 +12,10 @@ enum Mecanica: String, Codable, Sendable, CaseIterable {
     case ruedas
     case construir
     case numerico
+    /// Colocar (o no) la tilde en una palabra (Fase 05B).
+    case colocarTilde
+    /// Representar una fracción coloreando una barra dividida (Fase 05B).
+    case fraccionBarras
 }
 
 /// Peldaños de la escalera de dominio.
@@ -138,6 +142,8 @@ enum Payload: Sendable, Equatable {
     case ruedas(Ruedas)
     case construir(Construir)
     case numerico(Numerico)
+    case colocarTilde(ColocarTilde)
+    case fraccionBarras(FraccionBarras)
 
     var mecanica: Mecanica {
         switch self {
@@ -151,6 +157,8 @@ enum Payload: Sendable, Equatable {
         case .ruedas: .ruedas
         case .construir: .construir
         case .numerico: .numerico
+        case .colocarTilde: .colocarTilde
+        case .fraccionBarras: .fraccionBarras
         }
     }
 
@@ -257,6 +265,67 @@ enum Payload: Sendable, Equatable {
         var exigeIrreducible: Bool?
     }
 
+    /// `palabra` en minúsculas y sin tildes; `indiceTilde` es el índice (base 0) del carácter
+    /// vocal que lleva la tilde, o `nil` si la palabra no la lleva.
+    struct ColocarTilde: Codable, Sendable, Equatable {
+        var palabra: String
+        var indiceTilde: Int?
+
+        static let vocales: Set<Character> = ["a", "e", "i", "o", "u"]
+        static let conTilde: [Character: Character] = ["a": "á", "e": "é", "i": "í", "o": "ó", "u": "ú"]
+
+        var letras: [Character] { Array(palabra) }
+
+        /// La palabra escrita con la tilde en `indice` (o sin tilde si es `nil`).
+        func escrita(conTildeEn indice: Int?) -> String {
+            var l = letras
+            if let i = indice, l.indices.contains(i), let c = Self.conTilde[l[i]] { l[i] = c }
+            return String(l)
+        }
+
+        /// Forma correcta de la palabra.
+        var correcta: String { escrita(conTildeEn: indiceTilde) }
+
+        func encode(to encoder: Encoder) throws {
+            var c = encoder.container(keyedBy: CodingKeys.self)
+            try c.encode(palabra, forKey: .palabra)
+            try c.encode(indiceTilde, forKey: .indiceTilde)
+        }
+    }
+
+    /// Barra que se colorea para representar `objetivo` (`"n/d"`).
+    struct FraccionBarras: Codable, Sendable, Equatable {
+        enum Modo: String, Codable, Sendable {
+            /// La barra viene dividida en `partes`; solo se colorea.
+            case colorear
+            /// El usuario elige primero en cuántas partes dividir (2–12) y después colorea.
+            case dividirYColorear
+        }
+        static let rangoPartes = 2...12
+
+        var modo: Modo
+        var partes: Int?
+        var objetivo: String
+        var aceptarEquivalentes: Bool
+        var particionesPermitidas: [Int]?
+
+        /// Numerador y denominador tal como están escritos en `objetivo` (sin simplificar).
+        var fraccionObjetivo: (numerador: Int, denominador: Int)? {
+            let trozos = objetivo.split(separator: "/", omittingEmptySubsequences: false)
+            guard trozos.count == 2, let n = Int(trozos[0]), let d = Int(trozos[1]), d > 0 else { return nil }
+            return (n, d)
+        }
+
+        func encode(to encoder: Encoder) throws {
+            var c = encoder.container(keyedBy: CodingKeys.self)
+            try c.encode(modo, forKey: .modo)
+            try c.encode(partes, forKey: .partes)
+            try c.encode(objetivo, forKey: .objetivo)
+            try c.encode(aceptarEquivalentes, forKey: .aceptarEquivalentes)
+            try c.encodeIfPresent(particionesPermitidas, forKey: .particionesPermitidas)
+        }
+    }
+
     static func decodificar(mecanica: Mecanica, de decoder: Decoder) throws -> Payload {
         switch mecanica {
         case .eleccion: .eleccion(try Eleccion(from: decoder))
@@ -269,6 +338,8 @@ enum Payload: Sendable, Equatable {
         case .ruedas: .ruedas(try Ruedas(from: decoder))
         case .construir: .construir(try Construir(from: decoder))
         case .numerico: .numerico(try Numerico(from: decoder))
+        case .colocarTilde: .colocarTilde(try ColocarTilde(from: decoder))
+        case .fraccionBarras: .fraccionBarras(try FraccionBarras(from: decoder))
         }
     }
 
@@ -284,6 +355,8 @@ enum Payload: Sendable, Equatable {
         case .ruedas(let p): try p.encode(to: encoder)
         case .construir(let p): try p.encode(to: encoder)
         case .numerico(let p): try p.encode(to: encoder)
+        case .colocarTilde(let p): try p.encode(to: encoder)
+        case .fraccionBarras(let p): try p.encode(to: encoder)
         }
     }
 }

@@ -10,6 +10,16 @@ enum TipoRonda: Sendable, Equatable {
     case ortografiaExpres
     /// Ítems concretos, en orden (revisión de contenido y demostraciones).
     case items([String])
+    /// Ronda de un área (`LEN` o `MAT`) con su competencia en curso.
+    case area(String)
+}
+
+/// Propuesta de ronda por área para el panel protagonista de Hoy.
+struct PropuestaRonda: Sendable, Equatable {
+    var area: String
+    var competencia: Catalogo.Competencia
+    /// Mecánica más frecuente de los ítems que tocan ahora (vista previa del panel).
+    var mecanica: Mecanica?
 }
 
 struct RondaPreparada: Sendable, Equatable {
@@ -51,6 +61,12 @@ struct EstadoHoy: Sendable, Equatable {
     var competenciaEnCurso: Catalogo.Competencia?
     var hayContenido: Bool
     var itemsOrtografia: Int
+    /// Una propuesta por área con contenido (Lengua primero).
+    var propuestas: [PropuestaRonda] = []
+    var avatar: Int?
+    /// Racha en riesgo: hay racha, hoy no hay ronda y quedan menos de 4 h (D-054).
+    var rachaEnRiesgo = false
+    var horasHastaMedianoche = 24
 }
 
 /// Orquesta el núcleo para una sesión de juego: compone rondas, registra respuestas y
@@ -101,8 +117,61 @@ final class ServicioSesion {
             rescatesPendientes: try repositorio.colaRescate().cantidad,
             competenciaEnCurso: enCurso.flatMap { id in banco.catalogo.todasLasCompetencias.first { $0.id == id } },
             hayContenido: itemsDeRonda.count >= configRonda.minimo,
-            itemsOrtografia: itemsOrtografia.count
+            itemsOrtografia: itemsOrtografia.count,
+            propuestas: try propuestas(enCurso: enCurso),
+            avatar: perfil.avatar,
+            rachaEnRiesgo: ReglasPersonaje.rachaEnRiesgo(perfil.racha.vigente(hoy: hoy), ahora: reloj.ahora, calendario: calendario),
+            horasHastaMedianoche: ReglasPersonaje.horasHastaMedianoche(ahora: reloj.ahora, calendario: calendario)
         )
+    }
+
+    /// Resumen compacto del progreso guardado (peldaño y caja de Leitner por competencia, Rescate,
+    /// XP y avatar). Lo usa el test de interfaz de cierre y reapertura (Debug).
+    func resumenProgreso() throws -> String {
+        let estados = try repositorio.estadosCompetencia().values.sorted { $0.competenciaId < $1.competenciaId }
+        let perfil = try repositorio.perfil()
+        let competencias = estados.map { "\($0.competenciaId):p\($0.escalera.peldano):c\($0.leitner?.caja ?? 0)" }
+        return (competencias + ["rescate:\(try repositorio.colaRescate().cantidad)", "xp:\(perfil.xpTotal)",
+                                "avatar:\(perfil.avatar.map(String.init) ?? "-")"]).joined(separator: ";")
+    }
+
+    /// Guarda el avatar elegido en el perfil.
+    func elegirAvatar(_ id: Int) throws {
+        guard Avatar.con(id: id) != nil else { return }
+        var perfil = try repositorio.perfil()
+        perfil.avatar = id
+        try repositorio.guardar(perfil)
+    }
+
+    /// Competencia en curso de un área: la en curso global si es de esa área; si no, la
+    /// primera sin dominar del área por prioridad de bloque y orden del catálogo.
+    func competenciaEnCurso(area: String) throws -> String? {
+        let estados = try repositorio.estadosCompetencia()
+        if let global = try competenciaEnCurso(), Catalogo.area(de: global) == area { return global }
+        return competenciasOrdenadas().filter { Catalogo.area(de: $0) == area }.first { valida($0, estados) }
+    }
+
+    private func propuestas(enCurso: String?) throws -> [PropuestaRonda] {
+        let estados = try repositorio.estadosCompetencia()
+        return try ["LEN", "MAT"].compactMap { area -> PropuestaRonda? in
+            guard let id = try competenciaEnCurso(area: area),
+                  let c = banco.catalogo.todasLasCompetencias.first(where: { $0.id == id }) else { return nil }
+            let peldano = estados[id]?.escalera.peldano ?? 1
+            let candidatos = ConstructorRondas(banco: banco, config: configRonda).candidatos(competencia: id, peldano: peldano)
+            let frecuencias = Dictionary(grouping: candidatos, by: \.mecanica).mapValues(\.count)
+            let mecanica = frecuencias.max { ($0.value, $1.key.rawValue) < ($1.value, $0.key.rawValue) }?.key
+            return PropuestaRonda(area: area, competencia: c, mecanica: mecanica)
+        }
+    }
+
+    private func competenciasOrdenadas() -> [String] {
+        let bloques = banco.catalogo.todosLosBloques.enumerated().sorted { ($1.element.prioridad, $0.offset) < ($0.element.prioridad, $1.offset) }
+        return bloques.flatMap { $0.element.competencias.sorted { $0.orden < $1.orden } }.map(\.id)
+    }
+
+    private func valida(_ id: String, _ estados: [String: EstadoCompetencia]) -> Bool {
+        !(estados[id]?.escalera.dominada(configAprendizaje.escalera) ?? false)
+            && banco.items(competencia: id).contains { $0.peldano <= configRonda.peldanoMaximoEnRonda }
     }
 
     /// Competencia en curso: se mantiene la guardada mientras no esté dominada y tenga
@@ -116,13 +185,8 @@ final class ServicioSesion {
 
     private func competenciaEnCurso(perfil: inout PerfilJugador) throws -> String? {
         let estados = try repositorio.estadosCompetencia()
-        func valida(_ id: String) -> Bool {
-            !(estados[id]?.escalera.dominada(configAprendizaje.escalera) ?? false)
-                && banco.items(competencia: id).contains { $0.peldano <= configRonda.peldanoMaximoEnRonda }
-        }
-        if let actual = perfil.competenciaEnCurso, valida(actual) { return actual }
-        let bloques = banco.catalogo.todosLosBloques.enumerated().sorted { ($1.element.prioridad, $0.offset) < ($0.element.prioridad, $1.offset) }
-        let siguiente = bloques.flatMap { $0.element.competencias.sorted { $0.orden < $1.orden } }.map(\.id).first(where: valida)
+        if let actual = perfil.competenciaEnCurso, valida(actual, estados) { return actual }
+        let siguiente = competenciasOrdenadas().first { valida($0, estados) }
         perfil.competenciaEnCurso = siguiente
         return siguiente
     }
@@ -138,8 +202,11 @@ final class ServicioSesion {
         let vistos = try repositorio.vistos(desde: ahora.addingTimeInterval(-configRonda.segundosSinRepetir))
         let esReciente: (String) -> Bool = { vistos[$0] != nil }
         switch tipo {
-        case .recomendada:
-            let enCurso = try competenciaEnCurso()
+        case .recomendada, .area:
+            // La ronda de un área usa la competencia en curso de esa área; el resto (repasos,
+            // Rescate e intercalado) lo compone el motor igual que en la recomendada.
+            let enCurso: String?
+            if case .area(let area) = tipo { enCurso = try competenciaEnCurso(area: area) } else { enCurso = try competenciaEnCurso() }
             let ronda = ConstructorRondas(banco: banco, config: configRonda).construir(
                 estados: try repositorio.estadosCompetencia(), rescate: try repositorio.colaRescate(), enCurso: enCurso,
                 vistos: vistos, ahora: ahora, calendario: calendario, rng: &rng)

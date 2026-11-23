@@ -3,9 +3,14 @@ import SwiftUI
 /// Datos comunes que recibe cada mecánica.
 struct ContextoMecanica {
     let item: Item
+    /// Primario del área: rellenos (con texto blanco) y objetos manipulables.
     let acento: Color
     /// Resultado tras comprobar (nil mientras se responde).
     let resultado: Resultado?
+
+    /// Tinte del panel protagonista y tinta (texto con color de área), v2.
+    var tinte: Color { Paleta.tinte(competencia: item.competencia) }
+    var tinta: Color { Paleta.tinta(competencia: item.competencia) }
 
     var corregido: Bool { resultado != nil }
 
@@ -44,6 +49,8 @@ struct VistaMecanica: View {
             case .ruedas(let p): MecanicaRuedas(p: p, ctx: contexto, respuesta: respuesta)
             case .construir(let p): MecanicaConstruir(p: p, ctx: contexto, respuesta: respuesta)
             case .numerico(let p): MecanicaNumerico(p: p, ctx: contexto, respuesta: respuesta)
+            case .colocarTilde(let p): MecanicaColocarTilde(p: p, ctx: contexto, respuesta: respuesta)
+            case .fraccionBarras(let p): MecanicaFraccionBarras(p: p, ctx: contexto, respuesta: respuesta)
             }
         }
     }
@@ -57,6 +64,7 @@ struct Instruccion: View {
         Text(texto)
             .font(.footnote)
             .foregroundStyle(Paleta.textoSecundario)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
@@ -248,7 +256,7 @@ struct MecanicaNumerico: View {
         VStack(spacing: Espacio.l) {
             HStack(alignment: .firstTextBaseline, spacing: Espacio.s) {
                 Text(texto.wrappedValue.isEmpty ? "?" : texto.wrappedValue.replacingOccurrences(of: "-", with: "−"))
-                    .font(.redondeada(.largeTitle, peso: .bold))
+                    .font(.redondeada(.largeTitle, peso: .semibold))
                     .foregroundStyle(colorTexto)
                     .contentTransition(.numericText())
                     .lineLimit(1)
@@ -332,7 +340,7 @@ struct MecanicaRuedas: View {
         let corto = rueda.opciones.count <= 3 && rueda.opciones.allSatisfy { $0.count <= 10 } && !tamano.isAccessibilitySize
         return VStack(alignment: .leading, spacing: Espacio.s) {
             HStack {
-                Text(rueda.nombre).font(.subheadline.bold()).foregroundStyle(Paleta.textoPrincipal)
+                Text(rueda.nombre).font(.subheadline.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
                 Spacer()
                 if ctx.corregido {
                     Image(systemName: error ? "xmark" : "checkmark")
@@ -352,11 +360,11 @@ struct MecanicaRuedas: View {
                     ForEach(rueda.opciones, id: \.self) { Text($0).tag(Optional($0)) }
                 }
                 .pickerStyle(.menu)
-                .tint(ctx.acento)
+                .tint(ctx.tinta)
                 .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo, alignment: .leading)
             }
             if ctx.corregido, error {
-                Text("Correcta: \(rueda.correcta)").font(.footnote.bold()).foregroundStyle(Paleta.exito)
+                Text("Correcta: \(rueda.correcta)").font(.footnote.weight(.semibold)).foregroundStyle(Paleta.exito)
             }
         }
         .padding(Espacio.m)

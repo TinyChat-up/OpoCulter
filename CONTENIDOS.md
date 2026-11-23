@@ -100,6 +100,8 @@ Modelos Swift: [Core/Content](Educulter/Core/Content). El validador ([ValidadorC
 | `ruedas` | `{ "ruedas":[{"id","nombre","opciones":["…"],"correcta":"…"}] }` | 1–5 ruedas; ≥ 2 opciones sin repetir; `correcta` entre las opciones |
 | `construir` | `{ "plantilla":"… {h1} …", "huecos":[{"id","correcta":"pieceId"}], "piezas":[{"id","texto"}] }` | cada `{id}` de la plantilla tiene hueco y viceversa; `correcta` es una pieza existente; las piezas sobrantes actúan como distractores |
 | `numerico` | `{ "respuesta":"573,75", "formato":"entero\|decimal\|fraccion", "tolerancia":0, "unidad":"€", "exigeIrreducible": true }` | ver 2.4.2 |
+| `colocarTilde` (05B) | `{ "palabra":"cancion", "indiceTilde":5 }` (`null` si no lleva) | `palabra` en minúsculas, solo letras y sin tildes; el índice existe y apunta a una vocal (a, e, i, o, u) |
+| `fraccionBarras` (05B) | `{ "modo":"colorear\|dividirYColorear", "partes":4, "objetivo":"3/4", "aceptarEquivalentes":false, "particionesPermitidas":[6,9] }` | objetivo `n/d` propio (denominador 2–12); en `colorear`, `partes` obligatorio (2–12), `partes × objetivo` entero y, sin equivalentes, `partes` = denominador; `particionesPermitidas` solo en `dividirYColorear` (con `partes: null`), cada una capaz de representar el objetivo |
 
 #### 2.4.1 Segmentar: rangos y anidamiento
 
@@ -132,6 +134,8 @@ El feedback específico se elige cruzando `erroresHabituales[].respuesta` con lo
 | `ruedas` | id de la rueda fallada |
 | `construir` | id del hueco fallado |
 | `numerico` | texto exacto tecleado (p. ej. `"2/6"`) |
+| `colocarTilde` | `"sinTilde"` (no puso tilde y la llevaba), `"conTilde"` (la puso y no la llevaba) o `"posicion"` (en otra vocal) |
+| `fraccionBarras` | `"partes"` (división no válida o no permitida) o `"coloreadas"` (cantidad incorrecta) |
 
 ### 2.6 Tarjeta de teoría
 
@@ -184,6 +188,7 @@ Preguntas numeradas 1, 2, 3… en orden; `area` es `LEN` o `MAT`; las competenci
 |---|---|---|---|---|---|
 | Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
 | Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
+| Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 
@@ -201,4 +206,10 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 - `LEN.ORT.HIA.0003`: el ejemplo «reloj» (termina en -j) pasa a ser «nariz».
 - `LEN.ORT.DIA.0003`: se emparejan las palabras con frases donde encajan («___ canta muy bien.», «A ___ me encanta.»…), de modo que cada frase admite una sola palabra (se elimina la ambigüedad él/mí).
 - `LEN.ORT.DIA.0008`: se adopta la terminología de la NGLE, «determinante posesivo».
+
+**Lote 02 · piloto 05B (23/11/2026).**
+- LEN.ORT.AGU.0010–0021: 12 ítems de `colocarTilde`, peldaños 2–3.
+- MAT.NUM: sus competencias se sustituyen por MAT.NUM.FRAREP («Representar fracciones», 4 ítems) y MAT.NUM.FRAEQ («Fracciones equivalentes», 5 ítems: 4 de `fraccionBarras` y 1 de `construir`), con una tarjeta de teoría cada una.
+- Los borradores de prueba de MAT.NUM (FRACSUM y EQUIV) pasan a MAT.OPE (D-057).
+- Pasa el validador sin cambios. En Release se cargan 50 ítems de LEN.ORT, 9 de MAT.NUM, 5 tarjetas de LEN.ORT y 2 de MAT.NUM, y ningún borrador.
 

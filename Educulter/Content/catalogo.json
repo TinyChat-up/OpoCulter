@@ -204,13 +204,13 @@
           "orden": 4,
           "competencias": [
             {
-              "id": "MAT.NUM.FRACSUM",
-              "nombre": "Suma de fracciones",
+              "id": "MAT.NUM.FRAREP",
+              "nombre": "Representar fracciones",
               "orden": 1
             },
             {
-              "id": "MAT.NUM.EQUIV",
-              "nombre": "Fracciones y decimales equivalentes",
+              "id": "MAT.NUM.FRAEQ",
+              "nombre": "Fracciones equivalentes",
               "orden": 2
             }
           ]
@@ -238,6 +238,16 @@
               "id": "MAT.OPE.JERARQ",
               "nombre": "Jerarquía de operaciones",
               "orden": 1
+            },
+            {
+              "id": "MAT.OPE.FRACSUM",
+              "nombre": "Suma de fracciones",
+              "orden": 2
+            },
+            {
+              "id": "MAT.OPE.EQUIV",
+              "nombre": "Fracciones y decimales equivalentes",
+              "orden": 3
             }
           ]
         },

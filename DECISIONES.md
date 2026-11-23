@@ -190,3 +190,63 @@ El requisito es "SDK de iOS 26 o superior"; 27.2 lo cumple. No se instala el run
 - Las 5 competencias del bloque sustituyen a `LEN.ORT.TILDES`. Sus 5 borradores y su tarjeta se eliminan porque el lote real cubre las mismas mecánicas (en Debug sigue habiendo al menos 3 ítems por mecánica).
 - Los ítems de demostración por mecánica (`-rondaDemostracion`, capturas y test de UI) pasan a ser una lista fija (`EntornoApp.demostracionPreferida`); `construir` usa `LEN.ORT.AGU.0008`.
 - "Ortografía exprés" toma ya sus 5 ítems del lote real.
+
+## Fase 05B — Transformación premium: piloto vertical
+
+### D-053 · 2026-11-23 · Fase 05B · Vigente (propietario)
+**Dirección visual C, "Laboratorio táctil", con personajes y avatares originales.** La misión premium es vinculante ([docs/MISION_PREMIUM.md](docs/MISION_PREMIUM.md)).
+- **Sistema de diseño v2** (sustituye la paleta de la 05A): fondo `#FBFBFA`/`#121316`, superficie neutra `#F1F2F4`/`#1C1D22`, y tinte, tinta y primario por área.
+- **Solo un panel tintado por pantalla** (`PanelProtagonista`). Lo demás son baldosas neutras sin borde ni sombra, o filas.
+- **Radios:** 16 en el panel, 10 en fichas y 4 en celdas.
+- **Pesos:** regular y semibold.
+- **Animaciones:** ≤ 0,35 s y solo para confirmar acciones. Se retiran los brillos y las sombras de la 05A.1: el pulso al acertar queda en escala, el combo en salto y el vuelo de XP pasa a 0,35 s.
+- **Ajustes de contraste AA respecto a la propuesta:**
+  - Lengua primario claro `#E4613F` → **`#C94A27`**: el original da 3,45:1 con texto blanco; `#E4613F` se mantiene como primario oscuro.
+  - Éxito claro `#257E55` → `#237A52`, Fallo `#D13030` → `#C92D2D` y RecompensaTexto `#9C620A` → `#946007`, para que superen 4,5:1 sobre la superficie neutra y los tintes.
+  - Éxito oscuro `#33A872` y Fallo oscuro `#E26A6A`.
+  - El texto con color de área usa la **tinta**; el primario queda para rellenos con texto blanco y para objetos manipulables.
+
+### D-054 · 2026-11-23 · Fase 05B · Vigente
+**Personajes y avatar.**
+- «Tilde» y «Cuarto» se dibujan con `Shape` (sin imágenes) y tienen 6 estados.
+- Las reglas de qué estado dispara cada evento están en Core (`ReglasPersonaje`) y cubiertas por tests:
+  - feedback: celebra o anima;
+  - resumen: celebra si aciertas al menos la mitad;
+  - estado vacío: pensando;
+  - bienvenida: neutral;
+  - racha en riesgo: dormido (hay racha, hoy no hay ronda y quedan menos de 4 h para medianoche);
+  - récord: sorprendido.
+- Uso: nunca reciben toques, miden ≤ 64 pt en la actividad y son `accessibilityHidden` (el mensaje siempre va en texto).
+- Arquitectura: protocolo `RepresentacionPersonaje` con `.vectorial` e `.ilustracion(nombreAsset:)`, inyectable por el entorno.
+- **Avatar:** 12 combinaciones originales de forma, tono y accesorio. Se guarda en el perfil (SwiftData, campo opcional `avatar`), se elige en la bienvenida (que aparece mientras no haya avatar) y se cambia en Perfil (desde el avatar de la cabecera de Hoy).
+
+### D-055 · 2026-11-23 · Fase 05B · Vigente
+**Rondas por área.**
+- Nuevo `TipoRonda.area(String)`: usa la competencia en curso de esa área, que es la global si es de esa área o, si no, la primera sin dominar del área por prioridad.
+- El panel protagonista de Hoy tiene un selector Lengua | Matemáticas. Así se pueden cumplir las misiones "Completa 1 ronda de Lengua/Matemáticas", y un test lo comprueba con el contenido del piloto durante 6 días seguidos.
+- **El relleno de cualquier ronda prefiere el área de la competencia en curso** antes de recurrir a otras: sin esto, una ronda de Matemáticas con pocos ítems del peldaño se completaba con Lengua.
+
+### D-056 · 2026-11-23 · Fase 05B · Vigente
+**Contrato de las mecánicas nuevas.**
+- **`colocarTilde`**
+  - Respuesta: `Int?` (`nil` = «Sin tilde»). Tocar de nuevo la vocal con tilde deja el ítem sin responder.
+  - Errores: `sinTilde`, `conTilde` y `posicion`.
+  - Al corregir se resalta la sílaba tónica con una barra en la tinta del área. La calcula `Silabeo`, una división silábica simplificada (diptongos, hiatos, grupos inseparables y «qu»/«gu») probada con 22 palabras.
+- **`fraccionBarras`**
+  - Respuesta: `(partes, conjunto de celdas)`; la posición no importa y las celdas fuera de la barra no cuentan.
+  - Errores: `partes` (división no válida; en ese caso no se juzga lo coloreado) y `coloreadas`.
+  - Solución de referencia: en `colorear`, las partes dadas; en `dividirYColorear`, la primera partición permitida o el denominador.
+  - El texto de la solución pone la equivalencia cuando difiere del objetivo ("9/12 = 3/4").
+  - Partes de 2 a 12. Al cambiar la división, la barra se vacía.
+- Los dos payloads codifican los nulos de forma explícita (`"indiceTilde": null`, `"partes": null`).
+
+### D-057 · 2026-11-23 · Fase 05B · Vigente
+**Borradores de MAT.NUM.** Las competencias de prueba `MAT.NUM.FRACSUM` y `MAT.NUM.EQUIV`, con sus 3 borradores, su tarjeta y la pregunta 2 de SIM.01, pasan a MAT.OPE (`MAT.OPE.FRACSUM`, `MAT.OPE.EQUIV`) en lugar de eliminarse. Son el único tercer ítem de `ordenar` y el ítem de demostración de `numerico`. Siguen siendo borradores y solo se cargan en Debug.
+
+### D-058 · 2026-11-23 · Fase 05B · Vigente
+**Opciones de arranque nuevas (solo Debug):**
+- `-avatar N`: salta la bienvenida en tests y capturas.
+- `-almacenPruebas NOMBRE` y `-borrarAlmacen`: almacén SwiftData en disco para el test de cierre y reapertura.
+- `-politicaRelease`: carga solo el contenido aprobado.
+
+Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.resumenProgreso()`: peldaño y caja de Leitner por competencia, Rescate, XP y avatar) para que el test compare el progreso guardado antes y después de reabrir.

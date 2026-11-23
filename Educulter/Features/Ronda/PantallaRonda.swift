@@ -35,7 +35,7 @@ struct PantallaRonda: View {
         .sheet(item: $modelo.teoriaAbierta) { tarjeta in
             NavigationStack {
                 ScrollView {
-                    VistaTarjetaTeoria(tarjeta: tarjeta, acento: Paleta.acento(competencia: tarjeta.competencia))
+                    VistaTarjetaTeoria(tarjeta: tarjeta, acento: Paleta.tinta(competencia: tarjeta.competencia))
                         .padding(Espacio.l)
                 }
                 .background(Paleta.fondo)
@@ -73,8 +73,8 @@ struct PantallaRonda: View {
                         } icon: {
                             Image(systemName: SimboloBloque.de(competencia: item.competencia)).accessibilityHidden(true)
                         }
-                        .font(.caption.bold())
-                        .foregroundStyle(acento)
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(Paleta.tinta(competencia: item.competencia))
                         .accessibilityIdentifier("cabeceraCompetencia")
                         Text(item.enunciado)
                             .font(.title3.weight(.semibold))
@@ -93,10 +93,13 @@ struct PantallaRonda: View {
                         }
                         // La mecánica se reparte en el espacio libre (no se amontona arriba).
                         Spacer(minLength: 0)
-                        VistaMecanica(contexto: ContextoMecanica(item: item, acento: acento, resultado: modelo.resultado),
-                                      respuesta: $modelo.respuesta)
-                            .modifier(PulsoAcierto(disparo: modelo.resultado?.correcto == true ? modelo.respondidos : 0))
-                            .id(item.id)
+                        // Panel protagonista: el único elemento tintado de la pantalla (v2).
+                        PanelProtagonista(tinte: Paleta.tinte(competencia: item.competencia)) {
+                            VistaMecanica(contexto: ContextoMecanica(item: item, acento: acento, resultado: modelo.resultado),
+                                          respuesta: $modelo.respuesta)
+                        }
+                        .modifier(PulsoAcierto(disparo: modelo.resultado?.correcto == true ? modelo.respondidos : 0))
+                        .id(item.id)
                         Spacer(minLength: 0)
                     }
                     .padding(Espacio.l)
@@ -139,7 +142,7 @@ struct PantallaRonda: View {
             let datos = VueloXP.Datos(xp: nuevo - anterior)
             vuelo = datos
             Task { @MainActor in
-                try? await Task.sleep(for: .milliseconds(650))
+                try? await Task.sleep(for: .milliseconds(370))
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { xpMostrado = nuevo }
                 if vuelo?.id == datos.id { vuelo = nil }
             }
@@ -198,7 +201,9 @@ struct PantallaRonda: View {
             HojaFeedback(
                 correcto: resultado.correcto, explicacion: item.explicacion,
                 feedbackEspecifico: modelo.feedbackEspecifico, solucion: modelo.solucion,
-                xp: modelo.efecto?.xp ?? 0, acento: acento, subioPeldano: modelo.efecto?.subioPeldano ?? false,
+                xp: modelo.efecto?.xp ?? 0, acento: acento, companero: Companero.de(area: Catalogo.area(de: item.competencia)),
+                tinta: Paleta.tinta(competencia: item.competencia),
+                subioPeldano: modelo.efecto?.subioPeldano ?? false,
                 puedeVerRegla: modelo.teoriaDelItem != nil,
                 verRegla: { modelo.verRegla() },
                 continuar: { modelo.continuar() })
@@ -244,9 +249,9 @@ struct PantallaRonda: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
-                    Text("Antes de empezar").font(.title2.bold()).foregroundStyle(Paleta.textoPrincipal)
+                    Text("Antes de empezar").font(.title2.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
                     ForEach(modelo.tarjetasPrevias) { tarjeta in
-                        VistaTarjetaTeoria(tarjeta: tarjeta, acento: Paleta.acento(competencia: tarjeta.competencia))
+                        VistaTarjetaTeoria(tarjeta: tarjeta, acento: Paleta.tinta(competencia: tarjeta.competencia))
                     }
                 }
                 .padding(Espacio.l)
@@ -259,8 +264,8 @@ struct PantallaRonda: View {
 
     private var estadoVacio: some View {
         VStack(spacing: Espacio.l) {
-            Image(systemName: "tray").font(.largeTitle).foregroundStyle(Paleta.textoSecundario).accessibilityHidden(true)
-            Text("No hay ítems para esta ronda").font(.title3.bold()).foregroundStyle(Paleta.textoPrincipal)
+            VistaPersonaje(companero: .tilde, estado: ReglasPersonaje.estado(para: .estadoVacio))
+            Text("No hay ítems para esta ronda").font(.title3.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
             Text("Vuelve más tarde o prueba otra ronda.").font(.body).foregroundStyle(Paleta.textoSecundario)
             Button("Volver", action: cerrar).buttonStyle(EstiloBotonSecundario())
         }
@@ -286,13 +291,11 @@ struct PantallaResumen: View {
             ScrollView {
                 VStack(spacing: Espacio.xl) {
                     VStack(spacing: Espacio.s) {
-                        Image(systemName: "star.circle.fill")
-                            .font(.system(size: 64))
-                            .foregroundStyle(Paleta.recompensa)
-                            .symbolEffect(.bounce, value: aparecer)
-                            .accessibilityHidden(true)
+                        VistaPersonaje(companero: Companero.de(area: resumen.areaPredominante),
+                                       estado: ReglasPersonaje.estado(para: .resumenRonda(aciertos: resumen.aciertos, total: resumen.total)),
+                                       tamano: 80)
                         Text("¡Ronda completada!")
-                            .font(.redondeada(.largeTitle, peso: .bold))
+                            .font(.redondeada(.largeTitle, peso: .semibold))
                             .foregroundStyle(Paleta.textoPrincipal)
                             .multilineTextAlignment(.center)
                             .accessibilityAddTraits(.isHeader)
@@ -306,6 +309,9 @@ struct PantallaResumen: View {
                             .accessibilityIdentifier("resumenXP")
                         dato("×\(resumen.comboMaximo)", "Combo máx.", icono: "bolt.fill", color: Paleta.recompensaTexto)
                     }
+                    // Los tres datos comparten una sola baldosa neutra (sin tarjetas repetidas).
+                    .padding(Espacio.m)
+                    .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
 
                     VStack(spacing: Espacio.s) {
                         ChipRacha(dias: resumen.racha.actual, protectores: resumen.racha.protectores, record: resumen.racha.record)
@@ -329,7 +335,7 @@ struct PantallaResumen: View {
                         seccion("Logros", icono: "trophy.fill") {
                             ForEach(resumen.logros) { logro in
                                 VStack(alignment: .leading) {
-                                    Text(logro.titulo).bold()
+                                    Text(logro.titulo).fontWeight(.semibold)
                                     Text(logro.descripcion).font(.footnote).foregroundStyle(Paleta.textoSecundario)
                                 }
                             }
@@ -342,7 +348,7 @@ struct PantallaResumen: View {
                                        acento: Paleta.acento(area: resumen.areaPredominante), accion: otraRonda)
                             .accessibilityIdentifier("botonOtraRonda")
                         Button("Terminar", action: terminar)
-                            .buttonStyle(EstiloBotonSecundario(acento: Paleta.acento(area: resumen.areaPredominante)))
+                            .buttonStyle(EstiloBotonSecundario(acento: Paleta.tinta(area: resumen.areaPredominante)))
                             .accessibilityIdentifier("botonTerminar")
                     }
                     .padding(.top, Espacio.s)
@@ -378,10 +384,9 @@ struct PantallaResumen: View {
             return
         }
         Task { @MainActor in
-            try? await Task.sleep(for: .milliseconds(300))
-            let pasos = min(final, 24)
+            let pasos = min(final, 12)
             for paso in 1...pasos {
-                try? await Task.sleep(for: .milliseconds(35))
+                try? await Task.sleep(for: .milliseconds(28))
                 withAnimation(.snappy(duration: 0.1)) { xpMostrado = final * paso / pasos }
             }
         }
@@ -390,28 +395,26 @@ struct PantallaResumen: View {
     private func dato(_ valor: String, _ titulo: String, icono: String, color: Color, valorAccesible: String? = nil) -> some View {
         VStack(spacing: Espacio.xs) {
             Image(systemName: icono).foregroundStyle(color).accessibilityHidden(true)
-            Text(valor).font(.redondeada(.title2, peso: .bold)).foregroundStyle(Paleta.textoPrincipal)
+            Text(valor).font(.redondeada(.title2, peso: .semibold)).foregroundStyle(Paleta.textoPrincipal)
                 .contentTransition(.numericText())
                 .lineLimit(1).minimumScaleFactor(0.6)
             Text(titulo).font(.caption).foregroundStyle(Paleta.textoSecundario)
         }
         .frame(maxWidth: .infinity)
-        .padding(.vertical, Espacio.m)
-        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-        .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(Paleta.borde))
+        .padding(.vertical, Espacio.s)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(titulo)
         .accessibilityValue(valorAccesible ?? valor)
     }
 
     private func seccion<C: View>(_ titulo: String, icono: String, @ViewBuilder contenido: () -> C) -> some View {
+        // Secciones como grupos con título (no tarjetas repetidas, v2).
         let cuerpo = contenido()
-        return TarjetaSuperficie {
-            VStack(alignment: .leading, spacing: Espacio.s) {
-                Label(titulo, systemImage: icono).font(.headline).foregroundStyle(Paleta.recompensaTexto)
-                cuerpo.font(.body).foregroundStyle(Paleta.textoPrincipal)
-            }
+        return VStack(alignment: .leading, spacing: Espacio.s) {
+            Label(titulo, systemImage: icono).font(.headline).foregroundStyle(Paleta.recompensaTexto)
+            cuerpo.font(.body).foregroundStyle(Paleta.textoPrincipal)
         }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -425,7 +428,7 @@ struct ContadorXP: View {
         HStack(spacing: Espacio.xs) {
             Image(systemName: "sparkles").foregroundStyle(Paleta.recompensaTexto).accessibilityHidden(true)
             Text("\(xp)")
-                .font(.redondeada(.subheadline, peso: .bold))
+                .font(.redondeada(.subheadline, peso: .semibold))
                 .foregroundStyle(Paleta.textoPrincipal)
                 .contentTransition(.numericText(value: Double(xp)))
         }
@@ -455,23 +458,22 @@ struct VueloXP: View {
 
     var body: some View {
         Text("+\(datos.xp) XP")
-            .font(.redondeada(.subheadline, peso: .bold))
+            .font(.redondeada(.subheadline, peso: .semibold))
             .foregroundStyle(Paleta.textoSobreRecompensa)
             .padding(.horizontal, Espacio.s)
             .padding(.vertical, Espacio.xs)
             .background(Paleta.recompensa, in: Capsule())
-            .shadow(color: Paleta.recompensa.opacity(0.6), radius: 8)
             .scaleEffect(llegado ? 0.6 : 1.1)
             .opacity(llegado ? 0 : 1)
             .position(llegado ? fin : inicio)
             .onAppear {
-                withAnimation(.easeIn(duration: 0.6)) { llegado = true }
+                withAnimation(.easeIn(duration: 0.35)) { llegado = true }
             }
     }
 }
 
-/// Pulso breve de escala y brillo verde sobre la mecánica al acertar. Con "Reducir
-/// movimiento", solo el brillo (fundido), sin escala.
+/// Pulso breve de escala sobre la mecánica al acertar (≤ 0,35 s, sin brillos ni sombras).
+/// Con "Reducir movimiento", un fundido breve.
 struct PulsoAcierto: ViewModifier {
     /// Cambia (distinto de 0) en cada acierto.
     let disparo: Int
@@ -481,17 +483,16 @@ struct PulsoAcierto: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .shadow(color: Paleta.exito.opacity(brillo * 0.55), radius: 18)
+            .opacity(1 - brillo * 0.25)
             .scaleEffect(escala)
             .onChange(of: disparo) { _, nuevo in
                 guard nuevo > 0 else { return }
                 if reducir {
-                    withAnimation(.easeOut(duration: 0.2)) { brillo = 1 }
-                    withAnimation(.easeIn(duration: 0.4).delay(0.2)) { brillo = 0 }
+                    withAnimation(.easeOut(duration: 0.15)) { brillo = 1 }
+                    withAnimation(.easeIn(duration: 0.2).delay(0.15)) { brillo = 0 }
                 } else {
-                    withAnimation(.spring(response: 0.18, dampingFraction: 0.5)) { escala = 1.03; brillo = 1 }
-                    withAnimation(.spring(response: 0.3, dampingFraction: 0.8).delay(0.18)) { escala = 1 }
-                    withAnimation(.easeIn(duration: 0.5).delay(0.25)) { brillo = 0 }
+                    withAnimation(.spring(response: 0.15, dampingFraction: 0.5)) { escala = 1.03 }
+                    withAnimation(.spring(response: 0.2, dampingFraction: 0.8).delay(0.15)) { escala = 1 }
                 }
             }
     }

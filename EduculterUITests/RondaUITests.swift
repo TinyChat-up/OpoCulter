@@ -1,22 +1,23 @@
 import XCTest
 
-/// Tests de interfaz de la Fase 05A. Se ejecutan en Debug con progreso en memoria y semilla fija.
-final class RondaUITests: XCTestCase {
+/// Base de los tests de interfaz: arranque, auditoría de accesibilidad con excepciones
+/// justificadas (D-048) y toques que desplazan el contenido si hace falta.
+class CasoUI: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
     }
 
     @MainActor
-    private func lanzar(_ extra: [String] = []) -> XCUIApplication {
+    func lanzar(_ extra: [String] = [], base: [String] = ["-enMemoria", "-semilla", "42", "-ayudasDePrueba", "-avatar", "0"]) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = ["-enMemoria", "-semilla", "42", "-ayudasDePrueba"] + extra
+        app.launchArguments = base + extra
         app.launch()
         XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 60))
         return app
     }
 
     /// Incidencias de accesibilidad acumuladas en el test (se informa de todas al final).
-    private var incidencias: [String] = []
+    var incidencias: [String] = []
 
     /// Excepciones justificadas (D-048):
     /// - `bordesDelScroll`: en Hoy, el contenido que el scroll deja bajo la barra de pestañas
@@ -29,7 +30,7 @@ final class RondaUITests: XCTestCase {
     ///   área visible (oculto o recortado por el borde) se mide sobre píxeles que no son suyos; se
     ///   ignora solo en ese caso. Si está entero a la vista, cuenta.
     @MainActor
-    private func auditar(_ app: XCUIApplication, _ pantalla: String, bordesDelScroll: Bool = false, trasPopover: Bool = false) throws {
+    func auditar(_ app: XCUIApplication, _ pantalla: String, bordesDelScroll: Bool = false, trasPopover: Bool = false) throws {
         let alto = app.windows.firstMatch.frame.maxY
         // Se espera a que terminen las transiciones (los fundidos bajan el contraste temporalmente).
         Thread.sleep(forTimeInterval: 1)
@@ -86,7 +87,7 @@ final class RondaUITests: XCTestCase {
     }
 
     @MainActor
-    private func tocar(_ app: XCUIApplication, _ ids: [String]) {
+    func tocar(_ app: XCUIApplication, _ ids: [String]) {
         for id in ids {
             let e = app.descendants(matching: .any)[id].firstMatch
             XCTAssertTrue(e.waitForExistence(timeout: 5), "No existe \(id)")
@@ -100,7 +101,10 @@ final class RondaUITests: XCTestCase {
             e.tap()
         }
     }
+}
 
+/// Tests de interfaz de las Fases 05A y 05B (ronda recomendada y todas las mecánicas).
+final class RondaUITests: CasoUI {
     /// Ronda recomendada de principio a fin (Hoy → ronda → feedback → resumen → Hoy).
     @MainActor
     func testRondaRecomendadaCompleta() throws {
@@ -149,7 +153,7 @@ final class RondaUITests: XCTestCase {
     /// Ronda de demostración con las 10 mecánicas, respondiendo con toques reales (modo sin
     /// arrastre) donde es posible y auditando la accesibilidad de cada mecánica.
     @MainActor
-    func testDiezMecanicasConAuditoria() throws {
+    func testTodasLasMecanicasConAuditoria() throws {
         let app = lanzar(["-rondaDemostracion"])
         app.buttons["botonEmpezarRonda"].tap()
 
@@ -166,11 +170,13 @@ final class RondaUITests: XCTestCase {
                           "seg_token_t5", "seg_token_t6", "etiqueta_CN"],
             "construir": ["pieza_p1", "pieza_p3"],
             "numerico": ["tecla3", "teclaFraccion", "tecla4"],
+            "colocarTilde": ["letra_5"],
+            "fraccionBarras": ["botonMasPartes", "celda_0", "celda_1"],
         ]
         var vistas: [String] = []
-        for _ in 0..<10 {
+        for _ in 0..<12 {
             let mecanica = try XCTUnwrap(["eleccion", "verdaderoFalso", "clasificar", "ordenar", "emparejar", "marcarTexto",
-                                          "segmentar", "ruedas", "construir", "numerico"].first { app.descendants(matching: .any)["mecanica_\($0)"].waitForExistence(timeout: 1) },
+                                          "segmentar", "ruedas", "construir", "numerico", "colocarTilde", "fraccionBarras"].first { app.descendants(matching: .any)["mecanica_\($0)"].waitForExistence(timeout: 1) },
                                          "No se reconoce la mecánica en pantalla")
             vistas.append(mecanica)
             try auditar(app, mecanica)
@@ -184,7 +190,7 @@ final class RondaUITests: XCTestCase {
             try auditar(app, "\(mecanica) corregido")
             app.buttons["botonContinuar"].tap()
         }
-        XCTAssertEqual(Set(vistas).count, 10)
+        XCTAssertEqual(Set(vistas).count, 12)
         XCTAssertTrue(app.descendants(matching: .any)["resumenRonda"].waitForExistence(timeout: 5))
         try auditar(app, "Resumen")
     }

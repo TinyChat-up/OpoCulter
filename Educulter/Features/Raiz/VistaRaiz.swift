@@ -9,12 +9,12 @@ struct VistaRaiz: View {
             TabView {
                 PantallaHoy(modelo: HoyViewModel(servicio: servicio))
                     .tabItem { Label("Hoy", systemImage: "sun.max.fill") }
-                VistaLlegaPronto(titulo: "Mapa", icono: "map",
-                                 texto: "Las rutas de Lengua y Matemáticas, con el dominio de cada competencia y los Retos de bloque.")
-                    .tabItem { Label("Mapa", systemImage: "map.fill") }
-                VistaLlegaPronto(titulo: "Examen", icono: "doc.text",
-                                 texto: "Simulacros completos de 90 minutos con autocorrección por rúbrica.")
-                    .tabItem { Label("Examen", systemImage: "doc.text.fill") }
+                VistaLlegaPronto(titulo: "Camino", icono: "point.topleft.down.to.point.bottomright.curvepath",
+                                 texto: "Las rutas de Lengua y Matemáticas, competencia a competencia, con tu dominio y los Retos de bloque.")
+                    .tabItem { Label("Camino", systemImage: "point.topleft.down.to.point.bottomright.curvepath") }
+                VistaLlegaPronto(titulo: "Tribunal", icono: "checkmark.seal",
+                                 texto: "Simulacros con el formato y el tiempo del examen, corregidos con la rúbrica del tribunal.")
+                    .tabItem { Label("Tribunal", systemImage: "checkmark.seal.fill") }
                 VistaLlegaPronto(titulo: "Progreso", icono: "chart.bar",
                                  texto: "Tu dominio por bloque, tu evolución, tus logros y los ajustes.")
                     .tabItem { Label("Progreso", systemImage: "chart.bar.fill") }
@@ -35,22 +35,14 @@ struct VistaLlegaPronto: View {
 
     var body: some View {
         VStack(spacing: Espacio.l) {
-            Image(systemName: icono)
-                .font(.system(size: 48, weight: .light))
-                .foregroundStyle(Paleta.matematicas)
-                .frame(width: 96, height: 96)
-                .background(Paleta.matematicas.opacity(0.1), in: Circle())
-                .accessibilityHidden(true)
+            VistaPersonaje(companero: .cuarto, estado: ReglasPersonaje.estado(para: .estadoVacio))
             Text(titulo)
-                .font(.title2.bold())
+                .font(.title2.weight(.semibold))
                 .foregroundStyle(Paleta.textoPrincipal)
                 .accessibilityAddTraits(.isHeader)
             Text("Llega pronto")
-                .font(.redondeada(.subheadline, peso: .bold))
-                .foregroundStyle(Paleta.textoSobreRecompensa)
-                .padding(.horizontal, Espacio.m)
-                .padding(.vertical, Espacio.xs)
-                .background(Paleta.recompensa, in: Capsule())
+                .font(.subheadline.weight(.semibold))
+                .foregroundStyle(Paleta.textoSecundario)
             Text(texto)
                 .font(.body)
                 .foregroundStyle(Paleta.textoSecundario)

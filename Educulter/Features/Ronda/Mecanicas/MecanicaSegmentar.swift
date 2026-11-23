@@ -182,10 +182,10 @@ struct MecanicaSegmentar: View {
                 withAnimation(.easeInOut(duration: 0.2)) { arbolPlegado.toggle() }
             } label: {
                 HStack {
-                    Text("Tu análisis (\(segmentos.count))").font(.footnote.bold()).foregroundStyle(Paleta.textoSecundario)
+                    Text("Tu análisis (\(segmentos.count))").font(.footnote.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
                     Spacer()
                     Image(systemName: "chevron.down")
-                        .font(.footnote.bold())
+                        .font(.footnote.weight(.semibold))
                         .foregroundStyle(Paleta.textoSecundario)
                         .rotationEffect(.degrees(arbolPlegado ? -90 : 0))
                         .accessibilityHidden(true)
@@ -204,7 +204,7 @@ struct MecanicaSegmentar: View {
                 HStack(spacing: Espacio.s) {
                     RoundedRectangle(cornerRadius: 2).fill(colorEtiqueta(s.etiqueta)).frame(width: 6).accessibilityHidden(true)
                     VStack(alignment: .leading, spacing: 0) {
-                        Text("\(nombreEtiqueta(s.etiqueta)) (\(s.etiqueta))").font(.subheadline.bold()).foregroundStyle(color(de: s))
+                        Text("\(nombreEtiqueta(s.etiqueta)) (\(s.etiqueta))").font(.subheadline.weight(.semibold)).foregroundStyle(color(de: s))
                         Text(texto).font(.subheadline).foregroundStyle(Paleta.textoPrincipal)
                     }
                     Spacer(minLength: 0)

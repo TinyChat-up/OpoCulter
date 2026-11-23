@@ -112,6 +112,7 @@ final class PerfilRegistro {
     var misionesJSON: Data?
     var metricasJSON: Data?
     var competenciaEnCurso: String?
+    var avatar: Int?
 
     init() {}
 
@@ -124,6 +125,7 @@ final class PerfilRegistro {
         ultimoDiaProcesado = p.racha.ultimoDiaProcesado?.clave
         diaMisiones = p.diaMisiones?.clave
         competenciaEnCurso = p.competenciaEnCurso
+        avatar = p.avatar
         misionesJSON = try JSONEncoder().encode(p.misiones)
         metricasJSON = try JSONEncoder().encode(Dictionary(uniqueKeysWithValues: p.metricas.map { ($0.key.rawValue, $0.value) }))
     }
@@ -137,7 +139,7 @@ final class PerfilRegistro {
                                 ultimoDiaProcesado: ultimoDiaProcesado.flatMap(DiaCivil.init(clave:)))
         return PerfilJugador(xpTotal: xpTotal, racha: racha, misiones: misiones,
                              diaMisiones: diaMisiones.flatMap(DiaCivil.init(clave:)), metricas: metricas,
-                             competenciaEnCurso: competenciaEnCurso)
+                             competenciaEnCurso: competenciaEnCurso, avatar: avatar)
     }
 }
 
@@ -175,6 +177,12 @@ enum EsquemaProgreso {
         let configuracion = ModelConfiguration(
             "Progreso", schema: Schema(modelos), isStoredInMemoryOnly: enMemoria, cloudKitDatabase: .none
         )
+        return try ModelContainer(for: Schema(modelos), configurations: configuracion)
+    }
+
+    /// Contenedor en un archivo concreto (tests de persistencia en disco).
+    static func contenedor(url: URL) throws -> ModelContainer {
+        let configuracion = ModelConfiguration("Progreso", schema: Schema(modelos), url: url, cloudKitDatabase: .none)
         return try ModelContainer(for: Schema(modelos), configurations: configuracion)
     }
 }

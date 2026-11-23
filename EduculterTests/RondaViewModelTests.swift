@@ -1,3 +1,5 @@
+#if DEBUG
+// Estos tests usan ayudas que solo existen en Debug (`rellenarParaPruebas`, opciones de arranque).
 import Foundation
 import Testing
 @testable import Educulter
@@ -35,17 +37,17 @@ struct RondaViewModelTests {
     @Test("Ronda completa: resumen, XP, combo y racha guardados")
     func rondaCompleta() throws {
         let m = RondaViewModel(servicio: servicio(), tipo: .items(EntornoApp.itemsDemostracion(banco)))
-        #expect(m.total == 10 && m.fase == .respondiendo)
+        #expect(m.total == 12 && m.fase == .respondiendo)
         jugar(m, fallos: [4])
         let r = try #require(m.resumen)
         #expect(m.fase == .resumen)
-        #expect(r.aciertos == 9 && r.total == 10)
-        #expect(r.comboMaximo == 5)
+        #expect(r.aciertos == 11 && r.total == 12)
+        #expect(r.comboMaximo == 7)
         let xpGuardado = try repo.perfil().xpTotal
         #expect(r.xp > 0 && r.xp == xpGuardado)
         #expect(r.racha.actual == 1 && r.cambiosRacha.incrementada)
         #expect(r.logros.contains { $0.id == "primera-ronda" })
-        #expect(try repo.intentos(desde: nil).count == 10)
+        #expect(try repo.intentos(desde: nil).count == 12)
         #expect(try repo.colaRescate().cantidad == 1)
     }
 
@@ -62,7 +64,7 @@ struct RondaViewModelTests {
 
     @Test("La pista se muestra, solo en peldaños 1–2, y deja el XP del ítem a 0")
     func pista() throws {
-        let m = RondaViewModel(servicio: servicio(), tipo: .items(["LEN.SIN.SUJPRED.0001", "MAT.NUM.FRACSUM.0001"]))
+        let m = RondaViewModel(servicio: servicio(), tipo: .items(["LEN.SIN.SUJPRED.0001", "MAT.OPE.FRACSUM.0001"]))
         #expect(m.puedePedirPista)
         m.pedirPista()
         #expect(m.pistasMostradas == ["Pregunta al verbo: ¿quién duerme?"])
@@ -149,7 +151,7 @@ struct RondaViewModelTests {
         #expect(OpcionesArranque.desde(["app"]) == OpcionesArranque())
         let entorno = EntornoApp.crear(argumentos: ["app", "-enMemoria", "-rondaDemostracion"])
         #expect(entorno.servicio != nil && entorno.errorCarga == nil)
-        if case .items(let ids) = entorno.tipoRondaPrincipal { #expect(ids.count == 10) } else { Issue.record("Debería ser la ronda de demostración") }
+        if case .items(let ids) = entorno.tipoRondaPrincipal { #expect(ids.count == 12) } else { Issue.record("Debería ser la ronda de demostración") }
         #expect(EntornoApp.crear(argumentos: ["app", "-enMemoria"]).tipoRondaPrincipal == .recomendada)
         #expect(entorno.servicioDeRevision() != nil)
     }
@@ -157,12 +159,12 @@ struct RondaViewModelTests {
     @Test("Hitos de combo (×3, ×5, ×10…) y área predominante del resumen")
     func hitosYArea() throws {
         #expect([1, 2, 3, 4, 5, 6, 9, 10, 15, 20].filter(RondaViewModel.esHitoCombo) == [3, 5, 10, 20])
-        // Demostración: 9 ítems de Lengua y 1 de Matemáticas, todo acertado → hitos en ×3, ×5 y ×10.
+        // Demostración: 10 ítems de Lengua y 2 de Matemáticas, todo acertado → hitos en ×3, ×5 y ×10.
         let m = RondaViewModel(servicio: servicio(), tipo: .items(EntornoApp.itemsDemostracion(banco)))
         jugar(m)
         #expect(m.hitosCombo == 3)
         #expect(m.resumen?.areaPredominante == "LEN")
-        let mates = RondaViewModel(servicio: servicio(), tipo: .items(["MAT.NUM.FRACSUM.0001", "MAT.ROM.LECTURA.0001", "LEN.ORT.AGU.0001"]))
+        let mates = RondaViewModel(servicio: servicio(), tipo: .items(["MAT.OPE.FRACSUM.0001", "MAT.ROM.LECTURA.0001", "LEN.ORT.AGU.0001"]))
         #expect(mates.areaPredominante == "MAT")
     }
 
@@ -177,3 +179,4 @@ struct RondaViewModelTests {
         #expect(Set(bloques.compactMap { SimboloBloque.porBloque[$0] }).count == bloques.count)
     }
 }
+#endif

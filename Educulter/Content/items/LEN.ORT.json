@@ -2332,5 +2332,482 @@
       "fecha": "2026-11-23"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0010",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "cancion",
+      "indiceTilde": 5
+    },
+    "pistas": [
+      "La tónica es la última sílaba."
+    ],
+    "explicacion": "Can-CIÓN: aguda terminada en -n, lleva tilde en la o.",
+    "erroresHabituales": [
+      {
+        "respuesta": "sinTilde",
+        "feedback": "Es aguda y termina en -n: sí lleva tilde."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0011",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "arbol",
+      "indiceTilde": 0
+    },
+    "pistas": [
+      "Las llanas llevan tilde si NO acaban en vocal, -n o -s."
+    ],
+    "explicacion": "ÁR-bol: llana terminada en -l, lleva tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0012",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "examen",
+      "indiceTilde": null
+    },
+    "pistas": [
+      "¿Cuál es la sílaba tónica? ¿En qué letra termina?"
+    ],
+    "explicacion": "E-XA-men: llana terminada en -n, no lleva tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "conTilde",
+        "feedback": "Las llanas en -n no llevan tilde. Su plural, «exámenes», sí."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0013",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "musica",
+      "indiceTilde": 1
+    },
+    "pistas": [
+      "Cuenta las sílabas desde el final."
+    ],
+    "explicacion": "MÚ-si-ca: esdrújula, siempre lleva tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0014",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "cafe",
+      "indiceTilde": 3
+    },
+    "pistas": [],
+    "explicacion": "Ca-FÉ: aguda terminada en vocal, lleva tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0015",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "reloj",
+      "indiceTilde": null
+    },
+    "pistas": [],
+    "explicacion": "Re-LOJ: aguda terminada en -j, no lleva tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "conTilde",
+        "feedback": "Las agudas solo llevan tilde si acaban en vocal, -n o -s."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0016",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 1,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "lapiz",
+      "indiceTilde": 1
+    },
+    "pistas": [],
+    "explicacion": "LÁ-piz: llana terminada en -z, lleva tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0017",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "telefono",
+      "indiceTilde": 3
+    },
+    "pistas": [],
+    "explicacion": "Te-LÉ-fo-no: esdrújula, siempre lleva tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0018",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "robots",
+      "indiceTilde": null
+    },
+    "pistas": [],
+    "explicacion": "Ro-BOTS: aguda en -s precedida de consonante: no lleva tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "conTilde",
+        "feedback": "Excepción: agudas en -s tras otra consonante (-ts) no llevan tilde."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0019",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "jovenes",
+      "indiceTilde": 1
+    },
+    "pistas": [],
+    "explicacion": "JÓ-ve-nes: esdrújula, siempre lleva tilde (aunque «joven» no la lleve).",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0020",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "joven",
+      "indiceTilde": null
+    },
+    "pistas": [],
+    "explicacion": "JO-ven: llana terminada en -n, no lleva tilde.",
+    "erroresHabituales": [
+      {
+        "respuesta": "conTilde",
+        "feedback": "Llana en -n: sin tilde. La lleva el plural, «jóvenes»."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.0021",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Colocar la tilde según las reglas generales.",
+    "mecanica": "colocarTilde",
+    "enunciado": "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde».",
+    "payload": {
+      "palabra": "facil",
+      "indiceTilde": 1
+    },
+    "pistas": [],
+    "explicacion": "FÁ-cil: llana terminada en -l, lleva tilde.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-ORTOGRAFIA",
+      "examenes": [
+        "2026-L7"
+      ],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. II (acentuación)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-23"
+    },
+    "version": 1
   }
 ]

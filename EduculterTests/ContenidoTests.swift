@@ -13,9 +13,9 @@ struct ContenidoEmpaquetadoTests {
     @Test("El contenido del bundle se carga completo en Debug")
     func cargaCompleta() throws {
         let banco = try cargador.cargar(politica: .todos)
-        // 25 borradores de prueba (Fase 05A) + lote 01 de LEN.ORT (38 ítems y 5 tarjetas aprobados).
-        #expect(banco.items.count == 63)
-        #expect(banco.teoria.count == 7)
+        // 25 borradores de prueba + LEN.ORT (50 ítems y 5 tarjetas) + MAT.NUM (9 ítems y 2 tarjetas).
+        #expect(banco.items.count == 84)
+        #expect(banco.teoria.count == 9)
         #expect(banco.simulacros.count == 1)
         #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber ítems de todas las mecánicas")
         for m in Mecanica.allCases { #expect(banco.items.filter { $0.mecanica == m }.count >= 3, "Al menos 3 ítems de \(m)") }
@@ -42,9 +42,13 @@ struct ContenidoEmpaquetadoTests {
         #expect(release.items.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.teoria.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.simulacros.allSatisfy { $0.validacion.estado == .aprobado })
-        // Solo el lote 01 (LEN.ORT) está aprobado: exactamente 38 ítems y 5 tarjetas, y ningún borrador.
-        #expect(release.items.count == 38 && release.items.allSatisfy { $0.competencia.hasPrefix("LEN.ORT.") })
-        #expect(release.teoria.count == 5 && release.teoria.allSatisfy { $0.competencia.hasPrefix("LEN.ORT.") })
+        // Aprobado: LEN.ORT (50 ítems y 5 tarjetas) y MAT.NUM (9 ítems y 2 tarjetas); ningún borrador.
+        #expect(release.items.count == 59)
+        #expect(release.items.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 50)
+        #expect(release.items.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 9)
+        #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 5)
+        #expect(release.teoria.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 2)
+        #expect(release.teoria.count == 7)
         #expect(release.items.allSatisfy { $0.validacion.revisor == "direccion" })
         #expect(release.simulacros.isEmpty)
         #expect(todos.items.contains { $0.validacion.estado == .borrador })
@@ -76,15 +80,16 @@ struct ContenidoEmpaquetadoTests {
         let banco = try cargador.cargar(politica: .todos)
         #expect(banco.item(id: "LEN.SIN.SUJPRED.0001")?.mecanica == .segmentar)
         #expect(banco.item(id: "NO.EXISTE") == nil)
-        #expect(banco.items(competencia: "LEN.ORT.AGU").count == 9)
+        #expect(banco.items(competencia: "LEN.ORT.AGU").count == 21)
         #expect(banco.items(competencia: "LEN.ORT.AGU", peldano: 4).map(\.id) == ["LEN.ORT.AGU.0008", "LEN.ORT.AGU.0009"])
-        #expect(banco.items(bloque: "LEN.ORT").count == 38)
+        #expect(banco.items(bloque: "LEN.ORT").count == 50)
+        #expect(banco.items(bloque: "MAT.NUM").count == 9)
         #expect(banco.items(bloque: "LEN.LIT").count == 2)
         #expect(banco.items(bloque: "XXX.YYY").isEmpty)
-        #expect(banco.teoria(competencia: "MAT.NUM.FRACSUM").count == 1)
+        #expect(banco.teoria(competencia: "MAT.OPE.FRACSUM").count == 1)
         #expect(banco.catalogo.bloque(deCompetencia: "MAT.GEO.TRIANG")?.id == "MAT.GEO")
         #expect(Catalogo.area(de: "MAT.GEO.TRIANG") == "MAT")
-        #expect(banco.catalogo.todasLasCompetencias.count == 22)
+        #expect(banco.catalogo.todasLasCompetencias.count == 24)
     }
 }
 

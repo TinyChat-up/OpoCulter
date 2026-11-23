@@ -20,6 +20,10 @@ enum Respuesta: Sendable, Equatable {
     case construir([String: String])
     /// Texto tecleado en el teclado numérico propio (coma decimal, `a/b` para fracciones).
     case numerico(String)
+    /// Índice de la vocal con tilde, o `nil` = «Sin tilde».
+    case colocarTilde(Int?)
+    /// Partes en que se ha dividido la barra y celdas coloreadas (su posición no importa).
+    case fraccionBarras(partes: Int, coloreadas: Set<Int>)
 
     struct ParRespuesta: Sendable, Equatable, Hashable {
         var izquierda: String
@@ -49,7 +53,9 @@ struct Resultado: Sendable, Equatable {
     /// - marcarTexto: ids de tokens marcados de más o de menos;
     /// - segmentar: ids de los segmentos esperados que no se han reproducido;
     /// - ruedas: ids de rueda; construir: ids de hueco;
-    /// - numerico: el texto tecleado.
+    /// - numerico: el texto tecleado;
+    /// - colocarTilde: `"sinTilde"`, `"conTilde"` o `"posicion"`;
+    /// - fraccionBarras: `"partes"` (división incorrecta o no permitida) y/o `"coloreadas"`.
     /// Estos valores se cruzan con `erroresHabituales[].respuesta` para elegir el feedback.
     var errores: [String]
 
@@ -96,6 +102,15 @@ enum Evaluador {
             return .parcial(total: p.huecos.count, errores: mal)
         case (.numerico(let p), .numerico(let r)):
             return evaluarNumerico(p, r)
+        case (.colocarTilde(let p), .colocarTilde(let r)):
+            if r == p.indiceTilde { return .acierto }
+            switch (p.indiceTilde, r) {
+            case (.some, nil): return .fallo(["sinTilde"])
+            case (nil, .some): return .fallo(["conTilde"])
+            default: return .fallo(["posicion"])
+            }
+        case (.fraccionBarras(let p), .fraccionBarras(let partes, let coloreadas)):
+            return evaluarFraccionBarras(p, partes: partes, coloreadas: coloreadas.filter { (0..<partes).contains($0) }.count)
         default:
             return .fallo([Resultado.respuestaIncompatible])
         }
@@ -160,6 +175,23 @@ enum Evaluador {
             ? abs(dado.valor.valorDouble - esperado.valor.valorDouble) <= tolerancia + 1e-9
             : dado.valor == esperado.valor
         return correcto ? .acierto : .fallo([texto])
+    }
+
+    private static func evaluarFraccionBarras(_ p: Payload.FraccionBarras, partes: Int, coloreadas: Int) -> Resultado {
+        guard let (n, d) = p.fraccionObjetivo, partes > 0 else { return .fallo([Resultado.respuestaIncompatible]) }
+        var errores: [String] = []
+        let particionValida: Bool = {
+            if p.modo == .colorear, let fijas = p.partes { return partes == fijas }
+            if let permitidas = p.particionesPermitidas { return permitidas.contains(partes) }
+            return p.aceptarEquivalentes || partes == d
+        }()
+        if !particionValida { errores.append("partes") }
+        let cantidadCorrecta = p.aceptarEquivalentes
+            ? Racional(numerador: coloreadas, denominador: partes) == Racional(numerador: n, denominador: d)
+            : partes == d && coloreadas == n
+        // Con una división no válida solo se informa de la división (lo coloreado no se puede juzgar).
+        if !cantidadCorrecta, particionValida { errores.append("coloreadas") }
+        return errores.isEmpty ? .acierto : Resultado(correcto: false, fraccionCorrecta: particionValida ? 0.5 : 0, errores: errores)
     }
 
     private static func proporcion(_ a: Int, _ b: Int) -> Double {
