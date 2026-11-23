@@ -1,5 +1,107 @@
 [
   {
+    "id": "LEN.SIN.COMPL.0001",
+    "competencia": "LEN.SIN.COMPL",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Analizar complementos anidados.",
+    "mecanica": "segmentar",
+    "enunciado": "Analiza el predicado: núcleo, complemento circunstancial y complemento del nombre.",
+    "payload": {
+      "tokens": [
+        {
+          "id": "t1",
+          "texto": "Vive"
+        },
+        {
+          "id": "t2",
+          "texto": "en"
+        },
+        {
+          "id": "t3",
+          "texto": "la"
+        },
+        {
+          "id": "t4",
+          "texto": "casa"
+        },
+        {
+          "id": "t5",
+          "texto": "de"
+        },
+        {
+          "id": "t6",
+          "texto": "Ana"
+        }
+      ],
+      "etiquetas": [
+        {
+          "id": "PRED",
+          "nombre": "Predicado"
+        },
+        {
+          "id": "NV",
+          "nombre": "Núcleo verbal"
+        },
+        {
+          "id": "CCL",
+          "nombre": "CC de lugar"
+        },
+        {
+          "id": "CN",
+          "nombre": "Compl. del nombre"
+        }
+      ],
+      "segmentos": [
+        {
+          "id": "s1",
+          "desde": "t1",
+          "hasta": "t6",
+          "etiqueta": "PRED",
+          "padre": null
+        },
+        {
+          "id": "s2",
+          "desde": "t1",
+          "hasta": "t1",
+          "etiqueta": "NV",
+          "padre": "s1"
+        },
+        {
+          "id": "s3",
+          "desde": "t2",
+          "hasta": "t6",
+          "etiqueta": "CCL",
+          "padre": "s1"
+        },
+        {
+          "id": "s4",
+          "desde": "t5",
+          "hasta": "t6",
+          "etiqueta": "CN",
+          "padre": "s3"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "«Vive» es el núcleo; «en la casa de Ana» indica dónde (CC de lugar); dentro, «de Ana» complementa a «casa» (CN).",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
     "id": "LEN.SIN.SUJPRED.0001",
     "competencia": "LEN.SIN.SUJPRED",
     "peldano": 2,
@@ -9,25 +111,143 @@
     "enunciado": "Agrupa y etiqueta el sujeto y el predicado.",
     "payload": {
       "tokens": [
-        { "id": "t1", "texto": "El" },
-        { "id": "t2", "texto": "gato" },
-        { "id": "t3", "texto": "duerme" }
+        {
+          "id": "t1",
+          "texto": "El"
+        },
+        {
+          "id": "t2",
+          "texto": "gato"
+        },
+        {
+          "id": "t3",
+          "texto": "duerme"
+        }
       ],
       "etiquetas": [
-        { "id": "SUJ", "nombre": "Sujeto" },
-        { "id": "PRED", "nombre": "Predicado" }
+        {
+          "id": "SUJ",
+          "nombre": "Sujeto"
+        },
+        {
+          "id": "PRED",
+          "nombre": "Predicado"
+        }
       ],
       "segmentos": [
-        { "id": "s1", "desde": "t1", "hasta": "t2", "etiqueta": "SUJ", "padre": null },
-        { "id": "s2", "desde": "t3", "hasta": "t3", "etiqueta": "PRED", "padre": null }
+        {
+          "id": "s1",
+          "desde": "t1",
+          "hasta": "t2",
+          "etiqueta": "SUJ",
+          "padre": null
+        },
+        {
+          "id": "s2",
+          "desde": "t3",
+          "hasta": "t3",
+          "etiqueta": "PRED",
+          "padre": null
+        }
       ]
     },
-    "pistas": ["Pregunta al verbo: ¿quién duerme?"],
+    "pistas": [
+      "Pregunta al verbo: ¿quién duerme?"
+    ],
     "explicacion": "El sujeto («El gato») concuerda en número y persona con el verbo; el predicado («duerme») dice lo que se afirma del sujeto.",
     "erroresHabituales": [],
-    "referencia": { "tipoPregunta": "Análisis sintáctico", "examenes": [], "normativa": null },
-    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
-    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "referencia": {
+      "tipoPregunta": "Análisis sintáctico",
+      "examenes": [],
+      "normativa": null
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 04."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.SUJPRED.0002",
+    "competencia": "LEN.SIN.SUJPRED",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Separar sujeto y predicado.",
+    "mecanica": "segmentar",
+    "enunciado": "Agrupa y etiqueta el sujeto y el predicado.",
+    "payload": {
+      "tokens": [
+        {
+          "id": "t1",
+          "texto": "Los"
+        },
+        {
+          "id": "t2",
+          "texto": "niños"
+        },
+        {
+          "id": "t3",
+          "texto": "leen"
+        },
+        {
+          "id": "t4",
+          "texto": "cuentos"
+        }
+      ],
+      "etiquetas": [
+        {
+          "id": "SUJ",
+          "nombre": "Sujeto"
+        },
+        {
+          "id": "PRED",
+          "nombre": "Predicado"
+        }
+      ],
+      "segmentos": [
+        {
+          "id": "s1",
+          "desde": "t1",
+          "hasta": "t2",
+          "etiqueta": "SUJ",
+          "padre": null
+        },
+        {
+          "id": "s2",
+          "desde": "t3",
+          "hasta": "t4",
+          "etiqueta": "PRED",
+          "padre": null
+        }
+      ]
+    },
+    "pistas": [
+      "Pregunta al verbo: ¿quiénes leen?"
+    ],
+    "explicacion": "El sujeto «Los niños» concuerda con el verbo «leen» (tercera persona del plural); el resto es el predicado.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
     "version": 1
   }
 ]

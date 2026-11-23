@@ -1,0 +1,68 @@
+[
+  {
+    "id": "MAT.DIV.MCD.0001",
+    "competencia": "MAT.DIV.MCD",
+    "peldano": 4,
+    "dificultad": 3,
+    "objetivo": "Justificar el máximo común divisor.",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación.",
+    "payload": {
+      "plantilla": "El m.c.d. de 12 y 18 es {h1} porque es el {h2} de sus divisores comunes.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p4"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "6"
+        },
+        {
+          "id": "p2",
+          "texto": "3"
+        },
+        {
+          "id": "p3",
+          "texto": "36"
+        },
+        {
+          "id": "p4",
+          "texto": "mayor"
+        },
+        {
+          "id": "p5",
+          "texto": "menor"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Divisores comunes de 12 y 18: 1, 2, 3 y 6. El mayor es 6. (36 es el m.c.m., no el m.c.d.)",
+    "erroresHabituales": [
+      {
+        "respuesta": "h1",
+        "feedback": "36 es el mínimo común múltiplo; el m.c.d. es el mayor divisor común."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  }
+]

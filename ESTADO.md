@@ -1,26 +1,28 @@
 # Estado del proyecto
 
-**Fase actual:** 04 — Arquitectura y núcleo del producto · **Terminada**
-**Siguiente:** Fase 05 — Desarrollo (interfaz del MVP), a la espera de instrucciones de la dirección.
+**Fase actual:** 05A — Sistema de diseño, mecánicas y flujo de ronda · **Terminada**
+**Siguiente:** Fase 05B — Resto del MVP (bienvenida, diagnóstico, Mapa, Examen, Progreso, sonido y contenido real), a la espera de instrucciones de la dirección.
 **Última actualización:** 2026-11-23
 
-## Fase 04 — Resultado
+## Fase 05A — Resultado
 
 | Verificación | Resultado | Evidencia |
 |---|---|---|
-| Diseño aprobado en el repositorio | ✅ [docs/DISENO_PRODUCTO_v1.md](docs/DISENO_PRODUCTO_v1.md), integrado en DISENO_PEDAGOGICO, UX_UI, ARQUITECTURA y MONETIZACION | — |
-| Esquema de contenido v1 | ✅ Modelos `Codable`/`Sendable` en `Core/Content`; documentado en [CONTENIDOS.md](CONTENIDOS.md) | — |
-| Tests unitarios en simulador iPhone 16 (iOS 27.2) | ✅ 89 tests (95 casos con argumentos), 0 fallos | `xcodebuild test` → `** TEST SUCCEEDED **` |
-| Test de interfaz (pantalla de verificación) | ✅ 1 test, 0 fallos | mismo comando |
-| Todo el contenido del bundle pasa el validador | ✅ | `ContenidoEmpaquetadoTests` |
-| En Release no se carga ningún borrador | ✅ | `releaseNoCargaBorradores` |
-| Cobertura de `Core/` | ✅ **97,8 %** (1 734 / 1 773 líneas) | `-enableCodeCoverage YES` + `xccov` |
-| Avisos del compilador Swift 6 estricto | ✅ 0 en app y tests | logs de build, test y archive |
-| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`; el `.app` contiene `Content/{catalogo.json, items, teoria, simulacros}`. **No subido** | `xcodebuild archive` |
+| App jugable: Hoy → ronda → 10 mecánicas → corrección → feedback → resumen | ✅ XP, combo, racha, misiones y progreso guardados en SwiftData | `testRondaRecomendadaCompleta`, `RondaViewModelTests` |
+| Sistema de diseño (`Features/Comun/Diseno`) | ✅ Colores claro/oscuro AA, tipografía Dynamic Type, espaciado, radios, movimiento, hápticos, 10 componentes | [UX_UI.md](UX_UI.md) |
+| Tests unitarios + UI en simulador iPhone 16 (iOS 27.2) | ✅ 122 casos unitarios + 2 tests de UI, 0 fallos | `xcodebuild test` → `** TEST SUCCEEDED **` |
+| Auditoría de accesibilidad (Hoy, teoría, 10 mecánicas antes/después, resumen) | ✅ 0 incidencias; 1 excepción justificada (contraste bajo la barra de pestañas, D-048) | `RondaUITests` |
+| Prueba manual AX5 y modo oscuro | ✅ | capturas `2x_oscuro_*` y `3x_ax_*` |
+| Cobertura | ✅ Core **97,2 %** · Features 85,2 % · App 95,6 % | `xccov` |
+| Avisos del compilador | ✅ 0 (tests y archive) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada (v0.0.1). ⏳ Apertura pendiente: el iPhone estaba bloqueado | `devicectl` |
+| Capturas | ✅ 37 escenas + [HOJA.png](docs/capturas/fase05a/HOJA.png) | `scripts/capturas.sh` |
 
-Fuera de alcance en esta fase (por indicación de la dirección): interfaz de producto y contenido real. La app sigue mostrando la pantalla de verificación, por lo que no se ha reinstalado en el iPhone.
+Mapa, Examen y Progreso muestran "Llega pronto" (fuera de alcance de la 05A).
 
 ## Pendiente
-1. **Cuenta de Apple:** se mantiene el Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
-2. **Prioridades de bloque provisionales** (D-029): debe confirmarlas la dirección.
+1. **Apertura en el iPhone:** desbloquearlo y abrir Educulter (instalada; perfil del Personal Team vigente hasta el 30/11/2026).
+2. **Cuenta de Apple:** se mantiene el Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
 3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
+4. Contenido de prueba: 30 ítems (3 por mecánica) y 3 tarjetas de teoría, pendientes de aprobación por la dirección; el contenido real llega en la 05B.

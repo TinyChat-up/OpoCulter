@@ -1,0 +1,34 @@
+[
+  {
+    "id": "LEN.ORT.TILDES.T01",
+    "competencia": "LEN.ORT.TILDES",
+    "titulo": "Reglas generales de acentuación",
+    "bloques": [
+      {
+        "tipo": "texto",
+        "contenido": "Según dónde está la sílaba tónica, las palabras son agudas, llanas o esdrújulas, y cada tipo tiene su regla."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Agudas: tilde si acaban en vocal, n o s\nLlanas: tilde si no acaban en vocal, n o s\nEsdrújulas: siempre llevan tilde\nSílaba tónica → tipo de palabra → regla"
+      },
+      {
+        "tipo": "ejemplo",
+        "contenido": "camión (aguda) · árbol (llana) · música (esdrújula)"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    }
+  }
+]

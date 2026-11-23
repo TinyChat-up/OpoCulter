@@ -9,19 +9,146 @@
     "enunciado": "Analiza la forma verbal «cantábamos».",
     "payload": {
       "ruedas": [
-        { "id": "persona", "nombre": "Persona", "opciones": ["primera", "segunda", "tercera"], "correcta": "primera" },
-        { "id": "numero", "nombre": "Número", "opciones": ["singular", "plural"], "correcta": "plural" },
-        { "id": "tiempo", "nombre": "Tiempo", "opciones": ["presente", "pretérito imperfecto", "pretérito perfecto simple", "futuro simple"], "correcta": "pretérito imperfecto" },
-        { "id": "modo", "nombre": "Modo", "opciones": ["indicativo", "subjuntivo", "imperativo"], "correcta": "indicativo" }
+        {
+          "id": "persona",
+          "nombre": "Persona",
+          "opciones": [
+            "primera",
+            "segunda",
+            "tercera"
+          ],
+          "correcta": "primera"
+        },
+        {
+          "id": "numero",
+          "nombre": "Número",
+          "opciones": [
+            "singular",
+            "plural"
+          ],
+          "correcta": "plural"
+        },
+        {
+          "id": "tiempo",
+          "nombre": "Tiempo",
+          "opciones": [
+            "presente",
+            "pretérito imperfecto",
+            "pretérito perfecto simple",
+            "futuro simple"
+          ],
+          "correcta": "pretérito imperfecto"
+        },
+        {
+          "id": "modo",
+          "nombre": "Modo",
+          "opciones": [
+            "indicativo",
+            "subjuntivo",
+            "imperativo"
+          ],
+          "correcta": "indicativo"
+        }
       ]
     },
-    "pistas": ["La terminación -ábamos es del pretérito imperfecto de indicativo."],
+    "pistas": [
+      "La terminación -ábamos es del pretérito imperfecto de indicativo."
+    ],
     "explicacion": "«Cantábamos»: primera persona del plural (nosotros) del pretérito imperfecto de indicativo de «cantar».",
     "erroresHabituales": [
-      { "respuesta": "tiempo", "feedback": "-ába- es la marca del pretérito imperfecto; el perfecto simple sería «cantamos»." }
+      {
+        "respuesta": "tiempo",
+        "feedback": "-ába- es la marca del pretérito imperfecto; el perfecto simple sería «cantamos»."
+      }
     ],
-    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
-    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 04."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.ANALISIS.0002",
+    "competencia": "LEN.VER.ANALISIS",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Analizar una forma verbal en pasado.",
+    "mecanica": "ruedas",
+    "enunciado": "Analiza la forma verbal «comieron».",
+    "payload": {
+      "ruedas": [
+        {
+          "id": "persona",
+          "nombre": "Persona",
+          "opciones": [
+            "primera",
+            "segunda",
+            "tercera"
+          ],
+          "correcta": "tercera"
+        },
+        {
+          "id": "numero",
+          "nombre": "Número",
+          "opciones": [
+            "singular",
+            "plural"
+          ],
+          "correcta": "plural"
+        },
+        {
+          "id": "tiempo",
+          "nombre": "Tiempo",
+          "opciones": [
+            "presente",
+            "pretérito imperfecto",
+            "pretérito perfecto simple",
+            "futuro simple"
+          ],
+          "correcta": "pretérito perfecto simple"
+        },
+        {
+          "id": "modo",
+          "nombre": "Modo",
+          "opciones": [
+            "indicativo",
+            "subjuntivo",
+            "imperativo"
+          ],
+          "correcta": "indicativo"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "«Comieron»: tercera persona del plural (ellos) del pretérito perfecto simple de indicativo de «comer».",
+    "erroresHabituales": [
+      {
+        "respuesta": "tiempo",
+        "feedback": "«Comían» sería pretérito imperfecto; «comieron» es una acción acabada: perfecto simple."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
     "version": 1
   }
 ]

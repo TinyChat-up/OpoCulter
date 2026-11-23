@@ -10,20 +10,51 @@
     "payload": {
       "unidad": "palabra",
       "tokens": [
-        { "id": "t1", "texto": "El" },
-        { "id": "t2", "texto": "camión" },
-        { "id": "t3", "texto": "llegó" },
-        { "id": "t4", "texto": "tarde" }
+        {
+          "id": "t1",
+          "texto": "El"
+        },
+        {
+          "id": "t2",
+          "texto": "camión"
+        },
+        {
+          "id": "t3",
+          "texto": "llegó"
+        },
+        {
+          "id": "t4",
+          "texto": "tarde"
+        }
       ],
-      "correctos": ["t2", "t3"]
+      "correctos": [
+        "t2",
+        "t3"
+      ]
     },
-    "pistas": ["Busca las palabras agudas terminadas en vocal, n o s."],
+    "pistas": [
+      "Busca las palabras agudas terminadas en vocal, n o s."
+    ],
     "explicacion": "«Camión» y «llegó» son agudas terminadas en n y en vocal, por eso llevan tilde. «Tarde» es llana terminada en vocal: no la lleva.",
     "erroresHabituales": [
-      { "respuesta": "t4", "feedback": "«Tarde» es llana y termina en vocal: las llanas solo llevan tilde si no terminan en vocal, n o s." }
+      {
+        "respuesta": "t4",
+        "feedback": "«Tarde» es llana y termina en vocal: las llanas solo llevan tilde si no terminan en vocal, n o s."
+      }
     ],
-    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
-    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 04."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
     "version": 1
   },
   {
@@ -37,24 +68,244 @@
     "payload": {
       "plantilla": "«Camión» lleva tilde porque es una palabra {h1} terminada en {h2}.",
       "huecos": [
-        { "id": "h1", "correcta": "p1" },
-        { "id": "h2", "correcta": "p4" }
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p4"
+        }
       ],
       "piezas": [
-        { "id": "p1", "texto": "aguda" },
-        { "id": "p2", "texto": "llana" },
-        { "id": "p3", "texto": "esdrújula" },
-        { "id": "p4", "texto": "-n" },
-        { "id": "p5", "texto": "-l" }
+        {
+          "id": "p1",
+          "texto": "aguda"
+        },
+        {
+          "id": "p2",
+          "texto": "llana"
+        },
+        {
+          "id": "p3",
+          "texto": "esdrújula"
+        },
+        {
+          "id": "p4",
+          "texto": "-n"
+        },
+        {
+          "id": "p5",
+          "texto": "-l"
+        }
       ]
     },
     "pistas": [],
     "explicacion": "La sílaba tónica de «camión» es la última (aguda), y las agudas llevan tilde cuando terminan en vocal, n o s.",
     "erroresHabituales": [
-      { "respuesta": "h1", "feedback": "La sílaba tónica es «-mión», la última: es aguda, no llana." }
+      {
+        "respuesta": "h1",
+        "feedback": "La sílaba tónica es «-mión», la última: es aguda, no llana."
+      }
     ],
-    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
-    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 04."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.TILDES.0003",
+    "competencia": "LEN.ORT.TILDES",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Clasificar palabras por su sílaba tónica.",
+    "mecanica": "clasificar",
+    "enunciado": "Clasifica cada palabra según su sílaba tónica.",
+    "payload": {
+      "categorias": [
+        {
+          "id": "AG",
+          "nombre": "Aguda"
+        },
+        {
+          "id": "LL",
+          "nombre": "Llana"
+        },
+        {
+          "id": "ES",
+          "nombre": "Esdrújula"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "café",
+          "categoria": "AG"
+        },
+        {
+          "id": "f2",
+          "texto": "árbol",
+          "categoria": "LL"
+        },
+        {
+          "id": "f3",
+          "texto": "música",
+          "categoria": "ES"
+        },
+        {
+          "id": "f4",
+          "texto": "canción",
+          "categoria": "AG"
+        },
+        {
+          "id": "f5",
+          "texto": "lápiz",
+          "categoria": "LL"
+        },
+        {
+          "id": "f6",
+          "texto": "pájaro",
+          "categoria": "ES"
+        }
+      ]
+    },
+    "pistas": [
+      "Di la palabra en voz alta y busca la sílaba que suena más fuerte."
+    ],
+    "explicacion": "Agudas: tónica en la última sílaba (ca-FÉ). Llanas: en la penúltima (ÁR-bol). Esdrújulas: en la antepenúltima (MÚ-si-ca).",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.TILDES.0004",
+    "competencia": "LEN.ORT.TILDES",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Localizar la sílaba tónica.",
+    "mecanica": "marcarTexto",
+    "enunciado": "Toca la sílaba tónica de «música».",
+    "payload": {
+      "unidad": "silaba",
+      "tokens": [
+        {
+          "id": "t1",
+          "texto": "mú"
+        },
+        {
+          "id": "t2",
+          "texto": "si"
+        },
+        {
+          "id": "t3",
+          "texto": "ca"
+        }
+      ],
+      "correctos": [
+        "t1"
+      ]
+    },
+    "pistas": [
+      "Es la sílaba que lleva la tilde."
+    ],
+    "explicacion": "En «música» la sílaba que suena más fuerte es «mú»: es esdrújula y por eso lleva tilde.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.TILDES.0005",
+    "competencia": "LEN.ORT.TILDES",
+    "peldano": 4,
+    "dificultad": 2,
+    "objetivo": "Justificar la tilde de una palabra llana.",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación con las piezas.",
+    "payload": {
+      "plantilla": "«Árbol» lleva tilde porque es una palabra {h1} terminada en {h2}.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p2"
+        },
+        {
+          "id": "h2",
+          "correcta": "p4"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "aguda"
+        },
+        {
+          "id": "p2",
+          "texto": "llana"
+        },
+        {
+          "id": "p3",
+          "texto": "esdrújula"
+        },
+        {
+          "id": "p4",
+          "texto": "-l"
+        },
+        {
+          "id": "p5",
+          "texto": "-n"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "La tónica de «árbol» es «ár», la penúltima: es llana. Las llanas llevan tilde si no acaban en vocal, n o s, y «árbol» acaba en l.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
     "version": 1
   }
 ]

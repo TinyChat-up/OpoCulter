@@ -1,0 +1,115 @@
+[
+  {
+    "id": "MAT.UNI.LONG.0001",
+    "competencia": "MAT.UNI.LONG",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Relacionar unidades de longitud.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada medida con su equivalencia.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "1 km"
+        },
+        {
+          "id": "i2",
+          "texto": "1 m"
+        },
+        {
+          "id": "i3",
+          "texto": "1 cm"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "10 mm"
+        },
+        {
+          "id": "d2",
+          "texto": "1000 m"
+        },
+        {
+          "id": "d3",
+          "texto": "100 cm"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d2"
+        ],
+        [
+          "i2",
+          "d3"
+        ],
+        [
+          "i3",
+          "d1"
+        ]
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Cada unidad de longitud es 10 veces la siguiente: 1 km = 1000 m, 1 m = 100 cm, 1 cm = 10 mm.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.LONG.0002",
+    "competencia": "MAT.UNI.LONG",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Convertir kilómetros en metros.",
+    "mecanica": "ruedas",
+    "enunciado": "2,5 km equivalen a… metros.",
+    "payload": {
+      "ruedas": [
+        {
+          "id": "valor",
+          "nombre": "Metros",
+          "opciones": [
+            "25",
+            "250",
+            "2500",
+            "25 000"
+          ],
+          "correcta": "2500"
+        }
+      ]
+    },
+    "pistas": [
+      "Multiplica por 1000."
+    ],
+    "explicacion": "1 km = 1000 m, así que 2,5 km = 2,5 × 1000 = 2500 m.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  }
+]

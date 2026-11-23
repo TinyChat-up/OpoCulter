@@ -5,42 +5,249 @@
       "id": "LEN",
       "nombre": "Lengua Castellana y Literatura",
       "bloques": [
-        { "id": "LEN.SIN", "nombre": "Sintaxis", "prioridad": 3, "orden": 1,
-          "competencias": [ { "id": "LEN.SIN.SUJPRED", "nombre": "Sujeto y predicado", "orden": 1 } ] },
-        { "id": "LEN.ORT", "nombre": "Ortografía y tildes", "prioridad": 3, "orden": 2,
-          "competencias": [ { "id": "LEN.ORT.TILDES", "nombre": "Reglas generales de acentuación", "orden": 1 } ] },
-        { "id": "LEN.CLA", "nombre": "Clases de palabras", "prioridad": 3, "orden": 3,
-          "competencias": [ { "id": "LEN.CLA.SUSTADJ", "nombre": "Sustantivo y adjetivo", "orden": 1 } ] },
-        { "id": "LEN.VER", "nombre": "Formas verbales", "prioridad": 3, "orden": 4,
-          "competencias": [ { "id": "LEN.VER.ANALISIS", "nombre": "Análisis de formas verbales", "orden": 1 } ] },
-        { "id": "LEN.LIT", "nombre": "Autores y épocas", "prioridad": 3, "orden": 5,
+        {
+          "id": "LEN.SIN",
+          "nombre": "Sintaxis",
+          "prioridad": 3,
+          "orden": 1,
           "competencias": [
-            { "id": "LEN.LIT.CRONO", "nombre": "Cronología de autores", "orden": 1 },
-            { "id": "LEN.LIT.AUTOBRA", "nombre": "Autor y obra", "orden": 2 }
-          ] },
-        { "id": "LEN.COM", "nombre": "Comprensión (tema y resumen)", "prioridad": 3, "orden": 6, "competencias": [] },
-        { "id": "LEN.REC", "nombre": "Recursos literarios", "prioridad": 2, "orden": 7, "competencias": [] },
-        { "id": "LEN.MET", "nombre": "Métrica", "prioridad": 2, "orden": 8, "competencias": [] },
-        { "id": "LEN.LEX", "nombre": "Léxico y vocabulario", "prioridad": 2, "orden": 9, "competencias": [] },
-        { "id": "LEN.FOR", "nombre": "Formación de palabras", "prioridad": 2, "orden": 10, "competencias": [] }
+            {
+              "id": "LEN.SIN.SUJPRED",
+              "nombre": "Sujeto y predicado",
+              "orden": 1
+            },
+            {
+              "id": "LEN.SIN.COMPL",
+              "nombre": "Complementos del verbo",
+              "orden": 2
+            }
+          ]
+        },
+        {
+          "id": "LEN.ORT",
+          "nombre": "Ortografía y tildes",
+          "prioridad": 3,
+          "orden": 2,
+          "competencias": [
+            {
+              "id": "LEN.ORT.TILDES",
+              "nombre": "Reglas generales de acentuación",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "LEN.CLA",
+          "nombre": "Clases de palabras",
+          "prioridad": 3,
+          "orden": 3,
+          "competencias": [
+            {
+              "id": "LEN.CLA.SUSTADJ",
+              "nombre": "Sustantivo y adjetivo",
+              "orden": 1
+            },
+            {
+              "id": "LEN.CLA.VERBO",
+              "nombre": "El verbo",
+              "orden": 2
+            }
+          ]
+        },
+        {
+          "id": "LEN.VER",
+          "nombre": "Formas verbales",
+          "prioridad": 3,
+          "orden": 4,
+          "competencias": [
+            {
+              "id": "LEN.VER.ANALISIS",
+              "nombre": "Análisis de formas verbales",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "LEN.LIT",
+          "nombre": "Autores y épocas",
+          "prioridad": 3,
+          "orden": 5,
+          "competencias": [
+            {
+              "id": "LEN.LIT.CRONO",
+              "nombre": "Cronología de autores",
+              "orden": 1
+            },
+            {
+              "id": "LEN.LIT.AUTOBRA",
+              "nombre": "Autor y obra",
+              "orden": 2
+            }
+          ]
+        },
+        {
+          "id": "LEN.COM",
+          "nombre": "Comprensión (tema y resumen)",
+          "prioridad": 3,
+          "orden": 6,
+          "competencias": []
+        },
+        {
+          "id": "LEN.REC",
+          "nombre": "Recursos literarios",
+          "prioridad": 2,
+          "orden": 7,
+          "competencias": [
+            {
+              "id": "LEN.REC.FIGURAS",
+              "nombre": "Figuras retóricas",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "LEN.MET",
+          "nombre": "Métrica",
+          "prioridad": 2,
+          "orden": 8,
+          "competencias": []
+        },
+        {
+          "id": "LEN.LEX",
+          "nombre": "Léxico y vocabulario",
+          "prioridad": 2,
+          "orden": 9,
+          "competencias": [
+            {
+              "id": "LEN.LEX.SINON",
+              "nombre": "Sinónimos",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "LEN.FOR",
+          "nombre": "Formación de palabras",
+          "prioridad": 2,
+          "orden": 10,
+          "competencias": []
+        }
       ]
     },
     {
       "id": "MAT",
       "nombre": "Matemáticas",
       "bloques": [
-        { "id": "MAT.UNI", "nombre": "Unidades y medida", "prioridad": 3, "orden": 1, "competencias": [] },
-        { "id": "MAT.GEO", "nombre": "Geometría", "prioridad": 3, "orden": 2,
-          "competencias": [ { "id": "MAT.GEO.TRIANG", "nombre": "Propiedades del triángulo", "orden": 1 } ] },
-        { "id": "MAT.POR", "nombre": "Porcentajes y proporcionalidad", "prioridad": 3, "orden": 3, "competencias": [] },
-        { "id": "MAT.NUM", "nombre": "Fracciones y decimales", "prioridad": 3, "orden": 4,
-          "competencias": [ { "id": "MAT.NUM.FRACSUM", "nombre": "Suma de fracciones", "orden": 1 } ] },
-        { "id": "MAT.DIV", "nombre": "Divisibilidad (m.c.m./m.c.d.)", "prioridad": 3, "orden": 5, "competencias": [] },
-        { "id": "MAT.OPE", "nombre": "Operaciones combinadas y ecuaciones", "prioridad": 3, "orden": 6, "competencias": [] },
-        { "id": "MAT.ROM", "nombre": "Números romanos", "prioridad": 2, "orden": 7,
-          "competencias": [ { "id": "MAT.ROM.LECTURA", "nombre": "Lectura de números romanos", "orden": 1 } ] },
-        { "id": "MAT.EST", "nombre": "Estadística", "prioridad": 2, "orden": 8, "competencias": [] },
-        { "id": "MAT.PRO", "nombre": "Probabilidad", "prioridad": 2, "orden": 9, "competencias": [] }
+        {
+          "id": "MAT.UNI",
+          "nombre": "Unidades y medida",
+          "prioridad": 3,
+          "orden": 1,
+          "competencias": [
+            {
+              "id": "MAT.UNI.LONG",
+              "nombre": "Unidades de longitud",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "MAT.GEO",
+          "nombre": "Geometría",
+          "prioridad": 3,
+          "orden": 2,
+          "competencias": [
+            {
+              "id": "MAT.GEO.TRIANG",
+              "nombre": "Propiedades del triángulo",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "MAT.POR",
+          "nombre": "Porcentajes y proporcionalidad",
+          "prioridad": 3,
+          "orden": 3,
+          "competencias": [
+            {
+              "id": "MAT.POR.PORCENT",
+              "nombre": "Porcentajes",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "MAT.NUM",
+          "nombre": "Fracciones y decimales",
+          "prioridad": 3,
+          "orden": 4,
+          "competencias": [
+            {
+              "id": "MAT.NUM.FRACSUM",
+              "nombre": "Suma de fracciones",
+              "orden": 1
+            },
+            {
+              "id": "MAT.NUM.EQUIV",
+              "nombre": "Fracciones y decimales equivalentes",
+              "orden": 2
+            }
+          ]
+        },
+        {
+          "id": "MAT.DIV",
+          "nombre": "Divisibilidad (m.c.m./m.c.d.)",
+          "prioridad": 3,
+          "orden": 5,
+          "competencias": [
+            {
+              "id": "MAT.DIV.MCD",
+              "nombre": "Máximo común divisor",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "MAT.OPE",
+          "nombre": "Operaciones combinadas y ecuaciones",
+          "prioridad": 3,
+          "orden": 6,
+          "competencias": [
+            {
+              "id": "MAT.OPE.JERARQ",
+              "nombre": "Jerarquía de operaciones",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "MAT.ROM",
+          "nombre": "Números romanos",
+          "prioridad": 2,
+          "orden": 7,
+          "competencias": [
+            {
+              "id": "MAT.ROM.LECTURA",
+              "nombre": "Lectura de números romanos",
+              "orden": 1
+            }
+          ]
+        },
+        {
+          "id": "MAT.EST",
+          "nombre": "Estadística",
+          "prioridad": 2,
+          "orden": 8,
+          "competencias": []
+        },
+        {
+          "id": "MAT.PRO",
+          "nombre": "Probabilidad",
+          "prioridad": 2,
+          "orden": 9,
+          "competencias": []
+        }
       ]
     }
   ]

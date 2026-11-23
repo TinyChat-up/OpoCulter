@@ -14,10 +14,88 @@
     "pistas": [],
     "explicacion": "En geometría plana, los tres ángulos interiores de un triángulo siempre suman 180°.",
     "erroresHabituales": [
-      { "respuesta": "falso", "feedback": "Es verdadero: da igual la forma del triángulo, sus ángulos suman 180°." }
+      {
+        "respuesta": "falso",
+        "feedback": "Es verdadero: da igual la forma del triángulo, sus ángulos suman 180°."
+      }
     ],
-    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
-    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 04."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.TRIANG.0002",
+    "competencia": "MAT.GEO.TRIANG",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Clasificar triángulos por sus lados.",
+    "mecanica": "clasificar",
+    "enunciado": "Clasifica cada triángulo según sus lados.",
+    "payload": {
+      "categorias": [
+        {
+          "id": "EQ",
+          "nombre": "Equilátero"
+        },
+        {
+          "id": "IS",
+          "nombre": "Isósceles"
+        },
+        {
+          "id": "ESC",
+          "nombre": "Escaleno"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "Lados 5, 5 y 5",
+          "categoria": "EQ"
+        },
+        {
+          "id": "f2",
+          "texto": "Lados 4, 4 y 6",
+          "categoria": "IS"
+        },
+        {
+          "id": "f3",
+          "texto": "Lados 3, 4 y 5",
+          "categoria": "ESC"
+        },
+        {
+          "id": "f4",
+          "texto": "Lados 7, 7 y 7",
+          "categoria": "EQ"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Equilátero: tres lados iguales. Isósceles: exactamente dos iguales. Escaleno: los tres distintos.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
     "version": 1
   }
 ]

@@ -1,0 +1,92 @@
+[
+  {
+    "id": "MAT.OPE.JERARQ.0001",
+    "competencia": "MAT.OPE.JERARQ",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Aplicar la jerarquía de operaciones.",
+    "mecanica": "ordenar",
+    "enunciado": "Ordena los pasos para calcular 3 + 4 × (5 − 2).",
+    "payload": {
+      "fichas": [
+        {
+          "id": "a",
+          "texto": "Sumar: 3 + 12 = 15"
+        },
+        {
+          "id": "b",
+          "texto": "Resolver el paréntesis: 5 − 2 = 3"
+        },
+        {
+          "id": "c",
+          "texto": "Multiplicar: 4 × 3 = 12"
+        }
+      ],
+      "ordenCorrecto": [
+        "b",
+        "c",
+        "a"
+      ],
+      "etiquetaInicio": "Primer paso",
+      "etiquetaFin": "Último paso"
+    },
+    "pistas": [
+      "Los paréntesis siempre van primero."
+    ],
+    "explicacion": "Primero los paréntesis, después multiplicaciones y divisiones, y por último sumas y restas.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.JERARQ.0002",
+    "competencia": "MAT.OPE.JERARQ",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Calcular con jerarquía de operaciones.",
+    "mecanica": "numerico",
+    "enunciado": "Calcula 3 + 4 × (5 − 2).",
+    "payload": {
+      "respuesta": "15",
+      "formato": "entero",
+      "tolerancia": 0,
+      "unidad": null
+    },
+    "pistas": [
+      "Primero el paréntesis y después la multiplicación."
+    ],
+    "explicacion": "Paréntesis: 5 − 2 = 3. Producto: 4 × 3 = 12. Suma: 3 + 12 = 15.",
+    "erroresHabituales": [
+      {
+        "respuesta": "21",
+        "feedback": "Has sumado antes de multiplicar: la multiplicación va antes que la suma."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  }
+]

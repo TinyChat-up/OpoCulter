@@ -20,9 +20,17 @@ struct EscaleraTests {
         for _ in 0..<3 { do { let v = e.registrar(correcto: true, peldanoDelItem: 2); #expect(!v) } }
         #expect(e.ventana == [false, false, true, true, true])
         do { let v = e.registrar(correcto: true, peldanoDelItem: 2); #expect(v, "Ventana [F,T,T,T,T] → 4 de 5") }
+        // Peldaño 1 (D-032): 2 aciertos en los 2 últimos intentos.
         var f = EstadoEscalera(peldano: 1)
-        for _ in 0..<3 { f.registrar(correcto: true, peldanoDelItem: 1) }
+        do { let v = f.registrar(correcto: true, peldanoDelItem: 1); #expect(!v) }
+        do { let v = f.registrar(correcto: false, peldanoDelItem: 1); #expect(!v) }
+        do { let v = f.registrar(correcto: true, peldanoDelItem: 1); #expect(!v) }
         do { let v = f.registrar(correcto: true, peldanoDelItem: 1); #expect(v) }
+        #expect(f.peldano == 2)
+        // Un ítem de un peldaño superior también cuenta (D-037).
+        var g = EstadoEscalera(peldano: 2)
+        for _ in 0..<4 { g.registrar(correcto: true, peldanoDelItem: 3) }
+        #expect(g.peldano == 3)
     }
 
     @Test("Los ítems de otros peldaños no cuentan")
@@ -284,6 +292,9 @@ struct RondasTests {
         #expect(c.candidatos(competencia: Self.avanzada, peldano: 5).allSatisfy { $0.peldano == 3 })
         #expect(c.candidatos(competencia: Self.repaso, peldano: 4).allSatisfy { $0.peldano == 2 })
         #expect(c.candidatos(competencia: "NO.EXI.STE", peldano: 2).isEmpty)
+        // Sin ítems del peldaño ni inferiores, se usa el superior más cercano (D-037).
+        #expect(c.candidatos(competencia: Self.avanzada, peldano: 1).allSatisfy { $0.peldano == 3 })
+        #expect(!c.candidatos(competencia: Self.avanzada, peldano: 1).isEmpty)
     }
 }
 

@@ -1,0 +1,52 @@
+[
+  {
+    "id": "LEN.REC.FIGURAS.0001",
+    "competencia": "LEN.REC.FIGURAS",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Reconocer la metáfora.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Qué figura hay en «Tus ojos son dos luceros»?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "Metáfora"
+        },
+        {
+          "id": "b",
+          "texto": "Símil o comparación"
+        },
+        {
+          "id": "c",
+          "texto": "Hipérbole"
+        }
+      ],
+      "correcta": "a"
+    },
+    "pistas": [
+      "Fíjate en si aparece la palabra «como»."
+    ],
+    "explicacion": "Se identifica un término real (ojos) con uno imaginario (luceros) sin usar «como»: es una metáfora.",
+    "erroresHabituales": [
+      {
+        "respuesta": "b",
+        "feedback": "Para que sea símil hace falta un nexo comparativo: «tus ojos son como luceros»."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  }
+]

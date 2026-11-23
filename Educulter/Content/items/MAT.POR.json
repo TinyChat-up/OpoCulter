@@ -1,0 +1,87 @@
+[
+  {
+    "id": "MAT.POR.PORCENT.0001",
+    "competencia": "MAT.POR.PORCENT",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Calcular un porcentaje sencillo.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Cuánto es el 25 % de 80?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "a",
+          "texto": "20"
+        },
+        {
+          "id": "b",
+          "texto": "25"
+        },
+        {
+          "id": "c",
+          "texto": "32"
+        }
+      ],
+      "correcta": "a"
+    },
+    "pistas": [],
+    "explicacion": "El 25 % es la cuarta parte: 80 : 4 = 20.",
+    "erroresHabituales": [
+      {
+        "respuesta": "b",
+        "feedback": "El 25 % no es 25 unidades: es 25 de cada 100, la cuarta parte."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.POR.PORCENT.0002",
+    "competencia": "MAT.POR.PORCENT",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Aplicar un descuento.",
+    "mecanica": "numerico",
+    "enunciado": "Una camiseta cuesta 20 € y tiene un 15 % de descuento. ¿Cuánto pagas?",
+    "payload": {
+      "respuesta": "17",
+      "formato": "decimal",
+      "tolerancia": 0,
+      "unidad": "€"
+    },
+    "pistas": [],
+    "explicacion": "15 % de 20 = 3 €. Se pagan 20 − 3 = 17 €. O directamente: 20 × 0,85 = 17.",
+    "erroresHabituales": [
+      {
+        "respuesta": "3",
+        "feedback": "3 € es el descuento, no lo que se paga: hay que restarlo a 20."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  }
+]
