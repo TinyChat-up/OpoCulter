@@ -1,12 +1,27 @@
 import SwiftUI
 
 /// Punto de entrada de la app.
-/// Fase 00: solo contiene una pantalla de verificación técnica, sin funcionalidad de producto.
 @main
 struct EduculterApp: App {
+    @State private var entorno = EntornoApp.crear()
+
     var body: some Scene {
         WindowGroup {
-            PantallaVerificacionView()
+            raiz
+                .environment(entorno)
         }
+    }
+
+    @ViewBuilder
+    private var raiz: some View {
+        #if DEBUG
+        if let escena = entorno.opciones.captura {
+            VistaCaptura(escena: escena)
+        } else {
+            VistaRaiz()
+        }
+        #else
+        VistaRaiz()
+        #endif
     }
 }

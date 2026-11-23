@@ -9,21 +9,165 @@
     "enunciado": "Arrastra cada palabra a su caja.",
     "payload": {
       "categorias": [
-        { "id": "SUS", "nombre": "Sustantivo" },
-        { "id": "ADJ", "nombre": "Adjetivo" }
+        {
+          "id": "SUS",
+          "nombre": "Sustantivo"
+        },
+        {
+          "id": "ADJ",
+          "nombre": "Adjetivo"
+        }
       ],
       "fichas": [
-        { "id": "f1", "texto": "gato", "categoria": "SUS" },
-        { "id": "f2", "texto": "mesa", "categoria": "SUS" },
-        { "id": "f3", "texto": "hermoso", "categoria": "ADJ" },
-        { "id": "f4", "texto": "feliz", "categoria": "ADJ" }
+        {
+          "id": "f1",
+          "texto": "gato",
+          "categoria": "SUS"
+        },
+        {
+          "id": "f2",
+          "texto": "mesa",
+          "categoria": "SUS"
+        },
+        {
+          "id": "f3",
+          "texto": "hermoso",
+          "categoria": "ADJ"
+        },
+        {
+          "id": "f4",
+          "texto": "feliz",
+          "categoria": "ADJ"
+        }
       ]
     },
-    "pistas": ["El sustantivo nombra; el adjetivo dice cómo es lo nombrado."],
+    "pistas": [
+      "El sustantivo nombra; el adjetivo dice cómo es lo nombrado."
+    ],
     "explicacion": "«Gato» y «mesa» nombran seres u objetos (sustantivos); «hermoso» y «feliz» expresan cualidades (adjetivos).",
     "erroresHabituales": [],
-    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
-    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 04."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.CLA.SUSTADJ.0002",
+    "competencia": "LEN.CLA.SUSTADJ",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Distinguir adjetivo y adverbio.",
+    "mecanica": "verdaderoFalso",
+    "enunciado": "¿Verdadero o falso?",
+    "payload": {
+      "afirmacion": "«Rápidamente» es un adjetivo.",
+      "esVerdadera": false
+    },
+    "pistas": [],
+    "explicacion": "«Rápidamente» es un adverbio de modo: modifica al verbo y no varía en género ni número.",
+    "erroresHabituales": [
+      {
+        "respuesta": "verdadero",
+        "feedback": "Los adjetivos acompañan al sustantivo; las palabras en -mente son adverbios."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.CLA.VERBO.0001",
+    "competencia": "LEN.CLA.VERBO",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Reconocer verbos en una oración.",
+    "mecanica": "marcarTexto",
+    "enunciado": "Toca los verbos.",
+    "payload": {
+      "unidad": "palabra",
+      "tokens": [
+        {
+          "id": "t1",
+          "texto": "Ana"
+        },
+        {
+          "id": "t2",
+          "texto": "come"
+        },
+        {
+          "id": "t3",
+          "texto": "y"
+        },
+        {
+          "id": "t4",
+          "texto": "Luis"
+        },
+        {
+          "id": "t5",
+          "texto": "lee"
+        },
+        {
+          "id": "t6",
+          "texto": "en"
+        },
+        {
+          "id": "t7",
+          "texto": "el"
+        },
+        {
+          "id": "t8",
+          "texto": "parque"
+        }
+      ],
+      "correctos": [
+        "t2",
+        "t5"
+      ]
+    },
+    "pistas": [
+      "Busca las palabras que indican qué hace alguien."
+    ],
+    "explicacion": "«Come» y «lee» expresan acciones y se conjugan: son verbos.",
+    "erroresHabituales": [
+      {
+        "respuesta": "t8",
+        "feedback": "«Parque» es un sustantivo: nombra un lugar."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
     "version": 1
   }
 ]

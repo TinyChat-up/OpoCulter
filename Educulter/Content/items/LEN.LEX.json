@@ -1,0 +1,72 @@
+[
+  {
+    "id": "LEN.LEX.SINON.0001",
+    "competencia": "LEN.LEX.SINON",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Reconocer sinónimos.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada palabra con su sinónimo.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "rápido"
+        },
+        {
+          "id": "i2",
+          "texto": "alegre"
+        },
+        {
+          "id": "i3",
+          "texto": "comenzar"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "empezar"
+        },
+        {
+          "id": "d2",
+          "texto": "veloz"
+        },
+        {
+          "id": "d3",
+          "texto": "contento"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d2"
+        ],
+        [
+          "i2",
+          "d3"
+        ],
+        [
+          "i3",
+          "d1"
+        ]
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Los sinónimos tienen un significado igual o muy parecido: rápido/veloz, alegre/contento, comenzar/empezar.",
+    "erroresHabituales": [],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 05A."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    },
+    "version": 1
+  }
+]

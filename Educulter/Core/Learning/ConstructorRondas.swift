@@ -138,13 +138,18 @@ struct ConstructorRondas: Sendable {
     }
 
     /// Ítems de una competencia para practicar en un peldaño. Si no hay ítems de ese peldaño,
-    /// se usa el peldaño inferior más cercano que tenga. Nunca se usa el peldaño 5 en rondas.
+    /// se usa el peldaño inferior más cercano que tenga y, si tampoco hay, el superior más
+    /// cercano (D-037). Nunca se usa el peldaño 5 en rondas.
     func candidatos(competencia: String, peldano: Int) -> [Item] {
-        var p = min(peldano, config.peldanoMaximoEnRonda)
-        while p >= 1 {
+        let tope = config.peldanoMaximoEnRonda
+        let inicial = min(peldano, tope)
+        for p in stride(from: inicial, through: 1, by: -1) {
             let items = banco.items(competencia: competencia, peldano: p)
             if !items.isEmpty { return items }
-            p -= 1
+        }
+        for p in stride(from: inicial + 1, through: tope, by: 1) {
+            let items = banco.items(competencia: competencia, peldano: p)
+            if !items.isEmpty { return items }
         }
         return []
     }

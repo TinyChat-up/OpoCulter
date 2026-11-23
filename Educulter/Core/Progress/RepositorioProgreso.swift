@@ -23,6 +23,8 @@ struct PerfilJugador: Codable, Sendable, Equatable {
     var misiones: [Mision] = []
     var diaMisiones: DiaCivil?
     var metricas: [Metrica: Int] = [:]
+    /// Competencia que se está trabajando en las rondas recomendadas.
+    var competenciaEnCurso: String?
 }
 
 struct LogroObtenido: Codable, Sendable, Equatable {

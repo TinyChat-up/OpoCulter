@@ -10,8 +10,8 @@ struct ConfiguracionEscalera: Sendable, Equatable {
     }
 
     var reglaGeneral = Regla(ventana: 5, aciertos: 4)
-    /// Excepciones por peldaño (p. ej. el peldaño 1, que solo tiene 1–2 ítems guiados).
-    var reglasPorPeldano: [Int: Regla] = [:]
+    /// Excepciones por peldaño. El peldaño 1 (1–2 ítems guiados) se supera con 2 de 2 (D-032).
+    var reglasPorPeldano: [Int: Regla] = [1: Regla(ventana: 2, aciertos: 2)]
     var peldanoMaximo = 5
     /// Una competencia está dominada cuando alcanza este peldaño (ha superado el 3 y el 4).
     var peldanoDominio = 5
@@ -33,11 +33,12 @@ struct EstadoEscalera: Codable, Sendable, Equatable {
         peldano >= config.peldanoDominio
     }
 
-    /// Registra un intento. Solo cuentan los ítems del peldaño actual; los repasos de
-    /// peldaños inferiores no hacen subir. Devuelve `true` si se ha subido de peldaño.
+    /// Registra un intento. Cuentan los ítems del peldaño actual o superiores (cuando falta
+    /// contenido del peldaño se practica con el siguiente, D-037); los repasos de peldaños
+    /// inferiores no hacen subir. Devuelve `true` si se ha subido de peldaño.
     @discardableResult
     mutating func registrar(correcto: Bool, peldanoDelItem: Int, config: ConfiguracionEscalera = .estandar) -> Bool {
-        guard peldanoDelItem == peldano, peldano < config.peldanoMaximo else { return false }
+        guard peldanoDelItem >= peldano, peldano < config.peldanoMaximo else { return false }
         let regla = config.regla(para: peldano)
         ventana.append(correcto)
         if ventana.count > regla.ventana { ventana.removeFirst(ventana.count - regla.ventana) }

@@ -39,6 +39,12 @@ struct ValidadorTests {
         item.explicacion = String(repeating: "a", count: 280)
         #expect(errores(item).isEmpty)
 
+        var conPistas = Fx.item("LEN.SIN.SUJPRED.0001", peldano: 3)
+        conPistas.pistas = ["Una pista"]
+        #expect(contiene(errores(conPistas), "no pueden tener pistas"))
+        conPistas.peldano = 2
+        #expect(errores(conPistas).isEmpty)
+
         item.objetivo = ""; item.enunciado = ""; item.explicacion = ""; item.version = 0
         let m = errores(item)
         #expect(contiene(m, "objetivo vacío") && contiene(m, "enunciado vacío") && contiene(m, "explicación vacía") && contiene(m, "versión"))

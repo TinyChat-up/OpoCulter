@@ -118,6 +118,9 @@ struct ValidadorContenido: Sendable {
             mensajes.append("la explicación tiene \(item.explicacion.count) caracteres (máximo \(Self.maxCaracteresExplicacion))")
         }
         if item.version < 1 { mensajes.append("la versión debe ser 1 o mayor") }
+        if item.peldano >= Peldano.sinAyudas.rawValue, !item.pistas.isEmpty {
+            mensajes.append("los ítems de peldaño 3 o superior no pueden tener pistas (D-033)")
+        }
         for error in item.erroresHabituales where error.respuesta.isEmpty || error.feedback.isEmpty {
             mensajes.append("error habitual con respuesta o feedback vacíos")
         }

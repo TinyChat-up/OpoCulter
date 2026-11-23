@@ -13,10 +13,11 @@ struct ContenidoEmpaquetadoTests {
     @Test("El contenido del bundle se carga completo en Debug")
     func cargaCompleta() throws {
         let banco = try cargador.cargar(politica: .todos)
-        #expect(banco.items.count == 10)
-        #expect(banco.teoria.count == 2)
+        #expect(banco.items.count == 30)
+        #expect(banco.teoria.count == 3)
         #expect(banco.simulacros.count == 1)
-        #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber un ítem por mecánica")
+        #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber ítems de todas las mecánicas")
+        for m in Mecanica.allCases { #expect(banco.items.filter { $0.mecanica == m }.count == 3, "3 ítems de \(m)") }
         #expect(banco.catalogo.areas.map(\.id) == ["LEN", "MAT"])
         #expect(banco.catalogo.areas[0].bloques.count == 10)
         #expect(banco.catalogo.areas[1].bloques.count == 9)
@@ -70,14 +71,14 @@ struct ContenidoEmpaquetadoTests {
         let banco = try cargador.cargar(politica: .todos)
         #expect(banco.item(id: "LEN.SIN.SUJPRED.0001")?.mecanica == .segmentar)
         #expect(banco.item(id: "NO.EXISTE") == nil)
-        #expect(banco.items(competencia: "LEN.ORT.TILDES").count == 2)
-        #expect(banco.items(competencia: "LEN.ORT.TILDES", peldano: 4).map(\.id) == ["LEN.ORT.TILDES.0002"])
+        #expect(banco.items(competencia: "LEN.ORT.TILDES").count == 5)
+        #expect(banco.items(competencia: "LEN.ORT.TILDES", peldano: 4).map(\.id) == ["LEN.ORT.TILDES.0002", "LEN.ORT.TILDES.0005"])
         #expect(banco.items(bloque: "LEN.LIT").count == 2)
         #expect(banco.items(bloque: "XXX.YYY").isEmpty)
         #expect(banco.teoria(competencia: "MAT.NUM.FRACSUM").count == 1)
         #expect(banco.catalogo.bloque(deCompetencia: "MAT.GEO.TRIANG")?.id == "MAT.GEO")
         #expect(Catalogo.area(de: "MAT.GEO.TRIANG") == "MAT")
-        #expect(banco.catalogo.todasLasCompetencias.count == 9)
+        #expect(banco.catalogo.todasLasCompetencias.count == 18)
     }
 }
 

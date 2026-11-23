@@ -111,6 +111,7 @@ final class PerfilRegistro {
     var diaMisiones: Int?
     var misionesJSON: Data?
     var metricasJSON: Data?
+    var competenciaEnCurso: String?
 
     init() {}
 
@@ -122,6 +123,7 @@ final class PerfilRegistro {
         ultimoDiaActivo = p.racha.ultimoDiaActivo?.clave
         ultimoDiaProcesado = p.racha.ultimoDiaProcesado?.clave
         diaMisiones = p.diaMisiones?.clave
+        competenciaEnCurso = p.competenciaEnCurso
         misionesJSON = try JSONEncoder().encode(p.misiones)
         metricasJSON = try JSONEncoder().encode(Dictionary(uniqueKeysWithValues: p.metricas.map { ($0.key.rawValue, $0.value) }))
     }
@@ -134,7 +136,8 @@ final class PerfilRegistro {
                                 ultimoDiaActivo: ultimoDiaActivo.flatMap(DiaCivil.init(clave:)),
                                 ultimoDiaProcesado: ultimoDiaProcesado.flatMap(DiaCivil.init(clave:)))
         return PerfilJugador(xpTotal: xpTotal, racha: racha, misiones: misiones,
-                             diaMisiones: diaMisiones.flatMap(DiaCivil.init(clave:)), metricas: metricas)
+                             diaMisiones: diaMisiones.flatMap(DiaCivil.init(clave:)), metricas: metricas,
+                             competenciaEnCurso: competenciaEnCurso)
     }
 }
 

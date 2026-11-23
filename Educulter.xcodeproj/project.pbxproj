@@ -29,22 +29,9 @@
 		EC0000000000000000000006 /* EduculterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = EduculterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		EC0000000000000000000013 /* Exceptions for "Educulter" folder in "Educulter" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Features/.gitkeep,
-			);
-			target = EC0000000000000000000020 /* Educulter */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EC0000000000000000000010 /* Educulter */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				EC0000000000000000000013 /* Exceptions for "Educulter" folder in "Educulter" target */,
-			);
 			explicitFolders = (
 				Content,
 			);

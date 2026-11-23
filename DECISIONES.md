@@ -78,7 +78,7 @@ El requisito es "SDK de iOS 26 o superior"; 27.2 lo cumple. No se instala el run
 ### D-023 · 2026-11-23 · Fase 04 · Vigente
 **Leitner por competencia:** el primer intento de una competencia la coloca en la caja 1 con repaso al día siguiente. Después, solo el **primer intento de un día en que está vencida** mueve la caja (acierto +1, fallo −2, mínimo 1); los demás intentos de ese día no la mueven. Sin esta regla, una sola ronda subiría una competencia hasta la caja 5.
 
-### D-024 · 2026-11-23 · Fase 04 · Vigente
+### D-024 · 2026-11-23 · Fase 04 · Vigente (matizada por D-032 y D-037)
 **Escalera:** solo cuentan los intentos con ítems del peldaño actual (los repasos de peldaños inferiores no hacen subir). Con 4 aciertos entre los 5 últimos intentos (o 4 de 4) se sube y la ventana se vacía. "Dominada" = peldaño 5 alcanzado. La regla es configurable en general y por peldaño (p. ej. el peldaño 1, que solo tiene 1–2 ítems guiados).
 
 ### D-025 · 2026-11-23 · Fase 04 · Vigente
@@ -93,8 +93,68 @@ El requisito es "SDK de iOS 26 o superior"; 27.2 lo cumple. No se instala el run
 ### D-028 · 2026-11-23 · Fase 04 · Vigente
 **Diagnóstico:** primer ítem de cada bloque ★★★ con dificultad lo más cercana posible a 2, de los peldaños 2–4, alternando Lengua y Matemáticas. Nivel por bloque: 0, 0,5 o 1 (ver DISENO_PEDAGOGICO.md §2). El plan incluye solo los bloques con contenido; los no evaluados cuentan con debilidad 0,5. Empates: mayor prioridad y después el orden del catálogo.
 
-### D-029 · 2026-11-23 · Fase 04 · Provisional
+### D-029 · 2026-11-23 · Fase 04 · Sustituida por D-031
 **Prioridades de bloque provisionales**, a la espera de la dirección: ★★★ LEN SIN, ORT, CLA, VER, LIT, COM y MAT UNI, GEO, POR, NUM, DIV, OPE (12 bloques, unos 12–24 ítems de diagnóstico); ★★ el resto. El catálogo incluye solo las competencias que necesita el contenido de prueba.
 
 ### D-030 · 2026-11-23 · Fase 04 · Vigente
 **Reglas del validador además de las pedidas:** 2–4 opciones en `eleccion` y 2–4 categorías en `clasificar` (según el catálogo de mecánicas); 1–5 ruedas; la licencia debe ser coherente con el tipo (`original` → `propia`, `dominioPublico` → `dominio publico`); un elemento `aprobado` exige `revisor` y `fecha` `AAAA-MM-DD`; los errores habituales de `eleccion` deben ser opciones incorrectas; formato de las referencias a exámenes.
+
+## Fase 05A — Sistema de diseño, mecánicas y flujo de ronda
+
+### Resoluciones de la dirección
+
+### D-031 · 2026-11-23 · Fase 05A · Vigente (dirección)
+**Prioridades de bloque definitivas.** ★★★: LEN.SIN, LEN.COM, LEN.LIT, LEN.CLA, LEN.ORT, LEN.VER · MAT.UNI, MAT.GEO, MAT.POR, MAT.NUM, MAT.DIV, MAT.OPE. ★★: LEN.LEX, LEN.REC, LEN.MET, LEN.FOR · MAT.ROM, MAT.EST, MAT.PRO. El diagnóstico usa los 6 + 6 bloques ★★★, con un máximo de 2 ítems por bloque. Coinciden con las provisionales (D-029), así que el catálogo no cambia.
+
+### D-032 · 2026-11-23 · Fase 05A · Vigente (dirección)
+**Peldaño 1:** se supera con 2 aciertos en los 2 últimos intentos; se pueden repetir los ítems guiados. Implementado como regla por defecto en `ConfiguracionEscalera.estandar`.
+
+### D-033 · 2026-11-23 · Fase 05A · Vigente (dirección)
+**Pistas solo en los peldaños 1 y 2.** El validador rechaza ítems de peldaño ≥ 3 con pistas, y la interfaz solo ofrece el botón "Pista" en los peldaños 1–2.
+
+### D-034 · 2026-11-23 · Fase 05A · Vigente (dirección)
+**Teoría tipo `esquema`:** una fila por línea; `Etiqueta: valor` en dos columnas y `A → B` como flecha. Si los dos puntos aparecen antes de la primera flecha, la línea es un par. Lo interpreta `FilaEsquema` (núcleo) y lo maqueta `VistaEsquema`.
+
+### D-035 · 2026-11-23 · Fase 05A · Vigente (dirección)
+**Aprobación de contenido:** `revisor = "direccion"` cuando aprueba la dirección; fecha `AAAA-MM-DD`.
+
+### D-036 · 2026-11-23 · Fase 05A · Vigente (dirección)
+**ROADMAP:** las Fases 01–03 figuran como "Completadas (integradas en el diseño v1)".
+
+### Decisiones técnicas
+
+### D-037 · 2026-11-23 · Fase 05A · Vigente
+**Contenido escaso por peldaño.** Si una competencia no tiene ítems de su peldaño ni de los inferiores, la ronda usa el peldaño superior más cercano (hasta el 4), y la escalera cuenta los intentos con ítems del peldaño actual **o superior** (antes, solo del actual). Sin esto, una competencia nueva (peldaño 1) sin ítems de peldaño 1 no podría avanzar nunca.
+
+### D-038 · 2026-11-23 · Fase 05A · Vigente
+**Paleta ajustada a AA.** Se conserva el matiz de cada color de la dirección y se ajusta la luminosidad hasta ≥ 4,5:1 como texto en el peor fondo: Lengua claro `#C73F1C`, Matemáticas oscuro `#7581DE`, Éxito claro `#257E55`, Fallo `#D13030`/`#DC6060`, y ámbar como texto en claro `#9C620A`. El ámbar `#F2A93B` se mantiene como relleno de recompensa, siempre con texto `#141518` (9,1:1). Sobre los acentos, texto blanco en claro y `#141518` en oscuro. Tabla completa en UX_UI.md §4.1.
+
+### D-039 · 2026-11-23 · Fase 05A · Vigente
+**Feedback como panel inferior**, no como hoja modal: así la corrección en el sitio (verde/rojo) sigue visible y desplazable mientras se lee la explicación. "Ver regla" sí abre una hoja (media o completa).
+
+### D-040 · 2026-11-23 · Fase 05A · Vigente
+**Hápticos con `sensoryFeedback` de SwiftUI** (iOS 17): `.success`, `.error`, impacto medio cada 3 aciertos y `.selection` al seleccionar, colocar o arrastrar. Sin generadores de UIKit ni servicio propio.
+
+### D-041 · 2026-11-23 · Fase 05A · Vigente
+**Sonido:** protocolo `ServicioSonido` con la implementación vacía `SonidoSilencioso`; la implementación real llega en la 05B.
+
+### D-042 · 2026-11-23 · Fase 05A · Vigente
+**Competencia en curso:** se guarda en el perfil y se mantiene hasta que se domina o se queda sin ítems. La siguiente es la primera sin dominar por prioridad de bloque (★★★ primero) y orden del catálogo. En la 05B la sustituirá el plan del diagnóstico.
+
+### D-043 · 2026-11-23 · Fase 05A · Vigente
+**`ServicioSesion` (Core/Sesion, `@MainActor`)** orquesta el núcleo: prepara rondas (recomendada, Rescate, Ortografía exprés, ítems concretos), registra cada respuesta (escalera, Leitner, Rescate, XP, métricas, misiones, logros e intento) y cierra la ronda (racha, misiones y logros). Los view models solo gestionan la secuencia en pantalla, y la lógica queda cubierta por tests del núcleo. Cada respuesta se guarda al comprobar; salir a mitad no pierde nada y no cuenta para la racha.
+
+### D-044 · 2026-11-23 · Fase 05A · Vigente
+**Opciones de arranque solo en Debug:** `-enMemoria`, `-semilla N`, `-ayudasDePrueba` (botón "Rellenar (pruebas)"), `-rondaDemostracion` (un ítem por mecánica) y `-captura <escena>`. En Release se ignoran (`#if DEBUG`). La pantalla de revisión usa un progreso en memoria aparte, para no alterar el real.
+
+### D-045 · 2026-11-23 · Fase 05A · Vigente
+**Contrato de las mecánicas:** cada vista escribe el borrador en un único `Binding<Respuesta?>`, y `Respuesta.esCompleta(para:)` (núcleo) decide si se activa "Comprobar". El modo sin arrastre (tocar y luego el destino) está siempre disponible. Ordenar empieza en el orden del archivo (rotado si coincide con el correcto). Emparejar identifica cada par por color **y** número. Ruedas usa un control segmentado con ≤ 3 opciones cortas y un menú en el resto. Segmentar anida automáticamente y rechaza los tramos que se cruzan (UX_UI.md §6).
+
+### D-046 · 2026-11-23 · Fase 05A · Vigente
+**Se retira la pantalla de verificación** de la Fase 00 y sus dos tests; los sustituyen la raíz con pestañas y los tests de la 05A.
+
+### D-047 · 2026-11-23 · Fase 05A · Vigente
+**Capturas reproducibles sin dependencias:** `scripts/capturas.sh` lanza cada escena en el simulador con `-captura` (claro, oscuro y texto AX5) y `scripts/hoja_contactos.swift` compone `HOJA.png` con AppKit.
+
+### D-048 · 2026-11-23 · Fase 05A · Vigente
+**Auditoría de accesibilidad sin incidencias.** `performAccessibilityAudit()` se ejecuta en Hoy, la teoría previa, cada mecánica (antes y después de comprobar) y el resumen, y el test falla si queda alguna incidencia. Para lograrlo: los cambios de disposición por Dynamic Type usan `AnyLayout` (no `ViewThatFits`, que la auditoría marca); no se limita `dynamicTypeSize`; los controles inactivos no se atenúan (`allowsHitTesting` en lugar de `.disabled`, y botón desactivado con contorno y texto secundario); las fichas corregidas conservan el texto en color principal y llevan borde e icono de color. **Única excepción justificada:** en Hoy se ignoran las incidencias de contraste de los elementos que el scroll deja bajo la barra de pestañas translúcida, porque dependen de la posición del scroll y del material del sistema, no de nuestros colores.

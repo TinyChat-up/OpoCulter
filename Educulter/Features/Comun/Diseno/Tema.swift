@@ -1,0 +1,62 @@
+import SwiftUI
+
+/// Colores del sistema de diseño ("Calma enfocada"). Definidos en el Asset Catalog
+/// (`Resources/Assets.xcassets/Colores`) con variante clara y oscura y contraste AA
+/// comprobado (ver UX_UI.md §4).
+enum Paleta {
+    static let fondo = Color("Fondo")
+    static let superficie = Color("Superficie")
+    static let textoPrincipal = Color("TextoPrincipal")
+    static let textoSecundario = Color("TextoSecundario")
+    static let borde = Color("Borde")
+    static let lengua = Color("Lengua")
+    static let matematicas = Color("Matematicas")
+    static let exito = Color("Exito")
+    static let fallo = Color("Fallo")
+    /// Relleno de recompensa (siempre con `textoSobreRecompensa` encima).
+    static let recompensa = Color("Recompensa")
+    /// Ámbar legible como texto sobre fondo o superficie.
+    static let recompensaTexto = Color("RecompensaTexto")
+    /// Texto sobre un relleno de acento (Lengua, Matemáticas, éxito, fallo).
+    static let textoSobreAcento = Color("TextoSobreAcento")
+    static let textoSobreRecompensa = Color("TextoSobreRecompensa")
+
+    /// Color de acento de un área (`LEN` → coral, `MAT` → índigo).
+    static func acento(area: String) -> Color {
+        area == "MAT" ? matematicas : lengua
+    }
+
+    static func acento(competencia: String) -> Color {
+        acento(area: Catalogo.area(de: competencia))
+    }
+
+    /// Colores (todos AA) para distinguir pares y etiquetas; siempre acompañados de número o texto.
+    static let pares: [Color] = [matematicas, lengua, exito, recompensaTexto, textoSecundario]
+}
+
+/// Escala de espaciado 4/8/12/16/24/32.
+enum Espacio {
+    static let xs: CGFloat = 4
+    static let s: CGFloat = 8
+    static let m: CGFloat = 12
+    static let l: CGFloat = 16
+    static let xl: CGFloat = 24
+    static let xxl: CGFloat = 32
+}
+
+enum Radio {
+    static let tarjeta: CGFloat = 16
+    static let ficha: CGFloat = 12
+}
+
+enum Medidas {
+    /// Área táctil mínima (HIG).
+    static let tactilMinimo: CGFloat = 44
+}
+
+extension Font {
+    /// SF Rounded con estilo de Dynamic Type: números, XP y recompensas.
+    static func redondeada(_ estilo: Font.TextStyle, peso: Font.Weight = .semibold) -> Font {
+        .system(estilo, design: .rounded).weight(peso)
+    }
+}
