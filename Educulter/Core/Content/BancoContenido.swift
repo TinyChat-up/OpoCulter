@@ -1,20 +1,42 @@
 import Foundation
 
 /// Contenido educativo cargado en memoria, con índices de búsqueda. Inmutable y `Sendable`.
+///
+/// Además de los ítems estáticos, materializa `variantesPorPlantilla` ítems de cada plantilla de
+/// generador (D-062) a partir de `semillaBase` (distinta en cada sesión; fija con `-semilla`).
+/// El constructor de rondas los usa igual que los estáticos. `item(id:)` regenera cualquier
+/// `<plantilla>#<semilla>` (Rescate reproduce el ítem exacto aunque no esté materializado).
 struct BancoContenido: Sendable, Equatable {
     let catalogo: Catalogo
+    /// Ítems estáticos + variantes materializadas de las plantillas.
     let items: [Item]
     let teoria: [TarjetaTeoria]
     let simulacros: [Simulacro]
+    let plantillas: [Plantilla]
+    let recursos: RecursosGeneradores
+    /// Número de ítems estáticos (los primeros de `items`).
+    let numeroEstaticos: Int
 
     private let indicePorId: [String: Int]
     private let indicePorCompetencia: [String: [Int]]
+    private let plantillaPorId: [String: Plantilla]
 
-    init(catalogo: Catalogo, items: [Item], teoria: [TarjetaTeoria] = [], simulacros: [Simulacro] = []) {
+    static let variantesPorPlantilla = 12
+
+    init(catalogo: Catalogo, items: [Item], teoria: [TarjetaTeoria] = [], simulacros: [Simulacro] = [],
+         plantillas: [Plantilla] = [], recursos: RecursosGeneradores = .vacios,
+         variantesPorPlantilla: Int = BancoContenido.variantesPorPlantilla, semillaBase: UInt64 = 1) {
         self.catalogo = catalogo
-        self.items = items
+        self.numeroEstaticos = items.count
+        self.items = items + plantillas.flatMap {
+            MotorGeneradores.variantes($0, cantidad: variantesPorPlantilla, semillaBase: semillaBase, recursos: recursos)
+        }
         self.teoria = teoria
         self.simulacros = simulacros
+        self.plantillas = plantillas
+        self.recursos = recursos
+        self.plantillaPorId = Dictionary(plantillas.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
+        let items = self.items
         var porId: [String: Int] = [:]
         var porCompetencia: [String: [Int]] = [:]
         for (i, item) in items.enumerated() {
@@ -26,8 +48,15 @@ struct BancoContenido: Sendable, Equatable {
     }
 
     func item(id: String) -> Item? {
-        indicePorId[id].map { items[$0] }
+        if let i = indicePorId[id] { return items[i] }
+        guard let (pid, semilla) = MotorGeneradores.partes(de: id), let p = plantillaPorId[pid] else { return nil }
+        return try? MotorGeneradores.generar(p, semilla: semilla, recursos: recursos)
     }
+
+    func plantilla(id: String) -> Plantilla? { plantillaPorId[id] }
+
+    /// Ítems estáticos (sin las variantes generadas).
+    var itemsEstaticos: ArraySlice<Item> { items.prefix(numeroEstaticos) }
 
     func items(competencia: String) -> [Item] {
         (indicePorCompetencia[competencia] ?? []).map { items[$0] }
@@ -48,5 +77,6 @@ struct BancoContenido: Sendable, Equatable {
 
     static func == (a: BancoContenido, b: BancoContenido) -> Bool {
         a.catalogo == b.catalogo && a.items == b.items && a.teoria == b.teoria && a.simulacros == b.simulacros
+            && a.plantillas == b.plantillas && a.recursos == b.recursos
     }
 }

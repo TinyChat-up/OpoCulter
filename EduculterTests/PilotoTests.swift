@@ -217,15 +217,12 @@ struct PersonajesTests {
 
 @Suite("Avatares")
 struct AvatarTests {
-    @Test("12 avatares distintos y equilibrados")
+    @Test("6 avatares del propietario, distintos (05C sustituye a los 12 geométricos)")
     func catalogo() {
         let todos = Avatar.todos
-        #expect(todos.count == 12 && Set(todos.map(\.id)) == Set(0..<12))
-        #expect(Set(todos.map { "\($0.forma)\($0.tono)\($0.accesorio)" }).count == 12)
-        for f in Avatar.Forma.allCases { #expect(todos.filter { $0.forma == f }.count == 3) }
-        for t in Avatar.Tono.allCases { #expect(todos.filter { $0.tono == t }.count == 3) }
-        for a in Avatar.Accesorio.allCases { #expect(todos.filter { $0.accesorio == a }.count == 4) }
-        #expect(Avatar.con(id: 0)?.nombre == "Círculo índigo con gafas")
+        #expect(todos.count == 6 && Set(todos.map(\.id)) == Set(0..<6))
+        #expect(Set(todos.map(\.nombre)).count == 6 && Set(todos.map(\.recurso)).count == 6)
+        #expect(Avatar.con(id: 2)?.nombre == "cinta deportiva")
         #expect(Avatar.con(id: 12) == nil && Avatar.con(id: nil) == nil)
     }
 
@@ -238,12 +235,13 @@ struct AvatarTests {
         do {
             let servicio = ServicioSesion(banco: banco, repositorio: RepositorioSwiftData(contenedor: try EsquemaProgreso.contenedor(url: url)))
             #expect(try servicio.estadoHoy().avatar == nil)
-            try servicio.elegirAvatar(7)
+            try servicio.elegirAvatar(4)
+            try servicio.elegirAvatar(7) // ids de 05B (6–11): ya no se pueden elegir
             try servicio.elegirAvatar(99) // fuera de rango: se ignora
         }
         let reabierto = ServicioSesion(banco: banco, repositorio: RepositorioSwiftData(contenedor: try EsquemaProgreso.contenedor(url: url)))
-        #expect(try reabierto.estadoHoy().avatar == 7)
-        #expect(try reabierto.resumenProgreso() == "rescate:0;xp:0;avatar:7")
+        #expect(try reabierto.estadoHoy().avatar == 4)
+        #expect(try reabierto.resumenProgreso() == "rescate:0;xp:0;avatar:4")
     }
 }
 

@@ -49,12 +49,12 @@ final class PilotoUITests: CasoUI {
 
         // Perfil: cambiar el avatar.
         app.buttons["botonPerfil"].tap()
-        XCTAssertTrue(app.buttons["avatar_9"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["avatar_3"].waitForExistence(timeout: 5))
         try auditar(app, "Perfil")
-        app.buttons["avatar_9"].tap()
+        app.buttons["avatar_3"].tap()
         app.buttons["botonGuardarPerfil"].tap()
         XCTAssertTrue(app.buttons["botonPerfil"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.buttons["botonPerfil"].value as? String, "Hexágono coral con gafas")
+        XCTAssertEqual(app.buttons["botonPerfil"].value as? String, "pañuelo rojo y aros")
     }
 
     private struct EstadoVisible: Equatable {

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "LEN.CLA.SUSTADJ.G01",
+    "competencia": "LEN.CLA.SUSTADJ",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "clasificar",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "Clasifica cada palabra de «{{oracion}}» según su clase."
+    ],
+    "objetivo": "Reconocer clases de palabras",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

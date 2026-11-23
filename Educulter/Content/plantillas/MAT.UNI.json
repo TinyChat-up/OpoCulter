@@ -1,0 +1,55 @@
+[
+  {
+    "id": "MAT.UNI.LONG.G01",
+    "competencia": "MAT.UNI.LONG",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "numerico",
+    "tipo": "conversionUnidades",
+    "enunciados": [
+      "Expresa {{cantidad}} en {{hasta}}.",
+      "¿Cuántos {{hasta}} son {{cantidad}}?"
+    ],
+    "objetivo": "Convertir unidades de longitud",
+    "parametros": {
+      "magnitudes": [
+        "longitud"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.LONG.G02",
+    "competencia": "MAT.UNI.LONG",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "ruedas",
+    "tipo": "conversionUnidades",
+    "enunciados": [
+      "Completa: {{cantidad}} = {{resultado}} ___. Elige la unidad."
+    ],
+    "objetivo": "Reconocer la unidad de una equivalencia",
+    "parametros": {
+      "magnitudes": [
+        "longitud"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

@@ -1,0 +1,23 @@
+[
+  {
+    "id": "LEN.VER.ANALISIS.G01",
+    "competencia": "LEN.VER.ANALISIS",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "ruedas",
+    "tipo": "analisisVerbal",
+    "enunciados": [
+      "Analiza la forma verbal «{{forma}}» (verbo {{infinitivo}})."
+    ],
+    "objetivo": "Analizar formas verbales",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

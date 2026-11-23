@@ -10,7 +10,8 @@
 | 05A | Sistema de diseño, mecánicas y ronda | Terminada | App jugable: Hoy, ronda, 10 mecánicas, feedback y resumen |
 | 05A.1 | Pulido visual y lote 01 de contenido | Terminada | Recompensas y más peso táctil; 38 ítems y 5 tarjetas reales de LEN.ORT |
 | 05B | Transformación premium: piloto vertical | Terminada | Sistema de diseño v2 "Laboratorio táctil", personajes «Tilde» y «Cuarto», 12 avatares, bienvenida, Hoy rediseñado, rondas por área, `colocarTilde` y `fraccionBarras`, contenido del piloto |
-| 05C | Supervivencia y resto del MVP | Siguiente | Supervivencia (con récords y avatar), Camino, Tribunal, Progreso, diagnóstico, sonido y más contenido; medición de tirones en dispositivo |
+| 05C | Estilo Rubber Hose, avatares del propietario, generadores y matriz de exámenes | Terminada | Estilo "Rubber Hose moderno" con Fredoka; 6 avatares del propietario con migración; motor de 16 generadores paramétricos con dificultad 1–6, léxico y gramática generativa; catálogo de preguntas únicas; matriz de los exámenes oficiales A1 |
+| 05D | Modos de juego | Siguiente | Supervivencia (con récords y avatar), Camino, Tribunal (a partir de la matriz), Progreso, diagnóstico y sonido; lotes 02 y 02b (léxico, plantillas reales, gramática y frases) |
 | Post-MVP | Editor de personalización del avatar | Pendiente | Hoy hay 12 avatares cerrados; el editor completo queda para después del MVP (D-054) |
 | 06 | Monetización | Pendiente | Suscripción con StoreKit 2 y muro de pago |
 | 07 | Calidad | Pendiente | Tests, accesibilidad, rendimiento, iOS 17 |

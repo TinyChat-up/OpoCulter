@@ -1,0 +1,23 @@
+[
+  {
+    "id": "MAT.PRO.LAPLACE.G01",
+    "competencia": "MAT.PRO.LAPLACE",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "probabilidadSimple",
+    "enunciados": [
+      "{{experimento}} ¿Qué probabilidad hay de que {{suceso}}? Escríbela como fracción."
+    ],
+    "objetivo": "Calcular probabilidades con la regla de Laplace",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

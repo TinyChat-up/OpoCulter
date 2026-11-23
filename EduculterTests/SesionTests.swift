@@ -99,7 +99,9 @@ struct ServicioSesionTests {
         let s = servicio()
         let e = try s.estadoHoy()
         #expect(e.misiones.count == 3)
-        #expect(e.hayContenido && e.itemsOrtografia == 50, "Lote 01 y piloto 05B de LEN.ORT")
+        // 50 ítems reales de LEN.ORT + las variantes de las plantillas de prueba de LEN.ORT (Debug, 05C).
+        let generadosOrt = banco.items.dropFirst(banco.numeroEstaticos).filter { $0.competencia.hasPrefix("LEN.ORT.") && $0.peldano <= 4 }.count
+        #expect(e.hayContenido && e.itemsOrtografia == 50 + generadosOrt, "Lote 01 y piloto 05B de LEN.ORT")
         #expect(e.competenciaEnCurso?.id == "LEN.SIN.SUJPRED", "Primer bloque ★★★ del catálogo")
         #expect(e.nivel == 1 && e.xpTotal == 0 && e.racha.actual == 0)
         // Las misiones no cambian el mismo día.

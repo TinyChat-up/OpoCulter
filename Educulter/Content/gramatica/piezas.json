@@ -1,0 +1,436 @@
+{
+  "sujetos": [
+    {
+      "tokens": [
+        [
+          "la",
+          "det"
+        ],
+        [
+          "profesora",
+          "sust"
+        ]
+      ],
+      "genero": "f",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
+          "mi",
+          "det"
+        ],
+        [
+          "hermano",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
+          "los",
+          "det"
+        ],
+        [
+          "alumnos",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "p"
+    },
+    {
+      "tokens": [
+        [
+          "las",
+          "det"
+        ],
+        [
+          "vecinas",
+          "sust"
+        ]
+      ],
+      "genero": "f",
+      "numero": "p"
+    },
+    {
+      "tokens": [
+        [
+          "el",
+          "det"
+        ],
+        [
+          "cartero",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
+          "Ana",
+          "sust"
+        ]
+      ],
+      "genero": "f",
+      "numero": "s"
+    }
+  ],
+  "verbos": [
+    {
+      "infinitivo": "caminar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "llegar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "descansar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "trabajar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "leer",
+      "regimen": "transitivo",
+      "ci": true,
+      "cd": [
+        {
+          "tokens": [
+            [
+              "un",
+              "det"
+            ],
+            [
+              "cuento",
+              "sust"
+            ]
+          ]
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "carta",
+              "sust"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "infinitivo": "escribir",
+      "regimen": "transitivo",
+      "ci": true,
+      "cd": [
+        {
+          "tokens": [
+            [
+              "un",
+              "det"
+            ],
+            [
+              "mensaje",
+              "sust"
+            ]
+          ]
+        },
+        {
+          "tokens": [
+            [
+              "una",
+              "det"
+            ],
+            [
+              "postal",
+              "sust"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "infinitivo": "preparar",
+      "regimen": "transitivo",
+      "ci": true,
+      "cd": [
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "cena",
+              "sust"
+            ]
+          ]
+        },
+        {
+          "tokens": [
+            [
+              "un",
+              "det"
+            ],
+            [
+              "pastel",
+              "sust"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "infinitivo": "comprar",
+      "regimen": "transitivo",
+      "ci": true,
+      "cd": [
+        {
+          "tokens": [
+            [
+              "fruta",
+              "sust"
+            ]
+          ]
+        },
+        {
+          "tokens": [
+            [
+              "unos",
+              "det"
+            ],
+            [
+              "libros",
+              "sust"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "infinitivo": "estar",
+      "regimen": "copulativo"
+    }
+  ],
+  "complementos": {
+    "CI": [
+      {
+        "tokens": [
+          [
+            "a",
+            "prep"
+          ],
+          [
+            "sus",
+            "det"
+          ],
+          [
+            "abuelos",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "a",
+            "prep"
+          ],
+          [
+            "la",
+            "det"
+          ],
+          [
+            "directora",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "a",
+            "prep"
+          ],
+          [
+            "Pedro",
+            "sust"
+          ]
+        ]
+      }
+    ],
+    "CCL": [
+      {
+        "tokens": [
+          [
+            "en",
+            "prep"
+          ],
+          [
+            "el",
+            "det"
+          ],
+          [
+            "parque",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "en",
+            "prep"
+          ],
+          [
+            "casa",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "por",
+            "prep"
+          ],
+          [
+            "la",
+            "det"
+          ],
+          [
+            "calle",
+            "sust"
+          ]
+        ]
+      }
+    ],
+    "CCT": [
+      {
+        "tokens": [
+          [
+            "ayer",
+            "adv"
+          ]
+        ],
+        "tiempo": [
+          "Pretérito perfecto simple"
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "mañana",
+            "adv"
+          ]
+        ],
+        "tiempo": [
+          "Futuro simple"
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "por",
+            "prep"
+          ],
+          [
+            "la",
+            "det"
+          ],
+          [
+            "tarde",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "todos",
+            "det"
+          ],
+          [
+            "los",
+            "det"
+          ],
+          [
+            "días",
+            "sust"
+          ]
+        ],
+        "tiempo": [
+          "Presente",
+          "Pretérito imperfecto"
+        ]
+      }
+    ],
+    "CCM": [
+      {
+        "tokens": [
+          [
+            "tranquilamente",
+            "adv"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "con",
+            "prep"
+          ],
+          [
+            "cuidado",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "deprisa",
+            "adv"
+          ]
+        ]
+      }
+    ]
+  },
+  "atributos": [
+    {
+      "formas": {
+        "ms": "contento",
+        "fs": "contenta",
+        "mp": "contentos",
+        "fp": "contentas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "cansado",
+        "fs": "cansada",
+        "mp": "cansados",
+        "fp": "cansadas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "tranquilo",
+        "fs": "tranquila",
+        "mp": "tranquilos",
+        "fp": "tranquilas"
+      }
+    }
+  ]
+}

@@ -1,0 +1,45 @@
+[
+  {
+    "id": "MAT.ROM.LECTURA.G01",
+    "competencia": "MAT.ROM.LECTURA",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "romanos",
+    "enunciados": [
+      "¿Qué número es {{romano}}?",
+      "Escribe en cifras: {{romano}}"
+    ],
+    "objetivo": "Leer números romanos",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.ROM.LECTURA.G02",
+    "competencia": "MAT.ROM.LECTURA",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "construir",
+    "tipo": "romanos",
+    "enunciados": [
+      "Escribe {{numero}} en números romanos con las piezas."
+    ],
+    "objetivo": "Escribir números romanos",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

@@ -17,6 +17,10 @@ struct ValidadorContenido: Sendable {
     /// Años desde la muerte del autor que exige la ley española para el dominio público
     /// (se exige que hayan pasado *más* de 80).
     static let aniosDominioPublico = 80
+    /// Dificultad 1–5 (de un paso a examen real) y 6 "Experto" (D-063).
+    static let rangoDificultad = 1...6
+    /// Semillas que se generan al validar una plantilla (los tests de propiedades usan 1000).
+    static let semillasValidacionPlantilla: [UInt64] = [0, 1, 2, 7, 42]
 
     /// Año en curso, inyectable para que los tests no dependan de la fecha.
     var anioActual: Int
@@ -40,6 +44,16 @@ struct ValidadorContenido: Sendable {
             }
             errores += validar(item: item, competencias: competencias)
         }
+
+        vistos.removeAll()
+        for plantilla in banco.plantillas {
+            if !vistos.insert(plantilla.id).inserted {
+                errores.append(.init(elemento: plantilla.id, mensaje: "id de plantilla duplicado"))
+            }
+            errores += validar(plantilla: plantilla, competencias: competencias, recursos: banco.recursos)
+        }
+        // Coherencia del léxico con las reglas generales de acentuación (no falla en silencio).
+        errores += Acentuacion.informe(banco.recursos.lexico).map { ErrorValidacion(elemento: "léxico", mensaje: $0) }
 
         vistos.removeAll()
         for tarjeta in banco.teoria {
@@ -103,14 +117,14 @@ struct ValidadorContenido: Sendable {
 
     func validar(item: Item, competencias: Set<String>) -> [ErrorValidacion] {
         var mensajes: [String] = []
-        if !Self.coincide(item.id, Self.escapar(item.competencia) + "\\.[0-9]{4}") {
-            mensajes.append("el id debe tener el formato <competencia>.NNNN y empezar por su competencia")
+        if !Self.coincide(item.id, Self.escapar(item.competencia) + "\\.([0-9]{4}|G[0-9]{2,3}#[0-9]+)") {
+            mensajes.append("el id debe tener el formato <competencia>.NNNN (o <competencia>.Gnn#semilla si es generado) y empezar por su competencia")
         }
         if !competencias.contains(item.competencia) {
             mensajes.append("la competencia \(item.competencia) no existe en el catálogo")
         }
         if !(1...5).contains(item.peldano) { mensajes.append("peldaño \(item.peldano) fuera de rango (1–5)") }
-        if !(1...5).contains(item.dificultad) { mensajes.append("dificultad \(item.dificultad) fuera de rango (1–5)") }
+        if !Self.rangoDificultad.contains(item.dificultad) { mensajes.append("dificultad \(item.dificultad) fuera de rango (1–6)") }
         if item.objetivo.isEmpty { mensajes.append("objetivo vacío") }
         if item.enunciado.isEmpty { mensajes.append("enunciado vacío") }
         if item.explicacion.isEmpty { mensajes.append("explicación vacía") }
@@ -151,6 +165,44 @@ struct ValidadorContenido: Sendable {
         mensajes += validar(procedencia: item.procedencia)
         mensajes += validar(validacion: item.validacion)
         return mensajes.map { ErrorValidacion(elemento: item.id, mensaje: $0) }
+    }
+
+    // MARK: - Plantillas de generador (Fase 05C)
+
+    func validar(plantilla p: Plantilla, competencias: Set<String>, recursos: RecursosGeneradores) -> [ErrorValidacion] {
+        var m: [String] = []
+        if !Self.coincide(p.id, Self.escapar(p.competencia) + "\\.G[0-9]{2,3}") {
+            m.append("el id debe tener el formato <competencia>.Gnn")
+        }
+        if !competencias.contains(p.competencia) { m.append("la competencia \(p.competencia) no existe en el catálogo") }
+        if !(1...5).contains(p.peldano) { m.append("peldaño \(p.peldano) fuera de rango (1–5)") }
+        if !Self.rangoDificultad.contains(p.dificultad) { m.append("dificultad \(p.dificultad) fuera de rango (1–6)") }
+        if p.enunciados.isEmpty { m.append("sin enunciados") }
+        if p.peldano >= Peldano.sinAyudas.rawValue, !(p.pistas ?? []).isEmpty { m.append("los peldaños 3 o superiores no pueden tener pistas (D-033)") }
+        if let g = MotorGeneradores.generador(p.tipo) {
+            if !g.mecanicas.contains(p.mecanica) { m.append("el generador «\(p.tipo)» no admite la mecánica \(p.mecanica.rawValue)") }
+            let permitidos = g.marcadores.union(["contexto"])
+            for texto in p.enunciados + (p.contextos ?? []) {
+                for marca in Marcadores.en(texto) where !permitidos.contains(marca) {
+                    m.append("el marcador {{\(marca)}} no lo rellena el generador «\(p.tipo)»")
+                }
+            }
+            if m.isEmpty {
+                for semilla in Self.semillasValidacionPlantilla {
+                    do {
+                        let item = try MotorGeneradores.generar(p, semilla: semilla, recursos: recursos)
+                        m += validar(item: item, competencias: competencias).map { "semilla \(semilla): \($0.mensaje)" }
+                    } catch {
+                        m.append("semilla \(semilla): \(error)")
+                    }
+                }
+            }
+        } else {
+            m.append("no hay generador para el tipo «\(p.tipo)»")
+        }
+        m += validar(procedencia: p.procedencia)
+        m += validar(validacion: p.validacion)
+        return m.map { ErrorValidacion(elemento: p.id, mensaje: $0) }
     }
 
     func validar(payload: Payload) -> [String] {

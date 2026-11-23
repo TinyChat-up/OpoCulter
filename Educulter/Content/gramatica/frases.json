@@ -1,0 +1,277 @@
+{
+  "familias": [
+    {
+      "id": "tu",
+      "formas": [
+        {
+          "texto": "tú",
+          "uso": "pronombre personal («Tú vienes»)"
+        },
+        {
+          "texto": "tu",
+          "uso": "determinante posesivo («tu libro»)"
+        }
+      ]
+    },
+    {
+      "id": "el",
+      "formas": [
+        {
+          "texto": "él",
+          "uso": "pronombre personal («Él canta»)"
+        },
+        {
+          "texto": "el",
+          "uso": "artículo («el libro»)"
+        }
+      ]
+    },
+    {
+      "id": "mi",
+      "formas": [
+        {
+          "texto": "mí",
+          "uso": "pronombre personal tras preposición («para mí»)"
+        },
+        {
+          "texto": "mi",
+          "uso": "determinante posesivo («mi casa»)"
+        }
+      ]
+    },
+    {
+      "id": "se",
+      "formas": [
+        {
+          "texto": "sé",
+          "uso": "forma de los verbos saber o ser («Yo sé»; «Sé amable»)"
+        },
+        {
+          "texto": "se",
+          "uso": "pronombre («Se peina»)"
+        }
+      ]
+    },
+    {
+      "id": "si",
+      "formas": [
+        {
+          "texto": "sí",
+          "uso": "adverbio de afirmación o pronombre («Dijo que sí»)"
+        },
+        {
+          "texto": "si",
+          "uso": "conjunción condicional («Si vienes…»)"
+        }
+      ]
+    },
+    {
+      "id": "de",
+      "formas": [
+        {
+          "texto": "dé",
+          "uso": "forma del verbo dar («Que me dé…»)"
+        },
+        {
+          "texto": "de",
+          "uso": "preposición («casa de piedra»)"
+        }
+      ]
+    },
+    {
+      "id": "te",
+      "formas": [
+        {
+          "texto": "té",
+          "uso": "sustantivo: la infusión («un té»)"
+        },
+        {
+          "texto": "te",
+          "uso": "pronombre («Te llamo»)"
+        }
+      ]
+    },
+    {
+      "id": "mas",
+      "formas": [
+        {
+          "texto": "más",
+          "uso": "adverbio de cantidad («más agua»)"
+        },
+        {
+          "texto": "mas",
+          "uso": "conjunción equivalente a «pero»"
+        }
+      ]
+    },
+    {
+      "id": "aun",
+      "formas": [
+        {
+          "texto": "aún",
+          "uso": "adverbio equivalente a «todavía»"
+        },
+        {
+          "texto": "aun",
+          "uso": "adverbio equivalente a «incluso»"
+        }
+      ]
+    },
+    {
+      "id": "porque",
+      "formas": [
+        {
+          "texto": "por qué",
+          "uso": "preposición y pronombre interrogativo («¿Por qué…?»)"
+        },
+        {
+          "texto": "porque",
+          "uso": "conjunción causal («porque llovía»)"
+        },
+        {
+          "texto": "porqué",
+          "uso": "sustantivo: la causa («el porqué»)"
+        },
+        {
+          "texto": "por que",
+          "uso": "preposición y relativo («la razón por (la) que»)"
+        }
+      ]
+    }
+  ],
+  "frases": [
+    {
+      "id": "F001",
+      "familia": "tu",
+      "texto": "¿___ vienes a la excursión?",
+      "correcta": "Tú",
+      "dificultad": 1
+    },
+    {
+      "id": "F002",
+      "familia": "tu",
+      "texto": "He dejado ___ mochila en la clase.",
+      "correcta": "tu",
+      "dificultad": 1
+    },
+    {
+      "id": "F003",
+      "familia": "el",
+      "texto": "___ siempre llega el primero.",
+      "correcta": "Él",
+      "dificultad": 1
+    },
+    {
+      "id": "F004",
+      "familia": "el",
+      "texto": "Me gusta ___ libro de cuentos.",
+      "correcta": "el",
+      "dificultad": 1
+    },
+    {
+      "id": "F005",
+      "familia": "mi",
+      "texto": "Ese regalo es para ___.",
+      "correcta": "mí",
+      "dificultad": 2
+    },
+    {
+      "id": "F006",
+      "familia": "mi",
+      "texto": "___ hermana juega al baloncesto.",
+      "correcta": "Mi",
+      "dificultad": 2
+    },
+    {
+      "id": "F007",
+      "familia": "se",
+      "texto": "No ___ la respuesta de memoria.",
+      "correcta": "sé",
+      "dificultad": 2
+    },
+    {
+      "id": "F008",
+      "familia": "se",
+      "texto": "Marta ___ levanta temprano.",
+      "correcta": "se",
+      "dificultad": 2
+    },
+    {
+      "id": "F009",
+      "familia": "si",
+      "texto": "Dijo que ___ con la cabeza.",
+      "correcta": "sí",
+      "dificultad": 2
+    },
+    {
+      "id": "F010",
+      "familia": "si",
+      "texto": "___ llueve, iremos al museo.",
+      "correcta": "Si",
+      "dificultad": 2
+    },
+    {
+      "id": "F011",
+      "familia": "de",
+      "texto": "Espero que me ___ la razón.",
+      "correcta": "dé",
+      "dificultad": 3
+    },
+    {
+      "id": "F012",
+      "familia": "te",
+      "texto": "Por la tarde tomamos un ___ con limón.",
+      "correcta": "té",
+      "dificultad": 3
+    },
+    {
+      "id": "F013",
+      "familia": "mas",
+      "texto": "Necesito ___ tiempo para terminar.",
+      "correcta": "más",
+      "dificultad": 3
+    },
+    {
+      "id": "F014",
+      "familia": "aun",
+      "texto": "___ no han llegado los invitados.",
+      "correcta": "Aún",
+      "dificultad": 3
+    },
+    {
+      "id": "F015",
+      "familia": "aun",
+      "texto": "Ganaron el partido, ___ jugando con diez.",
+      "correcta": "aun",
+      "dificultad": 4
+    },
+    {
+      "id": "F016",
+      "familia": "porque",
+      "texto": "¿___ no viniste ayer?",
+      "correcta": "Por qué",
+      "dificultad": 3
+    },
+    {
+      "id": "F017",
+      "familia": "porque",
+      "texto": "No vine ___ estaba enfermo.",
+      "correcta": "porque",
+      "dificultad": 3
+    },
+    {
+      "id": "F018",
+      "familia": "porque",
+      "texto": "Nadie sabe el ___ de su decisión.",
+      "correcta": "porqué",
+      "dificultad": 3
+    },
+    {
+      "id": "F019",
+      "familia": "porque",
+      "texto": "Esa es la razón ___ me marché.",
+      "correcta": "por que",
+      "dificultad": 3
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "id": "LEN.SIN.COMPL.G01",
+    "competencia": "LEN.SIN.COMPL",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "segmentar",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "Analiza la oración: sujeto, predicado y complementos."
+    ],
+    "objetivo": "Reconocer sujeto, predicado y complementos",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.COMPL.G02",
+    "competencia": "LEN.SIN.COMPL",
+    "peldano": 2,
+    "dificultad": 4,
+    "mecanica": "eleccion",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "¿Qué función cumple «{{sintagma}}» en «{{oracion}}»?"
+    ],
+    "objetivo": "Identificar la función de un sintagma",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

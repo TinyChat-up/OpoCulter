@@ -45,6 +45,9 @@ enum ErrorCarga: Error, Equatable, CustomStringConvertible {
 /// items/<bloque>.json        (array de ítems)
 /// teoria/<bloque>.json       (array de tarjetas)
 /// simulacros/<id>.json       (un simulacro por archivo)
+/// plantillas/<bloque>.json   (array de plantillas de generador, Fase 05C)
+/// lexico/palabras.json       (léxico de los generadores de Lengua)
+/// gramatica/piezas.json · verbos.json · frases.json
 /// ```
 struct CargadorContenido: Sendable {
     /// Nombre de la carpeta de contenido dentro del bundle de la app.
@@ -65,17 +68,37 @@ struct CargadorContenido: Sendable {
     }
 
     /// Carga el banco aplicando la política indicada (por defecto, la de la configuración).
-    func cargar(politica: PoliticaCarga = .porDefecto) throws -> BancoContenido {
+    /// `semillaBase` fija las variantes materializadas de las plantillas.
+    func cargar(politica: PoliticaCarga = .porDefecto, semillaBase: UInt64 = 1) throws -> BancoContenido {
         let catalogo: Catalogo = try decodificar(raiz.appendingPathComponent("catalogo.json"))
         let items: [Item] = try archivosJSON(en: "items").flatMap { try decodificar($0) as [Item] }
         let teoria: [TarjetaTeoria] = try archivosJSON(en: "teoria").flatMap { try decodificar($0) as [TarjetaTeoria] }
         let simulacros: [Simulacro] = try archivosJSON(en: "simulacros").map { try decodificar($0) }
+        let plantillas: [Plantilla] = try archivosJSON(en: "plantillas").flatMap { try decodificar($0) as [Plantilla] }
 
         return BancoContenido(
             catalogo: catalogo,
             items: items.filter { politica.admite($0.validacion) },
             teoria: teoria.filter { politica.admite($0.validacion) },
-            simulacros: simulacros.filter { politica.admite($0.validacion) }
+            simulacros: simulacros.filter { politica.admite($0.validacion) },
+            plantillas: plantillas.filter { politica.admite($0.validacion) },
+            recursos: try recursos(),
+            semillaBase: semillaBase
+        )
+    }
+
+    /// Recursos de los generadores (opcionales: si falta un archivo, ese recurso queda vacío).
+    func recursos() throws -> RecursosGeneradores {
+        func opcional<T: Decodable>(_ ruta: String) throws -> T? {
+            let url = raiz.appendingPathComponent(ruta)
+            guard FileManager.default.fileExists(atPath: url.path) else { return nil }
+            return try decodificar(url) as T
+        }
+        return RecursosGeneradores(
+            lexico: try opcional("lexico/palabras.json") ?? [],
+            gramatica: try opcional("gramatica/piezas.json") ?? PiezasGramatica(),
+            verbos: try opcional("gramatica/verbos.json") ?? BancoVerbos(),
+            frases: try opcional("gramatica/frases.json") ?? BancoFrases()
         )
     }
 

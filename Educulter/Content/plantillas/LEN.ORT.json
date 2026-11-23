@@ -1,0 +1,126 @@
+[
+  {
+    "id": "LEN.ORT.AGU.G01",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "colocarTilde",
+    "tipo": "colocarTilde",
+    "enunciados": [
+      "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde»."
+    ],
+    "objetivo": "Aplicar las reglas generales de acentuación",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.G02",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "clasificarAcentuacion",
+    "enunciados": [
+      "¿Cómo es la palabra «{{palabra}}» según su acento?",
+      "Clasifica «{{palabra}}»: ¿aguda, llana o esdrújula?"
+    ],
+    "objetivo": "Clasificar palabras por su sílaba tónica",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.G03",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "marcarTexto",
+    "tipo": "silabaTonica",
+    "enunciados": [
+      "Marca la sílaba tónica de «{{palabra}}»."
+    ],
+    "objetivo": "Reconocer la sílaba tónica",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.G01",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "eleccion",
+    "tipo": "fraseHueco",
+    "enunciados": [
+      "Elige la forma correcta: {{frase}}"
+    ],
+    "objetivo": "Usar la tilde diacrítica",
+    "parametros": {
+      "familias": [
+        "tu",
+        "el",
+        "mi",
+        "se",
+        "si",
+        "de",
+        "te",
+        "mas",
+        "aun"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.PQ.G01",
+    "competencia": "LEN.ORT.PQ",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "construir",
+    "tipo": "fraseHueco",
+    "enunciados": [
+      "Completa con la forma correcta."
+    ],
+    "objetivo": "Distinguir por qué, porque, porqué y por que",
+    "parametros": {
+      "familias": [
+        "porque"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+    },
+    "validacion": {
+      "estado": "borrador"
+    },
+    "version": 1
+  }
+]

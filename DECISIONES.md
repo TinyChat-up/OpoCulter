@@ -250,3 +250,68 @@ El requisito es "SDK de iOS 26 o superior"; 27.2 lo cumple. No se instala el run
 - `-politicaRelease`: carga solo el contenido aprobado.
 
 Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.resumenProgreso()`: peldaño y caja de Leitner por competencia, Rescate, XP y avatar) para que el test compare el progreso guardado antes y después de reabrir.
+
+### D-059 · 2026-11-23 · Fase 05C · Vigente (dirección)
+**Estilo "Rubber Hose moderno"**, evolución del sistema v2 (D-053). Toma el lenguaje gráfico general de la animación de los años 20–30 (tinta gruesa, formas gomosas, paleta retro sobre papel) sin copiar personajes, estudios ni juegos: nada de guantes blancos ni ojos "de tarta".
+- **Papel** `#FBF3E8` / `#17130F`; **tinta** `#1A1714` (clara `#EDE3D6` en oscuro). Contorno de 2,5 pt (1,5 pt en lo pequeño).
+- **Rellenos**: Lengua coral `#F2674B`, Matemáticas azul cielo `#4AA3E8`, recompensa mostaza `#F5B82E`, turquesa `#17A3A3`, oliva `#A7C03A` y violeta, **ajustado de `#9B6BC0` a `#A77ACB`** (tinta sobre `#9B6BC0` = 4,47:1; sobre `#A77ACB` = 5,35:1).
+- **El texto sobre un relleno de color va siempre en tinta** (≥ 5,3:1 en los dos modos). El texto con color de área usa tintas oscuras propias (`#A8381A` y `#1F5F99` en claro). Éxito y fallo como texto: `#186B43` y `#B3261E` (el verde se oscurece desde `#1F7A4D` para pasar AA sobre el tinte de Lengua). Se añade `ExitoRelleno` `#5FC98A` para el botón "Continuar" tras acertar. Contrastes en UX_UI §4.1; los comprueba un script al escribir los colores.
+- **Radios** 20 (paneles), 14 (fichas) y 6 (celdas).
+- **Sombra dura** de 3 pt en tinta, sin desenfoque: es la única sombra y **marca lo que se puede pulsar**. `EstiloPulsable` publica el estado de pulsación en el entorno y `superficiePulsable(…)` desplaza la superficie 3 pt ("se hunde"). Así funciona también con etiquetas anidadas. Lo corregido o desactivado queda plano y sin sombra.
+- **Movimiento gomoso**: muelles con rebote (`spring(duration: 0.3, bounce: 0.4)`) y `estiramiento(_:)` (*squash & stretch* 1,08 × 0,92, 0,3 s). Con "Reducir movimiento", fundidos.
+- **Personajes** Tilde y Cuarto redibujados con contorno de tinta, brazos y piernas "de manguera" (curvas cuadráticas sin codos), manos redondas del color del cuerpo (no guantes) y ojos ovalados lisos con un punto de luz. Mantienen los 6 estados, los disparadores y la vía `.ilustracion`.
+
+### D-060 · 2026-11-23 · Fase 05C · Vigente
+**Fuente de exhibición: Fredoka** (SIL OFL 1.1, Google Fonts), elegida entre Fredoka, Lilita One y Baloo 2 por ser la más redondeada y legible en los tamaños de AX5. Se empaqueta la fuente variable `Resources/Fuentes/Fredoka.ttf` con su `OFL.txt` y se usa la instancia con nombre `Fredoka-SemiBold`. Se registra en tiempo de ejecución con `CTFontManagerRegisterFontsForURL` (sin tocar el Info.plist). En SwiftUI, `Font.exhibicion(_:)` usa `Font.custom(_:size:relativeTo:)`, que escala con `UIFontMetrics` del estilo de texto. Para UIKit y los tests está `FuenteExhibicion.uiFont`, que llama a `UIFontMetrics.scaledFont`. Solo se usa en títulos: el cuerpo va en SF Pro y los números en SF Pro Rounded. Créditos en CREDITOS.md.
+
+### D-061 · 2026-11-23 · Fase 05C · Vigente
+**Avatares del propietario.** Sustituyen a los 12 geométricos (D-054).
+- **Recorte**: `scripts/recortar_avatares.swift` es reproducible y no tiene ajustes a mano por avatar. Para cada celda de la cuadrícula 3 × 2 toma el color dominante del disco en una corona exterior. Con los extremos izquierdo, derecho y superior de ese color calcula el centro y el radio, y aplica una máscara circular con 2 pt de margen hacia dentro. Exporta PNG a @2x (160 px) y @3x (240 px) en `Assets.xcassets/Avatares/avatar_01…06`.
+- **Ids**: del 0 al 5. Los ids de la 05B del 6 al 11 se migran con `id % 6` al leer el perfil, y la migración se guarda la primera vez. Los ids fuera de 0–11 se descartan y el usuario vuelve a elegir. `elegirAvatar` solo acepta 0–5.
+- **VoiceOver**: "Avatar con …" con el rasgo descriptivo de cada uno.
+- **Selector**: 3 × 2. Todos llevan contorno de tinta; el elegido, además, sombra dura, fondo mostaza y una marca ✓, para que el estado no dependa solo del color.
+
+### D-062 · 2026-11-23 · Fase 05C · Vigente (dirección)
+**Motor de generadores paramétricos** (`Core/Content/Generadores`).
+- **Plantillas**: una plantilla JSON (`Content/plantillas/<bloque>.json`) declara `tipo`, mecánica, peldaño, dificultad, parámetros, enunciados con marcadores `{{…}}`, contextos opcionales, procedencia y validación.
+- **Generadores**: cada `tipo` es un `GeneradorItems` de código que calcula la solución, los distractores (según reglas de error típico, cada uno con su error habitual y su feedback), la clave canónica, la complejidad y los datos para el oráculo de los tests.
+- **Determinismo**: `(plantilla, semilla) → Item` siempre da el mismo ítem. Se siembra con FNV-1a del id de la plantilla combinado con la semilla mediante SplitMix64, sin depender del `hashValue` de Swift. Los ids son `<plantilla>#<semilla>` y el validador acepta `<competencia>.Gnn#n`.
+- **Integración**: el banco materializa 12 variantes con claves distintas por plantilla a partir de una `semillaBase` de sesión: aleatoria, o fija con `-semilla`. El constructor de rondas las usa igual que los ítems estáticos, y el progreso sigue registrándose por competencia. `BancoContenido.item(id:)` regenera cualquier `#semilla`, de modo que Rescate guarda el id y reproduce el ítem exacto. La búsqueda de variantes de Rescate encuentra las otras semillas materializadas de la misma plantilla.
+- **Validación**: el validador comprueba también las plantillas: tipo conocido, mecánica admitida, marcadores que el generador rellena y 5 semillas que generan ítems válidos.
+- **Release**: las plantillas de prueba están en borrador, así que Release no las carga.
+
+### D-063 · 2026-11-23 · Fase 05C · Vigente (dirección)
+**Dificultad 6 "Experto".** El validador admite dificultades de 1 a 6 en ítems y plantillas. Cada generador documenta en su código cómo escalan sus parámetros por nivel (tablas en UX_UI y CONTENIDOS) y expone una medida de complejidad: pasos, magnitud de los números, cercanía de los valores, tipo de palabra… Un test por tipo y mecánica calcula la media de 200 semillas en cada nivel. En Matemáticas exige que crezca estrictamente del 1 al 6. En los generadores de Lengua, que dependen del tamaño del léxico y del banco de prueba, exige que no decrezca y que el nivel 6 supere al 1.
+
+### D-064 · 2026-11-23 · Fase 05C · Vigente
+**`CatalogoPreguntas`: cifra real de preguntas únicas.**
+- **Qué se cuenta**: los ítems estáticos (por id) más las claves canónicas únicas de cada plantilla (`tipo|clave`). Dos plantillas que comparten caso no cuentan doble. La mecánica no forma parte de la clave, por prudencia: el mismo caso en dos mecánicas cuenta una vez.
+- **Exacto o cota inferior**: los espacios finitos y abarcables se enumeran enteros (porcentajes, unidades, romanos, m.c.m./m.c.d., probabilidad, ecuaciones, fracciones, léxico, verbos y frases). Los combinatorios enormes (operaciones combinadas, estadística y oraciones) se recorren con semillas consecutivas hasta 3000 claves, y el resultado se marca como cota inferior ("≥"). La enumeración por plantilla se corta en 20 000 claves.
+- **Rendimiento**: el recuento completo tarda menos de 2 s (lo comprueba un test). Se cachea por versión de contenido y nunca se calcula al arrancar: solo en Revisión.
+
+### D-065 · 2026-11-23 · Fase 05C · Vigente (dirección)
+**Léxico con acentuación deducida.**
+- **Entrada mínima**: `{"palabra": …}`. El silabeo sale de `Silabeo.swift` y la sílaba tónica, de la tilde escrita o de las reglas generales. Para los casos que las reglas no resuelven (agudas en -ts/-ns como «robots») se declara `tonica` explícita.
+- **Comprobación de coherencia**: se aplican las reglas generales de la RAE (agudas, llanas, esdrújulas y sobresdrújulas; -n/-s tras consonante; hiato con vocal cerrada tónica; monosílabos) y se compara la tilde predicha con la escrita.
+- **Discrepancias**: aparecen como errores del validador (elemento "léxico", visibles en Revisión y en el test de contenido), con la forma que predicen las reglas. Además, la palabra queda fuera de los generadores. Las diacríticas (`"diacritica": true`) no se comprueban.
+- **Nivel de cada palabra** (1–6): bisílabas regulares; trisílabas; esdrújulas; hiatos; finales especiales o 4+ sílabas; sobresdrújulas o 5+ sílabas.
+
+### D-066 · 2026-11-23 · Fase 05C · Vigente
+**Gramática generativa controlada y conjugación.**
+- **Sentido de las oraciones**: cada verbo transitivo trae sus propios complementos directos compatibles («preparar la cena»), los sujetos son de persona y un CCT con tiempo («ayer», «mañana») restringe el tiempo verbal.
+- **Concordancia**: el verbo en 3.ª persona concuerda en número con el sujeto y el atributo, en género y número.
+- **Análisis**: se conoce por construcción y alimenta `segmentar`, `clasificar` y `eleccion`.
+- **Conjugador**: regular para -ar, -er e -ir (tiempos simples y compuestos de indicativo, y presente, imperfecto y compuestos de subjuntivo, con vosotros) más una tabla de irregulares en JSON por `modo|tiempo`.
+- **Análisis verbal**: no pregunta formas ambiguas dentro del paradigma que ofrecen las ruedas («cantaba», «cantamos»).
+
+### D-067 · 2026-11-23 · Fase 05C · Vigente
+**Matriz de exámenes oficiales.**
+- **Fuentes**: los PDF se descargan de comunidad.madrid y sede.comunidad.madrid. Las URL, las fechas y los SHA-256 están en `docs/examenes/FUENTES.md`.
+- **En el repositorio**: los PDF se guardan, porque el aviso legal permite reutilizarlos sin alterarlos y citando la fuente y la fecha, y los cuadernillos no traen aviso propio de derechos.
+- **Extracción**: `scripts/extraer_examenes.swift` usa la capa de texto de PDFKit y, en las páginas que no la tienen, OCR con Vision (es-ES).
+- **La matriz**: `docs/examenes/MATRIZ.md` se genera con `scripts/matriz/gen.py`; la clasificación está en `datos.py`. Los resúmenes están redactados con nuestras palabras.
+- **Textos con derechos vigentes**: Salinas y Laforet quedan marcados como no mostrables.
+- **Tribunal**: no se crea contenido; decide la dirección.
+
+### D-068 · 2026-11-23 · Fase 05C · Vigente
+**Competencias nuevas en el catálogo** para las plantillas de prueba que no tenían competencia: `MAT.OPE.ECUAC` (ecuaciones), `MAT.EST.CENTRAL` (media, mediana, moda y rango) y `MAT.PRO.LAPLACE` (probabilidad de un suceso). El catálogo pasa a la versión 2 con 27 competencias. Las demás competencias que propone la matriz (marcadas con † en MATRIZ.md) se dejan a la dirección. En Release estas competencias no tienen ítems todavía y `ServicioSesion` las salta (`valida` exige ítems).

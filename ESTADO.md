@@ -1,8 +1,21 @@
 # Estado del proyecto
 
-**Fase actual:** 05B — Transformación premium: piloto vertical · **Terminada**
-**Siguiente:** Fase 05C, a la espera de instrucciones de la dirección.
+**Fase actual:** 05C — Estilo Rubber Hose, avatares del propietario, generadores y matriz de exámenes · **Desarrollada, verificación incompleta (detenida por el propietario)**
+**Siguiente:** completar la verificación de la 05C y fusionarla; después, 05D (modos de juego).
 **Última actualización:** 2026-11-23
+
+## Fase 05C — Resultado (rama `fase-05c/estilo-generadores`, sin fusionar)
+
+| Verificación | Resultado |
+|---|---|
+| Plan de contenidos (anexo A) | ✅ [docs/PLAN_CONTENIDOS.md](docs/PLAN_CONTENIDOS.md) |
+| Matriz de exámenes | ✅ 7 cuadernillos, 139 preguntas: [docs/examenes/MATRIZ.md](docs/examenes/MATRIZ.md) y [FUENTES.md](docs/examenes/FUENTES.md) |
+| Estilo Rubber Hose, Fredoka, personajes y avatares | ✅ Implementado y revisado en capturas de trabajo (claro) |
+| Generadores (16 tipos), léxico, gramática y catálogo | ✅ Implementado |
+| Tests unitarios | ✅ 152 tests en 33 suites; en la última pasada con cobertura falló 1 (el recuento tardó 2,10 s, por encima de 2 s). Se paralelizó después, **sin volver a probarlo** |
+| Tests de interfaz | ⚠️ Solo llegaron a pasar 2 (persistencia y ronda de Lengua) antes de detenerlos |
+| Auditoría de accesibilidad, cobertura, capturas 05C, archive, iPhone, fluidez | ⏸ Pendientes |
+| Compilación | ✅ `BUILD SUCCEEDED`, 0 avisos |
 
 ## Fase 05B — Resultado
 
