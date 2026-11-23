@@ -1,0 +1,27 @@
+[
+  {
+    "id": "MAT.ROM.LECTURA.0001",
+    "competencia": "MAT.ROM.LECTURA",
+    "peldano": 2,
+    "dificultad": 1,
+    "objetivo": "Leer números romanos con resta.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Qué número es XIV?",
+    "payload": {
+      "opciones": [
+        { "id": "a", "texto": "14" },
+        { "id": "b", "texto": "16" },
+        { "id": "c", "texto": "114" }
+      ],
+      "correcta": "a"
+    },
+    "pistas": ["Una I delante de V resta."],
+    "explicacion": "XIV = X + IV = 10 + 4 = 14. Un símbolo menor delante de uno mayor se resta.",
+    "erroresHabituales": [
+      { "respuesta": "b", "feedback": "Has leído XVI. En XIV la I va delante de la V y resta: 10 + 4 = 14." }
+    ],
+    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
+    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "version": 1
+  }
+]

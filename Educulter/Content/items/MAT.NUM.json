@@ -1,0 +1,26 @@
+[
+  {
+    "id": "MAT.NUM.FRACSUM.0001",
+    "competencia": "MAT.NUM.FRACSUM",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Sumar fracciones con distinto denominador.",
+    "mecanica": "numerico",
+    "enunciado": "Calcula 1/2 + 1/4 y escribe el resultado como fracción irreducible.",
+    "payload": {
+      "respuesta": "3/4",
+      "formato": "fraccion",
+      "tolerancia": 0,
+      "unidad": null,
+      "exigeIrreducible": true
+    },
+    "pistas": [],
+    "explicacion": "Común denominador 4: 1/2 = 2/4, y 2/4 + 1/4 = 3/4, que ya es irreducible.",
+    "erroresHabituales": [
+      { "respuesta": "2/6", "feedback": "No se suman los denominadores: primero se reduce a común denominador." }
+    ],
+    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
+    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" },
+    "version": 1
+  }
+]

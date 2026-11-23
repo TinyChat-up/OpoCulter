@@ -1,0 +1,104 @@
+import Foundation
+import SwiftData
+
+/// Repositorio de progreso sobre SwiftData.
+///
+/// Como no se usa `.unique` (requisito de CloudKit), los "singletons" (perfil, diagnóstico) y
+/// las claves naturales (competencia, logro) se buscan con un predicado y se reutiliza el
+/// primer registro. Si una futura sincronización crea duplicados, se toma el más avanzado.
+@MainActor
+final class RepositorioSwiftData: RepositorioProgreso {
+    /// Se retiene el contenedor: si se libera, su `mainContext` deja de ser válido.
+    let contenedor: ModelContainer
+    let contexto: ModelContext
+
+    init(contenedor: ModelContainer) {
+        self.contenedor = contenedor
+        contexto = contenedor.mainContext
+    }
+
+    func registrarIntento(_ intento: Intento) throws {
+        contexto.insert(IntentoRegistro(intento))
+        try contexto.save()
+    }
+
+    func intentos(desde: Date?) throws -> [Intento] {
+        var descriptor = FetchDescriptor<IntentoRegistro>(sortBy: [SortDescriptor(\.fecha)])
+        if let desde {
+            descriptor.predicate = #Predicate { $0.fecha >= desde }
+        }
+        return try contexto.fetch(descriptor).map(\.valor)
+    }
+
+    func estadosCompetencia() throws -> [String: EstadoCompetencia] {
+        let registros = try contexto.fetch(FetchDescriptor<EstadoCompetenciaRegistro>())
+        var resultado: [String: EstadoCompetencia] = [:]
+        for r in registros {
+            let valor = r.valor
+            if let previo = resultado[valor.competenciaId], previo.escalera.peldano >= valor.escalera.peldano { continue }
+            resultado[valor.competenciaId] = valor
+        }
+        return resultado
+    }
+
+    func guardar(_ estado: EstadoCompetencia) throws {
+        let id = estado.competenciaId
+        let existente = try contexto.fetch(FetchDescriptor<EstadoCompetenciaRegistro>(predicate: #Predicate { $0.competenciaId == id })).first
+        let registro = existente ?? EstadoCompetenciaRegistro(competenciaId: id)
+        if existente == nil { contexto.insert(registro) }
+        registro.actualizar(con: estado)
+        try contexto.save()
+    }
+
+    func colaRescate() throws -> ColaRescate {
+        let registros = try contexto.fetch(FetchDescriptor<RescateRegistro>(sortBy: [SortDescriptor(\.posicion), SortDescriptor(\.fecha)]))
+        return ColaRescate(entradas: registros.map(\.valor))
+    }
+
+    func guardar(_ cola: ColaRescate) throws {
+        try contexto.delete(model: RescateRegistro.self)
+        for (i, entrada) in cola.entradas.enumerated() {
+            contexto.insert(RescateRegistro(entrada, posicion: i))
+        }
+        try contexto.save()
+    }
+
+    func perfil() throws -> PerfilJugador {
+        let registros = try contexto.fetch(FetchDescriptor<PerfilRegistro>(sortBy: [SortDescriptor(\.xpTotal, order: .reverse)]))
+        return try registros.first?.valor() ?? PerfilJugador()
+    }
+
+    func guardar(_ perfil: PerfilJugador) throws {
+        let registro = try contexto.fetch(FetchDescriptor<PerfilRegistro>(sortBy: [SortDescriptor(\.xpTotal, order: .reverse)])).first
+            ?? { let nuevo = PerfilRegistro(); contexto.insert(nuevo); return nuevo }()
+        try registro.actualizar(con: perfil)
+        try contexto.save()
+    }
+
+    func logros() throws -> [LogroObtenido] {
+        let registros = try contexto.fetch(FetchDescriptor<LogroRegistro>(sortBy: [SortDescriptor(\.fecha)]))
+        var vistos = Set<String>()
+        return registros.filter { vistos.insert($0.logroId).inserted }.map { LogroObtenido(logroId: $0.logroId, fecha: $0.fecha) }
+    }
+
+    func registrarLogro(_ logro: LogroObtenido) throws {
+        let id = logro.logroId
+        let existe = try contexto.fetchCount(FetchDescriptor<LogroRegistro>(predicate: #Predicate { $0.logroId == id })) > 0
+        guard !existe else { return }
+        contexto.insert(LogroRegistro(logro))
+        try contexto.save()
+    }
+
+    func diagnostico() throws -> ResultadoDiagnostico? {
+        var descriptor = FetchDescriptor<DiagnosticoRegistro>(sortBy: [SortDescriptor(\.fecha, order: .reverse)])
+        descriptor.fetchLimit = 1
+        guard let datos = try contexto.fetch(descriptor).first?.datos else { return nil }
+        return try JSONDecoder().decode(ResultadoDiagnostico.self, from: datos)
+    }
+
+    func guardar(_ diagnostico: ResultadoDiagnostico) throws {
+        try contexto.delete(model: DiagnosticoRegistro.self)
+        contexto.insert(DiagnosticoRegistro(fecha: diagnostico.fecha, datos: try JSONEncoder().encode(diagnostico)))
+        try contexto.save()
+    }
+}

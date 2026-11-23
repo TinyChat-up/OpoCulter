@@ -33,8 +33,6 @@
 		EC0000000000000000000013 /* Exceptions for "Educulter" folder in "Educulter" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Content/.gitkeep,
-				Core/.gitkeep,
 				Features/.gitkeep,
 			);
 			target = EC0000000000000000000020 /* Educulter */;
@@ -46,6 +44,9 @@
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
 				EC0000000000000000000013 /* Exceptions for "Educulter" folder in "Educulter" target */,
+			);
+			explicitFolders = (
+				Content,
 			);
 			path = Educulter;
 			sourceTree = "<group>";

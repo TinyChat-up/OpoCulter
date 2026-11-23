@@ -1,24 +1,26 @@
 # Estado del proyecto
 
-**Fase actual:** 00 — Preparación técnica · **Terminada** (con un aviso abierto, ver "Pendiente")
+**Fase actual:** 04 — Arquitectura y núcleo del producto · **Terminada**
+**Siguiente:** Fase 05 — Desarrollo (interfaz del MVP), a la espera de instrucciones de la dirección.
 **Última actualización:** 2026-11-23
 
-## Fase 00 — Resultado
+## Fase 04 — Resultado
 
 | Verificación | Resultado | Evidencia |
 |---|---|---|
-| macOS ≥ 15.6 | ✅ 27.2.1 (26B131), arm64, 8 GB de RAM, 68 GB libres | `sw_vers`, `uname -m`, `sysctl`, `df` |
-| Xcode ≥ 26 | ✅ Xcode 27.2 (27B52) | `xcodebuild -version` |
-| Runtime iOS ≥ 26 | ✅ iOS 27.2 | `xcrun simctl list runtimes` |
-| git | ✅ 2.54.0 | `git --version` |
-| Tests en simulador iPhone 16 (iOS 27.2) | ✅ 1 unitario + 1 UI, `** TEST SUCCEEDED **` | `xcodebuild test` |
-| Compilación e instalación en el iPhone 16 físico | ✅ `** BUILD SUCCEEDED **`, app instalada | `xcodebuild build`, `devicectl device install app` |
-| La app se abre en el iPhone | ✅ "Launched application", proceso `Educulter` en marcha | `devicectl device process launch` / `info processes` |
-| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, arm64, 0.0.1 (1). **No subido** | `xcodebuild archive` |
+| Diseño aprobado en el repositorio | ✅ [docs/DISENO_PRODUCTO_v1.md](docs/DISENO_PRODUCTO_v1.md), integrado en DISENO_PEDAGOGICO, UX_UI, ARQUITECTURA y MONETIZACION | — |
+| Esquema de contenido v1 | ✅ Modelos `Codable`/`Sendable` en `Core/Content`; documentado en [CONTENIDOS.md](CONTENIDOS.md) | — |
+| Tests unitarios en simulador iPhone 16 (iOS 27.2) | ✅ 89 tests (95 casos con argumentos), 0 fallos | `xcodebuild test` → `** TEST SUCCEEDED **` |
+| Test de interfaz (pantalla de verificación) | ✅ 1 test, 0 fallos | mismo comando |
+| Todo el contenido del bundle pasa el validador | ✅ | `ContenidoEmpaquetadoTests` |
+| En Release no se carga ningún borrador | ✅ | `releaseNoCargaBorradores` |
+| Cobertura de `Core/` | ✅ **97,8 %** (1 734 / 1 773 líneas) | `-enableCodeCoverage YES` + `xccov` |
+| Avisos del compilador Swift 6 estricto | ✅ 0 en app y tests | logs de build, test y archive |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`; el `.app` contiene `Content/{catalogo.json, items, teoria, simulacros}`. **No subido** | `xcodebuild archive` |
+
+Fuera de alcance en esta fase (por indicación de la dirección): interfaz de producto y contenido real. La app sigue mostrando la pantalla de verificación, por lo que no se ha reinstalado en el iPhone.
 
 ## Pendiente
-1. **Tipo de cuenta de Apple.** El equipo `BG34ARBG5W` genera perfiles que caducan a los 7 días (creado el 23/11/2026, caduca el 30/11/2026), lo que corresponde a un *Personal Team* gratuito, no a una membresía de pago del Apple Developer Program. Basta para desarrollar, pero **TestFlight y el App Store requieren la membresía de pago** (Fases 08 y 09). Mientras tanto, la app instalada en el iPhone dejará de abrirse cada 7 días hasta que se vuelva a instalar desde el Mac.
-2. Runtime de iOS 17 en el simulador, para probar el target mínimo: previsto en la Fase 07 (D-008).
-
-## Próxima fase
-Fase 01 — Investigación (a la espera de instrucciones de la dirección del proyecto).
+1. **Cuenta de Apple:** se mantiene el Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
+2. **Prioridades de bloque provisionales** (D-029): debe confirmarlas la dirección.
+3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
