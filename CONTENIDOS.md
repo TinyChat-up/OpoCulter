@@ -217,17 +217,32 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 ### 2.12 Catálogo de preguntas (D-064)
 `CatalogoPreguntas` suma los ítems estáticos y las variantes únicas de las plantillas (sin duplicados, por clave canónica). Lo hace por área, bloque, competencia, peldaño y dificultad, y marca como cota inferior ("≥") los espacios que se muestrean. La tabla está en Revisión → "Recuentos del catálogo de preguntas".
 
-### 2.13 Base literaria (Lote 05a, D-069)
-Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Content/literatura/`): `{"version": 1, "movimientos": […], "autores": […]}`. Todavía no lo lee la app: lo usará el motor literario de la Fase 05F.
+### 2.13 Base literaria (Lote 05a, D-069 y D-070)
+Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Content/literatura/`): `{"version": 2, "movimientos": […], "autores": […]}`. Todavía no lo lee la app: lo usará el motor literario de la Fase 05F.
 
 - **Movimiento**: `{id, nombre, periodo, inicio, fin|null, rasgos[2]}`. `rasgos` lleva exactamente dos textos. `fin: null` indica que el movimiento sigue abierto.
-- **Autor**: `{id, nombre, nacimiento|null, muerte|null, aproximado, ambito, pais, movimiento, generos[], obras[{titulo, anio|null, genero}], rasgo, dominioPublico}`.
+- **Autor**: `{id, nombre, nacimiento|null, muerte|null, aproximado, ambito, pais, movimiento, generos[], obras[{titulo, anio|null, genero}], rasgo, dominioPublico, fragmentosPermitidos}`.
   - `ambito`: `espanola`, `hispanoamericana`, `universal` o `infantil`.
   - `movimiento`: `id` de un movimiento existente.
-  - `generos` y `obras[].genero`: `poesia`, `narrativa`, `teatro` o `ensayo`.
+  - `generos` y `obras[].genero`: `poesia`, `narrativa`, `teatro` o `ensayo`. Cada género de una obra figura también en los géneros del autor.
   - Los años negativos son a. C. `aproximado: true` indica fechas aproximadas.
-  - `dominioPublico`: si se pueden reproducir fragmentos del autor en España. Es `true` si el autor murió en 1945 o antes, o si es anónimo o antiguo (sin fechas). Se refiere al texto original: una traducción tiene sus propios derechos.
-- **Validación**: `python3 scripts/validar_literatura.py` (solo biblioteca estándar) comprueba que el JSON es válido y los ids únicos, que existe el movimiento de cada autor, que el nacimiento es anterior a la muerte, que el año de cada obra está entre el nacimiento y la muerte + 10 (ediciones póstumas), la coherencia de `dominioPublico` con la regla y que no hay espacios dobles. Avisa, sin fallar, si el género de una obra no figura en los géneros del autor.
+  - `pais`: nombre del Estado actual («Reino Unido», no «Inglaterra» ni «Escocia»; «Italia», no «Roma»).
+  - `dominioPublico`: si la obra original del autor es de dominio público en España. Es `true` si el autor murió en 1945 o antes, o si es anónimo o antiguo (sin fechas).
+  - `fragmentosPermitidos` (versión 2): si se pueden reproducir fragmentos del autor. Es `true` solo si `dominioPublico` es `true` y el ámbito es `espanola` o `hispanoamericana`. Una traducción publicada tiene sus propios derechos, así que de un autor extranjero de dominio público solo se pueden usar fragmentos traducidos por la dirección (traducción propia), nunca tomados de traducciones publicadas.
+- **Convenciones**:
+  - **Géneros**: las greguerías se clasifican como `ensayo`, por ser prosa breve, y la prosa mística doctrinal también («Las moradas»).
+  - **Año de una obra**: el de publicación o estreno. Si la obra se publicó mucho después de escribirse, se usa el año de escritura («La casa de Bernarda Alba», 1936).
+- **Regla para el motor 05F**: las preguntas «¿a qué movimiento pertenece?» se hacen sobre el autor. Sobre una obra, solo si su año está dentro del rango (`inicio`–`fin`) del movimiento del autor.
+- **Validación**: `python3 scripts/validar_literatura.py` (solo biblioteca estándar) comprueba:
+  - que el JSON es válido y los ids son únicos;
+  - que existe el movimiento de cada autor;
+  - que el nacimiento es anterior a la muerte;
+  - que el año de cada obra está entre el nacimiento y la muerte + 10 (ediciones póstumas);
+  - que `dominioPublico` y `fragmentosPermitidos` son coherentes con sus reglas;
+  - que no hay espacios dobles.
+
+  Avisa, sin fallar, si el género de una obra no figura en los géneros del autor.
+- **Errata**: `scripts/errata_literatura_05a.py` reescribió la versión 1 como versión 2 (errata 1). Se conserva como registro, pero no debe volver a ejecutarse.
 
 ## 3. Registro de procedencia
 
@@ -236,6 +251,7 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 | Ítems, tarjetas y SIM.01 de prueba (Fases 04 y 05A) | original | Claude Code, solo para tests y desarrollo (estado `borrador`, solo Debug) | propia | 2026-11-23 |
 | Lote 01 · `LEN.ORT.*` (38 ítems y 5 tarjetas) | original | Redacción original de la dirección del proyecto | propia | 2026-11-23 |
 | Lote 05a · Base literaria (`literatura/literatura.json`) | original | Datos biográficos y bibliográficos de conocimiento general, con rasgos redactados por la dirección del proyecto. No incluye fragmentos de obras | propia | 2026-11-24 |
+| Fragmentos literarios (regla del lote 05a · errata 1) | original o dominio público | Solo de autores con `fragmentosPermitidos: true` (dominio público y en lengua original española). De un autor extranjero de dominio público solo se usa una traducción propia de la dirección, registrada aquí con el autor y la obra; nunca una traducción publicada | propia (traducciones) o dominio público (originales) | 2026-11-24 |
 
 ## 4. Proceso de revisión y calidad
 
@@ -249,6 +265,7 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 | Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
 | Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
 | Lote 05a · Base literaria | Literatura (142 autores · 19 movimientos) | — | — | Aprobado por la dirección 24/11/2026 · pendiente del motor literario (Fase 05F) | `literatura/literatura.json` |
+| Lote 05a · errata 1 · versión 2 | Literatura (142 autores · 21 movimientos · 50 con fragmentos permitidos) | — | — | Aprobada por la dirección 24/11/2026 | `literatura/literatura.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 

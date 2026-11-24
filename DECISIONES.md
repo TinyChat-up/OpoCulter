@@ -322,3 +322,12 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 - **Ubicación**: `Educulter/Content/literatura/literatura.json`, que en la documentación se cita como `Content/literatura/`, igual que el resto del contenido. `Content` es una carpeta explícita del target, así que el archivo se copiará al bundle sin tocar el `.pbxproj`. `CargadorContenido` solo lee `items`, `teoria`, `simulacros`, `plantillas`, `lexico` y `gramatica`, de modo que la app lo ignora hasta que exista el motor literario (Fase 05F).
 - **Validación**: `scripts/validar_literatura.py` (Python 3, solo biblioteca estándar) para validar sin Mac. Cuando exista el motor, sus tests de Swift deberán repetir estas comprobaciones.
 - **Dominio público**: regla de la dirección. Muerte en 1945 o antes, o autor anónimo o antiguo sin fechas. Un autor con nacimiento y sin muerte cuenta como vivo.
+
+### D-070 · 2026-11-24 · Lote 05a · errata 1 · Vigente (dirección)
+**Base literaria, versión 2.**
+- **Géneros**: se añade `ensayo` a Fray Luis y a Lope. Santa Teresa pasa a tener `narrativa` y `ensayo`, y «Las moradas» pasa a `ensayo`. Las greguerías siguen siendo `ensayo` por convención.
+- **Clasificación**: dos movimientos nuevos, `TEATRO1900` (Benavente, Arniches y Muñoz Seca) y `G36` (Miguel Hernández). Marsé pasa a `POSGUERRA`, REALISMO termina en 1905 y se corrigen los rasgos de Goethe y de los hermanos Grimm.
+- **Fechas**: la obra de Hierro pasa a ser «Quinta del 42» (1952), la de Gil de Biedma, «Moralidades» (1966), y «La casa de Bernarda Alba» lleva el año de escritura (1936).
+- **Motor 05F**: las preguntas de movimiento se hacen sobre el autor. Sobre una obra, solo si su año está dentro del rango del movimiento.
+- **País**: «Reino Unido» unifica Inglaterra y Escocia, y «Roma» pasa a «Italia».
+- **Fragmentos**: se añade el campo `fragmentosPermitidos`, que es `dominioPublico` y además ámbito español o hispanoamericano. De los extranjeros de dominio público solo se admite una traducción propia de la dirección. El validador comprueba esta regla.

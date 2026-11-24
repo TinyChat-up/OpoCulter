@@ -12,6 +12,8 @@ Errores (salida con código 1):
   - Año de una obra anterior al nacimiento o posterior a muerte + 10.
   - `dominioPublico` incoherente con la regla: muerte <= 1945, o anónimo o
     antiguo sin fechas, implica true; muerte > 1945 o autor vivo, false.
+  - `fragmentosPermitidos` incoherente: true solo si `dominioPublico` es true
+    y el ámbito es espanola o hispanoamericana.
   - Textos con espacios dobles o con espacios al principio o al final.
 
 Avisos (no hacen fallar):
@@ -33,8 +35,9 @@ CAMPOS_MOVIMIENTO = {"id": str, "nombre": str, "periodo": str, "inicio": int, "f
 CAMPOS_AUTOR = {
     "id": str, "nombre": str, "nacimiento": (int, type(None)), "muerte": (int, type(None)),
     "aproximado": bool, "ambito": str, "pais": str, "movimiento": str, "generos": list,
-    "obras": list, "rasgo": str, "dominioPublico": bool,
+    "obras": list, "rasgo": str, "dominioPublico": bool, "fragmentosPermitidos": bool,
 }
+AMBITOS_CON_FRAGMENTOS = {"espanola", "hispanoamericana"}
 CAMPOS_OBRA = {"titulo": str, "anio": (int, type(None)), "genero": str}
 
 
@@ -145,6 +148,14 @@ def validar(doc):
             errores.append(f"{donde}: dominioPublico={str(a['dominioPublico']).lower()} pero la regla da "
                            f"{str(esperado).lower()} ({motivo})")
 
+        # Fragmentos (versión 2): solo de dominio público y en lengua original española.
+        # Los extranjeros de dominio público solo admiten traducción propia de la dirección.
+        frag_esperado = a["dominioPublico"] and a["ambito"] in AMBITOS_CON_FRAGMENTOS
+        if a["fragmentosPermitidos"] != frag_esperado:
+            errores.append(f"{donde}: fragmentosPermitidos={str(a['fragmentosPermitidos']).lower()} pero la regla da "
+                           f"{str(frag_esperado).lower()} (dominioPublico={str(a['dominioPublico']).lower()}, "
+                           f"ámbito {a['ambito']})")
+
         for j, o in enumerate(a["obras"]):
             od = f"{donde}, obras[{j}]"
             if not comprobar_campos(o, CAMPOS_OBRA, od, errores):
@@ -187,11 +198,12 @@ def main():
     if isinstance(doc.get("autores"), list):
         autores = [a for a in doc["autores"] if isinstance(a, dict)]
         dp = sum(1 for a in autores if a.get("dominioPublico") is True)
+        frag = sum(1 for a in autores if a.get("fragmentosPermitidos") is True)
         obras = sum(len(a.get("obras", [])) for a in autores)
         por_ambito = {}
         for a in autores:
             por_ambito[a.get("ambito")] = por_ambito.get(a.get("ambito"), 0) + 1
-        print(f"Obras: {obras} · dominio público: {dp} de {len(autores)} autores")
+        print(f"Obras: {obras} · dominio público: {dp} de {len(autores)} autores · fragmentos permitidos: {frag}")
         print("Ámbitos: " + ", ".join(f"{k} {v}" for k, v in sorted(por_ambito.items(), key=lambda kv: str(kv[0]))))
     for a in avisos:
         print(f"AVISO: {a}")
