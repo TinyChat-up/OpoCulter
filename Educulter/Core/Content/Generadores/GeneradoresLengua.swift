@@ -43,20 +43,6 @@ struct AnalisisPalabra: Sendable, Equatable {
     var coherente: Bool { tildeEscrita == tildePredicha }
     /// Palabra en minúsculas y sin tildes (para `colocarTilde`).
     var sinTilde: String { String(palabra.map { Acentuacion.quitarTilde[$0] ?? $0 }) }
-
-    /// Nivel de dificultad (1–6) de la palabra para los generadores.
-    var nivel: Int {
-        let n = silabas.count
-        if clase == .sobresdrujula || n >= 5 { return 6 }
-        let final = palabra.last.map(String.init) ?? ""
-        let penultima = palabra.count >= 2 ? Array(palabra)[palabra.count - 2] : " "
-        let finalEspecial = (final == "s" || final == "n") && !Acentuacion.vocales.contains(penultima) || final == "y"
-        if finalEspecial || (n >= 4 && clase != .esdrujula) { return 5 }
-        if hiato { return 4 }
-        if clase == .esdrujula { return 3 }
-        if n >= 3 { return 2 }
-        return 1
-    }
 }
 
 enum Acentuacion {
@@ -126,19 +112,58 @@ enum Acentuacion {
         lexico.filter { $0.diacritica != true }.map(analizar).filter { $0.coherente && $0.silabas.count >= 2 && $0.palabra.allSatisfy(\.isLetter) }
     }
 
-    /// Palabras del nivel de la plantilla (o del nivel inferior más próximo con palabras).
-    static func delNivel(_ lexico: [EntradaLexico], _ d: Int) -> [AnalisisPalabra] {
+    /// Nivel de cada palabra utilizable (lote 02, D):
+    /// 1 · dos sílabas y regla general · 2 · tres o más sílabas · 3 · hiato ·
+    /// 4 · plural que cambia la tilde (canción → canciones, examen → exámenes) ·
+    /// 5 · excepciones (-s tras consonante; plural que desplaza el acento: carácter → caracteres) ·
+    /// 6 · formas verbales con hiato y sobresdrújulas.
+    static func nivelar(_ lexico: [EntradaLexico], formasVerbales: Set<String>) -> [PalabraNivelada] {
         let todas = utilizables(lexico)
+        let porForma = Dictionary(todas.map { ($0.sinTilde, $0) }, uniquingKeysWith: { a, _ in a })
+        return todas.map { a in
+            PalabraNivelada(analisis: a, nivel: nivel(a, singular: singular(a, porForma), verbo: formasVerbales.contains(a.palabra)))
+        }
+    }
+
+    /// Singular del léxico de un plural en -es (lápices → lápiz).
+    static func singular(_ a: AnalisisPalabra, _ porForma: [String: AnalisisPalabra]) -> AnalisisPalabra? {
+        let s = a.sinTilde
+        guard s.hasSuffix("es"), s.count > 4 else { return nil }
+        let raiz = String(s.dropLast(2))
+        return ([raiz] + (raiz.hasSuffix("c") ? [String(raiz.dropLast()) + "z"] : [])).compactMap { porForma[$0] }.first
+    }
+
+    static func nivel(_ a: AnalisisPalabra, singular: AnalisisPalabra?, verbo: Bool) -> Int {
+        if a.clase == .sobresdrujula || (verbo && a.hiato) { return 6 }
+        let letras = Array(a.palabra)
+        let sTrasConsonante = letras.last == "s" && letras.count >= 2 && !vocales.contains(letras[letras.count - 2])
+        if sTrasConsonante { return 5 }
+        if let s = singular, s.tonica != a.tonica { return 5 }
+        if let s = singular, (s.tildeEscrita != nil) != (a.tildeEscrita != nil) { return 4 }
+        if a.hiato { return 3 }
+        return a.silabas.count >= 3 ? 2 : 1
+    }
+
+    /// Palabras del nivel pedido (o del nivel inferior más próximo con palabras).
+    static func delNivel(_ recursos: RecursosGeneradores, _ d: Int) -> [AnalisisPalabra] {
         for nivel in stride(from: d, through: 1, by: -1) {
-            let deNivel = todas.filter { $0.nivel == nivel }
+            let deNivel = recursos.palabras.filter { $0.nivel == nivel }.map(\.analisis)
             if !deNivel.isEmpty { return deNivel }
         }
-        return todas
+        return recursos.palabras.map(\.analisis)
     }
+
+    static func nivelDe(_ palabra: String, _ recursos: RecursosGeneradores) -> Int { recursos.palabras.first { $0.analisis.palabra == palabra }?.nivel ?? 1 }
 }
 
-private func complejidadPalabra(_ a: AnalisisPalabra) -> Double {
-    Double(a.nivel) + Double(a.silabas.count) * 0.2
+/// Palabra utilizable con su nivel de dificultad.
+struct PalabraNivelada: Sendable, Equatable {
+    let analisis: AnalisisPalabra
+    let nivel: Int
+}
+
+private func complejidadPalabra(_ a: AnalisisPalabra, _ r: RecursosGeneradores) -> Double {
+    Double(Acentuacion.nivelDe(a.palabra, r)) + Double(a.silabas.count) * 0.2
 }
 
 // MARK: - colocarTilde
@@ -152,7 +177,7 @@ struct GeneradorColocarTilde: GeneradorItems {
     let marcadores: Set<String> = ["contexto"]
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
-        let palabras = Acentuacion.delNivel(recursos.lexico, p.dificultad)
+        let palabras = Acentuacion.delNivel(recursos, p.dificultad)
         guard !palabras.isEmpty else { throw ErrorGenerador.sinRecursos(tipo) }
         let a = rng.elemento(palabras)
         let tonica = a.silabas[a.tonica].uppercased()
@@ -166,11 +191,11 @@ struct GeneradorColocarTilde: GeneradorItems {
                         ErrorHabitual(respuesta: "posicion", feedback: "La sílaba tónica es «\(tonica)»: la tilde va en su vocal."),
                        ].filter { e in a.tildePredicha == nil ? e.respuesta == "conTilde" : e.respuesta != "conTilde" },
                        pistas: ["Busca la sílaba que suena más fuerte."],
-                       complejidad: complejidadPalabra(a), datos: ["palabra": a.palabra])
+                       complejidad: complejidadPalabra(a, recursos), datos: ["palabra": a.palabra])
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
-        Array(Acentuacion.delNivel(recursos.lexico, p.dificultad).map(\.palabra).prefix(limite))
+        Array(Acentuacion.delNivel(recursos, p.dificultad).map(\.palabra).prefix(limite))
     }
 }
 
@@ -179,7 +204,7 @@ struct GeneradorColocarTilde: GeneradorItems {
 /// Aguda, llana, esdrújula o sobresdrújula (elección). Las palabras se muestran bien escritas.
 struct GeneradorClasificarAcentuacion: GeneradorItems {
     let tipo = "clasificarAcentuacion"
-    let mecanicas: Set<Mecanica> = [.eleccion]
+    let mecanicas: Set<Mecanica> = [.clasificar]
     let marcadores: Set<String> = ["palabra", "contexto"]
 
     static let feedback: [ClaseAcentual: String] = [
@@ -190,8 +215,9 @@ struct GeneradorClasificarAcentuacion: GeneradorItems {
     ]
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
-        let palabras = Acentuacion.delNivel(recursos.lexico, p.dificultad).filter { $0.clase != nil }
+        let palabras = Acentuacion.delNivel(recursos, p.dificultad).filter { $0.clase != nil }
         guard !palabras.isEmpty else { throw ErrorGenerador.sinRecursos(tipo) }
+        if p.mecanica == .clasificar { return try clasificar(p, palabras, recursos: recursos, rng: &rng) }
         let a = rng.elemento(palabras)
         let clase = a.clase!
         let incluirSobre = p.dificultad >= 5 || clase == .sobresdrujula
@@ -205,11 +231,45 @@ struct GeneradorClasificarAcentuacion: GeneradorItems {
                        payload: .eleccion(Payload.Eleccion(opciones: elementos, correcta: correcta)),
                        explicacion: "\(a.silabas.enumerated().map { $0.offset == a.tonica ? $0.element.uppercased() : $0.element }.joined(separator: "-")): \(clase.nombre.lowercased()).",
                        erroresHabituales: errores, pistas: ["Separa en sílabas y busca la que suena más fuerte."],
-                       complejidad: complejidadPalabra(a), datos: ["palabra": a.palabra, "clase": clase.rawValue])
+                       complejidad: complejidadPalabra(a, recursos), datos: ["palabra": a.palabra, "clase": clase.rawValue])
+    }
+
+    /// Clasificar de 4 a 6 palabras (lote 02): clases mezcladas, con palabras del nivel y de los
+    /// inferiores para que haya al menos dos clases.
+    private func clasificar(_ p: Plantilla, _ delNivel: [AnalisisPalabra], recursos: RecursosGeneradores,
+                            rng: inout GeneradorConSemilla) throws -> Muestra {
+        let todas = recursos.palabras.filter { $0.nivel <= p.dificultad && $0.analisis.clase != nil }.map(\.analisis)
+        for _ in 0..<200 {
+            let n = rng.entero(4...6)
+            let base = rng.elemento(delNivel)
+            var elegidas = [base]
+            for a in rng.barajar(todas) where elegidas.count < n && !elegidas.contains(where: { $0.palabra == a.palabra }) { elegidas.append(a) }
+            let clases = Set(elegidas.compactMap(\.clase))
+            guard elegidas.count == n, clases.count >= 2 else { continue }
+            var categorias: [ClaseAcentual] = [.aguda, .llana, .esdrujula]
+            if clases.contains(.sobresdrujula) { categorias.append(.sobresdrujula) }
+            let fichas = elegidas.enumerated().map { Payload.Clasificar.Ficha(id: "w\($0.offset + 1)", texto: $0.element.palabra, categoria: $0.element.clase!.rawValue) }
+            let errores = elegidas.enumerated().map { i, a in
+                ErrorHabitual(respuesta: "w\(i + 1)", feedback: "«\(a.palabra)» (\(a.silabas.enumerated().map { $0.offset == a.tonica ? $0.element.uppercased() : $0.element }.joined(separator: "-"))) es \(a.clase!.nombre.lowercased()): \(Self.feedback[a.clase!]!)")
+            }
+            let complejidad = elegidas.map { Double(Acentuacion.nivelDe($0.palabra, recursos)) }.reduce(0, +) / Double(n) + Double(n) * 0.2 + Double(clases.count) * 0.3
+            return Muestra(clave: elegidas.map(\.palabra).sorted().joined(separator: ","), valores: [:],
+                           payload: .clasificar(Payload.Clasificar(categorias: categorias.map { ElementoNombre(id: $0.rawValue, nombre: $0.nombre) }, fichas: fichas)),
+                           explicacion: elegidas.map { "\($0.palabra): \($0.clase!.nombre.lowercased())" }.joined(separator: "; ") + ".",
+                           erroresHabituales: errores, pistas: ["Separa en sílabas y busca la que suena más fuerte."],
+                           complejidad: complejidad,
+                           datos: ["palabras": elegidas.map(\.palabra).joined(separator: ","), "clases": elegidas.map { $0.clase!.rawValue }.joined(separator: ",")])
+        }
+        throw ErrorGenerador.sinCaso(tipo)
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
-        Array(Acentuacion.delNivel(recursos.lexico, p.dificultad).filter { $0.clase != nil }.map(\.palabra).prefix(limite))
+        if p.mecanica == .clasificar {
+            var vistos = Set<String>()
+            for semilla in UInt64(0)..<UInt64(min(limite, 3000)) { if let m = try? MotorGeneradores.muestra(p, semilla: semilla, recursos: recursos) { vistos.insert(m.clave) } }
+            return Array(vistos)
+        }
+        return Array(Acentuacion.delNivel(recursos, p.dificultad).filter { $0.clase != nil }.map(\.palabra).prefix(limite))
     }
 }
 
@@ -222,14 +282,14 @@ struct GeneradorSilabaTonica: GeneradorItems {
     let mecanicas: Set<Mecanica> = [.marcarTexto]
     let marcadores: Set<String> = ["palabra", "contexto"]
 
-    private func candidatas(_ p: Plantilla, _ lexico: [EntradaLexico]) -> [AnalisisPalabra] {
-        let delNivel = Acentuacion.delNivel(lexico, p.dificultad)
+    private func candidatas(_ p: Plantilla, _ recursos: RecursosGeneradores) -> [AnalisisPalabra] {
+        let delNivel = Acentuacion.delNivel(recursos, p.dificultad)
         let sinTilde = delNivel.filter { $0.tildeEscrita == nil }
         return p.dificultad >= 2 && !sinTilde.isEmpty ? sinTilde : delNivel
     }
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
-        let palabras = candidatas(p, recursos.lexico)
+        let palabras = candidatas(p, recursos)
         guard !palabras.isEmpty else { throw ErrorGenerador.sinRecursos(tipo) }
         let a = rng.elemento(palabras)
         let tokens = a.silabas.enumerated().map { ElementoTexto(id: "s\($0.offset + 1)", texto: $0.element) }
@@ -238,10 +298,10 @@ struct GeneradorSilabaTonica: GeneradorItems {
                        explicacion: "\(a.silabas.enumerated().map { $0.offset == a.tonica ? $0.element.uppercased() : $0.element }.joined(separator: "-")): la tónica es la \(a.tonica + 1)ª sílaba.",
                        erroresHabituales: tokens.enumerated().filter { $0.offset != a.tonica }.map { ErrorHabitual(respuesta: $0.element.id, feedback: "Pronuncia la palabra despacio: «\(a.silabas[a.tonica])» es la que suena más fuerte.") },
                        pistas: ["Pronuncia la palabra y escucha qué sílaba suena más fuerte."],
-                       complejidad: complejidadPalabra(a) + (a.tildeEscrita == nil ? 0.5 : 0), datos: ["palabra": a.palabra, "tonica": "\(a.tonica)"])
+                       complejidad: complejidadPalabra(a, recursos) + (a.tildeEscrita == nil ? 0.5 : 0), datos: ["palabra": a.palabra, "tonica": "\(a.tonica)"])
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
-        Array(candidatas(p, recursos.lexico).map(\.palabra).prefix(limite))
+        Array(candidatas(p, recursos).map(\.palabra).prefix(limite))
     }
 }

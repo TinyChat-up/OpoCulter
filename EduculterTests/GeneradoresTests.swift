@@ -44,8 +44,21 @@ enum Oraculo {
             if i < cs.count, cs[i] == "x" { i += 1; return x }
             if i < cs.count, cs[i] == "−" || cs[i] == "-" { i += 1; return numero().map { -$0 } }
             var s = ""
-            while i < cs.count, cs[i].isNumber || cs[i] == "," { s.append(cs[i]); i += 1 }
-            return Double(s.replacingOccurrences(of: ",", with: "."))
+            while i < cs.count, cs[i].isASCII, cs[i].isNumber || cs[i] == "," { s.append(cs[i]); i += 1 }
+            guard var v = Double(s.replacingOccurrences(of: ",", with: ".")) else { return nil }
+            // Fracción escrita como número (3/4).
+            if i + 1 < cs.count, cs[i] == "/", cs[i + 1].isNumber {
+                i += 1
+                var d = ""
+                while i < cs.count, cs[i].isASCII, cs[i].isNumber { d.append(cs[i]); i += 1 }
+                v /= Double(d)!
+            }
+            // Exponente en superíndice (2³).
+            let sup: [Character: Int] = ["⁰": 0, "¹": 1, "²": 2, "³": 3, "⁴": 4, "⁵": 5, "⁶": 6, "⁷": 7, "⁸": 8, "⁹": 9]
+            var e = ""
+            while i < cs.count, let k = sup[cs[i]] { e += "\(k)"; i += 1 }
+            if let k = Int(e) { v = pow(v, Double(k)) }
+            return v
         }
         func producto() -> Double? {
             guard var v = numero() else { return nil }
@@ -128,16 +141,64 @@ enum Oraculo {
         }
     }
 
-    /// Clase acentual de las 15 palabras de prueba, escrita a mano.
-    static let claseLexico: [String: String] = [
-        "canción": "aguda", "árbol": "llana", "examen": "llana", "música": "esdrujula", "café": "aguda", "reloj": "aguda",
-        "lápiz": "llana", "teléfono": "esdrujula", "robots": "aguda", "jóvenes": "esdrujula", "país": "aguda", "río": "llana",
-        "dígaselo": "sobresdrujula", "bíceps": "llana",
+    /// Acentuación independiente del generador: cuenta núcleos vocálicos (sin silabear las
+    /// consonantes), separa hiatos (dos vocales abiertas o una cerrada con tilde) y aplica las
+    /// reglas generales para la tónica cuando no hay tilde. Devuelve (sílabas, tónica, clase).
+    static func acento(_ palabra: String, tonica declarada: Int? = nil) -> (silabas: Int, tonica: Int, clase: String) {
+        let l = Array(palabra.lowercased())
+        let abiertas: Set<Character> = ["a", "e", "o", "á", "é", "ó"], cerradasTilde: Set<Character> = ["í", "ú"]
+        let vocales: Set<Character> = abiertas.union(["i", "u", "ü"]).union(cerradasTilde)
+        var nucleos: [[Int]] = []
+        var actual: [Int] = []
+        var anterior: Int? = nil
+        for (k, c) in l.enumerated() {
+            let muda = c == "u" && k > 0 && (l[k - 1] == "q" || l[k - 1] == "g") && k + 1 < l.count && "eiéí".contains(l[k + 1])
+            if vocales.contains(c) && !muda {
+                let pegada = anterior.map { a in (a + 1 ..< k).allSatisfy { l[$0] == "h" } } ?? false
+                if pegada, let a = anterior {
+                    let separa = (abiertas.contains(l[a]) && abiertas.contains(c)) || cerradasTilde.contains(c) || cerradasTilde.contains(l[a])
+                    if separa { nucleos.append(actual); actual = [k] } else { actual.append(k) }
+                } else {
+                    if !actual.isEmpty { nucleos.append(actual) }
+                    actual = [k]
+                }
+                anterior = k
+            }
+        }
+        if !actual.isEmpty { nucleos.append(actual) }
+        let n = nucleos.count
+        let conTilde = nucleos.firstIndex { $0.contains { "áéíóú".contains(l[$0]) } }
+        let ultima = l.last!, penultima = l.count > 1 ? l[l.count - 2] : " "
+        let llanaPorRegla = vocales.contains(ultima) || ((ultima == "n" || ultima == "s") && vocales.contains(penultima))
+        let t = declarada ?? conTilde ?? (n >= 2 && llanaPorRegla ? n - 2 : n - 1)
+        let clase = ["aguda", "llana", "esdrujula", "sobresdrujula"][min(n - 1 - t, 3)]
+        return (n, t, clase)
+    }
+
+    /// Factores de las unidades respecto a la base de su magnitud, escritos aparte del generador.
+    /// Capacidad y volumen comparten base (litros: 1 dm³ = 1 l); la masa va en gramos.
+    static let factores: [String: (String, Double)] = [
+        "km": ("L", 1000), "hm": ("L", 100), "dam": ("L", 10), "m": ("L", 1), "dm": ("L", 0.1), "cm": ("L", 0.01), "mm": ("L", 0.001),
+        "kg": ("M", 1000), "hg": ("M", 100), "dag": ("M", 10), "g": ("M", 1), "dg": ("M", 0.1), "cg": ("M", 0.01), "mg": ("M", 0.001),
+        "kl": ("C", 1000), "hl": ("C", 100), "dal": ("C", 10), "l": ("C", 1), "dl": ("C", 0.1), "cl": ("C", 0.01), "ml": ("C", 0.001),
+        "m³": ("C", 1000), "dm³": ("C", 1), "cm³": ("C", 0.001), "mm³": ("C", 0.000001),
+        "km²": ("S", 1e6), "hm²": ("S", 1e4), "dam²": ("S", 100), "m²": ("S", 1), "dm²": ("S", 0.01), "cm²": ("S", 1e-4), "mm²": ("S", 1e-6),
+        "ha": ("S", 1e4), "a": ("S", 100), "ca": ("S", 1),
     ]
-    static let tonicaLexico: [String: String] = [
-        "canción": "ción", "árbol": "ár", "examen": "xa", "música": "mú", "café": "fé", "reloj": "loj", "lápiz": "lá",
-        "teléfono": "lé", "robots": "bots", "jóvenes": "jó", "país": "ís", "río": "rí", "dígaselo": "dí", "bíceps": "bí",
-    ]
+
+    /// Números que aparecen en un texto (con coma decimal y puntos de miles).
+    static func numeros(_ t: String) -> [Double] {
+        var out: [Double] = [], actual = ""
+        for c in t + " " {
+            if c.isASCII && (c.isNumber || ((c == "," || c == ".") && !actual.isEmpty)) { actual.append(c) }
+            else if !actual.isEmpty {
+                while actual.last == "," || actual.last == "." { actual.removeLast() }
+                if let v = racional(actual) { out.append(v) }
+                actual = ""
+            }
+        }
+        return out
+    }
 
     /// Formas verbales escritas a mano: forma → (persona, número, tiempo, modo).
     static let formas: [String: (String, String, String, String)] = [
@@ -199,51 +260,112 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
     let sol = respuestaCorrecta(item).map { $0.replacingOccurrences(of: " \(p.parametros["unidad"]?.textos?.first ?? "@@")", with: "") }
     switch p.tipo {
     case "porcentajeDe":
-        let pc = Oraculo.racional(d["p"]!)!, base = Double(d["base"]!)!
+        let pc = Oraculo.racional(d["p"]!)! / 100, base = Double(d["base"]!)!
+        let p2 = d["p2"].flatMap(Oraculo.racional).map { $0 / 100 } ?? 0
         let esperado: Double = switch d["variante"]! {
-        case "porcentajeDe", "cantidadDesde": d["variante"] == "cantidadDesde" ? base : base * pc / 100
-        case "aumento": base * (1 + pc / 100)
-        case "descuento": base * (1 - pc / 100)
-        default: base * (1 + pc / 100) * (1 - Oraculo.racional(d["p2"]!)! / 100)
+        case "calc": base * pc
+        case "total", "inv": base
+        case "desc": base * (1 - pc)
+        case "aum": base * (1 + pc)
+        case "dd": base * (1 - pc) * (1 - p2)
+        default: base * (1 + pc) * (1 - p2)
         }
-        #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-6, "\(item.id): \(sol!) ≠ \(esperado)")
-        #expect(Int(d["base"]!)! <= 10_000)
-    case "conversionUnidades":
-        if let desde = d["desde"], let hasta = d["hasta"], let a = Oraculo.unidades[desde], let b = Oraculo.unidades[hasta] {
-            let esperado = Oraculo.racional(d["valor"]!)! * pow(Double(a.1), Double(a.0 - b.0))
-            let obtenido = d["respuesta"].flatMap(Oraculo.racional) ?? Oraculo.racional(d["resultado"]!)!
-            #expect(abs(obtenido - esperado) < 1e-6 * max(1, esperado), "\(item.id): \(obtenido) ≠ \(esperado)")
-        } else if let t = d["tiempo"] {
-            let h = t.split(separator: ",").map { Int($0)! }
-            #expect(Int(d["respuesta"]!)! == h[0] * 3600 + h[1] * 60 + h[2])
+        if case .construir(let c) = item.payload {
+            let textos = Dictionary(uniqueKeysWithValues: c.piezas.map { ($0.id, $0.texto) })
+            let valores = Dictionary(uniqueKeysWithValues: c.huecos.map { ($0.id, Oraculo.racional(textos[$0.correcta]!)!) })
+            let factores = c.huecos.filter { $0.id != "resultado" }.map { valores[$0.id]! }
+            #expect(abs(factores.reduce(base, *) - esperado) < 0.006, "\(item.id): factores \(factores)")
+            #expect(abs(valores["resultado"]! - esperado) < 1e-6, "\(item.id): resultado")
+        } else {
+            #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-6, "\(item.id): \(sol!) ≠ \(esperado)")
         }
+        // Los datos del enunciado son los del caso (base o parte visibles).
+        let enTexto = Oraculo.numeros(item.enunciado)
+        #expect(enTexto.contains { abs($0 - base) < 1e-9 || abs($0 - base * pc) < 1e-9 || abs($0 - base * (1 - pc)) < 1e-9 }, "\(item.id): \(item.enunciado)")
+        #expect(base <= 10_000)
     case "fraccionBarras":
         guard case .fraccionBarras(let f) = item.payload else { Issue.record("payload"); return }
         let solucion = f.solucion
         #expect(Double(solucion.coloreadas) / Double(solucion.partes) == Double(d["n"]!)! / Double(d["d"]!)!)
         #expect(Evaluador.evaluar(.fraccionBarras(partes: solucion.partes, coloreadas: Set(0..<solucion.coloreadas)), para: item).correcto)
+    case "reglaDeTres":
+        let a1 = Double(d["a1"]!)!, b1 = Oraculo.racional(d["b1"]!)!, a2 = Double(d["a2"]!)!
+        let esperado = d["modo"] == "cadena" ? b1 * a2 / 100 * Oraculo.racional(d["extra"]!)! : b1 * a2 / a1
+        #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-6, "\(item.id): \(sol!) ≠ \(esperado)")
+        let enTexto = Oraculo.numeros(item.enunciado)
+        #expect(enTexto.contains(b1) && enTexto.contains(a2), "\(item.id): \(item.enunciado)")
+    case "conversionUnidades":
+        let terminos = d["terminos"]!.split(separator: ";").map { $0.split(separator: ":").map(String.init) }
+        let destino = Oraculo.factores[d["hasta"]!]!
+        var total = 0.0
+        for t in terminos {
+            let f = Oraculo.factores[t[1]]!
+            if d["agua"] == "1" { #expect(f.0 == "C") } else { #expect(f.0 == destino.0, "\(item.id): magnitudes distintas") }
+            total += Oraculo.racional(t[0])! * f.1 * (d["agua"] == "1" ? 1000 : 1)
+        }
+        let esperado = total / destino.1
+        #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-6 * max(1, esperado), "\(item.id): \(sol!) ≠ \(esperado)")
+    case "sexagesimal":
+        let t1 = Int(d["t1"]!)!, t2 = Int(d["t2"]!)!, k = Int(d["k"]!)!
+        let segundos: Int = switch d["op"]! {
+        case "suma": t1 + t2
+        case "resta": t1 - t2
+        case "dur": t2 - t1
+        case "medianoche": (t2 + 86_400 - t1) % 86_400
+        case "mul": t1 * k
+        default: t1
+        }
+        #expect(segundos > 0 && Int(d["segundos"]!)! == segundos)
+        if case .ruedas(let rr) = item.payload {
+            let v = Dictionary(uniqueKeysWithValues: rr.ruedas.map { ($0.id, Int($0.correcta)!) })
+            #expect(v["h"]! * 3600 + v["min"]! * 60 + (v["s"] ?? 0) == segundos, "\(item.id)")
+            #expect(v["min"]! < 60 && (v["s"] ?? 0) < 60)
+        } else {
+            #expect(Int(sol!)! * (d["unidad"] == "min" ? 60 : 1) == segundos, "\(item.id): \(sol!)")
+        }
+    case "escala":
+        let n = Oraculo.numeros(item.enunciado)
+        let esperado: Double = switch d["modo"]! {
+        case "mr": n[1] * n[2] / (d["unidad"] == "km" ? 100_000 : 100)   // 1:e, d cm
+        case "rm": n[0] * 100_000 / n[2]                                  // D km, 1:e
+        default: n[0] * 100_000 / n[1]                                    // D km, d cm
+        }
+        #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-6 * max(1, esperado), "\(item.id): \(item.enunciado) → \(sol!) ≠ \(esperado)")
+    case "problemaFraccion":
+        let total = Double(d["total"]!)!, fs = d["fracciones"]!.split(separator: ";").map { Oraculo.racional(String($0))! }
+        var queda = total
+        if d["resto"] == "1" { for f in fs { queda -= queda * f } } else { queda -= fs.reduce(0, +) * total }
+        #expect(abs(Oraculo.racional(sol!)! - queda) < 1e-6, "\(item.id): \(sol!) ≠ \(queda)")
+    case "fraccionesOperar":
+        let esperado = Oraculo.evaluar(d["expresion"]!)!
+        #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-9, "\(item.id): \(d["expresion"]!) = \(esperado) ≠ \(sol!)")
+        if sol!.contains("/") { let p = sol!.split(separator: "/").map { Int($0)! }; #expect(Oraculo.mcd(p[0], p[1]) == 1, "Irreducible") }
     case let t where t == "ordenarNumeros" || (t == "operacionesCombinadas" && p.mecanica == .ordenar):
         guard case .ordenar(let o) = item.payload else { Issue.record("payload"); return }
         let textos = Dictionary(uniqueKeysWithValues: o.fichas.map { ($0.id, $0.texto) })
         if p.tipo == "ordenarNumeros" {
             let valores = o.ordenCorrecto.map { Oraculo.racional(textos[$0]!)! }
-            let ordenado = d["orden"] == "desc" ? valores.sorted(by: >) : valores.sorted()
-            #expect(valores == ordenado, "\(item.id): orden incorrecto \(valores)")
+            #expect(valores == valores.sorted(), "\(item.id): orden incorrecto \(valores)")
             #expect(Set(valores).count == valores.count, "\(item.id): valores repetidos")
         } else {
             let ultimo = textos[o.ordenCorrecto.last!]!
-            let resultado = Double(ultimo.split(separator: "=").last!.trimmingCharacters(in: .whitespaces))!
-            #expect(resultado == Oraculo.evaluar(d["expresion"]!), "\(item.id): \(d["expresion"]!) ≠ \(resultado)")
-            #expect(o.fichas.count == d["expresion"]!.filter { "+−×:".contains($0) }.count)
+            let resultado = Oraculo.racional(ultimo.split(separator: "=").last!.trimmingCharacters(in: .whitespaces))!
+            #expect(abs(resultado - Oraculo.evaluar(d["expresion"]!)!) < 1e-9, "\(item.id): \(d["expresion"]!) ≠ \(resultado)")
+            let operadores = d["expresion"]!.filter { "+−×:".contains($0) }.count + d["expresion"]!.filter { "²³".contains($0) }.count
+            #expect(o.fichas.count == operadores, "\(item.id): \(o.fichas.count) pasos para \(operadores) operaciones")
         }
     case "operacionesCombinadas":
-        #expect(Oraculo.evaluar(d["expresion"]!) == Double(sol!), "\(item.id): \(d["expresion"]!) = \(Oraculo.evaluar(d["expresion"]!) ?? -1) ≠ \(sol!)")
+        let esperado = Oraculo.evaluar(d["expresion"]!)!
+        #expect(abs(esperado - Oraculo.racional(sol!)!) < 1e-9, "\(item.id): \(d["expresion"]!) = \(esperado) ≠ \(sol!)")
     case "romanos":
-        if p.mecanica == .construir {
-            guard case .construir(let c) = item.payload else { Issue.record("payload"); return }
+        switch item.payload {
+        case .construir(let c):
             let textos = Dictionary(uniqueKeysWithValues: c.piezas.map { ($0.id, $0.texto) })
             #expect(c.huecos.map { textos[$0.correcta]! }.joined() == Oraculo.enteroARomano(Int(d["numero"]!)!))
-        } else {
+        case .eleccion(let e) where d["malEscrito"] != nil:
+            let malos = e.opciones.filter { Oraculo.enteroARomano(Oraculo.romanoAEntero($0.texto)) != $0.texto }
+            #expect(malos.count == 1 && malos.first?.id == e.correcta, "\(item.id): \(e.opciones.map(\.texto))")
+        default:
             #expect(Oraculo.romanoAEntero(d["romano"]!) == Int(sol!)!)
             #expect(Oraculo.enteroARomano(Int(sol!)!) == d["romano"]!)
         }
@@ -277,12 +399,32 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
     case "colocarTilde":
         guard case .colocarTilde(let c) = item.payload else { Issue.record("payload"); return }
         #expect(c.correcta == d["palabra"]!, "\(item.id): \(c.correcta) ≠ \(d["palabra"]!)")
+        // La tilde escrita coincide con la que piden las reglas según el oráculo.
+        let o = Oraculo.acento(d["palabra"]!)
+        let tilde = d["palabra"]!.contains { "áéíóú".contains($0) }
+        let hiato = d["palabra"]!.contains { "íú".contains($0) } && o.silabas > 1
+        let l = Array(d["palabra"]!)
+        let vocalNS = "aeiouáéíóú".contains(l.last!) || ((l.last! == "n" || l.last! == "s") && "aeiouáéíóú".contains(l[l.count - 2]))
+        let porClase: Bool
+        switch o.clase {
+        case "aguda": porClase = o.silabas > 1 && vocalNS
+        case "llana": porClase = !vocalNS
+        default: porClase = true
+        }
+        let pideTilde = hiato || porClase
+        #expect(tilde == pideTilde, "\(item.id): «\(d["palabra"]!)» \(o)")
     case "clasificarAcentuacion":
-        #expect(d["clase"] == Oraculo.claseLexico[d["palabra"]!], "\(item.id): \(d["palabra"]!)")
+        if case .clasificar(let c) = item.payload {
+            for f in c.fichas { #expect(f.categoria == Oraculo.acento(f.texto, tonica: ["robots": 1, "tictacs": 1, "zigzags": 1][f.texto]).clase, "\(item.id): \(f.texto)") }
+            #expect((4...6).contains(c.fichas.count) && Set(c.fichas.map(\.categoria)).count >= 2)
+        } else {
+            #expect(d["clase"] == Oraculo.acento(d["palabra"]!).clase, "\(item.id): \(d["palabra"]!)")
+        }
     case "silabaTonica":
         guard case .marcarTexto(let mt) = item.payload else { Issue.record("payload"); return }
-        let texto = mt.tokens.first { $0.id == mt.correctos.first }?.texto
-        #expect(texto == Oraculo.tonicaLexico[d["palabra"]!], "\(item.id): \(texto ?? "-")")
+        let o = Oraculo.acento(d["palabra"]!, tonica: ["robots": 1, "tictacs": 1, "zigzags": 1][d["palabra"]!])
+        #expect(mt.tokens.count == o.silabas, "\(item.id): \(mt.tokens.map(\.texto)) frente a \(o.silabas) sílabas")
+        #expect(mt.tokens.firstIndex { $0.id == mt.correctos.first } == o.tonica, "\(item.id): \(d["palabra"]!)")
     case "oracionSimple":
         let numero = d["numero"]!, funciones = d["funciones"]!.split(separator: ";").map { $0.split(separator: ":") }
         let tokens = d["oracion"]!.split(separator: " ").map(String.init)
@@ -315,7 +457,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
 struct GeneradoresPropiedadesTests {
     static let plantillas = bancoGeneradores.plantillas
 
-    @Test("Hay plantillas de prueba para los 16 tipos y todas sus mecánicas")
+    @Test("Hay plantillas para los 21 tipos y todas sus mecánicas; las del lote 02 están aprobadas")
     func cobertura() {
         let tipos = Set(Self.plantillas.map(\.tipo))
         #expect(tipos == Set(MotorGeneradores.generadores.keys))
@@ -323,7 +465,11 @@ struct GeneradoresPropiedadesTests {
             let mecanicas = Set(Self.plantillas.filter { $0.tipo == tipo }.map(\.mecanica))
             #expect(mecanicas == g.mecanicas, "\(tipo): \(mecanicas) ≠ \(g.mecanicas)")
         }
-        #expect(Self.plantillas.allSatisfy { $0.validacion.estado == .borrador }, "Las plantillas de prueba van en borrador")
+        // Lote 02: aprobadas por la dirección; el resto (05C) siguen en borrador.
+        let lote02 = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Lote 02") == true }
+        #expect(lote02.count == 38)
+        #expect(lote02.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-24") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -331,7 +477,7 @@ struct GeneradoresPropiedadesTests {
         let g = try #require(MotorGeneradores.generador(p.tipo))
         let espacio = Set(g.enumerar(p, recursos: bancoGeneradores.recursos, limite: 200_000))
         // Solo se comprueba la pertenencia cuando el espacio se ha enumerado entero.
-        let muestreado = ["operacionesCombinadas", "estadisticaBasica", "oracionSimple"].contains(p.tipo) || espacio.count >= 200_000
+        let muestreado = CatalogoPreguntas.muestreados.contains(p.tipo) || p.mecanica == .clasificar || espacio.count >= 200_000
         var fallos = 0
         for semilla in UInt64(0)..<1000 {
             let m = try MotorGeneradores.muestra(p, semilla: semilla, recursos: bancoGeneradores.recursos)
@@ -352,15 +498,15 @@ struct GeneradoresPropiedadesTests {
         }
     }
 
-    @Test("La complejidad media crece con la dificultad (1→6)", arguments: Array(Set(bancoGeneradores.plantillas.map { "\($0.tipo)|\($0.mecanica.rawValue)" })).sorted())
+    @Test("La complejidad media crece con la dificultad (1→6) en cada plantilla", arguments: bancoGeneradores.plantillas.map(\.id))
     func dificultadCreciente(_ clave: String) throws {
-        let base = try #require(Self.plantillas.first { "\($0.tipo)|\($0.mecanica.rawValue)" == clave })
+        let base = try #require(Self.plantillas.first { $0.id == clave })
         var medias: [Double] = []
         for d in 1...6 {
             var p = base
             p.dificultad = d
             // Parámetros por defecto del generador (salvo los que fijan qué se pregunta).
-            p.parametros = base.parametros.filter { ["operacion"].contains($0.key) }
+            p.parametros = base.parametros.filter { ["operacion", "variante", "familia", "agrupaciones"].contains($0.key) }
             var suma = 0.0
             for semilla in UInt64(0)..<200 { suma += try MotorGeneradores.muestra(p, semilla: semilla, recursos: bancoGeneradores.recursos).complejidad }
             medias.append(suma / 200)
@@ -380,12 +526,12 @@ struct GeneradoresPropiedadesTests {
 struct GeneradoresMotorTests {
     @Test("Ids generados: formato, partes y regeneración desde el banco")
     func ids() throws {
-        let p = try #require(bancoGeneradores.plantilla(id: "MAT.ROM.LECTURA.G01"))
+        let p = try #require(bancoGeneradores.plantilla(id: "MAT.ROM.LEER.G01"))
         let item = try MotorGeneradores.generar(p, semilla: 987_654, recursos: bancoGeneradores.recursos)
-        #expect(MotorGeneradores.partes(de: item.id)! == ("MAT.ROM.LECTURA.G01", 987_654))
+        #expect(MotorGeneradores.partes(de: item.id)! == ("MAT.ROM.LEER.G01", 987_654))
         #expect(MotorGeneradores.partes(de: "LEN.ORT.AGU.0001") == nil)
         #expect(bancoGeneradores.item(id: item.id) == item, "El banco regenera cualquier semilla")
-        #expect(bancoGeneradores.item(id: "MAT.ROM.LECTURA.G99#1") == nil)
+        #expect(bancoGeneradores.item(id: "MAT.ROM.LEER.G99#1") == nil)
         #expect(validador.validar(item: item, competencias: competencias).isEmpty)
     }
 
@@ -399,22 +545,23 @@ struct GeneradoresMotorTests {
         #expect(Set(otraSesion.items.map(\.id)) != Set(bancoGeneradores.items.map(\.id)), "Otra sesión, otras variantes")
     }
 
-    @Test("Release no carga las plantillas de prueba (borrador)")
+    @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.isEmpty)
-        #expect(banco.items.count == banco.numeroEstaticos)
+        #expect(banco.plantillas.count == 38)
+        #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
+        #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }
 
     @Test("El validador detecta plantillas mal formadas")
     func validadorPlantillas() throws {
-        var p = try #require(bancoGeneradores.plantilla(id: "MAT.POR.PORCENT.G01"))
+        var p = try #require(bancoGeneradores.plantilla(id: "MAT.POR.CALC.G01"))
         p.tipo = "inventado"
         #expect(validador.validar(plantilla: p, competencias: competencias, recursos: .vacios).contains { $0.mensaje.contains("no hay generador") })
-        p = bancoGeneradores.plantilla(id: "MAT.POR.PORCENT.G01")!
+        p = bancoGeneradores.plantilla(id: "MAT.POR.CALC.G01")!
         p.enunciados = ["{{desconocido}}"]
         #expect(validador.validar(plantilla: p, competencias: competencias, recursos: .vacios).contains { $0.mensaje.contains("{{desconocido}}") })
-        p = bancoGeneradores.plantilla(id: "MAT.POR.PORCENT.G01")!
+        p = bancoGeneradores.plantilla(id: "MAT.POR.CALC.G01")!
         p.mecanica = .ordenar
         p.dificultad = 7
         let m = validador.validar(plantilla: p, competencias: competencias, recursos: .vacios).map(\.mensaje)
@@ -474,10 +621,37 @@ struct GeneradoresMotorTests {
 
 @Suite("Léxico y acentuación")
 struct LexicoTests {
-    @Test("El léxico de prueba es coherente con las reglas de la RAE")
+    @Test("Léxico del lote 02: 818 palabras; las discrepancias van al informe y quedan fuera de los generadores")
     func coherente() {
-        #expect(Acentuacion.informe(bancoGeneradores.recursos.lexico).isEmpty, "\(Acentuacion.informe(bancoGeneradores.recursos.lexico))")
-        #expect(bancoGeneradores.recursos.lexico.count == 15)
+        let lexico = bancoGeneradores.recursos.lexico
+        #expect(lexico.count == 818 && Set(lexico.map(\.palabra)).count == 818)
+        let informe = Acentuacion.informe(lexico)
+        print("LEXICO discrepancias \(informe.count)")
+        for linea in informe { print("LEXICO \(linea)") }
+        #expect(validador.avisos(bancoGeneradores).count == informe.count)
+        let usadas = Set(bancoGeneradores.recursos.palabras.map(\.analisis.palabra))
+        for e in lexico where !Acentuacion.analizar(e).coherente { #expect(!usadas.contains(e.palabra.lowercased()), "«\(e.palabra)» con discrepancia no debe usarse") }
+        // Oráculo independiente: clase y tónica de todas las palabras utilizables.
+        for w in bancoGeneradores.recursos.palabras {
+            let o = Oraculo.acento(w.analisis.palabra, tonica: lexico.first { $0.palabra == w.analisis.palabra }?.tonica)
+            #expect(o.silabas == w.analisis.silabas.count && o.tonica == w.analisis.tonica && o.clase == w.analisis.clase?.rawValue,
+                    "«\(w.analisis.palabra)»: \(w.analisis.silabas) tónica \(w.analisis.tonica) frente a \(o)")
+        }
+        // Formas verbales del nivel 6, todas en el léxico.
+        #expect(Set(bancoGeneradores.recursos.formasVerbales).isSubset(of: Set(lexico.map(\.palabra))))
+        let porNivel = Dictionary(grouping: bancoGeneradores.recursos.palabras, by: \.nivel).mapValues(\.count)
+        print("LEXICO niveles " + porNivel.sorted { $0.key < $1.key }.map { "\($0.key): \($0.value)" }.joined(separator: " · "))
+        #expect((1...6).allSatisfy { (porNivel[$0] ?? 0) > 0 }, "\(porNivel)")
+    }
+
+    @Test("Niveles de palabra del lote 02 (plural que cambia la tilde, excepciones, formas verbales)")
+    func niveles() {
+        let n = Dictionary(uniqueKeysWithValues: bancoGeneradores.recursos.palabras.map { ($0.analisis.palabra, $0.nivel) })
+        #expect(n["casa"] == 1 && n["camino"] == 2 && n["país"] == 3)
+        #expect(n["canciones"] == 4 && n["exámenes"] == 4 && n["jóvenes"] == 4)
+        #expect(n["caracteres"] == 5 && n["bíceps"] == 5 && n["robots"] == 5)
+        #expect(n["comía"] == 6 && n["dígaselo"] == 6 && n["actúa"] == 6)
+        #expect(n["policía"] == 3, "sustantivo con hiato: no es forma verbal")
     }
 
     @Test("Las discrepancias salen en el informe (no fallan en silencio)")
@@ -505,8 +679,8 @@ struct LexicoTests {
         #expect(Acentuacion.analizar(EntradaLexico(palabra: "robots")).clase == .aguda, "-s tras consonante: aguda también sin tónica declarada")
         #expect(Acentuacion.analizar(EntradaLexico(palabra: "examen", tonica: 2)).tildePredicha == 4, "Una tónica declarada que exige tilde")
         #expect(Acentuacion.analizar(EntradaLexico(palabra: "bíceps")).coherente)
-        #expect(Acentuacion.analizar(EntradaLexico(palabra: "joven")).nivel == 1)
-        #expect(Acentuacion.analizar(EntradaLexico(palabra: "bíceps")).nivel == 5)
+        #expect(Acentuacion.nivel(Acentuacion.analizar(EntradaLexico(palabra: "joven")), singular: nil, verbo: false) == 1)
+        #expect(Acentuacion.nivel(Acentuacion.analizar(EntradaLexico(palabra: "bíceps")), singular: nil, verbo: false) == 5)
     }
 }
 
@@ -526,12 +700,12 @@ struct CatalogoPreguntasTests {
         }
         #expect(CatalogoPreguntas.contar(bancoGeneradores, paralelo: false) == r, "Paralelo y secuencial dan el mismo recuento")
         let ordenar = r.plantillas.first { $0.tipo == "ordenarNumeros" }
-        #expect(ordenar?.variantes == CatalogoPreguntas.maximoOrdenarNumeros && ordenar?.exacto == false && ordenar?.nota != nil)
+        #expect((ordenar?.variantes ?? 0) <= CatalogoPreguntas.maximoOrdenarNumeros && ordenar?.exacto == false && ordenar?.nota != nil)
         #expect(r.estaticos == bancoGeneradores.numeroEstaticos)
         #expect(r.generados == r.plantillas.map(\.variantes).reduce(0, +))
         #expect(r.porArea.values.reduce(0, +) == r.total)
         #expect(r.porBloque.values.reduce(0, +) == r.total && r.porDificultad.values.reduce(0, +) == r.total)
-        #expect(r.plantillas.first { $0.id == "MAT.ROM.LECTURA.G01" }?.variantes == (400...1999).filter { GeneradorRomanos.sustractivos($0) <= 1 }.count)
+        #expect(r.plantillas.first { $0.id == "MAT.ROM.LEER.G01" }?.variantes == 360, "40–399")
         #expect(r.plantillas.first { $0.tipo == "operacionesCombinadas" }?.exacto == false, "Muestreo: cota inferior")
         // Caché por versión: la segunda llamada es inmediata y da lo mismo.
         let primera = CatalogoPreguntas.recuento(bancoGeneradores)
@@ -556,7 +730,7 @@ struct CatalogoPreguntasTests {
         var rng = GeneradorConSemilla(semilla: 3)
         let ahora = Fx.fecha(2026, 11, 23, 10)
         var peor = 0.0
-        for competencia in ["MAT.ROM.LECTURA", "MAT.OPE.JERARQ", "LEN.SIN.COMPL", "MAT.EST.CENTRAL"] {
+        for competencia in ["MAT.ROM.LEER", "MAT.OPE.JER", "LEN.SIN.COMPL", "MAT.EST.CENTRAL"] {
             let inicio = Date()
             let ronda = constructor.construir(estados: [:], rescate: ColaRescate(), enCurso: competencia, vistos: [:], ahora: ahora,
                                               calendario: Fx.madrid, rng: &rng)
@@ -633,24 +807,15 @@ struct EstimacionEspacioTests {
         let tipos = Set(bancoGeneradores.plantillas.map { "\($0.tipo)|\($0.mecanica.rawValue)" }).sorted()
         for clave in tipos {
             var p = bancoGeneradores.plantillas.first { "\($0.tipo)|\($0.mecanica.rawValue)" == clave }!
-            p.parametros = p.parametros.filter { $0.key == "operacion" }
+            p.parametros = p.parametros.filter { ["operacion", "variante", "familia", "agrupaciones"].contains($0.key) }
             var porNivel: [String] = []
             var total = 0
             var exacto = true
             for d in 1...6 {
                 p.dificultad = d
-                let n: Int
-                if p.tipo == "ordenarNumeros" {
-                    let (k, numeros) = GeneradorOrdenarNumeros().conjunto(d)
-                    var c = 1.0
-                    for i in 0..<k { c = c * Double(numeros.count - i) / Double(i + 1) }
-                    n = d >= 5 ? Int(Double(numeros.count) * 2 * 70) : Int(c) * 2   // ventanas contiguas en 5–6 (aprox.)
-                    if d >= 5 { exacto = false }
-                } else {
-                    let g = MotorGeneradores.generador(p.tipo)!
-                    n = g.enumerar(p, recursos: bancoGeneradores.recursos, limite: 3_000_000).count
-                    if ["operacionesCombinadas", "estadisticaBasica", "oracionSimple"].contains(p.tipo) { exacto = false }
-                }
+                let g = MotorGeneradores.generador(p.tipo)!
+                let n = g.enumerar(p, recursos: bancoGeneradores.recursos, limite: 3_000_000).count
+                if CatalogoPreguntas.muestreados.contains(p.tipo) { exacto = false }
                 porNivel.append("\(n)")
                 total += n
             }

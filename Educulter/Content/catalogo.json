@@ -168,6 +168,31 @@
               "id": "MAT.UNI.LONG",
               "nombre": "Unidades de longitud",
               "orden": 1
+            },
+            {
+              "id": "MAT.UNI.LMC",
+              "nombre": "Longitud, masa y capacidad",
+              "orden": 2
+            },
+            {
+              "id": "MAT.UNI.SUP",
+              "nombre": "Unidades de superficie",
+              "orden": 3
+            },
+            {
+              "id": "MAT.UNI.VOL",
+              "nombre": "Volumen y capacidad",
+              "orden": 4
+            },
+            {
+              "id": "MAT.UNI.TIEM",
+              "nombre": "Tiempo y sistema sexagesimal",
+              "orden": 5
+            },
+            {
+              "id": "MAT.UNI.ESC",
+              "nombre": "Escalas",
+              "orden": 6
             }
           ]
         },
@@ -194,6 +219,26 @@
               "id": "MAT.POR.PORCENT",
               "nombre": "Porcentajes",
               "orden": 1
+            },
+            {
+              "id": "MAT.POR.CALC",
+              "nombre": "Tanto por ciento de una cantidad",
+              "orden": 2
+            },
+            {
+              "id": "MAT.POR.TOTAL",
+              "nombre": "Total a partir de una parte y su porcentaje",
+              "orden": 3
+            },
+            {
+              "id": "MAT.POR.VAR",
+              "nombre": "Aumentos y descuentos porcentuales",
+              "orden": 4
+            },
+            {
+              "id": "MAT.POR.PROP",
+              "nombre": "Proporcionalidad directa",
+              "orden": 5
             }
           ]
         },
@@ -212,6 +257,21 @@
               "id": "MAT.NUM.FRAEQ",
               "nombre": "Fracciones equivalentes",
               "orden": 2
+            },
+            {
+              "id": "MAT.NUM.ORDEN",
+              "nombre": "Ordenar fracciones y decimales",
+              "orden": 3
+            },
+            {
+              "id": "MAT.NUM.FRAOP",
+              "nombre": "Operaciones con fracciones",
+              "orden": 4
+            },
+            {
+              "id": "MAT.NUM.FRAPROB",
+              "nombre": "Problemas con fracciones",
+              "orden": 5
             }
           ]
         },
@@ -253,6 +313,16 @@
               "id": "MAT.OPE.ECUAC",
               "nombre": "Ecuaciones de primer grado",
               "orden": 4
+            },
+            {
+              "id": "MAT.OPE.JER",
+              "nombre": "Jerarquía de las operaciones",
+              "orden": 5
+            },
+            {
+              "id": "MAT.OPE.COMB",
+              "nombre": "Operaciones combinadas con paréntesis y corchetes",
+              "orden": 6
             }
           ]
         },
@@ -266,6 +336,16 @@
               "id": "MAT.ROM.LECTURA",
               "nombre": "Lectura de números romanos",
               "orden": 1
+            },
+            {
+              "id": "MAT.ROM.LEER",
+              "nombre": "Leer números romanos",
+              "orden": 2
+            },
+            {
+              "id": "MAT.ROM.ESCR",
+              "nombre": "Escribir números romanos",
+              "orden": 3
             }
           ]
         },

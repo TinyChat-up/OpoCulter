@@ -1,66 +1,105 @@
 [
   {
-    "id": "MAT.OPE.EQUIV.G01",
-    "competencia": "MAT.OPE.EQUIV",
+    "id": "MAT.OPE.JER.G01",
+    "competencia": "MAT.OPE.JER",
     "peldano": 2,
-    "dificultad": 3,
-    "mecanica": "ordenar",
-    "tipo": "ordenarNumeros",
+    "dificultad": 2,
+    "mecanica": "numerico",
+    "tipo": "operacionesCombinadas",
     "enunciados": [
-      "Ordena {{orden}}.",
-      "Ordena estos números {{orden}}."
+      "{{pregunta}}"
     ],
-    "objetivo": "Comparar fracciones y decimales",
+    "objetivo": "Aplicar la jerarquía de las operaciones",
+    "parametros": {
+      "agrupaciones": false
+    },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
-    "id": "MAT.OPE.JERARQ.G01",
-    "competencia": "MAT.OPE.JERARQ",
-    "peldano": 2,
-    "dificultad": 2,
+    "id": "MAT.OPE.JER.G02",
+    "competencia": "MAT.OPE.JER",
+    "peldano": 3,
+    "dificultad": 3,
     "mecanica": "ordenar",
     "tipo": "operacionesCombinadas",
     "enunciados": [
-      "Ordena los pasos para calcular {{expresion}}."
+      "{{pregunta}}"
     ],
-    "objetivo": "Aplicar la jerarquía de operaciones",
+    "objetivo": "Ordenar los pasos según la jerarquía de las operaciones",
+    "parametros": {
+      "agrupaciones": false
+    },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
-    "id": "MAT.OPE.JERARQ.G02",
-    "competencia": "MAT.OPE.JERARQ",
+    "id": "MAT.OPE.COMB.G01",
+    "competencia": "MAT.OPE.COMB",
     "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "ordenar",
+    "tipo": "operacionesCombinadas",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Ordenar los pasos de operaciones con paréntesis y corchetes",
+    "parametros": {
+      "agrupaciones": true
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.COMB.G02",
+    "competencia": "MAT.OPE.COMB",
+    "peldano": 4,
     "dificultad": 4,
     "mecanica": "numerico",
     "tipo": "operacionesCombinadas",
     "enunciados": [
-      "Calcula: {{expresion}}",
-      "Resuelve la operación combinada {{expresion}}."
+      "{{pregunta}}"
     ],
-    "objetivo": "Resolver operaciones combinadas",
+    "objetivo": "Calcular operaciones combinadas con paréntesis y corchetes",
+    "parametros": {
+      "agrupaciones": true
+    },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
@@ -68,21 +107,68 @@
     "id": "MAT.OPE.ECUAC.G01",
     "competencia": "MAT.OPE.ECUAC",
     "peldano": 2,
-    "dificultad": 3,
+    "dificultad": 2,
     "mecanica": "numerico",
     "tipo": "ecuacionLineal",
     "enunciados": [
-      "Resuelve la ecuación: {{ecuacion}}",
-      "Halla x: {{ecuacion}}"
+      "{{pregunta}}"
     ],
     "objetivo": "Resolver ecuaciones de primer grado",
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.ECUAC.G02",
+    "competencia": "MAT.OPE.ECUAC",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "ecuacionLineal",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Resolver ecuaciones de primer grado",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.OPE.ECUAC.G03",
+    "competencia": "MAT.OPE.ECUAC",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "numerico",
+    "tipo": "ecuacionLineal",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Resolver ecuaciones de primer grado",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   }

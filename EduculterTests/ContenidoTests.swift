@@ -15,8 +15,8 @@ struct ContenidoEmpaquetadoTests {
         let banco = try cargador.cargar(politica: .todos)
         // 25 borradores de prueba + LEN.ORT (50 ítems y 5 tarjetas) + MAT.NUM (9 ítems y 2 tarjetas).
         #expect(banco.numeroEstaticos == 84)
-        // Fase 05C: 23 plantillas de prueba (borrador) con sus variantes materializadas.
-        #expect(banco.plantillas.count == 23)
+        // Fase 05C: 10 plantillas de prueba (borrador) que siguen + 38 aprobadas del lote 02.
+        #expect(banco.plantillas.count == 48)
         #expect(banco.items.count > 84)
         #expect(banco.teoria.count == 9)
         #expect(banco.simulacros.count == 1)
@@ -43,12 +43,15 @@ struct ContenidoEmpaquetadoTests {
         #expect(!todos.items.isEmpty, "El bundle debe tener borradores para que el test tenga sentido")
         let release = try cargador.cargar(politica: .soloAprobados)
         #expect(release.items.allSatisfy { $0.validacion.estado == .aprobado })
+        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 38)
         #expect(release.teoria.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.simulacros.allSatisfy { $0.validacion.estado == .aprobado })
         // Aprobado: LEN.ORT (50 ítems y 5 tarjetas) y MAT.NUM (9 ítems y 2 tarjetas); ningún borrador.
-        #expect(release.items.count == 59)
-        #expect(release.items.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 50)
-        #expect(release.items.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 9)
+        // Lote 02: además, variantes de las plantillas aprobadas.
+        #expect(release.itemsEstaticos.count == 59)
+        #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 50)
+        #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 9)
+        #expect(release.items.count > 59)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 5)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 2)
         #expect(release.teoria.count == 7)
@@ -94,8 +97,8 @@ struct ContenidoEmpaquetadoTests {
         #expect(banco.teoria(competencia: "MAT.OPE.FRACSUM").count == 1)
         #expect(banco.catalogo.bloque(deCompetencia: "MAT.GEO.TRIANG")?.id == "MAT.GEO")
         #expect(Catalogo.area(de: "MAT.GEO.TRIANG") == "MAT")
-        // 24 + MAT.OPE.ECUAC, MAT.EST.CENTRAL y MAT.PRO.LAPLACE (Fase 05C).
-        #expect(banco.catalogo.todasLasCompetencias.count == 27)
+        // 24 + MAT.OPE.ECUAC, MAT.EST.CENTRAL y MAT.PRO.LAPLACE (Fase 05C) + 16 del lote 02.
+        #expect(banco.catalogo.todasLasCompetencias.count == 43)
     }
 }
 

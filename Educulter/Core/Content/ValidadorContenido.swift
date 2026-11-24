@@ -33,6 +33,13 @@ struct ValidadorContenido: Sendable {
         self.anioActual = DiaCivil(reloj.ahora, calendario: calendario).anio
     }
 
+    /// Avisos que no invalidan el contenido: palabras del léxico cuya tilde no coincide con las
+    /// reglas generales. Van al informe con la palabra exacta y quedan fuera de los generadores
+    /// hasta que la dirección responda (lote 02, D).
+    func avisos(_ banco: BancoContenido) -> [ErrorValidacion] {
+        Acentuacion.informe(banco.recursos.lexico).map { ErrorValidacion(elemento: "léxico", mensaje: $0) }
+    }
+
     func validar(_ banco: BancoContenido) -> [ErrorValidacion] {
         var errores = validar(catalogo: banco.catalogo)
         let competencias = Set(banco.catalogo.todasLasCompetencias.map(\.id))
@@ -52,8 +59,6 @@ struct ValidadorContenido: Sendable {
             }
             errores += validar(plantilla: plantilla, competencias: competencias, recursos: banco.recursos)
         }
-        // Coherencia del léxico con las reglas generales de acentuación (no falla en silencio).
-        errores += Acentuacion.informe(banco.recursos.lexico).map { ErrorValidacion(elemento: "léxico", mensaje: $0) }
 
         vistos.removeAll()
         for tarjeta in banco.teoria {
