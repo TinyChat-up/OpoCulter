@@ -34,6 +34,7 @@ Los enunciados de `Educulter/Content/pendiente/tribunal/*.json` se copian de `do
 ## 2 bis. Comprobaciones pedidas por la dirección (24/11/2026)
 
 - **M10 de 2017 O y de 2019 O**: no son iguales. 2017: «(16 x 8 + 12) : 4 - 3 (38 - 5 x 4) =», con signo menos impreso como guion corto (U+002D en la capa de texto, y así se ve en la imagen); resultado −19. 2019 O: «[(16 x 8 + 12) : 4] + [3 (38 - 5 x 4)] =», con corchetes y una suma entre ellos; resultado 89. La transcripción era correcta.
+- **Rima del soneto de 2024 O (L1)**: comprobada en la capa de texto del PDF (pág. 3). Finales de verso: furioso, esquivo, vivo, animoso / reposo, altivo, fugitivo, receloso / desengaño, süave, daño / cabe, desengaño, sabe. El esquema es ABBA ABBA CDC DCD, con rima consonante («süave», «cabe» y «sabe» riman en /-ábe/: b y v se pronuncian igual). La solución no cambia.
 
 ## 3. Tablas transcritas en línea
 
