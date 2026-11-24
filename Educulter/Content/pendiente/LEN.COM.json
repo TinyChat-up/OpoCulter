@@ -465,7 +465,7 @@
       ]
     },
     "pistas": [],
-    "explicacion": "Así lo valora la rúbrica del tribunal: si se recoge solo parte del contenido o se copian frases, la puntuación baja.",
+    "explicacion": "Según la plantilla oficial de corrección de 2026, si el resumen recoge solo parte del contenido principal, la pregunta vale la mitad.",
     "erroresHabituales": [],
     "referencia": {
       "tipoPregunta": "LEN-COMPRENSION",
@@ -487,7 +487,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.COM.INFER.0001",
@@ -587,27 +587,24 @@
     "peldano": 3,
     "dificultad": 3,
     "objetivo": "Localizar información en el texto.",
-    "mecanica": "marcarTexto",
-    "enunciado": "Toca la oración que expresa la consecuencia de la desaparición de las abejas.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Qué oración del texto expresa la consecuencia de la desaparición de las abejas?",
     "payload": {
-      "unidad": "palabra",
-      "tokens": [
+      "opciones": [
         {
-          "id": "t1",
-          "texto": "Por eso, su desaparición pondría en peligro buena parte de los alimentos que consumimos."
+          "id": "o1",
+          "texto": "«En cada colmena hay una reina, que pone los huevos.»"
         },
         {
-          "id": "t2",
-          "texto": "Además de producir miel, las abejas cumplen una tarea esencial."
+          "id": "o2",
+          "texto": "«Además de producir miel, las abejas cumplen una tarea esencial.»"
         },
         {
-          "id": "t3",
-          "texto": "En cada colmena hay una reina, que pone los huevos."
+          "id": "o3",
+          "texto": "«Por eso, su desaparición pondría en peligro buena parte de los alimentos que consumimos.»"
         }
       ],
-      "correctos": [
-        "t1"
-      ]
+      "correcta": "o3"
     },
     "pistas": [],
     "explicacion": "El conector «Por eso» introduce la consecuencia.",
@@ -630,7 +627,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1,
+    "version": 2,
     "textoRef": "TXT.ORI.ABEJAS"
   },
   {
@@ -640,20 +637,24 @@
     "dificultad": 1,
     "objetivo": "Reconocer tipos de texto.",
     "mecanica": "emparejar",
-    "enunciado": "Une cada texto con su tipo.",
+    "enunciado": "Une cada fragmento con su tipo de texto.",
     "payload": {
       "izquierda": [
         {
           "id": "i1",
-          "texto": "Las abejas"
+          "texto": "«Las abejas son insectos sociales que viven en colmenas.»"
         },
         {
           "id": "i2",
-          "texto": "¿Deberes en vacaciones?"
+          "texto": "«Creo que en vacaciones no debería haber deberes.»"
         },
         {
           "id": "i3",
-          "texto": "El faro"
+          "texto": "«Lucía subió los escalones con la linterna en la mano.»"
+        },
+        {
+          "id": "i4",
+          "texto": "«La casa era pequeña, blanca y con ventanas azules.»"
         }
       ],
       "derecha": [
@@ -668,6 +669,10 @@
         {
           "id": "d3",
           "texto": "narrativo"
+        },
+        {
+          "id": "d4",
+          "texto": "descriptivo"
         }
       ],
       "pares": [
@@ -682,6 +687,10 @@
         [
           "i3",
           "d3"
+        ],
+        [
+          "i4",
+          "d4"
         ]
       ]
     },
@@ -708,7 +717,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.COM.TIPO.0002",
@@ -995,7 +1004,7 @@
     "dificultad": 2,
     "objetivo": "Identificar conectores.",
     "mecanica": "clasificar",
-    "enunciado": "Clasifica los conectores del texto argumentativo.",
+    "enunciado": "Clasifica los conectores que aparecen en el texto.",
     "payload": {
       "categorias": [
         {
@@ -1004,11 +1013,11 @@
         },
         {
           "id": "c2",
-          "nombre": "Conclusión"
+          "nombre": "Oposición"
         },
         {
           "id": "c3",
-          "nombre": "Oposición"
+          "nombre": "Conclusión"
         }
       ],
       "fichas": [
@@ -1024,22 +1033,12 @@
         },
         {
           "id": "f3",
-          "texto": "En definitiva",
+          "texto": "pero",
           "categoria": "c2"
         },
         {
           "id": "f4",
-          "texto": "Por tanto",
-          "categoria": "c2"
-        },
-        {
-          "id": "f5",
-          "texto": "pero",
-          "categoria": "c3"
-        },
-        {
-          "id": "f6",
-          "texto": "sin embargo",
+          "texto": "En definitiva",
           "categoria": "c3"
         }
       ]
@@ -1065,7 +1064,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1,
+    "version": 2,
     "textoRef": "TXT.ORI.DEBERES"
   },
   {

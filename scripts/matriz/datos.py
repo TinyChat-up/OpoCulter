@@ -7,9 +7,9 @@ def add(y,c,a,rows):
     for i,r in enumerate(rows,1): R.append((y,c,a,i)+r)
 # ---------------- 2017 ----------------
 add(2017,O,L,[
-("Resumir un relato romántico en prosa (leyenda)","LEN.COM","LEN.COM.RESUMEN†","Resumen y tema","eleccion"),
+("Resumir un relato romántico en prosa (leyenda)","LEN.COM","LEN.COM.RESU","Resumen y tema","eleccion"),
 ("Situar en el tiempo la historia narrada","LEN.LIT","LEN.LIT.CONTEXTO†","Contexto histórico","eleccion"),
-("Significado en contexto de 5 palabras","LEN.LEX","LEN.LEX.CONTEXTO†","Vocabulario en contexto","emparejar"),
+("Significado en contexto de 5 palabras","LEN.LEX","LEN.LEX.CTX","Vocabulario en contexto","emparejar"),
 ("Identificar el movimiento literario del texto","LEN.LIT","LEN.LIT.AUTOBRA","Movimiento/época","eleccion"),
 ("Rasgos del movimiento (Romanticismo)","LEN.LIT","LEN.LIT.MOVIM†","Rasgos de un movimiento","clasificar"),
 ("Análisis de 3 formas verbales","LEN.VER","LEN.VER.ANALISIS","Análisis de formas verbales","ruedas"),
@@ -31,7 +31,7 @@ add(2017,O,M,[
 ])
 # ---------------- 2019 ordinaria ----------------
 add(2019,O,L,[
-("Tema y comentario de un poema amoroso (autor no de dominio público)","LEN.COM","LEN.COM.RESUMEN†","Resumen y tema","eleccion"),
+("Tema y comentario de un poema amoroso (autor no de dominio público)","LEN.COM","LEN.COM.RESU","Resumen y tema","eleccion"),
 ("Generación del autor","LEN.LIT","LEN.LIT.AUTOBRA","Movimiento/época","eleccion"),
 ("Reconocer la figura en dos fragmentos (enumeración, anáfora)","LEN.REC","LEN.REC.FIGURAS","Identificar figura retórica","eleccion"),
 ("Definir metáfora","LEN.REC","LEN.REC.FIGURAS","Definir términos","emparejar"),
@@ -56,9 +56,9 @@ add(2019,O,M,[
 ])
 # ---------------- 2019 aplazada ----------------
 add(2019,A,L,[
-("Resumen y comentario de un fragmento narrativo (autora no de dominio público)","LEN.COM","LEN.COM.RESUMEN†","Resumen y tema","eleccion"),
-("Interpretar una frase con comparación","LEN.COM","LEN.COM.SENTIDO†","Sentido de una frase","eleccion"),
-("Significado en contexto de 5 palabras","LEN.LEX","LEN.LEX.CONTEXTO†","Vocabulario en contexto","emparejar"),
+("Resumen y comentario de un fragmento narrativo (autora no de dominio público)","LEN.COM","LEN.COM.RESU","Resumen y tema","eleccion"),
+("Interpretar una frase con comparación","LEN.COM","LEN.COM.INFER","Sentido de una frase","eleccion"),
+("Significado en contexto de 5 palabras","LEN.LEX","LEN.LEX.CTX","Vocabulario en contexto","emparejar"),
 ("Definir neologismo, arcaísmo, eufemismo, morfema y acrónimo","LEN.LEX","LEN.LEX.CONCEPTOS†","Definir términos","emparejar"),
 ("Clasificar derivadas por sufijación o prefijación","LEN.FOR","LEN.FOR.DERIV†","Formación de palabras","clasificar"),
 ("Análisis de 3 formas verbales","LEN.VER","LEN.VER.ANALISIS","Análisis de formas verbales","ruedas"),
@@ -81,12 +81,12 @@ add(2019,A,M,[
 ])
 # ---------------- 2022 ----------------
 add(2022,O,L,[
-("Resumir un fragmento teatral en verso","LEN.COM","LEN.COM.RESUMEN†","Resumen y tema","eleccion"),
-("Tipo de texto y 3 rasgos (teatro)","LEN.COM","LEN.COM.TIPOLOGIA†","Tipología textual","clasificar"),
-("Significado en contexto de 4 palabras","LEN.LEX","LEN.LEX.CONTEXTO†","Vocabulario en contexto","emparejar"),
+("Resumir un fragmento teatral en verso","LEN.COM","LEN.COM.RESU","Resumen y tema","eleccion"),
+("Tipo de texto y 3 rasgos (teatro)","LEN.COM","LEN.COM.TIPO","Tipología textual","clasificar"),
+("Significado en contexto de 4 palabras","LEN.LEX","LEN.LEX.CTX","Vocabulario en contexto","emparejar"),
 ("Análisis de 3 formas verbales","LEN.VER","LEN.VER.ANALISIS","Análisis de formas verbales","ruedas"),
-("Dos acepciones de una palabra polisémica","LEN.LEX","LEN.LEX.POLISEMIA†","Polisemia","eleccion"),
-("Explicar el sentido de dos versos","LEN.COM","LEN.COM.SENTIDO†","Sentido de una frase","eleccion"),
+("Dos acepciones de una palabra polisémica","LEN.LEX","LEN.LEX.POLI","Polisemia","eleccion"),
+("Explicar el sentido de dos versos","LEN.COM","LEN.COM.INFER","Sentido de una frase","eleccion"),
 ("Métrica de 4 versos (anulada por error en el enunciado)","LEN.MET","LEN.MET.MEDIDA†","Métrica","numerico"),
 ("Definir metáfora, homónimas, verso libre y comparación","LEN.REC","LEN.REC.FIGURAS","Definir términos","emparejar"),
 ("Elegir la forma correcta (dé/de, mí/mi, té/te, sé/se) y razonar","LEN.ORT","LEN.ORT.DIA","Tilde diacrítica","eleccion"),
@@ -106,10 +106,10 @@ add(2022,O,M,[
 ])
 # ---------------- 2024 ----------------
 add(2024,O,L,[
-("Tema y contenido de un soneto barroco","LEN.COM","LEN.COM.RESUMEN†","Resumen y tema","eleccion"),
+("Tema y contenido de un soneto barroco","LEN.COM","LEN.COM.RESU","Resumen y tema","eleccion"),
 ("Autor del poema y su contexto","LEN.LIT","LEN.LIT.AUTOBRA","Autor y contexto","eleccion"),
 ("Dos corrientes del Barroco y sus autores","LEN.LIT","LEN.LIT.MOVIM†","Rasgos de un movimiento","emparejar"),
-("Definir 6 palabras (incluye paradoja)","LEN.LEX","LEN.LEX.CONTEXTO†","Vocabulario en contexto","emparejar"),
+("Definir 6 palabras (incluye paradoja)","LEN.LEX","LEN.LEX.CTX","Vocabulario en contexto","emparejar"),
 ("Análisis de 6 formas verbales (simples y compuestas)","LEN.VER","LEN.VER.ANALISIS","Análisis de formas verbales","ruedas"),
 ("Sinónimo y antónimo de 11 palabras","LEN.LEX","LEN.LEX.SINON","Sinónimos y antónimos","eleccion"),
 ("Poner las tildes que faltan en un texto","LEN.ORT","LEN.ORT.AGU","Colocar tildes en un texto","colocarTilde"),
@@ -131,8 +131,8 @@ add(2024,O,M,[
 ])
 # ---------------- 2026 ordinaria ----------------
 add(2026,O,L,[
-("Tema y contenido de un fragmento narrativo clásico","LEN.COM","LEN.COM.RESUMEN†","Resumen y tema","eleccion"),
-("Tipo de texto y 3 rasgos","LEN.COM","LEN.COM.TIPOLOGIA†","Tipología textual","clasificar"),
+("Tema y contenido de un fragmento narrativo clásico","LEN.COM","LEN.COM.RESU","Resumen y tema","eleccion"),
+("Tipo de texto y 3 rasgos","LEN.COM","LEN.COM.TIPO","Tipología textual","clasificar"),
 ("Época, obra y autor del fragmento","LEN.LIT","LEN.LIT.AUTOBRA","Autor y contexto","eleccion"),
 ("Prefijo y significado de 5 derivadas","LEN.FOR","LEN.FOR.DERIV†","Formación de palabras","emparejar"),
 ("Qué es un diccionario y para qué sirve","LEN.LEX","LEN.LEX.CONCEPTOS†","Definir términos","eleccion"),
@@ -156,9 +156,9 @@ add(2026,O,M,[
 ])
 # ---------------- 2026 aplazada ----------------
 add(2026,A,L,[
-("Tema y contenido de un poema (Generación del 27)","LEN.COM","LEN.COM.RESUMEN†","Resumen y tema","eleccion"),
+("Tema y contenido de un poema (Generación del 27)","LEN.COM","LEN.COM.RESU","Resumen y tema","eleccion"),
 ("Autor, Generación del 27 y dos rasgos","LEN.LIT","LEN.LIT.AUTOBRA","Autor y contexto","eleccion"),
-("Justificar la sensación de fatalidad con elementos del texto","LEN.COM","LEN.COM.SENTIDO†","Sentido de una frase","marcarTexto"),
+("Justificar la sensación de fatalidad con elementos del texto","LEN.COM","LEN.COM.INFER","Sentido de una frase","marcarTexto"),
 ("Clase de palabra y justificación de 7 palabras","LEN.CLA","LEN.CLA.SUSTADJ","Clases de palabras","clasificar"),
 ("Familia léxica, campo semántico, sinónimo/antónimo, propio/común","LEN.LEX","LEN.LEX.SINON","Léxico (familia, campo, sinónimos)","clasificar"),
 ("Anáfora, personificación, epíteto y medida de dos versos","LEN.REC","LEN.REC.FIGURAS","Identificar figura retórica","marcarTexto"),

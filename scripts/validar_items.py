@@ -18,7 +18,7 @@ Qué comprueba:
       · payload coherente con la mecánica (§2.4);
       · procedencia (§2.7) y validación (aprobado con revisor y fecha);
       · textoRef (solo pendiente/): apunta a un texto de pendiente/textos.json.
-  - teoria/*.json: id <competencia>.TNN único, competencia existente, bloques texto/regla
+  - teoria/*.json y pendiente/teoria_*.json: id <competencia>.TNN único, competencia existente, bloques texto/regla
     con 40 palabras o menos, procedencia y validación.
   - pendiente/textos.json: ids únicos, campos obligatorios, procedencia y validación.
   - simulacros/*.json: id SIM.NN y procedencia del texto base.
@@ -541,7 +541,8 @@ def main(argv):
     ids_items, usados = set(), set()
     estados = {}
     archivos_items = [(p, None) for p in sorted((raiz / "items").glob("*.json"))]
-    archivos_items += [(p, textos) for p in sorted((raiz / "pendiente").glob("*.json")) if p.name != "textos.json"]
+    archivos_items += [(p, textos) for p in sorted((raiz / "pendiente").glob("*.json"))
+                       if p.name != "textos.json" and not p.name.startswith("teoria_")]
     for ruta, refs in archivos_items:
         nombre = f"{ruta.parent.name}/{ruta.name}"
         lista = cargar(ruta, errores) or []
@@ -560,14 +561,16 @@ def main(argv):
         resumen.append(f"aviso: el texto {tid} no lo usa ningún ítem")
 
     ids_tarjetas = set()
-    for ruta in sorted((raiz / "teoria").glob("*.json")):
+    archivos_teoria = sorted((raiz / "teoria").glob("*.json")) + sorted((raiz / "pendiente").glob("teoria_*.json"))
+    for ruta in archivos_teoria:
+        nombre = f"{ruta.parent.name}/{ruta.name}"
         lista = cargar(ruta, errores) or []
         for t in lista:
             if t.get("id") in ids_tarjetas:
-                errores.append(f"teoria/{ruta.name} · {t.get('id')}: id de tarjeta duplicado")
+                errores.append(f"{nombre} · {t.get('id')}: id de tarjeta duplicado")
             ids_tarjetas.add(t.get("id"))
-            errores += [f"teoria/{ruta.name} · {t.get('id')}: {e}" for e in validar_tarjeta(t, competencias, anio)]
-        resumen.append(f"teoria/{ruta.name}: {len(lista)} tarjetas")
+            errores += [f"{nombre} · {t.get('id')}: {e}" for e in validar_tarjeta(t, competencias, anio)]
+        resumen.append(f"{nombre}: {len(lista)} tarjetas")
 
     for ruta in sorted((raiz / "simulacros").glob("*.json")):
         s = cargar(ruta, errores) or {}

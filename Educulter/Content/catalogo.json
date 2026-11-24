@@ -107,7 +107,7 @@
         },
         {
           "id": "LEN.COM",
-          "nombre": "Comprensión (tema y resumen)",
+          "nombre": "Comunicación y comprensión",
           "prioridad": 3,
           "orden": 6,
           "competencias": [
@@ -177,7 +177,7 @@
             {
               "id": "LEN.LEX.SINON",
               "nombre": "Sinónimos",
-              "orden": 1
+              "orden": 99
             },
             {
               "id": "LEN.LEX.SIN",

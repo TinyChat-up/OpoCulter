@@ -22,9 +22,9 @@ No se han encontrado publicados en la web oficial los cuadernillos de 2014, 2015
 
 | Año | Conv. | Área | Nº | Resumen | Bloque | Competencia | Tipo de tarea | Mecánica sugerida |
 |---|---|---|---|---|---|---|---|---|
-| 2017 | Ordinaria | Lengua | 1 | Resumir un relato romántico en prosa (leyenda) | LEN.COM | LEN.COM.RESUMEN† | Resumen y tema | eleccion |
+| 2017 | Ordinaria | Lengua | 1 | Resumir un relato romántico en prosa (leyenda) | LEN.COM | LEN.COM.RESU | Resumen y tema | eleccion |
 | 2017 | Ordinaria | Lengua | 2 | Situar en el tiempo la historia narrada | LEN.LIT | LEN.LIT.CONTEXTO† | Contexto histórico | eleccion |
-| 2017 | Ordinaria | Lengua | 3 | Significado en contexto de 5 palabras | LEN.LEX | LEN.LEX.CONTEXTO† | Vocabulario en contexto | emparejar |
+| 2017 | Ordinaria | Lengua | 3 | Significado en contexto de 5 palabras | LEN.LEX | LEN.LEX.CTX | Vocabulario en contexto | emparejar |
 | 2017 | Ordinaria | Lengua | 4 | Identificar el movimiento literario del texto | LEN.LIT | LEN.LIT.AUTOBRA | Movimiento/época | eleccion |
 | 2017 | Ordinaria | Lengua | 5 | Rasgos del movimiento (Romanticismo) | LEN.LIT | LEN.LIT.MOVIM† | Rasgos de un movimiento | clasificar |
 | 2017 | Ordinaria | Lengua | 6 | Análisis de 3 formas verbales | LEN.VER | LEN.VER.ANALISIS | Análisis de formas verbales | ruedas |
@@ -41,7 +41,7 @@ No se han encontrado publicados en la web oficial los cuadernillos de 2014, 2015
 | 2017 | Ordinaria | Matemáticas | 8 | Coincidencia periódica (m.c.m.) | MAT.DIV | MAT.DIV.MCM† | m.c.m. en contexto | numerico |
 | 2017 | Ordinaria | Matemáticas | 9 | Completar 6 equivalencias del SI (capacidad, longitud, masa, superficie, volumen) | MAT.UNI | MAT.UNI.CONV† | Conversión de unidades | numerico |
 | 2017 | Ordinaria | Matemáticas | 10 | Operación combinada con paréntesis | MAT.OPE | MAT.OPE.JERARQ | Operación combinada | numerico |
-| 2019 | Ordinaria | Lengua | 1 | Tema y comentario de un poema amoroso (autor no de dominio público) | LEN.COM | LEN.COM.RESUMEN† | Resumen y tema | eleccion |
+| 2019 | Ordinaria | Lengua | 1 | Tema y comentario de un poema amoroso (autor no de dominio público) | LEN.COM | LEN.COM.RESU | Resumen y tema | eleccion |
 | 2019 | Ordinaria | Lengua | 2 | Generación del autor | LEN.LIT | LEN.LIT.AUTOBRA | Movimiento/época | eleccion |
 | 2019 | Ordinaria | Lengua | 3 | Reconocer la figura en dos fragmentos (enumeración, anáfora) | LEN.REC | LEN.REC.FIGURAS | Identificar figura retórica | eleccion |
 | 2019 | Ordinaria | Lengua | 4 | Definir metáfora | LEN.REC | LEN.REC.FIGURAS | Definir términos | emparejar |
@@ -61,9 +61,9 @@ No se han encontrado publicados en la web oficial los cuadernillos de 2014, 2015
 | 2019 | Ordinaria | Matemáticas | 8 | Superficie total: dos rectángulos y un círculo con unidades mixtas | MAT.GEO | MAT.GEO.AREAS† | Áreas compuestas | numerico |
 | 2019 | Ordinaria | Matemáticas | 9 | Escribir 3 números en romanos | MAT.ROM | MAT.ROM.ESCRITURA† | Arábigo → romano | construir |
 | 2019 | Ordinaria | Matemáticas | 10 | Operación combinada con corchetes | MAT.OPE | MAT.OPE.JERARQ | Operación combinada | numerico |
-| 2019 | Aplazada | Lengua | 1 | Resumen y comentario de un fragmento narrativo (autora no de dominio público) | LEN.COM | LEN.COM.RESUMEN† | Resumen y tema | eleccion |
-| 2019 | Aplazada | Lengua | 2 | Interpretar una frase con comparación | LEN.COM | LEN.COM.SENTIDO† | Sentido de una frase | eleccion |
-| 2019 | Aplazada | Lengua | 3 | Significado en contexto de 5 palabras | LEN.LEX | LEN.LEX.CONTEXTO† | Vocabulario en contexto | emparejar |
+| 2019 | Aplazada | Lengua | 1 | Resumen y comentario de un fragmento narrativo (autora no de dominio público) | LEN.COM | LEN.COM.RESU | Resumen y tema | eleccion |
+| 2019 | Aplazada | Lengua | 2 | Interpretar una frase con comparación | LEN.COM | LEN.COM.INFER | Sentido de una frase | eleccion |
+| 2019 | Aplazada | Lengua | 3 | Significado en contexto de 5 palabras | LEN.LEX | LEN.LEX.CTX | Vocabulario en contexto | emparejar |
 | 2019 | Aplazada | Lengua | 4 | Definir neologismo, arcaísmo, eufemismo, morfema y acrónimo | LEN.LEX | LEN.LEX.CONCEPTOS† | Definir términos | emparejar |
 | 2019 | Aplazada | Lengua | 5 | Clasificar derivadas por sufijación o prefijación | LEN.FOR | LEN.FOR.DERIV† | Formación de palabras | clasificar |
 | 2019 | Aplazada | Lengua | 6 | Análisis de 3 formas verbales | LEN.VER | LEN.VER.ANALISIS | Análisis de formas verbales | ruedas |
@@ -81,12 +81,12 @@ No se han encontrado publicados en la web oficial los cuadernillos de 2014, 2015
 | 2019 | Aplazada | Matemáticas | 8 | Media, mediana y rango de 5 datos | MAT.EST | MAT.EST.CENTRAL† | Medidas de centralización | numerico |
 | 2019 | Aplazada | Matemáticas | 9 | Pasar 3 romanos a arábigos | MAT.ROM | MAT.ROM.LECTURA | Romano → arábigo | numerico |
 | 2019 | Aplazada | Matemáticas | 10 | Operación combinada con corchetes | MAT.OPE | MAT.OPE.JERARQ | Operación combinada | numerico |
-| 2022 | Ordinaria | Lengua | 1 | Resumir un fragmento teatral en verso | LEN.COM | LEN.COM.RESUMEN† | Resumen y tema | eleccion |
-| 2022 | Ordinaria | Lengua | 2 | Tipo de texto y 3 rasgos (teatro) | LEN.COM | LEN.COM.TIPOLOGIA† | Tipología textual | clasificar |
-| 2022 | Ordinaria | Lengua | 3 | Significado en contexto de 4 palabras | LEN.LEX | LEN.LEX.CONTEXTO† | Vocabulario en contexto | emparejar |
+| 2022 | Ordinaria | Lengua | 1 | Resumir un fragmento teatral en verso | LEN.COM | LEN.COM.RESU | Resumen y tema | eleccion |
+| 2022 | Ordinaria | Lengua | 2 | Tipo de texto y 3 rasgos (teatro) | LEN.COM | LEN.COM.TIPO | Tipología textual | clasificar |
+| 2022 | Ordinaria | Lengua | 3 | Significado en contexto de 4 palabras | LEN.LEX | LEN.LEX.CTX | Vocabulario en contexto | emparejar |
 | 2022 | Ordinaria | Lengua | 4 | Análisis de 3 formas verbales | LEN.VER | LEN.VER.ANALISIS | Análisis de formas verbales | ruedas |
-| 2022 | Ordinaria | Lengua | 5 | Dos acepciones de una palabra polisémica | LEN.LEX | LEN.LEX.POLISEMIA† | Polisemia | eleccion |
-| 2022 | Ordinaria | Lengua | 6 | Explicar el sentido de dos versos | LEN.COM | LEN.COM.SENTIDO† | Sentido de una frase | eleccion |
+| 2022 | Ordinaria | Lengua | 5 | Dos acepciones de una palabra polisémica | LEN.LEX | LEN.LEX.POLI | Polisemia | eleccion |
+| 2022 | Ordinaria | Lengua | 6 | Explicar el sentido de dos versos | LEN.COM | LEN.COM.INFER | Sentido de una frase | eleccion |
 | 2022 | Ordinaria | Lengua | 7 | Métrica de 4 versos (anulada por error en el enunciado) | LEN.MET | LEN.MET.MEDIDA† | Métrica | numerico |
 | 2022 | Ordinaria | Lengua | 8 | Definir metáfora, homónimas, verso libre y comparación | LEN.REC | LEN.REC.FIGURAS | Definir términos | emparejar |
 | 2022 | Ordinaria | Lengua | 9 | Elegir la forma correcta (dé/de, mí/mi, té/te, sé/se) y razonar | LEN.ORT | LEN.ORT.DIA | Tilde diacrítica | eleccion |
@@ -101,10 +101,10 @@ No se han encontrado publicados en la web oficial los cuadernillos de 2014, 2015
 | 2022 | Ordinaria | Matemáticas | 8 | Completar igualdades con potencias de 10 | MAT.NUM | MAT.NUM.POT10† | Potencias de 10 | numerico |
 | 2022 | Ordinaria | Matemáticas | 9 | Precio por viaje con abono y ahorro | MAT.POR | MAT.POR.PROPORC† | Precio unitario | numerico |
 | 2022 | Ordinaria | Matemáticas | 10 | Volumen de una figura de bloques (figura) | MAT.GEO | MAT.GEO.VOLUMEN† | Volumen de cuerpos | numerico |
-| 2024 | Ordinaria | Lengua | 1 | Tema y contenido de un soneto barroco | LEN.COM | LEN.COM.RESUMEN† | Resumen y tema | eleccion |
+| 2024 | Ordinaria | Lengua | 1 | Tema y contenido de un soneto barroco | LEN.COM | LEN.COM.RESU | Resumen y tema | eleccion |
 | 2024 | Ordinaria | Lengua | 2 | Autor del poema y su contexto | LEN.LIT | LEN.LIT.AUTOBRA | Autor y contexto | eleccion |
 | 2024 | Ordinaria | Lengua | 3 | Dos corrientes del Barroco y sus autores | LEN.LIT | LEN.LIT.MOVIM† | Rasgos de un movimiento | emparejar |
-| 2024 | Ordinaria | Lengua | 4 | Definir 6 palabras (incluye paradoja) | LEN.LEX | LEN.LEX.CONTEXTO† | Vocabulario en contexto | emparejar |
+| 2024 | Ordinaria | Lengua | 4 | Definir 6 palabras (incluye paradoja) | LEN.LEX | LEN.LEX.CTX | Vocabulario en contexto | emparejar |
 | 2024 | Ordinaria | Lengua | 5 | Análisis de 6 formas verbales (simples y compuestas) | LEN.VER | LEN.VER.ANALISIS | Análisis de formas verbales | ruedas |
 | 2024 | Ordinaria | Lengua | 6 | Sinónimo y antónimo de 11 palabras | LEN.LEX | LEN.LEX.SINON | Sinónimos y antónimos | eleccion |
 | 2024 | Ordinaria | Lengua | 7 | Poner las tildes que faltan en un texto | LEN.ORT | LEN.ORT.AGU | Colocar tildes en un texto | colocarTilde |
@@ -121,8 +121,8 @@ No se han encontrado publicados en la web oficial los cuadernillos de 2014, 2015
 | 2024 | Ordinaria | Matemáticas | 8 | Situar 4 puntos y su cuadrante | MAT.GEO | MAT.GEO.COORD† | Coordenadas cartesianas | eleccion |
 | 2024 | Ordinaria | Matemáticas | 9 | Definir experiencia aleatoria y tipos de suceso | MAT.PRO | MAT.PRO.CONCEPTOS† | Conceptos de probabilidad | emparejar |
 | 2024 | Ordinaria | Matemáticas | 10 | Medidas de centralización de 30 datos | MAT.EST | MAT.EST.CENTRAL† | Medidas de centralización | numerico |
-| 2026 | Ordinaria | Lengua | 1 | Tema y contenido de un fragmento narrativo clásico | LEN.COM | LEN.COM.RESUMEN† | Resumen y tema | eleccion |
-| 2026 | Ordinaria | Lengua | 2 | Tipo de texto y 3 rasgos | LEN.COM | LEN.COM.TIPOLOGIA† | Tipología textual | clasificar |
+| 2026 | Ordinaria | Lengua | 1 | Tema y contenido de un fragmento narrativo clásico | LEN.COM | LEN.COM.RESU | Resumen y tema | eleccion |
+| 2026 | Ordinaria | Lengua | 2 | Tipo de texto y 3 rasgos | LEN.COM | LEN.COM.TIPO | Tipología textual | clasificar |
 | 2026 | Ordinaria | Lengua | 3 | Época, obra y autor del fragmento | LEN.LIT | LEN.LIT.AUTOBRA | Autor y contexto | eleccion |
 | 2026 | Ordinaria | Lengua | 4 | Prefijo y significado de 5 derivadas | LEN.FOR | LEN.FOR.DERIV† | Formación de palabras | emparejar |
 | 2026 | Ordinaria | Lengua | 5 | Qué es un diccionario y para qué sirve | LEN.LEX | LEN.LEX.CONCEPTOS† | Definir términos | eleccion |
@@ -141,9 +141,9 @@ No se han encontrado publicados en la web oficial los cuadernillos de 2014, 2015
 | 2026 | Ordinaria | Matemáticas | 8 | Tabla de divisibilidad SÍ/NO | MAT.DIV | MAT.DIV.CRITERIOS† | Criterios de divisibilidad | clasificar |
 | 2026 | Ordinaria | Matemáticas | 9 | Completar una tabla de frecuencias | MAT.EST | MAT.EST.FRECUENCIAS† | Tabla de frecuencias | numerico |
 | 2026 | Ordinaria | Matemáticas | 10 | Medidas reales a partir de escalas | MAT.POR | MAT.POR.ESCALAS† | Escalas | numerico |
-| 2026 | Aplazada | Lengua | 1 | Tema y contenido de un poema (Generación del 27) | LEN.COM | LEN.COM.RESUMEN† | Resumen y tema | eleccion |
+| 2026 | Aplazada | Lengua | 1 | Tema y contenido de un poema (Generación del 27) | LEN.COM | LEN.COM.RESU | Resumen y tema | eleccion |
 | 2026 | Aplazada | Lengua | 2 | Autor, Generación del 27 y dos rasgos | LEN.LIT | LEN.LIT.AUTOBRA | Autor y contexto | eleccion |
-| 2026 | Aplazada | Lengua | 3 | Justificar la sensación de fatalidad con elementos del texto | LEN.COM | LEN.COM.SENTIDO† | Sentido de una frase | marcarTexto |
+| 2026 | Aplazada | Lengua | 3 | Justificar la sensación de fatalidad con elementos del texto | LEN.COM | LEN.COM.INFER | Sentido de una frase | marcarTexto |
 | 2026 | Aplazada | Lengua | 4 | Clase de palabra y justificación de 7 palabras | LEN.CLA | LEN.CLA.SUSTADJ | Clases de palabras | clasificar |
 | 2026 | Aplazada | Lengua | 5 | Familia léxica, campo semántico, sinónimo/antónimo, propio/común | LEN.LEX | LEN.LEX.SINON | Léxico (familia, campo, sinónimos) | clasificar |
 | 2026 | Aplazada | Lengua | 6 | Anáfora, personificación, epíteto y medida de dos versos | LEN.REC | LEN.REC.FIGURAS | Identificar figura retórica | marcarTexto |
@@ -276,14 +276,9 @@ Tipos de tarea que aparecen en 3 o más cuadernillos (candidatos prioritarios a 
 
 | Competencia | Bloque | Preguntas | Ejemplo de tarea |
 |---|---|---|---|
-| LEN.COM.RESUMEN | LEN.COM | 7 | Resumir un relato romántico en prosa (leyenda) |
-| LEN.COM.SENTIDO | LEN.COM | 3 | Interpretar una frase con comparación |
-| LEN.COM.TIPOLOGIA | LEN.COM | 2 | Tipo de texto y 3 rasgos (teatro) |
 | LEN.FOR.DERIV | LEN.FOR | 4 | Clasificar derivadas por sufijación o prefijación |
 | LEN.LEX.CONCEPTOS | LEN.LEX | 2 | Definir neologismo, arcaísmo, eufemismo, morfema y acrónimo |
-| LEN.LEX.CONTEXTO | LEN.LEX | 4 | Significado en contexto de 5 palabras |
 | LEN.LEX.DEFIN | LEN.LEX | 1 | Escribir la palabra a partir de su definición e iniciales |
-| LEN.LEX.POLISEMIA | LEN.LEX | 1 | Dos acepciones de una palabra polisémica |
 | LEN.LIT.CONTEXTO | LEN.LIT | 1 | Situar en el tiempo la historia narrada |
 | LEN.LIT.MOVIM | LEN.LIT | 2 | Rasgos del movimiento (Romanticismo) |
 | LEN.MET.MEDIDA | LEN.MET | 1 | Métrica de 4 versos (anulada por error en el enunciado) |
