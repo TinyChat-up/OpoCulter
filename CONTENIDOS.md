@@ -236,7 +236,7 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 | Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
 | Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
 | Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
-| Lote 02 | MAT (5 bloques) y LEN.ORT.AGU | 38 plantillas | — | Aprobado por la dirección 24/11/2026; las 38 superan los tests de propiedades (25/11/2026) | `plantillas/MAT.*.json`, `plantillas/LEN.ORT.json`, `lexico/palabras.json`, `lexico/formas_verbales.json`, `catalogo.json` |
+| Lote 02 | MAT (5 bloques) y LEN.ORT.AGU | 38 plantillas | — | Aprobado por la dirección 24/11/2026; las 38 superan los tests de propiedades (24/11/2026) | `plantillas/MAT.*.json`, `plantillas/LEN.ORT.json`, `lexico/palabras.json`, `lexico/formas_verbales.json`, `catalogo.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 
@@ -265,7 +265,7 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 ### Fase 05C · Plantillas de prueba (borrador)
 23 plantillas en borrador (`Content/plantillas/*.json`) que cubren los 16 tipos y todas sus mecánicas, más un léxico de 15 palabras, piezas de gramática, 14 verbos regulares y 6 irregulares, y 19 frases de 10 familias. Todo es original y **no se carga en Release**: sirve para probar el motor hasta que llegue el contenido real del lote 02. Se añaden las competencias `MAT.OPE.ECUAC`, `MAT.EST.CENTRAL` y `MAT.PRO.LAPLACE` (catálogo v2, D-068).
 
-### Lote 02 · Matemáticas y acentuación (24/11/2026, verificado el 25/11/2026)
+### Lote 02 · Matemáticas y acentuación (24/11/2026, verificado en el Mac el mismo día)
 38 plantillas aprobadas por la dirección (`validacion.estado = aprobado`, revisor `direccion`, 24/11/2026) y 16 competencias nuevas en el catálogo (v2). **Una plantilla solo queda aprobada si supera los tests de propiedades** (TESTING §12): las 38 los superan, ninguna vuelve a borrador.
 
 | Competencia | Plantillas (tipo · mecánica · dificultad) |

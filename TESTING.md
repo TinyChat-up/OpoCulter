@@ -56,7 +56,7 @@ Objetivo: cobertura de `Core/` ≥ 90 % (desde la 05A). Última medición (Fase 
 | `PilotoUITests.testRondaDeLenguaConColocarTilde` | Contenido de Release, semilla 10: ronda de LEN.ORT.AGU con `colocarTilde` respondida **tocando la vocal o «Sin tilde»** |
 | `RendimientoUITests` | Arranque en frío (`XCTApplicationLaunchMetric`) y manipulación de `fraccionBarras` (colorear, dividir) y `colocarTilde` (`XCTHitchMetric`, `XCTCPUMetric`, `XCTClockMetric`) |
 
-Opciones de arranque (solo Debug): `-enMemoria -semilla N -ayudasDePrueba -avatar N [-rondaDemostracion] [-politicaRelease] [-almacenPruebas NOMBRE -borrarAlmacen] [-captura ESCENA]` (D-044, D-058).
+Opciones de arranque (solo Debug): `-enMemoria -semilla N -ayudasDePrueba -avatar N [-rondaDemostracion] [-rondaItems ID1,ID2…] [-politicaRelease] [-almacenPruebas NOMBRE -borrarAlmacen] [-captura ESCENA]` (D-044, D-058, D-077). `-rondaItems` hace que «Empezar ronda» lance esos ítems en orden (también ids generados `<plantilla>#<semilla>`).
 
 `RondaViewModelTests` usa ayudas que solo existen en Debug y va dentro de `#if DEBUG`; así el paquete de tests también compila en Release (para medir el arranque con la app optimizada).
 

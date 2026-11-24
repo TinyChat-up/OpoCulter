@@ -12,6 +12,8 @@ struct OpcionesArranque: Equatable {
     var ayudasDePrueba = false
     /// "Empezar ronda" lanza una ronda con un ítem de cada mecánica.
     var rondaDemostracion = false
+    /// "Empezar ronda" lanza una ronda con estos ítems, en orden (`-rondaItems id1,id2…`).
+    var rondaItems: [String]?
     /// Escena que se abre directamente para generar capturas.
     var captura: String?
     /// Avatar preseleccionado (se salta la bienvenida en tests y capturas).
@@ -35,6 +37,9 @@ struct OpcionesArranque: Equatable {
         o.enMemoria = argumentos.contains("-enMemoria")
         o.ayudasDePrueba = argumentos.contains("-ayudasDePrueba")
         o.rondaDemostracion = argumentos.contains("-rondaDemostracion")
+        if let i = argumentos.firstIndex(of: "-rondaItems"), i + 1 < argumentos.count {
+            o.rondaItems = argumentos[i + 1].split(separator: ",").map { $0.trimmingCharacters(in: .whitespaces) }.filter { !$0.isEmpty }
+        }
         if let i = argumentos.firstIndex(of: "-semilla"), i + 1 < argumentos.count { o.semilla = UInt64(argumentos[i + 1]) }
         if let i = argumentos.firstIndex(of: "-captura"), i + 1 < argumentos.count { o.captura = argumentos[i + 1] }
         if let i = argumentos.firstIndex(of: "-avatar"), i + 1 < argumentos.count { o.avatar = Int(argumentos[i + 1]) }
@@ -150,7 +155,12 @@ final class EntornoApp {
 
     /// Ronda que lanza el botón principal de Hoy.
     var tipoRondaPrincipal: TipoRonda {
-        guard opciones.rondaDemostracion, let banco else { return .recomendada }
+        guard let banco else { return .recomendada }
+        if let ids = opciones.rondaItems {
+            let existentes = ids.filter { banco.item(id: $0) != nil }
+            if !existentes.isEmpty { return .items(existentes) }
+        }
+        guard opciones.rondaDemostracion else { return .recomendada }
         return .items(Self.itemsDemostracion(banco))
     }
 

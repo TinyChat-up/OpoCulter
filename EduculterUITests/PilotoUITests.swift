@@ -135,10 +135,13 @@ final class PilotoUITests: CasoUI {
 
     @MainActor
     func testRondaDeLenguaConColocarTilde() throws {
-        let app = lanzar(["-politicaRelease"], base: ["-enMemoria", "-semilla", "10", "-ayudasDePrueba", "-avatar", "0"])
+        // Desde el lote 02 el peldaño 1 de LEN.ORT.AGU se practica con silabaTonica y las palabras de
+        // colocarTilde generadas salen del léxico de 818: se juegan 4 ítems aprobados concretos.
+        let ids = "LEN.ORT.AGU.0010,LEN.ORT.AGU.0012,LEN.ORT.AGU.0016,LEN.ORT.AGU.0020"
+        let app = lanzar(["-politicaRelease", "-rondaItems", ids], base: ["-enMemoria", "-semilla", "10", "-ayudasDePrueba", "-avatar", "0"])
         XCTAssertTrue(app.staticTexts["Agudas, llanas y esdrújulas"].waitForExistence(timeout: 5))
         let respondidas = try jugarConToquesReales(app, mecanica: "colocarTilde")
-        XCTAssertGreaterThanOrEqual(respondidas, 1, "La ronda de Lengua debe incluir colocarTilde")
+        XCTAssertEqual(respondidas, 4, "Los 4 ítems de colocarTilde se responden tocando la vocal o «Sin tilde»")
     }
 
     /// Juega la ronda: la mecánica indicada con toques reales (y auditoría antes y después de

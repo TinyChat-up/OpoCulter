@@ -380,7 +380,7 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 - **Tests**: el propietario pide no seguir ejecutándolos. La 05D se guarda con un commit en su rama, pero **no se fusiona en `main`** hasta tener una suite completa en verde y el archive Release, como exige CLAUDE.md. Se puede hacer junto con el cierre de la siguiente fase.
 - **Suites largas**: se ejecutan con `caffeinate` y con el Mac enchufado.
 
-### D-077 · 2026-11-25 · Lote 02 · Vigente
+### D-077 · 2026-11-24 · Lote 02 · Vigente
 **Lote 02: generadores de Matemáticas y de acentuación, y criterio de aprobación.**
 - **Alcance**: 11 generadores de Matemáticas (5 nuevos y 6 reescritos con las tablas de dificultad 1–6 de la dirección) y 3 de acentuación (`colocarTilde`, `clasificarAcentuacion`, `silabaTonica`) sobre el léxico de 818 palabras con niveles 1–6. 38 plantillas y 16 competencias nuevas (catálogo v2).
 - **Redacciones**: las literales de la dirección viven en el generador (`{{pregunta}}`) para que cada contexto solo se use con datos que tengan sentido; las propias se marcan «A.2» en el código.
@@ -391,3 +391,7 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
   - `enumerar` aplica exactamente los mismos filtros que `muestra` en `conversionUnidades` (resultado entero hasta la dificultad 3) y `reglaDeTres` (factor no entero en 3–4): el recuento del catálogo solo cuenta casos que se pueden generar.
   - **Silabeador**: la *h* intercalada delante de la vocal cerrada tónica no impide el hiato («prohíbe», «ahínco», «rehúso»). Eran las 3 discrepancias del informe del léxico; el dato era correcto. El test del léxico exige ahora 0 discrepancias.
 - **Tests adaptados al contenido real**: con el lote 02 en Release, la competencia de Matemáticas en curso es `MAT.UNI.LMC` (primera por prioridad de bloque y orden del catálogo), no `MAT.NUM.FRAREP`. `PilotoTests` comprueba la propuesta real y `fraccionBarras` se prueba al practicar «Representar fracciones»; el test de interfaz llega a ella por Camino → nodo → Practicar.
+- **Verificación conjunta con la 05D** (tests de interfaz):
+  - El peldaño 1 de LEN.ORT.AGU se practica ahora con `silabaTonica` (G04) y las palabras de `colocarTilde` generadas salen del léxico de 818, que el test no conoce. `testRondaDeLenguaConColocarTilde` juega 4 ítems aprobados concretos con la opción nueva `-rondaItems` (solo Debug) y los responde todos con toques reales.
+  - En `testRescatePorCompetencia`, con casi toda la ronda en LEN.ORT.AGU peldaño 1, cada acierto posterior rescataba los fallos anteriores de la misma competencia y peldaño (comportamiento de la Fase 04). El test falla ahora todos los ítems y comprueba ese número.
+  - `RecorridoUITests`: recorrido de extremo a extremo con una captura de cada pantalla, para revisar en el iPhone lo que ve el usuario.
