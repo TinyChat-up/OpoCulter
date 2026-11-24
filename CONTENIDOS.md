@@ -247,6 +247,7 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 | Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
 | Lote 03a | LEN.LEX 30 ítems + LEN.COM 19 ítems (pendiente) + 8 tarjetas + 5 textos | 30 + 19 | 8 (4 LEN.LEX, 4 LEN.COM) | Aprobado por la dirección 24/11/2026 | `items/LEN.LEX.json`, `teoria/LEN.LEX.json`, `teoria/LEN.COM.json`, `pendiente/LEN.COM.json`, `pendiente/textos.json` |
 | Lote 03a · errata 1 | LEN.COM (pendiente) y LEN.LEX | 4 (versión 2: PROP.0002, INFER.0003, TIPO.0001, RESU.0004) | 1 (LEN.LEX.DICC.T01) | Aprobada por la dirección 24/11/2026. Las 4 tarjetas de LEN.COM pasan a `pendiente/` hasta que se activen sus ítems. `LEN.LEX.SINON` pasa a orden 99 y el bloque LEN.COM se llama «Comunicación y comprensión». En la matriz de exámenes, 5 propuestas (†) pasan a competencias del catálogo | `pendiente/LEN.COM.json`, `pendiente/teoria_LEN.COM.json`, `teoria/LEN.LEX.json`, `catalogo.json`, `docs/examenes/MATRIZ.md`, `scripts/matriz/datos.py` |
+| Lote 03a · errata 2 | LEN.COM (pendiente) | 1 (versión 3: TIPO.0001, la explicación incluye el tipo descriptivo) | — | Aprobada por la dirección 24/11/2026 | `pendiente/LEN.COM.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 
