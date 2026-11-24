@@ -1,119 +1,171 @@
 {
   "familias": [
     {
-      "id": "tu",
+      "id": "tu_tú",
       "formas": [
-        {
-          "texto": "tú",
-          "uso": "pronombre personal («Tú vienes»)"
-        },
         {
           "texto": "tu",
-          "uso": "determinante posesivo («tu libro»)"
+          "uso": "determinante posesivo (tu casa)"
+        },
+        {
+          "texto": "tú",
+          "uso": "pronombre personal (tú vienes)"
         }
       ]
     },
     {
-      "id": "el",
+      "id": "el_él",
       "formas": [
-        {
-          "texto": "él",
-          "uso": "pronombre personal («Él canta»)"
-        },
         {
           "texto": "el",
-          "uso": "artículo («el libro»)"
+          "uso": "artículo (el libro)"
+        },
+        {
+          "texto": "él",
+          "uso": "pronombre personal (él canta)"
         }
       ]
     },
     {
-      "id": "mi",
+      "id": "mi_mí",
       "formas": [
-        {
-          "texto": "mí",
-          "uso": "pronombre personal tras preposición («para mí»)"
-        },
         {
           "texto": "mi",
-          "uso": "determinante posesivo («mi casa»)"
+          "uso": "determinante posesivo (mi casa)"
+        },
+        {
+          "texto": "mí",
+          "uso": "pronombre tras preposición (para mí)"
         }
       ]
     },
     {
-      "id": "se",
+      "id": "si_sí",
       "formas": [
-        {
-          "texto": "sé",
-          "uso": "forma de los verbos saber o ser («Yo sé»; «Sé amable»)"
-        },
-        {
-          "texto": "se",
-          "uso": "pronombre («Se peina»)"
-        }
-      ]
-    },
-    {
-      "id": "si",
-      "formas": [
-        {
-          "texto": "sí",
-          "uso": "adverbio de afirmación o pronombre («Dijo que sí»)"
-        },
         {
           "texto": "si",
-          "uso": "conjunción condicional («Si vienes…»)"
+          "uso": "conjunción condicional o de pregunta indirecta (si llueve)"
+        },
+        {
+          "texto": "sí",
+          "uso": "adverbio de afirmación o pronombre (dijo que sí)"
         }
       ]
     },
     {
-      "id": "de",
+      "id": "te_té",
       "formas": [
-        {
-          "texto": "dé",
-          "uso": "forma del verbo dar («Que me dé…»)"
-        },
-        {
-          "texto": "de",
-          "uso": "preposición («casa de piedra»)"
-        }
-      ]
-    },
-    {
-      "id": "te",
-      "formas": [
-        {
-          "texto": "té",
-          "uso": "sustantivo: la infusión («un té»)"
-        },
         {
           "texto": "te",
-          "uso": "pronombre («Te llamo»)"
+          "uso": "pronombre personal (te llamo)"
+        },
+        {
+          "texto": "té",
+          "uso": "sustantivo, la bebida (un té)"
         }
       ]
     },
     {
-      "id": "mas",
+      "id": "de_dé",
       "formas": [
         {
-          "texto": "más",
-          "uso": "adverbio de cantidad («más agua»)"
+          "texto": "de",
+          "uso": "preposición (casa de mi abuela)"
         },
+        {
+          "texto": "dé",
+          "uso": "forma del verbo dar (que me dé)"
+        }
+      ]
+    },
+    {
+      "id": "se_sé",
+      "formas": [
+        {
+          "texto": "se",
+          "uso": "pronombre (se fue)"
+        },
+        {
+          "texto": "sé",
+          "uso": "forma de saber o de ser (ya sé; sé bueno)"
+        }
+      ]
+    },
+    {
+      "id": "mas_más",
+      "formas": [
         {
           "texto": "mas",
-          "uso": "conjunción equivalente a «pero»"
+          "uso": "conjunción adversativa, equivale a «pero»"
+        },
+        {
+          "texto": "más",
+          "uso": "adverbio de cantidad (más agua)"
         }
       ]
     },
     {
-      "id": "aun",
+      "id": "aun_aún",
       "formas": [
         {
-          "texto": "aún",
-          "uso": "adverbio equivalente a «todavía»"
+          "texto": "aun",
+          "uso": "equivale a «incluso» (ni aun así)"
         },
         {
-          "texto": "aun",
-          "uso": "adverbio equivalente a «incluso»"
+          "texto": "aún",
+          "uso": "equivale a «todavía» (aún no ha llegado)"
+        }
+      ]
+    },
+    {
+      "id": "que_qué",
+      "formas": [
+        {
+          "texto": "que",
+          "uso": "relativo o conjunción (dice que vendrá)"
+        },
+        {
+          "texto": "qué",
+          "uso": "interrogativo o exclamativo (¿qué quieres?)"
+        }
+      ]
+    },
+    {
+      "id": "como_cómo",
+      "formas": [
+        {
+          "texto": "como",
+          "uso": "comparativo o de modo (como te dije)"
+        },
+        {
+          "texto": "cómo",
+          "uso": "interrogativo (¿cómo te llamas?)"
+        }
+      ]
+    },
+    {
+      "id": "cuando_cuándo",
+      "formas": [
+        {
+          "texto": "cuando",
+          "uso": "adverbio relativo de tiempo (cuando llegue)"
+        },
+        {
+          "texto": "cuándo",
+          "uso": "interrogativo de tiempo (¿cuándo?)"
+        }
+      ]
+    },
+    {
+      "id": "donde_dónde",
+      "formas": [
+        {
+          "texto": "donde",
+          "uso": "adverbio relativo de lugar (donde nací)"
+        },
+        {
+          "texto": "dónde",
+          "uso": "interrogativo de lugar (¿dónde?)"
         }
       ]
     },
@@ -121,157 +173,1014 @@
       "id": "porque",
       "formas": [
         {
-          "texto": "por qué",
-          "uso": "preposición y pronombre interrogativo («¿Por qué…?»)"
+          "texto": "porque",
+          "uso": "conjunción causal, equivale a «ya que»"
         },
         {
-          "texto": "porque",
-          "uso": "conjunción causal («porque llovía»)"
+          "texto": "por qué",
+          "uso": "pregunta directa o indirecta (¿por qué?)"
         },
         {
           "texto": "porqué",
-          "uso": "sustantivo: la causa («el porqué»)"
+          "uso": "sustantivo, equivale a «el motivo»"
         },
         {
           "texto": "por que",
-          "uso": "preposición y relativo («la razón por (la) que»)"
+          "uso": "preposición + relativo, equivale a «por el/la que»"
+        }
+      ]
+    },
+    {
+      "id": "hay_ahí_ay",
+      "formas": [
+        {
+          "texto": "hay",
+          "uso": "verbo haber (hay nubes)"
+        },
+        {
+          "texto": "ahí",
+          "uso": "adverbio de lugar (está ahí)"
+        },
+        {
+          "texto": "ay",
+          "uso": "interjección (¡ay!)"
+        }
+      ]
+    },
+    {
+      "id": "haber_aver",
+      "formas": [
+        {
+          "texto": "haber",
+          "uso": "verbo (debe haber)"
+        },
+        {
+          "texto": "a ver",
+          "uso": "preposición + verbo ver (vamos a ver)"
+        }
+      ]
+    },
+    {
+      "id": "echo_hecho",
+      "formas": [
+        {
+          "texto": "echo",
+          "uso": "verbo echar (echo sal)"
+        },
+        {
+          "texto": "hecho",
+          "uso": "verbo hacer o sustantivo (he hecho; un hecho)"
+        }
+      ]
+    },
+    {
+      "id": "vaya_valla_baya",
+      "formas": [
+        {
+          "texto": "vaya",
+          "uso": "verbo ir o exclamación (¡vaya!)"
+        },
+        {
+          "texto": "valla",
+          "uso": "cerca o vallado"
+        },
+        {
+          "texto": "baya",
+          "uso": "fruto carnoso"
+        }
+      ]
+    },
+    {
+      "id": "tuvo_tubo",
+      "formas": [
+        {
+          "texto": "tuvo",
+          "uso": "verbo tener (tuvo fiebre)"
+        },
+        {
+          "texto": "tubo",
+          "uso": "pieza cilíndrica hueca"
+        }
+      ]
+    },
+    {
+      "id": "hola_ola",
+      "formas": [
+        {
+          "texto": "hola",
+          "uso": "saludo"
+        },
+        {
+          "texto": "ola",
+          "uso": "onda del mar"
+        }
+      ]
+    },
+    {
+      "id": "botar_votar",
+      "formas": [
+        {
+          "texto": "botar",
+          "uso": "saltar o hacer saltar"
+        },
+        {
+          "texto": "votar",
+          "uso": "emitir un voto"
+        }
+      ]
+    },
+    {
+      "id": "grabar_gravar",
+      "formas": [
+        {
+          "texto": "grabar",
+          "uso": "registrar imágenes o sonidos; tallar"
+        },
+        {
+          "texto": "gravar",
+          "uso": "imponer un impuesto o una carga"
+        }
+      ]
+    },
+    {
+      "id": "sabia_savia",
+      "formas": [
+        {
+          "texto": "sabia",
+          "uso": "que sabe mucho"
+        },
+        {
+          "texto": "savia",
+          "uso": "líquido que circula por las plantas"
+        }
+      ]
+    },
+    {
+      "id": "revelar_rebelar",
+      "formas": [
+        {
+          "texto": "revelar",
+          "uso": "descubrir algo oculto"
+        },
+        {
+          "texto": "rebelar",
+          "uso": "(rebelarse) sublevarse, oponerse"
+        }
+      ]
+    },
+    {
+      "id": "hasta_asta",
+      "formas": [
+        {
+          "texto": "hasta",
+          "uso": "preposición de límite"
+        },
+        {
+          "texto": "asta",
+          "uso": "palo de la bandera; cuerno"
+        }
+      ]
+    },
+    {
+      "id": "halla_haya",
+      "formas": [
+        {
+          "texto": "halla",
+          "uso": "verbo hallar, encontrar"
+        },
+        {
+          "texto": "haya",
+          "uso": "verbo haber o árbol (que haya; un haya)"
+        }
+      ]
+    },
+    {
+      "id": "hierba_hierva",
+      "formas": [
+        {
+          "texto": "hierba",
+          "uso": "planta pequeña"
+        },
+        {
+          "texto": "hierva",
+          "uso": "verbo hervir"
+        }
+      ]
+    },
+    {
+      "id": "bello_vello",
+      "formas": [
+        {
+          "texto": "bello",
+          "uso": "hermoso"
+        },
+        {
+          "texto": "vello",
+          "uso": "pelo corto y fino del cuerpo"
         }
       ]
     }
   ],
   "frases": [
     {
-      "id": "F001",
-      "familia": "tu",
-      "texto": "¿___ vienes a la excursión?",
-      "correcta": "Tú",
-      "dificultad": 1
+      "id": "FR.0001",
+      "familia": "tu_tú",
+      "texto": "___ hermana viene mañana.",
+      "correcta": "Tu",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F002",
-      "familia": "tu",
-      "texto": "He dejado ___ mochila en la clase.",
+      "id": "FR.0002",
+      "familia": "tu_tú",
+      "texto": "¿Vienes ___ al cine?",
+      "correcta": "tú",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0003",
+      "familia": "tu_tú",
+      "texto": "He visto ___ coche en la calle.",
       "correcta": "tu",
-      "dificultad": 1
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F003",
-      "familia": "el",
-      "texto": "___ siempre llega el primero.",
+      "id": "FR.0004",
+      "familia": "tu_tú",
+      "texto": "___ eres el primero de la lista.",
+      "correcta": "Tú",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0005",
+      "familia": "el_él",
+      "texto": "___ libro está en la mesa.",
+      "correcta": "El",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0006",
+      "familia": "el_él",
+      "texto": "Se lo di a ___.",
+      "correcta": "él",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0007",
+      "familia": "el_él",
+      "texto": "___ siempre llega puntual.",
       "correcta": "Él",
-      "dificultad": 1
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F004",
-      "familia": "el",
-      "texto": "Me gusta ___ libro de cuentos.",
+      "id": "FR.0008",
+      "familia": "el_él",
+      "texto": "Compré ___ pan esta mañana.",
       "correcta": "el",
-      "dificultad": 1
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F005",
-      "familia": "mi",
+      "id": "FR.0009",
+      "familia": "el_él",
+      "texto": "Iremos con ___ al parque.",
+      "correcta": "él",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0010",
+      "familia": "mi_mí",
+      "texto": "___ casa tiene un jardín.",
+      "correcta": "Mi",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0011",
+      "familia": "mi_mí",
       "texto": "Ese regalo es para ___.",
       "correcta": "mí",
-      "dificultad": 2
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F006",
-      "familia": "mi",
-      "texto": "___ hermana juega al baloncesto.",
+      "id": "FR.0012",
+      "familia": "mi_mí",
+      "texto": "A ___ me encanta leer.",
+      "correcta": "mí",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0013",
+      "familia": "mi_mí",
+      "texto": "___ perro se llama Toby.",
       "correcta": "Mi",
-      "dificultad": 2
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F007",
-      "familia": "se",
-      "texto": "No ___ la respuesta de memoria.",
-      "correcta": "sé",
-      "dificultad": 2
+      "id": "FR.0014",
+      "familia": "mi_mí",
+      "texto": "¿Te acuerdas de ___?",
+      "correcta": "mí",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F008",
-      "familia": "se",
-      "texto": "Marta ___ levanta temprano.",
-      "correcta": "se",
-      "dificultad": 2
-    },
-    {
-      "id": "F009",
-      "familia": "si",
-      "texto": "Dijo que ___ con la cabeza.",
-      "correcta": "sí",
-      "dificultad": 2
-    },
-    {
-      "id": "F010",
-      "familia": "si",
-      "texto": "___ llueve, iremos al museo.",
+      "id": "FR.0015",
+      "familia": "si_sí",
+      "texto": "___ llueve, no saldremos.",
       "correcta": "Si",
-      "dificultad": 2
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F011",
-      "familia": "de",
-      "texto": "Espero que me ___ la razón.",
-      "correcta": "dé",
-      "dificultad": 3
+      "id": "FR.0016",
+      "familia": "si_sí",
+      "texto": "Le pregunté y dijo que ___.",
+      "correcta": "sí",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F012",
-      "familia": "te",
-      "texto": "Por la tarde tomamos un ___ con limón.",
+      "id": "FR.0017",
+      "familia": "si_sí",
+      "texto": "No sé ___ vendrá.",
+      "correcta": "si",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0018",
+      "familia": "si_sí",
+      "texto": "Ella solo piensa en ___ misma.",
+      "correcta": "sí",
+      "dificultad": 4,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0019",
+      "familia": "si_sí",
+      "texto": "___, quiero ir contigo.",
+      "correcta": "Sí",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0020",
+      "familia": "te_té",
+      "texto": "¿Quieres un ___ con leche?",
       "correcta": "té",
-      "dificultad": 3
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F013",
-      "familia": "mas",
-      "texto": "Necesito ___ tiempo para terminar.",
+      "id": "FR.0021",
+      "familia": "te_té",
+      "texto": "___ llamo luego.",
+      "correcta": "Te",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0022",
+      "familia": "te_té",
+      "texto": "El ___ verde es muy sano.",
+      "correcta": "té",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0023",
+      "familia": "te_té",
+      "texto": "¿___ apetece un helado?",
+      "correcta": "Te",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0024",
+      "familia": "de_dé",
+      "texto": "Es la casa ___ mi abuela.",
+      "correcta": "de",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0025",
+      "familia": "de_dé",
+      "texto": "Dile que te ___ el libro.",
+      "correcta": "dé",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0026",
+      "familia": "de_dé",
+      "texto": "Espero que me ___ una respuesta.",
+      "correcta": "dé",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0027",
+      "familia": "de_dé",
+      "texto": "Vengo ___ la playa.",
+      "correcta": "de",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0028",
+      "familia": "se_sé",
+      "texto": "Ya ___ la respuesta.",
+      "correcta": "sé",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0029",
+      "familia": "se_sé",
+      "texto": "___ fue sin decir nada.",
+      "correcta": "Se",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0030",
+      "familia": "se_sé",
+      "texto": "No ___ dónde está mi móvil.",
+      "correcta": "sé",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0031",
+      "familia": "se_sé",
+      "texto": "Marta ___ peina cada mañana.",
+      "correcta": "se",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0032",
+      "familia": "se_sé",
+      "texto": "___ bueno y estudia.",
+      "correcta": "Sé",
+      "dificultad": 5,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0033",
+      "familia": "mas_más",
+      "texto": "Quiero ___ agua, por favor.",
       "correcta": "más",
-      "dificultad": 3
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F014",
-      "familia": "aun",
-      "texto": "___ no han llegado los invitados.",
+      "id": "FR.0034",
+      "familia": "mas_más",
+      "texto": "Lo intentó, ___ no lo consiguió.",
+      "correcta": "mas",
+      "dificultad": 6,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0035",
+      "familia": "mas_más",
+      "texto": "Este libro es ___ largo que aquel.",
+      "correcta": "más",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0036",
+      "familia": "aun_aún",
+      "texto": "___ no ha llegado el autobús.",
       "correcta": "Aún",
-      "dificultad": 3
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F015",
-      "familia": "aun",
-      "texto": "Ganaron el partido, ___ jugando con diez.",
+      "id": "FR.0037",
+      "familia": "aun_aún",
+      "texto": "Ni ___ así lo entendió.",
       "correcta": "aun",
-      "dificultad": 4
+      "dificultad": 4,
+      "competencia": "LEN.ORT.DIA"
     },
     {
-      "id": "F016",
+      "id": "FR.0038",
+      "familia": "aun_aún",
+      "texto": "¿___ estás despierto?",
+      "correcta": "Aún",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0039",
+      "familia": "aun_aún",
+      "texto": "Aprobaron todos, ___ los que no estudiaron.",
+      "correcta": "aun",
+      "dificultad": 5,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0040",
+      "familia": "que_qué",
+      "texto": "¿___ quieres cenar?",
+      "correcta": "Qué",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0041",
+      "familia": "que_qué",
+      "texto": "Dice ___ vendrá tarde.",
+      "correcta": "que",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0042",
+      "familia": "que_qué",
+      "texto": "No sé ___ hacer.",
+      "correcta": "qué",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0043",
+      "familia": "que_qué",
+      "texto": "¡___ bonito día!",
+      "correcta": "Qué",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0044",
+      "familia": "que_qué",
+      "texto": "El libro ___ me prestaste es genial.",
+      "correcta": "que",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0045",
+      "familia": "como_cómo",
+      "texto": "¿___ te llamas?",
+      "correcta": "Cómo",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0046",
+      "familia": "como_cómo",
+      "texto": "Hazlo ___ te dije.",
+      "correcta": "como",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0047",
+      "familia": "como_cómo",
+      "texto": "No sé ___ llegar a tu casa.",
+      "correcta": "cómo",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0048",
+      "familia": "como_cómo",
+      "texto": "Es tan alto ___ su padre.",
+      "correcta": "como",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0049",
+      "familia": "cuando_cuándo",
+      "texto": "¿___ empiezan las vacaciones?",
+      "correcta": "Cuándo",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0050",
+      "familia": "cuando_cuándo",
+      "texto": "Te llamaré ___ llegue.",
+      "correcta": "cuando",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0051",
+      "familia": "cuando_cuándo",
+      "texto": "No sé ___ volverá.",
+      "correcta": "cuándo",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0052",
+      "familia": "donde_dónde",
+      "texto": "¿___ has dejado las llaves?",
+      "correcta": "Dónde",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0053",
+      "familia": "donde_dónde",
+      "texto": "Esta es la casa ___ nací.",
+      "correcta": "donde",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0054",
+      "familia": "donde_dónde",
+      "texto": "Dime ___ quedamos.",
+      "correcta": "dónde",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.DIA"
+    },
+    {
+      "id": "FR.0055",
       "familia": "porque",
-      "texto": "¿___ no viniste ayer?",
+      "texto": "¿___ no viniste a clase?",
       "correcta": "Por qué",
-      "dificultad": 3
+      "dificultad": 2,
+      "competencia": "LEN.ORT.PQ"
     },
     {
-      "id": "F017",
+      "id": "FR.0056",
       "familia": "porque",
       "texto": "No vine ___ estaba enfermo.",
       "correcta": "porque",
-      "dificultad": 3
+      "dificultad": 2,
+      "competencia": "LEN.ORT.PQ"
     },
     {
-      "id": "F018",
+      "id": "FR.0057",
       "familia": "porque",
-      "texto": "Nadie sabe el ___ de su decisión.",
+      "texto": "No entiendo el ___ de su enfado.",
       "correcta": "porqué",
-      "dificultad": 3
+      "dificultad": 2,
+      "competencia": "LEN.ORT.PQ"
     },
     {
-      "id": "F019",
+      "id": "FR.0058",
       "familia": "porque",
-      "texto": "Esa es la razón ___ me marché.",
+      "texto": "Esa es la razón ___ me fui.",
       "correcta": "por que",
-      "dificultad": 3
+      "dificultad": 5,
+      "competencia": "LEN.ORT.PQ"
+    },
+    {
+      "id": "FR.0059",
+      "familia": "porque",
+      "texto": "Dime ___ lloras.",
+      "correcta": "por qué",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.PQ"
+    },
+    {
+      "id": "FR.0060",
+      "familia": "porque",
+      "texto": "Llegó tarde ___ perdió el tren.",
+      "correcta": "porque",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.PQ"
+    },
+    {
+      "id": "FR.0061",
+      "familia": "porque",
+      "texto": "Nadie conoce el ___ de la decisión.",
+      "correcta": "porqué",
+      "dificultad": 4,
+      "competencia": "LEN.ORT.PQ"
+    },
+    {
+      "id": "FR.0062",
+      "familia": "hay_ahí_ay",
+      "texto": "___ muchas nubes en el cielo.",
+      "correcta": "Hay",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0063",
+      "familia": "hay_ahí_ay",
+      "texto": "Deja la mochila ___, junto a la puerta.",
+      "correcta": "ahí",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0064",
+      "familia": "hay_ahí_ay",
+      "texto": "¡___, qué daño me he hecho!",
+      "correcta": "Ay",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0065",
+      "familia": "hay_ahí_ay",
+      "texto": "¿___ alguien en casa?",
+      "correcta": "Hay",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0066",
+      "familia": "hay_ahí_ay",
+      "texto": "___ está el problema.",
+      "correcta": "Ahí",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0067",
+      "familia": "haber_aver",
+      "texto": "Vamos ___ qué pasa.",
+      "correcta": "a ver",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0068",
+      "familia": "haber_aver",
+      "texto": "Debe ___ un error en la cuenta.",
+      "correcta": "haber",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0069",
+      "familia": "haber_aver",
+      "texto": "___ si mañana hace sol.",
+      "correcta": "A ver",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0070",
+      "familia": "haber_aver",
+      "texto": "Podría ___ más gente.",
+      "correcta": "haber",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0071",
+      "familia": "echo_hecho",
+      "texto": "Hoy he ___ los deberes.",
+      "correcta": "hecho",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0072",
+      "familia": "echo_hecho",
+      "texto": "Siempre ___ sal a la ensalada.",
+      "correcta": "echo",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0073",
+      "familia": "echo_hecho",
+      "texto": "Es un ___ histórico.",
+      "correcta": "hecho",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0074",
+      "familia": "echo_hecho",
+      "texto": "Te ___ de menos.",
+      "correcta": "echo",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0075",
+      "familia": "vaya_valla_baya",
+      "texto": "Saltó la ___ del jardín.",
+      "correcta": "valla",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0076",
+      "familia": "vaya_valla_baya",
+      "texto": "¡___ sorpresa!",
+      "correcta": "Vaya",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0077",
+      "familia": "vaya_valla_baya",
+      "texto": "El acebo da una ___ roja.",
+      "correcta": "baya",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0078",
+      "familia": "vaya_valla_baya",
+      "texto": "Espero que te ___ bien.",
+      "correcta": "vaya",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0079",
+      "familia": "tuvo_tubo",
+      "texto": "Ayer ___ fiebre.",
+      "correcta": "tuvo",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0080",
+      "familia": "tuvo_tubo",
+      "texto": "Se ha roto el ___ del agua.",
+      "correcta": "tubo",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0081",
+      "familia": "tuvo_tubo",
+      "texto": "___ que esperar una hora.",
+      "correcta": "Tuvo",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0082",
+      "familia": "hola_ola",
+      "texto": "Una ___ enorme mojó la toalla.",
+      "correcta": "ola",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0083",
+      "familia": "hola_ola",
+      "texto": "___, ¿qué tal estás?",
+      "correcta": "Hola",
+      "dificultad": 1,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0084",
+      "familia": "botar_votar",
+      "texto": "Los ciudadanos van a ___ el domingo.",
+      "correcta": "votar",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0085",
+      "familia": "botar_votar",
+      "texto": "El balón no deja de ___.",
+      "correcta": "botar",
+      "dificultad": 2,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0086",
+      "familia": "grabar_gravar",
+      "texto": "Vamos a ___ un vídeo.",
+      "correcta": "grabar",
+      "dificultad": 4,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0087",
+      "familia": "grabar_gravar",
+      "texto": "El Gobierno quiere ___ con un impuesto el tabaco.",
+      "correcta": "gravar",
+      "dificultad": 5,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0088",
+      "familia": "sabia_savia",
+      "texto": "La ___ circula por el tallo de la planta.",
+      "correcta": "savia",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0089",
+      "familia": "sabia_savia",
+      "texto": "Mi abuela es una mujer muy ___.",
+      "correcta": "sabia",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0090",
+      "familia": "revelar_rebelar",
+      "texto": "No quiso ___ el secreto.",
+      "correcta": "revelar",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0091",
+      "familia": "revelar_rebelar",
+      "texto": "Los soldados quisieron ___se contra su capitán.",
+      "correcta": "rebelar",
+      "dificultad": 4,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0092",
+      "familia": "hasta_asta",
+      "texto": "Caminamos ___ el río.",
+      "correcta": "hasta",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0093",
+      "familia": "hasta_asta",
+      "texto": "La bandera ondea en lo alto del ___.",
+      "correcta": "asta",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0094",
+      "familia": "halla_haya",
+      "texto": "Espero que no ___ problemas.",
+      "correcta": "haya",
+      "dificultad": 4,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0095",
+      "familia": "halla_haya",
+      "texto": "El tesoro se ___ bajo el árbol.",
+      "correcta": "halla",
+      "dificultad": 4,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0096",
+      "familia": "halla_haya",
+      "texto": "Un ___ es un árbol de hoja caduca.",
+      "correcta": "haya",
+      "dificultad": 5,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0097",
+      "familia": "hierba_hierva",
+      "texto": "Las vacas comen ___.",
+      "correcta": "hierba",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0098",
+      "familia": "hierba_hierva",
+      "texto": "Espera a que el agua ___.",
+      "correcta": "hierva",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0099",
+      "familia": "bello_vello",
+      "texto": "Es un paisaje muy ___.",
+      "correcta": "bello",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
+    },
+    {
+      "id": "FR.0100",
+      "familia": "bello_vello",
+      "texto": "El ___ de los brazos protege la piel.",
+      "correcta": "vello",
+      "dificultad": 3,
+      "competencia": "LEN.ORT.HOM"
     }
   ]
 }

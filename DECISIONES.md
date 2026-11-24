@@ -323,3 +323,11 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 - **Derivación gramatical**: sujetos = sustantivos de persona (singular y plural, con artículo). CD = sustantivos compatibles con `objeto` (con artículo; personas y animales con «a» + posesivo, para evitar «al»). CI = «a» + posesivo + persona. «ayer» y «todos los días» restringen el tiempo verbal, como en D-066. Se excluyen de `piezas.json` «junto al río» y «a las cinco», que no tienen una clase de palabra inequívoca.
 - **Lo que el esquema no admite** (etiquetas, `admiteCI` completo, CCC…) va a `gramatica/compatibilidad.json`, en formato neutro.
 - **Validación**: `scripts/validar_gramatica.py`. El conversor (`scripts/convertir_gramatica_02b.py`) se conserva para regenerar los archivos.
+
+### D-073 · 2026-11-24 · Lote 02b · errata 1 · Vigente (dirección)
+**Frases reales y etiquetas finas.**
+- `frases.json` pasa a tener las 100 frases y 28 familias reales, ya con `dificultad` y `uso` (deja sin efecto la reserva de D-072).
+- `piezas.json` usa las etiquetas finas del CD.
+- `verbos.json` conserva tener, decir, poner y hacer (formas de prueba de la Fase 05C) para `analisisVerbal` 5–6 y para el test de conjugación.
+- **Plantilla HOM**: el esquema de plantilla admite un solo peldaño, así que «peldaños 2 y 3» se cubre con dos plantillas, `LEN.ORT.HOM.G01` (peldaño 2, dificultad 2) y `LEN.ORT.HOM.G02` (peldaño 3, dificultad 3).
+- Las 4 plantillas de `fraseHueco` siguen en borrador hasta pasar los tests de propiedades.

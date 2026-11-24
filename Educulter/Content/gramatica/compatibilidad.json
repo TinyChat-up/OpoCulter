@@ -192,7 +192,10 @@
       "plural": "libros",
       "etiquetas": [
         "objeto",
-        "texto"
+        "texto",
+        "abrible",
+        "comprable",
+        "prestable"
       ]
     },
     {
@@ -200,7 +203,8 @@
       "genero": "f",
       "plural": "mesas",
       "etiquetas": [
-        "objeto"
+        "objeto",
+        "lavable"
       ]
     },
     {
@@ -208,7 +212,9 @@
       "genero": "f",
       "plural": "ventanas",
       "etiquetas": [
-        "objeto"
+        "objeto",
+        "abrible",
+        "lavable"
       ]
     },
     {
@@ -216,7 +222,9 @@
       "genero": "f",
       "plural": "cajas",
       "etiquetas": [
-        "objeto"
+        "objeto",
+        "abrible",
+        "comprable"
       ]
     },
     {
@@ -224,7 +232,10 @@
       "genero": "m",
       "plural": "coches",
       "etiquetas": [
-        "objeto"
+        "objeto",
+        "comprable",
+        "prestable",
+        "lavable"
       ]
     },
     {
@@ -232,7 +243,10 @@
       "genero": "f",
       "plural": "bicicletas",
       "etiquetas": [
-        "objeto"
+        "objeto",
+        "comprable",
+        "prestable",
+        "lavable"
       ]
     },
     {
@@ -240,7 +254,10 @@
       "genero": "m",
       "plural": "cuadernos",
       "etiquetas": [
-        "objeto"
+        "objeto",
+        "abrible",
+        "comprable",
+        "prestable"
       ]
     },
     {
@@ -248,7 +265,8 @@
       "genero": "f",
       "plural": "puertas",
       "etiquetas": [
-        "objeto"
+        "objeto",
+        "abrible"
       ]
     },
     {
@@ -256,7 +274,9 @@
       "genero": "m",
       "plural": "regalos",
       "etiquetas": [
-        "objeto"
+        "objeto",
+        "abrible",
+        "comprable"
       ]
     },
     {
@@ -304,7 +324,9 @@
       "genero": "f",
       "plural": "camisas",
       "etiquetas": [
-        "ropa"
+        "ropa",
+        "lavable",
+        "comprable"
       ]
     },
     {
@@ -312,7 +334,10 @@
       "genero": "m",
       "plural": "abrigos",
       "etiquetas": [
-        "ropa"
+        "ropa",
+        "lavable",
+        "comprable",
+        "prestable"
       ]
     }
   ],
@@ -508,8 +533,7 @@
       "regimen": "transitivo",
       "objeto": [
         "comida",
-        "objeto",
-        "ropa",
+        "comprable",
         "bebida"
       ],
       "admiteCI": true,
@@ -537,8 +561,7 @@
       "conjugacion": 1,
       "regimen": "transitivo",
       "objeto": [
-        "objeto",
-        "ropa"
+        "lavable"
       ],
       "admiteCI": false,
       "participioIrregular": null,
@@ -648,8 +671,7 @@
       "conjugacion": 1,
       "regimen": "transitivo",
       "objeto": [
-        "objeto",
-        "ropa",
+        "comprable",
         "comida"
       ],
       "admiteCI": true,
@@ -663,7 +685,7 @@
       "conjugacion": 1,
       "regimen": "transitivo",
       "objeto": [
-        "objeto"
+        "prestable"
       ],
       "admiteCI": true,
       "participioIrregular": null,
@@ -715,9 +737,8 @@
       "conjugacion": 2,
       "regimen": "transitivo",
       "objeto": [
-        "objeto",
-        "comida",
-        "ropa"
+        "comprable",
+        "comida"
       ],
       "admiteCI": true,
       "participioIrregular": null,
@@ -743,7 +764,7 @@
       "conjugacion": 3,
       "regimen": "transitivo",
       "objeto": [
-        "objeto"
+        "abrible"
       ],
       "admiteCI": false,
       "participioIrregular": "abierto",
@@ -822,8 +843,8 @@
       ]
     },
     {
-      "infinitivo": "vivir",
-      "conjugacion": 3,
+      "infinitivo": "pasear",
+      "conjugacion": 1,
       "regimen": "intransitivo",
       "objeto": null,
       "admiteCI": false,

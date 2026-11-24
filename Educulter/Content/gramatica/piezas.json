@@ -383,34 +383,6 @@
               "det"
             ],
             [
-              "mesa",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "ventana",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
               "caja",
               "sust"
             ]
@@ -458,20 +430,6 @@
             ]
           ],
           "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "puerta",
-              "sust"
-            ]
-          ],
-          "genero": "f",
           "numero": "s"
         },
         {
@@ -631,20 +589,6 @@
         {
           "tokens": [
             [
-              "el",
-              "det"
-            ],
-            [
-              "libro",
-              "sust"
-            ]
-          ],
-          "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
               "la",
               "det"
             ],
@@ -664,20 +608,6 @@
             ],
             [
               "ventana",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "caja",
               "sust"
             ]
           ],
@@ -710,48 +640,6 @@
             ]
           ],
           "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "el",
-              "det"
-            ],
-            [
-              "cuaderno",
-              "sust"
-            ]
-          ],
-          "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "puerta",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "el",
-              "det"
-            ],
-            [
-              "regalo",
-              "sust"
-            ]
-          ],
-          "genero": "m",
           "numero": "s"
         },
         {
@@ -2291,34 +2179,6 @@
               "det"
             ],
             [
-              "mesa",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "ventana",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
               "caja",
               "sust"
             ]
@@ -2366,20 +2226,6 @@
             ]
           ],
           "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "puerta",
-              "sust"
-            ]
-          ],
-          "genero": "f",
           "numero": "s"
         },
         {
@@ -2448,48 +2294,6 @@
         {
           "tokens": [
             [
-              "la",
-              "det"
-            ],
-            [
-              "mesa",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "ventana",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "caja",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
               "el",
               "det"
             ],
@@ -2532,25 +2336,11 @@
         {
           "tokens": [
             [
-              "la",
-              "det"
-            ],
-            [
-              "puerta",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
               "el",
               "det"
             ],
             [
-              "regalo",
+              "abrigo",
               "sust"
             ]
           ],
@@ -2785,34 +2575,6 @@
               "det"
             ],
             [
-              "mesa",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "ventana",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
               "caja",
               "sust"
             ]
@@ -2860,20 +2622,6 @@
             ]
           ],
           "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "puerta",
-              "sust"
-            ]
-          ],
-          "genero": "f",
           "numero": "s"
         },
         {
@@ -3023,20 +2771,6 @@
               "det"
             ],
             [
-              "mesa",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
               "ventana",
               "sust"
             ]
@@ -3052,34 +2786,6 @@
             ],
             [
               "caja",
-              "sust"
-            ]
-          ],
-          "genero": "f",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "el",
-              "det"
-            ],
-            [
-              "coche",
-              "sust"
-            ]
-          ],
-          "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "la",
-              "det"
-            ],
-            [
-              "bicicleta",
               "sust"
             ]
           ],
@@ -3155,7 +2861,7 @@
       "regimen": "intransitivo"
     },
     {
-      "infinitivo": "vivir",
+      "infinitivo": "pasear",
       "regimen": "intransitivo"
     },
     {

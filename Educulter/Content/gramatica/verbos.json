@@ -25,10 +25,226 @@
     "nadar",
     "descansar",
     "correr",
-    "vivir",
+    "pasear",
     "subir"
   ],
   "irregulares": [
+    {
+      "infinitivo": "tener",
+      "participio": "tenido",
+      "formas": {
+        "Indicativo|Presente": [
+          "tengo",
+          "tienes",
+          "tiene",
+          "tenemos",
+          "tenéis",
+          "tienen"
+        ],
+        "Indicativo|Pretérito perfecto simple": [
+          "tuve",
+          "tuviste",
+          "tuvo",
+          "tuvimos",
+          "tuvisteis",
+          "tuvieron"
+        ],
+        "Indicativo|Futuro simple": [
+          "tendré",
+          "tendrás",
+          "tendrá",
+          "tendremos",
+          "tendréis",
+          "tendrán"
+        ],
+        "Indicativo|Condicional simple": [
+          "tendría",
+          "tendrías",
+          "tendría",
+          "tendríamos",
+          "tendríais",
+          "tendrían"
+        ],
+        "Subjuntivo|Presente": [
+          "tenga",
+          "tengas",
+          "tenga",
+          "tengamos",
+          "tengáis",
+          "tengan"
+        ],
+        "Subjuntivo|Pretérito imperfecto": [
+          "tuviera",
+          "tuvieras",
+          "tuviera",
+          "tuviéramos",
+          "tuvierais",
+          "tuvieran"
+        ]
+      }
+    },
+    {
+      "infinitivo": "hacer",
+      "participio": "hecho",
+      "formas": {
+        "Indicativo|Presente": [
+          "hago",
+          "haces",
+          "hace",
+          "hacemos",
+          "hacéis",
+          "hacen"
+        ],
+        "Indicativo|Pretérito perfecto simple": [
+          "hice",
+          "hiciste",
+          "hizo",
+          "hicimos",
+          "hicisteis",
+          "hicieron"
+        ],
+        "Indicativo|Futuro simple": [
+          "haré",
+          "harás",
+          "hará",
+          "haremos",
+          "haréis",
+          "harán"
+        ],
+        "Indicativo|Condicional simple": [
+          "haría",
+          "harías",
+          "haría",
+          "haríamos",
+          "haríais",
+          "harían"
+        ],
+        "Subjuntivo|Presente": [
+          "haga",
+          "hagas",
+          "haga",
+          "hagamos",
+          "hagáis",
+          "hagan"
+        ],
+        "Subjuntivo|Pretérito imperfecto": [
+          "hiciera",
+          "hicieras",
+          "hiciera",
+          "hiciéramos",
+          "hicierais",
+          "hicieran"
+        ]
+      }
+    },
+    {
+      "infinitivo": "poner",
+      "participio": "puesto",
+      "formas": {
+        "Indicativo|Presente": [
+          "pongo",
+          "pones",
+          "pone",
+          "ponemos",
+          "ponéis",
+          "ponen"
+        ],
+        "Indicativo|Pretérito perfecto simple": [
+          "puse",
+          "pusiste",
+          "puso",
+          "pusimos",
+          "pusisteis",
+          "pusieron"
+        ],
+        "Indicativo|Futuro simple": [
+          "pondré",
+          "pondrás",
+          "pondrá",
+          "pondremos",
+          "pondréis",
+          "pondrán"
+        ],
+        "Indicativo|Condicional simple": [
+          "pondría",
+          "pondrías",
+          "pondría",
+          "pondríamos",
+          "pondríais",
+          "pondrían"
+        ],
+        "Subjuntivo|Presente": [
+          "ponga",
+          "pongas",
+          "ponga",
+          "pongamos",
+          "pongáis",
+          "pongan"
+        ],
+        "Subjuntivo|Pretérito imperfecto": [
+          "pusiera",
+          "pusieras",
+          "pusiera",
+          "pusiéramos",
+          "pusierais",
+          "pusieran"
+        ]
+      }
+    },
+    {
+      "infinitivo": "decir",
+      "participio": "dicho",
+      "formas": {
+        "Indicativo|Presente": [
+          "digo",
+          "dices",
+          "dice",
+          "decimos",
+          "decís",
+          "dicen"
+        ],
+        "Indicativo|Pretérito perfecto simple": [
+          "dije",
+          "dijiste",
+          "dijo",
+          "dijimos",
+          "dijisteis",
+          "dijeron"
+        ],
+        "Indicativo|Futuro simple": [
+          "diré",
+          "dirás",
+          "dirá",
+          "diremos",
+          "diréis",
+          "dirán"
+        ],
+        "Indicativo|Condicional simple": [
+          "diría",
+          "dirías",
+          "diría",
+          "diríamos",
+          "diríais",
+          "dirían"
+        ],
+        "Subjuntivo|Presente": [
+          "diga",
+          "digas",
+          "diga",
+          "digamos",
+          "digáis",
+          "digan"
+        ],
+        "Subjuntivo|Pretérito imperfecto": [
+          "dijera",
+          "dijeras",
+          "dijera",
+          "dijéramos",
+          "dijerais",
+          "dijeran"
+        ]
+      }
+    },
     {
       "infinitivo": "escribir",
       "participio": "escrito",
