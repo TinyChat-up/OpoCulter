@@ -372,7 +372,7 @@ Rúbrica (propia): B Recoge el contenido principal en orden, con palabras propia
 ```
 OF.2022.O · L2 · LEN.COM.TIPO
 ¿De qué tipo de texto se trata? Enumere al menos tres características de este tipo de textos.
-Solución: Es un texto teatral (género dramático), en verso: un fragmento de La venganza de Don Mendo (1918), astracanada que parodia el drama histórico romántico. Características: diálogo entre personajes, con el nombre de cada uno ante su intervención; acotaciones entre paréntesis que indican gestos y acciones («Se seca una lágrima de cada ojo»); ausencia de narrador; escrito para ser representado; versificación (octosílabos con rima consonante); y, en este caso, humor por exageración, rimas forzadas y lenguaje arcaizante.
+Solución: Es un texto teatral (género dramático), en verso: un fragmento de La venganza de Don Mendo (1918), astracanada que parodia el drama histórico romántico. Características: diálogo entre personajes, con el nombre de cada uno ante su intervención; acotaciones entre paréntesis que indican gestos y acciones («Se seca una lágrima de cada ojo»); ausencia de narrador; escrito para ser representado; versificación (versos de distintas medidas, sobre todo octosílabos, con rima consonante); y, en este caso, humor por exageración, rimas forzadas y lenguaje arcaizante.
 Rúbrica (propia): B Identifica el texto teatral y explica al menos tres características. / R Identifica el tipo de texto pero explica solo una o dos características. / M No identifica el tipo de texto ni sus características.
 ```
 ```

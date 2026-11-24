@@ -20,7 +20,7 @@ Los enunciados de `Educulter/Content/pendiente/tribunal/*.json` se copian de `do
 | Examen | Pregunta | Texto extraído | En el JSON |
 |---|---|---|---|
 | 2017 O | Texto base | Palabras partidas a final de renglón («des-/de», «mag-/níficos», «bre-/ñas») | Unidas («desde», «magníficos», «breñas»). Los renglones se unen en sus párrafos originales |
-| 2017 O | M9 | «m2», «dm3» | «m²», «dm³» (superíndices perdidos en la extracción) |
+| 2017 O | M9 | «m2», «dm3» | Igual: el PDF imprime «m2» y «dm3» sin superíndice (comprobado en la imagen) |
 | 2017 O | M9 | Casillas en blanco sin marca | Se marca cada hueco con «___» |
 | 2019 O | M1 | Fracciones en imagen (no se extraen) | Transcritas de la imagen: a) 4/5 + 2/10 + 2/15 − 2/5; b) 3/4 + 2/6 − 3/12; c) 4/9 + 2/6 − 2/5; d) 2/6 + 6/12 + 7/6 − 2/3 |
 | 2019 O | M2 | Casillas en blanco sin marca | Se marca cada hueco con «___» |
@@ -30,6 +30,10 @@ Los enunciados de `Educulter/Content/pendiente/tribunal/*.json` se copian de `do
 | 2024 O | M2 | Operación en imagen (no se extrae) | [3/5 + 1/4 × 2/3] : [(1 + 1/5) × 16/4] |
 | 2024 O | L6 y L7 | Números «6. 7.» fuera de lugar | Cada enunciado con su número |
 | 2019 A | M3 | «23 a = 9591» | Igual: el PDF no lleva signo de multiplicación (producto implícito) |
+
+## 2 bis. Comprobaciones pedidas por la dirección (24/11/2026)
+
+- **M10 de 2017 O y de 2019 O**: no son iguales. 2017: «(16 x 8 + 12) : 4 - 3 (38 - 5 x 4) =», con signo menos impreso como guion corto (U+002D en la capa de texto, y así se ve en la imagen); resultado −19. 2019 O: «[(16 x 8 + 12) : 4] + [3 (38 - 5 x 4)] =», con corchetes y una suma entre ellos; resultado 89. La transcripción era correcta.
 
 ## 3. Tablas transcritas en línea
 

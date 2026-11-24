@@ -237,7 +237,7 @@ EXAMENES.append({
         ("Una abogada viaja cada 36 días a San Sebastián y un comercial cada 48 días. Hoy han coincidido los dos en la ciudad. ¿Cuántos días pasarán "
          "para que vuelvan a coincidir?", r_calculo("Calcula el m.c.m. y responde correctamente.")),
         ("Complete para que las igualdades sean ciertas, siguiendo el sistema internacional:\na) ___ kl = 1928 l   b) 0,53 hm = ___ m   c) 7 g = ___ kg\n"
-         "d) ___ ha = 70.000 m²   e) 9 ml = ___ dm³   f) 54 dam = ___ mm", r_lista("Completa", 6)),
+         "d) ___ ha = 70.000 m2   e) 9 ml = ___ dm3   f) 54 dam = ___ mm", r_lista("Completa", 6)),
         ("Resuelva la siguiente operación combinada:\n(16 x 8 + 12) : 4 - 3 (38 - 5 x 4) =", r_calculo("Resuelve correctamente la operación respetando la jerarquía.")),
     ],
 })
@@ -408,8 +408,8 @@ EXAMENES.append({
         ("¿De qué tipo de texto se trata? Enumere al menos tres características de este tipo de textos.",
          "Es un texto teatral (género dramático), en verso: un fragmento de La venganza de Don Mendo (1918), astracanada que parodia el drama histórico "
          "romántico. Características: diálogo entre personajes, con el nombre de cada uno ante su intervención; acotaciones entre paréntesis que indican "
-         "gestos y acciones («Se seca una lágrima de cada ojo»); ausencia de narrador; escrito para ser representado; versificación (octosílabos con rima "
-         "consonante); y, en este caso, humor por exageración, rimas forzadas y lenguaje arcaizante.",
+         "gestos y acciones («Se seca una lágrima de cada ojo»); ausencia de narrador; escrito para ser representado; versificación (versos de distintas medidas, sobre todo "
+         "octosílabos, con rima consonante); y, en este caso, humor por exageración, rimas forzadas y lenguaje arcaizante.",
          rub("Identifica el texto teatral y explica al menos tres características.", "Identifica el tipo de texto pero explica solo una o dos características.",
              "No identifica el tipo de texto ni sus características.")),
         ("Explique el significado de las siguientes palabras, atendiendo a su sentido en el texto.\ngrey\nmedrar\nhueste\norfebrería",

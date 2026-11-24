@@ -324,7 +324,7 @@
       "numero": 18,
       "numeroEnArea": 9,
       "area": "MAT",
-      "enunciado": "Complete para que las igualdades sean ciertas, siguiendo el sistema internacional:\na) ___ kl = 1928 l   b) 0,53 hm = ___ m   c) 7 g = ___ kg\nd) ___ ha = 70.000 m²   e) 9 ml = ___ dm³   f) 54 dam = ___ mm",
+      "enunciado": "Complete para que las igualdades sean ciertas, siguiendo el sistema internacional:\na) ___ kl = 1928 l   b) 0,53 hm = ___ m   c) 7 g = ___ kg\nd) ___ ha = 70.000 m2   e) 9 ml = ___ dm3   f) 54 dam = ___ mm",
       "competencias": [
         "MAT.UNI.CONV"
       ],
