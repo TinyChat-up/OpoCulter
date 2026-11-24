@@ -228,14 +228,16 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
   "preguntas": [ { "numero": 1, "numeroEnArea": 1, "area": "LEN|MAT", "enunciado": "<literal>",
                    "competencias": ["LEN.COM.RESU"], "solucionModelo": "…",
                    "rubrica": { "bien": "…", "regular": "…", "mal": "…" },
-                   "fuenteSolucion": "oficial|direccion", "fuenteRubrica": "oficial|direccion", "puntos": 1 } ],
+                   "fuenteSolucion": "direccion", "fuenteRubrica": "oficial|direccion", "notaRubrica": "(opcional)", "puntos": 1 } ],
   "notas": "(opcional)", "validacion": { "estado": "borrador", "revisor": "", "fecha": "" } }
 ```
 
 - **Enunciados**: literales. Las correcciones de OCR, las tablas transcritas en línea y las figuras descritas entre corchetes se registran en `docs/examenes/CORRECCIONES_OCR.md`.
 - **Textos protegidos** (Salinas en 2019 O; Laforet en 2019 A): `"protegido": true`, `texto: null` y aviso de protección. Las citas del texto dentro de un enunciado se sustituyen por «[Cita del texto base protegido: consúltese en el PDF oficial]».
 - **Pregunta anulada** (2022 O L7): `"anulada": true` y `puntos: 0`.
-- **Rúbricas**: las de 2026 son las plantillas oficiales copiadas literalmente (`fuenteSolucion` y `fuenteRubrica`: `oficial`). Las demás son de redacción propia según ese modelo (`direccion`). La plantilla oficial da criterios, no soluciones: en 2026 el `solucionModelo` también es de redacción propia.
+- **Rúbricas**: las de 2026 son las plantillas oficiales copiadas literalmente (`fuenteRubrica: "oficial"`). Las demás son de redacción propia según ese modelo (`direccion`). `fuenteSolucion` es siempre `direccion`: la plantilla oficial da criterios, no soluciones. Cuando una rúbrica oficial no casa del todo con la pregunta, `notaRubrica` explica cómo la aplica la app (2026 O L6 y 2026 A L5).
+- **Erratas y ambigüedades de los enunciados oficiales** (D-075): el enunciado no se toca. La `solucionModelo` termina con una «Nota de la app» que explica cómo se resuelve: se aceptan todas las respuestas defendibles y, en las definiciones imprecisas, se da la respuesta esperada más la definición de la NGLE.
+- **Penalización ortográfica**: `pendiente/tribunal/reglas.json` (`palabraIncorrecta`, `tilde`, `unirSepararPalabras`, `abreviatura`, `limite: null`, `fuente` y `notas` con la redacción literal del BOCM). En la autocorrección del Tribunal (05E), el usuario indica cuántas faltas ha cometido y la app resta según esta regla, sin límite.
 - **Soluciones de Matemáticas**: se calculan con aritmética exacta en `scripts/tribunal/matematicas.py`. `scripts/tribunal/construir.py` genera los JSON y la hoja de revisión `docs/examenes/SOLUCIONES_REVISION_<n>.md`.
 - **Validación**: `python3 scripts/validar_tribunal.py` (comprueba además que todo JSON de `Content/` es válido).
 

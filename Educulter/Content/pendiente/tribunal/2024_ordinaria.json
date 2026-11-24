@@ -148,7 +148,7 @@
       "competencias": [
         "LEN.LEX.DEFIN"
       ],
-      "solucionModelo": "Redención (R*******N); elástico (E******O); arquitectura (A*********A; la palabra tiene 12 letras y la pista indica 11); química (Q*****A); metal (M****L; la palabra tiene 5 letras y la pista indica 6); teólogo (T*****O); paradójico (P********O); apogeo (A****O); silogismo (S*******O); oboe (O**E).",
+      "solucionModelo": "Redención (R*******N); elástico (E******O); arquitectura (A*********A); química (Q*****A); metal (M****L); teólogo (T*****O); paradójico (P********O); apogeo (A****O); silogismo (S*******O); oboe (O**E). Nota de la app: la pista A*********A indica 11 letras, pero ARQUITECTURA tiene 12, y la pista M****L indica 6, pero METAL tiene 5. Se aceptan ARQUITECTURA y METAL.",
       "rubrica": {
         "bien": "Escribe correctamente las 10 palabras.",
         "regular": "Comete uno o dos errores.",
@@ -310,7 +310,7 @@
       "competencias": [
         "MAT.GEO.VOLUMEN"
       ],
-      "solucionModelo": "1) A (prisma de base cuadrada): 13 cm × 13 cm × 22 cm = 3718 cm³ = 3,718 l. 2) B (prisma pentagonal): área de la base = perímetro × apotema : 2 = (5 × 12,5) × 8,57 : 2 = 267,8125 cm². 3) Volumen de B: 267,8125 × 12 = 3213,75 cm³ = 3,21375 l. 4) 3,718 − 3,21375 = 0,50425 l. Resultado: a) 3,718 litros; b) le sobrará agua: unos 0,504 l (504,25 cm³).",
+      "solucionModelo": "1) A (prisma de base cuadrada): 13 cm × 13 cm × 22 cm = 3718 cm³ = 3,718 l. 2) B (prisma pentagonal): área de la base = perímetro × apotema : 2 = (5 × 12,5) × 8,57 : 2 = 267,8125 cm². 3) Volumen de B: 267,8125 × 12 = 3213,75 cm³ = 3,21375 l. 4) 3,718 − 3,21375 = 0,50425 l. Resultado: a) 3,718 litros; b) le sobrará agua: unos 0,504 l (504,25 cm³). Nota de la app: en un pentágono regular de 12,5 cm de lado la apotema mide unos 8,60 cm, no 8,57 cm. Se usa el dato del enunciado; con 8,60 cm, B tendría unos 3,225 l y la conclusión (sobra agua) no cambia.",
       "rubrica": {
         "bien": "Responde correctamente los 2 elementos.",
         "regular": "Comete un error en uno de los 2 elementos.",

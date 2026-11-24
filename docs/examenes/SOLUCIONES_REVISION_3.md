@@ -1,6 +1,24 @@
 # Soluciones del Modo Tribunal · hoja de revisión (parte 3 de 3)
 
-Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de `Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo.
+Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de `Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo. Las soluciones son siempre de redacción propia. Las «Notas de la app» explican cómo se resuelven las erratas y ambigüedades de los enunciados oficiales, que no se alteran.
+```
+OF.2026.A · L6 · LEN.REC.FIGURAS
+Responda a las siguientes cuestiones literarias y métricas:
+Solución: a) Anáfora de «¡Ay…!» al comienzo de tres versos seguidos (o «por el llano, por el viento»): intensifica el lamento y la angustia y marca el ritmo. b) «La muerte me está mirando / desde las torres de Córdoba» (también «la muerte me espera»). c) «jaca negra», «luna roja», «luna grande», «jaca valerosa». d) Por-el-lla-no-por-el-vien-to: 8 sílabas; ja-ca-ne-gra-lu-na-ro-ja: 8 sílabas. Ambos son octosílabos (terminación llana); tienen la misma medida.
+Rúbrica (oficial 2026): B Identifica recursos literarios y realiza bien la medida. / R Acierta sólo parte de la cuestión. / M No identifica los recursos o mide mal ambos versos.
+```
+```
+OF.2026.A · L7 · LEN.ORT.HOM
+Seleccione la opción correcta en cada caso y justifique brevemente su elección.
+Solución: Por qué: interrogativa directa (preposición + interrogativo tónico). Aun: equivale a «incluso» («incluso sabiendo el camino»). Tuvo: verbo tener («tubo» es una pieza cilíndrica hueca). Ay: interjección de dolor o lamento. Dé: forma del verbo dar (presente de subjuntivo), con tilde diacrítica frente a la preposición «de». Tú: pronombre personal, sujeto de «conoces». Ahí: adverbio de lugar («hay» es del verbo haber). Prever: «ver con anticipación», se conjuga como ver; «preveer» es incorrecto.
+Rúbrica (oficial 2026): B Selecciona y explica correctamente todas las opciones. / R Tiene uno o dos fallos menores. / M Comete varios errores.
+```
+```
+OF.2026.A · L8 · LEN.REC.FIGURAS
+Relacione cada término con su definición, siguiendo el ejemplo.
+Solución: 1 I (dado como ejemplo); 2 C; 3 E; 4 J; 5 F; 6 H; 7 B; 8 D; 9 A; 10 G. Nota de la app: es la respuesta esperada por el tribunal (4 J, 5 F), pero las definiciones J y F se solapan. Según la NGLE, la preposición es una palabra invariable que introduce un complemento (su término) y lo subordina a otra palabra; la conjunción une palabras, grupos u oraciones (coordinantes) o introduce oraciones subordinadas (subordinantes).
+Rúbrica (oficial 2026): B Relaciona bien los términos con las definiciones. / R Comete un error. / M Comete más de un error.
+```
 ```
 OF.2026.A · L9 · LEN.FOR.DERIV
 Indique si las siguientes palabras son primitivas, derivadas o compuestas. Justifique brevemente su respuesta. Ejemplo: paraguas = compuesta, porqu…
@@ -46,7 +64,7 @@ Rúbrica (oficial 2026): B Resuelve bien la proporcionalidad. / R Comete un erro
 ```
 OF.2026.A · M6 · MAT.PRO.LAPLACE
 Tenemos 12 tarjetas numeradas del 1 al 12. Relacione cada suceso con su probabilidad.
-Solución: 1) 12 casos posibles; regla de Laplace. 2) Par: 6/12 = 1/2. Primo (2, 3, 5, 7, 11): 5/12. Mayor que 10 (11, 12): 2/12 = 1/6. Menor que 13: 12/12 = 1 (suceso seguro). Resultado: Par 1/2; primo 5/12; mayor que 10 1/6; menor que 13 1.
+Solución: 1) 12 casos posibles; regla de Laplace. 2) Par: 6/12 = 1/2. Primo (2, 3, 5, 7, 11): 5/12. Mayor que 10 (11, 12): 2/12 = 1/6. Menor que 13: 12/12 = 1 (suceso seguro). Resultado: Par 1/2; primo 5/12; mayor que 10 1/6; menor que 13 1. Nota de la app: la columna de probabilidades del cuadernillo está vacía, así que «Relacione» se interpreta como «escriba la probabilidad» de cada suceso.
 Rúbrica (oficial 2026): B Relaciona bien los sucesos y las probabilidades. / R Comete un error. / M Comete varios errores.
 ```
 ```

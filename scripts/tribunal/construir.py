@@ -175,6 +175,7 @@ EXAMENES.append({
     "fuente": "https://www.comunidad.madrid/docs/assets/2019/11/14/edu_rrhh_0371_2017_examen_comun.pdf",
     "textoBase": {"texto": texto2017, "autor": "Gustavo Adolfo Bécquer", "obra": "El monte de las ánimas", "protegido": False, "anioMuerteAutor": 1870},
     "puntosNota": "El cuadernillo de 2017 no indica la puntuación de cada pregunta (9 de Lengua y 10 de Matemáticas); se asigna 1 punto a cada una.",
+    "avisoExtra": " Puntuación por pregunta asignada por la app; el cuadernillo no la indica.",
     "LEN": [
         ("Resuma el contenido del texto.",
          "El narrador, despertado en la noche de difuntos por el doble de las campanas, decide escribir una tradición que oyó en Soria. "
@@ -526,8 +527,8 @@ EXAMENES.append({
              "Comete más de dos errores.")),
         ("Escriba la palabra correcta para la definición propuesta, atendiendo a las indicaciones dadas sobre la primera y última letra de cada término.\n"
          + "\n".join(lin8),
-         "Redención (R*******N); elástico (E******O); arquitectura (A*********A; la palabra tiene 12 letras y la pista indica 11); química (Q*****A); "
-         "metal (M****L; la palabra tiene 5 letras y la pista indica 6); teólogo (T*****O); paradójico (P********O); apogeo (A****O); silogismo "
+         "Redención (R*******N); elástico (E******O); arquitectura (A*********A); química (Q*****A); "
+         "metal (M****L); teólogo (T*****O); paradójico (P********O); apogeo (A****O); silogismo "
          "(S*******O); oboe (O**E).", rub("Escribe correctamente las 10 palabras.", "Comete uno o dos errores.", "Comete más de dos errores.")),
         ("Escriba tres palabras derivadas para cada uno de los términos propuestos.\nÁrbol, Agua, Pan, Moneda",
          "Árbol: arboleda, arbolado, arbolito. Agua: aguacero, aguado, aguador (aguar). Pan: panadero, panadería, panecillo (empanada). Moneda: monedero, "
@@ -621,8 +622,7 @@ EXAMENES.append({
          "singular; «habían habido» es incorrecto. Vendría: en estilo indirecto con verbo de lengua en pasado («dijo»), el futuro del enunciado original pasa "
          "a condicional (concordancia de tiempos); «vendrá» se admite si el hecho sigue siendo futuro respecto al momento en que se habla. Demasiado: "
          "concuerda en masculino singular con «ruido». Fuimos: pretérito perfecto simple de ir («fuemos» es un vulgarismo). Haya: presente de subjuntivo "
-         "de haber («haiga» es un vulgarismo). Suyo: el posesivo es la opción esperada en registro culto; «de él» también es gramatical y deshace la "
-         "ambigüedad de «suyo» (ver dudas)."),
+         "de haber («haiga» es un vulgarismo). Suyo: el posesivo es la opción esperada en registro culto."),
         ("Defina los siguientes términos.\nTérmino / Definición\nNarrador\nNovela\nHipérbole\nAdjetivo",
          "Narrador: voz que cuenta los hechos en un texto narrativo; puede ser interno (en 1.ª persona, protagonista o testigo) o externo (en 3.ª persona, "
          "omnisciente u observador). Novela: obra literaria narrativa extensa, en prosa y de ficción, con una trama compleja, personajes, tiempo y espacio "
@@ -759,6 +759,39 @@ EXAMENES.append({
     ],
 })
 
+# ======================================================================= NOTAS DE LA APP (decisiones de la dirección, 24/11/2026)
+# Erratas y ambigüedades de los enunciados oficiales: el enunciado no se toca; la nota explica cómo se resuelve.
+NOTAS = {
+    ("OF.2017.O", "MAT", 1): "la división 8888 : 40 no es exacta (b = 222,2). Así figura en el cuadernillo oficial; se acepta b = 222,2.",
+    ("OF.2024.O", "LEN", 8): "la pista A*********A indica 11 letras, pero ARQUITECTURA tiene 12, y la pista M****L indica 6, pero METAL tiene 5. "
+                            "Se aceptan ARQUITECTURA y METAL.",
+    ("OF.2024.O", "MAT", 7): "en un pentágono regular de 12,5 cm de lado la apotema mide unos 8,60 cm, no 8,57 cm. Se usa el dato del enunciado; "
+                            "con 8,60 cm, B tendría unos 3,225 l y la conclusión (sobra agua) no cambia.",
+    ("OF.2022.O", "MAT", 1): "el enunciado pide «más abalorios en cada uno», pero repartir cada color por igual entre los collares lleva al m.c.d. "
+                            "(6 collares de 9 abalorios). Se aceptan también, si se justifican, los otros repartos en collares iguales "
+                            "(3 collares de 18, 2 de 27) y un solo collar con los 54 abalorios, que es literalmente el que más lleva.",
+    ("OF.2026.O", "LEN", 7): "se aceptan las dos opciones en dos casos. «Vendría» es la esperada (estilo indirecto en pasado), pero «vendrá» es "
+                            "correcta si el hecho sigue siendo futuro cuando se habla. «Suyo» es la esperada, pero «de él» también es gramatical "
+                            "y evita la ambigüedad de «suyo».",
+    ("OF.2026.A", "MAT", 6): "la columna de probabilidades del cuadernillo está vacía, así que «Relacione» se interpreta como «escriba la "
+                            "probabilidad» de cada suceso.",
+    ("OF.2026.O", "LEN", 9): "es la respuesta esperada por el tribunal, pero dos definiciones del enunciado son imprecisas. Según la NGLE, el "
+                            "sujeto es una función sintáctica: el elemento que concuerda en número y persona con el verbo, haga o no la acción "
+                            "(en «El ladrón fue detenido», el sujeto no detiene). Y el verbo es una clase de palabra, no una «parte de la "
+                            "oración»: expresa acciones, procesos o estados, se flexiona en persona, número, tiempo, aspecto y modo, y es el "
+                            "núcleo del predicado.",
+    ("OF.2026.A", "LEN", 8): "es la respuesta esperada por el tribunal (4 J, 5 F), pero las definiciones J y F se solapan. Según la NGLE, la "
+                            "preposición es una palabra invariable que introduce un complemento (su término) y lo subordina a otra palabra; la "
+                            "conjunción une palabras, grupos u oraciones (coordinantes) o introduce oraciones subordinadas (subordinantes).",
+}
+# Cómo aplica la app las rúbricas oficiales que no casan del todo con la pregunta (la rúbrica se copia tal cual).
+NOTAS_RUBRICA = {
+    ("OF.2026.O", "LEN", 6): "La rúbrica oficial habla de «clases de palabras», pero la pregunta pide el análisis morfológico completo. La app "
+                            "aplica: Bien, las 4 palabras con su clase y todos sus rasgos correctos; Regular, un error (en la clase o en un "
+                            "rasgo); Mal, más de un error.",
+    ("OF.2026.A", "LEN", 5): "La pregunta tiene 4 apartados (a–d). La app aplica: Bien, los 4 correctos; Regular, 2 o 3 correctos; Mal, 0 o 1.",
+}
+
 # ======================================================================= SALIDA
 
 
@@ -784,13 +817,18 @@ def construir(ex):
                 b, r, m = OFICIAL[(letra, area)][i - 1]
                 rubrica = {"bien": b, "regular": r, "mal": m}
             n_global += 1
+            nota = NOTAS.get((ex["id"], area, i))
+            if nota:
+                solucion = solucion.rstrip() + " Nota de la app: " + nota
             p = {"numero": n_global, "numeroEnArea": i, "area": area, "enunciado": enunciado,
                  "competencias": competencias(anio, conv, nombre_area, i), "solucionModelo": solucion, "rubrica": rubrica,
-                 "fuenteSolucion": "oficial" if oficial else "direccion", "fuenteRubrica": "oficial" if oficial else "direccion", "puntos": extra.get("puntos", 1)}
+                 "fuenteSolucion": "direccion", "fuenteRubrica": "oficial" if oficial else "direccion", "puntos": extra.get("puntos", 1)}
+            if (ex["id"], area, i) in NOTAS_RUBRICA:
+                p["notaRubrica"] = NOTAS_RUBRICA[(ex["id"], area, i)]
             if extra.get("anulada"):
                 p["anulada"] = True
             preguntas.append(p)
-    aviso = AVISO + (AVISO_PROTEGIDO if ex["textoBase"]["protegido"] else "")
+    aviso = AVISO + (AVISO_PROTEGIDO if ex["textoBase"]["protegido"] else "") + ex.get("avisoExtra", "")
     doc = {"id": ex["id"], "anio": anio, "convocatoria": ex["convocatoria"], "duracionMin": 90, "fuente": ex["fuente"]}
     if "fuentePlantilla" in ex:
         doc["fuentePlantilla"] = ex["fuentePlantilla"]
@@ -813,13 +851,16 @@ def hoja(docs, limite=40_000):
             resumen = primera if len(primera) <= 150 else primera[:147].rstrip() + "…"
             r = p["rubrica"]
             fuente = "oficial 2026" if p["fuenteRubrica"] == "oficial" else "propia"
+            nr = f"\nNota sobre la rúbrica: {p['notaRubrica']}" if p.get("notaRubrica") else ""
             bloques.append(
                 f"```\n{d['id']} · {letra}{p['numeroEnArea']} · {', '.join(p['competencias'])}{' · ANULADA' if p.get('anulada') else ''}\n"
-                f"{resumen}\nSolución: {p['solucionModelo']}\nRúbrica ({fuente}): B {r['bien']} / R {r['regular']} / M {r['mal']}\n```\n")
+                f"{resumen}\nSolución: {p['solucionModelo']}\nRúbrica ({fuente}): B {r['bien']} / R {r['regular']} / M {r['mal']}{nr}\n```\n")
     cabecera = ("# Soluciones del Modo Tribunal · hoja de revisión (parte {n} de {t})\n\n"
                 "Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de "
                 "`Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. "
-                "Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo.\n")
+                "Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo. "
+                "Las soluciones son siempre de redacción propia. Las «Notas de la app» explican cómo se resuelven las erratas y "
+                "ambigüedades de los enunciados oficiales, que no se alteran.\n")
     partes, actual = [], ""
     for b in bloques:
         if len(cabecera) + len(actual) + len(b) > limite - 200:

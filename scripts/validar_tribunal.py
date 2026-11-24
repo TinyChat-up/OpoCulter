@@ -85,6 +85,10 @@ def validar_examen(nombre, d, competencias, anio_actual, errores, avisos, fuera)
             errores.append(f"{pd}: área «{p.get('area')}» no válida")
         if p.get("fuenteSolucion") not in ("oficial", "direccion"):
             errores.append(f"{pd}: fuenteSolucion no válida")
+        if p.get("fuenteRubrica") not in ("oficial", "direccion"):
+            errores.append(f"{pd}: fuenteRubrica no válida")
+        if (p.get("fuenteRubrica") == "oficial") != (d["anio"] == 2026):
+            errores.append(f"{pd}: solo las rúbricas de 2026 son oficiales")
         if not isinstance(p.get("puntos"), (int, float)) or p["puntos"] < 0 or (p["puntos"] == 0 and not p.get("anulada")):
             errores.append(f"{pd}: puntos no válidos")
         r = p.get("rubrica") or {}
@@ -130,7 +134,24 @@ def main(argv):
     print(f"  JSON de Content/ comprobados: {total}")
     dir_trib = raiz / "pendiente" / "tribunal"
     n_preg = 0
+    ruta_reglas = dir_trib / "reglas.json"
+    if ruta_reglas.exists():
+        try:
+            rg = json.loads(ruta_reglas.read_text(encoding="utf-8"))
+            for c in ("palabraIncorrecta", "tilde", "unirSepararPalabras", "abreviatura"):
+                if not isinstance(rg.get(c), (int, float)) or rg[c] <= 0:
+                    errores.append(f"reglas.json: «{c}» debe ser un número positivo")
+            if "limite" not in rg or (rg["limite"] is not None and not isinstance(rg["limite"], (int, float))):
+                errores.append("reglas.json: «limite» debe ser null (sin límite) o un número")
+            if not rg.get("fuente") or not rg.get("notas"):
+                errores.append("reglas.json: faltan «fuente» o «notas»")
+            print(f"  tribunal/reglas.json: palabra {rg.get('palabraIncorrecta')}, tilde {rg.get('tilde')}, "
+                  f"unir/separar {rg.get('unirSepararPalabras')}, abreviatura {rg.get('abreviatura')}, límite {rg.get('limite')}")
+        except json.JSONDecodeError:
+            pass
     for ruta in sorted(dir_trib.glob("*.json")):
+        if ruta.name == "reglas.json":
+            continue
         try:
             d = json.loads(ruta.read_text(encoding="utf-8"))
         except json.JSONDecodeError:

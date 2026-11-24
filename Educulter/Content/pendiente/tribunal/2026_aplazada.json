@@ -29,7 +29,7 @@
         "regular": "Recoge solo parte del sentido.",
         "mal": "No interpreta adecuadamente el poema."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -47,7 +47,7 @@
         "regular": "Menciona al autor con datos incompletos.",
         "mal": "No identifica al autor o se equivoca."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -65,7 +65,7 @@
         "regular": "Aporta una justificación parcial.",
         "mal": "No justifica o lo hace incorrectamente."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -83,7 +83,7 @@
         "regular": "Comete un error o una justificación insuficiente.",
         "mal": "Comete varios errores de clasificación."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -102,9 +102,10 @@
         "regular": "Resuelve tres partes con precisión.",
         "mal": "Comete varios errores."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "notaRubrica": "La pregunta tiene 4 apartados (a–d). La app aplica: Bien, los 4 correctos; Regular, 2 o 3 correctos; Mal, 0 o 1."
     },
     {
       "numero": 6,
@@ -120,7 +121,7 @@
         "regular": "Acierta sólo parte de la cuestión.",
         "mal": "No identifica los recursos o mide mal ambos versos."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -138,7 +139,7 @@
         "regular": "Tiene uno o dos fallos menores.",
         "mal": "Comete varios errores."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -150,13 +151,13 @@
       "competencias": [
         "LEN.REC.FIGURAS"
       ],
-      "solucionModelo": "1 I (dado como ejemplo); 2 C; 3 E; 4 J; 5 F; 6 H; 7 B; 8 D; 9 A; 10 G.",
+      "solucionModelo": "1 I (dado como ejemplo); 2 C; 3 E; 4 J; 5 F; 6 H; 7 B; 8 D; 9 A; 10 G. Nota de la app: es la respuesta esperada por el tribunal (4 J, 5 F), pero las definiciones J y F se solapan. Según la NGLE, la preposición es una palabra invariable que introduce un complemento (su término) y lo subordina a otra palabra; la conjunción une palabras, grupos u oraciones (coordinantes) o introduce oraciones subordinadas (subordinantes).",
       "rubrica": {
         "bien": "Relaciona bien los términos con las definiciones.",
         "regular": "Comete un error.",
         "mal": "Comete más de un error."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -174,7 +175,7 @@
         "regular": "Comete un error de clasificación.",
         "mal": "Comete varios errores o no justifica."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -192,7 +193,7 @@
         "regular": "Análisis parcialmente correcto.",
         "mal": "Análisis incorrecto o muy incompleto."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -210,7 +211,7 @@
         "regular": "Comete un error de cálculo menor.",
         "mal": "No resuelve el problema."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -228,7 +229,7 @@
         "regular": "Tiene una conversión o suma incorrecta.",
         "mal": "No completa correctamente la conversión."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -246,7 +247,7 @@
         "regular": "Acierta solo uno de los valores.",
         "mal": "No obtiene los valores correctos."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -264,7 +265,7 @@
         "regular": "Comete un error en el orden.",
         "mal": "El orden es incorrecto en varios casos."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -282,7 +283,7 @@
         "regular": "Comete un error aislado de cálculo.",
         "mal": "No mantiene la proporción."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -294,13 +295,13 @@
       "competencias": [
         "MAT.PRO.LAPLACE"
       ],
-      "solucionModelo": "1) 12 casos posibles; regla de Laplace. 2) Par: 6/12 = 1/2. Primo (2, 3, 5, 7, 11): 5/12. Mayor que 10 (11, 12): 2/12 = 1/6. Menor que 13: 12/12 = 1 (suceso seguro). Resultado: Par 1/2; primo 5/12; mayor que 10 1/6; menor que 13 1.",
+      "solucionModelo": "1) 12 casos posibles; regla de Laplace. 2) Par: 6/12 = 1/2. Primo (2, 3, 5, 7, 11): 5/12. Mayor que 10 (11, 12): 2/12 = 1/6. Menor que 13: 12/12 = 1 (suceso seguro). Resultado: Par 1/2; primo 5/12; mayor que 10 1/6; menor que 13 1. Nota de la app: la columna de probabilidades del cuadernillo está vacía, así que «Relacione» se interpreta como «escriba la probabilidad» de cada suceso.",
       "rubrica": {
         "bien": "Relaciona bien los sucesos y las probabilidades.",
         "regular": "Comete un error.",
         "mal": "Comete varios errores."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -318,7 +319,7 @@
         "regular": "Acierta solo una de las dos partes.",
         "mal": "No resuelve la cuestión."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -336,7 +337,7 @@
         "regular": "Comete un error.",
         "mal": "Comete varios errores."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -354,7 +355,7 @@
         "regular": "Comete un error.",
         "mal": "Comete varios errores."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -372,7 +373,7 @@
         "regular": "Comete un error de proceso o cálculo.",
         "mal": "No respeta la jerarquía de operaciones."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     }

@@ -29,7 +29,7 @@
         "regular": "Resume parcialmente el contenido principal.",
         "mal": "No identifica bien el tema o el resumen es incorrecto o insuficiente."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -47,7 +47,7 @@
         "regular": "Identifica el texto, pero explica solo algunos rasgos del texto.",
         "mal": "No identifica correctamente el tipo de texto ni sus características."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -65,7 +65,7 @@
         "regular": "Menciona solo parte de los datos o los explica con imprecisión.",
         "mal": "No identifica correctamente autor, obra o contexto."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -83,7 +83,7 @@
         "regular": "Presenta un error en los prefijos o en algún significado.",
         "mal": "Comete varios errores o no completa la actividad."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -101,7 +101,7 @@
         "regular": "Da una explicación general, pero incompleta.",
         "mal": "No define correctamente el diccionario ni sus usos."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -119,9 +119,10 @@
         "regular": "Comete un error en la clasificación.",
         "mal": "Comete más de un error o no responde."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "notaRubrica": "La rúbrica oficial habla de «clases de palabras», pero la pregunta pide el análisis morfológico completo. La app aplica: Bien, las 4 palabras con su clase y todos sus rasgos correctos; Regular, un error (en la clase o en un rasgo); Mal, más de un error."
     },
     {
       "numero": 7,
@@ -131,13 +132,13 @@
       "competencias": [
         "LEN.VER.NORMA"
       ],
-      "solucionModelo": "Anduve: pretérito perfecto simple irregular de andar («andé» es incorrecto). Había: «haber» impersonal (existencial) solo se usa en 3.ª persona del singular; «habían habido» es incorrecto. Vendría: en estilo indirecto con verbo de lengua en pasado («dijo»), el futuro del enunciado original pasa a condicional (concordancia de tiempos); «vendrá» se admite si el hecho sigue siendo futuro respecto al momento en que se habla. Demasiado: concuerda en masculino singular con «ruido». Fuimos: pretérito perfecto simple de ir («fuemos» es un vulgarismo). Haya: presente de subjuntivo de haber («haiga» es un vulgarismo). Suyo: el posesivo es la opción esperada en registro culto; «de él» también es gramatical y deshace la ambigüedad de «suyo» (ver dudas).",
+      "solucionModelo": "Anduve: pretérito perfecto simple irregular de andar («andé» es incorrecto). Había: «haber» impersonal (existencial) solo se usa en 3.ª persona del singular; «habían habido» es incorrecto. Vendría: en estilo indirecto con verbo de lengua en pasado («dijo»), el futuro del enunciado original pasa a condicional (concordancia de tiempos); «vendrá» se admite si el hecho sigue siendo futuro respecto al momento en que se habla. Demasiado: concuerda en masculino singular con «ruido». Fuimos: pretérito perfecto simple de ir («fuemos» es un vulgarismo). Haya: presente de subjuntivo de haber («haiga» es un vulgarismo). Suyo: el posesivo es la opción esperada en registro culto. Nota de la app: se aceptan las dos opciones en dos casos. «Vendría» es la esperada (estilo indirecto en pasado), pero «vendrá» es correcta si el hecho sigue siendo futuro cuando se habla. «Suyo» es la esperada, pero «de él» también es gramatical y evita la ambigüedad de «suyo».",
       "rubrica": {
         "bien": "Selecciona correctamente las opciones y justifica adecuadamente.",
         "regular": "Tiene un error o justificaciones poco precisas.",
         "mal": "Presenta varios errores o no justifica."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -155,7 +156,7 @@
         "regular": "Define parcialmente los términos, con alguna imprecisión.",
         "mal": "No define correctamente la mayoría de los términos."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -167,13 +168,13 @@
       "competencias": [
         "LEN.CLA.SUSTADJ"
       ],
-      "solucionModelo": "1 A (adjetivo); 2 B (sujeto); 3 C (verbo); 4 E (hipérbole); 5 F (narrador); 6 H (oración); 7 D (pronombre); 8 G (sustantivo, dado como ejemplo).",
+      "solucionModelo": "1 A (adjetivo); 2 B (sujeto); 3 C (verbo); 4 E (hipérbole); 5 F (narrador); 6 H (oración); 7 D (pronombre); 8 G (sustantivo, dado como ejemplo). Nota de la app: es la respuesta esperada por el tribunal, pero dos definiciones del enunciado son imprecisas. Según la NGLE, el sujeto es una función sintáctica: el elemento que concuerda en número y persona con el verbo, haga o no la acción (en «El ladrón fue detenido», el sujeto no detiene). Y el verbo es una clase de palabra, no una «parte de la oración»: expresa acciones, procesos o estados, se flexiona en persona, número, tiempo, aspecto y modo, y es el núcleo del predicado.",
       "rubrica": {
         "bien": "Relaciona correctamente todos los términos con sus definiciones.",
         "regular": "Comete un error en las relaciones.",
         "mal": "Comete varios errores o no completa la actividad."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -191,7 +192,7 @@
         "regular": "El análisis es parcialmente correcto.",
         "mal": "El análisis es incorrecto o incompleto."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -209,7 +210,7 @@
         "regular": "Responde de forma parcialmente correcta.",
         "mal": "La respuesta es incorrecta o incompleta."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -227,7 +228,7 @@
         "regular": "Comete un error en una de las potencias.",
         "mal": "Comete más de un error."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -245,7 +246,7 @@
         "regular": "Plantea bien el problema, pero comete un error de cálculo.",
         "mal": "No resuelve correctamente el problema."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -263,7 +264,7 @@
         "regular": "Comete un error en una equivalencia.",
         "mal": "Presenta más de un error."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -281,7 +282,7 @@
         "regular": "Plantea bien el procedimiento, pero comete un error.",
         "mal": "No calcula correctamente la probabilidad."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -299,7 +300,7 @@
         "regular": "Comete un error de cálculo.",
         "mal": "No resuelve correctamente."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -317,7 +318,7 @@
         "regular": "Realiza parte del procedimiento correctamente.",
         "mal": "No resuelve correctamente el problema."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -335,7 +336,7 @@
         "regular": "Comete uno o dos errores.",
         "mal": "Comete más de dos errores."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -353,7 +354,7 @@
         "regular": "Comete un error en la tabla.",
         "mal": "No completa correctamente la tabla."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     },
@@ -371,7 +372,7 @@
         "regular": "Comete un error en una equivalencia.",
         "mal": "Presenta más de un error."
       },
-      "fuenteSolucion": "oficial",
+      "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1
     }

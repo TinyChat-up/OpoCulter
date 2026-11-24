@@ -203,7 +203,7 @@
       "competencias": [
         "MAT.DIV.MCD"
       ],
-      "solucionModelo": "1) Para repartir por igual cada color en los collares, el número de collares debe dividir a 24, 12 y 18. 2) m.c.d.(24, 12, 18) = 6. 3) 24 : 6 = 4 blancos; 12 : 6 = 2 rojos; 18 : 6 = 3 azules. Resultado: 6 collares, cada uno con 4 blancos, 2 rojos y 3 azules (9 abalorios). [Lectura del enunciado dudosa: ver la hoja de revisión.]",
+      "solucionModelo": "1) Para repartir por igual cada color en los collares, el número de collares debe dividir a 24, 12 y 18. 2) m.c.d.(24, 12, 18) = 6. 3) 24 : 6 = 4 blancos; 12 : 6 = 2 rojos; 18 : 6 = 3 azules. Resultado: 6 collares, cada uno con 4 blancos, 2 rojos y 3 azules (9 abalorios). Nota de la app: el enunciado pide «más abalorios en cada uno», pero repartir cada color por igual entre los collares lleva al m.c.d. (6 collares de 9 abalorios). Se aceptan también, si se justifican, los otros repartos en collares iguales (3 collares de 18, 2 de 27) y un solo collar con los 54 abalorios, que es literalmente el que más lleva.",
       "rubrica": {
         "bien": "Aplica el m.c.d. y da el reparto correcto.",
         "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",

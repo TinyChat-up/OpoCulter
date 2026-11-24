@@ -185,7 +185,7 @@ g = gcd(gcd(24, 12), 18)
 assert g == 6
 sol(E, 1, ["Para repartir por igual cada color en los collares, el número de collares debe dividir a 24, 12 y 18.",
            "m.c.d.(24, 12, 18) = 6.", "24 : 6 = 4 blancos; 12 : 6 = 2 rojos; 18 : 6 = 3 azules."],
-    "6 collares, cada uno con 4 blancos, 2 rojos y 3 azules (9 abalorios). [Lectura del enunciado dudosa: ver la hoja de revisión.]")
+    "6 collares, cada uno con 4 blancos, 2 rojos y 3 azules (9 abalorios).")
 txt, _ = orden([("Lucas (3/4)", F(3, 4)), ("Ainara (1/2)", F(1, 2)), ("Berta (2/5)", F(2, 5))])
 sol(E, 2, ["Denominador común 20: 1/2 = 10/20; 3/4 = 15/20; 2/5 = 8/20.", "Como la revista es la misma, más fracción = más páginas."], f"Lucas ha leído más: {txt}.")
 a_ = F("71.46") - F("14.7") * F("5.32") + F("13.051")

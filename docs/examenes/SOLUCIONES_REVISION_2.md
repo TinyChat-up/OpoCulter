@@ -1,6 +1,6 @@
 # Soluciones del Modo Tribunal · hoja de revisión (parte 2 de 3)
 
-Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de `Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo.
+Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de `Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo. Las soluciones son siempre de redacción propia. Las «Notas de la app» explican cómo se resuelven las erratas y ambigüedades de los enunciados oficiales, que no se alteran.
 ```
 OF.2022.O · L10 · LEN.SIN.COMPL
 Analice sintácticamente la siguiente oración:
@@ -10,7 +10,7 @@ Rúbrica (propia): B Realiza un análisis sintáctico correcto y completo de la 
 ```
 OF.2022.O · M1 · MAT.DIV.MCD
 María quiere hacer varios collares. Tiene 24 abalorios blancos, 12 rojos y 18 azules. Si quiere poner la misma cantidad de abalorios de cada color…
-Solución: 1) Para repartir por igual cada color en los collares, el número de collares debe dividir a 24, 12 y 18. 2) m.c.d.(24, 12, 18) = 6. 3) 24 : 6 = 4 blancos; 12 : 6 = 2 rojos; 18 : 6 = 3 azules. Resultado: 6 collares, cada uno con 4 blancos, 2 rojos y 3 azules (9 abalorios). [Lectura del enunciado dudosa: ver la hoja de revisión.]
+Solución: 1) Para repartir por igual cada color en los collares, el número de collares debe dividir a 24, 12 y 18. 2) m.c.d.(24, 12, 18) = 6. 3) 24 : 6 = 4 blancos; 12 : 6 = 2 rojos; 18 : 6 = 3 azules. Resultado: 6 collares, cada uno con 4 blancos, 2 rojos y 3 azules (9 abalorios). Nota de la app: el enunciado pide «más abalorios en cada uno», pero repartir cada color por igual entre los collares lleva al m.c.d. (6 collares de 9 abalorios). Se aceptan también, si se justifican, los otros repartos en collares iguales (3 collares de 18, 2 de 27) y un solo collar con los 54 abalorios, que es literalmente el que más lleva.
 Rúbrica (propia): B Aplica el m.c.d. y da el reparto correcto. / R Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado. / M No plantea correctamente el problema o no responde.
 ```
 ```
@@ -114,7 +114,7 @@ Rúbrica (propia): B Coloca todas las tildes que faltan sin añadir ninguna inco
 ```
 OF.2024.O · L8 · LEN.LEX.DEFIN
 Escriba la palabra correcta para la definición propuesta, atendiendo a las indicaciones dadas sobre la primera y última letra de cada término.
-Solución: Redención (R*******N); elástico (E******O); arquitectura (A*********A; la palabra tiene 12 letras y la pista indica 11); química (Q*****A); metal (M****L; la palabra tiene 5 letras y la pista indica 6); teólogo (T*****O); paradójico (P********O); apogeo (A****O); silogismo (S*******O); oboe (O**E).
+Solución: Redención (R*******N); elástico (E******O); arquitectura (A*********A); química (Q*****A); metal (M****L); teólogo (T*****O); paradójico (P********O); apogeo (A****O); silogismo (S*******O); oboe (O**E). Nota de la app: la pista A*********A indica 11 letras, pero ARQUITECTURA tiene 12, y la pista M****L indica 6, pero METAL tiene 5. Se aceptan ARQUITECTURA y METAL.
 Rúbrica (propia): B Escribe correctamente las 10 palabras. / R Comete uno o dos errores. / M Comete más de dos errores.
 ```
 ```
@@ -168,7 +168,7 @@ Rúbrica (propia): B Convierte, suma y razona correctamente la respuesta. / R Pl
 ```
 OF.2024.O · M7 · MAT.GEO.VOLUMEN
 Verónica tiene el recipiente A lleno de agua, y quiere trasvasarla al recipiente B.
-Solución: 1) A (prisma de base cuadrada): 13 cm × 13 cm × 22 cm = 3718 cm³ = 3,718 l. 2) B (prisma pentagonal): área de la base = perímetro × apotema : 2 = (5 × 12,5) × 8,57 : 2 = 267,8125 cm². 3) Volumen de B: 267,8125 × 12 = 3213,75 cm³ = 3,21375 l. 4) 3,718 − 3,21375 = 0,50425 l. Resultado: a) 3,718 litros; b) le sobrará agua: unos 0,504 l (504,25 cm³).
+Solución: 1) A (prisma de base cuadrada): 13 cm × 13 cm × 22 cm = 3718 cm³ = 3,718 l. 2) B (prisma pentagonal): área de la base = perímetro × apotema : 2 = (5 × 12,5) × 8,57 : 2 = 267,8125 cm². 3) Volumen de B: 267,8125 × 12 = 3213,75 cm³ = 3,21375 l. 4) 3,718 − 3,21375 = 0,50425 l. Resultado: a) 3,718 litros; b) le sobrará agua: unos 0,504 l (504,25 cm³). Nota de la app: en un pentágono regular de 12,5 cm de lado la apotema mide unos 8,60 cm, no 8,57 cm. Se usa el dato del enunciado; con 8,60 cm, B tendría unos 3,225 l y la conclusión (sobra agua) no cambia.
 Rúbrica (propia): B Responde correctamente los 2 elementos. / R Comete un error en uno de los 2 elementos. / M Comete más de un error o no completa la actividad.
 ```
 ```
@@ -226,11 +226,12 @@ OF.2026.O · L6 · LEN.CLA.VERBO
 Analice morfológicamente las siguientes palabras del fragmento: libertad, hombres, aquellos, gozaba.
 Solución: Libertad: sustantivo común, abstracto, femenino, singular. Hombres: sustantivo común, concreto, masculino, plural (aquí con valor genérico, «los seres humanos»). Aquellos: determinante demostrativo de lejanía, masculino plural (acompaña a «banquetes»); sin sustantivo funcionaría como pronombre. Gozaba: verbo gozar, 1.ª persona del singular (la forma coincide con la 3.ª), pretérito imperfecto de indicativo, 1.ª conjugación, aspecto imperfectivo, voz activa.
 Rúbrica (oficial 2026): B Clasifica correctamente las clases de palabras. / R Comete un error en la clasificación. / M Comete más de un error o no responde.
+Nota sobre la rúbrica: La rúbrica oficial habla de «clases de palabras», pero la pregunta pide el análisis morfológico completo. La app aplica: Bien, las 4 palabras con su clase y todos sus rasgos correctos; Regular, un error (en la clase o en un rasgo); Mal, más de un error.
 ```
 ```
 OF.2026.O · L7 · LEN.VER.NORMA
 Seleccione la opción correcta de las dos facilitadas y razone su elección.
-Solución: Anduve: pretérito perfecto simple irregular de andar («andé» es incorrecto). Había: «haber» impersonal (existencial) solo se usa en 3.ª persona del singular; «habían habido» es incorrecto. Vendría: en estilo indirecto con verbo de lengua en pasado («dijo»), el futuro del enunciado original pasa a condicional (concordancia de tiempos); «vendrá» se admite si el hecho sigue siendo futuro respecto al momento en que se habla. Demasiado: concuerda en masculino singular con «ruido». Fuimos: pretérito perfecto simple de ir («fuemos» es un vulgarismo). Haya: presente de subjuntivo de haber («haiga» es un vulgarismo). Suyo: el posesivo es la opción esperada en registro culto; «de él» también es gramatical y deshace la ambigüedad de «suyo» (ver dudas).
+Solución: Anduve: pretérito perfecto simple irregular de andar («andé» es incorrecto). Había: «haber» impersonal (existencial) solo se usa en 3.ª persona del singular; «habían habido» es incorrecto. Vendría: en estilo indirecto con verbo de lengua en pasado («dijo»), el futuro del enunciado original pasa a condicional (concordancia de tiempos); «vendrá» se admite si el hecho sigue siendo futuro respecto al momento en que se habla. Demasiado: concuerda en masculino singular con «ruido». Fuimos: pretérito perfecto simple de ir («fuemos» es un vulgarismo). Haya: presente de subjuntivo de haber («haiga» es un vulgarismo). Suyo: el posesivo es la opción esperada en registro culto. Nota de la app: se aceptan las dos opciones en dos casos. «Vendría» es la esperada (estilo indirecto en pasado), pero «vendrá» es correcta si el hecho sigue siendo futuro cuando se habla. «Suyo» es la esperada, pero «de él» también es gramatical y evita la ambigüedad de «suyo».
 Rúbrica (oficial 2026): B Selecciona correctamente las opciones y justifica adecuadamente. / R Tiene un error o justificaciones poco precisas. / M Presenta varios errores o no justifica.
 ```
 ```
@@ -242,7 +243,7 @@ Rúbrica (oficial 2026): B Define correctamente todos los términos. / R Define 
 ```
 OF.2026.O · L9 · LEN.CLA.SUSTADJ
 Una el término con la definición que le corresponda.
-Solución: 1 A (adjetivo); 2 B (sujeto); 3 C (verbo); 4 E (hipérbole); 5 F (narrador); 6 H (oración); 7 D (pronombre); 8 G (sustantivo, dado como ejemplo).
+Solución: 1 A (adjetivo); 2 B (sujeto); 3 C (verbo); 4 E (hipérbole); 5 F (narrador); 6 H (oración); 7 D (pronombre); 8 G (sustantivo, dado como ejemplo). Nota de la app: es la respuesta esperada por el tribunal, pero dos definiciones del enunciado son imprecisas. Según la NGLE, el sujeto es una función sintáctica: el elemento que concuerda en número y persona con el verbo, haga o no la acción (en «El ladrón fue detenido», el sujeto no detiene). Y el verbo es una clase de palabra, no una «parte de la oración»: expresa acciones, procesos o estados, se flexiona en persona, número, tiempo, aspecto y modo, y es el núcleo del predicado.
 Rúbrica (oficial 2026): B Relaciona correctamente todos los términos con sus definiciones. / R Comete un error en las relaciones. / M Comete varios errores o no completa la actividad.
 ```
 ```
@@ -342,22 +343,5 @@ OF.2026.A · L5 · LEN.LEX.CAMPO, LEN.LEX.SIN
 Trabaje con el vocabulario del poema.
 Solución: a) Caminar, caminante (también caminata, encaminar). b) Cabalgar, trayecto (también ruta, jinete, alforja, viajero). c) Lejana: distante, remota; largo: corto, breve. d) «Córdoba» es nombre propio: designa un ser único (una ciudad concreta), se escribe con mayúscula y normalmente no lleva determinante; «camino» es nombre común: designa cualquier elemento de una clase, se escribe con minúscula y admite determinantes.
 Rúbrica (oficial 2026): B Resuelve correctamente familia léxica, campo semántico y relaciones léxicas. / R Resuelve tres partes con precisión. / M Comete varios errores.
-```
-```
-OF.2026.A · L6 · LEN.REC.FIGURAS
-Responda a las siguientes cuestiones literarias y métricas:
-Solución: a) Anáfora de «¡Ay…!» al comienzo de tres versos seguidos (o «por el llano, por el viento»): intensifica el lamento y la angustia y marca el ritmo. b) «La muerte me está mirando / desde las torres de Córdoba» (también «la muerte me espera»). c) «jaca negra», «luna roja», «luna grande», «jaca valerosa». d) Por-el-lla-no-por-el-vien-to: 8 sílabas; ja-ca-ne-gra-lu-na-ro-ja: 8 sílabas. Ambos son octosílabos (terminación llana); tienen la misma medida.
-Rúbrica (oficial 2026): B Identifica recursos literarios y realiza bien la medida. / R Acierta sólo parte de la cuestión. / M No identifica los recursos o mide mal ambos versos.
-```
-```
-OF.2026.A · L7 · LEN.ORT.HOM
-Seleccione la opción correcta en cada caso y justifique brevemente su elección.
-Solución: Por qué: interrogativa directa (preposición + interrogativo tónico). Aun: equivale a «incluso» («incluso sabiendo el camino»). Tuvo: verbo tener («tubo» es una pieza cilíndrica hueca). Ay: interjección de dolor o lamento. Dé: forma del verbo dar (presente de subjuntivo), con tilde diacrítica frente a la preposición «de». Tú: pronombre personal, sujeto de «conoces». Ahí: adverbio de lugar («hay» es del verbo haber). Prever: «ver con anticipación», se conjuga como ver; «preveer» es incorrecto.
-Rúbrica (oficial 2026): B Selecciona y explica correctamente todas las opciones. / R Tiene uno o dos fallos menores. / M Comete varios errores.
-```
-```
-OF.2026.A · L8 · LEN.REC.FIGURAS
-Relacione cada término con su definición, siguiendo el ejemplo.
-Solución: 1 I (dado como ejemplo); 2 C; 3 E; 4 J; 5 F; 6 H; 7 B; 8 D; 9 A; 10 G.
-Rúbrica (oficial 2026): B Relaciona bien los términos con las definiciones. / R Comete un error. / M Comete más de un error.
+Nota sobre la rúbrica: La pregunta tiene 4 apartados (a–d). La app aplica: Bien, los 4 correctos; Regular, 2 o 3 correctos; Mal, 0 o 1.
 ```

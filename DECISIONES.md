@@ -325,3 +325,12 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 - **Soluciones**: las de Matemáticas se calculan con código (`scripts/tribunal/matematicas.py`, aritmética exacta). Las de Lengua y las rúbricas de 2017–2024 son de redacción propia; las rúbricas de 2026 son las plantillas oficiales literales. Todo queda en borrador.
 - **Validación**: `scripts/validar_tribunal.py` es un script aparte (no amplía `validar_items.py`, que solo existe en la rama `contenido/lote-03a`), para no crear conflictos al fusionar.
 - **Convocatoria 2026**: se descarga la disposición BOCM-20260212-7 para citar la penalización ortográfica (FUENTES §4). Para ello se crea el entorno personal «OpoCulter», con acceso a www.bocm.es y a comunidad.madrid.
+
+### D-075 · 2026-11-24 · Datos del Tribunal · Vigente (dirección)
+**Decisiones sobre los datos del Tribunal.**
+- **Enunciados oficiales**: no se alteran, ni siquiera con erratas (2024 L8, 2017 M1, 2024 M7).
+- **Notas de la app**: la «Nota de la app» al final de `solucionModelo` resuelve las erratas, las ambigüedades (2022 M1, 2026 O L7, 2026 A M6, donde «relacione» se lee como «escriba la probabilidad») y las definiciones imprecisas (2026 O L9 y 2026 A L8, con la definición de la NGLE).
+- **Fuentes**: `fuenteSolucion` es `direccion` en todos los exámenes; `fuenteRubrica` es `oficial` en 2026 y `direccion` en el resto. `notaRubrica` explica cómo se aplica la rúbrica oficial en 2026 O L6 y 2026 A L5 (2 de 4 apartados = Regular).
+- **Textos protegidos**: sus citas dentro de los enunciados se siguen sustituyendo por la remisión al PDF. No se usa el derecho de cita, por prudencia ante la revisión de Apple.
+- **2017**: 1 punto por pregunta, con aviso de que la puntuación la asigna la app.
+- **Penalización ortográfica**: `pendiente/tribunal/reglas.json` guarda la regla como datos, sin límite.

@@ -1,6 +1,6 @@
 # Soluciones del Modo Tribunal · hoja de revisión (parte 1 de 3)
 
-Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de `Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo.
+Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de `Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo. Las soluciones son siempre de redacción propia. Las «Notas de la app» explican cómo se resuelven las erratas y ambigüedades de los enunciados oficiales, que no se alteran.
 
 ## OF.2017.O · 2017 ordinaria · texto base: Gustavo Adolfo Bécquer, El monte de las ánimas
 ```
@@ -60,7 +60,7 @@ Rúbrica (propia): B Realiza un análisis sintáctico correcto y completo de la 
 ```
 OF.2017.O · M1 · MAT.OPE.INCOG
 Calcule el valor de a y b para que se cumplan estas igualdades:
-Solución: 1) a = 300 : 1,5 = 3000 : 15 = 200. 2) b = 8888 : 40 = 222,2 (la división no es exacta). Resultado: a = 200; b = 222,2.
+Solución: 1) a = 300 : 1,5 = 3000 : 15 = 200. 2) b = 8888 : 40 = 222,2 (la división no es exacta). Resultado: a = 200; b = 222,2. Nota de la app: la división 8888 : 40 no es exacta (b = 222,2). Así figura en el cuadernillo oficial; se acepta b = 222,2.
 Rúbrica (propia): B Calcula correctamente a y b. / R Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado. / M No plantea correctamente el problema o no responde.
 ```
 ```

@@ -1,0 +1,18 @@
+{
+  "palabraIncorrecta": 0.5,
+  "tilde": 0.25,
+  "unirSepararPalabras": 0.25,
+  "abreviatura": 0.1,
+  "limite": null,
+  "fuente": "BOCM nº 36, 12/02/2026, Anexo V, C.1, págs. 96-97",
+  "notas": [
+    "La escritura incorrecta de una palabra supone la disminución de la nota en 0,5 puntos.",
+    "Si la incorrección se debe a una tilde, la disminución será de 0,25 puntos.",
+    "La escritura de dos palabras como una sola supone una disminución de 0,25 puntos.",
+    "La división de una palabra en dos dentro de un renglón supone una disminución de 0,25 puntos.",
+    "La separación incorrecta de dos vocales de una palabra al cambiar de renglón supone la disminución de 0,25 puntos.",
+    "La utilización de abreviaturas para expresar palabras, nexos, pronombres, terminaciones de adverbios, del tipo \"tb\" por también, \"pq\" en vez de porque o por qué, \"q\" en lugar de que o qué, adverbios que terminan en mente y se utiliza la \"barra inclinada\" (/), etc., se penalizará con la disminución de 0,10 puntos.",
+    "Las faltas cometidas en palabras que se repiten se contabilizarán una sola vez.",
+    "Se detraerá puntuación por incorrecciones ortográficas, sin límite de ningún tipo, de la calificación obtenida por el aspirante en el correspondiente ejercicio calificado."
+  ]
+}
