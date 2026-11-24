@@ -147,7 +147,8 @@ struct RondaViewModelTests {
     @Test("Opciones de arranque y entorno")
     func opcionesArranque() {
         let o = OpcionesArranque.desde(["app", "-enMemoria", "-semilla", "42", "-ayudasDePrueba", "-rondaDemostracion", "-captura", "item:X:antes"])
-        #expect(o == OpcionesArranque(enMemoria: true, semilla: 42, ayudasDePrueba: true, rondaDemostracion: true, captura: "item:X:antes"))
+        #expect(o == OpcionesArranque(enMemoria: true, semilla: 42, ayudasDePrueba: true, rondaDemostracion: true, captura: "item:X:antes",
+                                       sinAvisoRecordatorio: true), "Las capturas no muestran la pregunta del recordatorio")
         #expect(OpcionesArranque.desde(["app"]) == OpcionesArranque())
         let entorno = EntornoApp.crear(argumentos: ["app", "-enMemoria", "-rondaDemostracion"])
         #expect(entorno.servicio != nil && entorno.errorCarga == nil)

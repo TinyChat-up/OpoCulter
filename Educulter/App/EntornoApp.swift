@@ -22,6 +22,12 @@ struct OpcionesArranque: Equatable {
     var borrarAlmacen = false
     /// Carga solo el contenido aprobado, como en Release.
     var politicaRelease = false
+    /// Muestra la bienvenida aunque haya avatar (tests del flujo bienvenida → diagnóstico → plan).
+    var forzarBienvenida = false
+    /// Capturas: genera progreso real con el motor antes de mostrar la escena.
+    var progresoDemo = false
+    /// Tests de UI: da por respondida la pregunta del recordatorio (no aparece la alerta).
+    var sinAvisoRecordatorio = false
 
     static func desde(_ argumentos: [String]) -> OpcionesArranque {
         #if DEBUG
@@ -35,6 +41,9 @@ struct OpcionesArranque: Equatable {
         if let i = argumentos.firstIndex(of: "-almacenPruebas"), i + 1 < argumentos.count { o.almacenPruebas = argumentos[i + 1] }
         o.borrarAlmacen = argumentos.contains("-borrarAlmacen")
         o.politicaRelease = argumentos.contains("-politicaRelease")
+        o.forzarBienvenida = argumentos.contains("-forzarBienvenida")
+        o.progresoDemo = argumentos.contains("-progresoDemo")
+        o.sinAvisoRecordatorio = argumentos.contains("-sinAvisoRecordatorio") || o.captura != nil
         return o
         #else
         return OpcionesArranque()
@@ -49,13 +58,58 @@ final class EntornoApp {
     let opciones: OpcionesArranque
     let servicio: ServicioSesion?
     let errorCarga: String?
+    /// Sonidos sintetizados que respetan el interruptor de Ajustes (silencio en capturas).
+    let sonido: any ServicioSonido
+    /// Recordatorio diario local.
+    let recordatorio: ProgramadorRecordatorio
+    /// Copia observable de los ajustes (vibración y sonido se leen en las vistas).
+    var ajustes = Ajustes()
 
     var banco: BancoContenido? { servicio?.banco }
 
-    init(opciones: OpcionesArranque, servicio: ServicioSesion?, errorCarga: String?) {
+    init(opciones: OpcionesArranque, servicio: ServicioSesion?, errorCarga: String?,
+         centro: any CentroNotificaciones = CentroNotificacionesSistema()) {
         self.opciones = opciones
         self.servicio = servicio
         self.errorCarga = errorCarga
+        self.recordatorio = ProgramadorRecordatorio(centro: centro, calendario: .current)
+        let base: any ServicioSonido = opciones.captura == nil ? SonidoSintetizado() : SonidoSilencioso()
+        var lector: (() -> Bool)?
+        self.sonido = SonidoConAjustes(destino: base) { lector?() ?? true }
+        self.ajustes = (try? servicio?.ajustes()) ?? Ajustes()
+        lector = { [weak self] in self?.ajustes.sonido ?? true }
+    }
+
+    /// Guarda los ajustes y reprograma el recordatorio.
+    func guardar(_ nuevos: Ajustes) {
+        ajustes = nuevos
+        try? servicio?.guardar(nuevos)
+        Task { await reprogramarRecordatorio() }
+    }
+
+    /// Recarga los ajustes guardados (tras responder a la pregunta del recordatorio).
+    func recargarAjustes() {
+        ajustes = (try? servicio?.ajustes()) ?? ajustes
+    }
+
+    func reprogramarRecordatorio() async {
+        guard let servicio else { return }
+        await recordatorio.reprogramar(ajustes: ajustes, racha: servicio.racha, ahora: servicio.reloj.ahora)
+    }
+
+    /// Activa el recordatorio tras pedir el permiso en contexto (después de la primera ronda).
+    func activarRecordatorio() async {
+        let permitido = await recordatorio.centro.solicitarPermiso()
+        var a = (try? servicio?.ajustes()) ?? ajustes
+        a.recordatorioPreguntado = true
+        a.recordatorio = permitido
+        guardar(a)
+    }
+
+    /// Al completar una ronda: la notificación de hoy ya no hace falta.
+    func rondaCompletada() {
+        guard let servicio else { return }
+        recordatorio.cancelarHoy(ahora: servicio.reloj.ahora)
     }
 
     static func crear(argumentos: [String] = ProcessInfo.processInfo.arguments) -> EntornoApp {
@@ -83,6 +137,11 @@ final class EntornoApp {
             let rng = opciones.semilla.map(GeneradorConSemilla.init(semilla:)) ?? .aleatorio()
             let servicio = ServicioSesion(banco: banco, repositorio: repositorio, rng: rng)
             if let avatar = opciones.avatar { try servicio.elegirAvatar(avatar) }
+            if opciones.sinAvisoRecordatorio {
+                var a = try servicio.ajustes()
+                a.recordatorioPreguntado = true
+                try servicio.guardar(a)
+            }
             return EntornoApp(opciones: opciones, servicio: servicio, errorCarga: nil)
         } catch {
             return EntornoApp(opciones: opciones, servicio: nil, errorCarga: "\(error)")

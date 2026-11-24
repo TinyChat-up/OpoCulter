@@ -9,6 +9,9 @@ struct EduculterApp: App {
         WindowGroup {
             raiz
                 .environment(entorno)
+                .environment(\.sonido, entorno.sonido)
+                .environment(\.vibracionActiva, entorno.ajustes.vibracion)
+                .task { await entorno.reprogramarRecordatorio() }
         }
     }
 

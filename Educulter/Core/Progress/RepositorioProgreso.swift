@@ -27,6 +27,8 @@ struct PerfilJugador: Codable, Sendable, Equatable {
     var competenciaEnCurso: String?
     /// Avatar elegido (índice en `Avatar.todos`); `nil` hasta la bienvenida.
     var avatar: Int?
+    /// Competencias abiertas con prueba de nivel (Fase 05D).
+    var desbloqueos: [Desbloqueo] = []
 }
 
 struct LogroObtenido: Codable, Sendable, Equatable {
@@ -55,8 +57,24 @@ protocol RepositorioProgreso: AnyObject {
     /// Idempotente: registrar dos veces el mismo logro no lo duplica.
     func registrarLogro(_ logro: LogroObtenido) throws
 
+    /// Último diagnóstico.
     func diagnostico() throws -> ResultadoDiagnostico?
+    /// Guarda un diagnóstico nuevo; los anteriores quedan en el historial.
     func guardar(_ diagnostico: ResultadoDiagnostico) throws
+    /// Historial de diagnósticos, del más antiguo al más reciente.
+    func diagnosticos() throws -> [ResultadoDiagnostico]
+
+    /// Partidas de Supervivencia, de la más antigua a la más reciente.
+    func partidas() throws -> [PartidaSupervivencia]
+    /// Inserta o actualiza (por id) una partida.
+    func guardar(_ partida: PartidaSupervivencia) throws
+
+    func ajustes() throws -> Ajustes
+    func guardar(_ ajustes: Ajustes) throws
+
+    /// Borra todo el progreso (intentos, estados, Rescate, perfil, logros, diagnósticos y
+    /// partidas). Los ajustes se conservan.
+    func borrarProgreso() throws
 }
 
 extension RepositorioProgreso {
@@ -74,7 +92,9 @@ final class RepositorioEnMemoria: RepositorioProgreso {
     private var cola = ColaRescate()
     private var perfilGuardado = PerfilJugador()
     private var logrosGuardados: [LogroObtenido] = []
-    private var diagnosticoGuardado: ResultadoDiagnostico?
+    private var diagnosticosGuardados: [ResultadoDiagnostico] = []
+    private var partidasGuardadas: [PartidaSupervivencia] = []
+    private var ajustesGuardados = Ajustes()
 
     init() {}
 
@@ -99,6 +119,25 @@ final class RepositorioEnMemoria: RepositorioProgreso {
         logrosGuardados.append(logro)
     }
 
-    func diagnostico() throws -> ResultadoDiagnostico? { diagnosticoGuardado }
-    func guardar(_ diagnostico: ResultadoDiagnostico) throws { diagnosticoGuardado = diagnostico }
+    func diagnostico() throws -> ResultadoDiagnostico? { diagnosticosGuardados.last }
+    func guardar(_ diagnostico: ResultadoDiagnostico) throws { diagnosticosGuardados.append(diagnostico) }
+    func diagnosticos() throws -> [ResultadoDiagnostico] { diagnosticosGuardados }
+
+    func partidas() throws -> [PartidaSupervivencia] { partidasGuardadas.sorted { $0.inicio < $1.inicio } }
+    func guardar(_ partida: PartidaSupervivencia) throws {
+        if let i = partidasGuardadas.firstIndex(where: { $0.id == partida.id }) { partidasGuardadas[i] = partida } else { partidasGuardadas.append(partida) }
+    }
+
+    func ajustes() throws -> Ajustes { ajustesGuardados }
+    func guardar(_ ajustes: Ajustes) throws { ajustesGuardados = ajustes }
+
+    func borrarProgreso() throws {
+        intentosGuardados = []
+        estados = [:]
+        cola = ColaRescate()
+        perfilGuardado = PerfilJugador()
+        logrosGuardados = []
+        diagnosticosGuardados = []
+        partidasGuardadas = []
+    }
 }

@@ -102,8 +102,49 @@ final class RepositorioSwiftData: RepositorioProgreso {
     }
 
     func guardar(_ diagnostico: ResultadoDiagnostico) throws {
-        try contexto.delete(model: DiagnosticoRegistro.self)
+        // Desde la 05D se conserva el historial (repetir el diagnóstico desde Progreso).
         contexto.insert(DiagnosticoRegistro(fecha: diagnostico.fecha, datos: try JSONEncoder().encode(diagnostico)))
+        try contexto.save()
+    }
+
+    func diagnosticos() throws -> [ResultadoDiagnostico] {
+        try contexto.fetch(FetchDescriptor<DiagnosticoRegistro>(sortBy: [SortDescriptor(\.fecha)]))
+            .compactMap { $0.datos }.map { try JSONDecoder().decode(ResultadoDiagnostico.self, from: $0) }
+    }
+
+    func partidas() throws -> [PartidaSupervivencia] {
+        try contexto.fetch(FetchDescriptor<PartidaRegistro>(sortBy: [SortDescriptor(\.inicio)]))
+            .compactMap { $0.datos }.map { try JSONDecoder().decode(PartidaSupervivencia.self, from: $0) }
+    }
+
+    func guardar(_ partida: PartidaSupervivencia) throws {
+        let id = partida.id
+        let registro = try contexto.fetch(FetchDescriptor<PartidaRegistro>(predicate: #Predicate { $0.uuid == id })).first
+            ?? { let nuevo = PartidaRegistro(uuid: id, inicio: partida.inicio, datos: nil); contexto.insert(nuevo); return nuevo }()
+        registro.datos = try JSONEncoder().encode(partida)
+        try contexto.save()
+    }
+
+    func ajustes() throws -> Ajustes {
+        guard let datos = try contexto.fetch(FetchDescriptor<AjustesRegistro>()).first?.datos else { return Ajustes() }
+        return try JSONDecoder().decode(Ajustes.self, from: datos)
+    }
+
+    func guardar(_ ajustes: Ajustes) throws {
+        let registro = try contexto.fetch(FetchDescriptor<AjustesRegistro>()).first
+            ?? { let nuevo = AjustesRegistro(datos: nil); contexto.insert(nuevo); return nuevo }()
+        registro.datos = try JSONEncoder().encode(ajustes)
+        try contexto.save()
+    }
+
+    func borrarProgreso() throws {
+        try contexto.delete(model: IntentoRegistro.self)
+        try contexto.delete(model: EstadoCompetenciaRegistro.self)
+        try contexto.delete(model: RescateRegistro.self)
+        try contexto.delete(model: PerfilRegistro.self)
+        try contexto.delete(model: LogroRegistro.self)
+        try contexto.delete(model: DiagnosticoRegistro.self)
+        try contexto.delete(model: PartidaRegistro.self)
         try contexto.save()
     }
 }

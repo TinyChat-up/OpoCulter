@@ -13,7 +13,7 @@ final class PilotoUITests: CasoUI {
 
     @MainActor
     func testBienvenidaYProgresoTrasCerrarYReabrir() throws {
-        let almacen = ["-almacenPruebas", "UITestPersistencia", "-semilla", "7", "-ayudasDePrueba", "-politicaRelease"]
+        let almacen = ["-almacenPruebas", "UITestPersistencia", "-semilla", "7", "-ayudasDePrueba", "-politicaRelease", "-sinAvisoRecordatorio"]
         var app = XCUIApplication()
         app.launchArguments = almacen + ["-borrarAlmacen"]
         app.launch()
@@ -23,6 +23,9 @@ final class PilotoUITests: CasoUI {
         try auditar(app, "Bienvenida")
         app.buttons["avatar_5"].tap()
         app.buttons["botonEmpezarBienvenida"].tap()
+        // Fase 05D: la bienvenida ofrece el diagnóstico (se salta aquí; tiene su propio test).
+        XCTAssertTrue(app.buttons["botonSaltarDiagnostico"].waitForExistence(timeout: 10))
+        app.buttons["botonSaltarDiagnostico"].tap()
         XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 10))
         try auditar(app, "Hoy v2", bordesDelScroll: true)
 

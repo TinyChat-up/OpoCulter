@@ -316,3 +316,66 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 
 ### D-068 · 2026-11-23 · Fase 05C · Vigente
 **Competencias nuevas en el catálogo** para las plantillas de prueba que no tenían competencia: `MAT.OPE.ECUAC` (ecuaciones), `MAT.EST.CENTRAL` (media, mediana, moda y rango) y `MAT.PRO.LAPLACE` (probabilidad de un suceso). El catálogo pasa a la versión 2 con 27 competencias. Las demás competencias que propone la matriz (marcadas con † en MATRIZ.md) se dejan a la dirección. En Release estas competencias no tienen ítems todavía y `ServicioSesion` las salta (`valida` exige ítems).
+
+### D-069 · 2026-11-23 · Fase 05D · Vigente (dirección)
+**Supervivencia.**
+- **Reglas**: 3 vidas y sin cronómetro, por accesibilidad. La dificultad empieza en 1, sube un nivel cada 4 aciertos seguidos hasta el 6 «Experto» y un fallo resta una vida y baja un nivel (mínimo 1).
+- **Puntuación**: 10 × dificultad con un multiplicador de combo de +0,25 por acierto seguido a partir del segundo, con tope ×2 (desde el 5.º acierto seguido). Todo está en `ReglasSupervivencia`.
+- **Selección de bloque**: por el peso del bloque en los exámenes oficiales (`PesosSupervivencia`, derivado de la MATRIZ: preguntas del bloque entre las de su área), multiplicado por `0,5 + debilidad`. La debilidad sale del peldaño medio de sus competencias, del último diagnóstico o, si no hay ninguno de los dos, vale 0,5.
+- **Selección de ítem**: dentro del bloque, un ítem de la dificultad exacta, que puede ser estático (peldaño ≥ 2) o generado con `MotorGeneradores.ajustada` (`<plantilla>@dN#semilla`, reproducible por id, de modo que Rescate funciona). Si no hay ninguno de esa dificultad, se usa el estático más cercano.
+- **Efectos reales**: cada respuesta pasa por `ServicioSesion.registrar`, así que hay escalera, Leitner, Rescate y XP sin bonificaciones. La partida terminada cuenta como ronda para la racha y las misiones y se guarda con su historial (`PartidaRegistro`).
+- **Récords**: global y por área (Lengua, Matemáticas o mezcla). Se marca récord solo cuando se bate una partida anterior terminada: la primera no cuenta como récord. Las partidas abandonadas se guardan, pero no cuentan.
+- **Logros**: Superviviente, Nuevo récord y Nivel Experto. El modo contrarreloj se apunta en el ROADMAP para después del MVP.
+
+### D-070 · 2026-11-23 · Fase 05D · Vigente (dirección)
+**Camino, prueba de nivel y Reto de bloque.**
+- **Nodos**: `sinContenido` (trazo discontinuo, "En preparación", no se puede pulsar), `disponible`, `enCurso` (con anillo de dominio) y `dominada`.
+- **Candado orientativo**: lo llevan las competencias sin empezar que van después de la primera sin dominar del área. Es una recomendación, no un muro: se pueden practicar igualmente o abrir con la prueba de nivel.
+- **Prueba de nivel**: 5 ítems del peldaño 3. Con 4 aciertos o más, la competencia pasa al peldaño 3 y queda registrada en `PerfilJugador.desbloqueos`; se concede el logro «Salto de nivel». Solo se ofrece si hay al menos 5 ítems del peldaño 3.
+- **Reto de bloque**: 8 ítems sin ayudas (peldaño ≥ 3) de dificultad 4–5, estáticos o generados a esa dificultad. Con 6 aciertos o más se gana la medalla del bloque (`medalla-<bloque>`) y el logro «Primera medalla». Solo aparece si el bloque tiene 8 estáticos válidos o alguna plantilla.
+
+### D-071 · 2026-11-23 · Fase 05D · Vigente
+**Diagnóstico en la bienvenida.**
+- **Flujo**: avatar → oferta, con "Saltar" → diagnóstico adaptativo (motor de la Fase 04, ítem a ítem en la pantalla de ronda, con «x de N») → plan → Hoy.
+- **Contenido**: el diagnóstico usa solo bloques con contenido cargado (en Release, el aprobado) y prefiere los generados de dificultad 2–3 cuando el bloque tiene al menos 2.
+- **Plan**: cada bloque como fuerte, medio o débil, «Empezamos por…» con 2 competencias según el orden de debilidad × prioridad, y un aviso honesto de los bloques sin contenido.
+- **Historial**: el repositorio conserva todos los diagnósticos; `diagnostico()` devuelve el último. Desde Ajustes se puede repetir.
+
+### D-072 · 2026-11-23 · Fase 05D · Vigente (dirección)
+**Recordatorio diario local**, con `UNUserNotificationCenter` y sin servidor.
+- **Programación**: notificaciones sueltas para los próximos 7 días (no una repetitiva), de modo que se pueda cancelar solo la de hoy cuando ya se ha hecho una ronda. Se reprograman al abrir la app y al cambiar los ajustes.
+- **Permiso en contexto**: se pide tras la primera ronda (o partida) completada, con una explicación previa ("¿Te aviso cada día a las 20:00…?") y los botones "Sí" / "Ahora no". Se pregunta una sola vez.
+- **Texto**: útil y sin culpa. Para hoy menciona la racha; para los días siguientes es general, porque esa racha aún no se conoce.
+- **Ajustes**: activación y hora.
+- **Tests**: el centro de notificaciones se inyecta (`CentroNotificaciones`), y los tests usan uno simulado.
+
+### D-073 · 2026-11-23 · Fase 05D · Vigente (dirección)
+**Sonido sintetizado y vibración.**
+- **Sonido**: `SonidoSintetizado` genera tonos con AVAudioEngine (seno con un armónico suave y envolvente sin clics), sin archivos de audio de terceros. Cada sonido dura como mucho 250 ms y el de fallo es una nota grave suave.
+- **Sesión de audio**: categoría `.ambient` con `mixWithOthers`, así que respeta el interruptor de silencio y no interrumpe la música del usuario.
+- **Ajustes**: `SonidoConAjustes` solo reproduce si el sonido está activado. El modificador `retroHaptica` aplica `sensoryFeedback` solo con la vibración activada; sustituye a los 17 usos anteriores.
+- **Momentos con sonido**: acierto, fallo, hito de combo, fin de ronda, récord, tilde que cae y celda que se colorea.
+
+### D-074 · 2026-11-23 · Fase 05D · Vigente
+**Progreso y persistencia nueva.**
+- **Progreso**: dominio (peldaño medio por área y bloque, con la misma medida en los dos), evolución de 4 semanas con Swift Charts (aciertos o XP por día, con `AXChartDescriptor` para el gráfico de audio de VoiceOver), estadísticas, preguntas disponibles (solo contenido aprobado, con `CatalogoPreguntas`), logros obtenidos y pendientes con su condición, ajustes y créditos.
+- **Créditos**: se leen de `Resources/Creditos.md`, una copia de CREDITOS.md; un test comprueba que son idénticos.
+- **"Borrar mi progreso"**: doble confirmación. Conserva los ajustes.
+- **Modelos SwiftData nuevos** (migración ligera: entidades nuevas y atributos opcionales): `PartidaRegistro`, `AjustesRegistro` y `PerfilRegistro.desbloqueosJSON`.
+- **Opciones de arranque nuevas (solo Debug)**:
+  - `-sinAvisoRecordatorio`: tests de UI y capturas.
+  - `-forzarBienvenida`.
+  - `-progresoDemo`: capturas. Juega rondas y una partida reales con el motor antes de mostrar la escena.
+  - Además, un botón de pruebas "Con error".
+
+### D-075 · 2026-11-24 · Fase 05D · Vigente
+**El contraste se audita en una pasada propia, antes que el resto de comprobaciones.**
+- **Problema**: con Hoy desplazado hasta el final, la comprobación de Dynamic Type de `performAccessibilityAudit` cambia el tamaño del texto y desplaza el contenido. En una sola pasada, el contraste llegaba a medirse con el marco del elemento ya movido (unos 42 pt más abajo que el texto visible), sobre píxeles que no eran suyos. El elemento afectado cambiaba de una ejecución a otra («Empezar ronda», «5 ítems de ortografía y tildes»), aunque el contraste real del texto es de unos 7:1.
+- **Solución**: `CasoUI.auditarUnaVez` ejecuta primero `.contrast` y después todos los demás tipos, con el mismo filtro de excepciones (D-048). No se relaja ninguna regla.
+- **Baldosas de Hoy**: se quita el chevrón y el título se parte en dos líneas si no cabe (antes, `lineLimit(1)` + `minimumScaleFactor` recortaban «Supervivencia» y «Ortografía exprés»).
+
+### D-076 · 2026-11-24 · Fase 05D · Vigente (propietario)
+**Cierre de la 05D sin capturas y con la fusión aplazada.**
+- **Capturas**: el propietario pide no hacerlas en esta fase porque retrasan mucho el trabajo. `scripts/capturas.sh … 05d` queda preparado por si se piden.
+- **Tests**: el propietario pide no seguir ejecutándolos. La 05D se guarda con un commit en su rama, pero **no se fusiona en `main`** hasta tener una suite completa en verde y el archive Release, como exige CLAUDE.md. Se puede hacer junto con el cierre de la siguiente fase.
+- **Suites largas**: se ejecutan con `caffeinate` y con el Mac enchufado.

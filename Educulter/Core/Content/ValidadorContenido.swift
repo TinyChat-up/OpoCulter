@@ -117,7 +117,7 @@ struct ValidadorContenido: Sendable {
 
     func validar(item: Item, competencias: Set<String>) -> [ErrorValidacion] {
         var mensajes: [String] = []
-        if !Self.coincide(item.id, Self.escapar(item.competencia) + "\\.([0-9]{4}|G[0-9]{2,3}#[0-9]+)") {
+        if !Self.coincide(item.id, Self.escapar(item.competencia) + "\\.([0-9]{4}|G[0-9]{2,3}(@d[1-6](p[1-5])?)?#[0-9]+)") {
             mensajes.append("el id debe tener el formato <competencia>.NNNN (o <competencia>.Gnn#semilla si es generado) y empezar por su competencia")
         }
         if !competencias.contains(item.competencia) {

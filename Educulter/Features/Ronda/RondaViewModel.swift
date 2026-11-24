@@ -61,6 +61,33 @@ final class RondaViewModel: Identifiable {
     /// Tarjeta abierta con "Ver regla".
     var teoriaAbierta: TarjetaTeoria?
 
+    // MARK: Modos con ítems dinámicos (Fase 05D)
+
+    /// Supervivencia: estado de la partida y su registro (los ítems se piden uno a uno).
+    private(set) var supervivencia: EstadoSupervivencia?
+    private(set) var partida: PartidaSupervivencia?
+    private(set) var resultadoPartida: ResultadoPartida?
+    /// Puntos ganados con la última respuesta (para el "+N" en vivo).
+    private(set) var puntosUltimo = 0
+    /// Diagnóstico: sesión adaptativa y plan resultante.
+    private(set) var sesionDiagnostico: SesionDiagnostico?
+    private(set) var plan: PlanDiagnostico?
+    /// Resultado de la prueba de nivel o del Reto de bloque (`nil` en otras rondas).
+    private(set) var efectoFinal: EfectoRonda?
+    /// Tras la primera ronda completada se pregunta (una vez) por el recordatorio diario.
+    var preguntarRecordatorio = false
+    /// Sonidos (los inyecta la vista; se respetan los ajustes).
+    var sonido: (any ServicioSonido)?
+
+    var esSupervivencia: Bool { if case .supervivencia = ronda.tipo { true } else { false } }
+    var esDiagnostico: Bool { if case .diagnostico = ronda.tipo { true } else { false } }
+
+    /// Diagnóstico: total estimado (respondidos + pendientes), para "x de N".
+    var totalDiagnostico: Int {
+        let enCola = sesionDiagnostico?.pendientes.filter { id in !items.contains { $0.id == id } }.count ?? 0
+        return items.count + enCola
+    }
+
     init(servicio: ServicioSesion, tipo: TipoRonda) {
         self.servicio = servicio
         self.ronda = RondaPreparada(tipo: tipo, items: [], competenciaEnCurso: nil, teoriaPrevia: [])
@@ -140,8 +167,22 @@ final class RondaViewModel: Identifiable {
         respondidos += 1
         if r.correcto {
             aciertos += 1
-            if Self.esHitoCombo(comboActual) { hitosCombo += 1 }
+            if Self.esHitoCombo(comboActual) { hitosCombo += 1; sonido?.combo(comboActual) } else { sonido?.acierto() }
+        } else {
+            sonido?.fallo()
         }
+        if var estado = supervivencia, var p = partida {
+            puntosUltimo = estado.responder(correcto: r.correcto)
+            p.jugadas.append(.init(itemId: item.id, bloqueId: banco.catalogo.bloque(deCompetencia: item.competencia)?.id ?? "",
+                                   dificultad: item.dificultad, correcto: r.correcto, puntos: puntosUltimo))
+            p.puntos = estado.puntos
+            p.nivelMaximo = estado.nivelMaximo
+            p.aciertos = estado.aciertos
+            p.fallos = estado.fallos
+            supervivencia = estado
+            partida = p
+        }
+        sesionDiagnostico?.registrar(itemId: item.id, correcto: r.correcto)
         do {
             let e = try servicio.registrar(item: item, resultado: r, usoPista: usoPista, combo: comboActual,
                                            motivo: ronda.items[indice].motivo)
@@ -158,6 +199,17 @@ final class RondaViewModel: Identifiable {
 
     func continuar() {
         guard fase == .corregido else { return }
+        // Supervivencia y diagnóstico piden el siguiente ítem al terminar el anterior.
+        if let estado = supervivencia {
+            if !estado.terminada,
+               let siguiente = try? servicio.siguienteSupervivencia(dificultad: estado.dificultad, area: areaSupervivencia, usados: Set(items.map(\.id))) {
+                items.append(siguiente)
+                ronda.items.append(ItemRonda(itemId: siguiente.id, motivo: .supervivencia))
+            }
+        } else if let sesion = sesionDiagnostico, let siguiente = sesion.siguienteItem, !items.contains(where: { $0.id == siguiente.id }) {
+            items.append(siguiente)
+            ronda.items.append(ItemRonda(itemId: siguiente.id, motivo: .diagnostico))
+        }
         if indice + 1 < items.count {
             indice += 1
             reiniciarItem()
@@ -174,19 +226,58 @@ final class RondaViewModel: Identifiable {
     /// Nueva ronda del mismo tipo (las rondas de ítems fijos pasan a ser recomendadas).
     func otraRonda() {
         switch ronda.tipo {
-        case .items: preparar(.recomendada)
+        case .items, .diagnostico: preparar(.recomendada)
         default: preparar(ronda.tipo)
         }
     }
 
+    /// Salir a mitad: en Supervivencia, la partida se guarda como abandonada (con lo jugado) y no
+    /// cuenta para el récord. Las respuestas ya están guardadas en todos los modos.
+    func abandonar() {
+        guard fase != .resumen, let p = partida, !p.jugadas.isEmpty else { return }
+        _ = try? servicio.cerrarPartida(p, abandonada: true, ronda: ronda)
+    }
+
+    /// Respuesta a la pregunta del recordatorio (se hace una sola vez).
+    func responderRecordatorio(_ activar: Bool) {
+        preguntarRecordatorio = false
+        guard var ajustes = try? servicio.ajustes() else { return }
+        ajustes.recordatorioPreguntado = true
+        if activar { ajustes.recordatorio = true }
+        try? servicio.guardar(ajustes)
+    }
+
     // MARK: - Internos
 
+    private var areaSupervivencia: String? {
+        if case .supervivencia(let area) = ronda.tipo { return area }
+        return nil
+    }
+
     private func preparar(_ tipo: TipoRonda) {
+        supervivencia = nil
+        partida = nil
+        resultadoPartida = nil
+        sesionDiagnostico = nil
+        plan = nil
+        efectoFinal = nil
         do {
-            ronda = try servicio.prepararRonda(tipo)
+            if case .diagnostico = tipo {
+                // La sesión adaptativa vive en el modelo: el siguiente ítem depende de las respuestas.
+                let sesion = servicio.nuevaSesionDiagnostico()
+                sesionDiagnostico = sesion
+                ronda = RondaPreparada(tipo: tipo, items: sesion.siguienteItem.map { [ItemRonda(itemId: $0.id, motivo: .diagnostico)] } ?? [],
+                                       competenciaEnCurso: nil, teoriaPrevia: [])
+            } else {
+                ronda = try servicio.prepararRonda(tipo)
+            }
         } catch {
             ronda = RondaPreparada(tipo: tipo, items: [], competenciaEnCurso: nil, teoriaPrevia: [])
             mensajeError = "No se ha podido preparar la ronda."
+        }
+        if case .supervivencia(let area) = tipo {
+            supervivencia = EstadoSupervivencia()
+            partida = PartidaSupervivencia(inicio: servicio.reloj.ahora, area: area)
         }
         items = ronda.items.compactMap { banco.item(id: $0.itemId) }
         indice = 0
@@ -218,7 +309,25 @@ final class RondaViewModel: Identifiable {
     private func finalizar() {
         var efectoRonda = EfectoRonda()
         do {
-            efectoRonda = try servicio.completarRonda(ronda)
+            if let p = partida {
+                let r = try servicio.cerrarPartida(p, abandonada: false, ronda: ronda)
+                resultadoPartida = r
+                partida = r.partida
+                efectoRonda = r.efectoRonda ?? EfectoRonda()
+                if r.esRecord { sonido?.record() }
+            } else if let sesion = sesionDiagnostico {
+                let (resultado, logrosNuevos) = try servicio.completarDiagnostico(sesion)
+                plan = servicio.plan(resultado)
+                logros += logrosNuevos
+            } else {
+                efectoRonda = try servicio.completarRonda(ronda, aciertos: aciertos)
+                efectoFinal = efectoRonda
+            }
+            if !esDiagnostico {
+                sonido?.finRonda()
+                let ajustes = try servicio.ajustes()
+                preguntarRecordatorio = !ajustes.recordatorioPreguntado
+            }
         } catch {
             mensajeError = "No se ha podido guardar la ronda."
         }

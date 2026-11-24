@@ -49,7 +49,12 @@ struct BancoContenido: Sendable, Equatable {
 
     func item(id: String) -> Item? {
         if let i = indicePorId[id] { return items[i] }
-        guard let (pid, semilla) = MotorGeneradores.partes(de: id), let p = plantillaPorId[pid] else { return nil }
+        guard let (pid, semilla) = MotorGeneradores.partes(de: id) else { return nil }
+        if let p = plantillaPorId[pid] { return try? MotorGeneradores.generar(p, semilla: semilla, recursos: recursos) }
+        // Plantilla con dificultad (y peldaño) ajustados: `<id>@d5p3#semilla` (Fase 05D).
+        guard let ajuste = MotorGeneradores.ajuste(de: pid), let base = plantillaPorId[ajuste.base],
+              ValidadorContenido.rangoDificultad.contains(ajuste.dificultad) else { return nil }
+        let p = MotorGeneradores.ajustada(base, dificultad: ajuste.dificultad, peldano: ajuste.peldano)
         return try? MotorGeneradores.generar(p, semilla: semilla, recursos: recursos)
     }
 

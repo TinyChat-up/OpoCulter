@@ -11,6 +11,12 @@ enum Metrica: String, Codable, Sendable, CaseIterable {
     case sintaxisPerfectas
     case simulacrosAprobados
     case diagnosticosCompletados
+    /// Fase 05D.
+    case partidasSupervivencia
+    case recordsSupervivencia
+    case nivelMaximoSupervivencia
+    case pruebasNivelSuperadas
+    case medallasBloque
 }
 
 /// Condición declarativa de un logro (datos, no código: se puede ampliar sin tocar el motor).
@@ -61,5 +67,24 @@ struct MotorLogros: Sendable {
         Logro(id: "listo-para-examen", titulo: "Listo para el examen",
               descripcion: "Domina una competencia y aprueba un simulacro.",
               condicion: .todas([.alMenos(.competenciasDominadas, 1), .alMenos(.simulacrosAprobados, 1)])),
+        // Fase 05D.
+        Logro(id: "diagnostico", titulo: "Punto de partida", descripcion: "Completa el diagnóstico inicial.",
+              condicion: .alMenos(.diagnosticosCompletados, 1)),
+        Logro(id: "superviviente", titulo: "Superviviente", descripcion: "Termina una partida de Supervivencia.",
+              condicion: .alMenos(.partidasSupervivencia, 1)),
+        Logro(id: "nuevo-record", titulo: "Nuevo récord", descripcion: "Supera tu mejor partida de Supervivencia.",
+              condicion: .alMenos(.recordsSupervivencia, 1)),
+        Logro(id: "experto", titulo: "Nivel Experto", descripcion: "Llega al nivel 6 en Supervivencia.",
+              condicion: .alMenos(.nivelMaximoSupervivencia, 6)),
+        Logro(id: "salto-de-nivel", titulo: "Salto de nivel", descripcion: "Supera una prueba de nivel en el Camino.",
+              condicion: .alMenos(.pruebasNivelSuperadas, 1)),
+        Logro(id: "primera-medalla", titulo: "Primera medalla", descripcion: "Supera un Reto de bloque.",
+              condicion: .alMenos(.medallasBloque, 1)),
     ]
+
+    /// Medalla de un bloque (se concede al superar su Reto; no depende de métricas).
+    static func medalla(_ bloque: Catalogo.Bloque) -> Logro {
+        Logro(id: ConstructorCamino.medalla(bloque.id), titulo: "Medalla: \(bloque.nombre)",
+              descripcion: "Supera el Reto de bloque de \(bloque.nombre).", condicion: .alMenos(.medallasBloque, Int.max))
+    }
 }
