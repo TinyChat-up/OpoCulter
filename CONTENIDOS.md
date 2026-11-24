@@ -217,12 +217,37 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 ### 2.12 Catálogo de preguntas (D-064)
 `CatalogoPreguntas` suma los ítems estáticos y las variantes únicas de las plantillas (sin duplicados, por clave canónica). Lo hace por área, bloque, competencia, peldaño y dificultad, y marca como cota inferior ("≥") los espacios que se muestrean. La tabla está en Revisión → "Recuentos del catálogo de preguntas".
 
+### 2.15 Exámenes oficiales del Modo Tribunal (datos, D-074)
+`pendiente/tribunal/<año>_<convocatoria>.json`, un examen por archivo. La app no los lee: el motor del Tribunal llega en la Fase 05E.
+
+```json
+{ "id": "OF.2026.O", "anio": 2026, "convocatoria": "ordinaria|aplazada", "duracionMin": 90,
+  "fuente": "<URL oficial>", "fuentePlantilla": "<URL> (solo 2026)", "fechaConsulta": "2026-11-23",
+  "aviso": "…sin alteraciones… no está patrocinada ni avalada por la Comunidad de Madrid.",
+  "textoBase": { "texto": "…|null", "autor": "…", "obra": "…", "protegido": false, "anioMuerteAutor": 1870 },
+  "preguntas": [ { "numero": 1, "numeroEnArea": 1, "area": "LEN|MAT", "enunciado": "<literal>",
+                   "competencias": ["LEN.COM.RESU"], "solucionModelo": "…",
+                   "rubrica": { "bien": "…", "regular": "…", "mal": "…" },
+                   "fuenteSolucion": "oficial|direccion", "fuenteRubrica": "oficial|direccion", "puntos": 1 } ],
+  "notas": "(opcional)", "validacion": { "estado": "borrador", "revisor": "", "fecha": "" } }
+```
+
+- **Enunciados**: literales. Las correcciones de OCR, las tablas transcritas en línea y las figuras descritas entre corchetes se registran en `docs/examenes/CORRECCIONES_OCR.md`.
+- **Textos protegidos** (Salinas en 2019 O; Laforet en 2019 A): `"protegido": true`, `texto: null` y aviso de protección. Las citas del texto dentro de un enunciado se sustituyen por «[Cita del texto base protegido: consúltese en el PDF oficial]».
+- **Pregunta anulada** (2022 O L7): `"anulada": true` y `puntos: 0`.
+- **Rúbricas**: las de 2026 son las plantillas oficiales copiadas literalmente (`fuenteSolucion` y `fuenteRubrica`: `oficial`). Las demás son de redacción propia según ese modelo (`direccion`). La plantilla oficial da criterios, no soluciones: en 2026 el `solucionModelo` también es de redacción propia.
+- **Soluciones de Matemáticas**: se calculan con aritmética exacta en `scripts/tribunal/matematicas.py`. `scripts/tribunal/construir.py` genera los JSON y la hoja de revisión `docs/examenes/SOLUCIONES_REVISION_<n>.md`.
+- **Validación**: `python3 scripts/validar_tribunal.py` (comprueba además que todo JSON de `Content/` es válido).
+
 ## 3. Registro de procedencia
 
 | ID | Tipo | Autoría u origen | Licencia | Fecha |
 |---|---|---|---|---|
 | Ítems, tarjetas y SIM.01 de prueba (Fases 04 y 05A) | original | Claude Code, solo para tests y desarrollo (estado `borrador`, solo Debug) | propia | 2026-11-23 |
 | Lote 01 · `LEN.ORT.*` (38 ítems y 5 tarjetas) | original | Redacción original de la dirección del proyecto | propia | 2026-11-23 |
+| Datos Tribunal · enunciados y textos base de los 7 cuadernillos (`pendiente/tribunal/`) | oficial reutilizable + dominio público | Comunidad de Madrid, prueba común de Maestros 2017–2026 (URL y fecha en cada archivo y en `docs/examenes/FUENTES.md`); reutilización sin alterar el contenido y citando la fuente (aviso legal de comunidad.madrid). Textos base de dominio público: Bécquer, Muñoz Seca, Lope de Vega, Cervantes y García Lorca. Salinas y Laforet no se reproducen | reutilización (aviso legal) / dominio público | 2026-11-24 |
+| Datos Tribunal · rúbricas de 2026 | oficial reutilizable | Plantillas de corrección oficiales de 2026 (ordinaria y aplazada), copiadas literalmente | reutilización (aviso legal) | 2026-11-24 |
+| Datos Tribunal · soluciones modelo y rúbricas 2017–2024 | original | Redacción de Claude Code para revisión de la dirección (borrador) | propia | 2026-11-24 |
 
 ## 4. Proceso de revisión y calidad
 
@@ -235,6 +260,7 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 | Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
 | Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
 | Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
+| Datos Tribunal · 7 exámenes · borrador pendiente de revisión de la dirección | Modo Tribunal (05E) | 139 preguntas (69 L + 70 M) | — | Borrador pendiente de revisión de la dirección | `pendiente/tribunal/*.json`, `docs/examenes/SOLUCIONES_REVISION_1–3.md`, `docs/examenes/CORRECCIONES_OCR.md` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 

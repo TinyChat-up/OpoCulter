@@ -1,0 +1,383 @@
+{
+  "id": "OF.2019.A",
+  "anio": 2019,
+  "convocatoria": "aplazada",
+  "duracionMin": 90,
+  "fuente": "https://www.comunidad.madrid/docs/assets/2019/11/15/edu_rrhh_0371_2019_examen_prueba_comun_aplazada.pdf",
+  "fechaConsulta": "2026-11-23",
+  "aviso": "Examen oficial publicado por la Comunidad de Madrid. Reproducido sin alteraciones según sus condiciones de reutilización. Esta app no está patrocinada ni avalada por la Comunidad de Madrid. El texto base está protegido por derechos de autor y no se reproduce. Consúltalo en el PDF oficial.",
+  "textoBase": {
+    "texto": null,
+    "autor": "Carmen Laforet",
+    "obra": "Nada",
+    "protegido": true,
+    "anioMuerteAutor": 2004
+  },
+  "preguntas": [
+    {
+      "numero": 1,
+      "numeroEnArea": 1,
+      "area": "LEN",
+      "enunciado": "Resuma el contenido del texto y coméntelo brevemente.",
+      "competencias": [
+        "LEN.COM.RESU"
+      ],
+      "solucionModelo": "Resumen: de noche, la narradora llega al ábside de la catedral (de Barcelona); oye una tos ronca y se asusta al ver salir de la oscuridad a un viejo de aspecto miserable; llevada por un impulso, lo sigue, le da dos pesetas y él las guarda con ironía, sin hablar. Ya más calmada, llega a la fachada principal y la contemplación de la catedral le transmite paz y cumple el deseo que la había llevado hasta allí. Comentario: fragmento de Nada (1945), de Carmen Laforet, novela de la primera posguerra narrada en primera persona por Andrea. Contrasta la sordidez y el miedo de las callejuelas con la armonía y la paz de la catedral; abundan las impresiones sensoriales (luces, sonidos), la adjetivación expresiva y las comparaciones y personificaciones, que reflejan el estado de ánimo de la protagonista.",
+      "rubrica": {
+        "bien": "Recoge el contenido principal en orden, con palabras propias y sin detalles accesorios, e identifica el tema.",
+        "regular": "Recoge solo parte del contenido principal o copia frases del texto.",
+        "mal": "No identifica el tema o el resumen es incorrecto o insuficiente."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 2,
+      "numeroEnArea": 2,
+      "area": "LEN",
+      "enunciado": "Comente brevemente esta frase explicando lo que la narradora quiere decir.\n[Cita del texto base protegido: consúltese en el PDF oficial]",
+      "competencias": [
+        "LEN.COM.INFER"
+      ],
+      "solucionModelo": "Mediante una comparación (símil), la narradora juzga su propia conducta: se considera insensata porque actúa por impulsos, sin control ni voluntad, arrastrada por las emociones de la noche (el vino, la música, el miedo), igual que una hoja de papel que el viento lleva de un lado a otro. Expresa su desorientación y su pasividad.",
+      "rubrica": {
+        "bien": "Explica la comparación y su sentido: la narradora actúa sin voluntad, a merced de sus impulsos.",
+        "regular": "La explicación es correcta pero incompleta o imprecisa.",
+        "mal": "La explicación es incorrecta o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 3,
+      "numeroEnArea": 3,
+      "area": "LEN",
+      "enunciado": "Explique el significado de las siguientes palabras atendiendo a su sentido en el texto.\nÁbside:\nCarraspeo:\nInusitada:\nBronca:\nArmonía:",
+      "competencias": [
+        "LEN.LEX.CTX"
+      ],
+      "solucionModelo": "Ábside: parte de la iglesia, abovedada y por lo general semicircular, que sobresale en la fachada posterior, tras el altar mayor. Carraspeo: ruido que se hace con la garganta al aclararla; tos ronca. Inusitada: no habitual, extraordinaria. Bronca: áspera, ronca (dicho de la tos o la voz). Armonía: proporción y equilibrio agradable entre las partes de un conjunto.",
+      "rubrica": {
+        "bien": "Explica correctamente las 5 palabras según su sentido en el texto.",
+        "regular": "Explica bien 3 o 4 palabras.",
+        "mal": "Explica bien 2 palabras o menos."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 4,
+      "numeroEnArea": 4,
+      "area": "LEN",
+      "enunciado": "Defina los siguientes términos:\nNeologismo:\nArcaísmo:\nEufemismo:\nMorfema:\nAcrónimo:",
+      "competencias": [
+        "LEN.LEX.CONCEPTOS"
+      ],
+      "solucionModelo": "Neologismo: palabra o acepción nueva en una lengua (por ejemplo, «tuitear»). Arcaísmo: palabra, expresión o construcción anticuada, en desuso («fermoso»). Eufemismo: palabra o expresión que sustituye a otra considerada malsonante, dura o tabú («pasar a mejor vida»). Morfema: unidad mínima de la palabra con significado gramatical, que se une al lexema (flexivos, como el plural -s, y derivativos, como el sufijo -ero). Acrónimo: palabra formada con letras o segmentos de varias palabras que se lee como una palabra («ovni», «Renfe», «Mercosur»).",
+      "rubrica": {
+        "bien": "Define correctamente los 5 términos.",
+        "regular": "Define bien 3 o 4 términos o con alguna imprecisión.",
+        "mal": "Define bien 2 términos o menos."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 5,
+      "numeroEnArea": 5,
+      "area": "LEN",
+      "enunciado": "Agrupe las siguientes palabras derivadas según si están creadas mediante sufijación o prefijación:\nfloral, rosaleda, reformar, imposible, mesonero, inmaduro, multicolor, motorizar.\nSUFIJACIÓN / PREFIJACIÓN",
+      "competencias": [
+        "LEN.FOR.DERIV"
+      ],
+      "solucionModelo": "Sufijación: floral, rosaleda, mesonero, motorizar. Prefijación: reformar, imposible, inmaduro, multicolor.",
+      "rubrica": {
+        "bien": "Clasifica correctamente los 8 elementos.",
+        "regular": "Comete un error en uno de los 8 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 6,
+      "numeroEnArea": 6,
+      "area": "LEN",
+      "enunciado": "Analice las siguientes formas verbales:\nOí:\nDesgarrara:\nEra:",
+      "competencias": [
+        "LEN.VER.ANALISIS"
+      ],
+      "solucionModelo": "Oí: 1.ª persona del singular del pretérito perfecto simple de indicativo del verbo oír. Desgarrara: 1.ª o 3.ª persona del singular del pretérito imperfecto de subjuntivo del verbo desgarrar (en el texto, 3.ª persona). Era: 1.ª o 3.ª persona del singular del pretérito imperfecto de indicativo del verbo ser (en el texto, 3.ª persona).",
+      "rubrica": {
+        "bien": "Analiza correctamente las 3 formas (persona, número, tiempo, modo e infinitivo).",
+        "regular": "Comete un error en una de las formas o en uno de sus rasgos.",
+        "mal": "Comete varios errores o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 7,
+      "numeroEnArea": 7,
+      "area": "LEN",
+      "enunciado": "Incluya los siguientes adjetivos en la casilla correspondiente:\nalegre, verde, amplísimo, mayor, fuerte, mínimo, dócil, paupérrimo, peor.\nPOSITIVOS / COMPARATIVOS / SUPERLATIVOS",
+      "competencias": [
+        "LEN.CLA.SUSTADJ"
+      ],
+      "solucionModelo": "Positivos: alegre, verde, fuerte, dócil. Comparativos: mayor, peor. Superlativos: amplísimo, mínimo, paupérrimo.",
+      "rubrica": {
+        "bien": "Clasifica correctamente los 9 elementos.",
+        "regular": "Comete un error en uno de los 9 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 8,
+      "numeroEnArea": 8,
+      "area": "LEN",
+      "enunciado": "Cite al menos cinco poetas españoles que publicaran alguno de sus libros en el Siglo XX.",
+      "competencias": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "solucionModelo": "Por ejemplo: Antonio Machado, Juan Ramón Jiménez, Federico García Lorca, Rafael Alberti, Miguel Hernández, Blas de Otero, José Hierro, Gloria Fuertes, Ángel González o Jaime Gil de Biedma.",
+      "rubrica": {
+        "bien": "Cita correctamente los 5 elementos.",
+        "regular": "Comete un error en uno de los 5 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 9,
+      "numeroEnArea": 9,
+      "area": "LEN",
+      "enunciado": "Ordene del más antiguo al más moderno los siguientes autores:\nMiguel de Cervantes, Luis Alberto de Cuenca, Rosalía de Castro, Ramón del Valle-Inclán, Gabriela Mistral, Gaspar Melchor de Jovellanos.",
+      "competencias": [
+        "LEN.LIT.CRONO"
+      ],
+      "solucionModelo": "1. Miguel de Cervantes (1547-1616); 2. Gaspar Melchor de Jovellanos (1744-1811); 3. Rosalía de Castro (1837-1885); 4. Ramón del Valle-Inclán (1866-1936); 5. Gabriela Mistral (1889-1957); 6. Luis Alberto de Cuenca (1950).",
+      "rubrica": {
+        "bien": "Ordena correctamente los 6 elementos.",
+        "regular": "Comete un error en uno de los 6 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 10,
+      "numeroEnArea": 10,
+      "area": "LEN",
+      "enunciado": "Analice sintácticamente la siguiente oración:\nEl deportista llegó muy cansado a su casa.",
+      "competencias": [
+        "LEN.SIN.COMPL"
+      ],
+      "solucionModelo": "Oración simple, enunciativa afirmativa, predicativa e intransitiva. Sujeto: «El deportista» (SN). Predicado verbal: N «llegó»; complemento predicativo del sujeto «muy cansado» (SAdj: Mod «muy» + N «cansado», concuerda con «deportista»); CCL «a su casa» (SPrep: E «a» + término SN «su casa»; algunos análisis lo consideran complemento de régimen o argumental de dirección).",
+      "rubrica": {
+        "bien": "Realiza un análisis sintáctico correcto y completo de la oración (sujeto, predicado y complementos).",
+        "regular": "El análisis es parcialmente correcto: identifica sujeto y predicado pero yerra en algún complemento.",
+        "mal": "El análisis es incorrecto o incompleto."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 11,
+      "numeroEnArea": 1,
+      "area": "MAT",
+      "enunciado": "En una fiesta de cumpleaños debemos hinchar 60 globos. Juan, que ha sido el primero en llegar, ha hinchado 1/12 de los globos. A continuación, María ha hinchado 2/11 de los globos que quedaban y, por último, Ana ha hinchado 3/15 de los globos que restaban. ¿Cuántos globos han quedado sin hinchar?",
+      "competencias": [
+        "MAT.NUM.FRACDE"
+      ],
+      "solucionModelo": "1) Juan: 1/12 de 60 = 5; quedan 55. 2) María: 2/11 de 55 = 10; quedan 45. 3) Ana: 3/15 de 45 = 9; quedan 36. Resultado: Quedan 36 globos sin hinchar.",
+      "rubrica": {
+        "bien": "Calcula correctamente las fracciones sucesivas sobre lo que queda.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 12,
+      "numeroEnArea": 2,
+      "area": "MAT",
+      "enunciado": "En un laboratorio se está experimentando con tres baterías diferentes. Estas baterías son intercambiables y se quiere investigar cuánto tiempo podrá funcionar un motor conectado a las mismas. En las pruebas independientes cada una de las baterías ha dado la siguiente duración:\nA. 3h 10’   B. 210’ 600’’   C. 190’ 2400’’\n¿Cuántos minutos funcionará el motor si las tres baterías se conectan al mismo de forma sucesiva?",
+      "competencias": [
+        "MAT.UNI.TIEMPO"
+      ],
+      "solucionModelo": "1) A: 3 h 10′ = 190 min. 2) B: 600″ = 10′ → 220 min. C: 2400″ = 40′ → 230 min. 3) Sucesivas: 190 + 220 + 230. Resultado: 640 minutos.",
+      "rubrica": {
+        "bien": "Convierte y suma correctamente las tres duraciones.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 13,
+      "numeroEnArea": 3,
+      "area": "MAT",
+      "enunciado": "Calcule el valor de a y b para que se cumplan estas igualdades:\n23 a = 9591\n24024 : b = 88",
+      "competencias": [
+        "MAT.OPE.INCOG"
+      ],
+      "solucionModelo": "1) a = 9591 : 23 = 417 (23 × 417 = 9591). 2) b = 24024 : 88 = 273 (88 × 273 = 24.024). Resultado: a = 417; b = 273.",
+      "rubrica": {
+        "bien": "Calcula correctamente a y b.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 14,
+      "numeroEnArea": 4,
+      "area": "MAT",
+      "enunciado": "Ordene de mayor a menor los siguientes números:\n2,1; 23/24; 8/4; 0,8",
+      "competencias": [
+        "MAT.NUM.ORDEN"
+      ],
+      "solucionModelo": "1) 8/4 = 2; 23/24 = 0,958… 2) Se comparan: 2,1 > 2 > 0,958… > 0,8. Resultado: 2,1 > 8/4 > 23/24 > 0,8.",
+      "rubrica": {
+        "bien": "Ordena correctamente los cuatro números.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 15,
+      "numeroEnArea": 5,
+      "area": "MAT",
+      "enunciado": "Queremos hacer bizcocho de zanahoria para cinco personas y encontramos esta receta para cuatro personas. ¿Cuáles son las cantidades que deberemos utilizar para preparar ese bizcocho para cinco personas siguiendo las proporciones de la receta?\nBizcocho de zanahoria para cuatro personas:\n• 250 g de zanahorias crudas.\n• 200 g de harina.\n• 7 g de levadura en polvo o polvo de hornear.\n• 120 ml de aceite de girasol.\n• 4 huevos.\n• 200 g de azúcar.",
+      "competencias": [
+        "MAT.POR.PROPORC"
+      ],
+      "solucionModelo": "1) Razón de proporcionalidad: 5/4 = 1,25. 2) Cada cantidad se multiplica por 1,25. Resultado: 312,5 g de zanahorias; 250 g de harina; 8,75 g de levadura; 150 ml de aceite; 5 huevos; 250 g de azúcar.",
+      "rubrica": {
+        "bien": "Calcula correctamente las seis cantidades manteniendo la proporción.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 16,
+      "numeroEnArea": 6,
+      "area": "MAT",
+      "enunciado": "Tenemos en una caja 10 bolas numeradas del 0 al 9. Si sacamos una bola de la caja ¿qué posibilidades tendremos de que se cumplan los siguientes sucesos?\nRelacione con flechas suceso y probabilidad.\nSacar un número impar · Sacar un número mayor que 6 · Sacar el número 8 · Sacar un número menor que 10\n3/10 · 10/10 · 5/10 · 1/10",
+      "competencias": [
+        "MAT.PRO.LAPLACE"
+      ],
+      "solucionModelo": "1) Casos posibles: 10 (bolas 0–9). Regla de Laplace: favorables / posibles. 2) Impares (1, 3, 5, 7, 9): 5/10. Mayor que 6 (7, 8, 9): 3/10. El 8: 1/10. Menor que 10: todas, 10/10 (suceso seguro). Resultado: Impar → 5/10; mayor que 6 → 3/10; el 8 → 1/10; menor que 10 → 10/10.",
+      "rubrica": {
+        "bien": "Relaciona correctamente los 4 elementos.",
+        "regular": "Comete un error en uno de los 4 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 17,
+      "numeroEnArea": 7,
+      "area": "MAT",
+      "enunciado": "Halle el volumen de las siguientes figuras geométricas.\na) Una pirámide, cuya base es un cuadrado con cuatro metros de lado y cuya distancia al vértice superior (altura) son 8 metros.\nb) Un cilindro cuya base es un círculo con 2 metros de radio y cuya altura es de 8 metros.\nEntiéndase π=3,14.",
+      "competencias": [
+        "MAT.GEO.VOLUMEN"
+      ],
+      "solucionModelo": "1) Pirámide: V = (área de la base × altura) : 3 = (4² × 8) : 3 = 128/3. 2) Cilindro: V = π · r² · h = 3,14 × 2² × 8. Resultado: a) 128/3 ≈ 42,67 m³; b) 100,48 m³.",
+      "rubrica": {
+        "bien": "Calcula correctamente los dos volúmenes.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 18,
+      "numeroEnArea": 8,
+      "area": "MAT",
+      "enunciado": "Tras valorarse, del uno al diez, cinco propuestas de actividades complementarias que se han llevado a cabo en un colegio, se obtienen los siguientes resultados.\nResultados: Propuesta 1: 4; Propuesta 2: 5; Propuesta 3: 7; Propuesta 4: 8; Propuesta 5: 9.\nHalle la media aritmética, la mediana y el rango de los resultados.",
+      "competencias": [
+        "MAT.EST.CENTRAL"
+      ],
+      "solucionModelo": "1) Media: 33 : 5 = 6,6. 2) Mediana: datos ordenados (4, 5, 7, 8, 9), el central es 7. 3) Rango: 9 − 4 = 5. Resultado: Media 6,6; mediana 7; rango 5.",
+      "rubrica": {
+        "bien": "Calcula correctamente los 3 elementos.",
+        "regular": "Comete un error en uno de los 3 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 19,
+      "numeroEnArea": 9,
+      "area": "MAT",
+      "enunciado": "Convierta estos números romanos en números arábigos:\nMMCCCXLV   CCCXLVII   CDXCIII",
+      "competencias": [
+        "MAT.ROM.LECTURA"
+      ],
+      "solucionModelo": "1) MM CCC XL V = 2000 + 300 + 40 + 5. 2) CCC XL VII = 300 + 40 + 7. 3) CD XC III = 400 + 90 + 3. Resultado: 2345; 347; 493.",
+      "rubrica": {
+        "bien": "Convierte correctamente los 3 elementos.",
+        "regular": "Comete un error en uno de los 3 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 20,
+      "numeroEnArea": 10,
+      "area": "MAT",
+      "enunciado": "Resuelva la siguiente operación combinada:\n[(12 x 4 - 8) : 4] + [2 (23 - 2 x 3)] =",
+      "competencias": [
+        "MAT.OPE.JERARQ"
+      ],
+      "solucionModelo": "1) (12 × 4 − 8) : 4 = 40 : 4 = 10. 2) 2 × (23 − 6) = 2 × 17 = 34. 3) 10 + 34. Resultado: 44.",
+      "rubrica": {
+        "bien": "Resuelve correctamente la operación respetando la jerarquía.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    }
+  ],
+  "validacion": {
+    "estado": "borrador",
+    "revisor": "",
+    "fecha": ""
+  }
+}

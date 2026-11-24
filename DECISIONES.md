@@ -316,3 +316,12 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 
 ### D-068 · 2026-11-23 · Fase 05C · Vigente
 **Competencias nuevas en el catálogo** para las plantillas de prueba que no tenían competencia: `MAT.OPE.ECUAC` (ecuaciones), `MAT.EST.CENTRAL` (media, mediana, moda y rango) y `MAT.PRO.LAPLACE` (probabilidad de un suceso). El catálogo pasa a la versión 2 con 27 competencias. Las demás competencias que propone la matriz (marcadas con † en MATRIZ.md) se dejan a la dirección. En Release estas competencias no tienen ítems todavía y `ServicioSesion` las salta (`valida` exige ítems).
+
+### D-074 · 2026-11-24 · Datos del Tribunal · Vigente
+**Exámenes oficiales literales para el Modo Tribunal (borrador).**
+- **Ubicación**: `Content/pendiente/tribunal/`, un JSON por examen (esquema en CONTENIDOS §2.15). No lo lee la app; lo hará el motor de la Fase 05E.
+- **Literalidad**: los enunciados se copian del texto extraído y se cotejan con el PDF. Cada corrección de OCR, cada tabla transcrita en línea y cada figura descrita se registra en `docs/examenes/CORRECCIONES_OCR.md`.
+- **Derechos**: no se reproducen los textos de Salinas (2019 O) y Laforet (2019 A), ni las citas de esos textos dentro de los enunciados. Cada examen lleva fuente, fecha de consulta y aviso de no patrocinio (aviso legal de comunidad.madrid).
+- **Soluciones**: las de Matemáticas se calculan con código (`scripts/tribunal/matematicas.py`, aritmética exacta). Las de Lengua y las rúbricas de 2017–2024 son de redacción propia; las rúbricas de 2026 son las plantillas oficiales literales. Todo queda en borrador.
+- **Validación**: `scripts/validar_tribunal.py` es un script aparte (no amplía `validar_items.py`, que solo existe en la rama `contenido/lote-03a`), para no crear conflictos al fusionar.
+- **Convocatoria 2026**: se descarga la disposición BOCM-20260212-7 para citar la penalización ortográfica (FUENTES §4). Para ello se crea el entorno personal «OpoCulter», con acceso a www.bocm.es y a comunidad.madrid.

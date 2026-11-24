@@ -15,6 +15,7 @@ Descargados por Claude Code el **23/11/2026** desde la web oficial de la Comunid
 | `2026_comun_aplazada.pdf` | 2026 aplazada | https://www.comunidad.madrid/docs/2026-06/rh02_opo_prueba_comun_aplazada.pdf | `baedc582…c7c315` |
 | `2026_plantillas_ordinaria.pdf` | Plantilla de corrección 2026 ordinaria | https://www.comunidad.madrid/docs/2026-08/rh02_plantillas_prueba_comun_ordinaria_26.pdf | `c68787ec…ad4f` |
 | `2026_plantillas_aplazada.pdf` | Plantilla de corrección 2026 aplazada | https://www.comunidad.madrid/docs/2026-08/rh02_plantillas-prueba_comun_aplazada_26.pdf | `c38512f2…4edb481` |
+| `2026_convocatoria_BOCM-20260212-7.pdf` | Convocatoria 2026: Resolución de 2 de febrero de 2026 de la Dirección General de Recursos Humanos (BOCM núm. 36, 12/02/2026, págs. 34–115) | https://www.bocm.es/boletin/CM_Orden_BOCM/2026/02/12/BOCM-20260212-7.PDF (descargado el 24/11/2026) | `d70b17f1…8e53886` |
 
 Páginas índice consultadas: `comunidad.madrid/servicios/educacion/documentacion-procesos-selectivos-oposiciones-{2019,2022,2024}-maestros`, `comunidad.madrid/educacion/documentacion-procesos-selectivos-oposiciones-2026-maestros`, `comunidad.madrid/educacion/procesos-selectivos-oposiciones-2017-maestros` y `sede.comunidad.madrid/oferta-empleo/oposiciones-maestros-2026`.
 
@@ -50,3 +51,36 @@ Plazo de protección en España: 70 años tras la muerte del autor. Para autores
 | 2026 A | «Canción de jinete» | Federico García Lorca (1936) | Dominio público desde 2017 | Sí |
 
 Con 2019 O y 2019 A en Tribunal se podrían mostrar las preguntas que no dependen del texto, o el examen sin el texto citando dónde leerlo. Lo decide la dirección.
+
+## 4. Penalización ortográfica en la prueba común A1 (convocatoria 2026)
+
+Fuente: Resolución de 2 de febrero de 2026, de la Dirección General de Recursos Humanos, por la que se convoca proceso selectivo para ingreso en el Cuerpo de Maestros (BOCM núm. 36, de 12 de febrero de 2026; disposición BOCM-20260212-7). Se consultó el boletín completo (https://www.bocm.es/boletin/CM_Boletin_BOCM/2026/02/12/03600.PDF) y la disposición suelta, que se guarda en `oficiales/2026_convocatoria_BOCM-20260212-7.pdf`.
+
+**Regla general**: Anexo V, apartado C) «Criterios generales de valoración de las pruebas de la fase de oposición», punto 1, «Criterios de valoración generales para las pruebas escritas en castellano». El epígrafe «ORTOGRAFÍA.» está al pie de la **pág. 96** y el texto, en la **pág. 97**. Texto literal:
+
+> ORTOGRAFÍA.
+>
+> En todos los ejercicios escritos se aplicarán los siguientes criterios:
+>
+> — La escritura incorrecta de una palabra supone la disminución de la nota en 0,5 puntos.
+>
+> — Si la incorrección se debe a una tilde, la disminución será de 0,25 puntos.
+>
+> — La escritura de dos palabras como una sola supone una disminución de 0,25 puntos.
+>
+> — La división de una palabra en dos dentro de un renglón supone una disminución de 0,25 puntos.
+>
+> — La separación incorrecta de dos vocales de una palabra al cambiar de renglón supone la disminución de 0,25 puntos.
+>
+> — La utilización de abreviaturas para expresar palabras, nexos, pronombres, terminaciones de adverbios, del tipo "tb" por también, "pq" en vez de porque o por qué, "q" en lugar de que o qué, adverbios que terminan en mente y se utiliza la "barra inclinada" (/), etc., se penalizará con la disminución de 0,10 puntos.
+>
+> — Las faltas cometidas en palabras que se repiten se contabilizarán una sola vez.
+>
+> — Se detraerá puntuación por incorrecciones ortográficas, sin límite de ningún tipo, de la calificación obtenida por el aspirante en el correspondiente ejercicio calificado.
+>
+> — Estos criterios de corrección serán aplicados en todos los ejercicios escritos que realice el aspirante.
+
+**Criterio específico de la A1** (pág. 102, especialidades de Educación Primaria, Audición y Lenguaje, Educación Física, Música y Pedagogía Terapéutica; el mismo texto figura en la pág. 109 para las de Lengua Extranjera): «PARTE A1. PRUEBA COMÚN. Esta prueba tiene una plantilla de corrección específica. Se valorará el rigor y exactitud en las respuestas.» No fija otra cifra de penalización ortográfica para la A1, así que **se aplica la regla general**: la convocatoria sí fija cifras (0,5 por palabra mal escrita, 0,25 por tilde, etc.) y sin límite.
+
+**Ponderación de la A1** (pág. 52): «La calificación ponderada de esta parte se calculará multiplicando la nota obtenida en la parte A1 por 0,3». La parte A2 se multiplica por 0,7. Los cuadernillos de 2017 a 2026 recuerdan en su instrucción 8 o 9: «Las faltas de ortografía y las incorrecciones de acentuación restarán puntuación.»
+

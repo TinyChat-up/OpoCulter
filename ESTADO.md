@@ -28,6 +28,9 @@
 2. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
 3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
 
+## Pendiente con Mac
+1. **Datos del Tribunal (rama `contenido/tribunal-datos`)**: el motor del Modo Tribunal (05E) leerá `Content/pendiente/tribunal/*.json` (esquema en CONTENIDOS §2.15), que todavía no se carga. Antes, la dirección debe revisar `docs/examenes/SOLUCIONES_REVISION_1–3.md` y aprobar los 7 exámenes, que hoy están en borrador.
+
 ## Fase 05B — Resultado
 
 | Verificación | Resultado | Evidencia |

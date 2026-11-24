@@ -1,0 +1,383 @@
+{
+  "id": "OF.2019.O",
+  "anio": 2019,
+  "convocatoria": "ordinaria",
+  "duracionMin": 90,
+  "fuente": "https://www.comunidad.madrid/docs/assets/2019/11/15/edu_rrhh_0371_2019_examen_prueba_comun.pdf",
+  "fechaConsulta": "2026-11-23",
+  "aviso": "Examen oficial publicado por la Comunidad de Madrid. Reproducido sin alteraciones según sus condiciones de reutilización. Esta app no está patrocinada ni avalada por la Comunidad de Madrid. El texto base está protegido por derechos de autor y no se reproduce. Consúltalo en el PDF oficial.",
+  "textoBase": {
+    "texto": null,
+    "autor": "Pedro Salinas",
+    "obra": "La voz a ti debida",
+    "protegido": true,
+    "anioMuerteAutor": 1951
+  },
+  "preguntas": [
+    {
+      "numero": 1,
+      "numeroEnArea": 1,
+      "area": "LEN",
+      "enunciado": "Explique la temática del poema y coméntelo brevemente.",
+      "competencias": [
+        "LEN.COM.RESU"
+      ],
+      "solucionModelo": "Tema: el anhelo amoroso; el yo poético espera la llamada de la amada y estaría dispuesto a abandonarlo todo por ella. Comentario: poema de La voz a ti debida (1933), de Pedro Salinas, cumbre de su poesía amorosa. El amor se presenta como algo que trasciende lo material: el yo lo dejaría todo (enumeración de objetos y recuerdos) y espera que la voz llegue «desde un milagro», no desde lo cotidiano. Verso libre de arte menor, tono conversacional e íntimo, exclamaciones y anáforas que expresan el deseo, y juegos conceptuales (paradojas) característicos del autor.",
+      "rubrica": {
+        "bien": "Explica el tema y comenta con acierto la forma y el sentido del poema.",
+        "regular": "Explica el tema, pero el comentario es pobre o impreciso.",
+        "mal": "No identifica el tema o no comenta el poema."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 2,
+      "numeroEnArea": 2,
+      "area": "LEN",
+      "enunciado": "¿En qué generación podemos incluir al autor?",
+      "competencias": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "solucionModelo": "En la Generación del 27 (Pedro Salinas, 1891-1951).",
+      "rubrica": {
+        "bien": "Indica la Generación del 27.",
+        "regular": "Lo sitúa en la vanguardia o en el siglo XX sin precisar la generación.",
+        "mal": "Indica otra generación o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 3,
+      "numeroEnArea": 3,
+      "area": "LEN",
+      "enunciado": "¿Qué figura literaria podemos encontrarnos en estos versos? Marque la opción correcta.\n[Cita del texto base protegido: consúltese en el PDF oficial]\nEnumeración.\nMetonimia.\nHipérbaton.\n[Cita del texto base protegido: consúltese en el PDF oficial]\nSinécdoque.\nAnáfora.\nComparación.",
+      "competencias": [
+        "LEN.REC.FIGURAS"
+      ],
+      "solucionModelo": "Primer fragmento: enumeración (serie de elementos que lo dejaría todo). Segundo fragmento: anáfora (repetición de «si me llamaras» al comienzo de los versos).",
+      "rubrica": {
+        "bien": "Marca las dos figuras correctas.",
+        "regular": "Acierta una de las dos.",
+        "mal": "No acierta ninguna."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 4,
+      "numeroEnArea": 4,
+      "area": "LEN",
+      "enunciado": "Explique brevemente qué es una metáfora.",
+      "competencias": [
+        "LEN.REC.FIGURAS"
+      ],
+      "solucionModelo": "Figura retórica que identifica un término real con otro imaginario con el que guarda alguna semejanza, sin nexo comparativo («tus dientes son perlas»; metáfora pura: «las perlas de tu boca»).",
+      "rubrica": {
+        "bien": "Define la metáfora con precisión (identificación por semejanza, sin nexo) y, si acaso, pone un ejemplo.",
+        "regular": "La explicación es correcta pero incompleta o imprecisa.",
+        "mal": "La explicación es incorrecta o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 5,
+      "numeroEnArea": 5,
+      "area": "LEN",
+      "enunciado": "En los siguientes versos, aparece la palabra “si” con tilde y sin tilde, explique la diferencia.\n[Cita del texto base protegido: consúltese en el PDF oficial]",
+      "competencias": [
+        "LEN.ORT.DIA"
+      ],
+      "solucionModelo": "Es un caso de tilde diacrítica. «Si» sin tilde es una conjunción (aquí introduce una exclamación de deseo, con valor condicional: «¡si me llamaras!»). «Sí» con tilde es un adverbio de afirmación (también puede ser pronombre reflexivo: «para sí»).",
+      "rubrica": {
+        "bien": "Identifica la conjunción «si» y el adverbio de afirmación «sí» como tilde diacrítica.",
+        "regular": "La explicación es correcta pero incompleta o imprecisa.",
+        "mal": "La explicación es incorrecta o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 6,
+      "numeroEnArea": 6,
+      "area": "LEN",
+      "enunciado": "Analice las siguientes formas verbales del texto:\nllamaras\nespero\nllamas",
+      "competencias": [
+        "LEN.VER.ANALISIS"
+      ],
+      "solucionModelo": "Llamaras: 2.ª persona del singular del pretérito imperfecto de subjuntivo del verbo llamar. Espero: 1.ª persona del singular del presente de indicativo del verbo esperar. Llamas: 2.ª persona del singular del presente de indicativo del verbo llamar.",
+      "rubrica": {
+        "bien": "Analiza correctamente las 3 formas (persona, número, tiempo, modo e infinitivo).",
+        "regular": "Comete un error en una de las formas o en uno de sus rasgos.",
+        "mal": "Comete varios errores o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 7,
+      "numeroEnArea": 7,
+      "area": "LEN",
+      "enunciado": "Incluya los siguientes adjetivos en la casilla correspondiente:\nviejos, mejor, menor, dulcísimo, peor, triste, azul, óptimo, ínfimo.\nPOSITIVOS / COMPARATIVOS / SUPERLATIVOS",
+      "competencias": [
+        "LEN.CLA.SUSTADJ"
+      ],
+      "solucionModelo": "Positivos: viejos, triste, azul. Comparativos: mejor, menor, peor (comparativos sintéticos de bueno, pequeño y malo). Superlativos: dulcísimo, óptimo, ínfimo (superlativos absolutos).",
+      "rubrica": {
+        "bien": "Clasifica correctamente los 9 elementos.",
+        "regular": "Comete un error en uno de los 9 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 8,
+      "numeroEnArea": 8,
+      "area": "LEN",
+      "enunciado": "Cite cuatro narradores españoles que naciesen en el Siglo XX.",
+      "competencias": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "solucionModelo": "Por ejemplo: Camilo José Cela (1916), Miguel Delibes (1920), Carmen Laforet (1921), Ana María Matute (1925), Carmen Martín Gaite (1925), Rafael Sánchez Ferlosio (1927), Juan Marsé (1933), Eduardo Mendoza (1943), Javier Marías (1951), Antonio Muñoz Molina (1956).",
+      "rubrica": {
+        "bien": "Cita correctamente los 4 elementos.",
+        "regular": "Comete un error en uno de los 4 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 9,
+      "numeroEnArea": 9,
+      "area": "LEN",
+      "enunciado": "Ordene del más antiguo al más moderno a los siguientes autores:\nGustavo Adolfo Bécquer, José de Espronceda, Francisco de Quevedo, Juan Ramón Jiménez, José Hierro, Juan Boscán.",
+      "competencias": [
+        "LEN.LIT.CRONO"
+      ],
+      "solucionModelo": "1. Juan Boscán (c. 1490-1542); 2. Francisco de Quevedo (1580-1645); 3. José de Espronceda (1808-1842); 4. Gustavo Adolfo Bécquer (1836-1870); 5. Juan Ramón Jiménez (1881-1958); 6. José Hierro (1922-2002).",
+      "rubrica": {
+        "bien": "Ordena correctamente los 6 elementos.",
+        "regular": "Comete un error en uno de los 6 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 10,
+      "numeroEnArea": 10,
+      "area": "LEN",
+      "enunciado": "Analice sintácticamente la siguiente oración:\nEl hombre permaneció quieto sobre la acera.",
+      "competencias": [
+        "LEN.SIN.COMPL"
+      ],
+      "solucionModelo": "Oración simple, enunciativa afirmativa. Sujeto: «El hombre» (SN: Det + N). Predicado: «permaneció quieto sobre la acera»: N «permaneció» (verbo semicopulativo); «quieto» (SAdj), complemento predicativo del sujeto (concuerda con «hombre»; la NGLE lo trata como atributo de un verbo semicopulativo); CCL «sobre la acera» (SPrep: E «sobre» + término SN «la acera»).",
+      "rubrica": {
+        "bien": "Realiza un análisis sintáctico correcto y completo de la oración (sujeto, predicado y complementos).",
+        "regular": "El análisis es parcialmente correcto: identifica sujeto y predicado pero yerra en algún complemento.",
+        "mal": "El análisis es incorrecto o incompleto."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 11,
+      "numeroEnArea": 1,
+      "area": "MAT",
+      "enunciado": "Resuelva las siguientes operaciones y, si es posible, simplifique la fracción resultante:\na) 4/5 + 2/10 + 2/15 − 2/5 =\nb) 3/4 + 2/6 − 3/12 =\nc) 4/9 + 2/6 − 2/5 =\nd) 2/6 + 6/12 + 7/6 − 2/3 =",
+      "competencias": [
+        "MAT.OPE.FRACSUM"
+      ],
+      "solucionModelo": "1) a) m.c.m. 30: 24/30 + 6/30 + 4/30 − 12/30 = 22/30 = 11/15. 2) b) m.c.m. 12: 9/12 + 4/12 − 3/12 = 10/12 = 5/6. 3) c) m.c.m. 90: 40/90 + 30/90 − 36/90 = 34/90 = 17/45. 4) d) m.c.m. 12: 4/12 + 6/12 + 14/12 − 8/12 = 16/12 = 4/3. Resultado: a) 11/15; b) 5/6; c) 17/45; d) 4/3.",
+      "rubrica": {
+        "bien": "Resuelve y simplifica correctamente los 4 elementos.",
+        "regular": "Comete un error en uno de los 4 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 12,
+      "numeroEnArea": 2,
+      "area": "MAT",
+      "enunciado": "Exprese las siguientes cantidades en lo que se indica:\na) 10h 10’ = ___ segundos\nb) 170’ 600’’ = ___ horas\nc) 110’ 300’’ = ___ minutos",
+      "competencias": [
+        "MAT.UNI.TIEMPO"
+      ],
+      "solucionModelo": "1) a) 10 h = 36.000 s; 10′ = 600 s; total 36.600 s. 2) b) 600″ = 10′; 170′ + 10′ = 180′ = 3 h. 3) c) 300″ = 5′; 110′ + 5′ = 115′. Resultado: a) 36.600 s; b) 3 h; c) 115 minutos.",
+      "rubrica": {
+        "bien": "Convierte correctamente los 3 elementos.",
+        "regular": "Comete un error en uno de los 3 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 13,
+      "numeroEnArea": 3,
+      "area": "MAT",
+      "enunciado": "Calcule el valor de a y b para que se cumplan estas igualdades:\n44 x a = 1012\n2425 : b = 485",
+      "competencias": [
+        "MAT.OPE.INCOG"
+      ],
+      "solucionModelo": "1) a = 1012 : 44 = 23 (comprobación: 44 × 23 = 1012). 2) b = 2425 : 485 = 5 (comprobación: 485 × 5 = 2425). Resultado: a = 23; b = 5.",
+      "rubrica": {
+        "bien": "Calcula correctamente a y b.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 14,
+      "numeroEnArea": 4,
+      "area": "MAT",
+      "enunciado": "Ordene de mayor a menor los siguientes números:\n4/7; 0,4; 1/2; 3,3",
+      "competencias": [
+        "MAT.NUM.ORDEN"
+      ],
+      "solucionModelo": "1) 4/7 = 0,571…; 1/2 = 0,5. 2) Se ordenan los decimales: 3,3; 0,571…; 0,5; 0,4. Resultado: 3,3 > 4/7 > 1/2 > 0,4.",
+      "rubrica": {
+        "bien": "Ordena correctamente los cuatro números.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 15,
+      "numeroEnArea": 5,
+      "area": "MAT",
+      "enunciado": "Queremos llenar de agua una piscina que tiene las siguientes dimensiones:\n• 7 metros de largo.\n• 50 decímetros de ancho.\n• 300 centímetros de profundidad.\n¿Cuántos litros de agua necesitaremos?\na) 10500\nb) 105000\nc) 52500",
+      "competencias": [
+        "MAT.UNI.VOLCAP"
+      ],
+      "solucionModelo": "1) Se pasa todo a metros: 50 dm = 5 m; 300 cm = 3 m. 2) Volumen: 7 × 5 × 3 = 105 m³. 3) 1 m³ = 1000 l → 105.000 l. Resultado: b) 105.000 litros.",
+      "rubrica": {
+        "bien": "Elige la opción correcta (b) y la justifica con el cálculo.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 16,
+      "numeroEnArea": 6,
+      "area": "MAT",
+      "enunciado": "En una clase, tras finalizar la entrega de un trabajo, los diferentes grupos obtienen los siguientes resultados.\nResultados: Grupo 1: 6; Grupo 2: 4; Grupo 3: 7; Grupo 4: 9; Grupo 5: 9.\nHalle la media aritmética, la moda y el rango de los resultados.",
+      "competencias": [
+        "MAT.EST.CENTRAL"
+      ],
+      "solucionModelo": "1) Media: (6 + 4 + 7 + 9 + 9) : 5 = 35 : 5 = 7. 2) Moda: el valor más repetido, 9. 3) Rango: 9 − 4 = 5. Resultado: Media 7; moda 9; rango 5.",
+      "rubrica": {
+        "bien": "Calcula correctamente los 3 elementos.",
+        "regular": "Comete un error en uno de los 3 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 17,
+      "numeroEnArea": 7,
+      "area": "MAT",
+      "enunciado": "En las elecciones para delegado de una clase, los candidatos obtienen los siguientes votos:\nJuan: 5 votos • María: 15 votos • Luisa: 3 votos • Roberto: 2 votos\nRellene esta tabla con la frecuencia absoluta, la frecuencia relativa y el porcentaje.\n(Tabla: Candidatos | Frecuencia absoluta | Frecuencia relativa | %)",
+      "competencias": [
+        "MAT.EST.FRECUENCIAS"
+      ],
+      "solucionModelo": "1) Total de votos: 25. 2) Frecuencia relativa = votos : 25; porcentaje = relativa × 100. Resultado: Juan: 5, 0,2, 20 %; María: 15, 0,6, 60 %; Luisa: 3, 0,12, 12 %; Roberto: 2, 0,08, 8 % (suman 25, 1 y 100 %).",
+      "rubrica": {
+        "bien": "Completa correctamente toda la tabla.",
+        "regular": "Comete un error en la tabla.",
+        "mal": "Comete más de un error."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 18,
+      "numeroEnArea": 8,
+      "area": "MAT",
+      "enunciado": "Un colegio dispone de varios espacios para diseñar su patio. Necesita hacer pistas para dos zonas rectangulares de 3 decámetros por 10 metros y de 0,5 hectómetros por 30 metros. También dispone de una zona circular de 1000 centímetros de radio, donde se planea colocar una canasta de baloncesto. Si se quieren pavimentar todas esas secciones del patio ¿cuántos metros cuadrados será necesario pavimentar? Entiéndase π=3,14",
+      "competencias": [
+        "MAT.GEO.AREAS"
+      ],
+      "solucionModelo": "1) En metros: 3 dam = 30 m; 0,5 hm = 50 m; 1000 cm = 10 m. 2) Rectángulos: 30 × 10 = 300 m²; 50 × 30 = 1500 m². 3) Círculo: 3,14 × 10² = 314 m². 4) Total: 300 + 1500 + 314. Resultado: 2114 m².",
+      "rubrica": {
+        "bien": "Convierte las unidades y calcula correctamente las tres áreas y su suma.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 19,
+      "numeroEnArea": 9,
+      "area": "MAT",
+      "enunciado": "Escriba en números romanos:\n824   1223   793",
+      "competencias": [
+        "MAT.ROM.ESCRITURA"
+      ],
+      "solucionModelo": "1) 824 = DCCC + XX + IV. 2) 1223 = M + CC + XX + III. 3) 793 = DCC + XC + III. Resultado: DCCCXXIV; MCCXXIII; DCCXCIII.",
+      "rubrica": {
+        "bien": "Escribe correctamente los 3 elementos.",
+        "regular": "Comete un error en uno de los 3 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    },
+    {
+      "numero": 20,
+      "numeroEnArea": 10,
+      "area": "MAT",
+      "enunciado": "Resuelva la siguiente operación combinada:\n[(16 x 8 + 12) : 4] + [3 (38 - 5 x 4)] =",
+      "competencias": [
+        "MAT.OPE.JERARQ"
+      ],
+      "solucionModelo": "1) (16 × 8 + 12) : 4 = 140 : 4 = 35. 2) 3 × (38 − 20) = 3 × 18 = 54. 3) 35 + 54. Resultado: 89.",
+      "rubrica": {
+        "bien": "Resuelve correctamente la operación respetando la jerarquía.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1
+    }
+  ],
+  "validacion": {
+    "estado": "borrador",
+    "revisor": "",
+    "fecha": ""
+  }
+}
