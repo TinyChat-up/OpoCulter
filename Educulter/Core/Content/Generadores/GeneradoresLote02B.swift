@@ -71,6 +71,13 @@ struct GeneradorConversionUnidades: GeneradorItems {
             return Caso(terminos: [(rac(rng.entero(1...20)), Self.unidad(par.0))], destino: Self.unidad(par.1), agua: false, modo: rng.elemento(["expresa", "cuantos"]))
         case (_, 1): return simple(saltos: 1...1, soloBajar: true, valores: (1...(familia == "vol" ? 20 : 50)).map { rac($0) })
         case ("lmc", 2): return simple(saltos: 2...3, soloBajar: false, valores: (1...999).map { rac($0) })
+        case ("vol", 2):
+            // Dos saltos de volumen son ×1.000.000: al bajar, cantidades de una cifra (3 m³ = 3.000.000 cm³);
+            // al subir, millones exactos (5.000.000 cm³ = 5 m³). Así el resultado es entero y legible.
+            let i = rng.entero(0...1), k = rng.entero(1...9)
+            let modo = rng.elemento(["expresa", "cuantos"])
+            if rng.probabilidad(0.5) { return Caso(terminos: [(rac(k), lista[i])], destino: lista[i + 2], agua: false, modo: modo) }
+            return Caso(terminos: [(rac(k * 1_000_000), lista[i + 2])], destino: lista[i], agua: false, modo: modo)
         case (_, 2): return simple(saltos: 2...2, soloBajar: false, valores: (1...999).map { rac($0) })
         case ("vol", 3):
             let v = rng.elemento(Array(Self.listas["V"]!.prefix(3))), cap = rng.elemento(Self.listas["C"]!)
@@ -113,13 +120,25 @@ struct GeneradorConversionUnidades: GeneradorItems {
         return c.terminos.count == Set(c.terminos.map(\.1.simbolo)).count
     }
 
+    /// Cifras de un entero sin contar los ceros finales (2500 → 2).
+    static func cifrasSignificativas(_ n: Int) -> Double {
+        var m = abs(n)
+        while m >= 10 && m % 10 == 0 { m /= 10 }
+        return A.cifras(m)
+    }
+
+    /// Filtro común de `muestra` y `enumerar` (el recuento del catálogo solo cuenta casos que se
+    /// pueden generar): caso válido, con conversión real y resultado entero hasta la dificultad 3.
+    static func aceptable(_ c: Caso, _ sol: Racional, dificultad: Int) -> Bool {
+        valido(c, sol) && (c.terminos.count > 1 || c.terminos[0].1 != c.destino) && (dificultad > 3 || sol.esEntero)
+    }
+
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
         let familia = p.textos("familia", porDefecto: ["lmc"]).first ?? "lmc"
         for _ in 0..<500 {
             guard let c = caso(familia, p.dificultad, rng: &rng) else { continue }
             let sol = Self.resolver(c)
-            guard Self.valido(c, sol), c.terminos.count > 1 || c.terminos[0].1 != c.destino else { continue }
-            if p.dificultad <= 3 && !sol.esEntero { continue }
+            guard Self.aceptable(c, sol, dificultad: p.dificultad) else { continue }
             return construir(c, sol: sol, familia: familia)
         }
         throw ErrorGenerador.sinCaso(tipo)
@@ -162,9 +181,13 @@ struct GeneradorConversionUnidades: GeneradorItems {
             let partes = c.terminos.map { "\(A.texto($0.0)) \($0.1.simbolo) = \(A.texto($0.0 * A.potencia(10, $0.1.e + (c.agua ? 3 : 0) - c.destino.e))) \(hasta)" }
             explicacion = (c.agua ? "1 l de agua = 1 kg. " : (cambio ? "1 dm³ = 1 l. " : "")) + partes.joined(separator: "; ") + ". Total: \(A.texto(sol)) \(hasta)."
         }
-        var complejidad = 0.0
+        // Complejidad: saltos de cada término, decimales, cambio de sistema y, desde el lote 02, el
+        // trabajo de combinar varios términos (+1 por cada término adicional que se convierte y se
+        // suma). El tamaño del número cuenta por sus cifras significativas: 5.000.000 cm³ no es
+        // más difícil de convertir que 5 m³ (los saltos ya están en el primer término).
+        var complejidad = Double(c.terminos.count - 1)
         for (v, u) in c.terminos { complejidad += 0.5 * Double(abs(u.e + (c.agua ? 3 : 0) - c.destino.e)) + 1 + (v.esEntero ? 0 : 1) }
-        complejidad += 0.5 * Double(A.decimales(sol) ?? 0) + (u0.e < c.destino.e ? 0.5 : 0) + 0.3 * A.cifras(v0.numerador / v0.denominador)
+        complejidad += 0.5 * Double(A.decimales(sol) ?? 0) + (u0.e < c.destino.e ? 0.5 : 0) + 0.3 * Self.cifrasSignificativas(v0.numerador / v0.denominador)
         complejidad += (cambio ? 3 : 0) + (familia == "vol" && c.agua ? 3 : 0) + (c.modo == "finca" ? 1 : 0)
         let terminos = c.terminos.map { "\(A.texto($0.0)):\($0.1.simbolo)" }.joined(separator: ";")
         return Muestra(clave: [terminos, hasta, c.agua ? "agua" : "-", c.modo].joined(separator: "|"),
@@ -181,7 +204,7 @@ struct GeneradorConversionUnidades: GeneradorItems {
         for _ in 0..<min(limite, 20_000) {
             guard let c = caso(familia, p.dificultad, rng: &rng) else { continue }
             let sol = Self.resolver(c)
-            guard Self.valido(c, sol) else { continue }
+            guard Self.aceptable(c, sol, dificultad: p.dificultad) else { continue }
             vistos.insert([c.terminos.map { "\(A.texto($0.0)):\($0.1.simbolo)" }.joined(separator: ";"), c.destino.simbolo, c.agua ? "agua" : "-", c.modo].joined(separator: "|"))
         }
         return Array(vistos)

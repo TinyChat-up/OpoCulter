@@ -258,26 +258,40 @@ struct PilotoTests {
                        calendario: Fx.madrid, rng: GeneradorConSemilla(semilla: 5))
     }
 
+    /// Primera competencia de Matemáticas con contenido aprobado, por prioridad de bloque y orden
+    /// del catálogo. Desde el lote 02 es MAT.UNI.LMC (en la 05B, MAT.NUM.FRAREP era la única).
+    static let primeraMAT = "MAT.UNI.LMC"
+
     @Test("Hoy con el contenido de Release: propuestas de Lengua y Matemáticas con su mecánica")
     func propuestas() throws {
         let e = try servicio().estadoHoy()
         #expect(e.propuestas.map(\.area) == ["LEN", "MAT"])
         #expect(e.propuestas.first?.competencia.id == "LEN.ORT.AGU")
-        #expect(e.propuestas.last?.competencia.id == "MAT.NUM.FRAREP")
-        #expect(e.propuestas.last?.mecanica == .fraccionBarras)
+        #expect(e.propuestas.last?.competencia.id == Self.primeraMAT)
+        // La mecánica propuesta es la más frecuente entre los candidatos de la competencia.
+        #expect(e.propuestas.last?.mecanica == .numerico)
         #expect(!e.rachaEnRiesgo && e.horasHastaMedianoche == 14)
     }
 
-    @Test("Ronda de Matemáticas: MAT.NUM con fraccionBarras")
+    @Test("Ronda de Matemáticas: la competencia en curso del área, con el orden del catálogo")
     func rondaMatematicas() throws {
         let s = servicio()
         let ronda = try s.prepararRonda(.area("MAT"))
-        #expect(ronda.competenciaEnCurso == "MAT.NUM.FRAREP")
+        #expect(ronda.competenciaEnCurso == Self.primeraMAT)
+        let items = ronda.items.compactMap { banco.item(id: $0.itemId) }
+        #expect(items.count == ronda.items.count && !items.isEmpty)
+        // El motor puede intercalar repasos de otras competencias, pero la mayoría son de la competencia en curso.
+        #expect(items.filter { $0.competencia == Self.primeraMAT }.count * 2 > items.count)
+        #expect(try s.competenciaEnCurso(area: "LEN") == "LEN.ORT.AGU")
+    }
+
+    @Test("Practicar MAT.NUM.FRAREP (Camino) con el contenido de Release: ronda con fraccionBarras")
+    func practicarFracciones() throws {
+        let s = servicio()
+        let ronda = try s.prepararRonda(.competencia("MAT.NUM.FRAREP"))
         let items = ronda.items.compactMap { banco.item(id: $0.itemId) }
         #expect(items.contains { $0.mecanica == .fraccionBarras })
-        // El motor puede intercalar repasos de otras competencias, pero la mayoría son de MAT.NUM.
-        #expect(items.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count * 2 > items.count)
-        #expect(try s.competenciaEnCurso(area: "LEN") == "LEN.ORT.AGU")
+        #expect(!items.isEmpty && items.allSatisfy { $0.competencia == "MAT.NUM.FRAREP" }, "\(items.map(\.competencia))")
     }
 
     @Test("La misión de área del día se puede cumplir con el contenido del piloto", arguments: 23...28)

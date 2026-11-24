@@ -70,9 +70,11 @@ enum Acentuacion {
         // Hiato con vocal cerrada tónica (í, ú) junto a una abierta: siempre lleva tilde.
         var hiato = false
         if let v = vocalTonica, "iuíú".contains(letras[v]), vocalesSilaba.count == 1 {
+            // La h intercalada no impide el hiato, ni detrás (búho) ni delante (prohíbe, ahínco, rehúso).
             let antes = v > 0 ? letras[v - 1] : nil, despues = v + 1 < letras.count ? letras[v + 1] : nil
+            let previa = antes == "h" && v >= 2 ? letras[v - 2] : antes
             let tras = despues == "h" && v + 2 < letras.count ? letras[v + 2] : despues
-            hiato = (antes.map { abiertas.contains($0) } ?? false) || (tras.map { abiertas.contains($0) } ?? false)
+            hiato = (previa.map { abiertas.contains($0) } ?? false) || (tras.map { abiertas.contains($0) } ?? false)
         }
         let ultima = letras.last ?? " "
         let penultima = letras.count >= 2 ? letras[letras.count - 2] : " "

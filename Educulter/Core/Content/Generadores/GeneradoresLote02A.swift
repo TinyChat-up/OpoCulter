@@ -356,6 +356,8 @@ struct GeneradorReglaDeTres: GeneradorItems {
         for _ in 0..<min(limite, 20_000) {
             let c = caso(p.dificultad, rng: &rng)
             guard c.a1 != c.a2, Self.valido(c) != nil else { continue }
+            // Mismo filtro que `muestra`: en dificultad 3–4 el factor no es entero.
+            if p.dificultad >= 3 && p.dificultad <= 4 && c.a2 % c.a1 == 0 { continue }
             vistos.insert([c.modo, "\(c.a1)", AyudaMat.texto(c.b1), "\(c.a2)", c.extra.map(AyudaMat.texto) ?? "-"].joined(separator: "|"))
         }
         return Array(vistos)

@@ -379,3 +379,15 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 - **Capturas**: el propietario pide no hacerlas en esta fase porque retrasan mucho el trabajo. `scripts/capturas.sh … 05d` queda preparado por si se piden.
 - **Tests**: el propietario pide no seguir ejecutándolos. La 05D se guarda con un commit en su rama, pero **no se fusiona en `main`** hasta tener una suite completa en verde y el archive Release, como exige CLAUDE.md. Se puede hacer junto con el cierre de la siguiente fase.
 - **Suites largas**: se ejecutan con `caffeinate` y con el Mac enchufado.
+
+### D-077 · 2026-11-25 · Lote 02 · Vigente
+**Lote 02: generadores de Matemáticas y de acentuación, y criterio de aprobación.**
+- **Alcance**: 11 generadores de Matemáticas (5 nuevos y 6 reescritos con las tablas de dificultad 1–6 de la dirección) y 3 de acentuación (`colocarTilde`, `clasificarAcentuacion`, `silabaTonica`) sobre el léxico de 818 palabras con niveles 1–6. 38 plantillas y 16 competencias nuevas (catálogo v2).
+- **Redacciones**: las literales de la dirección viven en el generador (`{{pregunta}}`) para que cada contexto solo se use con datos que tengan sentido; las propias se marcan «A.2» en el código.
+- **Aprobación**: una plantilla del lote solo queda `aprobada` si supera los tests de propiedades (1000 semillas, oráculo independiente, dificultad no decreciente 1→6, distractores distintos de la solución y entre sí también por valor, ids únicos). Las 38 los superan.
+- **Correcciones al terminar el lote** (el código se adapta; ningún dato cambia):
+  - `conversionUnidades`, volumen con dos saltos (×1.000.000, dificultad 2): con valores de 1 a 999 solo valía ~1 % de los casos y una de cada tres semillas no encontraba caso. Ahora se usan cantidades de una cifra al bajar y millones exactos al subir.
+  - La medida de complejidad de `conversionUnidades` suma 1 por cada término adicional que hay que convertir y sumar, y mide el número por sus cifras significativas. Sin esto, «cantidad compleja → unidad mayor» (nivel 4) salía menos compleja que «volumen ↔ capacidad» (nivel 3), al revés que la tabla de la dirección.
+  - `enumerar` aplica exactamente los mismos filtros que `muestra` en `conversionUnidades` (resultado entero hasta la dificultad 3) y `reglaDeTres` (factor no entero en 3–4): el recuento del catálogo solo cuenta casos que se pueden generar.
+  - **Silabeador**: la *h* intercalada delante de la vocal cerrada tónica no impide el hiato («prohíbe», «ahínco», «rehúso»). Eran las 3 discrepancias del informe del léxico; el dato era correcto. El test del léxico exige ahora 0 discrepancias.
+- **Tests adaptados al contenido real**: con el lote 02 en Release, la competencia de Matemáticas en curso es `MAT.UNI.LMC` (primera por prioridad de bloque y orden del catálogo), no `MAT.NUM.FRAREP`. `PilotoTests` comprueba la propuesta real y `fraccionBarras` se prueba al practicar «Representar fracciones»; el test de interfaz llega a ella por Camino → nodo → Practicar.

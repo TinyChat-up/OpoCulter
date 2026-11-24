@@ -178,3 +178,14 @@ Los tests de fluidez localizan ahora celdas y vocales **por su posición en pant
 - Features 73,3 %: en esa ejecución, el Mac entró en reposo y 6 tests de interfaz se cortaron antes de recorrer sus pantallas.
 
 **Lección:** la suite completa se lanza con `caffeinate -dims` y el Mac enchufado. En reposo, `testmanagerd` pierde el simulador y los tests fallan por tiempo de espera, no por la app.
+
+## 12. Lote 02: propiedades de las plantillas aprobadas
+
+`EduculterTests/GeneradoresTests.swift`, sobre las 38 plantillas del lote 02 (y las 10 de prueba de la 05C que quedan):
+- **1000 semillas por plantilla** (`GeneradoresPropiedadesTests.propiedades`): cada ítem pasa el validador, no deja marcadores sin rellenar, es determinista y su clave pertenece al espacio enumerado (cuando se enumera entero).
+- **Oráculo independiente por tipo**: recalcula la solución sin usar el código del generador (fórmulas propias de porcentajes, regla de tres, unidades con su tabla de factores, sexagesimal, escalas, fracciones con un evaluador de expresiones propio, romanos con su propio parser, ecuaciones por fuerza bruta y acentuación con un contador de núcleos vocálicos y las reglas generales).
+- **Distractores**: distintos de la solución y entre sí, por texto y **por valor** (0,5 y 1/2 cuentan como el mismo).
+- **Dificultad 1→6** (`dificultadCreciente`): la complejidad media de 200 semillas crece de un nivel al siguiente en las de Matemáticas y no decrece en las de Lengua; el nivel 6 siempre supera al 1.
+- **Aprobación**: `cobertura` exige que las 38 plantillas del lote estén aprobadas por la dirección y que el resto siga en borrador; `release` comprueba que Release carga exactamente esas 38.
+- **Léxico** (`LexicoTests.coherente`): 818 palabras, **0 discrepancias** entre la tilde escrita y el silabeador con las reglas de la RAE, ninguna palabra apartada de los generadores y el oráculo independiente coincide en sílabas, tónica y clase de todas. `deduccion` comprueba el hiato con *h* intercalada (prohíbe, ahínco, rehúso, búho).
+- **Recuento del catálogo**: `enumerar` aplica los mismos filtros que `muestra`, de modo que solo se cuentan casos que se pueden generar.

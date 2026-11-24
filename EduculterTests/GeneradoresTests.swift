@@ -247,6 +247,9 @@ private func comprobarDistractores(_ item: Item) {
             #expect(v != nil, "\(item.id): error «\(r)» no interpretable")
             #expect(v != correcta, "\(item.id): error «\(r)» igual a la solución")
         }
+        // Distintos también por su valor (0,5 y 1/2 serían el mismo distractor).
+        let valores = respuestas.compactMap { Racional.interpretar($0)?.valor }
+        #expect(Set(valores).count == valores.count, "Errores con el mismo valor en \(item.id): \(respuestas)")
     case .construir(let c):
         let textos = c.piezas.map(\.texto)
         #expect(Set(textos).count == textos.count, "Piezas duplicadas en \(item.id)")
@@ -621,14 +624,17 @@ struct GeneradoresMotorTests {
 
 @Suite("Léxico y acentuación")
 struct LexicoTests {
-    @Test("Léxico del lote 02: 818 palabras; las discrepancias van al informe y quedan fuera de los generadores")
+    @Test("Léxico del lote 02: 818 palabras, 0 discrepancias entre su tilde y el silabeador con las reglas de la RAE")
     func coherente() {
         let lexico = bancoGeneradores.recursos.lexico
         #expect(lexico.count == 818 && Set(lexico.map(\.palabra)).count == 818)
         let informe = Acentuacion.informe(lexico)
         print("LEXICO discrepancias \(informe.count)")
         for linea in informe { print("LEXICO \(linea)") }
-        #expect(validador.avisos(bancoGeneradores).count == informe.count)
+        #expect(informe.isEmpty, "\(informe)")
+        #expect(validador.avisos(bancoGeneradores).isEmpty)
+        // Todas las palabras no diacríticas de 2+ sílabas se pueden usar en los generadores.
+        #expect(bancoGeneradores.recursos.palabras.count == Acentuacion.utilizables(lexico).count)
         let usadas = Set(bancoGeneradores.recursos.palabras.map(\.analisis.palabra))
         for e in lexico where !Acentuacion.analizar(e).coherente { #expect(!usadas.contains(e.palabra.lowercased()), "«\(e.palabra)» con discrepancia no debe usarse") }
         // Oráculo independiente: clase y tónica de todas las palabras utilizables.
@@ -674,6 +680,12 @@ struct LexicoTests {
         let a = Acentuacion.analizar(EntradaLexico(palabra: "canción"))
         #expect(a.silabas == ["can", "ción"] && a.clase == .aguda && a.tildePredicha == 5)
         #expect(Acentuacion.analizar(EntradaLexico(palabra: "país")).hiato)
+        // La h intercalada no impide el hiato, ni delante ni detrás de la vocal cerrada tónica.
+        for palabra in ["prohíbe", "ahínco", "rehúso", "búho"] {
+            let h = Acentuacion.analizar(EntradaLexico(palabra: palabra))
+            #expect(h.hiato && h.coherente, "\(palabra): \(h.silabas) \(h.motivo)")
+        }
+        #expect(Acentuacion.analizar(EntradaLexico(palabra: "prohíbe")).silabas == ["pro", "hí", "be"])
         #expect(Acentuacion.analizar(EntradaLexico(palabra: "dígaselo")).clase == .sobresdrujula)
         #expect(Acentuacion.analizar(EntradaLexico(palabra: "robots", tonica: 1)).clase == .aguda)
         #expect(Acentuacion.analizar(EntradaLexico(palabra: "robots")).clase == .aguda, "-s tras consonante: aguda también sin tónica declarada")

@@ -223,6 +223,7 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 |---|---|---|---|---|
 | Ítems, tarjetas y SIM.01 de prueba (Fases 04 y 05A) | original | Claude Code, solo para tests y desarrollo (estado `borrador`, solo Debug) | propia | 2026-11-23 |
 | Lote 01 · `LEN.ORT.*` (38 ítems y 5 tarjetas) | original | Redacción original de la dirección del proyecto | propia | 2026-11-23 |
+| Lote 02 · 38 plantillas (MAT y LEN.ORT.AGU), léxico de 818 palabras y formas verbales | original | Especificación de la dirección del proyecto; redacciones literales de la dirección en los generadores y redacciones propias marcadas «A.2» | propia | 2026-11-24 |
 
 ## 4. Proceso de revisión y calidad
 
@@ -235,6 +236,7 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 | Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
 | Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
 | Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
+| Lote 02 | MAT (5 bloques) y LEN.ORT.AGU | 38 plantillas | — | Aprobado por la dirección 24/11/2026; las 38 superan los tests de propiedades (25/11/2026) | `plantillas/MAT.*.json`, `plantillas/LEN.ORT.json`, `lexico/palabras.json`, `lexico/formas_verbales.json`, `catalogo.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 
@@ -262,3 +264,30 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 
 ### Fase 05C · Plantillas de prueba (borrador)
 23 plantillas en borrador (`Content/plantillas/*.json`) que cubren los 16 tipos y todas sus mecánicas, más un léxico de 15 palabras, piezas de gramática, 14 verbos regulares y 6 irregulares, y 19 frases de 10 familias. Todo es original y **no se carga en Release**: sirve para probar el motor hasta que llegue el contenido real del lote 02. Se añaden las competencias `MAT.OPE.ECUAC`, `MAT.EST.CENTRAL` y `MAT.PRO.LAPLACE` (catálogo v2, D-068).
+
+### Lote 02 · Matemáticas y acentuación (24/11/2026, verificado el 25/11/2026)
+38 plantillas aprobadas por la dirección (`validacion.estado = aprobado`, revisor `direccion`, 24/11/2026) y 16 competencias nuevas en el catálogo (v2). **Una plantilla solo queda aprobada si supera los tests de propiedades** (TESTING §12): las 38 los superan, ninguna vuelve a borrador.
+
+| Competencia | Plantillas (tipo · mecánica · dificultad) |
+|---|---|
+| LEN.ORT.AGU Agudas, llanas y esdrújulas | G01 `colocarTilde` d2 · G02 `colocarTilde` d3 · G03 `clasificarAcentuacion` (clasificar) d2 · G04 `silabaTonica` (marcar texto) d1 |
+| MAT.NUM.ORDEN Ordenar fracciones y decimales | G01 `ordenarNumeros` d2 · G02 d3 |
+| MAT.NUM.FRAOP Operaciones con fracciones | G01 `fraccionesOperar` d2 · G02 d3 · G03 d4 |
+| MAT.NUM.FRAPROB Problemas con fracciones | G01 `problemaFraccion` d3 · G02 d4 |
+| MAT.OPE.JER Jerarquía de las operaciones | G01 `operacionesCombinadas` (numérico) d2 · G02 (ordenar) d3 |
+| MAT.OPE.COMB Operaciones combinadas con paréntesis y corchetes | G01 `operacionesCombinadas` (ordenar) d3 · G02 (numérico) d4 |
+| MAT.OPE.ECUAC Ecuaciones de primer grado | G01 `ecuacionLineal` d2 · G02 d3 · G03 d4 |
+| MAT.POR.CALC Tanto por ciento de una cantidad | G01 `porcentajeDe` d2 · G02 d3 |
+| MAT.POR.TOTAL Total a partir de una parte | G01 `porcentajeDe` d3 |
+| MAT.POR.VAR Aumentos y descuentos | G01 `porcentajeDe` d3 · G02 (construir, «Justifica») d4 |
+| MAT.POR.PROP Proporcionalidad directa | G01 `reglaDeTres` d2 · G02 d3 |
+| MAT.ROM.LEER / MAT.ROM.ESCR Números romanos | LEER G01 `romanos` (numérico) d2 · G02 (elección) d3 · ESCR G01 (construir) d2 · G02 d3 |
+| MAT.UNI.LMC / SUP / VOL Unidades | LMC G01 `conversionUnidades` d2 · G02 d3 · SUP G01 d3 · VOL G01 d3 |
+| MAT.UNI.TIEM Tiempo sexagesimal | G01 `sexagesimal` (numérico) d2 · G02 (ruedas) d3 · G03 (ruedas) d4 |
+| MAT.UNI.ESC Escalas | G01 `escala` d3 · G02 d4 |
+
+- **Generadores**: 5 nuevos (`reglaDeTres`, `sexagesimal`, `escala`, `fraccionesOperar`, `problemaFraccion`) y 6 reescritos con las tablas de dificultad 1–6 de la dirección (`porcentajeDe`, `conversionUnidades`, `romanos`, `operacionesCombinadas`, `ecuacionLineal`, `ordenarNumeros`). Las tablas están documentadas en cada generador (`Core/Content/Generadores/GeneradoresLote02*.swift`).
+- **Redacciones**: las literales de la especificación viven en el generador (la plantilla usa `{{pregunta}}`), para que cada contexto solo se use con datos que tengan sentido (alumnos enteros, euros con dos decimales…). Las redacciones propias van marcadas con «A.2» en el código. Nombres propios de los enunciados: los 12 de la lista A.6.
+- **Léxico**: `lexico/palabras.json` con 818 palabras y `lexico/formas_verbales.json`. Niveles de palabra 1–6 (D-077): 322 · 319 · 65 · 58 · 8 · 46. **0 discrepancias** entre la tilde escrita y el silabeador con las reglas de la RAE (las 3 que señalaba el informe WIP —«prohíbe», «ahínco», «rehúso»— eran un fallo del código con la *h* intercalada, no del dato).
+- **Release**: carga las 38 plantillas y ninguna de las 10 de prueba de la 05C que quedan (siguen en borrador: LEN.CLA, LEN.ORT.DIA/PQ, LEN.SIN, LEN.VER, MAT.DIV, MAT.EST, MAT.NUM.FRAREP y MAT.PRO).
+
