@@ -316,3 +316,10 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 
 ### D-068 · 2026-11-23 · Fase 05C · Vigente
 **Competencias nuevas en el catálogo** para las plantillas de prueba que no tenían competencia: `MAT.OPE.ECUAC` (ecuaciones), `MAT.EST.CENTRAL` (media, mediana, moda y rango) y `MAT.PRO.LAPLACE` (probabilidad de un suceso). El catálogo pasa a la versión 2 con 27 competencias. Las demás competencias que propone la matriz (marcadas con † en MATRIZ.md) se dejan a la dirección. En Release estas competencias no tienen ítems todavía y `ServicioSesion` las salta (`valida` exige ítems).
+
+### D-072 · 2026-11-24 · Lote 02b · Vigente
+**Conversión del formato neutro de gramática al esquema de Swift.**
+- **Sin inventar contenido**: `FraseHueco.dificultad` y `FamiliaFormas.Forma.uso` son obligatorios y el formato neutro no los trae. Escribir `frases.json` sin ellos haría fallar la decodificación y, con ella, la carga de todo el contenido. Por eso las frases reales quedan en `gramatica/frases_lote02b.json` (que la app no lee) y `frases.json` mantiene los datos de prueba.
+- **Derivación gramatical**: sujetos = sustantivos de persona (singular y plural, con artículo). CD = sustantivos compatibles con `objeto` (con artículo; personas y animales con «a» + posesivo, para evitar «al»). CI = «a» + posesivo + persona. «ayer» y «todos los días» restringen el tiempo verbal, como en D-066. Se excluyen de `piezas.json` «junto al río» y «a las cinco», que no tienen una clase de palabra inequívoca.
+- **Lo que el esquema no admite** (etiquetas, `admiteCI` completo, CCC…) va a `gramatica/compatibilidad.json`, en formato neutro.
+- **Validación**: `scripts/validar_gramatica.py`. El conversor (`scripts/convertir_gramatica_02b.py`) se conserva para regenerar los archivos.

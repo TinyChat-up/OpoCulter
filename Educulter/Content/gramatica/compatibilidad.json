@@ -1,0 +1,879 @@
+{
+  "version": 1,
+  "origen": "Lote 02b (parte 1), formato neutro de la dirección. Pendiente de conectar al generador oracionSimple.",
+  "sustantivos": [
+    {
+      "lema": "niño",
+      "genero": "m",
+      "plural": "niños",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "lema": "niña",
+      "genero": "f",
+      "plural": "niñas",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "lema": "profesora",
+      "genero": "f",
+      "plural": "profesoras",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "lema": "médico",
+      "genero": "m",
+      "plural": "médicos",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "lema": "abuela",
+      "genero": "f",
+      "plural": "abuelas",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "lema": "vecino",
+      "genero": "m",
+      "plural": "vecinos",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "lema": "alumna",
+      "genero": "f",
+      "plural": "alumnas",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "lema": "cocinero",
+      "genero": "m",
+      "plural": "cocineros",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "lema": "perro",
+      "genero": "m",
+      "plural": "perros",
+      "etiquetas": [
+        "animal"
+      ]
+    },
+    {
+      "lema": "gata",
+      "genero": "f",
+      "plural": "gatas",
+      "etiquetas": [
+        "animal"
+      ]
+    },
+    {
+      "lema": "manzana",
+      "genero": "f",
+      "plural": "manzanas",
+      "etiquetas": [
+        "comida"
+      ]
+    },
+    {
+      "lema": "bocadillo",
+      "genero": "m",
+      "plural": "bocadillos",
+      "etiquetas": [
+        "comida"
+      ]
+    },
+    {
+      "lema": "sopa",
+      "genero": "f",
+      "plural": "sopas",
+      "etiquetas": [
+        "comida"
+      ]
+    },
+    {
+      "lema": "pastel",
+      "genero": "m",
+      "plural": "pasteles",
+      "etiquetas": [
+        "comida"
+      ]
+    },
+    {
+      "lema": "zumo",
+      "genero": "m",
+      "plural": "zumos",
+      "etiquetas": [
+        "bebida"
+      ]
+    },
+    {
+      "lema": "leche",
+      "genero": "f",
+      "plural": "leches",
+      "etiquetas": [
+        "bebida"
+      ]
+    },
+    {
+      "lema": "café",
+      "genero": "m",
+      "plural": "cafés",
+      "etiquetas": [
+        "bebida"
+      ]
+    },
+    {
+      "lema": "carta",
+      "genero": "f",
+      "plural": "cartas",
+      "etiquetas": [
+        "texto"
+      ]
+    },
+    {
+      "lema": "cuento",
+      "genero": "m",
+      "plural": "cuentos",
+      "etiquetas": [
+        "texto"
+      ]
+    },
+    {
+      "lema": "mensaje",
+      "genero": "m",
+      "plural": "mensajes",
+      "etiquetas": [
+        "texto"
+      ]
+    },
+    {
+      "lema": "poema",
+      "genero": "m",
+      "plural": "poemas",
+      "etiquetas": [
+        "texto"
+      ]
+    },
+    {
+      "lema": "canción",
+      "genero": "f",
+      "plural": "canciones",
+      "etiquetas": [
+        "cancion"
+      ]
+    },
+    {
+      "lema": "himno",
+      "genero": "m",
+      "plural": "himnos",
+      "etiquetas": [
+        "cancion"
+      ]
+    },
+    {
+      "lema": "libro",
+      "genero": "m",
+      "plural": "libros",
+      "etiquetas": [
+        "objeto",
+        "texto"
+      ]
+    },
+    {
+      "lema": "mesa",
+      "genero": "f",
+      "plural": "mesas",
+      "etiquetas": [
+        "objeto"
+      ]
+    },
+    {
+      "lema": "ventana",
+      "genero": "f",
+      "plural": "ventanas",
+      "etiquetas": [
+        "objeto"
+      ]
+    },
+    {
+      "lema": "caja",
+      "genero": "f",
+      "plural": "cajas",
+      "etiquetas": [
+        "objeto"
+      ]
+    },
+    {
+      "lema": "coche",
+      "genero": "m",
+      "plural": "coches",
+      "etiquetas": [
+        "objeto"
+      ]
+    },
+    {
+      "lema": "bicicleta",
+      "genero": "f",
+      "plural": "bicicletas",
+      "etiquetas": [
+        "objeto"
+      ]
+    },
+    {
+      "lema": "cuaderno",
+      "genero": "m",
+      "plural": "cuadernos",
+      "etiquetas": [
+        "objeto"
+      ]
+    },
+    {
+      "lema": "puerta",
+      "genero": "f",
+      "plural": "puertas",
+      "etiquetas": [
+        "objeto"
+      ]
+    },
+    {
+      "lema": "regalo",
+      "genero": "m",
+      "plural": "regalos",
+      "etiquetas": [
+        "objeto"
+      ]
+    },
+    {
+      "lema": "lección",
+      "genero": "f",
+      "plural": "lecciones",
+      "etiquetas": [
+        "leccion"
+      ]
+    },
+    {
+      "lema": "idioma",
+      "genero": "m",
+      "plural": "idiomas",
+      "etiquetas": [
+        "leccion"
+      ]
+    },
+    {
+      "lema": "museo",
+      "genero": "m",
+      "plural": "museos",
+      "etiquetas": [
+        "lugar"
+      ]
+    },
+    {
+      "lema": "ciudad",
+      "genero": "f",
+      "plural": "ciudades",
+      "etiquetas": [
+        "lugar"
+      ]
+    },
+    {
+      "lema": "pueblo",
+      "genero": "m",
+      "plural": "pueblos",
+      "etiquetas": [
+        "lugar"
+      ]
+    },
+    {
+      "lema": "camisa",
+      "genero": "f",
+      "plural": "camisas",
+      "etiquetas": [
+        "ropa"
+      ]
+    },
+    {
+      "lema": "abrigo",
+      "genero": "m",
+      "plural": "abrigos",
+      "etiquetas": [
+        "ropa"
+      ]
+    }
+  ],
+  "adjetivos": [
+    {
+      "ms": "simpático",
+      "fs": "simpática",
+      "mp": "simpáticos",
+      "fp": "simpáticas",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "ms": "amable",
+      "fs": "amable",
+      "mp": "amables",
+      "fp": "amables",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "ms": "alto",
+      "fs": "alta",
+      "mp": "altos",
+      "fp": "altas",
+      "etiquetas": [
+        "persona"
+      ]
+    },
+    {
+      "ms": "delicioso",
+      "fs": "deliciosa",
+      "mp": "deliciosos",
+      "fp": "deliciosas",
+      "etiquetas": [
+        "comida",
+        "bebida"
+      ]
+    },
+    {
+      "ms": "caliente",
+      "fs": "caliente",
+      "mp": "calientes",
+      "fp": "calientes",
+      "etiquetas": [
+        "comida",
+        "bebida"
+      ]
+    },
+    {
+      "ms": "rojo",
+      "fs": "roja",
+      "mp": "rojos",
+      "fp": "rojas",
+      "etiquetas": [
+        "objeto",
+        "ropa"
+      ]
+    },
+    {
+      "ms": "azul",
+      "fs": "azul",
+      "mp": "azules",
+      "fp": "azules",
+      "etiquetas": [
+        "objeto",
+        "ropa"
+      ]
+    },
+    {
+      "ms": "nuevo",
+      "fs": "nueva",
+      "mp": "nuevos",
+      "fp": "nuevas",
+      "etiquetas": [
+        "objeto",
+        "ropa"
+      ]
+    },
+    {
+      "ms": "viejo",
+      "fs": "vieja",
+      "mp": "viejos",
+      "fp": "viejas",
+      "etiquetas": [
+        "objeto",
+        "ropa",
+        "lugar"
+      ]
+    },
+    {
+      "ms": "grande",
+      "fs": "grande",
+      "mp": "grandes",
+      "fp": "grandes",
+      "etiquetas": [
+        "objeto",
+        "lugar",
+        "animal"
+      ]
+    },
+    {
+      "ms": "pequeño",
+      "fs": "pequeña",
+      "mp": "pequeños",
+      "fp": "pequeñas",
+      "etiquetas": [
+        "objeto",
+        "lugar",
+        "animal"
+      ]
+    },
+    {
+      "ms": "largo",
+      "fs": "larga",
+      "mp": "largos",
+      "fp": "largas",
+      "etiquetas": [
+        "texto",
+        "cancion"
+      ]
+    },
+    {
+      "ms": "divertido",
+      "fs": "divertida",
+      "mp": "divertidos",
+      "fp": "divertidas",
+      "etiquetas": [
+        "texto",
+        "cancion",
+        "persona"
+      ]
+    },
+    {
+      "ms": "precioso",
+      "fs": "preciosa",
+      "mp": "preciosos",
+      "fp": "preciosas",
+      "etiquetas": [
+        "texto",
+        "cancion",
+        "lugar"
+      ]
+    },
+    {
+      "ms": "antiguo",
+      "fs": "antigua",
+      "mp": "antiguos",
+      "fp": "antiguas",
+      "etiquetas": [
+        "lugar",
+        "objeto"
+      ]
+    },
+    {
+      "ms": "difícil",
+      "fs": "difícil",
+      "mp": "difíciles",
+      "fp": "difíciles",
+      "etiquetas": [
+        "leccion"
+      ]
+    },
+    {
+      "ms": "fácil",
+      "fs": "fácil",
+      "mp": "fáciles",
+      "fp": "fáciles",
+      "etiquetas": [
+        "leccion"
+      ]
+    }
+  ],
+  "verbos": [
+    {
+      "infinitivo": "cantar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "cancion"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "comprar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "comida",
+        "objeto",
+        "ropa",
+        "bebida"
+      ],
+      "admiteCI": true,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "preparar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "comida",
+        "bebida"
+      ],
+      "admiteCI": true,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "lavar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "objeto",
+        "ropa"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "mirar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "objeto",
+        "persona",
+        "animal"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "escuchar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "cancion",
+        "persona"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "dibujar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "objeto",
+        "animal",
+        "persona"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "pintar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "objeto"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "visitar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "persona",
+        "lugar"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "saludar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "persona"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "ayudar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "persona"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "regalar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "objeto",
+        "ropa",
+        "comida"
+      ],
+      "admiteCI": true,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "prestar",
+      "conjugacion": 1,
+      "regimen": "transitivo",
+      "objeto": [
+        "objeto"
+      ],
+      "admiteCI": true,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "comer",
+      "conjugacion": 2,
+      "regimen": "transitivo",
+      "objeto": [
+        "comida"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "beber",
+      "conjugacion": 2,
+      "regimen": "transitivo",
+      "objeto": [
+        "bebida"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "aprender",
+      "conjugacion": 2,
+      "regimen": "transitivo",
+      "objeto": [
+        "leccion"
+      ],
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "vender",
+      "conjugacion": 2,
+      "regimen": "transitivo",
+      "objeto": [
+        "objeto",
+        "comida",
+        "ropa"
+      ],
+      "admiteCI": true,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "escribir",
+      "conjugacion": 3,
+      "regimen": "transitivo",
+      "objeto": [
+        "texto"
+      ],
+      "admiteCI": true,
+      "participioIrregular": "escrito",
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "abrir",
+      "conjugacion": 3,
+      "regimen": "transitivo",
+      "objeto": [
+        "objeto"
+      ],
+      "admiteCI": false,
+      "participioIrregular": "abierto",
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "trabajar",
+      "conjugacion": 1,
+      "regimen": "intransitivo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "caminar",
+      "conjugacion": 1,
+      "regimen": "intransitivo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona",
+        "animal"
+      ]
+    },
+    {
+      "infinitivo": "bailar",
+      "conjugacion": 1,
+      "regimen": "intransitivo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona"
+      ]
+    },
+    {
+      "infinitivo": "nadar",
+      "conjugacion": 1,
+      "regimen": "intransitivo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona",
+        "animal"
+      ]
+    },
+    {
+      "infinitivo": "descansar",
+      "conjugacion": 1,
+      "regimen": "intransitivo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona",
+        "animal"
+      ]
+    },
+    {
+      "infinitivo": "correr",
+      "conjugacion": 2,
+      "regimen": "intransitivo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona",
+        "animal"
+      ]
+    },
+    {
+      "infinitivo": "vivir",
+      "conjugacion": 3,
+      "regimen": "intransitivo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona",
+        "animal"
+      ]
+    },
+    {
+      "infinitivo": "subir",
+      "conjugacion": 3,
+      "regimen": "intransitivo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "persona",
+        "animal"
+      ]
+    }
+  ],
+  "complementosCircunstanciales": {
+    "CCL": [
+      "en el parque",
+      "en casa",
+      "por la calle",
+      "en el colegio",
+      "junto al río",
+      "en la biblioteca"
+    ],
+    "CCT": [
+      "ayer",
+      "por la mañana",
+      "el lunes",
+      "todos los días",
+      "en verano",
+      "a las cinco"
+    ],
+    "CCM": [
+      "deprisa",
+      "con cuidado",
+      "tranquilamente",
+      "con alegría",
+      "en silencio",
+      "despacio"
+    ],
+    "CCC": [
+      "con sus amigos",
+      "con su hermana"
+    ]
+  }
+}

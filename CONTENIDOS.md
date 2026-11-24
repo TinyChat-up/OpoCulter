@@ -212,7 +212,10 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 - **`lexico/palabras.json`**: `[{"palabra": "canción"}, {"palabra": "robots", "tonica": 1}, {"palabra": "él", "diacritica": true}]`. Solo `palabra` es obligatoria. `tonica` es el índice de la sílaba (desde 0) cuando las reglas no lo deducen. Las palabras incoherentes con las reglas de la RAE salen como errores del validador (D-065).
 - **`gramatica/piezas.json`**: `sujetos` (tokens `[texto, clase]`, `genero`, `numero`); `verbos` (`infinitivo`, `regimen`: intransitivo, transitivo o copulativo; `cd` compatibles; `ci`); `complementos` (`CI`, `CCL`, `CCT` (con `tiempo` opcional), `CCM`); `atributos` (formas `ms`, `fs`, `mp`, `fp`). Clases: det, sust, verbo, adj, prep, adv, pron.
 - **`gramatica/verbos.json`**: `regulares` (infinitivos) e `irregulares` (`infinitivo`, `participio`, `formas` por `"Modo|Tiempo"` con 6 personas).
-- **`gramatica/frases.json`**: `familias` (formas con su uso) y `frases` (`id`, `familia`, `texto` con `___`, `correcta`, `dificultad`).
+- **`gramatica/frases.json`**: `familias` (formas con su uso) y `frases` (`id`, `familia`, `texto` con `___`, `correcta`, `dificultad`). La forma correcta lleva mayúscula si el hueco abre la frase; el generador capitaliza entonces también los distractores (`GeneradorFraseHueco.ajustar`).
+- **`gramatica/frases_lote02b.json`** (Lote 02b, D-072): las 101 frases reales con el esquema de `frases.json` más `competencia`, pero **sin `dificultad` ni `uso`**, que el formato neutro no trae. La app no lo lee: sustituirá a `frases.json` cuando la dirección aporte esos dos campos.
+- **`gramatica/compatibilidad.json`** (Lote 02b): el formato neutro completo de la dirección (sustantivos y adjetivos con `etiquetas`; verbos con `objeto`, `sujeto`, `admiteCI` y `participioIrregular`; CC por tipo, incluido CCC). Guarda lo que el esquema de `piezas.json` no admite. La app aún no lo lee. `scripts/convertir_gramatica_02b.py` genera `piezas.json`, `verbos.json`, `frases_lote02b.json` y este archivo a partir de los anexos.
+- **Validación sin Swift**: `python3 scripts/validar_gramatica.py`.
 
 ### 2.12 Catálogo de preguntas (D-064)
 `CatalogoPreguntas` suma los ítems estáticos y las variantes únicas de las plantillas (sin duplicados, por clave canónica). Lo hace por área, bloque, competencia, peldaño y dificultad, y marca como cota inferior ("≥") los espacios que se muestrean. La tabla está en Revisión → "Recuentos del catálogo de preguntas".
@@ -223,6 +226,7 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 |---|---|---|---|---|
 | Ítems, tarjetas y SIM.01 de prueba (Fases 04 y 05A) | original | Claude Code, solo para tests y desarrollo (estado `borrador`, solo Debug) | propia | 2026-11-23 |
 | Lote 01 · `LEN.ORT.*` (38 ítems y 5 tarjetas) | original | Redacción original de la dirección del proyecto | propia | 2026-11-23 |
+| Lote 02b (parte 1) · frases con hueco y piezas de gramática | original | Redacción original de la dirección del proyecto. Los sintagmas de `piezas.json` se derivan mecánicamente de sus sustantivos (artículo o «a» + posesivo) | propia | 2026-11-24 |
 
 ## 4. Proceso de revisión y calidad
 
@@ -235,6 +239,7 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 | Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
 | Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
 | Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
+| Lote 02b (parte 1) · 101 frases con hueco · 39 sustantivos, 17 adjetivos, 27 verbos, 20 complementos circunstanciales · aprobado por la dirección 24/11/2026 | LEN.ORT (DIA, PQ, HOM) y gramática de LEN.SIN, LEN.CLA y LEN.VER | — | — | Aprobado por la dirección 24/11/2026. Las piezas y los verbos sustituyen a los de prueba; las frases quedan en `frases_lote02b.json` hasta tener `dificultad` y `uso` | `gramatica/piezas.json`, `gramatica/verbos.json`, `gramatica/compatibilidad.json`, `gramatica/frases_lote02b.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 

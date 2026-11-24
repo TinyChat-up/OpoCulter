@@ -28,6 +28,12 @@
 2. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
 3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
 
+## Pendiente con Mac
+1. Conectar `compatibilidad.json` al generador `oracionSimple` para evitar oraciones sin sentido (p. ej., «la mesa come una canción»).
+2. **Lote 02b**: cuando la dirección aporte `dificultad` (cada frase) y `uso` (cada forma), pasar `gramatica/frases_lote02b.json` a `frases.json` y actualizar las familias de las plantillas `LEN.ORT.DIA.G01` y `LEN.ORT.PQ.G01`. Las ids de familia cambian: `tu` pasa a `tu_tú`, y lo mismo con las demás.
+3. **Lote 02b**: el test «Conjugación regular e irregular» de `GeneradoresTests` usa los irregulares del bundle (tener, decir, poner, hacer), que ya no están en `verbos.json`. Hay que pasarle una tabla propia de irregulares o añadirlos en un lote. `analisisVerbal` en dificultad 5–6 solo tiene ahora escribir y abrir, cuyas formas simples son regulares.
+4. **Lote 02b**: pasar `xcodebuild test` con las piezas nuevas (propiedades y complejidad de `oracionSimple`) y el archive.
+
 ## Fase 05B — Resultado
 
 | Verificación | Resultado | Evidencia |
