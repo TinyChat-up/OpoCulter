@@ -316,3 +316,9 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 
 ### D-068 · 2026-11-23 · Fase 05C · Vigente
 **Competencias nuevas en el catálogo** para las plantillas de prueba que no tenían competencia: `MAT.OPE.ECUAC` (ecuaciones), `MAT.EST.CENTRAL` (media, mediana, moda y rango) y `MAT.PRO.LAPLACE` (probabilidad de un suceso). El catálogo pasa a la versión 2 con 27 competencias. Las demás competencias que propone la matriz (marcadas con † en MATRIZ.md) se dejan a la dirección. En Release estas competencias no tienen ítems todavía y `ServicioSesion` las salta (`valida` exige ítems).
+
+### D-069 · 2026-11-24 · Lote 05a · Vigente
+**Base literaria como datos aparte, sin código.**
+- **Ubicación**: `Educulter/Content/literatura/literatura.json`, que en la documentación se cita como `Content/literatura/`, igual que el resto del contenido. `Content` es una carpeta explícita del target, así que el archivo se copiará al bundle sin tocar el `.pbxproj`. `CargadorContenido` solo lee `items`, `teoria`, `simulacros`, `plantillas`, `lexico` y `gramatica`, de modo que la app lo ignora hasta que exista el motor literario (Fase 05F).
+- **Validación**: `scripts/validar_literatura.py` (Python 3, solo biblioteca estándar) para validar sin Mac. Cuando exista el motor, sus tests de Swift deberán repetir estas comprobaciones.
+- **Dominio público**: regla de la dirección. Muerte en 1945 o antes, o autor anónimo o antiguo sin fechas. Un autor con nacimiento y sin muerte cuenta como vivo.

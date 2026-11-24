@@ -28,6 +28,9 @@
 2. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
 3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
 
+## Pendiente con Mac
+1. Integrar `Content/literatura/` en el bundle y crear el motor literario (05F). Lote 05a añadido sin Mac en la rama `contenido/literatura-05a`: solo datos, documentación y `scripts/validar_literatura.py`. Falta compilar y pasar los tests con Xcode.
+
 ## Fase 05B — Resultado
 
 | Verificación | Resultado | Evidencia |
