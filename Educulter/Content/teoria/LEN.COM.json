@@ -1,0 +1,106 @@
+[
+  {
+    "id": "LEN.COM.TEMA.T01",
+    "competencia": "LEN.COM.TEMA",
+    "titulo": "El tema",
+    "bloques": [
+      {
+        "tipo": "texto",
+        "contenido": "El tema expresa en una frase breve de qué trata todo el texto. No es un detalle ni un resumen."
+      },
+      {
+        "tipo": "regla",
+        "contenido": "Se suele formular con un sustantivo abstracto: «La importancia de…», «El paso del tiempo…»."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    }
+  },
+  {
+    "id": "LEN.COM.RESU.T01",
+    "competencia": "LEN.COM.RESU",
+    "titulo": "El resumen",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Más breve que el original, solo ideas principales, en su orden, con palabras propias y sin opiniones personales."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "1: lee y subraya las ideas principales\n2: descarta los ejemplos y los detalles\n3: redacta con tus palabras y conectores"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    }
+  },
+  {
+    "id": "LEN.COM.TIPO.T01",
+    "competencia": "LEN.COM.TIPO",
+    "titulo": "Tipos de texto",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Narrativo: cuenta hechos (narrador, personajes, tiempo, espacio)\nDescriptivo: muestra cómo es algo (adjetivos, verbos de estado)\nExpositivo: informa de forma objetiva\nArgumentativo: defiende una tesis con argumentos\nDialogado: intercambio entre interlocutores"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    }
+  },
+  {
+    "id": "LEN.COM.PROP.T01",
+    "competencia": "LEN.COM.PROP",
+    "titulo": "Propiedades del texto",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Coherencia: unidad de sentido y tema\nCohesión: conectores, pronombres y sinónimos que enlazan\nAdecuación: registro ajustado a la situación"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    }
+  }
+]

@@ -1,0 +1,1259 @@
+[
+  {
+    "id": "LEN.COM.TEMA.0001",
+    "competencia": "LEN.COM.TEMA",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Identificar el tema de un texto.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Cuál es el tema del texto?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "La organización de las abejas y su importancia para la naturaleza"
+        },
+        {
+          "id": "o2",
+          "texto": "Cómo se fabrica la miel"
+        },
+        {
+          "id": "o3",
+          "texto": "Los peligros de las picaduras"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "El tema abarca todo el texto, no un detalle."
+    ],
+    "explicacion": "El tema resume en pocas palabras de qué trata todo el texto; la miel es solo un detalle.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "La miel se menciona, pero es un detalle: el texto habla de la colmena y de la polinización."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [
+        "2026-L1"
+      ],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.ABEJAS"
+  },
+  {
+    "id": "LEN.COM.TEMA.0002",
+    "competencia": "LEN.COM.TEMA",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Identificar el tema de un poema.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Cuál es el tema de la rima?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "La poesía identificada con la persona amada"
+        },
+        {
+          "id": "o2",
+          "texto": "La belleza de los ojos azules"
+        },
+        {
+          "id": "o3",
+          "texto": "El oficio de escribir"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Fíjate en el último verso."
+    ],
+    "explicacion": "El poeta responde que la poesía es la amada: identifica ambas. Los ojos azules son un detalle.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [
+        "2026-L1"
+      ],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "dominioPublico",
+      "autorTexto": "Gustavo Adolfo Bécquer",
+      "anioMuerteAutor": 1870,
+      "fuente": "Rimas, XXI",
+      "licencia": "dominio publico",
+      "notas": "Texto de dominio público."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.BEC.R21"
+  },
+  {
+    "id": "LEN.COM.TEMA.0003",
+    "competencia": "LEN.COM.TEMA",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Identificar el tema de un poema simbólico.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Cuál es el tema del poema?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "La vida como un camino que cada uno construye con sus actos"
+        },
+        {
+          "id": "o2",
+          "texto": "Un viaje por el mar"
+        },
+        {
+          "id": "o3",
+          "texto": "La nostalgia de la infancia"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "«Camino» simboliza la vida: no existe de antemano, se hace al vivir, y lo vivido no se repite.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "El mar y el camino son símbolos: no se habla de un viaje real."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [
+        "2026-L1"
+      ],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "dominioPublico",
+      "autorTexto": "Antonio Machado",
+      "anioMuerteAutor": 1939,
+      "fuente": "Campos de Castilla, «Proverbios y cantares», XXIX",
+      "licencia": "dominio publico",
+      "notas": "Texto de dominio público."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.MAC.CAM"
+  },
+  {
+    "id": "LEN.COM.TEMA.0004",
+    "competencia": "LEN.COM.TEMA",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Identificar la tesis de un texto argumentativo.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Cuál es la tesis del autor?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "Los alumnos de Primaria no deberían tener deberes en vacaciones"
+        },
+        {
+          "id": "o2",
+          "texto": "Los deberes ayudan a no olvidar"
+        },
+        {
+          "id": "o3",
+          "texto": "Hay que leer por placer"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "La tesis es la opinión que defiende el autor; aparece al principio y se repite en la conclusión.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "Es un contraargumento que el autor admite y luego matiza."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.DEBERES"
+  },
+  {
+    "id": "LEN.COM.RESU.0001",
+    "competencia": "LEN.COM.RESU",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Ordenar las ideas para construir un resumen.",
+    "mecanica": "ordenar",
+    "enunciado": "Ordena las ideas del texto para resumirlo.",
+    "payload": {
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "Las abejas viven en colmenas organizadas"
+        },
+        {
+          "id": "f2",
+          "texto": "Cada grupo (reina, obreras, zánganos) tiene una función"
+        },
+        {
+          "id": "f3",
+          "texto": "Polinizan las plantas al ir de flor en flor"
+        },
+        {
+          "id": "f4",
+          "texto": "Su desaparición pondría en riesgo nuestros alimentos"
+        }
+      ],
+      "ordenCorrecto": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "etiquetaInicio": "Inicio",
+      "etiquetaFin": "Final"
+    },
+    "pistas": [
+      "Sigue el orden en que aparecen en el texto."
+    ],
+    "explicacion": "Un buen resumen recoge las ideas principales en el orden del texto, con palabras propias y sin detalles.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [
+        "2026-L1"
+      ],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.ABEJAS"
+  },
+  {
+    "id": "LEN.COM.RESU.0002",
+    "competencia": "LEN.COM.RESU",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Distinguir ideas principales y secundarias.",
+    "mecanica": "clasificar",
+    "enunciado": "¿Idea principal o detalle secundario?",
+    "payload": {
+      "categorias": [
+        {
+          "id": "c1",
+          "nombre": "Idea principal"
+        },
+        {
+          "id": "c2",
+          "nombre": "Detalle secundario"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "Las abejas polinizan las plantas",
+          "categoria": "c1"
+        },
+        {
+          "id": "f2",
+          "texto": "Viven en colmenas organizadas",
+          "categoria": "c1"
+        },
+        {
+          "id": "f3",
+          "texto": "Las obreras fabrican la cera",
+          "categoria": "c2"
+        },
+        {
+          "id": "f4",
+          "texto": "Los zánganos fecundan a la reina",
+          "categoria": "c2"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Las ideas principales sostienen el texto; los detalles las amplían o ejemplifican.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.ABEJAS"
+  },
+  {
+    "id": "LEN.COM.RESU.0003",
+    "competencia": "LEN.COM.RESU",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Construir un resumen con piezas.",
+    "mecanica": "construir",
+    "enunciado": "Completa el resumen.",
+    "payload": {
+      "plantilla": "Una noche de {h1}, Lucía encendió la lámpara del faro y {h2} a un pesquero, que después le dio las gracias.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p3"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "tormenta"
+        },
+        {
+          "id": "p2",
+          "texto": "fiesta"
+        },
+        {
+          "id": "p3",
+          "texto": "salvó"
+        },
+        {
+          "id": "p4",
+          "texto": "asustó"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "El resumen condensa la acción principal: problema (tormenta), acción de la protagonista y desenlace.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.FARO"
+  },
+  {
+    "id": "LEN.COM.RESU.0004",
+    "competencia": "LEN.COM.RESU",
+    "peldano": 4,
+    "dificultad": 3,
+    "objetivo": "Justificar qué debe tener un resumen.",
+    "mecanica": "construir",
+    "enunciado": "Completa la regla.",
+    "payload": {
+      "plantilla": "Un resumen debe ser {h1} que el texto original, recoger solo las ideas {h2} y redactarse con palabras {h3}.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p3"
+        },
+        {
+          "id": "h3",
+          "correcta": "p5"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "más breve"
+        },
+        {
+          "id": "p2",
+          "texto": "más largo"
+        },
+        {
+          "id": "p3",
+          "texto": "principales"
+        },
+        {
+          "id": "p4",
+          "texto": "secundarias"
+        },
+        {
+          "id": "p5",
+          "texto": "propias"
+        },
+        {
+          "id": "p6",
+          "texto": "del autor"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Así lo valora la rúbrica del tribunal: si se recoge solo parte del contenido o se copian frases, la puntuación baja.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [
+        "2026-L1"
+      ],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.COM.INFER.0001",
+    "competencia": "LEN.COM.INFER",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Hacer inferencias.",
+    "mecanica": "verdaderoFalso",
+    "enunciado": "¿Verdadero o falso? (Lo dice o se deduce del texto)",
+    "payload": {
+      "afirmacion": "Lucía tenía miedo al subir al faro.",
+      "esVerdadera": true
+    },
+    "pistas": [],
+    "explicacion": "No se dice directamente, pero la linterna «temblando entre las manos» permite deducirlo.",
+    "erroresHabituales": [
+      {
+        "respuesta": "falso",
+        "feedback": "Fíjate en el detalle de la linterna temblando."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.FARO"
+  },
+  {
+    "id": "LEN.COM.INFER.0002",
+    "competencia": "LEN.COM.INFER",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Interpretar el sentido de una expresión.",
+    "mecanica": "eleccion",
+    "enunciado": "En el poema, «no hay camino, / sino estelas en la mar» quiere decir que…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "lo vivido no deja un camino fijo que se pueda repetir"
+        },
+        {
+          "id": "o2",
+          "texto": "en el mar no se puede navegar"
+        },
+        {
+          "id": "o3",
+          "texto": "hay que viajar en barco"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "La estela desaparece enseguida: la vida no deja un camino trazado ni se puede recorrer dos veces.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [
+        "2026-L1"
+      ],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "dominioPublico",
+      "autorTexto": "Antonio Machado",
+      "anioMuerteAutor": 1939,
+      "fuente": "Campos de Castilla, «Proverbios y cantares», XXIX",
+      "licencia": "dominio publico",
+      "notas": "Texto de dominio público."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.MAC.CAM"
+  },
+  {
+    "id": "LEN.COM.INFER.0003",
+    "competencia": "LEN.COM.INFER",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Localizar información en el texto.",
+    "mecanica": "marcarTexto",
+    "enunciado": "Toca la oración que expresa la consecuencia de la desaparición de las abejas.",
+    "payload": {
+      "unidad": "palabra",
+      "tokens": [
+        {
+          "id": "t1",
+          "texto": "Por eso, su desaparición pondría en peligro buena parte de los alimentos que consumimos."
+        },
+        {
+          "id": "t2",
+          "texto": "Además de producir miel, las abejas cumplen una tarea esencial."
+        },
+        {
+          "id": "t3",
+          "texto": "En cada colmena hay una reina, que pone los huevos."
+        }
+      ],
+      "correctos": [
+        "t1"
+      ]
+    },
+    "pistas": [],
+    "explicacion": "El conector «Por eso» introduce la consecuencia.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.ABEJAS"
+  },
+  {
+    "id": "LEN.COM.TIPO.0001",
+    "competencia": "LEN.COM.TIPO",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Reconocer tipos de texto.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada texto con su tipo.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "Las abejas"
+        },
+        {
+          "id": "i2",
+          "texto": "¿Deberes en vacaciones?"
+        },
+        {
+          "id": "i3",
+          "texto": "El faro"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "expositivo"
+        },
+        {
+          "id": "d2",
+          "texto": "argumentativo"
+        },
+        {
+          "id": "d3",
+          "texto": "narrativo"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ]
+      ]
+    },
+    "pistas": [
+      "¿Informa, opina o cuenta una historia?"
+    ],
+    "explicacion": "Expositivo: informa. Argumentativo: defiende una opinión con argumentos. Narrativo: cuenta hechos con personajes en un tiempo y un lugar.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.COM.TIPO.0002",
+    "competencia": "LEN.COM.TIPO",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Identificar rasgos de los tipos de texto.",
+    "mecanica": "clasificar",
+    "enunciado": "¿Rasgo de texto narrativo o descriptivo?",
+    "payload": {
+      "categorias": [
+        {
+          "id": "c1",
+          "nombre": "Narrativo"
+        },
+        {
+          "id": "c2",
+          "nombre": "Descriptivo"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "Sucesión de acciones en el tiempo",
+          "categoria": "c1"
+        },
+        {
+          "id": "f2",
+          "texto": "Verbos de acción en pasado",
+          "categoria": "c1"
+        },
+        {
+          "id": "f3",
+          "texto": "Narrador y personajes",
+          "categoria": "c1"
+        },
+        {
+          "id": "f4",
+          "texto": "Abundancia de adjetivos",
+          "categoria": "c2"
+        },
+        {
+          "id": "f5",
+          "texto": "Enumeración de rasgos",
+          "categoria": "c2"
+        },
+        {
+          "id": "f6",
+          "texto": "Verbos de estado (ser, estar, tener)",
+          "categoria": "c2"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "La narración cuenta lo que pasa; la descripción muestra cómo es algo o alguien.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.COM.TIPO.0003",
+    "competencia": "LEN.COM.TIPO",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Reconocer la estructura argumentativa.",
+    "mecanica": "ordenar",
+    "enunciado": "Ordena la estructura del texto argumentativo.",
+    "payload": {
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "Tesis: no a los deberes en vacaciones"
+        },
+        {
+          "id": "f2",
+          "texto": "Argumento 1: el descanso"
+        },
+        {
+          "id": "f3",
+          "texto": "Argumento 2: aprender de otra manera"
+        },
+        {
+          "id": "f4",
+          "texto": "Contraargumento matizado: los repasos"
+        },
+        {
+          "id": "f5",
+          "texto": "Conclusión"
+        }
+      ],
+      "ordenCorrecto": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ],
+      "etiquetaInicio": "Inicio",
+      "etiquetaFin": "Final"
+    },
+    "pistas": [],
+    "explicacion": "Estructura típica: tesis, argumentos, posible contraargumento y conclusión que refuerza la tesis.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.DEBERES"
+  },
+  {
+    "id": "LEN.COM.TIPO.0004",
+    "competencia": "LEN.COM.TIPO",
+    "peldano": 4,
+    "dificultad": 3,
+    "objetivo": "Justificar el tipo de texto.",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación.",
+    "payload": {
+      "plantilla": "«Las abejas» es un texto {h1} porque su intención es {h2} con un lenguaje objetivo.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p3"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "expositivo"
+        },
+        {
+          "id": "p2",
+          "texto": "narrativo"
+        },
+        {
+          "id": "p3",
+          "texto": "informar"
+        },
+        {
+          "id": "p4",
+          "texto": "convencer"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Los textos expositivos transmiten información de forma ordenada y objetiva.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.ABEJAS"
+  },
+  {
+    "id": "LEN.COM.PROP.0001",
+    "competencia": "LEN.COM.PROP",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Reconocer las propiedades textuales.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada propiedad con su definición.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "Coherencia"
+        },
+        {
+          "id": "i2",
+          "texto": "Cohesión"
+        },
+        {
+          "id": "i3",
+          "texto": "Adecuación"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "las ideas tienen sentido y giran en torno a un tema"
+        },
+        {
+          "id": "d2",
+          "texto": "las partes están bien enlazadas con conectores y referencias"
+        },
+        {
+          "id": "d3",
+          "texto": "el texto se ajusta a la situación y al receptor"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ]
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Son las tres propiedades de un texto bien construido.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.COM.PROP.0002",
+    "competencia": "LEN.COM.PROP",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Identificar conectores.",
+    "mecanica": "clasificar",
+    "enunciado": "Clasifica los conectores del texto argumentativo.",
+    "payload": {
+      "categorias": [
+        {
+          "id": "c1",
+          "nombre": "Orden"
+        },
+        {
+          "id": "c2",
+          "nombre": "Conclusión"
+        },
+        {
+          "id": "c3",
+          "nombre": "Oposición"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "En primer lugar",
+          "categoria": "c1"
+        },
+        {
+          "id": "f2",
+          "texto": "En segundo lugar",
+          "categoria": "c1"
+        },
+        {
+          "id": "f3",
+          "texto": "En definitiva",
+          "categoria": "c2"
+        },
+        {
+          "id": "f4",
+          "texto": "Por tanto",
+          "categoria": "c2"
+        },
+        {
+          "id": "f5",
+          "texto": "pero",
+          "categoria": "c3"
+        },
+        {
+          "id": "f6",
+          "texto": "sin embargo",
+          "categoria": "c3"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Los conectores dan cohesión: ordenan, oponen o concluyen ideas.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1,
+    "textoRef": "TXT.ORI.DEBERES"
+  },
+  {
+    "id": "LEN.COM.SITU.0001",
+    "competencia": "LEN.COM.SITU",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Conocer los elementos de la comunicación.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada elemento con su definición.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "Emisor"
+        },
+        {
+          "id": "i2",
+          "texto": "Receptor"
+        },
+        {
+          "id": "i3",
+          "texto": "Código"
+        },
+        {
+          "id": "i4",
+          "texto": "Canal"
+        },
+        {
+          "id": "i5",
+          "texto": "Contexto"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "quien envía el mensaje"
+        },
+        {
+          "id": "d2",
+          "texto": "quien recibe el mensaje"
+        },
+        {
+          "id": "d3",
+          "texto": "sistema de signos compartido"
+        },
+        {
+          "id": "d4",
+          "texto": "medio físico por el que circula"
+        },
+        {
+          "id": "d5",
+          "texto": "circunstancias que rodean la comunicación"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ],
+        [
+          "i5",
+          "d5"
+        ]
+      ]
+    },
+    "pistas": [
+      "Piensa en una llamada de teléfono."
+    ],
+    "explicacion": "Elementos de la comunicación: emisor, receptor, mensaje, código, canal y contexto.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.COM.GEN.0001",
+    "competencia": "LEN.COM.GEN",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Reconocer géneros discursivos.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada texto con su género.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "Cuenta un hecho reciente de interés público"
+        },
+        {
+          "id": "i2",
+          "texto": "Explica paso a paso cómo hacer algo"
+        },
+        {
+          "id": "i3",
+          "texto": "Intenta convencer para comprar un producto"
+        },
+        {
+          "id": "i4",
+          "texto": "Se dirige a alguien con saludo y despedida"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "noticia"
+        },
+        {
+          "id": "d2",
+          "texto": "instrucciones"
+        },
+        {
+          "id": "d3",
+          "texto": "anuncio"
+        },
+        {
+          "id": "d4",
+          "texto": "carta"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ]
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Los géneros discursivos son formas de texto según la situación y la intención.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  }
+]

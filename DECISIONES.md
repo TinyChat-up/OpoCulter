@@ -316,3 +316,8 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 
 ### D-068 · 2026-11-23 · Fase 05C · Vigente
 **Competencias nuevas en el catálogo** para las plantillas de prueba que no tenían competencia: `MAT.OPE.ECUAC` (ecuaciones), `MAT.EST.CENTRAL` (media, mediana, moda y rango) y `MAT.PRO.LAPLACE` (probabilidad de un suceso). El catálogo pasa a la versión 2 con 27 competencias. Las demás competencias que propone la matriz (marcadas con † en MATRIZ.md) se dejan a la dirección. En Release estas competencias no tienen ítems todavía y `ServicioSesion` las salta (`valida` exige ítems).
+
+### D-071 · 2026-11-24 · Lote 03a · Vigente
+**Carpeta `pendiente/` y validador de contenido en Python.**
+- **`Content/pendiente/`**: guarda contenido aprobado que necesita algo que el motor aún no tiene (aquí, los textos base de comprensión con `textoRef`). Va dentro de la carpeta `Content`, así que se empaqueta, pero `CargadorContenido` no la lee: no afecta a la app ni a los tests hasta que el motor la admita y los ítems pasen a `items/`.
+- **`scripts/validar_items.py`**: reproduce sin Swift las reglas principales de `ValidadorContenido` (CONTENIDOS §2.14) para revisar lotes sin Mac. Cuando el motor admita `textoRef`, el validador de Swift deberá comprobar también que el texto existe.

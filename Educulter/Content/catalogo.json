@@ -110,7 +110,43 @@
           "nombre": "Comprensión (tema y resumen)",
           "prioridad": 3,
           "orden": 6,
-          "competencias": []
+          "competencias": [
+            {
+              "id": "LEN.COM.SITU",
+              "nombre": "Elementos de la comunicación",
+              "orden": 1
+            },
+            {
+              "id": "LEN.COM.TEMA",
+              "nombre": "Tema e idea principal",
+              "orden": 2
+            },
+            {
+              "id": "LEN.COM.RESU",
+              "nombre": "El resumen",
+              "orden": 3
+            },
+            {
+              "id": "LEN.COM.INFER",
+              "nombre": "Inferencias y sentido",
+              "orden": 4
+            },
+            {
+              "id": "LEN.COM.TIPO",
+              "nombre": "Tipos de texto",
+              "orden": 5
+            },
+            {
+              "id": "LEN.COM.PROP",
+              "nombre": "Coherencia, cohesión y adecuación",
+              "orden": 6
+            },
+            {
+              "id": "LEN.COM.GEN",
+              "nombre": "Géneros discursivos",
+              "orden": 7
+            }
+          ]
         },
         {
           "id": "LEN.REC",
@@ -142,6 +178,46 @@
               "id": "LEN.LEX.SINON",
               "nombre": "Sinónimos",
               "orden": 1
+            },
+            {
+              "id": "LEN.LEX.SIN",
+              "nombre": "Sinónimos y antónimos",
+              "orden": 1
+            },
+            {
+              "id": "LEN.LEX.POLI",
+              "nombre": "Polisemia, homonimia y paronimia",
+              "orden": 2
+            },
+            {
+              "id": "LEN.LEX.CAMPO",
+              "nombre": "Campo semántico y familia léxica",
+              "orden": 3
+            },
+            {
+              "id": "LEN.LEX.CTX",
+              "nombre": "Significado en contexto",
+              "orden": 4
+            },
+            {
+              "id": "LEN.LEX.DICC",
+              "nombre": "El diccionario",
+              "orden": 5
+            },
+            {
+              "id": "LEN.LEX.REG",
+              "nombre": "Registros, préstamos y extranjerismos",
+              "orden": 6
+            },
+            {
+              "id": "LEN.LEX.DEN",
+              "nombre": "Denotación y connotación",
+              "orden": 7
+            },
+            {
+              "id": "LEN.LEX.FRAS",
+              "nombre": "Frases hechas",
+              "orden": 8
             }
           ]
         },

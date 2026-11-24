@@ -34,6 +34,7 @@ Content/
   items/<bloque>.json        Array de ítems de un bloque (p. ej. items/LEN.SIN.json)
   teoria/<bloque>.json       Array de tarjetas de teoría de un bloque
   simulacros/<id>.json       Un simulacro por archivo (p. ej. simulacros/SIM.01.json)
+  pendiente/                 Contenido aprobado que el motor aún no sabe mostrar (no se carga; §2.14)
 ```
 
 Modelos Swift: [Core/Content](Educulter/Core/Content). El validador ([ValidadorContenido.swift](Educulter/Core/Content/ValidadorContenido.swift)) se ejecuta en los tests sobre todo el contenido del bundle; **un contenido que no lo pase rompe la compilación verificada**.
@@ -217,12 +218,20 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 ### 2.12 Catálogo de preguntas (D-064)
 `CatalogoPreguntas` suma los ítems estáticos y las variantes únicas de las plantillas (sin duplicados, por clave canónica). Lo hace por área, bloque, competencia, peldaño y dificultad, y marca como cota inferior ("≥") los espacios que se muestrean. La tabla está en Revisión → "Recuentos del catálogo de preguntas".
 
+### 2.14 Textos base y carpeta `pendiente/` (Lote 03a, D-071)
+`pendiente/` guarda contenido aprobado que el motor todavía no sabe mostrar. `CargadorContenido` no lee esta carpeta, así que no llega a la app ni a los tests de Swift.
+- **`pendiente/textos.json`**: array de textos base `{id, titulo, autor|null, obra|null, tipo, texto, procedencia, validacion}`. El id tiene el formato `TXT.<origen>.<clave>` (p. ej. `TXT.ORI.ABEJAS`, `TXT.BEC.R21`). `texto` es texto plano con `\n` para los saltos de verso. La procedencia sigue §2.7; si es de dominio público, `autor` coincide con `procedencia.autorTexto`.
+- **`pendiente/LEN.COM.json`**: ítems con el esquema de §2.3 y un campo nuevo, `textoRef` (opcional): el id del texto base que se muestra junto al enunciado. Se moverán a `items/` cuando el motor admita textos base (pendiente con Mac).
+- **Validación sin Swift**: `python3 scripts/validar_items.py` reproduce las reglas principales de `ValidadorContenido` sobre todo `Content/`: catálogo, ítems (incluidos los de `pendiente/`), teoría, textos base y simulacros. Comprueba ids, competencias, payload por mecánica, explicación de 280 caracteres o menos, pistas solo en los peldaños 1–2, bloques de teoría de 40 palabras o menos, procedencia y validación, y que cada `textoRef` exista. No valida `plantillas/` (necesita los generadores de Swift). El test de Swift sigue siendo la referencia.
+
 ## 3. Registro de procedencia
 
 | ID | Tipo | Autoría u origen | Licencia | Fecha |
 |---|---|---|---|---|
 | Ítems, tarjetas y SIM.01 de prueba (Fases 04 y 05A) | original | Claude Code, solo para tests y desarrollo (estado `borrador`, solo Debug) | propia | 2026-11-23 |
 | Lote 01 · `LEN.ORT.*` (38 ítems y 5 tarjetas) | original | Redacción original de la dirección del proyecto | propia | 2026-11-23 |
+| Lote 03a · `LEN.LEX.*` (30 ítems), `LEN.COM.*` (19 ítems), 8 tarjetas y textos `TXT.ORI.ABEJAS`, `TXT.ORI.DEBERES` y `TXT.ORI.FARO` | original | Redacción original de la dirección del proyecto | propia | 2026-11-24 |
+| Lote 03a · `TXT.BEC.R21` (Rima XXI) y `TXT.MAC.CAM` («Proverbios y cantares», XXIX) | dominio público | Gustavo Adolfo Bécquer (†1870), *Rimas*; Antonio Machado (†1939), *Campos de Castilla*. Texto original en español | dominio publico | 2026-11-24 |
 
 ## 4. Proceso de revisión y calidad
 
@@ -235,6 +244,7 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 | Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
 | Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
 | Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
+| Lote 03a | LEN.LEX 30 ítems + LEN.COM 19 ítems (pendiente) + 8 tarjetas + 5 textos | 30 + 19 | 8 (4 LEN.LEX, 4 LEN.COM) | Aprobado por la dirección 24/11/2026 | `items/LEN.LEX.json`, `teoria/LEN.LEX.json`, `teoria/LEN.COM.json`, `pendiente/LEN.COM.json`, `pendiente/textos.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 

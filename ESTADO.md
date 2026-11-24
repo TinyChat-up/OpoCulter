@@ -28,6 +28,10 @@
 2. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
 3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
 
+## Pendiente con Mac
+1. **Lote 03a (rama `contenido/lote-03a`)**: añadir al motor el soporte para textos base (`textoRef` → `pendiente/textos.json`, §2.14 de CONTENIDOS) y mover `pendiente/LEN.COM.json` a `items/` y `pendiente/textos.json` a su ubicación definitiva. Hasta entonces, LEN.COM tiene 4 tarjetas de teoría en Release pero ningún ítem.
+2. **Lote 03a**: actualizar los recuentos fijos de `ContenidoTests`, que cambian con este lote (ver el informe del lote): estáticos 84 → 114, tarjetas 9 → 17, Release 59 → 89 ítems y 7 → 15 tarjetas, y competencias 27 → 42. Después, pasar `xcodebuild test` y el archive.
+
 ## Fase 05B — Resultado
 
 | Verificación | Resultado | Evidencia |
