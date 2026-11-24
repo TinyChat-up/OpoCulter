@@ -30,6 +30,7 @@
 
 ## Pendiente con Mac
 1. **Datos del Tribunal (rama `contenido/tribunal-datos`)**: el motor del Modo Tribunal (05E) leerá `Content/pendiente/tribunal/*.json` (esquema en CONTENIDOS §2.15), que todavía no se carga. Antes, la dirección debe revisar `docs/examenes/SOLUCIONES_REVISION_1–3.md` y aprobar los 7 exámenes, que hoy están en borrador.
+   - Tribunal: soluciones aprobadas por la dirección (24/11/2026). Las 139 preguntas y los 7 exámenes tienen `validacion: aprobado`; los datos siguen en `pendiente/tribunal/` hasta que haya Mac.
 
 ## Fase 05B — Resultado
 

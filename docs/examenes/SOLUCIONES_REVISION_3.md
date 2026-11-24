@@ -1,6 +1,6 @@
 # Soluciones del Modo Tribunal · hoja de revisión (parte 3 de 3)
 
-Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de `Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo. Las soluciones son siempre de redacción propia. Las «Notas de la app» explican cómo se resuelven las erratas y ambigüedades de los enunciados oficiales, que no se alteran.
+Aprobado por la dirección el 24/11/2026. Generado por `scripts/tribunal/construir.py` a partir de los datos de `Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo. Las soluciones son siempre de redacción propia. Las «Notas de la app» explican cómo se resuelven las erratas y ambigüedades de los enunciados oficiales, que no se alteran.
 ```
 OF.2026.A · L6 · LEN.REC.FIGURAS
 Responda a las siguientes cuestiones literarias y métricas:
@@ -22,7 +22,7 @@ Rúbrica (oficial 2026): B Relaciona bien los términos con las definiciones. / 
 ```
 OF.2026.A · L9 · LEN.FOR.DERIV
 Indique si las siguientes palabras son primitivas, derivadas o compuestas. Justifique brevemente su respuesta. Ejemplo: paraguas = compuesta, porqu…
-Solución: Lunero: derivada (lexema lun- + sufijo -ero). Torrecilla: derivada (torre + sufijo diminutivo -cilla). Sacapuntas: compuesta (dos lexemas: saca + puntas). Mortal: derivada (lexema mort-, el de muerte, + sufijo -al). Viento: primitiva (no procede de otra palabra española; solo lexema y morfema de género). Girasol: compuesta (gira + sol).
+Solución: Lunero: derivada (lexema lun- + sufijo -ero). Torrecilla: derivada (torre + sufijo diminutivo -ecilla). Sacapuntas: compuesta (dos lexemas: saca + puntas). Mortal: derivada (lexema mort-, el de muerte, + sufijo -al). Viento: primitiva (no procede de otra palabra española; solo lexema y morfema de género). Girasol: compuesta (gira + sol).
 Rúbrica (oficial 2026): B Distingue primitivas, derivadas y compuestas con justificación. / R Comete un error de clasificación. / M Comete varios errores o no justifica.
 ```
 ```

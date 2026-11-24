@@ -30,7 +30,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 2,
@@ -48,7 +53,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 3,
@@ -66,7 +76,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 4,
@@ -84,7 +99,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 5,
@@ -102,7 +122,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 6,
@@ -120,7 +145,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 7,
@@ -138,7 +168,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 8,
@@ -156,7 +191,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 9,
@@ -174,7 +214,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 10,
@@ -192,7 +237,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 11,
@@ -210,7 +260,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 12,
@@ -228,7 +283,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 13,
@@ -246,7 +306,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 14,
@@ -264,7 +329,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 15,
@@ -282,7 +352,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 16,
@@ -300,7 +375,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 17,
@@ -318,7 +398,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 18,
@@ -336,7 +421,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 19,
@@ -354,13 +444,18 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "direccion",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     }
   ],
   "validacion": {
-    "estado": "borrador",
-    "revisor": "",
-    "fecha": ""
+    "estado": "aprobado",
+    "revisor": "direccion",
+    "fecha": "2026-11-24"
   },
   "notas": "El cuadernillo de 2017 no indica la puntuación de cada pregunta (9 de Lengua y 10 de Matemáticas); se asigna 1 punto a cada una."
 }

@@ -27,6 +27,7 @@ from matematicas import SOLUCIONES as SOL_MAT  # noqa: E402
 DESTINO = RAIZ / "Educulter" / "Content" / "pendiente" / "tribunal"
 TEXTOS = RAIZ / "docs" / "examenes" / "texto"
 FECHA_CONSULTA = "2026-11-23"
+VALIDACION = {"estado": "aprobado", "revisor": "direccion", "fecha": "2026-11-24"}  # soluciones aprobadas por la dirección
 AVISO = ("Examen oficial publicado por la Comunidad de Madrid. Reproducido sin alteraciones según sus "
          "condiciones de reutilización. Esta app no está patrocinada ni avalada por la Comunidad de Madrid.")
 AVISO_PROTEGIDO = " El texto base está protegido por derechos de autor y no se reproduce. Consúltalo en el PDF oficial."
@@ -731,7 +732,7 @@ EXAMENES.append({
          "1 I (dado como ejemplo); 2 C; 3 E; 4 J; 5 F; 6 H; 7 B; 8 D; 9 A; 10 G."),
         ("Indique si las siguientes palabras son primitivas, derivadas o compuestas. Justifique brevemente su respuesta. Ejemplo: paraguas = compuesta, "
          "porque reúne dos lexemas.\nPalabra / Tipo / Justificación\nlunero\ntorrecilla\nsacapuntas\nmortal\nviento\ngirasol",
-         "Lunero: derivada (lexema lun- + sufijo -ero). Torrecilla: derivada (torre + sufijo diminutivo -cilla). Sacapuntas: compuesta (dos lexemas: saca + "
+         "Lunero: derivada (lexema lun- + sufijo -ero). Torrecilla: derivada (torre + sufijo diminutivo -ecilla). Sacapuntas: compuesta (dos lexemas: saca + "
          "puntas). Mortal: derivada (lexema mort-, el de muerte, + sufijo -al). Viento: primitiva (no procede de otra palabra española; solo lexema y morfema "
          "de género). Girasol: compuesta (gira + sol)."),
         ("Analice sintácticamente la siguiente oración, respondiendo exclusivamente a las preguntas que se realizan.\nLa muerte miraba al jinete desde las "
@@ -825,6 +826,7 @@ def construir(ex):
                  "fuenteSolucion": "direccion", "fuenteRubrica": "oficial" if oficial else "direccion", "puntos": extra.get("puntos", 1)}
             if (ex["id"], area, i) in NOTAS_RUBRICA:
                 p["notaRubrica"] = NOTAS_RUBRICA[(ex["id"], area, i)]
+            p["validacion"] = dict(VALIDACION)
             if extra.get("anulada"):
                 p["anulada"] = True
             preguntas.append(p)
@@ -833,7 +835,7 @@ def construir(ex):
     if "fuentePlantilla" in ex:
         doc["fuentePlantilla"] = ex["fuentePlantilla"]
     doc.update({"fechaConsulta": FECHA_CONSULTA, "aviso": aviso, "textoBase": ex["textoBase"], "preguntas": preguntas,
-                "validacion": {"estado": "borrador", "revisor": "", "fecha": ""}})
+                "validacion": dict(VALIDACION)})
     if "puntosNota" in ex:
         doc["notas"] = ex["puntosNota"]
     return doc
@@ -856,7 +858,7 @@ def hoja(docs, limite=40_000):
                 f"```\n{d['id']} · {letra}{p['numeroEnArea']} · {', '.join(p['competencias'])}{' · ANULADA' if p.get('anulada') else ''}\n"
                 f"{resumen}\nSolución: {p['solucionModelo']}\nRúbrica ({fuente}): B {r['bien']} / R {r['regular']} / M {r['mal']}{nr}\n```\n")
     cabecera = ("# Soluciones del Modo Tribunal · hoja de revisión (parte {n} de {t})\n\n"
-                "Borrador para la dirección. Generado por `scripts/tribunal/construir.py` a partir de los datos de "
+                "Aprobado por la dirección el 24/11/2026. Generado por `scripts/tribunal/construir.py` a partir de los datos de "
                 "`Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. "
                 "Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo. "
                 "Las soluciones son siempre de redacción propia. Las «Notas de la app» explican cómo se resuelven las erratas y "

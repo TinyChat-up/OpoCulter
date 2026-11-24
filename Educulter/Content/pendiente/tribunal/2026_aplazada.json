@@ -31,7 +31,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 2,
@@ -49,7 +54,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 3,
@@ -67,7 +77,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 4,
@@ -85,7 +100,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 5,
@@ -105,7 +125,12 @@
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
       "puntos": 1,
-      "notaRubrica": "La pregunta tiene 4 apartados (a–d). La app aplica: Bien, los 4 correctos; Regular, 2 o 3 correctos; Mal, 0 o 1."
+      "notaRubrica": "La pregunta tiene 4 apartados (a–d). La app aplica: Bien, los 4 correctos; Regular, 2 o 3 correctos; Mal, 0 o 1.",
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 6,
@@ -123,7 +148,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 7,
@@ -141,7 +171,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 8,
@@ -159,7 +194,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 9,
@@ -169,7 +209,7 @@
       "competencias": [
         "LEN.FOR.DERIV"
       ],
-      "solucionModelo": "Lunero: derivada (lexema lun- + sufijo -ero). Torrecilla: derivada (torre + sufijo diminutivo -cilla). Sacapuntas: compuesta (dos lexemas: saca + puntas). Mortal: derivada (lexema mort-, el de muerte, + sufijo -al). Viento: primitiva (no procede de otra palabra española; solo lexema y morfema de género). Girasol: compuesta (gira + sol).",
+      "solucionModelo": "Lunero: derivada (lexema lun- + sufijo -ero). Torrecilla: derivada (torre + sufijo diminutivo -ecilla). Sacapuntas: compuesta (dos lexemas: saca + puntas). Mortal: derivada (lexema mort-, el de muerte, + sufijo -al). Viento: primitiva (no procede de otra palabra española; solo lexema y morfema de género). Girasol: compuesta (gira + sol).",
       "rubrica": {
         "bien": "Distingue primitivas, derivadas y compuestas con justificación.",
         "regular": "Comete un error de clasificación.",
@@ -177,7 +217,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 10,
@@ -195,7 +240,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 11,
@@ -213,7 +263,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 12,
@@ -231,7 +286,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 13,
@@ -249,7 +309,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 14,
@@ -267,7 +332,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 15,
@@ -285,7 +355,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 16,
@@ -303,7 +378,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 17,
@@ -321,7 +401,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 18,
@@ -339,7 +424,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 19,
@@ -357,7 +447,12 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     },
     {
       "numero": 20,
@@ -375,12 +470,17 @@
       },
       "fuenteSolucion": "direccion",
       "fuenteRubrica": "oficial",
-      "puntos": 1
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
     }
   ],
   "validacion": {
-    "estado": "borrador",
-    "revisor": "",
-    "fecha": ""
+    "estado": "aprobado",
+    "revisor": "direccion",
+    "fecha": "2026-11-24"
   }
 }
