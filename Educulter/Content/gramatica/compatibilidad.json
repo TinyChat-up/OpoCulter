@@ -192,7 +192,6 @@
       "plural": "libros",
       "etiquetas": [
         "objeto",
-        "texto",
         "abrible",
         "comprable",
         "prestable"
@@ -275,8 +274,7 @@
       "plural": "regalos",
       "etiquetas": [
         "objeto",
-        "abrible",
-        "comprable"
+        "abrible"
       ]
     },
     {

@@ -435,20 +435,6 @@
         {
           "tokens": [
             [
-              "el",
-              "det"
-            ],
-            [
-              "regalo",
-              "sust"
-            ]
-          ],
-          "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
               "la",
               "det"
             ],
@@ -2231,20 +2217,6 @@
         {
           "tokens": [
             [
-              "el",
-              "det"
-            ],
-            [
-              "regalo",
-              "sust"
-            ]
-          ],
-          "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
               "la",
               "det"
             ],
@@ -2627,20 +2599,6 @@
         {
           "tokens": [
             [
-              "el",
-              "det"
-            ],
-            [
-              "regalo",
-              "sust"
-            ]
-          ],
-          "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
               "la",
               "det"
             ],
@@ -2723,20 +2681,6 @@
             ],
             [
               "poema",
-              "sust"
-            ]
-          ],
-          "genero": "m",
-          "numero": "s"
-        },
-        {
-          "tokens": [
-            [
-              "el",
-              "det"
-            ],
-            [
-              "libro",
               "sust"
             ]
           ],
