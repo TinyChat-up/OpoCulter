@@ -1,8 +1,30 @@
 # Estado del proyecto
 
-**Fase actual:** 05C — Estilo Rubber Hose, avatares del propietario, generadores y matriz de exámenes · **Terminada**
-**Siguiente:** Fase 05D (modos de juego) y lotes de contenido 02 y 02b, a la espera de instrucciones de la dirección.
-**Última actualización:** 2026-11-23
+**Fase actual:** 05D — Modos de juego · **Terminada en su rama** (`fase-05d/modos`); la fusión en `main` queda pendiente de la verificación final completa.
+**Siguiente:** lotes de contenido (preguntas) y Fase 05E (Tribunal), a la espera de instrucciones de la dirección.
+**Última actualización:** 2026-11-24
+
+## Fase 05D — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| Camino, Supervivencia, Rescate, diagnóstico y plan, Progreso, ajustes, sonido y recordatorio | ✅ | D-069–D-074, UX_UI §4.12 |
+| Tests unitarios | ✅ 173 (37 suites), en verde en 4 ejecuciones | `xcodebuild test` |
+| Tests de interfaz nuevos (5) | ✅ Los 5 en verde en la suite completa del 24/11 | `ModosUITests` |
+| Tests de interfaz anteriores (9) | ✅ Cada uno ha pasado tras las correcciones, pero no todos en la misma ejecución. La última suite completa se cortó porque el Mac entró en reposo (batería) | TESTING §11 |
+| Auditoría de accesibilidad | ✅ Sin incidencias en las pantallas nuevas. El contraste se audita en una pasada aparte (D-075) | Tests de UI |
+| Cobertura | ✅ Core **96,2 %** (`Core/Modos` 98,0 %) · App 82,1 % · Features 73,3 % (ejecución cortada) | `xccov` |
+| Avisos del compilador | ✅ 0 (app y tests, tras corregir 3) | logs |
+| iPhone físico | ✅ Instalada y abierta (Debug) | `devicectl` |
+| Archive Release y arranque medido en el iPhone | ⏳ Pendiente | — |
+| Capturas | Omitidas por decisión del propietario | — |
+
+## Pendiente
+1. **Antes de fusionar la 05D en `main`:** una suite completa en verde, con el Mac enchufado y `caffeinate`, y el archive Release. Se puede hacer junto con el cierre de la siguiente fase.
+2. **Fase 05D, sin volver a ejecutar:** el test `testCaminoNodoYPruebaDeNivel` tras el último cambio del botón Practicar de la hoja del nodo (compila sin avisos).
+3. Revisar las 33 competencias que propone la matriz en el lote de contenido correspondiente.
+4. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06).
+5. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
 
 ## Fase 05C — Resultado
 
@@ -23,7 +45,7 @@
 | Capturas | ✅ [docs/capturas/fase05c](docs/capturas/fase05c/) (48 + HOJA.png: claro, oscuro, AX5) | `scripts/capturas.sh … 05c` |
 | Catálogo de preguntas | Release **59** (contenido aprobado); Debug **≥ 55 943** con las plantillas de prueba | `CatalogoPreguntas` |
 
-## Pendiente
+## Pendiente (05C)
 1. Revisar las 33 competencias que propone la matriz en el lote de contenido correspondiente (no se añaden todavía).
 2. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
 3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).

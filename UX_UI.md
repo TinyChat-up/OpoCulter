@@ -2,20 +2,24 @@
 
 > **Propósito:** recoger la arquitectura de información, los flujos, el sistema visual y los criterios de accesibilidad.
 > **Fuente aprobada:** [docs/DISENO_PRODUCTO_v1.md](docs/DISENO_PRODUCTO_v1.md) (§1, §3, §5 y §6). Este documento resume y enlaza; si hay discrepancia, manda el original.
-> **Estado:** Fase 05C: estilo **"Rubber Hose moderno"** (evolución del v2), avatares del propietario, personajes redibujados y fuente de exhibición Fredoka. Camino, Tribunal y Progreso muestran "Llega pronto"; Supervivencia y Tribunal llegan en la 05D.
+> **Estado:** Fase 05D, modos de juego: Camino (prueba de nivel y Reto de bloque), Supervivencia, Rescate con pantalla propia, diagnóstico en la bienvenida, Progreso con Swift Charts, Ajustes, sonido sintetizado y recordatorio local. Tribunal muestra "Llega pronto" (05E). Estilo "Rubber Hose moderno" (05C).
 > **Misión:** [docs/MISION_PREMIUM.md](docs/MISION_PREMIUM.md) (vinculante).
-> **Capturas:** [docs/capturas/fase05c/](docs/capturas/fase05c/) ([HOJA.png](docs/capturas/fase05c/HOJA.png)). Las anteriores (05A, 05A.1 y 05B) son históricas.
+> **Capturas:** [docs/capturas/fase05d/](docs/capturas/fase05d/) ([HOJA.png](docs/capturas/fase05d/HOJA.png)) para los modos y [fase05c](docs/capturas/fase05c/) para el estilo y las mecánicas. Las anteriores (05A–05B) son históricas.
 
 ## 1. Principios de experiencia
 Promesa (original §1): rondas de pocos minutos, casi sin escribir. Sin teclado del sistema: tocar, arrastrar, deslizar, ruedas, piezas y teclado numérico propio. **Toda interacción de arrastre tiene una alternativa de dos toques** (ficha → destino), siempre disponible y no solo con VoiceOver.
 
 ## 2. Arquitectura de información y navegación
-Barra de pestañas: **Hoy** · **Camino** (sustituye a "Mapa") · **Tribunal** (sustituye a "Examen") · **Progreso**. La ronda se abre a pantalla completa desde Hoy; "Ver regla" abre la tarjeta de teoría en una hoja. La **bienvenida** aparece a pantalla completa mientras no haya avatar. **Perfil** se abre en una hoja desde el avatar de la cabecera de Hoy.
+Barra de pestañas: **Hoy** · **Camino** · **Tribunal** ("Llega pronto", 05E) · **Progreso**. Las rondas y las partidas se abren a pantalla completa (desde Hoy, Camino o Ajustes); "Ver regla" abre la tarjeta de teoría en una hoja. La **bienvenida** (avatar → diagnóstico opcional → plan) aparece a pantalla completa mientras no haya avatar. **Perfil** se abre en una hoja desde el avatar de Hoy o desde Ajustes. **Rescate** y el inicio de **Supervivencia** se abren en hojas desde sus baldosas de Hoy; el **nodo** del Camino, en una hoja.
 
-## 3. Flujos principales (05A–05C)
-0. **Primera apertura** → bienvenida (los dos compañeros y la elección de avatar) → Hoy.
+## 3. Flujos principales (05A–05D)
+0. **Primera apertura** → bienvenida (los dos compañeros y la elección de avatar) → «¿Vemos desde dónde partes?» (Empezar diagnóstico | Saltar) → diagnóstico adaptativo («x de N») → **plan** (bloques fuerte/medio/débil con anillos, «Empezamos por…» con 2 competencias y aviso de los bloques sin datos) → Hoy.
 1. **Hoy** (cabecera con avatar, racha con su globo y nivel; panel protagonista con el selector Lengua | Matemáticas, la competencia, la vista previa de la mecánica y "Empezar ronda"; baldosas Rescate, Ortografía exprés, Supervivencia y Tribunal; misiones como filas) → "Empezar ronda" → (tarjetas de teoría si la competencia está en el peldaño 1) → ítem → **Comprobar** (solo activo con respuesta completa) → corrección en el sitio + panel de feedback → **Continuar** → … → **Resumen** → "Otra ronda" o "Terminar".
-2. **Rescate**: ronda solo con los ítems fallados (con variantes).
+2. **Rescate** (baldosa de Hoy, siempre activa con el número real): lista por competencia (errores pendientes, fecha del último y área) → "Rescatar todo" o "Rescatar esta competencia" → ronda de Rescate (con variantes; los generados se reproducen por semilla). Cada error se puede **ver de nuevo** (enunciado, solución y explicación). Sin errores: estado vacío con Tilde celebrando.
+2 bis. **Supervivencia** (baldosa con el récord real) → hoja de inicio (reglas, área Todo | Lengua | Matemáticas, récords) → partida (cabecera con 3 corazones, nivel y puntos en vivo; ítems uno a uno) → al perder la tercera vida, **fin de partida** (puntos, nivel máximo, aciertos, comparación con la mejor partida, récords; Cuarto o Tilde `sorprendido` si hay récord) → "Otra partida" o "Terminar". Salir a mitad pide confirmación: lo jugado se guarda, pero no cuenta para el récord.
+2 ter. **Camino** → ruta por área (selector) con las competencias por bloque → nodo → hoja (peldaño, caja y próximo repaso, teoría, "Practicar" y, si procede, "Prueba de nivel") → ronda. Al final de cada bloque con contenido, **Reto de bloque** → ronda de 8 → medalla con 6 aciertos.
+2 quater. **Progreso** → dominio, evolución, estadísticas, preguntas disponibles, logros → **Ajustes** (sonido, vibración, recordatorio y hora, repetir diagnóstico, cambiar avatar, créditos) y "Borrar mi progreso" (doble confirmación).
+2 quinquies. **Recordatorio**: tras la primera ronda o partida completada, una alerta en contexto («¿Te aviso cada día a las 20:00…?» Sí | Ahora no), una sola vez.
 3. **Ortografía exprés**: 5 ítems de Ortografía y tildes.
 4. **Salir a mitad**: la ✕ pide confirmación si ya se ha respondido algo; lo respondido queda guardado y la racha no cuenta.
 5. **Revisión de contenido (solo Debug)**: pulsación larga sobre el título "Hoy" (o acción de VoiceOver "Revisión de contenido"). Incluye "Plantillas" (cada plantilla con selector de semilla: ítem generado, clave, complejidad, errores habituales y "Abrir en su mecánica") y "Recuentos del catálogo de preguntas" (D-064).
@@ -64,11 +68,22 @@ Muelles con rebote (`spring(duration: 0.3, bounce: 0.4)`) y *squash & stretch* s
 ### 4.5 Iconografía
 SF Symbols con un único peso (semibold), un símbolo por bloque (§4.7) y los de las mecánicas en la vista previa de Hoy. Nada más.
 
-### 4.6 Respuesta háptica (D-040)
-Éxito → `.success`; fallo → `.error`; hitos de combo (×3, ×5, ×10 y cada 10 más) → impacto fuerte; selección, colocación y arrastre → `.selection`. Implementada con `sensoryFeedback` de SwiftUI.
+### 4.6 Respuesta háptica (D-040, D-073)
+Éxito → `.success`; fallo → `.error`; hitos de combo (×3, ×5, ×10 y cada 10 más) → impacto fuerte; selección, colocación y arrastre → `.selection`. Implementada con `sensoryFeedback` de SwiftUI a través de `retroHaptica`, que respeta el ajuste de vibración.
 
-### 4.6 bis Sonido
-Protocolo `ServicioSonido` con implementación vacía `SonidoSilencioso` (D-041), para la 05B.
+### 4.6 bis Sonido (D-073)
+`SonidoSintetizado`: tonos generados en tiempo real con AVAudioEngine, originales y sin archivos de terceros, de 250 ms como máximo, con envolvente suave. Sesión `.ambient` (respeta el modo silencio y no corta la música).
+
+| Momento | Sonido |
+|---|---|
+| Acierto | Dos notas ascendentes (mi5 → si5) |
+| Fallo | Una nota grave suave (sol3), nunca estridente |
+| Hito de combo | Tres notas ascendentes rápidas |
+| Récord | Arpegio de cuatro notas (do–mi–sol–do) |
+| Fin de ronda | Dos notas (re5 → la5) |
+| Tilde que cae / celda que se colorea | Golpe breve agudo / nota corta suave |
+
+`SonidoConAjustes` solo reproduce con el sonido activado en Ajustes; en capturas se usa `SonidoSilencioso`.
 
 ### 4.7 Símbolo por bloque (D-050)
 Junto al nombre de la competencia en la cabecera de la ronda y en "Ronda recomendada" (y en el Mapa en la 05B). Código: `SimboloBloque`.
@@ -136,6 +151,19 @@ Las **6 ilustraciones del propietario** (`Assets.xcassets/Avatares/avatar_01…0
 | 5 | avatar_06 | Avatar con gafas de aviador |
 
 Se eligen en la bienvenida y en Perfil (cuadrícula 3 × 2; el elegido lleva sombra dura, fondo mostaza y ✓) y aparecen en la cabecera de Hoy. Los ids 6–11 de la 05B se migran a `id % 6`. El editor de personalización queda para después del MVP.
+
+### 4.12 Pantallas de la Fase 05D
+| Pantalla | Contenido |
+|---|---|
+| **Camino** (`PantallaCamino`) | Título, selector Lengua/Matemáticas y la ruta: por bloque, su símbolo y nombre (con medalla si se ha ganado). Cada competencia es un nodo circular de 56 pt con contorno y sombra dura: anillo de dominio si está en curso, relleno del área si está dominada, candado si va después de la recomendada, y trazo discontinuo gris con "En preparación" (no pulsable) si no tiene contenido. Línea vertical entre nodos. Al final del bloque, el nodo mostaza "Reto de bloque". |
+| **Hoja del nodo** (`HojaNodo`) | Nombre, tarjeta con peldaño (n de 5 y su nombre), caja de repaso y próximo repaso, aviso del candado, "Prueba de nivel" (mostaza, con su explicación), "Practicar" y las tarjetas de teoría. |
+| **Inicio de Supervivencia** | Cuarto y el título, las cinco reglas en una tarjeta, selector de área y récords (global y del área). Botón mostaza "Jugar". |
+| **Partida** | La ronda de siempre con otra cabecera: ✕, tres corazones (rojos los que quedan), cápsula "Nivel n" ("· Experto" en el 6) y cápsula mostaza con los puntos, que cuentan en vivo. |
+| **Fin de partida** | Personaje a 80 pt (`sorprendido` si hay récord), "¡Nuevo récord!" o "Fin de la partida", tarjeta con puntos, nivel máximo y aciertos, comparación con la mejor partida y récords, logros nuevos. "Otra partida" y "Terminar". |
+| **Rescate** | Cabecera propia con "Cerrar", "Rescatar todo (n)" en mostaza y una tarjeta por competencia: nombre y símbolo, chip del área, "n errores pendientes · último el …", cada error como fila con 👁 para verlo de nuevo y "Rescatar esta competencia". |
+| **Oferta de diagnóstico y plan** | Cuarto pensando, «¿Vemos desde dónde partes?» y la explicación; "Empezar diagnóstico" / "Saltar". El diagnóstico usa la pantalla de ronda con «x de N». Plan: Tilde celebrando, «Tu plan», cada bloque con su anillo y fuerte/medio/débil (aciertos de respondidos), «Empezamos por…» en una tarjeta y el aviso de bloques sin datos. "Ir a Hoy". |
+| **Progreso** | Dominio por área y bloque (anillos; los bloques sin contenido, en discontinuo y "En preparación"), evolución de 4 semanas (barras de aciertos o XP, con gráfico de audio), estadísticas, preguntas disponibles (cifra real del contenido aprobado), logros conseguidos y pendientes con su condición, "Ajustes" y "Borrar mi progreso". |
+| **Ajustes** | Diseño propio por grupos con contorno: sonido y vibración; recordatorio y hora (selector de hora del sistema, sin teclado); repetir diagnóstico, cambiar avatar y créditos. |
 
 ## 5. Componentes
 | Componente | Descripción |

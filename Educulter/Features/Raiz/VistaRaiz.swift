@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Raíz de la app: barra de pestañas Hoy, Mapa, Examen y Progreso.
+/// Raíz de la app: barra de pestañas Hoy, Camino, Tribunal y Progreso.
 struct VistaRaiz: View {
     @Environment(EntornoApp.self) private var entorno
 
@@ -9,14 +9,12 @@ struct VistaRaiz: View {
             TabView {
                 PantallaHoy(modelo: HoyViewModel(servicio: servicio))
                     .tabItem { Label("Hoy", systemImage: "sun.max.fill") }
-                VistaLlegaPronto(titulo: "Camino", icono: "point.topleft.down.to.point.bottomright.curvepath",
-                                 texto: "Las rutas de Lengua y Matemáticas, competencia a competencia, con tu dominio y los Retos de bloque.")
+                PantallaCamino(servicio: servicio)
                     .tabItem { Label("Camino", systemImage: "point.topleft.down.to.point.bottomright.curvepath") }
                 VistaLlegaPronto(titulo: "Tribunal", icono: "checkmark.seal",
-                                 texto: "Simulacros con el formato y el tiempo del examen, corregidos con la rúbrica del tribunal.")
+                                 texto: "Los exámenes oficiales y simulacros con el formato y el tiempo del examen. Llega en la 05E.")
                     .tabItem { Label("Tribunal", systemImage: "checkmark.seal.fill") }
-                VistaLlegaPronto(titulo: "Progreso", icono: "chart.bar",
-                                 texto: "Tu dominio por bloque, tu evolución, tus logros y los ajustes.")
+                PantallaProgreso(servicio: servicio)
                     .tabItem { Label("Progreso", systemImage: "chart.bar.fill") }
             }
             .tint(Paleta.contorno)

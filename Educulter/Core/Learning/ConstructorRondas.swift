@@ -22,6 +22,8 @@ struct ConfiguracionRonda: Sendable, Equatable {
 struct ItemRonda: Sendable, Equatable {
     enum Motivo: String, Sendable, Codable {
         case repaso, rescate, enCurso, intercalado, relleno
+        /// Modos de la Fase 05D.
+        case pruebaNivel, reto, supervivencia, diagnostico, practica
     }
     var itemId: String
     var motivo: Motivo

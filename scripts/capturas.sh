@@ -6,6 +6,7 @@
 #   lote01 → los 38 ítems del lote 01 (LEN.ORT) antes de responder, para revisar el contenido
 #   05b    → piloto premium (v2): claro, oscuro y AX5
 #   05c    → estilo Rubber Hose, avatares del propietario y generadores: claro, oscuro y AX5
+#   05d    → modos de juego (contenido aprobado, como en Release; progreso real generado con el motor)
 set -euo pipefail
 APP="$1"; SALIDA="$2"; CONJUNTO="${3:-05a}"
 UDID=$(xcrun simctl list devices available | grep -E "^ +iPhone 16 \(" | head -1 | sed -E 's/.*\(([0-9A-F-]+)\).*/\1/')
@@ -31,6 +32,54 @@ if [[ "$CONJUNTO" == "lote01" ]]; then
   for id in $(python3 -c "import json,sys; print(' '.join(i['id'] for i in json.load(open(sys.argv[1]))))" "${0:A:h}/../Educulter/Content/items/LEN.ORT.json"); do
     captura "${id}" "item:${id}:antes"
   done
+  xcrun simctl status_bar "$UDID" clear
+  exit 0
+fi
+
+# Escena con contenido aprobado (Release) y progreso real generado con el motor (-progresoDemo):
+# rondas y una partida de Supervivencia jugadas con las mismas llamadas que la interfaz.
+capturaModos() { # nombre escena [espera]
+  xcrun simctl launch --terminate-running-process "$UDID" "$BUNDLE" -enMemoria -semilla 42 -avatar 0 -politicaRelease -progresoDemo -captura "$2" > /dev/null
+  sleep ${3:-20}
+  xcrun simctl io "$UDID" screenshot --type=png "$SALIDA/$1.png" > /dev/null 2>&1
+  echo "  $1"
+}
+
+if [[ "$CONJUNTO" == "05d" ]]; then
+  xcrun simctl ui "$UDID" content_size large
+  xcrun simctl ui "$UDID" appearance light
+  echo "Modo claro"
+  captura 00_bienvenida bienvenida
+  capturaModos 01_hoy hoy
+  capturaModos 02_camino_lengua camino
+  capturaModos 03_hoja_nodo "nodo:LEN.ORT.AGU"
+  capturaModos 04_prueba_nivel_superada "prueba:LEN.ORT.AGU"
+  capturaModos 05_supervivencia_inicio supervivencia
+  capturaModos 06_supervivencia_partida partida
+  capturaModos 07_supervivencia_fin finPartida
+  capturaModos 08_rescate rescate
+  capturaModos 09_diagnostico diagnostico
+  capturaModos 10_plan plan
+  capturaModos 11_progreso progreso
+  capturaModos 12_ajustes ajustes
+  echo "Modo oscuro"
+  xcrun simctl ui "$UDID" appearance dark
+  capturaModos 20_oscuro_hoy hoy
+  capturaModos 21_oscuro_camino camino
+  capturaModos 22_oscuro_partida partida
+  capturaModos 23_oscuro_fin_partida finPartida
+  capturaModos 24_oscuro_plan plan
+  capturaModos 25_oscuro_progreso progreso
+  echo "Texto de accesibilidad máximo"
+  xcrun simctl ui "$UDID" appearance light
+  xcrun simctl ui "$UDID" content_size accessibility-extra-extra-extra-large
+  capturaModos 30_ax_camino camino
+  capturaModos 31_ax_partida partida
+  capturaModos 32_ax_rescate rescate
+  capturaModos 33_ax_plan plan
+  capturaModos 34_ax_progreso progreso
+  capturaModos 35_ax_ajustes ajustes
+  xcrun simctl ui "$UDID" content_size large
   xcrun simctl status_bar "$UDID" clear
   exit 0
 fi

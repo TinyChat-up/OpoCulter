@@ -129,3 +129,52 @@ Conclusión: el arranque (≈ 0,6 s en el simulador desde el inicio del proceso 
 | Generar una ronda de 8 ítems con plantillas | < 50 ms (test) |
 
 Los tests de fluidez localizan ahora celdas y vocales **por su posición en pantalla** (ordenadas de arriba abajo y de izquierda a derecha), no por un índice fijo. El primer intento en el dispositivo falló porque el iPhone se bloqueó durante el test; con el bloqueo automático desactivado, pasaron los tres.
+
+## 11. Fase 05D: modos de juego
+
+**Tests unitarios nuevos** (`EduculterTests/ModosTests.swift`; 173 en total, 37 suites):
+- **Supervivencia**:
+  - sube un nivel cada 4 aciertos seguidos, hasta el 6, y un fallo quita una vida y baja un nivel;
+  - puntos: 10 × dificultad × combo, hasta ×2;
+  - récords: las partidas abandonadas no cuentan;
+  - pesos por bloque de la MATRIZ;
+  - el selector da ítems de la dificultad exacta, reproducibles por id;
+  - partida completa con efectos reales.
+- **Camino**:
+  - estados de nodo y candado orientativo;
+  - prueba de nivel: 4 de 5 supera, 3 de 5 no;
+  - Reto de bloque con ítems fijos y con plantillas: 8 ítems de dificultad 4–5, y 6 aciertos dan la medalla;
+  - Practicar.
+- **Diagnóstico, Rescate y estadísticas**:
+  - plan con bloques fuerte, medio y débil y con 2 recomendaciones;
+  - historial de diagnósticos;
+  - Rescate por competencia: el contador baja de verdad;
+  - estadísticas contra un historial sintético.
+- **Recordatorio**, con `CentroNotificaciones` simulado:
+  - programa 7 días;
+  - no avisa hoy si ya se ha jugado.
+- **Sonido**: un espía comprueba que no suena con el sonido desactivado, y cada sonido dura ≤ 250 ms y no satura.
+- **Persistencia y contenido**:
+  - ajustes, partidas, desbloqueos y diagnósticos se guardan en disco;
+  - borrar el progreso conserva los ajustes;
+  - los créditos coinciden con CREDITOS.md;
+  - las preguntas disponibles son solo las del contenido aprobado.
+
+**Tests de interfaz nuevos** (`EduculterUITests/ModosUITests.swift`, todos con auditoría de accesibilidad):
+
+| Test | Qué comprueba |
+|---|---|
+| `testBienvenidaDiagnosticoYPlan` | Avatar → diagnóstico → plan → Hoy |
+| `testSupervivenciaHastaPerderLasTresVidas` | Semilla fija; partida hasta perder las 3 vidas, con la puntuación exacta en la pantalla final |
+| `testCaminoNodoYPruebaDeNivel` | Camino → hoja del nodo → prueba de nivel superada → nodo actualizado |
+| `testRescatePorCompetencia` | Estado vacío → errores reales → rescate de una competencia → ver un ítem de nuevo |
+| `testRecordYAjustesTrasCerrarYReabrir` | El récord y los ajustes siguen ahí tras cerrar y reabrir la app (almacén en disco) |
+
+**Auditoría (D-075):** `CasoUI.auditarUnaVez` audita primero `.contrast` y después el resto de tipos. En una sola pasada, la comprobación de Dynamic Type desplazaba Hoy cuando estaba al final del scroll, y el contraste se medía fuera del texto.
+
+**Cobertura (05D):**
+- Core **96,2 %** (5 252 / 5 457); `Core/Modos` 98,0 %.
+- App 82,1 %.
+- Features 73,3 %: en esa ejecución, el Mac entró en reposo y 6 tests de interfaz se cortaron antes de recorrer sus pantallas.
+
+**Lección:** la suite completa se lanza con `caffeinate -dims` y el Mac enchufado. En reposo, `testmanagerd` pierde el simulador y los tests fallan por tiempo de espera, no por la app.

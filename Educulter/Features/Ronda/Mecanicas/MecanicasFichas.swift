@@ -28,7 +28,7 @@ struct MecanicaClasificar: View {
             }
             ForEach(p.categorias, id: \.id) { categoria in caja(categoria) }
         }
-        .sensoryFeedback(.selection, trigger: asignacion)
+        .retroHaptica(.selection, trigger: asignacion)
     }
 
     private func fichaVista(_ ficha: Payload.Clasificar.Ficha) -> some View {
@@ -187,7 +187,7 @@ struct MecanicaOrdenar: View {
             }
         }
         .onAppear { if respuesta == nil { respuesta = .ordenar(Self.ordenInicial(p)) } }
-        .sensoryFeedback(.selection, trigger: orden)
+        .retroHaptica(.selection, trigger: orden)
     }
 
     private func tocar(_ id: String) {
@@ -235,7 +235,7 @@ struct MecanicaEmparejar: View {
                 columna(p.derecha, izquierda: false)
             }
         }
-        .sensoryFeedback(.selection, trigger: pares)
+        .retroHaptica(.selection, trigger: pares)
     }
 
     private func columna(_ elementos: [ElementoTexto], izquierda: Bool) -> some View {
@@ -428,7 +428,7 @@ struct MecanicaConstruir: View {
                 }
             }
         }
-        .sensoryFeedback(.selection, trigger: colocadas)
+        .retroHaptica(.selection, trigger: colocadas)
     }
 
     private func huecoVista(_ id: String, numero: Int, texto: String?) -> some View {

@@ -10,7 +10,8 @@ class CasoUI: XCTestCase {
     @MainActor
     func lanzar(_ extra: [String] = [], base: [String] = ["-enMemoria", "-semilla", "42", "-ayudasDePrueba", "-avatar", "0"]) -> XCUIApplication {
         let app = XCUIApplication()
-        app.launchArguments = base + extra
+        // La pregunta del recordatorio tras la primera ronda tiene su propio test (ModosUITests).
+        app.launchArguments = base + extra + (extra.contains("-conAvisoRecordatorio") ? [] : ["-sinAvisoRecordatorio"])
         app.launch()
         XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 60))
         return app
@@ -49,7 +50,7 @@ class CasoUI: XCTestCase {
     @MainActor
     private func auditarUnaVez(_ app: XCUIApplication, _ pantalla: String, alto: CGFloat, scroll: CGRect,
                                bordesDelScroll: Bool, trasPopover: Bool) throws {
-        try app.performAccessibilityAudit { incidencia in
+        let filtro: (XCUIAccessibilityAuditIssue) throws -> Bool = { incidencia in
             if incidencia.auditType == .contrast, let e = incidencia.element, !scroll.isNull,
                e.frame.maxY > scroll.maxY + 0.5 || e.frame.minY < scroll.minY - 0.5,
                Self.perteneceAlScroll(e, app) {
@@ -70,6 +71,11 @@ class CasoUI: XCTestCase {
             print("AUDITORIA \(texto)")
             return true
         }
+        // El contraste se audita primero y por separado: la comprobación de Dynamic Type cambia el
+        // tamaño del texto y, con el scroll al final del contenido, lo desplaza; en una sola pasada,
+        // el contraste llegaba a medirse sobre píxeles que ya no eran del elemento (D-075).
+        try app.performAccessibilityAudit(for: .contrast, filtro)
+        try app.performAccessibilityAudit(for: XCUIAccessibilityAuditType.all.subtracting(.contrast), filtro)
     }
 
     /// El elemento forma parte del contenido del scroll (no es, p. ej., un botón del pie).

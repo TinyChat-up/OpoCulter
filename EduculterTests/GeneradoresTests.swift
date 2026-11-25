@@ -222,7 +222,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         let solucion = f.solucion
         #expect(Double(solucion.coloreadas) / Double(solucion.partes) == Double(d["n"]!)! / Double(d["d"]!)!)
         #expect(Evaluador.evaluar(.fraccionBarras(partes: solucion.partes, coloreadas: Set(0..<solucion.coloreadas)), para: item).correcto)
-    case "ordenarNumeros", "operacionesCombinadas" where p.mecanica == .ordenar:
+    case let t where t == "ordenarNumeros" || (t == "operacionesCombinadas" && p.mecanica == .ordenar):
         guard case .ordenar(let o) = item.payload else { Issue.record("payload"); return }
         let textos = Dictionary(uniqueKeysWithValues: o.fichas.map { ($0.id, $0.texto) })
         if p.tipo == "ordenarNumeros" {

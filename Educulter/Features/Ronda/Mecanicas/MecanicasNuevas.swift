@@ -33,7 +33,7 @@ struct MecanicaColocarTilde: View {
                 botonSinTilde
             }
         }
-        .sensoryFeedback(.selection, trigger: respuesta)
+        .retroHaptica(.selection, trigger: respuesta)
     }
 
     // MARK: Letras
@@ -213,8 +213,8 @@ struct MecanicaFraccionBarras: View {
                 solucion
             }
         }
-        .sensoryFeedback(.selection, trigger: coloreadas)
-        .sensoryFeedback(.selection, trigger: partes)
+        .retroHaptica(.selection, trigger: coloreadas)
+        .retroHaptica(.selection, trigger: partes)
     }
 
     private var colorRelleno: Color {

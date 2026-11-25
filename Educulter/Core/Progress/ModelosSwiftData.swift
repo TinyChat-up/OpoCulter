@@ -113,6 +113,8 @@ final class PerfilRegistro {
     var metricasJSON: Data?
     var competenciaEnCurso: String?
     var avatar: Int?
+    /// Desbloqueos por prueba de nivel (JSON, Fase 05D).
+    var desbloqueosJSON: Data?
 
     init() {}
 
@@ -127,6 +129,7 @@ final class PerfilRegistro {
         competenciaEnCurso = p.competenciaEnCurso
         avatar = p.avatar
         misionesJSON = try JSONEncoder().encode(p.misiones)
+        desbloqueosJSON = try JSONEncoder().encode(p.desbloqueos)
         metricasJSON = try JSONEncoder().encode(Dictionary(uniqueKeysWithValues: p.metricas.map { ($0.key.rawValue, $0.value) }))
     }
 
@@ -139,7 +142,8 @@ final class PerfilRegistro {
                                 ultimoDiaProcesado: ultimoDiaProcesado.flatMap(DiaCivil.init(clave:)))
         return PerfilJugador(xpTotal: xpTotal, racha: racha, misiones: misiones,
                              diaMisiones: diaMisiones.flatMap(DiaCivil.init(clave:)), metricas: metricas,
-                             competenciaEnCurso: competenciaEnCurso, avatar: Avatar.migrar(avatar))
+                             competenciaEnCurso: competenciaEnCurso, avatar: Avatar.migrar(avatar),
+                             desbloqueos: try desbloqueosJSON.map { try JSONDecoder().decode([Desbloqueo].self, from: $0) } ?? [])
     }
 }
 
@@ -165,11 +169,35 @@ final class DiagnosticoRegistro {
     }
 }
 
+/// Partida de Supervivencia (Fase 05D): el valor completo en JSON y la fecha para ordenar.
+@Model
+final class PartidaRegistro {
+    var uuid: UUID = UUID()
+    var inicio: Date = Date.distantPast
+    var datos: Data?
+
+    init(uuid: UUID, inicio: Date, datos: Data?) {
+        self.uuid = uuid
+        self.inicio = inicio
+        self.datos = datos
+    }
+}
+
+/// Ajustes del usuario (Fase 05D), en JSON.
+@Model
+final class AjustesRegistro {
+    var datos: Data?
+
+    init(datos: Data?) {
+        self.datos = datos
+    }
+}
+
 /// Esquema y contenedor del progreso.
 enum EsquemaProgreso {
     static var modelos: [any PersistentModel.Type] {
         [IntentoRegistro.self, EstadoCompetenciaRegistro.self, RescateRegistro.self,
-         PerfilRegistro.self, LogroRegistro.self, DiagnosticoRegistro.self]
+         PerfilRegistro.self, LogroRegistro.self, DiagnosticoRegistro.self, PartidaRegistro.self, AjustesRegistro.self]
     }
 
     /// Contenedor local (sin CloudKit). `enMemoria` para tests.

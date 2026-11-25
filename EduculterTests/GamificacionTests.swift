@@ -209,10 +209,10 @@ struct MisionesTests {
 
 @Suite("Logros")
 struct LogrosTests {
-    @Test("Motor de reglas con 5 logros de ejemplo")
+    @Test("Motor de reglas: 5 logros de ejemplo y 6 de la Fase 05D")
     func motor() {
         let motor = MotorLogros()
-        #expect(motor.logros.count == 5 && Set(motor.logros.map(\.id)).count == 5)
+        #expect(motor.logros.count == 11 && Set(motor.logros.map(\.id)).count == 11)
         #expect(motor.nuevos(metricas: [:], obtenidos: []).isEmpty)
         let m: [Metrica: Int] = [.rondasCompletadas: 1, .rescates: 10, .rachaRecord: 7, .sintaxisPerfectas: 1, .competenciasDominadas: 1]
         #expect(motor.nuevos(metricas: m, obtenidos: []).map(\.id) == ["primera-ronda", "sintaxis-perfecta", "rescatador", "semana-de-fuego"])

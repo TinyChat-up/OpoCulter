@@ -263,9 +263,11 @@ struct GeneradorOracionSimple: GeneradorItems {
                                explicacion: explicacion, pistas: ["Busca primero el verbo y pregúntale «¿quién?» para encontrar el sujeto."],
                                complejidad: complejidad, datos: datos)
             case .clasificar:
-                let usadas = Array(Set(o.tokens.map(\.1))).sorted()
+                // El validador admite 2–4 categorías: con más clases en la oración se eligen 4 al azar
+                // y solo se clasifican las palabras de esas clases.
+                let usadas = Array(rng.barajar(Array(Set(o.tokens.map(\.1))).sorted()).prefix(4)).sorted()
                 let categorias = usadas.map { ElementoNombre(id: $0, nombre: Self.clases[$0] ?? $0) }
-                let fichas = zip(ids, o.tokens).map { Payload.Clasificar.Ficha(id: $0, texto: $1.0, categoria: $1.1) }
+                let fichas = zip(ids, o.tokens).filter { usadas.contains($1.1) }.map { Payload.Clasificar.Ficha(id: $0, texto: $1.0, categoria: $1.1) }
                 return Muestra(clave: "clasificar|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""],
                                payload: .clasificar(Payload.Clasificar(categorias: categorias, fichas: rng.barajar(fichas))),
                                explicacion: o.tokens.map { "\($0.0): \((Self.clases[$0.1] ?? $0.1).lowercased())" }.joined(separator: "; ") + ".",
