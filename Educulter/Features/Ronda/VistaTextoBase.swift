@@ -15,6 +15,8 @@ struct VistaTextoBase: View {
     var plegable = true
 
     @Environment(\.accessibilityReduceMotion) private var reducir
+    /// Alto del texto completo: el panel se ajusta a él y solo se desplaza si supera el máximo.
+    @State private var altoTexto: CGFloat = 0
 
     /// «Autor · Obra (año)» de un texto literario.
     nonisolated static func referencia(_ t: TextoBase, anio: Int?) -> String? {
@@ -76,12 +78,13 @@ struct VistaTextoBase: View {
                         }
                     }
                     if plegable {
-                        // Entero si cabe; si no, desplazable dentro del alto máximo.
-                        ViewThatFits(in: .vertical) {
-                            cuerpo
-                            ScrollView { cuerpo }.scrollIndicators(.visible)
+                        // Ajustado al texto si cabe (sin huecos); si no, desplazable dentro del alto máximo.
+                        ScrollView {
+                            cuerpo.onGeometryChange(for: CGFloat.self) { $0.size.height } action: { altoTexto = $0 }
                         }
-                        .frame(maxHeight: altoMaximo)
+                        .scrollIndicators(.visible)
+                        .scrollBounceBehavior(.basedOnSize)
+                        .frame(height: altoTexto > 0 ? min(altoTexto, altoMaximo) : altoMaximo)
                     } else {
                         cuerpo
                     }
