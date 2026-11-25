@@ -378,3 +378,28 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 - **Base literaria** (D-088): cargada y validada; todavía sin preguntas (Fase 05F).
 - **Tribunal**: `pendiente/tribunal/` no cambia (Fase 05E).
 
+
+### Fase 05E · parte 1 (25/11/2026)
+- **Catálogo**: mapa curricular de la A1 (D-091): 21 bloques y 124 competencias (111 del mapa y 13 antiguas con `equivaleA`). Copia del mapa en [docs/MAPA_CURRICULAR_A1.md](docs/MAPA_CURRICULAR_A1.md).
+- **Plantillas nuevas aprobadas (37, D-095)**: LEN.SIN (SUJPRED 5, COMPL 5, CLASE 3) con `oracionSimple`; LEN.VER (ANALISIS 5 con `analisisVerbal`, NOPERS 5 con `formasNoPersonales`); LEN.LIT (HIST 5, UNIV 3, INF 3, GEN 3) con `literatura`. Release carga 79 plantillas.
+- **Datos nuevos o cambiados**:
+  - `ambiguas.json`: 70 palabras del léxico con otra forma válida (D-092).
+  - `pendiente/tildeContexto.json`: las 70 palabras, para que la dirección redacte frases con contexto.
+  - `gramatica/compatibilidad.json` v2 (D-090).
+  - `gramatica/verbos.json`: ser y estar, solo para las copulativas.
+  - `literatura/literatura.json`: `epoca` en Homero y Esopo.
+  - `calibracion/anclas.json`: 67 anclas (D-096).
+  - `tribunal/equivalencias.json`: las 139 preguntas oficiales en el mapa (D-097).
+- **Dificultad calibrada** (D-096): 4 = examen oficial. Seis ítems curados pasan a dificultad 4 (versión + 1): LEN.ORT.DIA.0008, DIA.0009, HOM.0008, LEN.LEX.SIN.0005, CTX.0002 y LEN.COM.INFER.0002.
+- **Catálogo de preguntas en Release**: **≥ 230 813** (108 estáticas y ≥ 230 705 generadas; antes, ≥ 146 933).
+
+| Bloque | Antes | Después |
+|---|---|---|
+| LEN.SIN | 0 | 35 091 |
+| LEN.LIT | 0 | 26 273 |
+| LEN.VER | 0 | 11 139 |
+| LEN.ORT | 3800 | 3737 (sin las palabras ambiguas) |
+| LEN.LEX | 30 | 30 |
+| LEN.COM | 19 | 19 |
+| Matemáticas | 143 084 | 154 524 (las tablas recalibradas cambian el espacio de casos) |
+- **Tarjetas de teoría que faltan** (33 competencias con contenido y sin tarjeta; las redacta la dirección): ver [docs/AUDITORIA_05E.md](docs/AUDITORIA_05E.md) §2.

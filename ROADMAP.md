@@ -13,8 +13,9 @@
 | 05C | Estilo Rubber Hose, avatares del propietario, generadores y matriz de exámenes | Terminada | Estilo "Rubber Hose moderno" con Fredoka; 6 avatares del propietario con migración; motor de 16 generadores paramétricos con dificultad 1–6, léxico y gramática generativa; catálogo de preguntas únicas; matriz de los exámenes oficiales A1 |
 | 05D | Modos de juego | Terminada (fusionada en `main` en la recuperación, 25/11/2026) | Camino (prueba de nivel y Reto de bloque), Supervivencia, Rescate con pantalla propia, diagnóstico en la bienvenida, Progreso con Swift Charts, ajustes, sonido sintetizado y recordatorio local |
 | Recuperación | Lote 02 e integración de las ramas de datos | Terminada (fusionada en `main`, 25/11/2026) | Lote 02 verificado con la 05D; base literaria, lote 03a (léxico y comprensión con textos base), lote 02b (frases y gramática con `compatibilidad.json`) y datos del Tribunal integrados y conectados |
-| 05E | Tribunal y contenido | Siguiente (a la espera del prompt de la dirección) | Modo Tribunal con los 7 exámenes oficiales ya aprobados (`pendiente/tribunal/`) y simulacros; lotes de contenido |
-| 05F | Motor literario | Pendiente | Preguntas de literatura a partir de la base literaria (ya cargada y validada, D-088) |
+| 05E parte 1 | Calidad y contenido | Terminada (fusionada en `main`, 25/11/2026) | Auditoría, mapa curricular de la A1 (21 bloques, 111 competencias), calibración «nivel examen» con 67 anclas, palabras ambiguas, naturalidad de la gramática y LEN.SIN, LEN.VER y LEN.LIT con 37 plantillas aprobadas |
+| 05E parte 2 | Identidad, sesión diaria, errores y ejemplos resueltos | Siguiente (a la espera del prompt de la dirección) | Definida por la dirección tras el informe de la parte 1 |
+| 05F | Motor literario | Adelantado en parte en la 05E (generador `literatura`, D-094) | Preguntas de literatura a partir de la base literaria; queda lo que la dirección decida (fragmentos, rasgos de los movimientos…) |
 | Post-MVP | Editor de personalización del avatar | Pendiente | Hoy hay 12 avatares cerrados; el editor completo queda para después del MVP (D-054) |
 | 06 | Monetización | Pendiente | Suscripción con StoreKit 2 y muro de pago |
 | 07 | Calidad | Pendiente | Tests, accesibilidad, rendimiento, iOS 17 |

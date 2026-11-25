@@ -189,4 +189,14 @@ Los 20 son correctos (respuesta y explicación). 8 explican el porqué, 8 muestr
 
 ## 5. Accesibilidad y rendimiento
 
-PLACEHOLDER_A11Y
+Solo lo nuevo respecto al informe de la recuperación.
+
+- **Auditoría de accesibilidad** (`performAccessibilityAudit`, todas las categorías): sin incidencias en las pantallas auditadas, también en las rondas nuevas de LEN.SIN, LEN.VER y LEN.LIT (simulador y **iPhone físico**).
+  - En el iPhone, la primera ejecución marcó contraste en la cabecera de la ronda (contador de XP, combo y nombre de la competencia) porque se auditó durante la transición de entrada; auditando con la pantalla quieta no hay incidencias.
+  - **Progreso (§4.3)**: con `ViewThatFits`, la auditoría daba **«Dynamic Type font sizes are partially unsupported»** sobre el **nombre del área** («Matemáticas», StaticText) y su **porcentaje** («1 %»): son los textos de la variante que no se muestra, y no desaparecían del árbol ni ocultándolos a VoiceOver. Se usa la disposición según el tamaño de texto (horizontal, con el porcentaje con prioridad de diseño para que no se parta; con texto de accesibilidad, el porcentaje debajo). Así pasa la auditoría, incluida la comprobación de Dynamic Type.
+- **Ruedas**: el análisis verbal completo muestra 6 selectores en vertical (antes, como mucho 5).
+- **Rendimiento**:
+  - Arranque en frío en el iPhone (Debug, 5 iteraciones): **0,87 s** de media (0,81–0,92), por debajo del objetivo de 1,5 s, pero por encima de los 0,67 s de la recuperación. La causa: al cargar el banco se generan 12 variantes de cada plantilla, y ahora hay 79 en lugar de 42.
+  - La primera medida dio 0,95 s porque `analisisVerbal` recalculaba el paradigma entero en cada muestra; con la caché por nivel, la carga del banco en Debug (Mac) bajó de 0,96 s a 0,26 s.
+  - Mejora propuesta para una fase posterior: generar esas variantes bajo demanda.
+  - Fluidez en el simulador: colocarTilde 2,1 s y dividir la barra 7,4 s por iteración de la medida (con la instrumentación de cobertura); sin cambios en esas mecánicas.
