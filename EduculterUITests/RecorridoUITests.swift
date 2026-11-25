@@ -2,7 +2,8 @@ import XCTest
 
 /// Recorrido de extremo a extremo con el contenido de Release y un almacén nuevo en disco:
 /// bienvenida → diagnóstico → plan → Hoy → ronda de Camino → Supervivencia → Rescate → Progreso →
-/// Ajustes. Guarda una captura de cada pantalla (`XCTAttachment`, se conservan siempre) para
+/// Ajustes; después, una ronda de comprensión con texto base y otra de frases con hueco (`-rondaItems`).
+/// Guarda una captura de cada pantalla (`XCTAttachment`, se conservan siempre) para
 /// revisar en el iPhone lo que ve el usuario. Las respuestas se dan con los botones de pruebas
 /// (solo Debug), unas bien y otras mal, para que Rescate y Progreso tengan datos reales.
 final class RecorridoUITests: XCTestCase {
@@ -161,5 +162,46 @@ final class RecorridoUITests: XCTestCase {
         ajustes.tap()
         XCTAssertTrue(app.switches["ajusteSonido"].waitForExistence(timeout: 15))
         captura(app, "23_ajustes")
+
+        // Recuperación: una ronda de comprensión con texto base (Bécquer, Machado y un texto
+        // original) y una de frases con hueco, sobre el mismo almacén (sin borrarlo).
+        let base = ["-almacenPruebas", "UITestRecorrido", "-semilla", "11", "-ayudasDePrueba", "-politicaRelease", "-sinAvisoRecordatorio"]
+        app.terminate()
+        app.launchArguments = base + ["-rondaItems", "LEN.COM.TEMA.0002,LEN.COM.INFER.0002,LEN.COM.RESU.0003"]
+        app.launch()
+        XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 60))
+        app.buttons["botonEmpezarRonda"].tap()
+        let panel = app.descendants(matching: .any)["panelTextoBase"]
+        XCTAssertTrue(panel.waitForExistence(timeout: 15), "La ronda de comprensión muestra el texto base")
+        XCTAssertTrue(app.staticTexts["autorTextoBase"].exists, "Texto literario: autor y año")
+        captura(app, "24_comprension_texto")
+        app.buttons["botonPlegarTexto"].tap()
+        XCTAssertTrue(app.buttons["botonVerTexto"].waitForExistence(timeout: 5))
+        captura(app, "25_comprension_plegado")
+        app.buttons["botonVerTexto"].tap()
+        XCTAssertTrue(panel.waitForExistence(timeout: 5))
+        var c = 0
+        while !app.descendants(matching: .any)["resumenRonda"].exists && c < 6 {
+            responder(app, correcto: true, capturaCorregido: c == 1 ? "26_comprension_machado" : nil)
+            c += 1
+        }
+        XCTAssertEqual(c, 3)
+        terminarRonda(app)
+
+        app.terminate()
+        app.launchArguments = base + ["-rondaItems", "LEN.ORT.DIA.G01#3,LEN.ORT.HOM.G01#5,LEN.ORT.PQ.G01#2,LEN.ORT.HOM.G02#8"]
+        app.launch()
+        XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 60))
+        app.buttons["botonEmpezarRonda"].tap()
+        XCTAssertTrue(app.buttons["botonComprobar"].waitForExistence(timeout: 15))
+        captura(app, "27_frase_hueco")
+        var f = 0
+        while !app.descendants(matching: .any)["resumenRonda"].exists && f < 6 {
+            responder(app, correcto: f != 1, capturaCorregido: f == 1 ? "28_frase_fallo" : (f == 2 ? "29_frase_construir" : nil))
+            f += 1
+        }
+        XCTAssertEqual(f, 4)
+        XCTAssertTrue(app.descendants(matching: .any)["resumenRonda"].waitForExistence(timeout: 10))
+        captura(app, "30_frases_resumen")
     }
 }

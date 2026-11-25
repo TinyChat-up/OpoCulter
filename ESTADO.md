@@ -1,8 +1,31 @@
 # Estado del proyecto
 
-**Fase actual:** 05D — Modos de juego · **Terminada en su rama** (`fase-05d/modos`); la fusión en `main` queda pendiente de la verificación final completa.
-**Siguiente:** lotes de contenido (preguntas) y Fase 05E (Tribunal), a la espera de instrucciones de la dirección.
-**Última actualización:** 2026-11-24
+**Fase actual:** Recuperación (lote 02, verificación de la 05D e integración de las ramas de datos) · **Terminada y fusionada en `main`**.
+**Siguiente:** Fase 05E (Tribunal), a la espera del prompt de la dirección.
+**Última actualización:** 2026-11-25
+
+## Recuperación — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| Lote 02 terminado | ✅ Las 38 plantillas superan los tests de propiedades; léxico con 0 discrepancias | D-077, TESTING §12 |
+| Verificación conjunta 05D + lote 02 | ✅ Suite completa, archive Release sin avisos, arranque y recorrido en el iPhone | D-077, TESTING §11–12 |
+| Integración (6 fusiones en orden) | ✅ Compilación y tests unitarios en verde tras cada fusión (con 2 commits de ajuste) | DECISIONES «Renumeración de la recuperación» |
+| Textos base, gramática con compatibilidad, frases y base literaria | ✅ | D-085–D-089 |
+| Tests unitarios + UI | @@TESTS@@ | TESTING §13 |
+| Cobertura | @@COBERTURA@@ | `xccov` |
+| Auditoría de accesibilidad | @@AUDITORIA@@ | Tests de UI |
+| Avisos del compilador | @@AVISOS@@ | logs |
+| Archive Release | @@ARCHIVE@@ | `xcodebuild archive` |
+| iPhone físico | @@IPHONE@@ | `xcodebuild test` en el dispositivo |
+| Catálogo de preguntas (Release) | @@CATALOGO@@ | `CatalogoPreguntas` |
+
+## Pendiente
+1. **Decisiones para la dirección** (informe de la recuperación): palabras del léxico que sin tilde son otra palabra válida (`colocarTilde` no da contexto), oraciones forzadas de la gramática generativa, «5 %» partido en dos líneas en la cabecera de Lengua de Progreso con texto grande, y la correspondencia entre las competencias del Tribunal y las del catálogo (25 propuestas no existen con ese nombre).
+2. Revisar las 28 competencias que propone la matriz en el lote de contenido correspondiente (no se añaden todavía). El lote 03a resolvió 5 de las 33 iniciales.
+3. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
+4. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
+5. Ramas temporales locales `wip/seccion4` y `wip/seccion4b` (solo en este Mac, no subidas): copias de trabajo de la recuperación, sin uso.
 
 ## Fase 05D — Resultado
 
@@ -16,15 +39,11 @@
 | Cobertura | ✅ Core **96,2 %** (`Core/Modos` 98,0 %) · App 82,1 % · Features 73,3 % (ejecución cortada) | `xccov` |
 | Avisos del compilador | ✅ 0 (app y tests, tras corregir 3) | logs |
 | iPhone físico | ✅ Instalada y abierta (Debug) | `devicectl` |
-| Archive Release y arranque medido en el iPhone | ⏳ Pendiente | — |
+| Archive Release y arranque medido en el iPhone | ✅ En la recuperación (D-077) | `xcodebuild archive`, `RendimientoUITests` |
 | Capturas | Omitidas por decisión del propietario | — |
 
-## Pendiente
-1. **Antes de fusionar la 05D en `main`:** una suite completa en verde, con el Mac enchufado y `caffeinate`, y el archive Release. Se puede hacer junto con el cierre de la siguiente fase.
-2. **Fase 05D, sin volver a ejecutar:** el test `testCaminoNodoYPruebaDeNivel` tras el último cambio del botón Practicar de la hoja del nodo (compila sin avisos).
-3. Revisar las 33 competencias que propone la matriz en el lote de contenido correspondiente.
-4. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06).
-5. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
+## Pendiente (05D, histórico)
+Resuelto en la recuperación: suite completa en verde, archive Release, arranque medido en el iPhone y `testCaminoNodoYPruebaDeNivel` en verde.
 
 ## Fase 05C — Resultado
 
@@ -45,24 +64,8 @@
 | Capturas | ✅ [docs/capturas/fase05c](docs/capturas/fase05c/) (48 + HOJA.png: claro, oscuro, AX5) | `scripts/capturas.sh … 05c` |
 | Catálogo de preguntas | Release **59** (contenido aprobado); Debug **≥ 55 943** con las plantillas de prueba | `CatalogoPreguntas` |
 
-## Pendiente (05C)
-1. Revisar las 33 competencias que propone la matriz en el lote de contenido correspondiente (no se añaden todavía).
-## Pendiente
-1. Revisar las 28 competencias que propone la matriz en el lote de contenido correspondiente (no se añaden todavía). El lote 03a resolvió 5 de las 33 iniciales.
-2. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
-3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
-
-## Pendiente con Mac
-1. Integrar `Content/literatura/` en el bundle y crear el motor literario (05F). Lote 05a añadido sin Mac en la rama `contenido/literatura-05a`: solo datos, documentación y `scripts/validar_literatura.py`. Falta compilar y pasar los tests con Xcode.
-1. **Lote 03a (rama `contenido/lote-03a`)**: añadir al motor el soporte para textos base (`textoRef` → `pendiente/textos.json`, §2.14 de CONTENIDOS) y mover `pendiente/LEN.COM.json` a `items/`, `pendiente/teoria_LEN.COM.json` a `teoria/LEN.COM.json` y `pendiente/textos.json` a su ubicación definitiva.
-2. **Lote 03a**: actualizar los recuentos fijos de `ContenidoTests`, que cambian con este lote (ver el informe del lote): estáticos 84 → 114, tarjetas 9 → 13, Release 59 → 89 ítems y 7 → 11 tarjetas, y competencias 27 → 42. Al activar LEN.COM, se suman 19 ítems y 4 tarjetas. Después, pasar `xcodebuild test` y el archive.
-1. Conectar `compatibilidad.json` al generador `oracionSimple` para evitar oraciones sin sentido (p. ej., «la mesa come una canción»).
-2. **Lote 02b · reglas en `oracionSimple`**: el sujeto y el CI nunca son el mismo sustantivo; usar las etiquetas finas de `compatibilidad.json` (`abrible`, `comprable`, `prestable`, `lavable`).. Como máximo 2 complementos circunstanciales, de tipos distintos. Si hay CCT, va al principio de la oración seguido de coma («En verano, la profesora vende…»).
-3. **Lote 02b · tests**: el test de concordancia del atributo (`GeneradoresTests`, caso `oracionSimple`) debe admitir adjetivos invariables (amable, azul, grande, caliente, fácil, difícil). El test de conjugación sigue teniendo sus irregulares: tener, decir, poner y hacer se mantienen en `verbos.json` con sus formas de prueba.
-4. **Lote 02b · plantillas**: `LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01`, `LEN.ORT.HOM.G01` y `LEN.ORT.HOM.G02` están en borrador. Hay que aprobarlas cuando pasen los tests de propiedades (1000 semillas) y actualizar `ContenidoTests`, porque ahora hay 25 plantillas, no 23.
-5. **Lote 02b**: pasar `xcodebuild test` con las frases y las piezas nuevas (propiedades y complejidad de `fraseHueco` y `oracionSimple`) y el archive.
-1. **Datos del Tribunal (rama `contenido/tribunal-datos`)**: el motor del Modo Tribunal (05E) leerá `Content/pendiente/tribunal/*.json` (esquema en CONTENIDOS §2.15), que todavía no se carga. Antes, la dirección debe revisar `docs/examenes/SOLUCIONES_REVISION_1–3.md` y aprobar los 7 exámenes, que hoy están en borrador.
-   - Tribunal: soluciones aprobadas por la dirección (24/11/2026). Las 139 preguntas y los 7 exámenes tienen `validacion: aprobado`; los datos siguen en `pendiente/tribunal/` hasta que haya Mac.
+## Pendiente (05C, histórico)
+Las competencias propuestas por la matriz y la cuenta de Apple siguen en el «Pendiente» de arriba. Los «pendientes con Mac» de las ramas de datos (literatura, lote 03a, lote 02b y Tribunal) se resolvieron en la recuperación (D-085–D-089).
 
 ## Fase 05B — Resultado
 

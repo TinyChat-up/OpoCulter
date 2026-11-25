@@ -314,6 +314,8 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 | Lote 02b · errata 1 | LEN.ORT (DIA, PQ, HOM) y gramática | 100 frases (versión 2) | — | Aprobada por la dirección 24/11/2026. `frases.json` pasa a tener las 28 familias reales con `uso` y `dificultad` (se quitan «ti» y su frase; FR.0074 «Te ___ de menos»; `revelar_rebelar` con formas paralelas). Etiquetas finas del CD (`abrible`, `comprable`, `prestable`, `lavable`); `pasear` sustituye a `vivir`; se conservan los irregulares tener, decir, poner y hacer. Plantillas `LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01` (familias nuevas) y `LEN.ORT.HOM.G01`/`G02` (nuevas), en borrador | `gramatica/frases.json`, `gramatica/piezas.json`, `gramatica/verbos.json`, `gramatica/compatibilidad.json`, `plantillas/LEN.ORT.json` |
 | Lote 02b · errata 2 | Gramática | — | — | Aprobada por la dirección 24/11/2026. «regalo» pierde `comprable` y «libro» pierde `texto` («escribir» solo admite carta, cuento, mensaje y poema) | `gramatica/compatibilidad.json`, `gramatica/piezas.json` |
 | Datos Tribunal · 7 exámenes · borrador pendiente de revisión de la dirección | Modo Tribunal (05E) | 139 preguntas (69 L + 70 M) | — | Borrador pendiente de revisión de la dirección | `pendiente/tribunal/*.json`, `docs/examenes/SOLUCIONES_REVISION_1–3.md`, `docs/examenes/CORRECCIONES_OCR.md` |
+| Datos Tribunal · aprobación | Modo Tribunal (05E) | 139 preguntas (69 L + 70 M) | — | Soluciones aprobadas por la dirección 24/11/2026; siguen en `pendiente/tribunal/` hasta la Fase 05E | `pendiente/tribunal/` |
+| Recuperación · activación | LEN.COM (comprensión con textos base) y plantillas de frases del lote 02b | 19 ítems + 4 plantillas | 4 (LEN.COM) | Ítems y textos ya aprobados; se activan al admitir el motor textos base (D-085). Plantillas aprobadas al superar sus tests (D-089), 25/11/2026 | `items/LEN.COM.json`, `teoria/LEN.COM.json`, `textos/textos.json`, `plantillas/LEN.ORT.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 
@@ -367,4 +369,12 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 - **Redacciones**: las literales de la especificación viven en el generador (la plantilla usa `{{pregunta}}`), para que cada contexto solo se use con datos que tengan sentido (alumnos enteros, euros con dos decimales…). Las redacciones propias van marcadas con «A.2» en el código. Nombres propios de los enunciados: los 12 de la lista A.6.
 - **Léxico**: `lexico/palabras.json` con 818 palabras y `lexico/formas_verbales.json`. Niveles de palabra 1–6 (D-077): 322 · 319 · 65 · 58 · 8 · 46. **0 discrepancias** entre la tilde escrita y el silabeador con las reglas de la RAE (las 3 que señalaba el informe WIP —«prohíbe», «ahínco», «rehúso»— eran un fallo del código con la *h* intercalada, no del dato).
 - **Release**: carga las 38 plantillas y ninguna de las 10 de prueba de la 05C que quedan (siguen en borrador: LEN.CLA, LEN.ORT.DIA/PQ, LEN.SIN, LEN.VER, MAT.DIV, MAT.EST, MAT.NUM.FRAREP y MAT.PRO).
+
+### Recuperación · contenido integrado (25/11/2026)
+- **Textos base** (D-085): `textos/textos.json` con 5 textos aprobados (Bécquer, Rima XXI; Machado, «Proverbios y cantares», XXIX; y 3 originales de la dirección). 13 de los 19 ítems de comprensión los citan con `textoRef`; los otros 6 son conceptuales.
+- **Gramática** (D-086): `compatibilidad.json` alimenta `oracionSimple` y `analisisVerbal`. Las plantillas que usan esos generadores (LEN.CLA, LEN.SIN y LEN.VER) siguen siendo las de prueba de la 05C, en borrador.
+- **Plantillas**: 50 en total, 42 aprobadas (38 del lote 02 y 4 de frases del lote 02b). Siguen en borrador 8 de prueba de la 05C (LEN.CLA.SUSTADJ.G01, LEN.SIN.COMPL.G01/G02, LEN.VER.ANALISIS.G01, MAT.DIV.MCD.G01, MAT.EST.CENTRAL.G01, MAT.NUM.FRAREP.G01 y MAT.PRO.LAPLACE.G01). Las versiones de prueba de LEN.ORT.DIA.G01 y LEN.ORT.PQ.G01 las sustituyeron las del lote 02b.
+- **Release**: 108 ítems estáticos (LEN.ORT 50, LEN.LEX 30, LEN.COM 19, MAT.NUM 9), 15 tarjetas, 5 textos y 42 plantillas. Catálogo de preguntas únicas: @@CATALOGO@@
+- **Base literaria** (D-088): cargada y validada; todavía sin preguntas (Fase 05F).
+- **Tribunal**: `pendiente/tribunal/` no cambia (Fase 05E).
 

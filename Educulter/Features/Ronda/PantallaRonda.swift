@@ -12,6 +12,8 @@ struct PantallaRonda: View {
     @State private var vuelo: VueloXP.Datos?
     /// Panel del texto base plegado (se conserva entre ítems; se despliega con cada texto nuevo).
     @State private var textoPlegado = false
+    /// Alto de la pantalla, para limitar el panel del texto base a una parte de ella.
+    @State private var altoPantalla: CGFloat = 800
     @Environment(\.accessibilityReduceMotion) private var reducir
     @Environment(\.dynamicTypeSize) private var tamano
     @Environment(\.vibracionActiva) private var vibracionActiva
@@ -43,6 +45,13 @@ struct PantallaRonda: View {
             }
         }
         .animacionApp(modelo.fase)
+        .background {
+            GeometryReader { g in
+                Color.clear
+                    .onAppear { altoPantalla = g.size.height }
+                    .onChange(of: g.size.height) { _, nuevo in altoPantalla = nuevo }
+            }
+        }
         .sheet(item: $modelo.teoriaAbierta) { tarjeta in
             NavigationStack {
                 ScrollView {
@@ -102,8 +111,10 @@ struct PantallaRonda: View {
             cabecera(acento: acento)
             if let texto = modelo.textoBase {
                 // Texto base fijo arriba: el ítem se responde debajo sin perderlo de vista.
+                // Como mucho un 30 % de la pantalla (22 % con texto de accesibilidad): el ítem y el pie
+                // con «Comprobar» caben siempre debajo.
                 VistaTextoBase(texto: texto, anio: modelo.anioTextoBase, plegado: $textoPlegado,
-                               altoMaximo: tamano.isAccessibilitySize ? 220 : 260)
+                               altoMaximo: max(110, altoPantalla * (tamano.isAccessibilitySize ? 0.22 : 0.3)))
                     .padding(.horizontal, Espacio.l)
                     .padding(.bottom, Espacio.s)
                     .transition(Movimiento.transicion(reducir: reducir))
@@ -279,13 +290,15 @@ struct PantallaRonda: View {
                         Button {
                             modelo.rellenarParaPruebas()
                         } label: {
-                            Text("Rellenar (pruebas)").font(.footnote).frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
+                            Text("Rellenar (pruebas)").font(.footnote).fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
                         }
                         .accessibilityIdentifier("botonRellenarDebug")
                         Button {
                             modelo.rellenarParaPruebas(correcta: false)
                         } label: {
-                            Text("Con error (pruebas)").font(.footnote).frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
+                            Text("Con error (pruebas)").font(.footnote).fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
                         }
                         .accessibilityIdentifier("botonRellenarErrorDebug")
                     }
