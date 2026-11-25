@@ -122,10 +122,12 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. En borrador hasta que pasen los tests de propiedades con el Mac."
+      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. Aprobada al superar los tests de propiedades en el Mac (25/11/2026, D-089)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
     },
     "version": 2
   },
@@ -148,10 +150,12 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. En borrador hasta que pasen los tests de propiedades con el Mac."
+      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. Aprobada al superar los tests de propiedades en el Mac (25/11/2026, D-089)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
     },
     "version": 2
   },
@@ -187,10 +191,12 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. En borrador hasta que pasen los tests de propiedades con el Mac."
+      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. Aprobada al superar los tests de propiedades en el Mac (25/11/2026, D-089)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
     },
     "version": 1
   },
@@ -226,10 +232,12 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. En borrador hasta que pasen los tests de propiedades con el Mac."
+      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. Aprobada al superar los tests de propiedades en el Mac (25/11/2026, D-089)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
     },
     "version": 1
   }

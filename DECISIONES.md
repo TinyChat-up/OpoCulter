@@ -474,6 +474,9 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 ### D-088 · 2026-11-25 · Recuperación · Vigente
 **Base literaria cargada y validada en Swift.** `CargadorContenido` lee `literatura/literatura.json` (`BaseLiteraria`) y el validador repite las reglas de `scripts/validar_literatura.py`: ids únicos, movimiento existente, dos rasgos por movimiento, nacimiento anterior a la muerte, año de cada obra entre el nacimiento y la muerte + 10, géneros y ámbitos válidos, `dominioPublico` coherente con la regla de la dirección y `fragmentosPermitidos` solo en dominio público y en ámbito español o hispanoamericano. Todavía no se generan preguntas (Fase 05F); la app solo la usa para fechar los textos base literarios.
 
+### D-089 · 2026-11-25 · Recuperación · Vigente
+**Las 4 plantillas de frases con hueco del lote 02b quedan aprobadas** (`LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01`, `LEN.ORT.HOM.G01` y `LEN.ORT.HOM.G02`; revisor «direccion», 25/11/2026), porque superan las condiciones de la dirección (`FrasesHuecoTests`, 1000 semillas por plantilla y nivel): una sola opción correcta por frase y distractores = las otras formas de su familia; explicación con el `uso` de la forma correcta; dificultad de la frase 1–6, no decreciente con el nivel pedido; ninguna frase repetida en una práctica, una ronda del motor, un Reto ni una partida de Supervivencia (D-087). Ninguna queda en borrador. Release carga ahora 42 plantillas.
+
 ## Renumeración de la recuperación
 
 Al integrar las ramas en `integracion/recuperacion` (25/11/2026), varias ramas habían usado los mismos números. Se conservan los de la primera rama fusionada (`fase-05d/modos`: D-069–D-076) y las decisiones de las ramas siguientes reciben números nuevos consecutivos; sus referencias en CONTENIDOS, ESTADO y el resto de documentos se han actualizado.

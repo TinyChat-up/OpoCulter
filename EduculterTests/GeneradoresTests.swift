@@ -475,11 +475,13 @@ struct GeneradoresPropiedadesTests {
             let mecanicas = Set(Self.plantillas.filter { $0.tipo == tipo }.map(\.mecanica))
             #expect(mecanicas == g.mecanicas, "\(tipo): \(mecanicas) ≠ \(g.mecanicas)")
         }
-        // Lote 02: aprobadas por la dirección; el resto (05C) siguen en borrador.
+        // Lote 02 (38) y frases del lote 02b (4, D-089): aprobadas por la dirección; el resto (05C) siguen en borrador.
         let lote02 = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Lote 02") == true }
-        #expect(lote02.count == 38)
+        let lote02b = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Plantilla del lote 02b") == true }
+        #expect(lote02.count == 38 && lote02b.count == 4)
         #expect(lote02.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-24") })
-        #expect(Self.plantillas.filter { !lote02.contains($0) }.allSatisfy { $0.validacion.estado == .borrador })
+        #expect(lote02b.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -558,7 +560,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 38)
+        #expect(banco.plantillas.count == 42)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }
