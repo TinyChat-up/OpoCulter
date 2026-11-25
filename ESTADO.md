@@ -56,6 +56,11 @@
 1. Integrar `Content/literatura/` en el bundle y crear el motor literario (05F). Lote 05a añadido sin Mac en la rama `contenido/literatura-05a`: solo datos, documentación y `scripts/validar_literatura.py`. Falta compilar y pasar los tests con Xcode.
 1. **Lote 03a (rama `contenido/lote-03a`)**: añadir al motor el soporte para textos base (`textoRef` → `pendiente/textos.json`, §2.14 de CONTENIDOS) y mover `pendiente/LEN.COM.json` a `items/`, `pendiente/teoria_LEN.COM.json` a `teoria/LEN.COM.json` y `pendiente/textos.json` a su ubicación definitiva.
 2. **Lote 03a**: actualizar los recuentos fijos de `ContenidoTests`, que cambian con este lote (ver el informe del lote): estáticos 84 → 114, tarjetas 9 → 13, Release 59 → 89 ítems y 7 → 11 tarjetas, y competencias 27 → 42. Al activar LEN.COM, se suman 19 ítems y 4 tarjetas. Después, pasar `xcodebuild test` y el archive.
+1. Conectar `compatibilidad.json` al generador `oracionSimple` para evitar oraciones sin sentido (p. ej., «la mesa come una canción»).
+2. **Lote 02b · reglas en `oracionSimple`**: el sujeto y el CI nunca son el mismo sustantivo; usar las etiquetas finas de `compatibilidad.json` (`abrible`, `comprable`, `prestable`, `lavable`).. Como máximo 2 complementos circunstanciales, de tipos distintos. Si hay CCT, va al principio de la oración seguido de coma («En verano, la profesora vende…»).
+3. **Lote 02b · tests**: el test de concordancia del atributo (`GeneradoresTests`, caso `oracionSimple`) debe admitir adjetivos invariables (amable, azul, grande, caliente, fácil, difícil). El test de conjugación sigue teniendo sus irregulares: tener, decir, poner y hacer se mantienen en `verbos.json` con sus formas de prueba.
+4. **Lote 02b · plantillas**: `LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01`, `LEN.ORT.HOM.G01` y `LEN.ORT.HOM.G02` están en borrador. Hay que aprobarlas cuando pasen los tests de propiedades (1000 semillas) y actualizar `ContenidoTests`, porque ahora hay 25 plantillas, no 23.
+5. **Lote 02b**: pasar `xcodebuild test` con las frases y las piezas nuevas (propiedades y complejidad de `fraseHueco` y `oracionSimple`) y el archive.
 
 ## Fase 05B — Resultado
 

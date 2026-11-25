@@ -413,3 +413,17 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 **Carpeta `pendiente/` y validador de contenido en Python.**
 - **`Content/pendiente/`**: guarda contenido aprobado que necesita algo que el motor aún no tiene (aquí, los textos base de comprensión con `textoRef`). Va dentro de la carpeta `Content`, así que se empaqueta, pero `CargadorContenido` no la lee: no afecta a la app ni a los tests hasta que el motor la admita y los ítems pasen a `items/`.
 - **`scripts/validar_items.py`**: reproduce sin Swift las reglas principales de `ValidadorContenido` (CONTENIDOS §2.14) para revisar lotes sin Mac. Cuando el motor admita `textoRef`, el validador de Swift deberá comprobar también que el texto existe.
+### D-081 · 2026-11-24 · Lote 02b · Vigente
+**Conversión del formato neutro de gramática al esquema de Swift.**
+- **Sin inventar contenido**: `FraseHueco.dificultad` y `FamiliaFormas.Forma.uso` son obligatorios y el formato neutro no los trae. Escribir `frases.json` sin ellos haría fallar la decodificación y, con ella, la carga de todo el contenido. Por eso las frases reales quedan en `gramatica/frases_lote02b.json` (que la app no lee) y `frases.json` mantiene los datos de prueba.
+- **Derivación gramatical**: sujetos = sustantivos de persona (singular y plural, con artículo). CD = sustantivos compatibles con `objeto` (con artículo; personas y animales con «a» + posesivo, para evitar «al»). CI = «a» + posesivo + persona. «ayer» y «todos los días» restringen el tiempo verbal, como en D-066. Se excluyen de `piezas.json` «junto al río» y «a las cinco», que no tienen una clase de palabra inequívoca.
+- **Lo que el esquema no admite** (etiquetas, `admiteCI` completo, CCC…) va a `gramatica/compatibilidad.json`, en formato neutro.
+- **Validación**: `scripts/validar_gramatica.py`. El conversor (`scripts/convertir_gramatica_02b.py`) se conserva para regenerar los archivos.
+
+### D-082 · 2026-11-24 · Lote 02b · errata 1 · Vigente (dirección)
+**Frases reales y etiquetas finas.**
+- `frases.json` pasa a tener las 100 frases y 28 familias reales, ya con `dificultad` y `uso` (deja sin efecto la reserva de D-081).
+- `piezas.json` usa las etiquetas finas del CD.
+- `verbos.json` conserva tener, decir, poner y hacer (formas de prueba de la Fase 05C) para `analisisVerbal` 5–6 y para el test de conjugación.
+- **Plantilla HOM**: el esquema de plantilla admite un solo peldaño, así que «peldaños 2 y 3» se cubre con dos plantillas, `LEN.ORT.HOM.G01` (peldaño 2, dificultad 2) y `LEN.ORT.HOM.G02` (peldaño 3, dificultad 3).
+- Las 4 plantillas de `fraseHueco` siguen en borrador hasta pasar los tests de propiedades.
