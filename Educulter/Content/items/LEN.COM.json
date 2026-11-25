@@ -534,7 +534,7 @@
     "id": "LEN.COM.INFER.0002",
     "competencia": "LEN.COM.INFER",
     "peldano": 3,
-    "dificultad": 2,
+    "dificultad": 4,
     "objetivo": "Interpretar el sentido de una expresión.",
     "mecanica": "eleccion",
     "enunciado": "En el poema, «no hay camino, / sino estelas en la mar» quiere decir que…",
@@ -578,7 +578,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1,
+    "version": 2,
     "textoRef": "TXT.MAC.CAM"
   },
   {

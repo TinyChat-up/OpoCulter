@@ -227,8 +227,8 @@ private func rellenar(_ patron: String, maxN: Int, rng: inout GeneradorConSemill
 /// | 1 | 1–39 |
 /// | 2 | 40–399 (XL, XC) |
 /// | 3 | 400–1999 (CD, CM) |
-/// | 4 | 2000–3999 |
-/// | 5 | años (1000–2100) y, al escribir, siglos |
+/// | 4 (examen) | 300–3999 con al menos un grupo sustractivo (2019 A M19, 2026 A M19) |
+/// | 5 | 1000–3999 con al menos dos grupos sustractivos y, al escribir, siglos |
 /// | 6 | `eleccion`: detectar el romano mal escrito; `numerico` y `construir`: 3 o más grupos sustractivos |
 struct GeneradorRomanos: GeneradorItems {
     let tipo = "romanos"
@@ -254,9 +254,9 @@ struct GeneradorRomanos: GeneradorItems {
         case 1: return Array(1...39)
         case 2: return Array(40...399)
         case 3: return Array(400...1999)
-        case 4: return Array(2000...3999)
-        case 5: return Array(1000...2100)
-        default: return (1...3999).filter { sustractivos($0) >= 3 }
+        case 4: return (300...3999).filter { sustractivos($0) >= 1 }
+        case 5: return (1000...3999).filter { sustractivos($0) >= 2 }
+        default: return (1000...3999).filter { sustractivos($0) >= 3 }
         }
     }
 
@@ -264,12 +264,12 @@ struct GeneradorRomanos: GeneradorItems {
         if p.mecanica == .eleccion && p.dificultad >= 6 { return malEscrito(rng: &rng) }
         let n = rng.elemento(Self.rango(p.dificultad))
         // Siglos al escribir (dificultad 5): el siglo del año.
-        if p.mecanica == .construir && p.dificultad == 5 && rng.probabilidad(0.4) {
+        if p.mecanica == .construir && p.dificultad == 5 && n <= 2100 && rng.probabilidad(0.4) {
             let siglo = (n - 1) / 100 + 1
             return escribir(siglo, pregunta: "¿En qué siglo está el año \(n)? Escríbelo en números romanos.", extra: 4.5, clave: "construir|siglo|\(n)", rng: &rng)   // A.2
         }
         let r = Self.romano(n)
-        let extra = p.dificultad == 5 ? 1.5 : 0
+        let extra = p.dificultad >= 5 ? 1.5 : 0
         switch p.mecanica {
         case .construir: return escribir(n, pregunta: "Escribe en números romanos: \(n)", extra: extra, clave: "construir|\(n)", rng: &rng)
         default:
@@ -354,7 +354,7 @@ struct GeneradorRomanos: GeneradorItems {
 /// | 1 | 3 números, + y × | 3 números con paréntesis |
 /// | 2 | 4 números, + − × : (división exacta) | 4 números con paréntesis |
 /// | 3 | 5 números | paréntesis (uno o dos) |
-/// | 4 | 6 números | paréntesis y corchetes |
+/// | 4 (examen) | 6 números | paréntesis y corchetes, 7 operaciones con números de hasta dos cifras (2019 M20) |
 /// | 5 | 5 números y una potencia | llaves y potencias |
 /// | 6 | 4 fracciones | fracciones con paréntesis |
 struct GeneradorOperacionesCombinadas: GeneradorItems {
@@ -368,7 +368,8 @@ struct GeneradorOperacionesCombinadas: GeneradorItems {
             case 1: return (["(n~n)*n", "n*(n~n)", "(n+n):n"], 10)
             case 2: return (["(n~n)&n~n", "n~n&(n~n)", "n&(n~n)~n", "(n~n)*(n~n)"], 12)
             case 3: return (["(n~n)&n~(n~n)", "n&(n~n&n)~n", "(n~n&n)&n~n", "n~(n~n)&(n~n)"], 15)
-            case 4: return (["((n~n)&n~n)&n", "n&((n~n)&n~n)", "(n~(n~n)&n)&n~n", "n~((n~n)&n~n)&n"], 15)
+            // Perfil del examen: dos niveles de agrupación y 7 operaciones («[(16 × 8 + 12) : 4] + [3 (38 − 5 × 4)]»).
+            case 4: return (["((n&n~n)&n)~(n&(n~n&n))", "((n~n)&n~n)&n~(n&n~n)", "(n&(n~n)~n)&n~((n~n)&n)"], 20)
             case 5: return (["(((n~n)&n~n)&n~p)&n", "n~(((n~n)&n~p)&n~n)", "p~((n~(n~n)&n)~n)&n"], 12)
             default: return (["(f~f)*f~f", "f*(f~f)~f", "(f~f):f~f", "f~f*(f~f)"], 9)
             }
@@ -403,7 +404,7 @@ struct GeneradorOperacionesCombinadas: GeneradorItems {
         let fracciones = p.dificultad >= 6
         let reglas = ExprArit.Reglas(fracciones: true, maximo: 100_000)
         let complejidad = Double(e.operaciones - e.potencias) * (fracciones ? 3.5 : 1) + Double(e.potencias) * 1.5 + Double(e.profundidad) + 0.3 * A.log(v)
-        let explicacion = "Primero paréntesis, después potencias, multiplicaciones y divisiones, y por último sumas y restas: " + pasos.map { $0.components(separatedBy: ": ").last! }.joined(separator: "; ") + "."
+        let explicacion = "Primero paréntesis, después potencias, multiplicaciones y divisiones, y por último sumas y restas: " + pasos.map(ExprArit.sinNombre).joined(separator: "; ") + "."
         let datos = ["expresion": e.texto, "respuesta": A.fraccion(v)]
         if p.mecanica == .ordenar {
             let fichas = pasos.enumerated().map { ElementoTexto(id: "s\($0.offset + 1)", texto: $0.element) }
@@ -546,10 +547,13 @@ struct GeneradorEcuacionLineal: GeneradorItems {
 /// |---|---|---|
 /// | 1 | 4 | decimales con una cifra decimal |
 /// | 2 | 4 | decimales con dos cifras decimales |
-/// | 3 | 5 | decimales con distinto número de cifras (0,5 frente a 0,45) |
-/// | 4 | 5 | fracciones con el mismo denominador o el mismo numerador |
-/// | 5 | 5 | fracciones y decimales mezclados |
+/// | 3 | 5 | decimales con distinto número de cifras (0,5 frente a 0,45), o fracciones con el mismo denominador o numerador |
+/// | 4 (examen) | 4 | fracciones (denominador ≤ 24, también impropias) y decimales (1–3 cifras) mezclados |
+/// | 5 | 5 | mezclados, todos entre dos enteros consecutivos (valores muy cercanos) |
 /// | 6 | 6 | con negativos y fracciones impropias |
+///
+/// Calibración de la Fase 05E (`Content/calibracion/anclas.json`): el nivel 4 reproduce el perfil
+/// de las preguntas oficiales de ordenar (2017 M11, 2019 M14, 2026 A M14).
 struct GeneradorOrdenarNumeros: GeneradorItems {
     let tipo = "ordenarNumeros"
     let mecanicas: Set<Mecanica> = [.ordenar]
@@ -562,11 +566,23 @@ struct GeneradorOrdenarNumeros: GeneradorItems {
         switch d {
         case 1: let e = rng.entero(0...8); return (0..<4).map { _ in dec(rac(e * 10 + rng.entero(1...19), 10)) }
         case 2: let e = rng.entero(0...5); return (0..<4).map { _ in dec(rac(e * 100 + rng.entero(1...150), 100)) }
-        case 3: return (0..<5).map { _ in dec(rac(rng.entero(1...999), rng.elemento([10, 100, 1000]))) }
-        case 4:
+        case 3:
+            if rng.probabilidad(0.5) { return (0..<5).map { _ in dec(rac(rng.entero(1...999), rng.elemento([10, 100, 1000]))) } }
             if rng.probabilidad(0.5) { let den = rng.entero(5...12); return (0..<5).map { _ in fr(rac(rng.entero(1...(2 * den)), den)) } }
             let num = rng.entero(1...9); return (0..<5).map { _ in fr(rac(num, rng.entero(2...12))) }
-        case 5: return (0..<5).map { _ in rng.probabilidad(0.5) ? fr(rac(rng.entero(1...11), rng.entero(2...12))) : dec(rac(rng.entero(5...150), 100)) }
+        case 4:
+            return (0..<4).map { _ in
+                if rng.probabilidad(0.5) { let den = rng.entero(2...24); return fr(rac(rng.entero(1...(2 * den)), den)) }
+                // Decimales de 1 a 3 cifras entre 0 y 2,5, como en el examen (0,5; 1,18; 1,205).
+                let k = rng.elemento([1, 10, 100])
+                return dec(rac(rng.entero(1...(25 * k)), 10 * k))
+            }
+        case 5:
+            let e = rng.entero(0...2)
+            return (0..<5).map { _ in
+                if rng.probabilidad(0.5) { let den = rng.entero(2...24); return fr(rac(e * den + rng.entero(1...(den - 1)), den)) }
+                return dec(rac(e * 1000 + rng.entero(1...999), rng.elemento([100, 1000])))
+            }
         default:
             return (0..<6).map { _ in
                 switch rng.entero(0...2) {
@@ -583,7 +599,8 @@ struct GeneradorOrdenarNumeros: GeneradorItems {
             let ns = numeros(d, rng: &rng)
             guard Set(ns.map(\.0)).count == ns.count, Set(ns.map(\.1)).count == ns.count, ns.allSatisfy({ !$0.0.esEntero }) else { continue }
             if d == 3 && Set(ns.map { $0.1.count }).count < 2 { continue }
-            if d == 5 && !(ns.contains { $0.1.contains("/") } && ns.contains { $0.1.contains(",") }) { continue }
+            if d == 3 && ns.allSatisfy({ $0.1.contains("/") }) && Set(ns.map { $0.0.denominador }).count > 1 && Set(ns.map { $0.0.numerador }).count > 1 { continue }
+            if (d == 4 || d == 5) && !(ns.contains { $0.1.contains("/") } && ns.contains { $0.1.contains(",") }) { continue }
             if d == 6 && !(ns.contains { $0.0.numerador < 0 } && ns.contains { $0.1.contains("/") && $0.0.numerador > $0.0.denominador }) { continue }
             return ns
         }
@@ -595,7 +612,7 @@ struct GeneradorOrdenarNumeros: GeneradorItems {
         let ordenados = ns.sorted { A.menor($0.0, $1.0) }
         let fichas = ns.enumerated().map { ElementoTexto(id: "n\($0.offset + 1)", texto: $0.element.1) }
         let orden = ordenados.map { o in fichas.first { $0.texto == o.1 }!.id }
-        let tipoPeso: Double = [1: 0, 2: 0.5, 3: 1, 4: 2, 5: 3][p.dificultad] ?? 4
+        let tipoPeso: Double = [1: 0, 2: 0.5, 3: 1.5, 4: 3.5, 5: 4, 6: 5][p.dificultad] ?? 5
         return Muestra(clave: ns.map(\.1).sorted().joined(separator: ";"), valores: ["pregunta": "Ordena de menor a mayor."],
                        payload: .ordenar(Payload.Ordenar(fichas: fichas, ordenCorrecto: orden, etiquetaInicio: "Menor", etiquetaFin: "Mayor")),
                        explicacion: "De menor a mayor: \(ordenados.map(\.1).joined(separator: " < ")).",
@@ -620,9 +637,9 @@ struct GeneradorOrdenarNumeros: GeneradorItems {
 /// |---|---|
 /// | 1 | suma o resta con el mismo denominador |
 /// | 2 | denominadores múltiplos |
-/// | 3 | m.c.m. de dos denominadores ≤ 12 |
-/// | 4 | multiplicación y división |
-/// | 5 | tres fracciones |
+/// | 3 | m.c.m. de dos denominadores ≤ 12, o multiplicación y división |
+/// | 4 (examen) | tres o cuatro fracciones con sumas y restas y denominadores distintos (2019 M11) |
+/// | 5 | combinadas sin paréntesis (sumas, productos y cocientes) |
 /// | 6 | combinadas con paréntesis |
 struct GeneradorFraccionesOperar: GeneradorItems {
     let tipo = "fraccionesOperar"
@@ -638,11 +655,22 @@ struct GeneradorFraccionesOperar: GeneradorItems {
             case 1: let den = rng.entero(3...12); t = [f(den), op(), f(den)]
             case 2: let a = rng.entero(2...6), den2 = a * rng.entero(2...3); t = [f(a), op(), f(den2)]
             case 3:
+                if rng.probabilidad(0.5) { t = [f(rng.entero(2...9)), .op(rng.probabilidad(0.5) ? "*" : ":"), f(rng.entero(2...9))]; break }
                 let a = rng.entero(3...12), b = rng.entero(3...12)
                 guard a % b != 0, b % a != 0, a / Racional.mcd(a, b) * b <= 60 else { continue }
                 t = [f(a), op(), f(b)]
-            case 4: t = [f(rng.entero(2...9)), .op(rng.probabilidad(0.5) ? "*" : ":"), f(rng.entero(2...9))]
-            case 5: t = [f(rng.entero(2...8)), op(), f(rng.entero(2...8)), op(), f(rng.entero(2...8))]
+            case 4:
+                // Denominadores distintos también después de simplificar (2/4 se escribe 1/2).
+                let n = rng.entero(3...4)
+                let fs = (0..<n).map { _ in f(rng.entero(2...15)) }
+                let dens = fs.compactMap { x -> Int? in if case .num(let r) = x { r.denominador } else { nil } }
+                guard Set(dens).count >= 2 else { continue }
+                t = [fs[0]]
+                for x in fs.dropFirst() { t += [op(), x] }
+            case 5:
+                let mul: ExprArit.Token = .op(rng.probabilidad(0.5) ? "*" : ":")
+                t = rng.probabilidad(0.5) ? [f(rng.entero(2...8)), op(), f(rng.entero(2...8)), mul, f(rng.entero(2...8))]
+                                          : [f(rng.entero(2...8)), mul, f(rng.entero(2...8)), op(), f(rng.entero(2...8)), op(), f(rng.entero(2...8))]
             default:
                 let patrones: [[ExprArit.Token]] = [
                     [.abre, f(rng.entero(2...6)), op(), f(rng.entero(2...6)), .cierra, .op("*"), f(rng.entero(2...9))],
@@ -674,11 +702,11 @@ struct GeneradorFraccionesOperar: GeneradorItems {
         var pasos: [String] = []
         _ = e.resolver(ExprArit.Reglas(fracciones: true, maximo: 50), pasos: &pasos)
         // Peso por operación: mismo denominador 1, múltiplos 2, m.c.m. 3, producto o cociente 4 (inversa y simplificación).
-        let pesoOps: Double = [1: 1, 2: 2, 3: 3, 4: 4, 5: 3, 6: 3][p.dificultad] ?? 3
+        let pesoOps: Double = [1: 1, 2: 2, 3: 3, 4: 3, 5: 3.5, 6: 4][p.dificultad] ?? 4
         let complejidad = Double(e.operaciones) * pesoOps + Double(e.profundidad) + 0.5 * log10(Double(v.numerador * v.denominador + 1))
         return Muestra(clave: e.texto, valores: ["pregunta": "Calcula y simplifica: \(e.texto)", "expresion": e.texto],
                        payload: A.numerico(v, unidad: nil, comoFraccion: true),
-                       explicacion: pasos.map { $0.components(separatedBy: ": ").last! }.joined(separator: "; ") + ". Resultado irreducible: \(A.fraccion(v)).",
+                       explicacion: pasos.map(ExprArit.sinNombre).joined(separator: "; ") + ". Resultado irreducible: \(A.fraccion(v)).",
                        erroresHabituales: A.errores(v, reglas, comoFraccion: true),
                        pistas: ["Para sumar o restar, busca un denominador común; al final, simplifica."],
                        complejidad: complejidad, datos: ["expresion": e.texto, "respuesta": A.fraccion(v)])
@@ -700,10 +728,10 @@ struct GeneradorFraccionesOperar: GeneradorItems {
 /// |---|---|
 /// | 1 | un gasto de fracción unitaria |
 /// | 2 | un gasto de fracción no unitaria |
-/// | 3 | dos gastos sobre el total (fracciones unitarias) |
-/// | 4 | dos gastos sobre el total |
-/// | 5 | el segundo gasto se aplica sobre lo que queda |
-/// | 6 | tres gastos, cada uno sobre lo que queda |
+/// | 3 | dos gastos: sobre el total, o el segundo sobre lo que queda |
+/// | 4 (examen) | tres gastos, cada uno sobre lo que queda (2019 A M11, 2026 A M11) |
+/// | 5 | tres gastos sobre lo que queda, con fracciones no unitarias y cantidades mayores |
+/// | 6 | cuatro gastos, cada uno sobre lo que queda |
 struct GeneradorProblemaFraccion: GeneradorItems {
     let tipo = "problemaFraccion"
     let mecanicas: Set<Mecanica> = [.numerico]
@@ -726,10 +754,11 @@ struct GeneradorProblemaFraccion: GeneradorItems {
             let den = rng.entero(2...8)
             return unitaria ? rac(1, den) : rac(rng.entero(1...(den - 1)), den)
         }
-        let n = [1: 1, 2: 1, 3: 2, 4: 2, 5: 2][d] ?? 3
-        let fs = (0..<n).map { _ in fraccion(unitaria: d == 1 || d == 3) }
-        let maximo = [1: 60, 2: 120, 3: 240, 4: 480, 5: 600][d] ?? 1200
-        return Caso(total: rng.entero(2...maximo), fracciones: fs, resto: d >= 5)
+        let n = [1: 1, 2: 1, 3: 2, 4: 3, 5: 3][d] ?? 4
+        let fs = (0..<n).map { _ in d == 5 ? rac(rng.entero(2...7), rng.entero(3...8)) : fraccion(unitaria: d == 1) }
+        let maximo = [1: 60, 2: 120, 3: 240, 4: 600, 5: 1200][d] ?? 2400
+        return Caso(total: rng.entero(2...maximo), fracciones: fs.map { $0.numerador < $0.denominador ? $0 : rac(1, $0.denominador) },
+                    resto: d >= 4 || (d == 3 && rng.probabilidad(0.5)))
     }
 
     static func valido(_ c: Caso) -> Bool {
@@ -759,7 +788,8 @@ struct GeneradorProblemaFraccion: GeneradorItems {
         case 1: pregunta = "\(nombre) tiene \(c.total) €. Gasta \(fs[0]) en \(cosas[0]). ¿Cuánto dinero le queda?"   // A.2
         case 2 where !c.resto: pregunta = "\(nombre) tiene \(c.total) €. Gasta \(fs[0]) en \(cosas[0]) y \(fs[1]) en \(cosas[1]). ¿Cuánto dinero le queda?"   // A.2
         case 2: pregunta = "\(nombre) tiene \(c.total) €. Gasta \(fs[0]) en \(cosas[0]) y \(fs[1]) de lo que le queda en \(cosas[1]). ¿Cuánto dinero le queda?"
-        default: pregunta = "\(nombre) tiene \(c.total) €. Gasta \(fs[0]) en \(cosas[0]), \(fs[1]) de lo que le queda en \(cosas[1]) y \(fs[2]) del resto en \(cosas[2]). ¿Cuánto dinero le queda?"   // A.2
+        case 3: pregunta = "\(nombre) tiene \(c.total) €. Gasta \(fs[0]) en \(cosas[0]), \(fs[1]) de lo que le queda en \(cosas[1]) y \(fs[2]) del resto en \(cosas[2]). ¿Cuánto dinero le queda?"   // A.2
+        default: pregunta = "\(nombre) tiene \(c.total) €. Gasta \(fs[0]) en \(cosas[0]), \(fs[1]) de lo que le queda en \(cosas[1]), \(fs[2]) del resto en \(cosas[2]) y \(fs[3]) de lo que aún le queda en \(cosas[3]). ¿Cuánto dinero le queda?"   // 05E
         }
         let sol = Self.queda(c)
         let t = rac(c.total)
@@ -790,5 +820,14 @@ struct GeneradorProblemaFraccion: GeneradorItems {
             if Self.valido(c) { vistos.insert("\(c.total)|\(c.fracciones.map(A.fraccion).joined(separator: ","))|\(c.resto)") }
         }
         return Array(vistos)
+    }
+}
+
+extension ExprArit {
+    /// Paso sin su nombre («División: 3 : 3 = 1» → «3 : 3 = 1»). Solo se quita el primer prefijo:
+    /// el paso puede contener el signo de dividir « : » (05E; antes se mostraba «3 = 1»).
+    static func sinNombre(_ paso: String) -> String {
+        guard let r = paso.range(of: ": ") else { return paso }
+        return String(paso[r.upperBound...])
     }
 }

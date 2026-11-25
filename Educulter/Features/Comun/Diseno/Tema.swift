@@ -217,6 +217,7 @@ enum SimboloBloque {
         "LEN.MET": "music.quarternote.3",
         "LEN.LEX": "character.book.closed",
         "LEN.FOR": "puzzlepiece",
+        "LEN.HAB": "globe.europe.africa",
         "MAT.UNI": "ruler",
         "MAT.GEO": "triangle",
         "MAT.POR": "percent",
@@ -226,6 +227,7 @@ enum SimboloBloque {
         "MAT.ROM": "building.columns",
         "MAT.EST": "chart.bar",
         "MAT.PRO": "dice",
+        "MAT.ALG": "arrow.triangle.branch",
     ]
 
     static func de(bloque: String) -> String { porBloque[bloque] ?? "square.stack" }

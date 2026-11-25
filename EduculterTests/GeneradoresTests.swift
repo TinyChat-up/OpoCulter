@@ -310,12 +310,16 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-6 * max(1, esperado), "\(item.id): \(sol!) ≠ \(esperado)")
     case "sexagesimal":
         let t1 = Int(d["t1"]!)!, t2 = Int(d["t2"]!)!, k = Int(d["k"]!)!
+        let partes: [[Int]] = (d["partes"] ?? "").split(separator: ";").map { p in p.split(separator: ":").map { Int($0)! } }
+        let sumaPartes: Int = partes.map { $0[0] * 3600 + $0[1] * 60 + $0[2] }.reduce(0, +)
         let segundos: Int = switch d["op"]! {
         case "suma": t1 + t2
         case "resta": t1 - t2
         case "dur": t2 - t1
         case "medianoche": (t2 + 86_400 - t1) % 86_400
         case "mul": t1 * k
+        // Suma de tiempos sin normalizar (05E): cada uno «h:min:s», calculado aquí.
+        case "sumaN": sumaPartes
         default: t1
         }
         #expect(segundos > 0 && Int(d["segundos"]!)! == segundos)
@@ -330,6 +334,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         let n = Oraculo.numeros(item.enunciado)
         let esperado: Double = switch d["modo"]! {
         case "mr": n[1] * n[2] / (d["unidad"] == "km" ? 100_000 : 100)   // 1:e, d cm
+        case "mrPlano": n[1] * n[2] / (d["unidadPlano"] == "mm" ? 1000 : 100)   // 1:e, d cm o mm → m
         case "rm": n[0] * 100_000 / n[2]                                  // D km, 1:e
         default: n[0] * 100_000 / n[1]                                    // D km, d cm
         }
@@ -552,7 +557,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 42)
+        #expect(banco.plantillas.count == 79)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }

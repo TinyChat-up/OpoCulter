@@ -15,8 +15,8 @@ private typealias A = AyudaMat
 /// | 1 | 1 cambio habitual (m → cm, kg → g, l → ml) | 1 salto (×100) | 1 salto (×1000) |
 /// | 2 | 2–3 saltos, en los dos sentidos | 2 saltos | 2 saltos |
 /// | 3 | compleja → incompleja («3 km 25 m = ? m») | compleja → incompleja | volumen ↔ capacidad (1 dm³ = 1 l) |
-/// | 4 | compleja → unidad mayor (decimales) | compleja → unidad mayor | compleja → unidad mayor |
-/// | 5 | suma de cantidades con decimales | suma con decimales | volumen ↔ capacidad con saltos y decimales |
+/// | 4 | examen: compleja de 3 términos → unidad intermedia (2022 M14) | compleja → unidad mayor | compleja → unidad mayor |
+/// | 5 | suma de 3 cantidades con decimales | suma con decimales | volumen ↔ capacidad con saltos y decimales |
 /// | 6 | capacidad → masa de agua (1 l = 1 kg) | unidades agrarias (ha, a, ca) | volumen → capacidad → masa de agua |
 struct GeneradorConversionUnidades: GeneradorItems {
     let tipo = "conversionUnidades"
@@ -90,8 +90,13 @@ struct GeneradorConversionUnidades: GeneradorItems {
             let menor = t.map(\.1).last!
             let idx = lista.firstIndex(of: menor)!
             return Caso(terminos: t, destino: lista[min(lista.count - 1, idx + rng.entero(0...1))], agua: false, modo: "expresa")
+        case ("lmc", 4):
+            // Perfil del examen: 3 términos (el último, de hasta dos cifras) → una unidad entre la mayor y la menor.
+            let t = compleja(lista, terminos: 3...3)
+            let i0 = lista.firstIndex(of: t[0].1)!, i2 = lista.firstIndex(of: t[2].1)!
+            return Caso(terminos: t, destino: lista[rng.entero((i0 + 1)...(i2 - 1))], agua: false, modo: "expresa")
         case (_, 4):
-            let t = compleja(lista, terminos: 2...(familia == "lmc" ? 3 : 2))
+            let t = compleja(lista, terminos: 2...2)
             return Caso(terminos: t, destino: t[0].1, agua: false, modo: "expresa")
         case ("vol", 5):
             let v = rng.elemento(Array(Self.listas["V"]!.prefix(3))), cap = rng.elemento(Self.listas["C"]!)
@@ -100,7 +105,7 @@ struct GeneradorConversionUnidades: GeneradorItems {
             guard abs(de.e - a.e) >= 2 else { return nil }
             return Caso(terminos: [(rac(rng.entero(1...999), rng.elemento([10, 100])), de)], destino: a, agua: false, modo: rng.elemento(["expresa", "cuantos"]))
         case (_, 5):
-            let t = compleja(lista, terminos: 2...3, decimal: true)
+            let t = compleja(lista, terminos: (familia == "lmc" ? 3 : 2)...3, decimal: true)
             let medio = lista[min(lista.count - 1, lista.firstIndex(of: t[0].1)! + 1 + rng.entero(0...1))]
             return Caso(terminos: t, destino: medio, agua: false, modo: "suma")
         case ("lmc", _):
@@ -221,9 +226,9 @@ struct GeneradorConversionUnidades: GeneradorItems {
 /// | 1 | h → min o min → s (ruedas: min → h y min) |
 /// | 2 | h y min → s (ruedas: s → h, min y s) |
 /// | 3 | sumar dos tiempos (h, min) con llevada, o duración en el mismo día |
-/// | 4 | sumar o restar tiempos con segundos (llevadas) |
-/// | 5 | duración entre dos horas que cruzan la medianoche |
-/// | 6 | multiplicar un tiempo (h, min, s) por un número |
+/// | 4 (examen) | sumar tres tiempos escritos sin normalizar («165 min 900 s») y expresarlo en una unidad (2019 A M12, 2026 A M12) |
+/// | 5 | sumar cuatro tiempos sin normalizar |
+/// | 6 | multiplicar un tiempo (h, min, s) por un número, o duración que cruza la medianoche |
 struct GeneradorSexagesimal: GeneradorItems {
     let tipo = "sexagesimal"
     let mecanicas: Set<Mecanica> = [.numerico, .ruedas]
@@ -240,7 +245,28 @@ struct GeneradorSexagesimal: GeneradorItems {
     static func reloj(_ s: Int) -> String { String(format: "%d:%02d", s / 3600 % 24, s % 3600 / 60) }
 
     /// Caso: operación, tiempos en segundos, factor y unidad de la respuesta numérica (s o min).
-    struct Caso { let op: String; let t1: Int; let t2: Int; let k: Int; let unidad: String }
+    /// En `sumaN`, `partes` son los tiempos escritos sin normalizar: (h, min, s) de cada uno.
+    struct Caso {
+        let op: String; let t1: Int; let t2: Int; let k: Int; let unidad: String
+        var partes: [(Int, Int, Int)] = []
+    }
+
+    static func escrito(_ p: (Int, Int, Int)) -> String {
+        var t: [String] = []
+        if p.0 > 0 { t.append("\(p.0) h") }
+        if p.1 > 0 { t.append("\(p.1) min") }
+        if p.2 > 0 { t.append("\(p.2) s") }
+        return t.joined(separator: " ")
+    }
+
+    /// Tiempo escrito sin normalizar, como en el examen: minutos o segundos que pasan de 59.
+    static func desordenado(_ rng: inout GeneradorConSemilla, enMinutos: Bool) -> (Int, Int, Int) {
+        switch rng.entero(0...2) {
+        case 0: return (rng.entero(1...3), rng.entero(1...59), enMinutos ? 0 : rng.entero(1...59))
+        case 1: return (0, rng.entero(60...210), 60 * rng.entero(2...40))
+        default: return (rng.entero(1...2), rng.entero(60...99), enMinutos ? 60 * rng.entero(1...10) : rng.entero(60...150))
+        }
+    }
 
     static func resultado(_ c: Caso) -> Int {
         switch c.op {
@@ -249,6 +275,7 @@ struct GeneradorSexagesimal: GeneradorItems {
         case "dur": return c.t2 - c.t1
         case "medianoche": return 86_400 - c.t1 + c.t2
         case "mul": return c.t1 * c.k
+        case "sumaN": return c.partes.map { $0.0 * 3600 + $0.1 * 60 + $0.2 }.reduce(0, +)
         default: return c.t1
         }
     }
@@ -269,15 +296,20 @@ struct GeneradorSexagesimal: GeneradorItems {
             }
             let a = 60 * (60 * rng.entero(7...14) + 5 * rng.entero(0...11))
             return Caso(op: "dur", t1: a, t2: a + 60 * (5 * rng.entero(13...100)), k: 1, unidad: "min")
-        case 4:
-            let t1 = 3600 * rng.entero(1...6) + 60 * rng.entero(0...59) + rng.entero(1...59)
-            let t2 = 3600 * rng.entero(0...3) + 60 * rng.entero(1...59) + rng.entero(1...59)
-            if rng.probabilidad(0.5) { return Caso(op: "suma", t1: t1, t2: t2, k: 1, unidad: "s") }
-            return Caso(op: "resta", t1: max(t1, t2), t2: min(t1, t2), k: 1, unidad: "s")
-        case 5:
-            let a = 60 * (60 * rng.entero(19...23) + 5 * rng.entero(0...11))
-            return Caso(op: "medianoche", t1: a, t2: 60 * (60 * rng.entero(0...9) + 5 * rng.entero(0...11)), k: 1, unidad: "min")
+        case 4, 5:
+            // Perfil del examen: tres tiempos (cuatro en el nivel 5), alguno sin normalizar.
+            let unidad = ruedas ? "s" : (rng.probabilidad(0.5) ? "min" : "s")
+            var partes = (0..<(d == 4 ? 3 : 4)).map { _ in Self.desordenado(&rng, enMinutos: unidad == "min") }
+            // Al menos uno sin normalizar (minutos o segundos que pasan de 59), como en el examen.
+            if !partes.contains(where: { $0.1 >= 60 || $0.2 >= 60 }) {
+                partes[rng.entero(0...(partes.count - 1))] = (0, rng.entero(60...210), 60 * rng.entero(2...40))
+            }
+            return Caso(op: "sumaN", t1: 0, t2: 0, k: 1, unidad: unidad, partes: partes)
         default:
+            if rng.probabilidad(0.5) {
+                let a = 60 * (60 * rng.entero(19...23) + 5 * rng.entero(0...11))
+                return Caso(op: "medianoche", t1: a, t2: 60 * (60 * rng.entero(0...9) + 5 * rng.entero(0...11)), k: 1, unidad: "min")
+            }
             return Caso(op: "mul", t1: 3600 * rng.entero(0...2) + 60 * rng.entero(1...59) + rng.entero(1...59), t2: 0, k: rng.entero(2...9), unidad: "s")
         }
     }
@@ -305,6 +337,10 @@ struct GeneradorSexagesimal: GeneradorItems {
             else if c.t1 < 3600 { pregunta = "¿Cuántos segundos son \(c.t1 / 60) min?" }   // A.2
             else { pregunta = "¿Cuántos segundos son \(c.t1 / 3600) h \(c.t1 % 3600 / 60) min?" }
         case "suma": pregunta = "Suma \(Self.tiempo(c.t1)) y \(Self.tiempo(c.t2))." + enUnidad
+        case "sumaN":
+            let lista = c.partes.map(Self.escrito)
+            pregunta = "Tres aparatos funcionan uno detrás de otro durante \(lista.dropLast().joined(separator: "; ")) y \(lista.last!). ¿Cuánto tiempo funcionan en total?" + enUnidad   // 05E
+            if c.partes.count == 4 { pregunta = pregunta.replacingOccurrences(of: "Tres aparatos", with: "Cuatro aparatos") }
         case "resta": pregunta = "Resta \(Self.tiempo(c.t2)) a \(Self.tiempo(c.t1))." + enUnidad   // A.2
         case "dur", "medianoche":
             pregunta = "\(nombre) sale a las \(Self.reloj(c.t1)) y llega a las \(Self.reloj(c.t2)). ¿Cuánto dura el viaje?" + enUnidad
@@ -315,20 +351,28 @@ struct GeneradorSexagesimal: GeneradorItems {
         case "conv": explicacion = "1 h = 60 min y 1 min = 60 s. \(Self.tiempo(c.t1)) = \(ruedas ? Self.tiempo(r) : "\(r / (c.unidad == "min" ? 60 : 1)) \(c.unidad)")."
         case "medianoche": explicacion = "Hasta las 24:00: \(Self.tiempo(86_400 - c.t1)); después, hasta las \(Self.reloj(c.t2)): \(Self.tiempo(c.t2)). Total: \(Self.tiempo(r))."
         case "mul": explicacion = "\(Self.tiempo(c.t1)) × \(c.k) = \(Self.tiempo(r)) (cada 60 s son 1 min y cada 60 min, 1 h)."
+        case "sumaN":
+            let segundos = c.partes.map { "\(Self.escrito($0)) = \($0.0 * 3600 + $0.1 * 60 + $0.2) s" }
+            explicacion = "Se pasa cada tiempo a segundos y se suma: " + segundos.joined(separator: "; ") + ". Total: \(r) s = \(Self.tiempo(r))."
         default: explicacion = "Se opera por separado con horas, minutos y segundos, y cada 60 se lleva 1 a la unidad mayor: \(Self.tiempo(r))."
         }
         let llevadas: Double
-        if c.op == "mul" {
+        if c.op == "sumaN" {
+            let s = c.partes.map(\.2).reduce(0, +), m = c.partes.map(\.1).reduce(0, +) + s / 60
+            llevadas = Double((s >= 60 ? 1 : 0) + (m >= 60 ? 1 : 0)) + 0.5 * Double(c.partes.filter { $0.1 >= 60 || $0.2 >= 60 }.count)
+        } else if c.op == "mul" {
             let s = c.t1 % 60 * c.k, m = c.t1 % 3600 / 60 * c.k + s / 60
             llevadas = Double((s >= 60 ? 1 : 0) + (m >= 60 ? 1 : 0))
         } else {
             llevadas = Double((c.t1 % 60 + c.t2 % 60 >= 60 ? 1 : 0) + (c.t1 % 3600 / 60 + c.t2 % 3600 / 60 >= 60 ? 1 : 0))
         }
-        let operacion: Double = ["conv": c.t1 % 3600 == 0 || c.t1 < 3600 ? 1 : 2, "suma": 3, "resta": 3, "dur": 3, "medianoche": 5, "mul": 5][c.op] ?? 1
+        let operacion: Double = ["conv": c.t1 % 3600 == 0 || c.t1 < 3600 ? 1 : 2, "suma": 3, "resta": 3, "dur": 3, "medianoche": 8, "mul": 8,
+                                 "sumaN": 2 + Double(c.partes.count) * 0.5][c.op] ?? 1
         let unidades = Double([r / 3600 > 0, r % 3600 / 60 > 0, r % 60 > 0].filter { $0 }.count)
         let complejidad = operacion + llevadas + unidades * 0.5 + 0.3 * log10(Double(max(r, 1)))
-        let clave = [p.mecanica.rawValue, c.op, "\(c.t1)", "\(c.t2)", "\(c.k)", c.unidad].joined(separator: "|")
-        let datos = ["op": c.op, "t1": "\(c.t1)", "t2": "\(c.t2)", "k": "\(c.k)", "unidad": c.unidad, "segundos": "\(r)"]
+        let partes = c.partes.map { "\($0.0):\($0.1):\($0.2)" }.joined(separator: ";")
+        let clave = [p.mecanica.rawValue, c.op, "\(c.t1)", "\(c.t2)", "\(c.k)", c.unidad, partes].joined(separator: "|")
+        let datos = ["op": c.op, "t1": "\(c.t1)", "t2": "\(c.t2)", "k": "\(c.k)", "unidad": c.unidad, "segundos": "\(r)", "partes": partes]
         if ruedas {
             let h = r / 3600, m = r % 3600 / 60, s = r % 60
             var lista = [Payload.Ruedas.Rueda(id: "h", nombre: "Horas", opciones: (0...max(23, h + 3)).map(String.init), correcta: "\(h)"),
@@ -360,7 +404,7 @@ struct GeneradorSexagesimal: GeneradorItems {
         for _ in 0..<min(limite, 20_000) {
             let c = caso(p.dificultad, ruedas: p.mecanica == .ruedas, rng: &rng)
             guard Self.resultado(c) > 0 else { continue }
-            vistos.insert([p.mecanica.rawValue, c.op, "\(c.t1)", "\(c.t2)", "\(c.k)", c.unidad].joined(separator: "|"))
+            vistos.insert([p.mecanica.rawValue, c.op, "\(c.t1)", "\(c.t2)", "\(c.k)", c.unidad, c.partes.map { "\($0.0):\($0.1):\($0.2)" }.joined(separator: ";")].joined(separator: "|"))
         }
         return Array(vistos)
     }
@@ -375,9 +419,9 @@ struct GeneradorSexagesimal: GeneradorItems {
 /// | 1 | plano 1:100, de cm a m |
 /// | 2 | plano 1:1000 o 1:10 000, de cm a m |
 /// | 3 | mapa 1:10 000 a 1:100 000, de cm a km |
-/// | 4 | de la realidad (km) al mapa (cm) |
-/// | 5 | averiguar la escala a partir de las dos distancias |
-/// | 6 | averiguar la escala con distancias decimales |
+/// | 4 (examen) | plano 1:20 a 1:1000 con la medida decimal en cm o en mm, resultado en m (2026 O M20) |
+/// | 5 | de la realidad (km) al mapa (cm) |
+/// | 6 | averiguar la escala (distancias enteras o decimales) |
 struct GeneradorEscala: GeneradorItems {
     let tipo = "escala"
     let mecanicas: Set<Mecanica> = [.numerico]
@@ -385,18 +429,28 @@ struct GeneradorEscala: GeneradorItems {
 
     /// Caso: modo (`mr` mapa → realidad, `rm` realidad → mapa, `esc` escala), escala, distancia en el
     /// mapa (cm) y unidad de la distancia real.
-    struct Caso { let modo: String; let e: Int; let d: Racional; let unidad: String }
+    struct Caso {
+        let modo: String; let e: Int; let d: Racional; let unidad: String
+        /// Unidad de la medida en el plano (cm o mm; en `mrPlano` puede ser mm).
+        var unidadPlano = "cm"
+    }
 
-    static func real(_ c: Caso) -> Racional { c.d * rac(c.e) * A.potencia(10, c.unidad == "km" ? -5 : -2) }
+    static func real(_ c: Caso) -> Racional { c.d * rac(c.e) * A.potencia(10, (c.unidad == "km" ? -5 : -2) - (c.unidadPlano == "mm" ? 1 : 0)) }
 
     func caso(_ dif: Int, rng: inout GeneradorConSemilla) -> Caso {
         switch dif {
         case 1: return Caso(modo: "mr", e: 100, d: rac(rng.entero(1...40)), unidad: "m")
         case 2: return Caso(modo: "mr", e: rng.elemento([1000, 10_000]), d: rac(rng.entero(1...30)), unidad: "m")
         case 3: return Caso(modo: "mr", e: rng.elemento([10_000, 50_000, 100_000]), d: rac(rng.entero(2...40), 2), unidad: "km")
-        case 4: return Caso(modo: "rm", e: rng.elemento([50_000, 100_000, 200_000]), d: rac(rng.entero(2...40), 2), unidad: "km")
-        case 5: return Caso(modo: "esc", e: rng.elemento([10_000, 20_000, 25_000, 50_000, 100_000, 200_000, 500_000]), d: rac(rng.entero(2...20)), unidad: "km")
-        default: return Caso(modo: "esc", e: rng.elemento([20_000, 25_000, 50_000, 200_000, 250_000, 500_000, 1_000_000]), d: rac(rng.entero(3...39), 2), unidad: "km")
+        case 4:
+            // Perfil del examen: «2,5 cm | 1:200», «35 mm | 1:20», resultado en metros.
+            let e = rng.elemento([20, 50, 200, 500, 1000])
+            if rng.probabilidad(0.5) { return Caso(modo: "mrPlano", e: e, d: rac(rng.entero(11...99), 10), unidad: "m") }
+            return Caso(modo: "mrPlano", e: e, d: rac(rng.entero(11...95)), unidad: "m", unidadPlano: "mm")
+        case 5: return Caso(modo: "rm", e: rng.elemento([50_000, 100_000, 200_000]), d: rac(rng.entero(2...40), 2), unidad: "km")
+        default:
+            if rng.probabilidad(0.5) { return Caso(modo: "esc", e: rng.elemento([10_000, 20_000, 25_000, 50_000, 100_000, 200_000, 500_000]), d: rac(rng.entero(2...20)), unidad: "km") }
+            return Caso(modo: "esc", e: rng.elemento([20_000, 25_000, 50_000, 200_000, 250_000, 500_000, 1_000_000]), d: rac(rng.entero(3...39), 2), unidad: "km")
         }
     }
 
@@ -405,7 +459,7 @@ struct GeneradorEscala: GeneradorItems {
             let c = caso(p.dificultad, rng: &rng)
             let r = Self.real(c)
             guard let dr = A.decimales(r), dr <= 3 else { continue }
-            if p.dificultad == 6 && c.d.esEntero { continue }
+            if p.dificultad == 4 && c.unidadPlano == "cm" && c.d.esEntero { continue }
             return construir(c, real: r)
         }
         throw ErrorGenerador.sinCaso(tipo)
@@ -417,6 +471,16 @@ struct GeneradorEscala: GeneradorItems {
         var pregunta: String, sol: Racional, unidad: String?, explicacion: String
         var reglas: [(Racional?, String)] = []
         switch c.modo {
+        case "mrPlano":
+            sol = r; unidad = "m"
+            let ud = c.unidadPlano
+            pregunta = "En un plano a escala \(es), una pared mide \(ds) \(ud). ¿Cuántos metros mide en la realidad?"   // 05E
+            let enUd = c.d * rac(c.e)
+            reglas = [(enUd, "Has dejado el resultado en \(ud == "mm" ? "milímetros: 1 m = 1.000 mm" : "centímetros: 1 m = 100 cm")."),
+                      (r * rac(10), "Revisa el paso a metros: \(ud == "mm" ? "1 m = 1.000 mm" : "1 m = 100 cm")."),
+                      (r * rac(1, 10), "Revisa el paso a metros: \(ud == "mm" ? "1 m = 1.000 mm" : "1 m = 100 cm")."),
+                      (c.d / rac(c.e), "En el plano las medidas son más pequeñas: para pasar a la realidad se multiplica por \(FormatoNumero.miles(c.e)).")]
+            explicacion = "\(ds) \(ud) × \(FormatoNumero.miles(c.e)) = \(A.texto(enUd)) \(ud) = \(rs) m."
         case "mr":
             sol = r; unidad = c.unidad
             if c.unidad == "km" {
@@ -446,13 +510,14 @@ struct GeneradorEscala: GeneradorItems {
                       (r / c.d, "Pasa los kilómetros a centímetros antes de dividir.")]
             explicacion = "\(rs) km = \(A.texto(enCm)) cm; \(A.texto(enCm)) : \(ds) = \(FormatoNumero.miles(c.e)). Escala \(es)."
         }
-        let direccion: Double = ["mr": 1, "rm": 2, "esc": 3][c.modo] ?? 1
+        // `mrPlano`: multiplicar un decimal (o mm) y pasar por dos unidades hasta el metro.
+        let direccion: Double = ["mr": 1, "mrPlano": 3.5, "rm": 4, "esc": 5][c.modo] ?? 1
         let complejidad = 0.5 * (c.unidad == "km" ? 5 : 2) + direccion + 0.2 * log10(Double(c.e)) + (c.d.esEntero ? 0 : 1)
-        return Muestra(clave: [c.modo, "\(c.e)", ds, c.unidad].joined(separator: "|"), valores: ["pregunta": pregunta],
+        return Muestra(clave: [c.modo, "\(c.e)", ds, c.unidad, c.unidadPlano].joined(separator: "|"), valores: ["pregunta": pregunta],
                        payload: A.numerico(sol, unidad: unidad), explicacion: explicacion, erroresHabituales: A.errores(sol, reglas),
                        pistas: ["1:\(FormatoNumero.miles(c.e)) significa que 1 cm del mapa son \(FormatoNumero.miles(c.e)) cm reales."],
                        complejidad: complejidad,
-                       datos: ["modo": c.modo, "e": "\(c.e)", "d": ds, "unidad": c.unidad, "respuesta": A.texto(sol)])
+                       datos: ["modo": c.modo, "e": "\(c.e)", "d": ds, "unidad": c.unidad, "unidadPlano": c.unidadPlano, "respuesta": A.texto(sol)])
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
@@ -460,8 +525,8 @@ struct GeneradorEscala: GeneradorItems {
         var vistos = Set<String>()
         for _ in 0..<min(limite, 20_000) {
             let c = caso(p.dificultad, rng: &rng)
-            guard let dr = A.decimales(Self.real(c)), dr <= 3, p.dificultad != 6 || !c.d.esEntero else { continue }
-            vistos.insert([c.modo, "\(c.e)", A.texto(c.d), c.unidad].joined(separator: "|"))
+            guard let dr = A.decimales(Self.real(c)), dr <= 3, p.dificultad != 4 || c.unidadPlano == "mm" || !c.d.esEntero else { continue }
+            vistos.insert([c.modo, "\(c.e)", A.texto(c.d), c.unidad, c.unidadPlano].joined(separator: "|"))
         }
         return Array(vistos)
     }

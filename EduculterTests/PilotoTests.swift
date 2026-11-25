@@ -266,7 +266,8 @@ struct PilotoTests {
     func propuestas() throws {
         let e = try servicio().estadoHoy()
         #expect(e.propuestas.map(\.area) == ["LEN", "MAT"])
-        #expect(e.propuestas.first?.competencia.id == "LEN.ORT.AGU")
+        // Desde la 05E, LEN.SIN (primer bloque de Lengua) tiene contenido aprobado.
+        #expect(e.propuestas.first?.competencia.id == "LEN.SIN.SUJPRED")
         #expect(e.propuestas.last?.competencia.id == Self.primeraMAT)
         // La mecánica propuesta es la más frecuente entre los candidatos de la competencia.
         #expect(e.propuestas.last?.mecanica == .numerico)
@@ -282,7 +283,7 @@ struct PilotoTests {
         #expect(items.count == ronda.items.count && !items.isEmpty)
         // El motor puede intercalar repasos de otras competencias, pero la mayoría son de la competencia en curso.
         #expect(items.filter { $0.competencia == Self.primeraMAT }.count * 2 > items.count)
-        #expect(try s.competenciaEnCurso(area: "LEN") == "LEN.ORT.AGU")
+        #expect(try s.competenciaEnCurso(area: "LEN") == "LEN.SIN.SUJPRED")
     }
 
     @Test("Practicar MAT.NUM.FRAREP (Camino) con el contenido de Release: ronda con fraccionBarras")

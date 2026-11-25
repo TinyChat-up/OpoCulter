@@ -381,7 +381,7 @@
     "id": "LEN.LEX.SIN.0005",
     "competencia": "LEN.LEX.SIN",
     "peldano": 3,
-    "dificultad": 2,
+    "dificultad": 4,
     "objetivo": "Identificar el sinónimo en contexto sin ayudas.",
     "mecanica": "eleccion",
     "enunciado": "«El orador fue muy prolijo en su discurso». «Prolijo» significa:",
@@ -428,7 +428,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.LEX.SIN.0006",
@@ -1267,7 +1267,7 @@
     "id": "LEN.LEX.CTX.0002",
     "competencia": "LEN.LEX.CTX",
     "peldano": 3,
-    "dificultad": 3,
+    "dificultad": 4,
     "objetivo": "Deducir el significado de un término desconocido.",
     "mecanica": "eleccion",
     "enunciado": "«Era un hombre tan taciturno que apenas pronunciaba tres palabras al día». «Taciturno» es…",
@@ -1309,7 +1309,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.LEX.CTX.0003",

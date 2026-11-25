@@ -1,0 +1,1536 @@
+{
+  "version": 1,
+  "nota": "Equivalencia de las preguntas oficiales con el mapa curricular de la A1 y valoración de si la app las entrena hoy (Fase 05E, §1.3). «si»: contenido aprobado en un formato que ejercita la misma destreza; «parcial»: hay contenido aprobado de la competencia, pero la destreza no es la misma; «no»: sin contenido aprobado o sin esa destreza. Generado por scripts/equivalencias_tribunal.py.",
+  "preguntas": [
+    {
+      "examen": "OF.2017.O",
+      "numero": 1,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.RESU"
+      ],
+      "competencia": "LEN.COM.RESU",
+      "entrena": "parcial",
+      "nota": "Redactar un resumen; la app pide reconocer el mejor resumen."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 2,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.CONTEXTO"
+      ],
+      "competencia": "LEN.COM.INFER",
+      "entrena": "parcial",
+      "nota": "Provisional LEN.LIT.CONTEXTO: inferir la época de la historia a partir del texto."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 3,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.CTX"
+      ],
+      "competencia": "LEN.LEX.CTX",
+      "entrena": "parcial",
+      "nota": "Explicar el significado; la app pide elegirlo."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 4,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "parcial",
+      "nota": "Movimiento de un texto por sus rasgos; la app pregunta el movimiento de una obra por su título."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 5,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.MOVIM"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "no",
+      "nota": "Provisional LEN.LIT.MOVIM: rasgos del movimiento; no hay preguntas sobre rasgos."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 6,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.VER.ANALISIS"
+      ],
+      "competencia": "LEN.VER.ANALISIS",
+      "entrena": "si",
+      "nota": "Formas regulares."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 7,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "parcial",
+      "nota": "Citar autores (recuerdo libre); la app pide relacionar y ordenar."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 8,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.CRONO"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "si",
+      "nota": "Ordenar autores por época."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 9,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.SIN.COMPL"
+      ],
+      "competencia": "LEN.SIN.COMPL",
+      "entrena": "si",
+      "nota": "S + V + CCM + CCL (nivel 5 de oracionSimple)."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 10,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.INCOG"
+      ],
+      "competencia": "MAT.OPE.ECUAC",
+      "entrena": "parcial",
+      "nota": "Provisional MAT.OPE.INCOG: término desconocido con números grandes y decimales."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 11,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.ORDEN"
+      ],
+      "competencia": "MAT.NUM.ORDEN",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 12,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.FRAEQ"
+      ],
+      "competencia": "MAT.NUM.FRAEQ",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 13,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.ANGULOS"
+      ],
+      "competencia": "MAT.GEO.ANG",
+      "entrena": "no",
+      "nota": "Provisional MAT.GEO.ANGULOS."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 14,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.AREAS"
+      ],
+      "competencia": "MAT.GEO.AREA",
+      "entrena": "no",
+      "nota": "Provisional MAT.GEO.AREAS."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 15,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.ROM.ESCRITURA"
+      ],
+      "competencia": "MAT.ROM.ESCR",
+      "entrena": "si",
+      "nota": "Provisional MAT.ROM.ESCRITURA."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 16,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.POR.PORCENT"
+      ],
+      "competencia": "MAT.POR.VAR",
+      "entrena": "si",
+      "nota": "Rebaja porcentual (antes MAT.POR.PORCENT)."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 17,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.DIV.MCM"
+      ],
+      "competencia": "MAT.DIV.MCM",
+      "entrena": "no",
+      "nota": "Provisional MAT.DIV.MCM: sin plantilla aprobada."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 18,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.UNI.CONV"
+      ],
+      "competencia": "MAT.UNI.LMC",
+      "entrena": "si",
+      "nota": "Provisional MAT.UNI.CONV (incluye ha y dm³: SUP y VOL también aprobadas)."
+    },
+    {
+      "examen": "OF.2017.O",
+      "numero": 19,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.JERARQ"
+      ],
+      "competencia": "MAT.OPE.COMB",
+      "entrena": "si",
+      "nota": "Antes MAT.OPE.JERARQ."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 1,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.RESU"
+      ],
+      "competencia": "LEN.COM.RESU",
+      "entrena": "parcial",
+      "nota": "Resumir y comentar."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 2,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.INFER"
+      ],
+      "competencia": "LEN.COM.INFER",
+      "entrena": "parcial",
+      "nota": "Comentar el sentido de una frase."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 3,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.CTX"
+      ],
+      "competencia": "LEN.LEX.CTX",
+      "entrena": "parcial",
+      "nota": "Explicar el significado."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 4,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.CONCEPTOS"
+      ],
+      "competencia": "LEN.LEX.REG",
+      "entrena": "no",
+      "nota": "Provisional LEN.LEX.CONCEPTOS: definir neologismo, arcaísmo, eufemismo, morfema y acrónimo; no hay contenido de esos conceptos."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 5,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.FOR.DERIV"
+      ],
+      "competencia": "LEN.FOR.DER",
+      "entrena": "no",
+      "nota": "Provisional LEN.FOR.DERIV."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 6,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.VER.ANALISIS"
+      ],
+      "competencia": "LEN.VER.ANALISIS",
+      "entrena": "parcial",
+      "nota": "Oí y era son irregulares (fuera del generador)."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 7,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.CLA.SUSTADJ"
+      ],
+      "competencia": "LEN.CLA.ADJGRAD",
+      "entrena": "no",
+      "nota": "Grados del adjetivo (antes LEN.CLA.SUSTADJ)."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 8,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "parcial",
+      "nota": "Citar autores."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 9,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.CRONO"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "si",
+      "nota": "Ordenar autores."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 10,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.SIN.COMPL"
+      ],
+      "competencia": "LEN.SIN.COMPL",
+      "entrena": "parcial",
+      "nota": "Complemento predicativo: no se genera."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 11,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.FRACDE"
+      ],
+      "competencia": "MAT.NUM.FRAPROB",
+      "entrena": "si",
+      "nota": "Provisional MAT.NUM.FRACDE."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 12,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.UNI.TIEMPO"
+      ],
+      "competencia": "MAT.UNI.TIEM",
+      "entrena": "si",
+      "nota": "Provisional MAT.UNI.TIEMPO."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 13,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.INCOG"
+      ],
+      "competencia": "MAT.OPE.ECUAC",
+      "entrena": "parcial",
+      "nota": "Provisional MAT.OPE.INCOG."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 14,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.ORDEN"
+      ],
+      "competencia": "MAT.NUM.ORDEN",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 15,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.POR.PROPORC"
+      ],
+      "competencia": "MAT.POR.PROP",
+      "entrena": "si",
+      "nota": "Provisional MAT.POR.PROPORC."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 16,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.PRO.LAPLACE"
+      ],
+      "competencia": "MAT.PRO.LAPLACE",
+      "entrena": "no",
+      "nota": "Plantilla en borrador."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 17,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.VOLUMEN"
+      ],
+      "competencia": "MAT.GEO.VOL",
+      "entrena": "no",
+      "nota": "Provisional MAT.GEO.VOLUMEN."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 18,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.EST.CENTRAL"
+      ],
+      "competencia": "MAT.EST.CENTRAL",
+      "entrena": "no",
+      "nota": "Plantilla en borrador."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 19,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.ROM.LECTURA"
+      ],
+      "competencia": "MAT.ROM.LEER",
+      "entrena": "si",
+      "nota": "Antes MAT.ROM.LECTURA."
+    },
+    {
+      "examen": "OF.2019.A",
+      "numero": 20,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.JERARQ"
+      ],
+      "competencia": "MAT.OPE.COMB",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 1,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.RESU"
+      ],
+      "competencia": "LEN.COM.RESU",
+      "entrena": "parcial",
+      "nota": "Tema y comentario de un poema."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 2,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "si",
+      "nota": "Generación del autor: la app pregunta el movimiento de sus obras."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 3,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.REC.FIGURAS"
+      ],
+      "competencia": "LEN.REC.FIG",
+      "entrena": "no",
+      "nota": "Antes LEN.REC.FIGURAS."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 4,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.REC.FIGURAS"
+      ],
+      "competencia": "LEN.REC.DEF",
+      "entrena": "no",
+      "nota": "Definir la metáfora."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 5,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.ORT.DIA"
+      ],
+      "competencia": "LEN.ORT.DIA",
+      "entrena": "parcial",
+      "nota": "Explicar la diferencia entre si y sí; la app pide elegir la forma."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 6,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.VER.ANALISIS"
+      ],
+      "competencia": "LEN.VER.ANALISIS",
+      "entrena": "si",
+      "nota": "Formas regulares."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 7,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.CLA.SUSTADJ"
+      ],
+      "competencia": "LEN.CLA.ADJGRAD",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 8,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "parcial",
+      "nota": "Citar autores."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 9,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.CRONO"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "si",
+      "nota": "Ordenar autores."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 10,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.SIN.COMPL"
+      ],
+      "competencia": "LEN.SIN.COMPL",
+      "entrena": "parcial",
+      "nota": "Verbo semicopulativo con predicativo: no se genera."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 11,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.FRACSUM"
+      ],
+      "competencia": "MAT.NUM.FRAOP",
+      "entrena": "si",
+      "nota": "Antes MAT.OPE.FRACSUM."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 12,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.UNI.TIEMPO"
+      ],
+      "competencia": "MAT.UNI.TIEM",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 13,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.INCOG"
+      ],
+      "competencia": "MAT.OPE.ECUAC",
+      "entrena": "parcial",
+      "nota": "Provisional MAT.OPE.INCOG."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 14,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.ORDEN"
+      ],
+      "competencia": "MAT.NUM.ORDEN",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 15,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.UNI.VOLCAP"
+      ],
+      "competencia": "MAT.GEO.VOL",
+      "entrena": "no",
+      "nota": "Provisional MAT.UNI.VOLCAP: el paso a litros se practica en MAT.UNI.VOL, pero el volumen del prisma no."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 16,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.EST.CENTRAL"
+      ],
+      "competencia": "MAT.EST.CENTRAL",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 17,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.EST.FRECUENCIAS"
+      ],
+      "competencia": "MAT.EST.FREC",
+      "entrena": "no",
+      "nota": "Provisional MAT.EST.FRECUENCIAS."
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 18,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.AREAS"
+      ],
+      "competencia": "MAT.GEO.AREA",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 19,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.ROM.ESCRITURA"
+      ],
+      "competencia": "MAT.ROM.ESCR",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2019.O",
+      "numero": 20,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.JERARQ"
+      ],
+      "competencia": "MAT.OPE.COMB",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 1,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.RESU"
+      ],
+      "competencia": "LEN.COM.RESU",
+      "entrena": "parcial",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 2,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.TIPO"
+      ],
+      "competencia": "LEN.COM.TIPO",
+      "entrena": "parcial",
+      "nota": "Identificar el tipo y enumerar características."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 3,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.CTX"
+      ],
+      "competencia": "LEN.LEX.CTX",
+      "entrena": "parcial",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 4,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.VER.ANALISIS"
+      ],
+      "competencia": "LEN.VER.ANALISIS",
+      "entrena": "si",
+      "nota": "Sonrío es irregular; perdiste y hundiré, regulares."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 5,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.POLI"
+      ],
+      "competencia": "LEN.LEX.POLI",
+      "entrena": "parcial",
+      "nota": "Explicar dos acepciones."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 6,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.INFER"
+      ],
+      "competencia": "LEN.COM.INFER",
+      "entrena": "parcial",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 7,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.MET.MEDIDA"
+      ],
+      "competencia": "LEN.MET.MED",
+      "entrena": "no",
+      "nota": "Provisional LEN.MET.MEDIDA."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 8,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.REC.FIGURAS"
+      ],
+      "competencia": "LEN.REC.DEF",
+      "entrena": "no",
+      "nota": "Definir metáfora, homónimas, verso libre y comparación."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 9,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.ORT.DIA"
+      ],
+      "competencia": "LEN.ORT.DIA",
+      "entrena": "si",
+      "nota": "Elegir entre dos formas con tilde diacrítica."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 10,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.SIN.COMPL"
+      ],
+      "competencia": "LEN.SIN.COMPL",
+      "entrena": "parcial",
+      "nota": "Complemento del nombre: no se genera."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 11,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.DIV.MCD"
+      ],
+      "competencia": "MAT.DIV.MCD",
+      "entrena": "no",
+      "nota": "Plantilla en borrador."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 12,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.ORDEN"
+      ],
+      "competencia": "MAT.NUM.ORDEN",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 13,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.JERARQ"
+      ],
+      "competencia": "MAT.OPE.JER",
+      "entrena": "parcial",
+      "nota": "Jerarquía con decimales: el generador solo usa naturales."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 14,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.UNI.CONV"
+      ],
+      "competencia": "MAT.UNI.LMC",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 15,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.AREAS"
+      ],
+      "competencia": "MAT.GEO.AREA",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 16,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.POR.PORCENT"
+      ],
+      "competencia": "MAT.POR.CALC",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 17,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.EST.CENTRAL"
+      ],
+      "competencia": "MAT.EST.CENTRAL",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 18,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.POT10"
+      ],
+      "competencia": "MAT.OPE.POT",
+      "entrena": "no",
+      "nota": "Provisional MAT.NUM.POT10."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 19,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.POR.PROPORC"
+      ],
+      "competencia": "MAT.POR.PROP",
+      "entrena": "si",
+      "nota": "Reducción a la unidad con decimales."
+    },
+    {
+      "examen": "OF.2022.O",
+      "numero": 20,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.VOLUMEN"
+      ],
+      "competencia": "MAT.GEO.VOL",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 1,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.RESU"
+      ],
+      "competencia": "LEN.COM.RESU",
+      "entrena": "parcial",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 2,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "parcial",
+      "nota": "Autor y contexto histórico."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 3,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.MOVIM"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "no",
+      "nota": "Corrientes del Barroco (culteranismo y conceptismo): no hay contenido."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 4,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.CTX"
+      ],
+      "competencia": "LEN.LEX.CTX",
+      "entrena": "parcial",
+      "nota": "Definir palabras."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 5,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.VER.ANALISIS"
+      ],
+      "competencia": "LEN.VER.ANALISIS",
+      "entrena": "parcial",
+      "nota": "Es, estuvieras y visto son irregulares."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 6,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.SIN"
+      ],
+      "competencia": "LEN.LEX.SIN",
+      "entrena": "parcial",
+      "nota": "Escribir sinónimos y antónimos; la app pide elegirlos."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 7,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.ORT.AGU"
+      ],
+      "competencia": "LEN.ORT.AGU",
+      "entrena": "parcial",
+      "nota": "Tildes en un texto con contexto: la app trabaja palabras y frases sueltas."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 8,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.DEFIN"
+      ],
+      "competencia": "LEN.LEX.DICC",
+      "entrena": "parcial",
+      "nota": "Provisional LEN.LEX.DEFIN: escribir la palabra de una definición."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 9,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.FOR.DERIV"
+      ],
+      "competencia": "LEN.FOR.DER",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 10,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.SIN.COMPL"
+      ],
+      "competencia": "LEN.SIN.COMPL",
+      "entrena": "si",
+      "nota": "S + V + CD + CI (nivel 5)."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 11,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.ORDEN"
+      ],
+      "competencia": "MAT.NUM.ORDEN",
+      "entrena": "parcial",
+      "nota": "Hay que calcular expresiones antes de ordenar."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 12,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.FRACSUM"
+      ],
+      "competencia": "MAT.NUM.FRAOP",
+      "entrena": "si",
+      "nota": "Combinada con corchetes (nivel 6)."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 13,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.DESCOMP"
+      ],
+      "competencia": "MAT.NUM.VALPOS",
+      "entrena": "no",
+      "nota": "Provisional MAT.NUM.DESCOMP."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 14,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.DIV.MCM"
+      ],
+      "competencia": "MAT.DIV.MCM",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 15,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.POR.PROPORC"
+      ],
+      "competencia": "MAT.POR.PROP",
+      "entrena": "no",
+      "nota": "Trabajo conjunto (proporcionalidad inversa): no se genera."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 16,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.UNI.CONV"
+      ],
+      "competencia": "MAT.UNI.LMC",
+      "entrena": "si",
+      "nota": "Suma de cantidades complejas (nivel 5)."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 17,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.VOLUMEN"
+      ],
+      "competencia": "MAT.GEO.VOL",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 18,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.COORD"
+      ],
+      "competencia": "MAT.GEO.CART",
+      "entrena": "no",
+      "nota": "Provisional MAT.GEO.COORD."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 19,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.PRO.CONCEPTOS"
+      ],
+      "competencia": "MAT.PRO.SUCESOS",
+      "entrena": "no",
+      "nota": "Provisional MAT.PRO.CONCEPTOS."
+    },
+    {
+      "examen": "OF.2024.O",
+      "numero": 20,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.EST.CENTRAL"
+      ],
+      "competencia": "MAT.EST.CENTRAL",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 1,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.RESU"
+      ],
+      "competencia": "LEN.COM.RESU",
+      "entrena": "parcial",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 2,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "parcial",
+      "nota": "Autor, Generación del 27 y rasgos."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 3,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.INFER"
+      ],
+      "competencia": "LEN.COM.INFER",
+      "entrena": "parcial",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 4,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.CLA.SUSTADJ"
+      ],
+      "competencia": "LEN.CLA.JUST",
+      "entrena": "no",
+      "nota": "Clase de palabra con justificación (antes LEN.CLA.SUSTADJ)."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 5,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.CAMPO",
+        "LEN.LEX.SIN"
+      ],
+      "competencia": "LEN.LEX.CAMPO",
+      "entrena": "parcial",
+      "nota": "Escribir palabras de la familia y del campo; también LEN.LEX.SIN."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 6,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.REC.FIGURAS"
+      ],
+      "competencia": "LEN.REC.FIG",
+      "entrena": "no",
+      "nota": "También métrica."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 7,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.ORT.HOM"
+      ],
+      "competencia": "LEN.ORT.HOM",
+      "entrena": "si",
+      "nota": "Elegir la forma en frases con hueco."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 8,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.REC.FIGURAS"
+      ],
+      "competencia": "LEN.REC.DEF",
+      "entrena": "no",
+      "nota": "Relacionar término y definición."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 9,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.FOR.DERIV"
+      ],
+      "competencia": "LEN.FOR.CLAS",
+      "entrena": "no",
+      "nota": "Primitivas, derivadas y compuestas."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 10,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.SIN.SUJPRED"
+      ],
+      "competencia": "LEN.SIN.SUJPRED",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 11,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.FRACDE"
+      ],
+      "competencia": "MAT.NUM.FRAPROB",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 12,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.UNI.TIEMPO"
+      ],
+      "competencia": "MAT.UNI.TIEM",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 13,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.INCOG"
+      ],
+      "competencia": "MAT.OPE.ECUAC",
+      "entrena": "parcial",
+      "nota": "Provisional MAT.OPE.INCOG."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 14,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.ORDEN"
+      ],
+      "competencia": "MAT.NUM.ORDEN",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 15,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.POR.PROPORC"
+      ],
+      "competencia": "MAT.POR.PROP",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 16,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.PRO.LAPLACE"
+      ],
+      "competencia": "MAT.PRO.LAPLACE",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 17,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.VOLUMEN"
+      ],
+      "competencia": "MAT.GEO.VOL",
+      "entrena": "no",
+      "nota": "El paso de m³ a litros se practica en MAT.UNI.VOL, pero el volumen del prisma no."
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 18,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.EST.CENTRAL"
+      ],
+      "competencia": "MAT.EST.CENTRAL",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 19,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.ROM.LECTURA"
+      ],
+      "competencia": "MAT.ROM.LEER",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.A",
+      "numero": 20,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.JERARQ"
+      ],
+      "competencia": "MAT.OPE.COMB",
+      "entrena": "si",
+      "nota": "Con llaves (nivel 5)."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 1,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.RESU"
+      ],
+      "competencia": "LEN.COM.RESU",
+      "entrena": "parcial",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 2,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.COM.TIPO"
+      ],
+      "competencia": "LEN.COM.TIPO",
+      "entrena": "parcial",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 3,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "competencia": "LEN.LIT.HIST",
+      "entrena": "parcial",
+      "nota": "Contextualizar el fragmento y nombrar obra y autor."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 4,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.FOR.DERIV"
+      ],
+      "competencia": "LEN.FOR.DER",
+      "entrena": "no",
+      "nota": "Prefijos y su significado."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 5,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.LEX.DICC"
+      ],
+      "competencia": "LEN.LEX.DICC",
+      "entrena": "parcial",
+      "nota": "Explicar qué es un diccionario."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 6,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.CLA.VERBO"
+      ],
+      "competencia": "LEN.CLA.VAR",
+      "entrena": "no",
+      "nota": "Análisis morfológico (antes LEN.CLA.VERBO)."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 7,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.VER.NORMA"
+      ],
+      "competencia": "LEN.VER.IRREG",
+      "entrena": "no",
+      "nota": "Provisional LEN.VER.NORMA (anduve/andé)."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 8,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.REC.FIGURAS"
+      ],
+      "competencia": "LEN.REC.DEF",
+      "entrena": "no",
+      "nota": "Narrador, novela, hipérbole y adjetivo."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 9,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.CLA.SUSTADJ"
+      ],
+      "competencia": "LEN.CLA.VAR",
+      "entrena": "no",
+      "nota": "Clases de palabras por su definición."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 10,
+      "area": "LEN",
+      "competenciaOriginal": [
+        "LEN.SIN.COMPL"
+      ],
+      "competencia": "LEN.SIN.COMPL",
+      "entrena": "si",
+      "nota": "S + V + CD + CCL."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 11,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.EQUIV"
+      ],
+      "competencia": "MAT.NUM.EQUIV",
+      "entrena": "no",
+      "nota": "Antes MAT.OPE.EQUIV."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 12,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.NUM.POT10"
+      ],
+      "competencia": "MAT.OPE.POT",
+      "entrena": "no",
+      "nota": "Provisional MAT.NUM.POT10."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 13,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.OPE.FRACSUM"
+      ],
+      "competencia": "MAT.NUM.FRAPROB",
+      "entrena": "si",
+      "nota": "Fracción del resto (antes MAT.OPE.FRACSUM)."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 14,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.UNI.LONG"
+      ],
+      "competencia": "MAT.UNI.LMC",
+      "entrena": "si",
+      "nota": "Antes MAT.UNI.LONG."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 15,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.PRO.LAPLACE"
+      ],
+      "competencia": "MAT.PRO.SUCESOS",
+      "entrena": "no",
+      "nota": "Probabilidad estimada por la frecuencia relativa."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 16,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.POR.PORCENT"
+      ],
+      "competencia": "MAT.POR.CALC",
+      "entrena": "si",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 17,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.GEO.AREAS"
+      ],
+      "competencia": "MAT.GEO.AREA",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 18,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.DIV.CRITERIOS"
+      ],
+      "competencia": "MAT.DIV.REGLAS",
+      "entrena": "no",
+      "nota": "Provisional MAT.DIV.CRITERIOS."
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 19,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.EST.FRECUENCIAS"
+      ],
+      "competencia": "MAT.EST.FREC",
+      "entrena": "no",
+      "nota": ""
+    },
+    {
+      "examen": "OF.2026.O",
+      "numero": 20,
+      "area": "MAT",
+      "competenciaOriginal": [
+        "MAT.POR.ESCALAS"
+      ],
+      "competencia": "MAT.UNI.ESC",
+      "entrena": "si",
+      "nota": "Provisional MAT.POR.ESCALAS."
+    }
+  ]
+}
