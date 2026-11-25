@@ -254,7 +254,7 @@ final class ServicioSesion {
         case .competencia(let id):
             return try prepararPractica(id, esReciente: esReciente)
         case .pruebaNivel(let id):
-            let items = ConstructorCamino(banco: banco).itemsPruebaNivel(id).shuffled(using: &rng)
+            let items = ConstructorCamino(banco: banco).itemsPruebaNivel(id).shuffled(using: &rng).sinPreguntasRepetidas()
                 .prefix(ConfiguracionCamino.estandar.itemsPruebaNivel).map { ItemRonda(itemId: $0.id, motivo: .pruebaNivel) }
             return RondaPreparada(tipo: tipo, items: items.count == ConfiguracionCamino.estandar.itemsPruebaNivel ? Array(items) : [],
                                   competenciaEnCurso: id, teoriaPrevia: [])

@@ -39,7 +39,8 @@ extension ServicioSesion {
         let peldano = try estado(competencia: id).escalera.peldano
         let candidatos = ConstructorRondas(banco: banco, config: configRonda).candidatos(competencia: id, peldano: peldano).shuffled(using: &rng)
         let ordenados = candidatos.filter { !esReciente($0.id) } + candidatos.filter { esReciente($0.id) }
-        let items = ordenados.prefix(configRonda.objetivo).map { ItemRonda(itemId: $0.id, motivo: .practica) }
+        // Sin preguntas repetidas en la ronda aunque cambie el id (D-087).
+        let items = ordenados.sinPreguntasRepetidas().prefix(configRonda.objetivo).map { ItemRonda(itemId: $0.id, motivo: .practica) }
         let teoria = peldano == 1 ? banco.teoria(competencia: id).map(\.id) : []
         return RondaPreparada(tipo: .competencia(id), items: Array(items), competenciaEnCurso: id, teoriaPrevia: teoria)
     }
@@ -80,10 +81,10 @@ extension ServicioSesion {
 
     // MARK: Supervivencia
 
-    func siguienteSupervivencia(dificultad: Int, area: String?, usados: Set<String>) throws -> Item? {
+    func siguienteSupervivencia(dificultad: Int, area: String?, usados: Set<String>, huellas: Set<String>? = nil) throws -> Item? {
         let selector = SelectorSupervivencia(banco: banco)
         let debilidades = selector.debilidades(estados: try repositorio.estadosCompetencia(), diagnostico: try repositorio.diagnostico())
-        return selector.siguiente(dificultad: dificultad, area: area, debilidades: debilidades, usados: usados, rng: &rng)
+        return selector.siguiente(dificultad: dificultad, area: area, debilidades: debilidades, usados: usados, huellasUsadas: huellas, rng: &rng)
     }
 
     func recordsSupervivencia() throws -> RecordsSupervivencia {

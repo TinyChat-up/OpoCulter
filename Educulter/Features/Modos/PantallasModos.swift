@@ -320,7 +320,10 @@ struct PantallaRescate: View {
             }
         }
         .background(Paleta.fondo.ignoresSafeArea())
-        .sheet(item: $itemVisto) { item in VistaItemRepaso(item: item, nombre: nombre(item.competencia)) }
+        .sheet(item: $itemVisto) { item in
+            let texto = servicio.banco.texto(de: item)
+            VistaItemRepaso(item: item, nombre: nombre(item.competencia), texto: texto, anio: texto.flatMap { servicio.banco.anio(de: $0) })
+        }
         .onAppear { grupos = (try? servicio.gruposRescate()) ?? [] }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaRescate")
@@ -373,6 +376,9 @@ struct PantallaRescate: View {
 struct VistaItemRepaso: View {
     let item: Item
     let nombre: String
+    /// Texto base del ítem (comprensión), que se muestra entero encima del enunciado.
+    var texto: TextoBase? = nil
+    var anio: Int? = nil
     @Environment(\.dismiss) private var cerrar
 
     var body: some View {
@@ -388,6 +394,9 @@ struct VistaItemRepaso: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
                     Text(nombre.uppercased()).font(.caption.weight(.semibold)).foregroundStyle(Paleta.tinta(competencia: item.competencia))
+                    if let texto {
+                        VistaTextoBase(texto: texto, anio: anio, plegado: .constant(false), plegable: false)
+                    }
                     Text(item.enunciado).font(.title3.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
                     TarjetaSuperficie {
                         VStack(alignment: .leading, spacing: Espacio.s) {

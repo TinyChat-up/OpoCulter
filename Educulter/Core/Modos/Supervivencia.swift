@@ -137,8 +137,9 @@ struct SelectorSupervivencia: Sendable {
         return r
     }
 
+    /// `huellasUsadas`: huellas de las preguntas ya vistas (si no se dan, se calculan desde `usados`).
     func siguiente(dificultad: Int, area: String?, debilidades: [String: Double], usados: Set<String>,
-                   rng: inout GeneradorConSemilla) -> Item? {
+                   huellasUsadas: Set<String>? = nil, rng: inout GeneradorConSemilla) -> Item? {
         let disponibles = bloques(area: area)
         guard !disponibles.isEmpty else { return nil }
         let pesos = disponibles.map { PesosSupervivencia.peso($0, debilidad: debilidades[$0] ?? 0.5) }
@@ -148,8 +149,22 @@ struct SelectorSupervivencia: Sendable {
             if tirada < w { bloque = b; break }
             tirada -= w
         }
-        // Fuentes exactas: estáticos de esa dificultad no usados y plantillas del bloque.
-        let exactos = estaticos(bloque).filter { $0.dificultad == dificultad && !usados.contains($0.id) }
+        // Preguntas ya vistas en la partida (aunque otro id genere la misma, D-087).
+        let huellas = huellasUsadas ?? Set(usados.compactMap { banco.item(id: $0).map(banco.huella) })
+        // El bloque sorteado y, si ya no le quedan preguntas nuevas, los demás: solo se repite una
+        // pregunta cuando no queda ninguna nueva en el área.
+        if let item = nueva(bloque, dificultad: dificultad, usados: usados, huellas: huellas, rng: &rng) { return item }
+        for otro in disponibles.filter({ $0 != bloque }).shuffled(using: &rng) {
+            if let item = nueva(otro, dificultad: dificultad, usados: usados, huellas: huellas, rng: &rng) { return item }
+        }
+        return estaticos(bloque).randomElement(using: &rng)
+    }
+
+    /// Una pregunta no vista del bloque: estático de la dificultad exacta o generada a esa
+    /// dificultad; si no, el estático no visto de dificultad más cercana.
+    private func nueva(_ bloque: String, dificultad: Int, usados: Set<String>, huellas: Set<String>,
+                       rng: inout GeneradorConSemilla) -> Item? {
+        let exactos = estaticos(bloque).filter { $0.dificultad == dificultad && !usados.contains($0.id) && !huellas.contains(banco.huella($0)) }
         let fuentes = plantillas(bloque)
         let total = exactos.count + fuentes.count
         if total > 0 {
@@ -158,16 +173,14 @@ struct SelectorSupervivencia: Sendable {
             let p = MotorGeneradores.ajustada(fuentes[k - exactos.count], dificultad: dificultad)
             for _ in 0..<10 {
                 let semilla = UInt64.random(in: 0...999_999, using: &rng)
-                if let item = try? MotorGeneradores.generar(p, semilla: semilla, recursos: banco.recursos), !usados.contains(item.id) {
+                if let item = try? MotorGeneradores.generar(p, semilla: semilla, recursos: banco.recursos), !usados.contains(item.id),
+                   !huellas.contains(item.huella) {
                     return item
                 }
             }
         }
-        // Sin fuente exacta: el estático no usado de dificultad más cercana.
-        let resto = estaticos(bloque).filter { !usados.contains($0.id) }
-        guard let cercania = resto.map({ abs($0.dificultad - dificultad) }).min() else {
-            return estaticos(bloque).randomElement(using: &rng)
-        }
+        let resto = estaticos(bloque).filter { !usados.contains($0.id) && !huellas.contains(banco.huella($0)) }
+        guard let cercania = resto.map({ abs($0.dificultad - dificultad) }).min() else { return nil }
         return resto.filter { abs($0.dificultad - dificultad) == cercania }.randomElement(using: &rng)
     }
 }

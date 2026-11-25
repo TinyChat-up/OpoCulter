@@ -113,15 +113,16 @@ struct ConstructorCamino: Sendable {
 
     /// Los 8 ítems del Reto: estáticos válidos y, si faltan, generados a dificultad 4–5 y peldaño ≥ 3.
     func itemsReto(_ bloque: String, rng: inout GeneradorConSemilla) -> [Item] {
-        var items = Array(estaticosReto(bloque).shuffled(using: &rng).prefix(config.itemsReto))
+        var items = Array(estaticosReto(bloque).shuffled(using: &rng).sinPreguntasRepetidas().prefix(config.itemsReto))
         let plantillas = plantillasReto(bloque)
         var intentos = 0
         while items.count < config.itemsReto, !plantillas.isEmpty, intentos < 200 {
             intentos += 1
             let base = plantillas.randomElement(using: &rng)!
             let p = MotorGeneradores.ajustada(base, dificultad: config.dificultadesReto.randomElement(using: &rng)!, peldano: max(3, base.peldano))
+            // Sin preguntas repetidas aunque cambie el id (D-087).
             if let item = try? MotorGeneradores.generar(p, semilla: UInt64.random(in: 0...999_999, using: &rng), recursos: banco.recursos),
-               !items.contains(where: { $0.id == item.id }) {
+               !items.contains(where: { $0.id == item.id || $0.huella == item.huella }) {
                 items.append(item)
             }
         }

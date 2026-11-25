@@ -10,6 +10,8 @@ struct PantallaRonda: View {
     /// XP que muestra el contador de la cabecera (se actualiza cuando aterriza el vuelo).
     @State private var xpMostrado = 0
     @State private var vuelo: VueloXP.Datos?
+    /// Panel del texto base plegado (se conserva entre ítems; se despliega con cada texto nuevo).
+    @State private var textoPlegado = false
     @Environment(\.accessibilityReduceMotion) private var reducir
     @Environment(\.dynamicTypeSize) private var tamano
     @Environment(\.vibracionActiva) private var vibracionActiva
@@ -98,6 +100,14 @@ struct PantallaRonda: View {
         let acento = item.map { Paleta.acento(competencia: $0.competencia) } ?? Paleta.matematicas
         return VStack(spacing: 0) {
             cabecera(acento: acento)
+            if let texto = modelo.textoBase {
+                // Texto base fijo arriba: el ítem se responde debajo sin perderlo de vista.
+                VistaTextoBase(texto: texto, anio: modelo.anioTextoBase, plegado: $textoPlegado,
+                               altoMaximo: tamano.isAccessibilitySize ? 220 : 260)
+                    .padding(.horizontal, Espacio.l)
+                    .padding(.bottom, Espacio.s)
+                    .transition(Movimiento.transicion(reducir: reducir))
+            }
             GeometryReader { geo in
             ScrollView {
                 if let item {
@@ -180,6 +190,9 @@ struct PantallaRonda: View {
                 withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { xpMostrado = nuevo }
                 if vuelo?.id == datos.id { vuelo = nil }
             }
+        }
+        .onChange(of: modelo.textoBase?.id) { anterior, nuevo in
+            if nuevo != nil && nuevo != anterior { textoPlegado = false }
         }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaRonda")

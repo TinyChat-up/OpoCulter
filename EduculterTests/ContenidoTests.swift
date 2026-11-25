@@ -14,12 +14,13 @@ struct ContenidoEmpaquetadoTests {
     func cargaCompleta() throws {
         let banco = try cargador.cargar(politica: .todos)
         // 25 borradores de prueba + LEN.ORT (50 ítems y 5 tarjetas) + MAT.NUM (9 ítems y 2 tarjetas)
-        // + lote 03a: LEN.LEX (30 ítems y 4 tarjetas).
-        #expect(banco.numeroEstaticos == 114)
-        // Fase 05C: 8 plantillas de prueba (borrador) que siguen + 38 del lote 02 + 4 del lote 02b (borrador).
+        // + lote 03a: LEN.LEX (30 ítems y 4 tarjetas) y LEN.COM (19 ítems y 4 tarjetas).
+        #expect(banco.numeroEstaticos == 133)
+        // Fase 05C: 8 plantillas de prueba (borrador) que siguen + 38 del lote 02 + 4 del lote 02b.
         #expect(banco.plantillas.count == 50)
-        #expect(banco.items.count > 114)
-        #expect(banco.teoria.count == 13)
+        #expect(banco.items.count > 133)
+        #expect(banco.teoria.count == 17)
+        #expect(banco.textos.count == 5 && banco.literatura?.autores.count == 142)
         #expect(banco.simulacros.count == 1)
         #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber ítems de todas las mecánicas")
         for m in Mecanica.allCases { #expect(banco.items.filter { $0.mecanica == m }.count >= 3, "Al menos 3 ítems de \(m)") }
@@ -47,17 +48,20 @@ struct ContenidoEmpaquetadoTests {
         #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 38)
         #expect(release.teoria.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.simulacros.allSatisfy { $0.validacion.estado == .aprobado })
-        // Aprobado: LEN.ORT (50 ítems y 5 tarjetas), MAT.NUM (9 y 2) y LEN.LEX (30 y 4, lote 03a);
-        // ningún borrador. Lote 02: además, variantes de las plantillas aprobadas.
-        #expect(release.itemsEstaticos.count == 89)
+        // Aprobado: LEN.ORT (50 ítems y 5 tarjetas), MAT.NUM (9 y 2), LEN.LEX (30 y 4) y LEN.COM (19 y 4,
+        // lote 03a); ningún borrador. Lote 02: además, variantes de las plantillas aprobadas.
+        #expect(release.itemsEstaticos.count == 108)
         #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 50)
         #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 9)
         #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.LEX.") }.count == 30)
-        #expect(release.items.count > 89)
+        #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 19)
+        #expect(release.items.count > 108)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 5)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 2)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.LEX.") }.count == 4)
-        #expect(release.teoria.count == 11)
+        #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 4)
+        #expect(release.teoria.count == 15)
+        #expect(release.textos.count == 5)
         #expect(release.items.allSatisfy { $0.validacion.revisor == "direccion" })
         #expect(release.simulacros.isEmpty)
         #expect(todos.items.contains { $0.validacion.estado == .borrador })

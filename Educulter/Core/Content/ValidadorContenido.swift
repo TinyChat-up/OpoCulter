@@ -75,6 +75,21 @@ struct ValidadorContenido: Sendable {
             }
             errores += validar(simulacro: simulacro, competencias: competencias)
         }
+
+        // Textos base y referencias desde los ítems (D-085).
+        vistos.removeAll()
+        for texto in banco.textos {
+            if !vistos.insert(texto.id).inserted {
+                errores.append(.init(elemento: texto.id, mensaje: "id de texto base duplicado"))
+            }
+            errores += validar(texto: texto)
+        }
+        for item in banco.itemsEstaticos {
+            if let ref = item.textoRef, banco.texto(id: ref) == nil {
+                errores.append(.init(elemento: item.id, mensaje: "el texto base «\(ref)» no existe (o no está cargado con esta política)"))
+            }
+        }
+        if let literatura = banco.literatura { errores += validar(literatura: literatura) }
         if !banco.recursos.compatibilidad.vacia { errores += validar(compatibilidad: banco.recursos.compatibilidad) }
         return errores
     }
@@ -163,6 +178,9 @@ struct ValidadorContenido: Sendable {
             for error in item.erroresHabituales where !["partes", "coloreadas"].contains(error.respuesta) {
                 mensajes.append("el error habitual «\(error.respuesta)» no es partes ni coloreadas")
             }
+        }
+        if let ref = item.textoRef, !Self.coincide(ref, Self.patronTexto) {
+            mensajes.append("textoRef «\(ref)» no tiene el formato TXT.XXX.CLAVE")
         }
         for examen in item.referencia?.examenes ?? [] where !Self.coincide(examen, "[0-9]{4}-[LM][0-9]{1,2}") {
             mensajes.append("referencia de examen «\(examen)» no válida (formato AAAA-L9 o AAAA-M9)")
@@ -470,6 +488,70 @@ struct ValidadorContenido: Sendable {
         }
         m += validar(validacion: simulacro.validacion)
         return m.map { ErrorValidacion(elemento: simulacro.id, mensaje: $0) }
+    }
+
+    // MARK: - Textos base (D-085) y base literaria (D-078, D-079)
+
+    /// Formato del id de un texto base: `TXT.<origen>.<clave>` (p. ej. `TXT.ORI.ABEJAS`).
+    static let patronTexto = "TXT\\.[A-Z]{3}\\.[A-Z0-9]{2,16}"
+
+    func validar(texto t: TextoBase) -> [ErrorValidacion] {
+        var m: [String] = []
+        if !Self.coincide(t.id, Self.patronTexto) { m.append("el id debe tener el formato TXT.XXX.CLAVE") }
+        if t.titulo.isEmpty { m.append("título vacío") }
+        if t.tipo.isEmpty { m.append("tipo vacío") }
+        if t.texto.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { m.append("texto vacío") }
+        // Dominio público: año de muerte obligatorio y más de 80 años (validar(procedencia:)); el
+        // autor del texto es el de la procedencia.
+        if t.procedencia.tipo == .dominioPublico, t.autor != t.procedencia.autorTexto {
+            m.append("el autor «\(t.autor ?? "")» no coincide con procedencia.autorTexto «\(t.procedencia.autorTexto ?? "")»")
+        }
+        if t.procedencia.tipo == .original, t.esLiterario {
+            m.append("un texto original de la dirección no lleva autor")
+        }
+        m += validar(procedencia: t.procedencia) + validar(validacion: t.validacion)
+        return m.map { ErrorValidacion(elemento: t.id, mensaje: $0) }
+    }
+
+    /// Reglas de la base literaria (las de `scripts/validar_literatura.py`).
+    func validar(literatura b: BaseLiteraria) -> [ErrorValidacion] {
+        var errores: [ErrorValidacion] = []
+        func error(_ id: String, _ m: String) { errores.append(.init(elemento: "literatura · \(id)", mensaje: m)) }
+        if b.version < 1 { error("version", "la versión debe ser 1 o mayor") }
+        var ids = Set<String>()
+        for mv in b.movimientos {
+            if !ids.insert(mv.id).inserted { error(mv.id, "id de movimiento duplicado") }
+            if mv.nombre.isEmpty { error(mv.id, "nombre vacío") }
+            if mv.rasgos.count != 2 || mv.rasgos.contains(where: \.isEmpty) { error(mv.id, "un movimiento lleva exactamente dos rasgos") }
+            if let fin = mv.fin, fin < mv.inicio { error(mv.id, "termina antes de empezar") }
+        }
+        let movimientos = Set(b.movimientos.map(\.id))
+        ids.removeAll()
+        for a in b.autores {
+            if !ids.insert(a.id).inserted { error(a.id, "id de autor duplicado") }
+            if a.nombre.isEmpty || a.rasgo.isEmpty { error(a.id, "nombre o rasgo vacíos") }
+            if !movimientos.contains(a.movimiento) { error(a.id, "el movimiento «\(a.movimiento)» no existe") }
+            if !BaseLiteraria.ambitos.contains(a.ambito) { error(a.id, "ámbito «\(a.ambito)» no válido") }
+            if a.generos.isEmpty || !Set(a.generos).isSubset(of: BaseLiteraria.generos) { error(a.id, "géneros no válidos: \(a.generos)") }
+            if a.obras.isEmpty { error(a.id, "sin obras") }
+            if let n = a.nacimiento, let m = a.muerte, n >= m { error(a.id, "el nacimiento (\(n)) no es anterior a la muerte (\(m))") }
+            for o in a.obras {
+                if o.titulo.isEmpty { error(a.id, "obra sin título") }
+                if !BaseLiteraria.generos.contains(o.genero) { error(a.id, "«\(o.titulo)»: género «\(o.genero)» no válido") }
+                // Año de la obra entre el nacimiento y la muerte + 10 (ediciones póstumas).
+                if let anio = o.anio, let n = a.nacimiento, anio < n { error(a.id, "«\(o.titulo)» (\(anio)) es anterior al nacimiento") }
+                if let anio = o.anio, let m = a.muerte, anio > m + 10 { error(a.id, "«\(o.titulo)» (\(anio)) es posterior a la muerte + 10") }
+            }
+            // Dominio público: muerte hace más de 80 años, o autor anónimo o antiguo (sin fechas).
+            // Con nacimiento y sin muerte, el autor está vivo.
+            let dominio: Bool
+            if let m = a.muerte { dominio = anioActual - m > Self.aniosDominioPublico }
+            else { dominio = a.nacimiento == nil }
+            if a.dominioPublico != dominio { error(a.id, "dominioPublico debería ser \(dominio)") }
+            let fragmentos = a.dominioPublico && BaseLiteraria.ambitosConFragmentos.contains(a.ambito)
+            if a.fragmentosPermitidos != fragmentos { error(a.id, "fragmentosPermitidos debería ser \(fragmentos)") }
+        }
+        return errores
     }
 
     /// Coherencia de `compatibilidad.json` (D-086): conjugación según el infinitivo, etiquetas de

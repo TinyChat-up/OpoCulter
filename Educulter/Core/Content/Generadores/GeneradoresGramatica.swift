@@ -455,7 +455,10 @@ struct GeneradorFraseHueco: GeneradorItems {
             let de = validas.filter { $0.dificultad == d }
             if !de.isEmpty { return de }
         }
-        return validas
+        // Sin frases de ese nivel ni de los inferiores: las del nivel más fácil que haya (no todas,
+        // para que la dificultad no decrezca con el nivel pedido).
+        guard let minimo = validas.map(\.dificultad).min() else { return [] }
+        return validas.filter { $0.dificultad == minimo }
     }
 
     /// Respeta la mayúscula inicial de la forma correcta.

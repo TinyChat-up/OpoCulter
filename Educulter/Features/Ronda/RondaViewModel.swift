@@ -128,6 +128,10 @@ final class RondaViewModel: Identifiable {
         itemActual.map { DescripcionSolucion.texto($0.payload) }
     }
 
+    /// Texto base del ítem en curso (comprensión, D-085) y año de su obra si es literario.
+    var textoBase: TextoBase? { itemActual.flatMap { banco.texto(de: $0) } }
+    var anioTextoBase: Int? { textoBase.flatMap { banco.anio(de: $0) } }
+
     var teoriaDelItem: TarjetaTeoria? {
         itemActual.flatMap { banco.teoria(competencia: $0.competencia).first }
     }
@@ -202,7 +206,8 @@ final class RondaViewModel: Identifiable {
         // Supervivencia y diagnóstico piden el siguiente ítem al terminar el anterior.
         if let estado = supervivencia {
             if !estado.terminada,
-               let siguiente = try? servicio.siguienteSupervivencia(dificultad: estado.dificultad, area: areaSupervivencia, usados: Set(items.map(\.id))) {
+               let siguiente = try? servicio.siguienteSupervivencia(dificultad: estado.dificultad, area: areaSupervivencia, usados: Set(items.map(\.id)),
+                                                                 huellas: Set(items.map(\.huella))) {
                 items.append(siguiente)
                 ronda.items.append(ItemRonda(itemId: siguiente.id, motivo: .supervivencia))
             }

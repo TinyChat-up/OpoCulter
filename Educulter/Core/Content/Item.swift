@@ -47,6 +47,11 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
     var procedencia: Procedencia
     var validacion: Validacion
     var version: Int
+    /// Id del texto base que se muestra junto al enunciado (comprensión, lote 03a, D-085).
+    var textoRef: String?
+    /// `tipo|clave` del caso para los ítems generados (D-087): dos ítems con la misma clave son la
+    /// misma pregunta aunque cambie la semilla o la plantilla. `nil` en los estáticos.
+    var claveGenerada: String?
 
     var mecanica: Mecanica { payload.mecanica }
 
@@ -54,7 +59,8 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         id: String, competencia: String, peldano: Int, dificultad: Int, objetivo: String,
         enunciado: String, payload: Payload, pistas: [String] = [], explicacion: String,
         erroresHabituales: [ErrorHabitual] = [], referencia: Referencia? = nil,
-        procedencia: Procedencia, validacion: Validacion, version: Int = 1
+        procedencia: Procedencia, validacion: Validacion, version: Int = 1, textoRef: String? = nil,
+        claveGenerada: String? = nil
     ) {
         self.id = id
         self.competencia = competencia
@@ -70,11 +76,13 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         self.procedencia = procedencia
         self.validacion = validacion
         self.version = version
+        self.textoRef = textoRef
+        self.claveGenerada = claveGenerada
     }
 
     private enum CodingKeys: String, CodingKey {
         case id, competencia, peldano, dificultad, objetivo, mecanica, enunciado, payload,
-             pistas, explicacion, erroresHabituales, referencia, procedencia, validacion, version
+             pistas, explicacion, erroresHabituales, referencia, procedencia, validacion, version, textoRef, claveGenerada
     }
 
     init(from decoder: Decoder) throws {
@@ -94,6 +102,8 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         procedencia = try c.decode(Procedencia.self, forKey: .procedencia)
         validacion = try c.decode(Validacion.self, forKey: .validacion)
         version = try c.decode(Int.self, forKey: .version)
+        textoRef = try c.decodeIfPresent(String.self, forKey: .textoRef)
+        claveGenerada = try c.decodeIfPresent(String.self, forKey: .claveGenerada)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -113,6 +123,8 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         try c.encode(procedencia, forKey: .procedencia)
         try c.encode(validacion, forKey: .validacion)
         try c.encode(version, forKey: .version)
+        try c.encodeIfPresent(textoRef, forKey: .textoRef)
+        try c.encodeIfPresent(claveGenerada, forKey: .claveGenerada)
     }
 }
 

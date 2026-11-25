@@ -10,17 +10,17 @@ Uso:
 
 Qué comprueba:
   - catalogo.json: ids de área, bloque y competencia con formato y sin repetir.
-  - items/*.json y pendiente/LEN.*.json (ítems):
+  - items/*.json (y pendiente/LEN.*.json si quedara alguno) (ítems):
       · id <competencia>.NNNN, único en todo el contenido; la competencia existe;
       · peldaño 1–5, dificultad 1–6, textos obligatorios, versión >= 1;
       · explicación de 1 a 280 caracteres; pistas solo en los peldaños 1–2 (D-033);
       · errores habituales coherentes con la mecánica; referencias de examen AAAA-L9/AAAA-M9;
       · payload coherente con la mecánica (§2.4);
       · procedencia (§2.7) y validación (aprobado con revisor y fecha);
-      · textoRef (solo pendiente/): apunta a un texto de pendiente/textos.json.
+      · textoRef: apunta a un texto de textos/*.json (D-085; antes, pendiente/textos.json).
   - teoria/*.json y pendiente/teoria_*.json: id <competencia>.TNN único, competencia existente, bloques texto/regla
     con 40 palabras o menos, procedencia y validación.
-  - pendiente/textos.json: ids únicos, campos obligatorios, procedencia y validación.
+  - textos/*.json: ids únicos, campos obligatorios, procedencia y validación.
   - simulacros/*.json: id SIM.NN y procedencia del texto base.
 No comprueba: plantillas/ (necesitan los generadores de Swift), léxico y gramática.
 """
@@ -413,11 +413,8 @@ def validar_item(it, competencias, anio, textos=None):
         m += validar_payload(mec, p)
     m += validar_procedencia(it.get("procedencia"), anio)
     m += validar_validacion(it.get("validacion"))
-    if "textoRef" in it:
-        if textos is None:
-            m.append("textoRef solo se admite en pendiente/ (el motor aún no lo soporta)")
-        elif it["textoRef"] not in textos:
-            m.append(f"textoRef «{it['textoRef']}» no existe en pendiente/textos.json")
+    if "textoRef" in it and it["textoRef"] not in (textos or {}):
+        m.append(f"textoRef «{it['textoRef']}» no existe en textos/")
     return m
 
 
@@ -528,19 +525,20 @@ def main(argv):
     resumen.append(f"catalogo.json: {len(competencias)} competencias")
 
     textos = {}
-    ruta_textos = raiz / "pendiente" / "textos.json"
-    if ruta_textos.exists():
+    rutas_textos = sorted((raiz / "textos").glob("*.json")) + [r for r in [raiz / "pendiente" / "textos.json"] if r.exists()]
+    for ruta_textos in rutas_textos:
+        nombre_textos = f"{ruta_textos.parent.name}/{ruta_textos.name}"
         lista = cargar(ruta_textos, errores) or []
         for t in lista:
             if t.get("id") in textos:
-                errores.append(f"pendiente/textos.json · {t.get('id')}: id de texto duplicado")
+                errores.append(f"{nombre_textos} · {t.get('id')}: id de texto duplicado")
             textos[t.get("id")] = t
-            errores += [f"pendiente/textos.json · {t.get('id')}: {e}" for e in validar_texto_base(t, anio)]
-        resumen.append(f"pendiente/textos.json: {len(lista)} textos")
+            errores += [f"{nombre_textos} · {t.get('id')}: {e}" for e in validar_texto_base(t, anio)]
+        resumen.append(f"{nombre_textos}: {len(lista)} textos")
 
     ids_items, usados = set(), set()
     estados = {}
-    archivos_items = [(p, None) for p in sorted((raiz / "items").glob("*.json"))]
+    archivos_items = [(p, textos) for p in sorted((raiz / "items").glob("*.json"))]
     archivos_items += [(p, textos) for p in sorted((raiz / "pendiente").glob("*.json"))
                        if p.name != "textos.json" and not p.name.startswith("teoria_")]
     for ruta, refs in archivos_items:

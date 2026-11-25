@@ -2,7 +2,7 @@ import Foundation
 import Testing
 @testable import Educulter
 
-// Recuperación (24/11/2026), §4.2: gramática generativa con compatibilidad.json (D-086).
+// Recuperación (25/11/2026), §4.2: gramática generativa con compatibilidad.json (D-086).
 // Propiedades con 1000 semillas por mecánica y nivel, con un oráculo que solo usa los datos de
 // compatibilidad.json y tablas escritas aquí (artículos, terminaciones verbales, restricciones
 // de tiempo de los CCT), no el código del generador.

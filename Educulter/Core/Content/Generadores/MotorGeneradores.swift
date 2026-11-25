@@ -129,7 +129,8 @@ enum MotorGeneradores {
                     dificultad: p.dificultad, objetivo: p.objetivo ?? "Practicar \(p.tipo)",
                     enunciado: Marcadores.rellenar(redaccion, con: valores), payload: m.payload, pistas: pistas,
                     explicacion: m.explicacion, erroresHabituales: m.erroresHabituales,
-                    procedencia: p.procedencia, validacion: p.validacion, version: p.version)
+                    procedencia: p.procedencia, validacion: p.validacion, version: p.version,
+                    claveGenerada: "\(p.tipo)|\(m.clave)")
     }
 
     /// Copia de una plantilla con otra dificultad (y, opcionalmente, otro peldaño) para Supervivencia

@@ -444,3 +444,48 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 - **Textos protegidos**: sus citas dentro de los enunciados se siguen sustituyendo por la remisión al PDF. No se usa el derecho de cita, por prudencia ante la revisión de Apple.
 - **2017**: 1 punto por pregunta, con aviso de que la puntuación la asigna la app.
 - **Penalización ortográfica**: `pendiente/tribunal/reglas.json` guarda la regla como datos, sin límite.
+
+### D-085 · 2026-11-25 · Recuperación · Vigente
+**Textos base de comprensión (`textoRef`) en el motor y en la ronda.**
+- **Datos**: los textos pasan de `pendiente/textos.json` a `textos/textos.json` (carpeta de arrays, como `items/`). Los ítems de `pendiente/LEN.COM.json` pasan a `items/LEN.COM.json` y su teoría a `teoria/LEN.COM.json`. `pendiente/tribunal/` sigue donde está hasta la Fase 05E. `scripts/validar_items.py` lee las rutas nuevas.
+- **Modelo**: `Item.textoRef` (opcional) y `TextoBase` (`id`, `titulo`, `autor`, `obra`, `tipo`, `texto`, `procedencia`, `validacion`). El banco filtra los textos con la misma política que el resto (Release: solo aprobados).
+- **Validador**: id `TXT.XXX.CLAVE`; título, tipo y texto no vacíos; procedencia (§2.7: un texto de dominio público exige `anioMuerteAutor` y que hayan pasado más de 80 años); en dominio público, `autor` = `procedencia.autorTexto`; un texto original no lleva autor; cada `textoRef` apunta a un texto cargado con la misma política.
+- **Vista**: panel superior plegable (`VistaTextoBase`) en una superficie neutra (el panel tintado sigue siendo el de la mecánica), con título y, si es literario, «Autor · Obra (año)». El año sale de la base literaria (Rimas, 1871; Campos de Castilla, 1912), porque `textos.json` no lo trae. Desplegado ocupa como mucho 260 pt (220 con texto de accesibilidad) y el texto se desplaza dentro si no cabe; el ítem se responde debajo. Plegado queda la pestaña «Ver texto». Se despliega solo al llegar un texto distinto. Tipo dinámico, VoiceOver (cabecera, botones con etiqueta) y Reducir movimiento. En «Ver de nuevo» de Rescate el texto va entero encima del enunciado.
+
+### D-086 · 2026-11-25 · Recuperación · Vigente
+**`compatibilidad.json` conectada a la gramática generativa.**
+- `oracionSimple` construye las oraciones con las etiquetas de `compatibilidad.json` (si el archivo existe; si no, con `piezas.json`):
+  - **Sujeto** de un sustantivo cuyas etiquetas admite el verbo (`sujeto`): ahora también animales con los verbos que los admiten.
+  - **CD** de un sustantivo con una etiqueta de `objeto` del verbo (las finas incluidas: `abrible`, `comprable`, `prestable`, `lavable`…), distinto del sujeto. Personas y animales, con «a su…» como en `piezas.json` (sin la contracción «al», D-081).
+  - **CI** de persona, solo con verbos `admiteCI`, nunca el mismo referente que el sujeto (ni que el CD).
+  - **Complementos circunstanciales**: como mucho 2, de tipos distintos, de CCL, CCT, CCM y **CCC** (compañía, nuevo en las funciones y en las opciones). «junto al río» y «a las cinco» se siguen excluyendo, como en la conversión de 02b. Un **CCT puede ir delante** (desde el nivel 3, salvo en `segmentar`, donde el predicado quedaría partido): entonces es el primer constituyente y va seguido de coma. Las restricciones de tiempo de los CCT («ayer» → pretérito perfecto simple) salen de `piezas.json`.
+  - **Adjetivos** de etiqueta compatible con el sustantivo (sujeto desde el nivel 4; CD desde el 5), concordados con las cuatro formas de los datos: nunca se deriva una forma, así que los invariables en género (amable, azul, caliente, difícil, fácil, grande) solo cambian en número.
+  - **Concordancia** artículo-sustantivo (género y número) y sujeto-verbo (número).
+  - **Nivel 4**: no hay verbos copulativos en los datos, así que pasa a S (+ adjetivo) + V + CD + CI (+ 0–1 CC) con verbos que admiten CI (si no, el nivel 4 quedaba por debajo del 3 tras fusionar el lote 02b).
+- `analisisVerbal` usa los verbos de `compatibilidad.json` y su `participioIrregular` en los tiempos compuestos (escrito, abierto).
+- **Validador**: conjugación según el infinitivo, etiquetas de sujeto y objeto que existen en algún sustantivo, formas completas y tipos de complemento válidos.
+
+### D-087 · 2026-11-25 · Recuperación · Vigente
+**Ninguna ronda repite una pregunta, aunque cambie el id.** Dos semillas, o dos plantillas del mismo tipo que recurren al mismo nivel de frases (HOM.G01 y HOM.G02 a dificultad 4–5), pueden generar la misma pregunta con ids distintos.
+- **Huella** (`Item.huella`): en los ítems generados, la clave canónica del caso (`tipo|clave`, que el motor guarda en `Item.claveGenerada`; en las frases incluye el id de la frase); en los estáticos, su id. Una primera versión por enunciado y solución se descartó: confundía ítems estáticos distintos con enunciado genérico y la misma respuesta.
+- La usan el constructor de rondas, la práctica del Camino, la prueba de nivel, el Reto de bloque y Supervivencia (que recibe las huellas de la partida).
+- **Frases con hueco**: si no hay frases del nivel pedido ni de los inferiores, el generador usa las del nivel más fácil que haya (antes, todas), para que la dificultad no decrezca (la familia «porque» no tiene frases de dificultad 1).
+
+### D-088 · 2026-11-25 · Recuperación · Vigente
+**Base literaria cargada y validada en Swift.** `CargadorContenido` lee `literatura/literatura.json` (`BaseLiteraria`) y el validador repite las reglas de `scripts/validar_literatura.py`: ids únicos, movimiento existente, dos rasgos por movimiento, nacimiento anterior a la muerte, año de cada obra entre el nacimiento y la muerte + 10, géneros y ámbitos válidos, `dominioPublico` coherente con la regla de la dirección y `fragmentosPermitidos` solo en dominio público y en ámbito español o hispanoamericano. Todavía no se generan preguntas (Fase 05F); la app solo la usa para fechar los textos base literarios.
+
+## Renumeración de la recuperación
+
+Al integrar las ramas en `integracion/recuperacion` (25/11/2026), varias ramas habían usado los mismos números. Se conservan los de la primera rama fusionada (`fase-05d/modos`: D-069–D-076) y las decisiones de las ramas siguientes reciben números nuevos consecutivos; sus referencias en CONTENIDOS, ESTADO y el resto de documentos se han actualizado.
+
+| Rama | Número antiguo | Número nuevo |
+|---|---|---|
+| `fase-05d/modos` | D-069–D-076 | sin cambios |
+| `contenido/lote-02` | D-077 | sin cambios |
+| `contenido/literatura-05a` | D-069 | D-078 |
+| `contenido/literatura-05a` | D-070 | D-079 |
+| `contenido/lote-03a` | D-071 | D-080 |
+| `contenido/lote-02b` | D-072 | D-081 |
+| `contenido/lote-02b` | D-073 | D-082 |
+| `contenido/tribunal-datos` | D-074 | D-083 |
+| `contenido/tribunal-datos` | D-075 | D-084 |

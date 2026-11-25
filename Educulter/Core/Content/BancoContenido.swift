@@ -14,17 +14,23 @@ struct BancoContenido: Sendable, Equatable {
     let simulacros: [Simulacro]
     let plantillas: [Plantilla]
     let recursos: RecursosGeneradores
+    /// Textos base de comprensión (D-085).
+    let textos: [TextoBase]
+    /// Base literaria del lote 05a (datos para la Fase 05F; fecha los textos literarios).
+    let literatura: BaseLiteraria?
     /// Número de ítems estáticos (los primeros de `items`).
     let numeroEstaticos: Int
 
     private let indicePorId: [String: Int]
     private let indicePorCompetencia: [String: [Int]]
     private let plantillaPorId: [String: Plantilla]
+    private let textoPorId: [String: TextoBase]
 
     static let variantesPorPlantilla = 12
 
     init(catalogo: Catalogo, items: [Item], teoria: [TarjetaTeoria] = [], simulacros: [Simulacro] = [],
-         plantillas: [Plantilla] = [], recursos: RecursosGeneradores = .vacios,
+         plantillas: [Plantilla] = [], recursos: RecursosGeneradores = .vacios, textos: [TextoBase] = [],
+         literatura: BaseLiteraria? = nil,
          variantesPorPlantilla: Int = BancoContenido.variantesPorPlantilla, semillaBase: UInt64 = 1) {
         self.catalogo = catalogo
         self.numeroEstaticos = items.count
@@ -35,6 +41,9 @@ struct BancoContenido: Sendable, Equatable {
         self.simulacros = simulacros
         self.plantillas = plantillas
         self.recursos = recursos
+        self.textos = textos
+        self.literatura = literatura
+        self.textoPorId = Dictionary(textos.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         self.plantillaPorId = Dictionary(plantillas.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         let items = self.items
         var porId: [String: Int] = [:]
@@ -46,6 +55,9 @@ struct BancoContenido: Sendable, Equatable {
         indicePorId = porId
         indicePorCompetencia = porCompetencia
     }
+
+    /// Huella de la pregunta (D-087).
+    func huella(_ item: Item) -> String { item.huella }
 
     func item(id: String) -> Item? {
         if let i = indicePorId[id] { return items[i] }
@@ -59,6 +71,14 @@ struct BancoContenido: Sendable, Equatable {
     }
 
     func plantilla(id: String) -> Plantilla? { plantillaPorId[id] }
+
+    func texto(id: String) -> TextoBase? { textoPorId[id] }
+
+    /// Texto base del ítem (si lo cita con `textoRef` y está cargado).
+    func texto(de item: Item) -> TextoBase? { item.textoRef.flatMap { textoPorId[$0] } }
+
+    /// Año de la obra de un texto literario según la base literaria (si consta).
+    func anio(de texto: TextoBase) -> Int? { literatura?.anio(autor: texto.autor, obra: texto.obra) }
 
     /// Ítems estáticos (sin las variantes generadas).
     var itemsEstaticos: ArraySlice<Item> { items.prefix(numeroEstaticos) }
@@ -82,6 +102,6 @@ struct BancoContenido: Sendable, Equatable {
 
     static func == (a: BancoContenido, b: BancoContenido) -> Bool {
         a.catalogo == b.catalogo && a.items == b.items && a.teoria == b.teoria && a.simulacros == b.simulacros
-            && a.plantillas == b.plantillas && a.recursos == b.recursos
+            && a.plantillas == b.plantillas && a.recursos == b.recursos && a.textos == b.textos && a.literatura == b.literatura
     }
 }
