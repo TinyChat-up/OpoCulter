@@ -1,0 +1,107 @@
+[
+  {
+    "id": "TXT.BEC.R21",
+    "titulo": "Rima XXI",
+    "autor": "Gustavo Adolfo Bécquer",
+    "obra": "Rimas",
+    "tipo": "poesia",
+    "procedencia": {
+      "tipo": "dominioPublico",
+      "autorTexto": "Gustavo Adolfo Bécquer",
+      "anioMuerteAutor": 1870,
+      "fuente": "Rimas, XXI",
+      "licencia": "dominio publico",
+      "notas": "Texto de dominio público."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "texto": "¿Qué es poesía?, dices mientras clavas\nen mi pupila tu pupila azul.\n¿Qué es poesía? ¿Y tú me lo preguntas?\nPoesía... eres tú."
+  },
+  {
+    "id": "TXT.MAC.CAM",
+    "titulo": "Proverbios y cantares, XXIX",
+    "autor": "Antonio Machado",
+    "obra": "Campos de Castilla",
+    "tipo": "poesia",
+    "procedencia": {
+      "tipo": "dominioPublico",
+      "autorTexto": "Antonio Machado",
+      "anioMuerteAutor": 1939,
+      "fuente": "Campos de Castilla, «Proverbios y cantares», XXIX",
+      "licencia": "dominio publico",
+      "notas": "Texto de dominio público."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "texto": "Caminante, son tus huellas\nel camino y nada más;\ncaminante, no hay camino,\nse hace camino al andar.\nAl andar se hace camino,\ny al volver la vista atrás\nse ve la senda que nunca\nse ha de volver a pisar.\nCaminante, no hay camino,\nsino estelas en la mar."
+  },
+  {
+    "id": "TXT.ORI.ABEJAS",
+    "titulo": "Las abejas",
+    "autor": null,
+    "obra": null,
+    "tipo": "expositivo",
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "texto": "Las abejas son insectos sociales que viven en colmenas organizadas. En cada colmena hay una reina, que pone los huevos; miles de obreras, que recogen néctar, fabrican la cera y cuidan de las crías; y los zánganos, cuya función es fecundar a la reina. Además de producir miel, las abejas cumplen una tarea esencial: al pasar de flor en flor transportan el polen y permiten que muchas plantas den frutos. Por eso, su desaparición pondría en peligro buena parte de los alimentos que consumimos."
+  },
+  {
+    "id": "TXT.ORI.DEBERES",
+    "titulo": "¿Deberes en vacaciones?",
+    "autor": null,
+    "obra": null,
+    "tipo": "argumentativo",
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "texto": "Creo que en vacaciones los alumnos de Primaria no deberían tener deberes. En primer lugar, el descanso es necesario para volver al colegio con energía. En segundo lugar, las vacaciones son una ocasión para aprender de otra manera: leer por placer, jugar al aire libre o compartir tiempo con la familia. Es cierto que algunos repasos ayudan a no olvidar lo aprendido, pero bastaría con recomendar lecturas. En definitiva, unas vacaciones sin tareas obligatorias también educan."
+  },
+  {
+    "id": "TXT.ORI.FARO",
+    "titulo": "El faro",
+    "autor": null,
+    "obra": null,
+    "tipo": "narrativo",
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "texto": "Aquella noche la tormenta apagó todas las luces del pueblo. Lucía, la hija del farero, subió los ciento veinte escalones con una linterna temblando entre las manos. Arriba, el viento golpeaba los cristales. Encendió la lámpara de reserva justo cuando un pesquero aparecía entre las olas. Al amanecer, los marineros llamaron a la puerta del faro para darle las gracias; Lucía, agotada, solo pudo sonreír."
+  }
+]

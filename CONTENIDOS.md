@@ -34,6 +34,7 @@ Content/
   items/<bloque>.json        Array de ítems de un bloque (p. ej. items/LEN.SIN.json)
   teoria/<bloque>.json       Array de tarjetas de teoría de un bloque
   simulacros/<id>.json       Un simulacro por archivo (p. ej. simulacros/SIM.01.json)
+  pendiente/                 Contenido aprobado que el motor aún no sabe mostrar (no se carga; §2.14)
 ```
 
 Modelos Swift: [Core/Content](Educulter/Core/Content). El validador ([ValidadorContenido.swift](Educulter/Core/Content/ValidadorContenido.swift)) se ejecuta en los tests sobre todo el contenido del bundle; **un contenido que no lo pase rompe la compilación verificada**.
@@ -243,6 +244,12 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 
   Avisa, sin fallar, si el género de una obra no figura en los géneros del autor.
 - **Errata**: `scripts/errata_literatura_05a.py` reescribió la versión 1 como versión 2 (errata 1). Se conserva como registro, pero no debe volver a ejecutarse.
+### 2.14 Textos base y carpeta `pendiente/` (Lote 03a, D-080)
+`pendiente/` guarda contenido aprobado que el motor todavía no sabe mostrar. `CargadorContenido` no lee esta carpeta, así que no llega a la app ni a los tests de Swift.
+- **`pendiente/textos.json`**: array de textos base `{id, titulo, autor|null, obra|null, tipo, texto, procedencia, validacion}`. El id tiene el formato `TXT.<origen>.<clave>` (p. ej. `TXT.ORI.ABEJAS`, `TXT.BEC.R21`). `texto` es texto plano con `\n` para los saltos de verso. La procedencia sigue §2.7; si es de dominio público, `autor` coincide con `procedencia.autorTexto`.
+- **`pendiente/LEN.COM.json`**: ítems con el esquema de §2.3 y un campo nuevo, `textoRef` (opcional): el id del texto base que se muestra junto al enunciado. Se moverán a `items/` cuando el motor admita textos base (pendiente con Mac).
+- **`pendiente/teoria_<bloque>.json`**: tarjetas de teoría (§2.6) de un bloque cuyos ítems siguen en `pendiente/`. Pasan a `teoria/<bloque>.json` junto con sus ítems, para que no haya teoría sin práctica en Release.
+- **Validación sin Swift**: `python3 scripts/validar_items.py` reproduce las reglas principales de `ValidadorContenido` sobre todo `Content/`: catálogo, ítems (incluidos los de `pendiente/`), teoría, textos base y simulacros. Comprueba ids, competencias, payload por mecánica, explicación de 280 caracteres o menos, pistas solo en los peldaños 1–2, bloques de teoría de 40 palabras o menos, procedencia y validación, y que cada `textoRef` exista. No valida `plantillas/` (necesita los generadores de Swift). El test de Swift sigue siendo la referencia.
 
 ## 3. Registro de procedencia
 
@@ -253,6 +260,8 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 | Lote 02 · 38 plantillas (MAT y LEN.ORT.AGU), léxico de 818 palabras y formas verbales | original | Especificación de la dirección del proyecto; redacciones literales de la dirección en los generadores y redacciones propias marcadas «A.2» | propia | 2026-11-24 |
 | Lote 05a · Base literaria (`literatura/literatura.json`) | original | Datos biográficos y bibliográficos de conocimiento general, con rasgos redactados por la dirección del proyecto. No incluye fragmentos de obras | propia | 2026-11-24 |
 | Fragmentos literarios (regla del lote 05a · errata 1) | original o dominio público | Solo de autores con `fragmentosPermitidos: true` (dominio público y en lengua original española). De un autor extranjero de dominio público solo se usa una traducción propia de la dirección, registrada aquí con el autor y la obra; nunca una traducción publicada | propia (traducciones) o dominio público (originales) | 2026-11-24 |
+| Lote 03a · `LEN.LEX.*` (30 ítems), `LEN.COM.*` (19 ítems), 8 tarjetas y textos `TXT.ORI.ABEJAS`, `TXT.ORI.DEBERES` y `TXT.ORI.FARO` | original | Redacción original de la dirección del proyecto | propia | 2026-11-24 |
+| Lote 03a · `TXT.BEC.R21` (Rima XXI) y `TXT.MAC.CAM` («Proverbios y cantares», XXIX) | dominio público | Gustavo Adolfo Bécquer (†1870), *Rimas*; Antonio Machado (†1939), *Campos de Castilla*. Texto original en español | dominio publico | 2026-11-24 |
 
 ## 4. Proceso de revisión y calidad
 
@@ -268,6 +277,9 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 | Lote 02 | MAT (5 bloques) y LEN.ORT.AGU | 38 plantillas | — | Aprobado por la dirección 24/11/2026; las 38 superan los tests de propiedades (24/11/2026) | `plantillas/MAT.*.json`, `plantillas/LEN.ORT.json`, `lexico/palabras.json`, `lexico/formas_verbales.json`, `catalogo.json` |
 | Lote 05a · Base literaria | Literatura (142 autores · 19 movimientos) | — | — | Aprobado por la dirección 24/11/2026 · pendiente del motor literario (Fase 05F) | `literatura/literatura.json` |
 | Lote 05a · errata 1 · versión 2 | Literatura (142 autores · 21 movimientos · 50 con fragmentos permitidos) | — | — | Aprobada por la dirección 24/11/2026 | `literatura/literatura.json` |
+| Lote 03a | LEN.LEX 30 ítems + LEN.COM 19 ítems (pendiente) + 8 tarjetas + 5 textos | 30 + 19 | 8 (4 LEN.LEX, 4 LEN.COM) | Aprobado por la dirección 24/11/2026 | `items/LEN.LEX.json`, `teoria/LEN.LEX.json`, `teoria/LEN.COM.json`, `pendiente/LEN.COM.json`, `pendiente/textos.json` |
+| Lote 03a · errata 1 | LEN.COM (pendiente) y LEN.LEX | 4 (versión 2: PROP.0002, INFER.0003, TIPO.0001, RESU.0004) | 1 (LEN.LEX.DICC.T01) | Aprobada por la dirección 24/11/2026. Las 4 tarjetas de LEN.COM pasan a `pendiente/` hasta que se activen sus ítems. `LEN.LEX.SINON` pasa a orden 99 y el bloque LEN.COM se llama «Comunicación y comprensión». En la matriz de exámenes, 5 propuestas (†) pasan a competencias del catálogo | `pendiente/LEN.COM.json`, `pendiente/teoria_LEN.COM.json`, `teoria/LEN.LEX.json`, `catalogo.json`, `docs/examenes/MATRIZ.md`, `scripts/matriz/datos.py` |
+| Lote 03a · errata 2 | LEN.COM (pendiente) | 1 (versión 3: TIPO.0001, la explicación incluye el tipo descriptivo) | — | Aprobada por la dirección 24/11/2026 | `pendiente/LEN.COM.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 

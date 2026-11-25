@@ -68,5 +68,1917 @@
       "fecha": ""
     },
     "version": 1
+  },
+  {
+    "id": "LEN.LEX.SIN.0001",
+    "competencia": "LEN.LEX.SIN",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Reconocer sinónimos.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada palabra con su sinónimo.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "rápido"
+        },
+        {
+          "id": "i2",
+          "texto": "comenzar"
+        },
+        {
+          "id": "i3",
+          "texto": "alegre"
+        },
+        {
+          "id": "i4",
+          "texto": "hablar"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "veloz"
+        },
+        {
+          "id": "d2",
+          "texto": "empezar"
+        },
+        {
+          "id": "d3",
+          "texto": "contento"
+        },
+        {
+          "id": "d4",
+          "texto": "conversar"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ]
+      ]
+    },
+    "pistas": [
+      "Prueba a cambiar una palabra por otra en una frase."
+    ],
+    "explicacion": "Los sinónimos tienen un significado igual o muy parecido y pueden sustituirse en el mismo contexto.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.SIN.0002",
+    "competencia": "LEN.LEX.SIN",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Reconocer antónimos.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada palabra con su antónimo.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "generoso"
+        },
+        {
+          "id": "i2",
+          "texto": "ancho"
+        },
+        {
+          "id": "i3",
+          "texto": "aparecer"
+        },
+        {
+          "id": "i4",
+          "texto": "verdad"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "tacaño"
+        },
+        {
+          "id": "d2",
+          "texto": "estrecho"
+        },
+        {
+          "id": "d3",
+          "texto": "desaparecer"
+        },
+        {
+          "id": "d4",
+          "texto": "mentira"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ]
+      ]
+    },
+    "pistas": [
+      "Busca el significado contrario."
+    ],
+    "explicacion": "Los antónimos expresan significados opuestos. Pueden ser léxicos (ancho/estrecho) o formados con prefijo (aparecer/desaparecer).",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.SIN.0003",
+    "competencia": "LEN.LEX.SIN",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Elegir el sinónimo adecuado al contexto.",
+    "mecanica": "eleccion",
+    "enunciado": "En «El agua de la fuente está muy clara», ¿qué palabra puede sustituir a «clara»?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "transparente"
+        },
+        {
+          "id": "o2",
+          "texto": "evidente"
+        },
+        {
+          "id": "o3",
+          "texto": "luminosa"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Piensa en qué significa «clara» hablando de agua."
+    ],
+    "explicacion": "En este contexto «clara» significa 'sin turbiedad': transparente. «Evidente» sería sinónimo en «una idea clara».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Evidente» es sinónimo de «clara» en otro sentido: «una prueba clara». Aquí se habla del agua."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.SIN.0004",
+    "competencia": "LEN.LEX.SIN",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Distinguir antónimos de prefijo negativo.",
+    "mecanica": "clasificar",
+    "enunciado": "¿El antónimo se forma con prefijo o es otra palabra?",
+    "payload": {
+      "categorias": [
+        {
+          "id": "c1",
+          "nombre": "Con prefijo"
+        },
+        {
+          "id": "c2",
+          "nombre": "Otra palabra"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "posible / imposible",
+          "categoria": "c1"
+        },
+        {
+          "id": "f2",
+          "texto": "legal / ilegal",
+          "categoria": "c1"
+        },
+        {
+          "id": "f3",
+          "texto": "hacer / deshacer",
+          "categoria": "c1"
+        },
+        {
+          "id": "f4",
+          "texto": "subir / bajar",
+          "categoria": "c2"
+        },
+        {
+          "id": "f5",
+          "texto": "frío / calor",
+          "categoria": "c2"
+        },
+        {
+          "id": "f6",
+          "texto": "comprar / vender",
+          "categoria": "c2"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Algunos antónimos se forman añadiendo un prefijo negativo (in-, im-, i-, des-); otros son palabras distintas.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.SIN.0005",
+    "competencia": "LEN.LEX.SIN",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Identificar el sinónimo en contexto sin ayudas.",
+    "mecanica": "eleccion",
+    "enunciado": "«El orador fue muy prolijo en su discurso». «Prolijo» significa:",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "largo y detallado en exceso"
+        },
+        {
+          "id": "o2",
+          "texto": "breve y claro"
+        },
+        {
+          "id": "o3",
+          "texto": "ordenado"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "«Prolijo» es lo que se extiende demasiado en detalles. Su antónimo sería «conciso».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "Es justo lo contrario: lo breve y claro es «conciso»."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.SIN.0006",
+    "competencia": "LEN.LEX.SIN",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Detectar el intruso que no es sinónimo.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Qué palabra NO es sinónimo de las demás?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "efímero"
+        },
+        {
+          "id": "o2",
+          "texto": "fugaz"
+        },
+        {
+          "id": "o3",
+          "texto": "pasajero"
+        },
+        {
+          "id": "o4",
+          "texto": "perenne"
+        }
+      ],
+      "correcta": "o4"
+    },
+    "pistas": [],
+    "explicacion": "«Perenne» significa 'continuo, que no se acaba': es antónimo de los otros tres, que expresan brevedad.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.SIN.0007",
+    "competencia": "LEN.LEX.SIN",
+    "peldano": 4,
+    "dificultad": 2,
+    "objetivo": "Justificar la relación de sinonimia.",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación.",
+    "payload": {
+      "plantilla": "«Empezar» y «comenzar» son {h1} porque tienen {h2} y se pueden intercambiar en la misma frase.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p3"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "sinónimos"
+        },
+        {
+          "id": "p2",
+          "texto": "antónimos"
+        },
+        {
+          "id": "p3",
+          "texto": "el mismo significado"
+        },
+        {
+          "id": "p4",
+          "texto": "la misma raíz"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Para que haya sinonimia basta con un significado equivalente en el contexto; no hace falta compartir la raíz.",
+    "erroresHabituales": [
+      {
+        "respuesta": "h2",
+        "feedback": "Compartir la raíz es propio de la familia léxica, no de la sinonimia."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.POLI.0001",
+    "competencia": "LEN.LEX.POLI",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Reconocer una palabra polisémica.",
+    "mecanica": "eleccion",
+    "enunciado": "«Banco» puede ser un asiento o una entidad financiera. Es una palabra…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "polisémica"
+        },
+        {
+          "id": "o2",
+          "texto": "sinónima"
+        },
+        {
+          "id": "o3",
+          "texto": "antónima"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "Una misma palabra, varios significados."
+    ],
+    "explicacion": "Una palabra polisémica tiene varios significados relacionados con un mismo origen; el diccionario los recoge como acepciones de una misma entrada.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.POLI.0002",
+    "competencia": "LEN.LEX.POLI",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Relacionar acepciones con sus contextos.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada frase con el significado de «hoja».",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "Se cayó una hoja del árbol."
+        },
+        {
+          "id": "i2",
+          "texto": "Arranca una hoja del cuaderno."
+        },
+        {
+          "id": "i3",
+          "texto": "La hoja del cuchillo está afilada."
+        },
+        {
+          "id": "i4",
+          "texto": "Cierra la hoja de la ventana."
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "parte de una planta"
+        },
+        {
+          "id": "d2",
+          "texto": "lámina de papel"
+        },
+        {
+          "id": "d3",
+          "texto": "cuchilla de un arma o herramienta"
+        },
+        {
+          "id": "d4",
+          "texto": "parte que se abre y se cierra"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ]
+      ]
+    },
+    "pistas": [
+      "Fíjate en las otras palabras de cada frase."
+    ],
+    "explicacion": "«Hoja» es polisémica: el contexto indica qué acepción se usa en cada frase.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.POLI.0003",
+    "competencia": "LEN.LEX.POLI",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Distinguir homófonos.",
+    "mecanica": "verdaderoFalso",
+    "enunciado": "¿Verdadero o falso?",
+    "payload": {
+      "afirmacion": "«Vaca» y «baca» son palabras homófonas: suenan igual y significan cosas distintas.",
+      "esVerdadera": true
+    },
+    "pistas": [],
+    "explicacion": "Homófonas: se pronuncian igual pero se escriben distinto y tienen significados diferentes (vaca/baca, hola/ola, tuvo/tubo).",
+    "erroresHabituales": [
+      {
+        "respuesta": "falso",
+        "feedback": "Suenan igual en español y significan cosas distintas: eso es homofonía."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.POLI.0004",
+    "competencia": "LEN.LEX.POLI",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Distinguir parónimos.",
+    "mecanica": "eleccion",
+    "enunciado": "«Actitud» y «aptitud» son…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "parónimos: se parecen en la forma pero significan cosas distintas"
+        },
+        {
+          "id": "o2",
+          "texto": "sinónimos"
+        },
+        {
+          "id": "o3",
+          "texto": "homófonos"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Actitud = manera de comportarse; aptitud = capacidad para algo. Se parecen, pero no suenan igual: son parónimos.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o3",
+        "feedback": "No suenan igual (c / p): no son homófonos."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.POLI.0005",
+    "competencia": "LEN.LEX.POLI",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Clasificar relaciones semánticas.",
+    "mecanica": "clasificar",
+    "enunciado": "Clasifica cada pareja.",
+    "payload": {
+      "categorias": [
+        {
+          "id": "c1",
+          "nombre": "Homófonas"
+        },
+        {
+          "id": "c2",
+          "nombre": "Parónimas"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "hola / ola",
+          "categoria": "c1"
+        },
+        {
+          "id": "f2",
+          "texto": "hierba / hierva",
+          "categoria": "c1"
+        },
+        {
+          "id": "f3",
+          "texto": "vello / bello",
+          "categoria": "c1"
+        },
+        {
+          "id": "f4",
+          "texto": "actitud / aptitud",
+          "categoria": "c2"
+        },
+        {
+          "id": "f5",
+          "texto": "prever / proveer",
+          "categoria": "c2"
+        },
+        {
+          "id": "f6",
+          "texto": "adoptar / adaptar",
+          "categoria": "c2"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Homófonas: idéntica pronunciación. Parónimas: forma parecida y pronunciación distinta.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.POLI.0006",
+    "competencia": "LEN.LEX.POLI",
+    "peldano": 4,
+    "dificultad": 3,
+    "objetivo": "Justificar la diferencia entre polisemia y homonimia.",
+    "mecanica": "construir",
+    "enunciado": "Completa la justificación.",
+    "payload": {
+      "plantilla": "En la polisemia, una palabra tiene varios significados {h1}; en la homonimia, dos palabras de {h2} coinciden en la forma.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p3"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "relacionados"
+        },
+        {
+          "id": "p2",
+          "texto": "sin relación"
+        },
+        {
+          "id": "p3",
+          "texto": "origen distinto"
+        },
+        {
+          "id": "p4",
+          "texto": "igual origen"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Polisemia: un solo origen con varias acepciones (hoja). Homonimia: orígenes distintos que coinciden (vino del verbo venir / vino, la bebida).",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.CAMPO.0001",
+    "competencia": "LEN.LEX.CAMPO",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Reconocer un campo semántico.",
+    "mecanica": "eleccion",
+    "enunciado": "«Martillo, sierra, destornillador, alicates» forman el campo semántico de…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "las herramientas"
+        },
+        {
+          "id": "o2",
+          "texto": "los oficios"
+        },
+        {
+          "id": "o3",
+          "texto": "los metales"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "¿Qué tienen en común todas?"
+    ],
+    "explicacion": "Un campo semántico agrupa palabras de la misma categoría gramatical que comparten un rasgo de significado.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.CAMPO.0002",
+    "competencia": "LEN.LEX.CAMPO",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Distinguir campo semántico y familia léxica.",
+    "mecanica": "clasificar",
+    "enunciado": "¿Pertenece a la familia léxica de «mar» o al campo semántico de la playa?",
+    "payload": {
+      "categorias": [
+        {
+          "id": "c1",
+          "nombre": "Familia léxica de «mar»"
+        },
+        {
+          "id": "c2",
+          "nombre": "Campo semántico de la playa"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "marino",
+          "categoria": "c1"
+        },
+        {
+          "id": "f2",
+          "texto": "marinero",
+          "categoria": "c1"
+        },
+        {
+          "id": "f3",
+          "texto": "marea",
+          "categoria": "c1"
+        },
+        {
+          "id": "f4",
+          "texto": "arena",
+          "categoria": "c2"
+        },
+        {
+          "id": "f5",
+          "texto": "toalla",
+          "categoria": "c2"
+        },
+        {
+          "id": "f6",
+          "texto": "sombrilla",
+          "categoria": "c2"
+        }
+      ]
+    },
+    "pistas": [
+      "¿Se repite la raíz mar-?"
+    ],
+    "explicacion": "La familia léxica comparte la raíz (mar-). El campo semántico comparte el significado aunque la raíz sea distinta.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.CAMPO.0003",
+    "competencia": "LEN.LEX.CAMPO",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Encontrar el intruso de un campo semántico.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Qué palabra no pertenece al campo semántico de los instrumentos musicales?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "violín"
+        },
+        {
+          "id": "o2",
+          "texto": "flauta"
+        },
+        {
+          "id": "o3",
+          "texto": "pentagrama"
+        },
+        {
+          "id": "o4",
+          "texto": "tambor"
+        }
+      ],
+      "correcta": "o3"
+    },
+    "pistas": [],
+    "explicacion": "El pentagrama es donde se escribe la música, no un instrumento.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.CAMPO.0004",
+    "competencia": "LEN.LEX.CAMPO",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Reconocer palabras de la misma familia léxica.",
+    "mecanica": "eleccion",
+    "enunciado": "¿Qué palabra NO es de la familia léxica de «pan»?",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "panadero"
+        },
+        {
+          "id": "o2",
+          "texto": "empanada"
+        },
+        {
+          "id": "o3",
+          "texto": "panorama"
+        },
+        {
+          "id": "o4",
+          "texto": "panecillo"
+        }
+      ],
+      "correcta": "o3"
+    },
+    "pistas": [],
+    "explicacion": "«Panorama» procede del griego pan- 'todo' + horama 'vista'; no comparte la raíz de «pan».",
+    "erroresHabituales": [
+      {
+        "respuesta": "o2",
+        "feedback": "«Empanada» sí: em- + pan + -ada."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.CAMPO.0005",
+    "competencia": "LEN.LEX.CAMPO",
+    "peldano": 4,
+    "dificultad": 3,
+    "objetivo": "Justificar qué es una familia léxica.",
+    "mecanica": "construir",
+    "enunciado": "Completa la definición.",
+    "payload": {
+      "plantilla": "Una familia léxica es el conjunto de palabras que comparten el mismo {h1}, como «flor», «florero» y «floristería».",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "lexema"
+        },
+        {
+          "id": "p2",
+          "texto": "sufijo"
+        },
+        {
+          "id": "p3",
+          "texto": "significado"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Las palabras de una familia léxica se forman a partir de un mismo lexema (raíz) añadiendo morfemas.",
+    "erroresHabituales": [
+      {
+        "respuesta": "h1",
+        "feedback": "Compartir significado define el campo semántico, no la familia léxica."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.CTX.0001",
+    "competencia": "LEN.LEX.CTX",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Deducir el significado de una palabra por el contexto.",
+    "mecanica": "eleccion",
+    "enunciado": "«Tras la tormenta, el río se desbordó e inundó los campos». «Desbordó» significa…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "salió de su cauce"
+        },
+        {
+          "id": "o2",
+          "texto": "se secó"
+        },
+        {
+          "id": "o3",
+          "texto": "cambió de color"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [
+      "¿Qué consecuencia se cuenta después?"
+    ],
+    "explicacion": "El contexto (tormenta, inundó) indica que el agua rebasó los bordes del cauce.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.CTX.0002",
+    "competencia": "LEN.LEX.CTX",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Deducir el significado de un término desconocido.",
+    "mecanica": "eleccion",
+    "enunciado": "«Era un hombre tan taciturno que apenas pronunciaba tres palabras al día». «Taciturno» es…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "callado y reservado"
+        },
+        {
+          "id": "o2",
+          "texto": "alegre y hablador"
+        },
+        {
+          "id": "o3",
+          "texto": "muy alto"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "La aclaración «apenas pronunciaba tres palabras» permite deducir que significa 'callado, silencioso'.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.CTX.0003",
+    "competencia": "LEN.LEX.CTX",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Elegir la acepción adecuada.",
+    "mecanica": "eleccion",
+    "enunciado": "«Le dieron una mano de pintura a la puerta». «Mano» significa aquí…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "capa"
+        },
+        {
+          "id": "o2",
+          "texto": "parte del cuerpo"
+        },
+        {
+          "id": "o3",
+          "texto": "ayuda"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "En pintura, «mano» es cada capa que se aplica sobre una superficie.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.DICC.0001",
+    "competencia": "LEN.LEX.DICC",
+    "peldano": 1,
+    "dificultad": 1,
+    "objetivo": "Ordenar palabras alfabéticamente.",
+    "mecanica": "ordenar",
+    "enunciado": "Ordena como en el diccionario.",
+    "payload": {
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "caballo"
+        },
+        {
+          "id": "f2",
+          "texto": "cabeza"
+        },
+        {
+          "id": "f3",
+          "texto": "cable"
+        },
+        {
+          "id": "f4",
+          "texto": "cabra"
+        }
+      ],
+      "ordenCorrecto": [
+        "f1",
+        "f2",
+        "f3",
+        "f4"
+      ],
+      "etiquetaInicio": "Primera",
+      "etiquetaFin": "Última"
+    },
+    "pistas": [
+      "Las tres primeras letras coinciden: mira la cuarta."
+    ],
+    "explicacion": "Se compara letra a letra: cab-a, cab-e, cab-l, cab-r. La primera letra distinta decide el orden.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.DICC.0002",
+    "competencia": "LEN.LEX.DICC",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Saber cómo aparecen las palabras en el diccionario.",
+    "mecanica": "eleccion",
+    "enunciado": "Para buscar «cantábamos» en el diccionario, buscas…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "cantar"
+        },
+        {
+          "id": "o2",
+          "texto": "cantábamos"
+        },
+        {
+          "id": "o3",
+          "texto": "canto"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Los verbos aparecen en infinitivo; los sustantivos y adjetivos, en masculino singular cuando tienen variación.",
+    "erroresHabituales": [
+      {
+        "respuesta": "o3",
+        "feedback": "«Canto» es otra palabra (sustantivo) o una forma del verbo; la entrada del verbo es el infinitivo."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.DICC.0003",
+    "competencia": "LEN.LEX.DICC",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Interpretar las abreviaturas del diccionario.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada abreviatura con su significado.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "m."
+        },
+        {
+          "id": "i2",
+          "texto": "f."
+        },
+        {
+          "id": "i3",
+          "texto": "adj."
+        },
+        {
+          "id": "i4",
+          "texto": "tr."
+        },
+        {
+          "id": "i5",
+          "texto": "adv."
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "masculino"
+        },
+        {
+          "id": "d2",
+          "texto": "femenino"
+        },
+        {
+          "id": "d3",
+          "texto": "adjetivo"
+        },
+        {
+          "id": "d4",
+          "texto": "verbo transitivo"
+        },
+        {
+          "id": "d5",
+          "texto": "adverbio"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ],
+        [
+          "i5",
+          "d5"
+        ]
+      ]
+    },
+    "pistas": [],
+    "explicacion": "El diccionario usa abreviaturas para indicar la categoría gramatical y otras marcas de uso.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.DICC.0004",
+    "competencia": "LEN.LEX.DICC",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Ordenar alfabéticamente con dificultad.",
+    "mecanica": "ordenar",
+    "enunciado": "Ordena como en el diccionario.",
+    "payload": {
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "llama"
+        },
+        {
+          "id": "f2",
+          "texto": "llave"
+        },
+        {
+          "id": "f3",
+          "texto": "lluvia"
+        },
+        {
+          "id": "f4",
+          "texto": "lobo"
+        },
+        {
+          "id": "f5",
+          "texto": "lugar"
+        }
+      ],
+      "ordenCorrecto": [
+        "f1",
+        "f2",
+        "f3",
+        "f4",
+        "f5"
+      ],
+      "etiquetaInicio": "Primera",
+      "etiquetaFin": "Última"
+    },
+    "pistas": [],
+    "explicacion": "Desde 1994, la «ll» se ordena dentro de la l, como l + l: lla, lle, llu, lo, lu.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE/ASALE, Ortografía de la lengua española (2010), cap. I: orden alfabético"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.DICC.0005",
+    "competencia": "LEN.LEX.DICC",
+    "peldano": 4,
+    "dificultad": 3,
+    "objetivo": "Definir qué es un diccionario.",
+    "mecanica": "construir",
+    "enunciado": "Completa la definición.",
+    "payload": {
+      "plantilla": "Un diccionario es una obra que recoge las palabras de una lengua ordenadas {h1} y explica su {h2}.",
+      "huecos": [
+        {
+          "id": "h1",
+          "correcta": "p1"
+        },
+        {
+          "id": "h2",
+          "correcta": "p3"
+        }
+      ],
+      "piezas": [
+        {
+          "id": "p1",
+          "texto": "alfabéticamente"
+        },
+        {
+          "id": "p2",
+          "texto": "por temas"
+        },
+        {
+          "id": "p3",
+          "texto": "significado"
+        },
+        {
+          "id": "p4",
+          "texto": "pronunciación"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Además del significado, suele indicar la categoría gramatical, la etimología y ejemplos de uso.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.REG.0001",
+    "competencia": "LEN.LEX.REG",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Reconocer extranjerismos y su alternativa en español.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada extranjerismo con su equivalente en español.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "e-mail"
+        },
+        {
+          "id": "i2",
+          "texto": "parking"
+        },
+        {
+          "id": "i3",
+          "texto": "show"
+        },
+        {
+          "id": "i4",
+          "texto": "feedback"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "correo electrónico"
+        },
+        {
+          "id": "d2",
+          "texto": "aparcamiento"
+        },
+        {
+          "id": "d3",
+          "texto": "espectáculo"
+        },
+        {
+          "id": "d4",
+          "texto": "retroalimentación"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ]
+      ]
+    },
+    "pistas": [],
+    "explicacion": "La RAE recomienda usar el equivalente español cuando existe.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "Fundéu RAE; RAE, Diccionario panhispánico de dudas"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.REG.0002",
+    "competencia": "LEN.LEX.REG",
+    "peldano": 3,
+    "dificultad": 2,
+    "objetivo": "Distinguir registros.",
+    "mecanica": "clasificar",
+    "enunciado": "¿Registro formal o coloquial?",
+    "payload": {
+      "categorias": [
+        {
+          "id": "c1",
+          "nombre": "Formal"
+        },
+        {
+          "id": "c2",
+          "nombre": "Coloquial"
+        }
+      ],
+      "fichas": [
+        {
+          "id": "f1",
+          "texto": "Le ruego que me disculpe.",
+          "categoria": "c1"
+        },
+        {
+          "id": "f2",
+          "texto": "Les comunicamos que la reunión se aplaza.",
+          "categoria": "c1"
+        },
+        {
+          "id": "f3",
+          "texto": "¡Qué pasada de peli!",
+          "categoria": "c2"
+        },
+        {
+          "id": "f4",
+          "texto": "Tío, me voy ya.",
+          "categoria": "c2"
+        }
+      ]
+    },
+    "pistas": [],
+    "explicacion": "El registro formal es cuidado y objetivo; el coloquial es espontáneo, con expresiones familiares.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.FRAS.0001",
+    "competencia": "LEN.LEX.FRAS",
+    "peldano": 2,
+    "dificultad": 2,
+    "objetivo": "Comprender frases hechas.",
+    "mecanica": "emparejar",
+    "enunciado": "Une cada frase hecha con su significado.",
+    "payload": {
+      "izquierda": [
+        {
+          "id": "i1",
+          "texto": "Estar en las nubes"
+        },
+        {
+          "id": "i2",
+          "texto": "Meter la pata"
+        },
+        {
+          "id": "i3",
+          "texto": "Tomar el pelo"
+        },
+        {
+          "id": "i4",
+          "texto": "Costar un ojo de la cara"
+        }
+      ],
+      "derecha": [
+        {
+          "id": "d1",
+          "texto": "estar distraído"
+        },
+        {
+          "id": "d2",
+          "texto": "equivocarse"
+        },
+        {
+          "id": "d3",
+          "texto": "burlarse de alguien"
+        },
+        {
+          "id": "d4",
+          "texto": "ser muy caro"
+        }
+      ],
+      "pares": [
+        [
+          "i1",
+          "d1"
+        ],
+        [
+          "i2",
+          "d2"
+        ],
+        [
+          "i3",
+          "d3"
+        ],
+        [
+          "i4",
+          "d4"
+        ]
+      ]
+    },
+    "pistas": [],
+    "explicacion": "Las frases hechas tienen un significado figurado que no se deduce de sus palabras por separado.",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.DEN.0001",
+    "competencia": "LEN.LEX.DEN",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Distinguir denotación y connotación.",
+    "mecanica": "eleccion",
+    "enunciado": "En «Ese chico es un lince», la palabra «lince» se usa con sentido…",
+    "payload": {
+      "opciones": [
+        {
+          "id": "o1",
+          "texto": "connotativo: 'muy listo'"
+        },
+        {
+          "id": "o2",
+          "texto": "denotativo: el animal"
+        }
+      ],
+      "correcta": "o1"
+    },
+    "pistas": [],
+    "explicacion": "Denotación: significado objetivo (el felino). Connotación: valor añadido o figurado (astuto, perspicaz).",
+    "erroresHabituales": [],
+    "referencia": {
+      "tipoPregunta": "LEN-LEXICO",
+      "examenes": [],
+      "normativa": "RAE, Diccionario de la lengua española; Decreto 61/2022 (Lengua, bloque D)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
   }
 ]

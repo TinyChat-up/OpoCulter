@@ -409,3 +409,7 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 - **Motor 05F**: las preguntas de movimiento se hacen sobre el autor. Sobre una obra, solo si su año está dentro del rango del movimiento.
 - **País**: «Reino Unido» unifica Inglaterra y Escocia, y «Roma» pasa a «Italia».
 - **Fragmentos**: se añade el campo `fragmentosPermitidos`, que es `dominioPublico` y además ámbito español o hispanoamericano. De los extranjeros de dominio público solo se admite una traducción propia de la dirección. El validador comprueba esta regla.
+### D-080 · 2026-11-24 · Lote 03a · Vigente
+**Carpeta `pendiente/` y validador de contenido en Python.**
+- **`Content/pendiente/`**: guarda contenido aprobado que necesita algo que el motor aún no tiene (aquí, los textos base de comprensión con `textoRef`). Va dentro de la carpeta `Content`, así que se empaqueta, pero `CargadorContenido` no la lee: no afecta a la app ni a los tests hasta que el motor la admita y los ítems pasen a `items/`.
+- **`scripts/validar_items.py`**: reproduce sin Swift las reglas principales de `ValidadorContenido` (CONTENIDOS §2.14) para revisar lotes sin Mac. Cuando el motor admita `textoRef`, el validador de Swift deberá comprobar también que el texto existe.
