@@ -42,6 +42,20 @@ final class RecorridoUITests: XCTestCase {
         e.tap()
     }
 
+    /// Cambia de pestaña. En iOS 26+ la barra de pestañas flotante se minimiza al desplazar: se
+    /// desplaza hacia arriba hasta que la pestaña se pueda pulsar y se comprueba el destino.
+    @MainActor
+    private func pestana(_ app: XCUIApplication, _ nombre: String, destino: XCUIElement) {
+        for _ in 0..<4 {
+            let boton = app.tabBars.buttons[nombre].firstMatch
+            var vueltas = 0
+            while !(boton.exists && boton.isHittable) && vueltas < 5 { app.swipeDown(); vueltas += 1 }
+            if boton.isHittable { boton.tap() }
+            if destino.waitForExistence(timeout: 5) { return }
+        }
+        XCTFail("No se pudo abrir la pestaña \(nombre)")
+    }
+
     @MainActor
     private func terminarRonda(_ app: XCUIApplication) {
         let terminar = app.buttons["botonTerminar"]
@@ -85,8 +99,7 @@ final class RecorridoUITests: XCTestCase {
         app.scrollViews.firstMatch.swipeDown()
 
         // Una ronda de Camino: el primer nodo de Lengua con contenido.
-        app.tabBars.buttons["Camino"].firstMatch.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["pantallaCamino"].waitForExistence(timeout: 15))
+        pestana(app, "Camino", destino: app.descendants(matching: .any)["pantallaCamino"])
         captura(app, "07_camino")
         let nodo = app.buttons["nodo_LEN.ORT.AGU"]
         tocarVisible(app, nodo)
@@ -109,7 +122,7 @@ final class RecorridoUITests: XCTestCase {
         terminarRonda(app)
 
         // Supervivencia.
-        app.tabBars.buttons["Hoy"].firstMatch.tap()
+        pestana(app, "Hoy", destino: app.buttons["baldosaSupervivencia"])
         tocarVisible(app, app.buttons["baldosaSupervivencia"])
         XCTAssertTrue(app.buttons["botonJugarSupervivencia"].waitForExistence(timeout: 15))
         captura(app, "13_supervivencia_inicio")
@@ -136,8 +149,7 @@ final class RecorridoUITests: XCTestCase {
         terminarRonda(app)
 
         // Progreso y Ajustes.
-        app.tabBars.buttons["Progreso"].firstMatch.tap()
-        XCTAssertTrue(app.descendants(matching: .any)["seccionDominio"].waitForExistence(timeout: 15))
+        pestana(app, "Progreso", destino: app.descendants(matching: .any)["seccionDominio"])
         captura(app, "20_progreso")
         app.scrollViews.firstMatch.swipeUp()
         captura(app, "21_progreso_2")

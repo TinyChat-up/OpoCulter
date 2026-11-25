@@ -312,7 +312,7 @@ struct ChipRacha: View {
     }
 
     private var chip: some View {
-        let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(spacing: Espacio.m))
+        let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(spacing: Espacio.s))
         return disposicion {
             Label {
                 Text(dias == 1 ? "1 día" : "\(dias) días").font(.redondeada(.headline, peso: .semibold))
@@ -333,7 +333,7 @@ struct ChipRacha: View {
             }
         }
         .foregroundStyle(Paleta.textoPrincipal)
-        .padding(.horizontal, Espacio.l)
+        .padding(.horizontal, Espacio.m)
         .padding(.vertical, tamano.isAccessibilitySize ? Espacio.m : 0)
         .frame(minHeight: Medidas.tactilMinimo)
         .superficiePulsable(Paleta.superficie, radio: 22)
