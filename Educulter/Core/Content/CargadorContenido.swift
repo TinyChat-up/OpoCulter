@@ -51,6 +51,7 @@ enum ErrorCarga: Error, Equatable, CustomStringConvertible {
 /// gramatica/piezas.json · verbos.json · frases.json · compatibilidad.json
 /// textos/<archivo>.json      (array de textos base de comprensión, D-085)
 /// literatura/literatura.json (base literaria del lote 05a, D-078)
+/// ambiguas.json              (formas que solo se distinguen por la tilde, 05E §4.1)
 /// ```
 /// `pendiente/` (contenido aprobado que el motor aún no muestra, p. ej. el Tribunal) no se lee.
 struct CargadorContenido: Sendable {
@@ -110,7 +111,9 @@ struct CargadorContenido: Sendable {
             gramatica: try opcional("gramatica/piezas.json") ?? PiezasGramatica(),
             verbos: try opcional("gramatica/verbos.json") ?? BancoVerbos(),
             frases: try opcional("gramatica/frases.json") ?? BancoFrases(),
-            compatibilidad: try opcional("gramatica/compatibilidad.json") ?? CompatibilidadGramatica()
+            compatibilidad: try opcional("gramatica/compatibilidad.json") ?? CompatibilidadGramatica(),
+            ambiguas: try opcional("ambiguas.json") ?? PalabrasAmbiguas(),
+            literatura: try opcional("literatura/literatura.json")
         )
     }
 

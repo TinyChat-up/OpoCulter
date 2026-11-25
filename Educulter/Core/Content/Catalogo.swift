@@ -24,6 +24,9 @@ struct Catalogo: Codable, Sendable, Equatable {
         var id: String
         var nombre: String
         var orden: Int
+        /// Competencia del mapa curricular de la A1 que sustituye a esta (Fase 05E, D-091). El id
+        /// antiguo se conserva por el progreso guardado; sin contenido, no se muestra en el Camino.
+        var equivaleA: String? = nil
     }
 
     /// Todos los bloques, en el orden de áreas y de `orden`.

@@ -40,5 +40,351 @@
       "estado": "borrador"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.SIN.SUJPRED.G01",
+    "competencia": "LEN.SIN.SUJPRED",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "marcarTexto",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "Toca las palabras que forman el sujeto."
+    ],
+    "objetivo": "Reconocer el sujeto por la concordancia",
+    "parametros": {
+      "modo": "sujeto"
+    },
+    "pistas": [
+      "El sujeto concuerda con el verbo: cambia el número del verbo y mira qué cambia.",
+      "Pregunta al verbo «¿quién?»."
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.SUJPRED.G02",
+    "competencia": "LEN.SIN.SUJPRED",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "segmentar",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "Separa el sujeto y el predicado."
+    ],
+    "objetivo": "Separar sujeto y predicado",
+    "parametros": {
+      "modo": "sujetoPredicado"
+    },
+    "pistas": [
+      "El sujeto concuerda con el verbo: cambia el número del verbo y mira qué cambia.",
+      "Todo lo que no es sujeto forma el predicado."
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.SUJPRED.G03",
+    "competencia": "LEN.SIN.SUJPRED",
+    "peldano": 3,
+    "dificultad": 5,
+    "mecanica": "marcarTexto",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "Toca las palabras que forman el sujeto."
+    ],
+    "objetivo": "Reconocer el sujeto en oraciones más largas",
+    "parametros": {
+      "modo": "sujeto"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.SUJPRED.G04",
+    "competencia": "LEN.SIN.SUJPRED",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "eleccion",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "En «{{oracion}}», si «{{forma}}» pasa a «{{otraForma}}», ¿qué grupo tiene que cambiar para que la oración siga siendo correcta?"
+    ],
+    "objetivo": "Justificar el sujeto con la prueba de la concordancia",
+    "parametros": {
+      "modo": "concordancia"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.SUJPRED.G05",
+    "competencia": "LEN.SIN.SUJPRED",
+    "peldano": 5,
+    "dificultad": 6,
+    "mecanica": "marcarTexto",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "Toca las palabras que forman el sujeto."
+    ],
+    "objetivo": "Reconocer el sujeto con el orden alterado",
+    "parametros": {
+      "modo": "sujeto"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.COMPL.G03",
+    "competencia": "LEN.SIN.COMPL",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "eleccion",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "¿Qué función cumple «{{sintagma}}» en «{{oracion}}»?"
+    ],
+    "objetivo": "Identificar la función de un grupo",
+    "parametros": {
+      "modo": "funcion"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.COMPL.G04",
+    "competencia": "LEN.SIN.COMPL",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "clasificar",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "Clasifica cada grupo de «{{oracion}}» según su función."
+    ],
+    "objetivo": "Clasificar los grupos de una oración por su función",
+    "parametros": {
+      "modo": "funciones"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.COMPL.G05",
+    "competencia": "LEN.SIN.COMPL",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "eleccion",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "¿Qué función cumple «{{sintagma}}» en «{{oracion}}»?"
+    ],
+    "objetivo": "Identificar la función de un grupo sin ayudas",
+    "parametros": {
+      "modo": "funcion"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.COMPL.G06",
+    "competencia": "LEN.SIN.COMPL",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "eleccion",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "¿Por qué pronombre se sustituye «{{sintagma}}» en «{{oracion}}»?"
+    ],
+    "objetivo": "Justificar el CD y el CI con la sustitución por pronombres",
+    "parametros": {
+      "modo": "pronombre"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.COMPL.G07",
+    "competencia": "LEN.SIN.COMPL",
+    "peldano": 5,
+    "dificultad": 4,
+    "mecanica": "segmentar",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "Analiza la oración: sujeto, predicado y complementos."
+    ],
+    "objetivo": "Analizar sintácticamente una oración simple",
+    "parametros": {
+      "modo": "completo"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.CLASE.G01",
+    "competencia": "LEN.SIN.CLASE",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "eleccion",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "¿Qué clase de oración es «{{oracion}}»?"
+    ],
+    "objetivo": "Distinguir oraciones copulativas y predicativas",
+    "parametros": {
+      "modo": "clase"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.CLASE.G02",
+    "competencia": "LEN.SIN.CLASE",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "eleccion",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "¿Qué clase de oración es «{{oracion}}»?"
+    ],
+    "objetivo": "Clasificar oraciones por su predicado",
+    "parametros": {
+      "modo": "clase"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.SIN.CLASE.G03",
+    "competencia": "LEN.SIN.CLASE",
+    "peldano": 5,
+    "dificultad": 5,
+    "mecanica": "eleccion",
+    "tipo": "oracionSimple",
+    "enunciados": [
+      "¿Qué clase de oración es «{{oracion}}»?"
+    ],
+    "objetivo": "Clasificar oraciones por su predicado en formato de examen",
+    "parametros": {
+      "modo": "clase"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
   }
 ]

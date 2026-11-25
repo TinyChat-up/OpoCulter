@@ -2,19 +2,30 @@ import Foundation
 import Testing
 @testable import Educulter
 
-// Recuperación (25/11/2026), §4.2: gramática generativa con compatibilidad.json (D-086).
-// Propiedades con 1000 semillas por mecánica y nivel, con un oráculo que solo usa los datos de
-// compatibilidad.json y tablas escritas aquí (artículos, terminaciones verbales, restricciones
-// de tiempo de los CCT), no el código del generador.
+// Gramática generativa con compatibilidad.json (D-086) y reglas de naturalidad de la Fase 05E
+// (D-090). Propiedades con 1000 semillas por plantilla y nivel, con un oráculo independiente: el
+// análisis se deduce de la estructura elegida (lemas, número, determinantes, CC y orden) y de los
+// datos de compatibilidad.json, con tablas escritas aquí (artículos, terminaciones, ser y estar),
+// nunca leyendo el texto generado ni usando el código del generador.
 
 private let bancoGramatica = try! CargadorContenido.desdeBundle().cargar(politica: .todos)
 private var compat: CompatibilidadGramatica { bancoGramatica.recursos.compatibilidad }
 
-private enum OraculoGramatica {
+enum OraculoOracion {
     static let articulos: [String: String] = ["ms": "el", "fs": "la", "mp": "los", "fp": "las"]
+    static let nombres: [String: String] = [
+        "SUJ": "Sujeto", "CD": "Complemento directo", "CI": "Complemento indirecto", "CCL": "CC de lugar", "CCT": "CC de tiempo",
+        "CCM": "CC de modo", "CCC": "CC de compañía", "ATR": "Atributo",
+    ]
+    /// 3.ª persona de ser y estar (escrita a mano).
+    static let copulativos: [String: [String: (String, String)]] = [
+        "ser": ["Presente": ("es", "son"), "Pretérito imperfecto": ("era", "eran"), "Pretérito perfecto simple": ("fue", "fueron"), "Futuro simple": ("será", "serán")],
+        "estar": ["Presente": ("está", "están"), "Pretérito imperfecto": ("estaba", "estaban"), "Pretérito perfecto simple": ("estuvo", "estuvieron"), "Futuro simple": ("estará", "estarán")],
+    ]
 
-    /// 3.ª persona (singular, plural) de un verbo regular en los tiempos que usa el generador.
+    /// 3.ª persona (singular, plural) en los tiempos que usa el generador.
     static func terceraPersona(_ inf: String, _ tiempo: String) -> (String, String)? {
+        if let c = copulativos[inf] { return c[tiempo] }
         let raiz = String(inf.dropLast(2)), ar = inf.hasSuffix("ar")
         switch tiempo {
         case "Presente": return ar ? (raiz + "a", raiz + "an") : (raiz + "e", raiz + "en")
@@ -25,12 +36,6 @@ private enum OraculoGramatica {
         }
     }
 
-    /// Tiempos admitidos por cada CCT (piezas.json, D-066): el resto admite cualquiera.
-    static let tiemposCCT: [String: Set<String>] = [
-        "ayer": ["Pretérito perfecto simple"],
-        "todos los días": ["Presente", "Pretérito imperfecto"],
-    ]
-
     static func forma(_ a: CompatibilidadGramatica.Adjetivo, _ genero: String, _ numero: String) -> String {
         switch genero + numero {
         case "fs": a.fs
@@ -39,154 +44,291 @@ private enum OraculoGramatica {
         default: a.ms
         }
     }
-}
 
-/// Comprueba todas las reglas de la 4.2 sobre una muestra; devuelve los fallos (vacío si cumple).
-private func reglas(_ m: Muestra) -> [String] {
-    let d = m.datos
-    var fallos: [String] = []
-    let oracion = d["oracion"]!
-    let tokens = d["tokens"]!.split(separator: " ").map { $0.split(separator: "/").map(String.init) }
-    let funciones = d["funciones"]!.split(separator: ";").map { f -> (String, Int, Int) in
-        let p = f.split(separator: ":"), r = p[1].split(separator: "-")
-        return (String(p[0]), Int(r[0])!, Int(r[1])!)
+    /// Oración y análisis esperados a partir de la estructura.
+    struct Esperado {
+        var texto: String
+        /// (función, texto) en el orden de la oración (NV incluido, sin PRED).
+        var constituyentes: [(String, String)]
+        var sujeto: String
+        var clase: String
+        var verbo: String
+        var otraForma: String
     }
-    func texto(_ f: (String, Int, Int)) -> [[String]] { Array(tokens[f.1...f.2]) }
-    guard let verbo = compat.verbos.first(where: { $0.infinitivo == d["verbo"] }) else { return ["verbo fuera de compatibilidad: \(d["verbo"] ?? "")"] }
-    guard let sujeto = compat.sustantivos.first(where: { $0.lema == d["sujetoLema"] }) else { return ["sujeto fuera de compatibilidad"] }
-    let numero = d["numero"]!
 
-    // Sujeto compatible con el verbo y concordancia artículo-sustantivo.
-    if Set(sujeto.etiquetas).isDisjoint(with: verbo.sujeto) { fallos.append("sujeto «\(sujeto.lema)» no admitido por «\(verbo.infinitivo)»") }
-    let suj = funciones.first { $0.0 == "SUJ" }!
-    let sujTokens = texto(suj)
-    if sujTokens[0][0].lowercased() != OraculoGramatica.articulos[sujeto.genero + numero] { fallos.append("artículo del sujeto: \(sujTokens[0][0])") }
-    if sujTokens[1][0] != (numero == "p" ? sujeto.plural : sujeto.lema) { fallos.append("número del sujeto: \(sujTokens[1][0])") }
+    static func esperado(_ d: [String: String]) -> Esperado? {
+        guard let s = compat.sustantivos.first(where: { $0.lema == d["sujetoLema"] }), let n = d["numero"], let tiempo = d["tiempo"],
+              let inf = d["verbo"], let (v3s, v3p) = terceraPersona(inf, tiempo) else { return nil }
+        let adjetivos = (d["adjetivos"] ?? "").split(separator: ";").map { $0.split(separator: "|").map(String.init) }
+        func adj(_ lema: String) -> String { adjetivos.first { $0[1] == lema }.map { " " + $0[0] } ?? "" }
+        func nominal(_ x: CompatibilidadGramatica.Sustantivo, _ num: String) -> String {
+            "\(articulos[x.genero + num]!) \(num == "p" ? x.plural : x.lema)\(adj(x.lema))"
+        }
+        func animado(_ x: CompatibilidadGramatica.Sustantivo, _ num: String, _ det: String) -> String {
+            let nombre = num == "p" ? x.plural : x.lema
+            if det == "pos" { return "a \(num == "p" ? "sus" : "su") \(nombre)" }
+            let art = articulos[x.genero + num]!
+            return art == "el" ? "al \(nombre)" : "a \(art) \(nombre)"
+        }
+        let sujeto = nominal(s, n)
+        let verbo = n == "p" ? v3p : v3s
+        var tras: [(String, String)] = []
+        var clase = "Predicativa intransitiva"
+        if let lema = d["cdLema"], !lema.isEmpty, let o = compat.sustantivos.first(where: { $0.lema == lema }) {
+            let num = d["cdNumero"] ?? "s"
+            tras.append(("CD", (d["cdDet"] ?? "").isEmpty ? nominal(o, num) : animado(o, num, d["cdDet"]!)))
+            clase = "Predicativa transitiva"
+        }
+        if let lema = d["atributoLema"], !lema.isEmpty, let a = compat.adjetivos.first(where: { $0.ms == lema }) {
+            tras.append(("ATR", forma(a, s.genero, n)))
+            clase = "Copulativa (atributiva)"
+        }
+        if let lema = d["ciLema"], !lema.isEmpty, let c = compat.sustantivos.first(where: { $0.lema == lema }) {
+            tras.append(("CI", animado(c, d["ciNumero"] ?? "s", d["ciDet"] ?? "art")))
+        }
+        var ccs = (d["textosCC"] ?? "").split(separator: ";").map { $0.split(separator: "=").map(String.init) }.map { ($0[0], $0[1]) }
+        let orden = d["orden"] ?? "canonico"
+        var partes: [(String, String)] = []
+        var delante: (String, String)?
+        if orden != "canonico", !ccs.isEmpty { delante = ccs.removeFirst() }
+        if let delante { partes.append(delante) }
+        if orden == "sujetoPospuesto" { partes += [("NV", verbo), ("SUJ", sujeto)] } else { partes += [("SUJ", sujeto), ("NV", verbo)] }
+        partes += tras + ccs
+        var texto = partes.enumerated().map { $0.offset == 0 && delante != nil ? $0.element.1 + "," : $0.element.1 }.joined(separator: " ")
+        texto = texto.prefix(1).uppercased() + texto.dropFirst()
+        return Esperado(texto: texto, constituyentes: partes, sujeto: sujeto, clase: clase, verbo: verbo, otraForma: n == "p" ? v3s : v3p)
+    }
 
-    // Concordancia sujeto-verbo (terminaciones escritas aquí).
-    let nv = funciones.first { $0.0 == "NV" }!
-    if nv.1 != suj.2 + 1 { fallos.append("el verbo no sigue al sujeto") }
-    if let (s, p) = OraculoGramatica.terceraPersona(verbo.infinitivo, d["tiempo"]!) {
-        if tokens[nv.1][0] != (numero == "p" ? p : s) { fallos.append("concordancia sujeto-verbo: \(tokens[nv.1][0]) (\(numero), \(d["tiempo"]!))") }
-    } else { fallos.append("tiempo inesperado \(d["tiempo"]!)") }
+    static func iguales(_ a: String, _ b: String) -> Bool { a.lowercased() == b.lowercased() }
 
-    // CD: etiqueta fina compatible con el verbo; nunca el sujeto.
-    let cd = funciones.first { $0.0 == "CD" }
-    if verbo.regimen == "transitivo" {
-        if let cd, let o = compat.sustantivos.first(where: { $0.lema == d["cdLema"] }) {
-            if Set(o.etiquetas).isDisjoint(with: verbo.objeto ?? []) { fallos.append("CD absurdo: «\(verbo.infinitivo)» + «\(o.lema)»") }
-            if o.lema == sujeto.lema { fallos.append("CD = sujeto") }
-            let t = texto(cd)
-            if o.animado {
-                if t.map(\.[0]) != ["a", "su", o.lema] { fallos.append("CD de persona: \(t.map(\.[0]))") }
-            } else {
-                let n = t[1][0] == o.plural ? "p" : "s"
-                if t[1][0] != o.lema && t[1][0] != o.plural { fallos.append("forma del CD: \(t[1][0])") }
-                if t[0][0] != OraculoGramatica.articulos[o.genero + n] { fallos.append("artículo del CD: \(t[0][0]) \(t[1][0])") }
+    /// Comprueba análisis, mecánica y reglas de naturalidad (D-090). Devuelve los fallos.
+    static func comprobar(_ m: Muestra, _ item: Item, _ p: Plantilla) -> [String] {
+        let d = m.datos
+        guard let e = esperado(d) else { return ["sin estructura: \(d)"] }
+        var fallos: [String] = []
+        if e.texto != d["oracion"] { fallos.append("texto «\(d["oracion"]!)» ≠ estructura «\(e.texto)»") }
+        // Constituyentes generados (por posición) frente a los deducidos de la estructura.
+        let tokens = d["tokens"]!.split(separator: " ").map { $0.split(separator: "/").map(String.init) }
+        let generados = d["funciones"]!.split(separator: ";").map { f -> (String, String) in
+            let x = f.split(separator: ":"), r = x[1].split(separator: "-")
+            return (String(x[0]), tokens[Int(r[0])!...Int(r[1])!].map(\.[0]).joined(separator: " "))
+        }.filter { $0.0 != "PRED" }
+        let a = Set(generados.map { "\($0.0)=\($0.1.lowercased())" }), b = Set(e.constituyentes.map { "\($0.0)=\($0.1.lowercased())" })
+        if a != b { fallos.append("análisis \(a.sorted()) ≠ \(b.sorted())") }
+        let funcionDe = Dictionary(e.constituyentes.map { ($0.1.lowercased(), $0.0) }, uniquingKeysWith: { x, _ in x })
+
+        switch item.payload {
+        case .marcarTexto(let mt):
+            let marcado = mt.tokens.filter { mt.correctos.contains($0.id) }.map { $0.texto.replacingOccurrences(of: ",", with: "") }.joined(separator: " ")
+            if !iguales(marcado, e.sujeto) { fallos.append("sujeto marcado «\(marcado)» ≠ «\(e.sujeto)»") }
+        case .segmentar(let sg):
+            let pos = Dictionary(uniqueKeysWithValues: sg.tokens.enumerated().map { ($1.id, $0) })
+            func t(_ s: Payload.Segmentar.Segmento) -> String { sg.tokens[pos[s.desde]!...pos[s.hasta]!].map(\.texto).joined(separator: " ") }
+            let suj = sg.segmentos.first { $0.etiqueta == "SUJ" }.map(t) ?? ""
+            if !iguales(suj, e.sujeto) { fallos.append("segmento sujeto «\(suj)»") }
+            let resto = e.constituyentes.filter { $0.0 != "SUJ" }.map(\.1).joined(separator: " ")
+            if !iguales(sg.segmentos.first { $0.etiqueta == "PRED" }.map(t) ?? "", resto) { fallos.append("predicado") }
+            let nombrePred = sg.etiquetas.first { $0.id == "PRED" }?.nombre
+            if nombrePred != (e.clase.hasPrefix("Copulativa") ? "Predicado nominal" : "Predicado verbal") { fallos.append("nombre del predicado: \(nombrePred ?? "")") }
+            for s in sg.segmentos where s.padre != nil {
+                if funcionDe[t(s).lowercased()] != s.etiqueta { fallos.append("segmento \(s.etiqueta) «\(t(s))»") }
             }
-        } else { fallos.append("transitivo sin CD") }
-    } else if cd != nil { fallos.append("intransitivo con CD") }
-
-    // CI: persona, nunca el mismo referente que el sujeto.
-    if funciones.contains(where: { $0.0 == "CI" }) {
-        guard let ci = compat.sustantivos.first(where: { $0.lema == d["ciLema"] }) else { return fallos + ["CI sin lema"] }
-        if !verbo.admiteCI { fallos.append("«\(verbo.infinitivo)» no admite CI") }
-        if ci.lema == sujeto.lema { fallos.append("CI = sujeto («\(ci.lema)»)") }
-        if !ci.etiquetas.contains("persona") { fallos.append("CI que no es persona") }
+            if Oraculo05E.modo(p) == "completo" && sg.segmentos.count != e.constituyentes.count + 1 { fallos.append("faltan segmentos") }
+        case .clasificar(let c) where Oraculo05E.modo(p) == "funciones":
+            for f in c.fichas where funcionDe[f.texto.lowercased()] != f.categoria { fallos.append("ficha «\(f.texto)» → \(f.categoria)") }
+        case .clasificar(let c):
+            for f in c.fichas where claseDePalabra(f.texto, d) != f.categoria { fallos.append("clase de «\(f.texto)»: \(f.categoria) ≠ \(claseDePalabra(f.texto, d))") }
+        case .eleccion(let el):
+            let correcta = el.opciones.first { $0.id == el.correcta }?.texto ?? ""
+            switch Oraculo05E.modo(p) {
+            case "clase": if correcta != e.clase { fallos.append("clase \(correcta) ≠ \(e.clase)") }
+            case "concordancia":
+                if !iguales(correcta, e.sujeto) { fallos.append("concordancia: \(correcta)") }
+                if d["otraForma"] != e.otraForma { fallos.append("otra forma \(d["otraForma"] ?? "") ≠ \(e.otraForma)") }
+                if e.clase.hasPrefix("Copulativa") { fallos.append("concordancia con copulativa (el atributo también cambiaría)") }
+            case "pronombre":
+                let f = d["objetivo"] ?? ""
+                let lema = f == "CD" ? d["cdLema"] : d["ciLema"]
+                let num = (f == "CD" ? d["cdNumero"] : d["ciNumero"]) ?? "s"
+                guard let s = compat.sustantivos.first(where: { $0.lema == lema }) else { fallos.append("pronombre sin lema"); break }
+                let esperado = f == "CI" ? (num == "p" ? "les" : "le") : (s.genero == "f" ? "la" : "lo") + (num == "p" ? "s" : "")
+                if correcta != esperado { fallos.append("pronombre \(correcta) ≠ \(esperado)") }
+                if f == "CD" && s.animado { fallos.append("CD de persona o animal en la pregunta de pronombre (leísmo admitido)") }
+            default:
+                let sintagma = item.enunciado.components(separatedBy: "«").dropFirst().first?.components(separatedBy: "»").first ?? ""
+                if correcta != nombres[funcionDe[sintagma.lowercased()] ?? ""] { fallos.append("función de «\(sintagma)»: \(correcta)") }
+            }
+        default: fallos.append("mecánica inesperada")
+        }
+        return fallos + reglas(d, e)
     }
 
-    // Complementos circunstanciales: como mucho 2, de tipos distintos, de la lista de cada tipo.
-    let ccs = funciones.filter { $0.0.hasPrefix("CC") }
-    if ccs.count > 2 { fallos.append("\(ccs.count) CC") }
-    if Set(ccs.map(\.0)).count != ccs.count { fallos.append("CC repetidos: \(ccs.map(\.0))") }
-    var tiempos: Set<String>? = nil
-    for cc in ccs {
-        let t = texto(cc).map(\.[0]).joined(separator: " ").lowercased()
-        if !(compat.complementosCircunstanciales[cc.0] ?? []).contains(t) { fallos.append("\(cc.0) «\(t)» no está en compatibilidad.json") }
-        if cc.0 == "CCT", let r = OraculoGramatica.tiemposCCT[t] { tiempos = r }
+    /// Clase de palabra deducida de los datos (no del generador).
+    static func claseDePalabra(_ palabra: String, _ d: [String: String]) -> String {
+        let w = palabra.lowercased().replacingOccurrences(of: ",", with: "")
+        if ["el", "la", "los", "las", "su", "sus", "todos", "un", "una"].contains(w) { return "det" }
+        if ["a", "en", "por", "con", "para", "de"].contains(w) { return "prep" }
+        if ["ayer", "deprisa", "despacio", "tranquilamente"].contains(w) { return "adv" }
+        if w == d["verbo"].flatMap({ v in terceraPersona(v, d["tiempo"]!).map { d["numero"] == "p" ? $0.1 : $0.0 } }) { return "verbo" }
+        if compat.adjetivos.contains(where: { $0.formas.contains(w) }) { return "adj" }
+        return "sust"
     }
-    if let tiempos, !tiempos.contains(d["tiempo"]!) { fallos.append("tiempo \(d["tiempo"]!) incompatible con el CCT") }
 
-    // CCT antepuesto: primer constituyente y seguido de coma. Ningún otro constituyente va delante del sujeto.
-    let primero = funciones.filter { $0.0 != "PRED" }.min { $0.1 < $1.1 }!
-    if primero.0 != "SUJ" {
-        if primero.0 != "CCT" { fallos.append("\(primero.0) delante del sujeto") }
-        if d["coma"] != "\(primero.2)" { fallos.append("CCT antepuesto sin coma") }
-        let palabras = texto(primero).map(\.[0]).joined(separator: " ")
-        if !oracion.hasPrefix(palabras + ",") { fallos.append("la coma no sigue al CCT: \(oracion)") }
-    } else if !(d["coma"] ?? "").isEmpty || oracion.contains(",") { fallos.append("coma sin CCT antepuesto") }
-    if oracion.first?.isUppercase != true { fallos.append("sin mayúscula inicial") }
-    if oracion.contains(" a el ") || oracion.contains(" de el ") { fallos.append("contracción sin hacer") }
-
-    // Adjetivos: compatibles, concordados y solo con las cuatro formas de los datos.
-    let adjetivos = (d["adjetivos"] ?? "").split(separator: ";").map { $0.split(separator: "|").map(String.init) }
-    if adjetivos.count != tokens.filter({ $0[1] == "adj" }).count { fallos.append("adjetivos sin registrar") }
-    for a in adjetivos {
-        let (forma, lema, genero, n) = (a[0], a[1], a[2], a[3])
-        guard let s = compat.sustantivos.first(where: { $0.lema == lema }) else { fallos.append("adjetivo de «\(lema)»"); continue }
-        let posibles = compat.adjetivos.filter { OraculoGramatica.forma($0, genero, n) == forma }
-        if posibles.isEmpty { fallos.append("forma inexistente o sin concordar: «\(forma)» (\(genero)\(n))") }
-        if !posibles.contains(where: { !Set($0.etiquetas).isDisjoint(with: s.etiquetas) }) { fallos.append("«\(forma)» no califica a «\(lema)»") }
-        for adj in posibles where adj.invariableEnGenero && forma != (n == "p" ? adj.mp : adj.ms) { fallos.append("invariable mal formada: \(forma)") }
-        if !tokens.contains(where: { $0[0] == forma && $0[1] == "adj" }) { fallos.append("adjetivo «\(forma)» no está en la oración") }
+    /// Reglas de naturalidad (D-090) sobre la estructura.
+    static func reglas(_ d: [String: String], _ e: Esperado) -> [String] {
+        var f: [String] = []
+        guard let v = compat.verbos.first(where: { $0.infinitivo == d["verbo"] }),
+              let s = compat.sustantivos.first(where: { $0.lema == d["sujetoLema"] }) else { return ["verbo o sujeto fuera de compatibilidad"] }
+        let tiempo = d["tiempo"]!
+        // Incontables: nunca en plural.
+        if s.incontable && d["numero"] == "p" { f.append("incontable en plural: \(s.lema)") }
+        if let o = compat.sustantivos.first(where: { $0.lema == d["cdLema"] }), o.incontable, d["cdNumero"] == "p" { f.append("CD incontable en plural") }
+        for lema in ["leche", "café", "sopa", "zumo"] where !(compat.sustantivos.first { $0.lema == lema }?.incontable ?? false) { f.append("\(lema) sin «incontable»") }
+        // Sujeto y CD compatibles con el verbo; CD ≠ sujeto.
+        if v.regimen != "copulativo" && Set(s.etiquetas).isDisjoint(with: v.sujeto) { f.append("sujeto no admitido") }
+        if let o = compat.sustantivos.first(where: { $0.lema == d["cdLema"] }) {
+            if Set(o.etiquetas).isDisjoint(with: v.objeto ?? []) { f.append("CD absurdo: \(v.infinitivo) + \(o.lema)") }
+            if o.lema == s.lema { f.append("CD = sujeto") }
+            if o.animado == (d["cdDet"] ?? "").isEmpty { f.append("determinante del CD") }
+            if !o.animado && d["cdDet"] == "pos" { f.append("CD de cosa con posesivo") }
+            if ["niño", "niña", "cocinero"].contains(o.lema) && d["cdDet"] == "pos" { f.append("\(o.lema) con posesivo") }
+        }
+        // CI: persona, ≠ sujeto, ≠ CD, artículo o posesivo (niño, niña y cocinero solo artículo).
+        if let lema = d["ciLema"], !lema.isEmpty, let c = compat.sustantivos.first(where: { $0.lema == lema }) {
+            if !v.admiteCI { f.append("\(v.infinitivo) no admite CI") }
+            if !c.etiquetas.contains("persona") { f.append("CI que no es persona") }
+            if c.lema == s.lema || c.lema == d["cdLema"] { f.append("CI = sujeto o CD") }
+            if !["art", "pos"].contains(d["ciDet"] ?? "") { f.append("CI sin determinante") }
+            if ["niño", "niña", "cocinero"].contains(c.lema) && d["ciDet"] == "pos" { f.append("\(c.lema) con posesivo") }
+        }
+        if v.infinitivo == "preparar" && v.admiteCI { f.append("preparar admite CI") }
+        // CC: tipos distintos, sin repetir preposición inicial, compatibles con el verbo y el sujeto.
+        let ccs = (d["textosCC"] ?? "").split(separator: ";").map { $0.split(separator: "=").map(String.init) }
+        if Set(ccs.map(\.[0])).count != ccs.count { f.append("CC repetidos") }
+        let preps = ccs.compactMap { c -> String? in
+            let p = String(c[1].split(separator: " ").first ?? "")
+            return ["a", "en", "por", "con", "para", "de"].contains(p) ? p : nil
+        }
+        if Set(preps).count != preps.count { f.append("dos CC con la misma preposición: \(ccs.map(\.[1]))") }
+        let aspecto: [String: String] = ["ayer": "puntual", "el lunes": "puntual", "a las cinco": "puntual", "todos los días": "habitual",
+                                         "por la mañana": "neutro", "en verano": "neutro"]
+        for c in ccs {
+            if c[1] == "junto al río" { f.append("«junto al río» excluido") }
+            if (compat.ccExcluye[c[1]] ?? []).contains(v.infinitivo) { f.append("«\(v.infinitivo) \(c[1])»") }
+            if c[1].hasPrefix("con su") && !s.etiquetas.contains("persona") { f.append("CCC con sujeto que no es persona") }
+            guard c[0] == "CCT" else { continue }
+            if c[1] == "ayer" && tiempo != "Pretérito perfecto simple" { f.append("«ayer» con \(tiempo)") }
+            switch aspecto[c[1]] {
+            case "puntual": if tiempo == "Pretérito imperfecto" { f.append("CCT puntual con imperfecto") }
+            case "habitual":
+                if !["Presente", "Pretérito imperfecto"].contains(tiempo) { f.append("habitual con \(tiempo)") }
+                if ["comprar", "regalar", "prestar"].contains(v.infinitivo) { f.append("habitual con \(v.infinitivo)") }
+            default: break
+            }
+        }
+        // Copulativas: ser (cualidad), estar (estado), parecer (ambas); predicado nominal.
+        if v.regimen == "copulativo" {
+            guard let a = compat.adjetivos.first(where: { $0.ms == d["atributoLema"] }) else { return f + ["copulativa sin atributo"] }
+            let admitidos: [String: Set<String>] = ["ser": ["cualidad"], "estar": ["estado"], "parecer": ["cualidad", "estado"]]
+            if !(admitidos[v.infinitivo] ?? []).contains(a.tipo ?? "") { f.append("\(v.infinitivo) + \(a.ms) (\(a.tipo ?? ""))") }
+            if Set(a.etiquetas).isDisjoint(with: s.etiquetas) { f.append("«\(a.ms)» no califica a «\(s.lema)»") }
+            if v.infinitivo != "estar" && !["Presente", "Pretérito imperfecto"].contains(tiempo) { f.append("\(v.infinitivo) en \(tiempo)") }
+            if !ccs.isEmpty || !(d["cdLema"] ?? "").isEmpty { f.append("copulativa con CD o CC") }
+        }
+        // Orden: el CC antepuesto es de tiempo o de lugar y va seguido de coma.
+        if d["orden"] != "canonico", let primero = ccs.first, !["CCT", "CCL"].contains(primero[0]) { f.append("\(primero[0]) antepuesto") }
+        if (d["orden"] == "canonico") == (d["oracion"]!.contains(",")) { f.append("coma y orden no coinciden") }
+        // Estructura del nivel.
+        let nivel = Int(d["nivel"]!)!
+        let tieneCD = !(d["cdLema"] ?? "").isEmpty, tieneCI = !(d["ciLema"] ?? "").isEmpty
+        let ok: Bool = switch nivel {
+        case 1: v.regimen == "intransitivo" && ccs.isEmpty
+        case 2: v.regimen == "transitivo" && tieneCD && !tieneCI && ccs.isEmpty
+        case 3: v.regimen == "intransitivo" && ccs.count == 1
+        case 4: v.regimen == "copulativo"
+        case 5: (v.regimen == "transitivo" && tieneCD && tieneCI && ccs.isEmpty) || (v.regimen == "intransitivo" && ccs.count == 2)
+        default: d["orden"] != "canonico" || (tieneCD && tieneCI && ccs.count == 1)
+        }
+        if !ok { f.append("estructura del nivel \(nivel): \(d["oracion"]!)") }
+        if d["orden"] == "sujetoPospuesto" && v.regimen != "intransitivo" { f.append("sujeto pospuesto con verbo no intransitivo") }
+        return f
     }
-    return fallos
 }
 
-@Suite("Gramática generativa con compatibilidad.json (1000 semillas)")
+@Suite("Gramática generativa con compatibilidad.json y naturalidad (D-090, 1000 semillas)")
 struct GramaticaCompatibilidadTests {
     static let plantillas = bancoGramatica.plantillas.filter { $0.tipo == "oracionSimple" }
 
-    @Test("La compatibilidad se carga y pasa el validador")
+    @Test("La compatibilidad se carga y pasa el validador; datos de D-090")
     func carga() {
-        #expect(!compat.vacia && compat.sustantivos.count == 39 && compat.adjetivos.count == 17 && compat.verbos.count == 27)
+        #expect(!compat.vacia && compat.sustantivos.count == 39 && compat.adjetivos.count == 27 && compat.verbos.count == 30)
         #expect(ValidadorContenido(anioActual: 2026).validar(compatibilidad: compat).isEmpty)
-        #expect(compat.adjetivos.filter(\.invariableEnGenero).map(\.ms).sorted() == ["amable", "azul", "caliente", "difícil", "fácil", "grande"])
+        #expect(Set(compat.sustantivos.filter(\.incontable).map(\.lema)) == ["leche", "café", "sopa", "zumo"])
+        #expect(compat.verbos.first { $0.infinitivo == "preparar" }?.admiteCI == false)
+        #expect(Set(compat.verbos.filter { $0.regimen == "copulativo" }.map(\.infinitivo)) == ["ser", "estar", "parecer"])
+        let estado = Set(compat.adjetivos.filter { $0.tipo == "estado" }.map(\.ms))
+        #expect(estado == ["caliente", "cansado", "contento", "nervioso", "tranquilo", "enfadado", "limpio", "sucio", "abierto", "cerrado", "frío"])
+        #expect(compat.adjetivos.filter { $0.tipo == "cualidad" }.count == 16)
+        #expect(compat.aspectoCCT["ayer"] == "puntual" && compat.aspectoCCT["todos los días"] == "habitual" && compat.aspectoCCT["en verano"] == "neutro")
     }
 
-    @Test("CD compatible, CI ≠ sujeto, ≤ 2 CC de tipos distintos, CCT antepuesto con coma, adjetivos y concordancias",
-          arguments: plantillas, 1...6)
+    @Test("Análisis deducido de la estructura, mecánica y reglas de naturalidad", arguments: plantillas, 1...6)
     func reglasDeLaOracion(_ base: Plantilla, _ dificultad: Int) throws {
         var p = base
         p.dificultad = dificultad
         var fallos: [String] = []
-        var vistas = Set<String>()
-        var antepuestos = 0, conCI = 0, conAdjetivo = 0
+        var antepuestos = 0, pospuestos = 0, conCI = 0, copulativas = 0
         for semilla in UInt64(0)..<1000 {
             let m = try MotorGeneradores.muestra(p, semilla: semilla, recursos: bancoGramatica.recursos)
-            let f = reglas(m)
+            let item = MotorGeneradores.item(p, semilla: semilla, muestra: m)
+            let f = OraculoOracion.comprobar(m, item, p)
             if !f.isEmpty { fallos.append("\(m.datos["oracion"]!): \(f.joined(separator: "; "))") }
-            if !(m.datos["coma"] ?? "").isEmpty { antepuestos += 1 }
+            if m.datos["orden"] != "canonico" { antepuestos += 1 }
+            if m.datos["orden"] == "sujetoPospuesto" { pospuestos += 1 }
             if !(m.datos["ciLema"] ?? "").isEmpty { conCI += 1 }
-            if !(m.datos["adjetivos"] ?? "").isEmpty { conAdjetivo += 1 }
-            if vistas.insert(m.datos["oracion"]!).inserted && vistas.count <= 12 && dificultad >= 4 {
-                print("ORACION \(p.id) d\(dificultad): \(m.datos["oracion"]!)")
-            }
+            if m.datos["regimen"] == "copulativo" { copulativas += 1 }
             if fallos.count >= 5 { break }
         }
         #expect(fallos.isEmpty, "\(fallos)")
-        // Las reglas se ejercitan de verdad.
-        if dificultad >= 5 { #expect(conCI > 0 && conAdjetivo > 0, "d\(dificultad): CI \(conCI), adjetivos \(conAdjetivo)") }
-        if dificultad >= 3 && p.mecanica != .segmentar { #expect(antepuestos > 0, "d\(dificultad): ningún CCT antepuesto") }
-        if p.mecanica == .segmentar { #expect(antepuestos == 0, "En segmentar el CCT no se antepone") }
+        // Las reglas se ejercitan de verdad en los niveles que las piden.
+        let modo = Oraculo05E.modo(p)
+        if ["sujeto", "completo", "sujetoPredicado", "funciones", "clases"].contains(modo) {
+            if dificultad == 4 { #expect(copulativas == 1000) }
+            if dificultad == 5 { #expect(conCI > 0) }
+            if dificultad == 6 && p.mecanica != .segmentar { #expect(antepuestos == 1000 && pospuestos > 0) }
+        }
+        if p.mecanica == .segmentar { #expect(antepuestos == 0, "En segmentar no hay orden alterado") }
     }
 
-    @Test("Con compatibilidad, analisisVerbal usa sus verbos y participios irregulares (escrito, abierto)", arguments: 1...6)
+    @Test("50 oraciones distintas por nivel, para revisar (se imprimen 3)", arguments: 1...6)
+    func cincuentaPorNivel(_ nivel: Int) throws {
+        let p = Plantilla(id: "LEN.SIN.SUJPRED.GX", competencia: "LEN.SIN.SUJPRED", peldano: 3, dificultad: nivel, mecanica: .marcarTexto,
+                          tipo: "oracionSimple", parametros: ["modo": .texto("sujeto")], enunciados: ["{{oracion}}"])
+        var vistas: [String] = []
+        for semilla in UInt64(0)..<2000 where vistas.count < 50 {
+            let o = try MotorGeneradores.muestra(p, semilla: semilla, recursos: bancoGramatica.recursos).datos["oracion"]!
+            if !vistas.contains(o) { vistas.append(o) }
+        }
+        #expect(vistas.count == 50)
+        for o in vistas.prefix(3) { print("ORACION nivel \(nivel): \(o).") }
+    }
+
+    @Test("Con compatibilidad, analisisVerbal usa sus verbos no copulativos y participios irregulares (escrito, abierto)", arguments: 1...6)
     func verbos(_ dificultad: Int) throws {
         let base = try #require(bancoGramatica.plantillas.first { $0.tipo == "analisisVerbal" })
         var p = base
         p.dificultad = dificultad
         let banco = GeneradorAnalisisVerbal.banco(bancoGramatica.recursos)
-        #expect(Set(compat.verbos.map(\.infinitivo)).isSubset(of: Set(banco.regulares)))
+        #expect(Set(compat.verbos.filter { $0.regimen != "copulativo" }.map(\.infinitivo)).isSubset(of: Set(banco.regulares)))
+        #expect(banco.regulares.allSatisfy { !["ser", "estar", "parecer", "tener", "hacer", "poner", "decir"].contains($0) })
         for semilla in UInt64(0)..<1000 {
             let m = try MotorGeneradores.muestra(p, semilla: semilla, recursos: bancoGramatica.recursos)
             let forma = m.datos["forma"]!, verbo = m.datos["verbo"]!
-            #expect(!forma.hasSuffix("escribido") && !forma.hasSuffix("abrido") && !forma.hasSuffix("ponido") && !forma.hasSuffix("decido") && !forma.hasSuffix("hacido"), "\(forma)")
+            #expect(!forma.hasSuffix("escribido") && !forma.hasSuffix("abrido"), "\(forma)")
             if forma.contains(" ") {
                 let participio = String(forma.split(separator: " ").last!)
-                let esperado = ["escribir": "escrito", "abrir": "abierto", "poner": "puesto", "decir": "dicho", "hacer": "hecho"][verbo]
-                    ?? String(verbo.dropLast(2)) + (verbo.hasSuffix("ar") ? "ado" : "ido")
-                if verbo != "tener" { #expect(participio == esperado, "\(verbo): \(forma)") }
+                let esperado = ["escribir": "escrito", "abrir": "abierto"][verbo] ?? String(verbo.dropLast(2)) + (verbo.hasSuffix("ar") ? "ado" : "ido")
+                #expect(participio == esperado, "\(verbo): \(forma)")
             }
             if let v = compat.verbos.first(where: { $0.infinitivo == verbo }) {
                 #expect(["ar": 1, "er": 2, "ir": 3][String(verbo.suffix(2))] == v.conjugacion)

@@ -29,19 +29,31 @@ struct RecursosGeneradores: Sendable, Equatable {
     var frases: BancoFrases
     /// Compatibilidad semántica de la gramática generativa (lote 02b, D-086).
     var compatibilidad: CompatibilidadGramatica
-    /// Palabras utilizables del léxico, analizadas una sola vez, con su nivel (1–6).
+    /// Formas válidas que solo se distinguen por la tilde de una palabra del léxico (`ambiguas.json`, 05E §4.1).
+    let ambiguas: PalabrasAmbiguas
+    /// Palabras del léxico ambiguas sin contexto (término/termino/terminó): no se usan en los
+    /// generadores de acentuación sin contexto.
+    let palabrasAmbiguas: Set<String>
+    /// Palabras utilizables del léxico, analizadas una sola vez, con su nivel (1–6), sin las ambiguas.
     let palabras: [PalabraNivelada]
+    /// Base literaria del lote 05a (generador `literatura`, Fase 05E).
+    var literatura: BaseLiteraria?
 
     init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
          verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases(),
-         compatibilidad: CompatibilidadGramatica = CompatibilidadGramatica()) {
+         compatibilidad: CompatibilidadGramatica = CompatibilidadGramatica(), ambiguas: PalabrasAmbiguas = PalabrasAmbiguas(),
+         literatura: BaseLiteraria? = nil) {
+        self.literatura = literatura
         self.lexico = lexico
         self.formasVerbales = formasVerbales
         self.gramatica = gramatica
         self.verbos = verbos
         self.frases = frases
         self.compatibilidad = compatibilidad
-        self.palabras = Acentuacion.nivelar(lexico, formasVerbales: Set(formasVerbales))
+        self.ambiguas = ambiguas
+        let ambiguasLexico = Acentuacion.ambiguas(lexico.map(\.palabra), formasValidas: ambiguas.formas)
+        self.palabrasAmbiguas = ambiguasLexico
+        self.palabras = Acentuacion.nivelar(lexico, formasVerbales: Set(formasVerbales)).filter { !ambiguasLexico.contains($0.analisis.palabra) }
     }
 
     static let vacios = RecursosGeneradores()
@@ -87,6 +99,8 @@ enum MotorGeneradores {
             GeneradorReglaDeTres(), GeneradorSexagesimal(), GeneradorEscala(), GeneradorFraccionesOperar(), GeneradorProblemaFraccion(),
             GeneradorColocarTilde(), GeneradorClasificarAcentuacion(), GeneradorSilabaTonica(),
             GeneradorOracionSimple(), GeneradorAnalisisVerbal(), GeneradorFraseHueco(),
+            // Fase 05E.
+            GeneradorFormasNoPersonales(), GeneradorLiteratura(),
         ]
         return Dictionary(uniqueKeysWithValues: todos.map { ($0.tipo, $0) })
     }()

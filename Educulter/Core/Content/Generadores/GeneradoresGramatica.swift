@@ -82,6 +82,21 @@ enum Conjugador {
     static let compuestosIndicativo = ["Pretérito perfecto compuesto", "Pretérito pluscuamperfecto", "Futuro compuesto", "Condicional compuesto"]
     static let simplesSubjuntivo = ["Presente", "Pretérito imperfecto"]
     static let compuestosSubjuntivo = ["Pretérito perfecto compuesto", "Pretérito pluscuamperfecto"]
+    /// Variante en -se del pretérito imperfecto de subjuntivo (amase) y su compuesto (hubiese amado):
+    /// la clave lleva el sufijo, pero el nombre del tiempo es el mismo (`nombreTiempo`).
+    static let sufijoSe = " (-se)"
+
+    /// Nombre del tiempo que se muestra (sin la marca de la variante en -se).
+    static func nombreTiempo(_ clave: String) -> String { clave.replacingOccurrences(of: sufijoSe, with: "") }
+
+    /// Tiempos compuestos (haber + participio).
+    static func esCompuesto(_ clave: String) -> Bool { auxiliarDe[clave] != nil }
+
+    /// Aspecto (Fase 05E): perfecto en los tiempos compuestos y en el pretérito perfecto simple;
+    /// imperfecto en el resto de los simples.
+    static func aspecto(_ clave: String, modo: String) -> String {
+        esCompuesto(clave) || (modo == indicativo && clave == "Pretérito perfecto simple") ? "Perfecto" : "Imperfecto"
+    }
 
     private static let haber: [String: [String]] = [
         "Indicativo|Presente": ["he", "has", "ha", "hemos", "habéis", "han"],
@@ -90,10 +105,14 @@ enum Conjugador {
         "Indicativo|Condicional simple": ["habría", "habrías", "habría", "habríamos", "habríais", "habrían"],
         "Subjuntivo|Presente": ["haya", "hayas", "haya", "hayamos", "hayáis", "hayan"],
         "Subjuntivo|Pretérito imperfecto": ["hubiera", "hubieras", "hubiera", "hubiéramos", "hubierais", "hubieran"],
+        "Indicativo|Pretérito perfecto simple": ["hube", "hubiste", "hubo", "hubimos", "hubisteis", "hubieron"],
+        "Subjuntivo|Pretérito imperfecto (-se)": ["hubiese", "hubieses", "hubiese", "hubiésemos", "hubieseis", "hubiesen"],
+        "Subjuntivo|Futuro simple": ["hubiere", "hubieres", "hubiere", "hubiéremos", "hubiereis", "hubieren"],
     ]
     private static let auxiliarDe: [String: String] = [
         "Pretérito perfecto compuesto": "Presente", "Pretérito pluscuamperfecto": "Pretérito imperfecto",
         "Futuro compuesto": "Futuro simple", "Condicional compuesto": "Condicional simple",
+        "Pretérito anterior": "Pretérito perfecto simple", "Pretérito pluscuamperfecto (-se)": "Pretérito imperfecto (-se)",
     ]
 
     static func participio(_ inf: String, irregular: VerboIrregular?) -> String {
@@ -121,6 +140,8 @@ enum Conjugador {
         case (indicativo, "Condicional simple"): return ["ía", "ías", "ía", "íamos", "íais", "ían"].map { inf + $0 }
         case (subjuntivo, "Presente"): desinencias = ar ? ["e", "es", "e", "emos", "éis", "en"] : ["a", "as", "a", "amos", "áis", "an"]
         case (subjuntivo, "Pretérito imperfecto"): desinencias = ar ? ["ara", "aras", "ara", "áramos", "arais", "aran"] : ["iera", "ieras", "iera", "iéramos", "ierais", "ieran"]
+        case (subjuntivo, "Pretérito imperfecto (-se)"): desinencias = ar ? ["ase", "ases", "ase", "ásemos", "aseis", "asen"] : ["iese", "ieses", "iese", "iésemos", "ieseis", "iesen"]
+        case (subjuntivo, "Futuro simple"): desinencias = ar ? ["are", "ares", "are", "áremos", "areis", "aren"] : ["iere", "ieres", "iere", "iéremos", "iereis", "ieren"]
         default: return nil
         }
         return desinencias.map { raiz + $0 }
@@ -138,18 +159,22 @@ enum Conjugador {
 /// Con `compatibilidad.json` (lote 02b, D-086) las oraciones salen de sus etiquetas semánticas:
 /// ver `construirCompatible`. Sin ese archivo se usan las piezas de `piezas.json`.
 ///
+/// Con `compatibilidad.json`, la estructura de cada nivel es la de D-090 (`Estructura.nivel`):
+/// 1 S + V intransitivo · 2 S + V + CD · 3 S + V + CC · 4 copulativa · 5 S + V + CD + CI o dos CC ·
+/// 6 CC delante con coma y sujeto pospuesto. Sin ese archivo (solo `piezas.json`):
+///
 /// | Dif. | Estructura |
 /// |---|---|
 /// | 1 | S + V intransitivo (+ 1 CC) |
 /// | 2 | S + V + CD |
-/// | 3 | S + V + CD + CC, o intransitivo + 2 CC (un CCT puede ir delante, con coma) |
-/// | 4 | S + V copulativo + Atributo (+ CC), o S + V + CD + CI; con compatibilidad: S (+ adj) + V + CD + CI (+ CC) |
+/// | 3 | S + V + CD + CC, o intransitivo + 2 CC |
+/// | 4 | S + V copulativo + Atributo (+ CC), o S + V + CD + CI |
 /// | 5 | S + V + CD (+ adj) + CI + CC |
 /// | 6 | S + V + CD (+ CI) + 2 CC |
 struct GeneradorOracionSimple: GeneradorItems {
     let tipo = "oracionSimple"
-    let mecanicas: Set<Mecanica> = [.segmentar, .clasificar, .eleccion]
-    let marcadores: Set<String> = ["oracion", "sintagma", "contexto"]
+    let mecanicas: Set<Mecanica> = [.segmentar, .clasificar, .eleccion, .marcarTexto]
+    let marcadores: Set<String> = ["oracion", "sintagma", "forma", "otraForma", "contexto"]
 
     static let nombres: [String: String] = [
         "SUJ": "Sujeto", "PRED": "Predicado", "NV": "Núcleo verbal", "CD": "Complemento directo", "CI": "Complemento indirecto",
@@ -157,6 +182,7 @@ struct GeneradorOracionSimple: GeneradorItems {
     ]
     static let clases: [String: String] = [
         "det": "Determinante", "sust": "Sustantivo", "verbo": "Verbo", "adj": "Adjetivo", "prep": "Preposición", "adv": "Adverbio", "pron": "Pronombre",
+        "contr": "Contracción (preposición + artículo)", "num": "Numeral",
     ]
     static let definiciones: [String: String] = [
         "SUJ": "El sujeto concuerda en número y persona con el verbo.",
@@ -240,55 +266,151 @@ struct GeneradorOracionSimple: GeneradorItems {
                        verbo: v.infinitivo, regimen: v.regimen, atributo: atributo)
     }
 
+    /// Modo de la plantilla (`parametros.modo`): `sujeto` (marcarTexto), `sujetoPredicado` o
+    /// `completo` (segmentar), `clases` o `funciones` (clasificar), `funcion`, `clase`,
+    /// `concordancia` o `pronombre` (eleccion).
+    static func modo(_ p: Plantilla) -> String {
+        let porDefecto: String = switch p.mecanica {
+        case .marcarTexto: "sujeto"
+        case .segmentar: "completo"
+        case .clasificar: "clases"
+        default: "funcion"
+        }
+        return p.textos("modo", porDefecto: [porDefecto]).first ?? porDefecto
+    }
+
+    /// Nivel estructural de la oración (D-090) según la dificultad pedida y el modo. Las preguntas que
+    /// comparan oraciones (clase, función, concordancia, pronombre) mezclan niveles: con uno solo,
+    /// la respuesta sería siempre la misma.
+    static func nivelEstructural(_ d: Int, modo: String, rng: inout GeneradorConSemilla) -> Int {
+        let i = min(max(d, 1), 6) - 1
+        let mezclas: [[Int]]? = switch modo {
+        case "clase": [[1, 2], [1, 2, 3], [1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [4, 5, 6]]
+        case "funcion": [[2, 3], [2, 3, 4], [3, 4, 5], [3, 4, 5, 6], [4, 5, 6], [5, 6]]
+        case "concordancia": [[2, 3], [2, 3], [3, 5], [5, 6], [5, 6], [6]]
+        case "pronombre": [[2], [2], [2, 5], [2, 5, 6], [5, 6], [5, 6]]
+        default: nil
+        }
+        return mezclas.map { rng.elemento($0[i]) } ?? (i + 1)
+    }
+
+    /// Peso de cada función en la medida de complejidad.
+    static let pesos: [String: Double] = ["SUJ": 1, "NV": 1, "CD": 1, "CI": 1.5, "ATR": 1, "CCL": 1.2, "CCT": 1.2, "CCM": 1.2, "CCC": 1.2]
+
+    static func nombre(_ f: String, copulativa: Bool) -> String {
+        switch f {
+        case "PRED": copulativa ? "Predicado nominal" : "Predicado verbal"
+        case "NV": copulativa ? "Núcleo (verbo copulativo)" : "Núcleo verbal"
+        default: nombres[f] ?? f
+        }
+    }
+
+    /// Clase de oración por su estructura (CLASE).
+    static func claseOracion(regimen: String) -> String {
+        switch regimen {
+        case "copulativo": "Copulativa (atributiva)"
+        case "transitivo": "Predicativa transitiva"
+        default: "Predicativa intransitiva"
+        }
+    }
+
+    static func pronombre(_ funcion: String, genero: String, numero: String) -> String {
+        if funcion == "CI" { return numero == "p" ? "les" : "le" }
+        return (genero == "f" ? "la" : "lo") + (numero == "p" ? "s" : "")
+    }
+
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
+        let modo = Self.modo(p)
         for _ in 0..<200 {
             let o: Oracion
             var concordancia: Concordancia?
+            let nivel = Self.nivelEstructural(p.dificultad, modo: modo, rng: &rng)
             if !recursos.compatibilidad.vacia {
-                // Un CCT puede ir delante desde el nivel 3, salvo en `segmentar` (el predicado quedaría partido).
-                let anteponer = p.mecanica != .segmentar && p.dificultad >= 3 && rng.probabilidad(0.4)
-                guard let (oracion, datos) = construirCompatible(p.dificultad, recursos.compatibilidad, piezas: recursos.gramatica,
-                                                                 verbos: recursos.verbos, anteponerCCT: anteponer, rng: &rng) else { continue }
+                guard let (oracion, datos) = construirCompatible(nivel, recursos.compatibilidad, piezas: recursos.gramatica, verbos: recursos.verbos,
+                                                                 permitirDesorden: p.mecanica != .segmentar, rng: &rng) else { continue }
                 o = oracion
                 concordancia = datos
             } else {
                 guard let oracion = construir(p.dificultad, recursos.gramatica, verbos: recursos.verbos, rng: &rng) else { continue }
                 o = oracion
             }
+            let copulativa = o.regimen == "copulativo"
             let ids = o.tokens.indices.map { "t\($0 + 1)" }
-            let elementos = zip(ids, o.tokens).map { ElementoTexto(id: $0, texto: $1.0) }
-            let analisis = o.constituyentes.filter { $0.0 != "PRED" && $0.0 != "SUJ" }
-                .map { "\(Self.nombres[$0.0]!): «\(o.tokens[$0.1...$0.2].map(\.0).joined(separator: " "))»" }
-            let sujetoTexto = o.tokens[o.constituyentes[0].1...o.constituyentes[0].2].map(\.0).joined(separator: " ")
-            let explicacion = "Sujeto: «\(sujetoTexto)» (concuerda con «\(o.tokens[o.constituyentes[1].1].0)»). " + analisis.joined(separator: "; ") + "."
-            let complejidad = Double(o.constituyentes.count) + Double(o.tokens.count) * 0.1 + (o.regimen == "copulativo" ? 0.5 : 0)
-                + (o.comaTras != nil ? 0.5 : 0)
+            /// Texto de un token tal como se ve (con la coma del CC antepuesto).
+            func visto(_ i: Int) -> String { i == o.comaTras ? o.tokens[i].0 + "," : o.tokens[i].0 }
+            let elementos = o.tokens.indices.map { ElementoTexto(id: ids[$0], texto: visto($0)) }
+            func texto(_ c: (String, Int, Int)) -> String { o.tokens[c.1...c.2].map(\.0).joined(separator: " ") }
+            let suj = o.constituyentes.first { $0.0 == "SUJ" }!
+            let nv = o.constituyentes.first { $0.0 == "NV" }!
+            let grupos = o.constituyentes.filter { $0.0 != "PRED" && $0.0 != "NV" }
+            let analisis = o.constituyentes.filter { $0.0 != "PRED" && $0.0 != "SUJ" && $0.0 != "NV" }
+                .map { "\(Self.nombres[$0.0]!): «\(texto($0))»" }
+            var explicacion = "Sujeto: «\(texto(suj))» (concuerda con «\(texto(nv))»)."
+            if copulativa {
+                explicacion += " Predicado nominal: el núcleo es el verbo copulativo «\(texto(nv))» y «\(o.atributo ?? "")» es el atributo (concuerda con el sujeto)."
+            } else {
+                explicacion += " Predicado verbal, con núcleo «\(texto(nv))»."
+            }
+            if !analisis.isEmpty, !copulativa { explicacion += " " + analisis.joined(separator: "; ") + "." }
+            let peso = o.constituyentes.filter { $0.0 != "PRED" }.map { Self.pesos[$0.0] ?? 1 }.reduce(0, +)
+            let orden = concordancia?.orden ?? .canonico
+            let complejidad = peso + (copulativa ? 1 : 0) + (orden != .canonico ? 1.5 : 0) + (orden == .sujetoPospuesto ? 0.5 : 0)
+                + Double(o.tokens.count) * 0.05
             var datos = ["oracion": o.texto, "numero": o.sujetoNumero, "genero": o.sujetoGenero, "verbo": o.verbo, "regimen": o.regimen,
                          "funciones": o.constituyentes.map { "\($0.0):\($0.1)-\($0.2)" }.joined(separator: ";"), "atributo": o.atributo ?? "",
-                         "tokens": o.tokens.map { "\($0.0)/\($0.1)" }.joined(separator: " "), "coma": o.comaTras.map(String.init) ?? ""]
+                         "tokens": o.tokens.map { "\($0.0)/\($0.1)" }.joined(separator: " "), "coma": o.comaTras.map(String.init) ?? "",
+                         "modo": modo, "nivel": String(nivel)]
             if let c = concordancia {
                 datos.merge(["sujetoLema": c.sujetoLema, "cdLema": c.cdLema ?? "", "ciLema": c.ciLema ?? "", "adjetivos": c.adjetivos.joined(separator: ";"),
-                             "circunstanciales": c.circunstanciales.joined(separator: ";"), "tiempo": c.tiempo]) { $1 }
+                             "circunstanciales": c.circunstanciales.joined(separator: ";"), "tiempo": c.tiempo, "textosCC": c.textosCC.joined(separator: ";"),
+                             "cdDet": c.cdDeterminante ?? "", "ciDet": c.ciDeterminante ?? "", "cdNumero": c.cdNumero ?? "", "ciNumero": c.ciNumero ?? "",
+                             "atributoLema": c.atributoLema ?? "", "orden": c.orden.rawValue]) { $1 }
             }
+            let pistaConcordancia = "El sujeto concuerda con el verbo: cambia el número del verbo y mira qué cambia."
             switch p.mecanica {
+            case .marcarTexto:
+                let correctos = Array(ids[suj.1...suj.2])
+                return Muestra(clave: "marcar|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""],
+                               payload: .marcarTexto(Payload.MarcarTexto(unidad: .palabra, tokens: elementos, correctos: correctos)),
+                               explicacion: explicacion, pistas: [pistaConcordancia], complejidad: complejidad, datos: datos)
             case .segmentar:
+                guard let pred = o.constituyentes.first(where: { $0.0 == "PRED" }) else { continue }
                 var segmentos: [Payload.Segmentar.Segmento] = []
-                let pred = o.constituyentes.first { $0.0 == "PRED" }!
-                segmentos.append(.init(id: "s1", desde: ids[o.constituyentes[0].1], hasta: ids[o.constituyentes[0].2], etiqueta: "SUJ", padre: nil))
+                segmentos.append(.init(id: "s1", desde: ids[suj.1], hasta: ids[suj.2], etiqueta: "SUJ", padre: nil))
                 segmentos.append(.init(id: "s2", desde: ids[pred.1], hasta: ids[pred.2], etiqueta: "PRED", padre: nil))
-                for c in o.constituyentes where c.0 != "SUJ" && c.0 != "PRED" {
-                    segmentos.append(.init(id: "s\(segmentos.count + 1)", desde: ids[c.1], hasta: ids[c.2], etiqueta: c.0, padre: "s2"))
+                if modo != "sujetoPredicado" {
+                    for c in o.constituyentes where c.0 != "SUJ" && c.0 != "PRED" {
+                        segmentos.append(.init(id: "s\(segmentos.count + 1)", desde: ids[c.1], hasta: ids[c.2], etiqueta: c.0, padre: "s2"))
+                    }
                 }
                 let usadas = Set(segmentos.map(\.etiqueta))
-                let etiquetas = ["SUJ", "PRED", "NV", "CD", "CI", "ATR", "CCL", "CCT", "CCM", "CCC"].filter(usadas.contains).map { ElementoNombre(id: $0, nombre: Self.nombres[$0]!) }
-                return Muestra(clave: "segmentar|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""],
+                let etiquetas = ["SUJ", "PRED", "NV", "CD", "CI", "ATR", "CCL", "CCT", "CCM", "CCC"].filter(usadas.contains)
+                    .map { ElementoNombre(id: $0, nombre: Self.nombre($0, copulativa: copulativa)) }
+                return Muestra(clave: "segmentar|\(modo)|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""],
                                payload: .segmentar(Payload.Segmentar(tokens: elementos, etiquetas: etiquetas, segmentos: segmentos)),
-                               explicacion: explicacion, pistas: ["Busca primero el verbo y pregúntale «¿quién?» para encontrar el sujeto."],
+                               explicacion: explicacion, pistas: [pistaConcordancia, "Busca primero el verbo y pregúntale «¿quién?» para encontrar el sujeto."],
+                               complejidad: complejidad, datos: datos)
+            case .clasificar where modo == "funciones":
+                // Fichas = grupos (y el verbo); categorías = sus funciones (2–4: si hay más, se eligen 4).
+                let conVerbo = grupos + [nv]
+                let funciones = Array(Set(conVerbo.map(\.0)))
+                guard funciones.count >= 2 else { continue }
+                let usadas = Set(rng.barajar(funciones.sorted()).prefix(4))
+                let orden = ["SUJ", "NV", "CD", "CI", "ATR", "CCL", "CCT", "CCM", "CCC"]
+                let categorias = orden.filter(usadas.contains).map { ElementoNombre(id: $0, nombre: Self.nombre($0, copulativa: copulativa)) }
+                let fichas = conVerbo.sorted { $0.1 < $1.1 }.filter { usadas.contains($0.0) }.enumerated()
+                    .map { Payload.Clasificar.Ficha(id: "g\($0.offset + 1)", texto: texto($0.element), categoria: $0.element.0) }
+                return Muestra(clave: "funciones|\(o.texto)|\(usadas.sorted().joined(separator: ","))", valores: ["oracion": o.texto, "sintagma": ""],
+                               payload: .clasificar(Payload.Clasificar(categorias: categorias, fichas: rng.barajar(fichas))),
+                               explicacion: explicacion, pistas: [pistaConcordancia, "Pregunta al verbo: «¿qué?» (CD), «¿a quién?» (CI), «¿dónde?», «¿cuándo?», «¿cómo?», «¿con quién?» (CC)."],
                                complejidad: complejidad, datos: datos)
             case .clasificar:
                 // El validador admite 2–4 categorías: con más clases en la oración se eligen 4 al azar
-                // y solo se clasifican las palabras de esas clases.
-                let usadas = Array(rng.barajar(Array(Set(o.tokens.map(\.1))).sorted()).prefix(4)).sorted()
+                // y solo se clasifican las palabras de esas clases. Las contracciones («al») y los
+                // numerales no se clasifican (no tienen una sola clase inequívoca).
+                let clasificables = Array(Set(o.tokens.map(\.1)).subtracting(["contr", "num"])).sorted()
+                let usadas = Array(rng.barajar(clasificables).prefix(4)).sorted()
+                guard usadas.count >= 2 else { continue }
                 let categorias = usadas.map { ElementoNombre(id: $0, nombre: Self.clases[$0] ?? $0) }
                 let fichas = zip(ids, o.tokens).filter { usadas.contains($1.1) }.map { Payload.Clasificar.Ficha(id: $0, texto: $1.0, categoria: $1.1) }
                 return Muestra(clave: "clasificar|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""],
@@ -297,15 +419,71 @@ struct GeneradorOracionSimple: GeneradorItems {
                                pistas: ["Los determinantes acompañan al sustantivo; las preposiciones introducen complementos."],
                                complejidad: complejidad, datos: datos)
             default:
-                let candidatos = o.constituyentes.filter { $0.0 != "PRED" && $0.0 != "NV" }
-                let objetivo = rng.elemento(candidatos)
-                let texto = o.tokens[objetivo.1...objetivo.2].map(\.0).joined(separator: " ")
-                let otras = rng.barajar(["SUJ", "CD", "CI", "CCL", "CCT", "CCM", "CCC", "ATR"].filter { $0 != objetivo.0 })
-                let (e, errores) = Opciones.eleccion(correcta: Self.nombres[objetivo.0]!,
-                                                     distractores: otras.map { (Self.nombres[$0]!, Self.definiciones[objetivo.0] ?? "") }, rng: &rng)
-                return Muestra(clave: "eleccion|\(o.texto)|\(objetivo.0)", valores: ["oracion": o.texto, "sintagma": texto],
-                               payload: .eleccion(e), explicacion: "«\(texto)» es \(Self.nombres[objetivo.0]!.lowercased()). \(Self.definiciones[objetivo.0] ?? "")",
-                               erroresHabituales: errores, complejidad: complejidad, datos: datos.merging(["objetivo": objetivo.0]) { $1 })
+                switch modo {
+                case "clase":
+                    let correcta = Self.claseOracion(regimen: o.regimen)
+                    let porque = switch o.regimen {
+                    case "copulativo": "«\(texto(nv))» es un verbo copulativo y «\(o.atributo ?? "")» es el atributo: predicado nominal."
+                    case "transitivo": "Tiene complemento directo («\(grupos.first { $0.0 == "CD" }.map(texto) ?? "")»): predicado verbal con CD."
+                    default: "El verbo no lleva complemento directo ni atributo: predicado verbal sin CD."
+                    }
+                    let otras = ["Copulativa (atributiva)", "Predicativa transitiva", "Predicativa intransitiva"].filter { $0 != correcta }
+                    let (e, errores) = Opciones.eleccion(correcta: correcta, distractores: otras.map { ($0, porque) }, rng: &rng)
+                    return Muestra(clave: "clase|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""], payload: .eleccion(e),
+                                   explicacion: "\(correcta). \(porque)", erroresHabituales: errores,
+                                   pistas: ["¿El verbo es ser, estar o parecer con un adjetivo? ¿Lleva complemento directo?"],
+                                   complejidad: complejidad, datos: datos.merging(["clase": correcta]) { $1 })
+                case "concordancia":
+                    // Prueba de la concordancia: si el verbo cambia de número, solo el sujeto tiene que cambiar.
+                    guard !copulativa, grupos.count >= 2,
+                          let formas = Conjugador.formas(o.verbo, tiempo: concordancia?.tiempo ?? "Presente", modo: Conjugador.indicativo, irregulares: recursos.verbos.irregulares)
+                    else { continue }
+                    let otraForma = formas[o.sujetoNumero == "p" ? 2 : 5]
+                    let correcta = texto(suj)
+                    let otras = grupos.filter { $0.0 != "SUJ" }.map(texto)
+                    guard Set(otras + [correcta]).count == otras.count + 1 else { continue }
+                    let (e, errores) = Opciones.eleccion(correcta: correcta,
+                                                         distractores: otras.map { ($0, "«\($0)» no concuerda con el verbo: puede quedarse igual.") }, rng: &rng)
+                    return Muestra(clave: "concordancia|\(o.texto)", valores: ["oracion": o.texto, "sintagma": "", "forma": texto(nv), "otraForma": otraForma],
+                                   payload: .eleccion(e),
+                                   explicacion: "Si «\(texto(nv))» pasa a «\(otraForma)», «\(correcta)» tiene que cambiar de número: es el sujeto, porque concuerda con el verbo.",
+                                   erroresHabituales: errores, pistas: [pistaConcordancia], complejidad: complejidad,
+                                   datos: datos.merging(["otraForma": otraForma]) { $1 })
+                case "pronombre":
+                    // CD de cosa (lo, la, los, las) o CI (le, les). El CD de persona no se pregunta: «le»
+                    // para el masculino singular es leísmo admitido y habría dos respuestas.
+                    var objetivos: [(String, Int, Int)] = []
+                    if let cd = grupos.first(where: { $0.0 == "CD" }), let lema = concordancia?.cdLema,
+                       let s = recursos.compatibilidad.sustantivos.first(where: { $0.lema == lema }), !s.animado { objetivos.append(cd) }
+                    if let ci = grupos.first(where: { $0.0 == "CI" }) { objetivos.append(ci) }
+                    guard !objetivos.isEmpty, let c = concordancia else { continue }
+                    let objetivo = rng.elemento(objetivos)
+                    let lema = objetivo.0 == "CD" ? c.cdLema : c.ciLema
+                    guard let s = recursos.compatibilidad.sustantivos.first(where: { $0.lema == lema }) else { continue }
+                    let n = (objetivo.0 == "CD" ? c.cdNumero : c.ciNumero) ?? "s"
+                    let correcta = Self.pronombre(objetivo.0, genero: s.genero, numero: n)
+                    let regla = objetivo.0 == "CI" ? "El complemento indirecto se sustituye por «le» o «les»."
+                        : "El complemento directo se sustituye por «lo», «la», «los» o «las», según su género y número."
+                    let otras = rng.barajar(["lo", "la", "los", "las", "le", "les"].filter { $0 != correcta })
+                    let (e, errores) = Opciones.eleccion(correcta: correcta, distractores: otras.map { ($0, regla) }, rng: &rng)
+                    return Muestra(clave: "pronombre|\(o.texto)|\(objetivo.0)", valores: ["oracion": o.texto, "sintagma": texto(objetivo)],
+                                   payload: .eleccion(e),
+                                   explicacion: "«\(texto(objetivo))» es \(Self.nombres[objetivo.0]!.lowercased()): se sustituye por «\(correcta)». \(regla)",
+                                   erroresHabituales: errores, pistas: [regla], complejidad: complejidad,
+                                   datos: datos.merging(["objetivo": objetivo.0, "pronombre": correcta]) { $1 })
+                default:
+                    let candidatos = grupos
+                    guard candidatos.count >= 2 || candidatos.first?.0 != "SUJ" else { continue }
+                    let objetivo = rng.elemento(candidatos)
+                    let t = texto(objetivo)
+                    let otras = rng.barajar(["SUJ", "CD", "CI", "CCL", "CCT", "CCM", "CCC", "ATR"].filter { $0 != objetivo.0 })
+                    let (e, errores) = Opciones.eleccion(correcta: Self.nombres[objetivo.0]!,
+                                                         distractores: otras.map { (Self.nombres[$0]!, Self.definiciones[objetivo.0] ?? "") }, rng: &rng)
+                    return Muestra(clave: "eleccion|\(o.texto)|\(objetivo.0)", valores: ["oracion": o.texto, "sintagma": t],
+                                   payload: .eleccion(e), explicacion: "«\(t)» es \(Self.nombres[objetivo.0]!.lowercased()). \(Self.definiciones[objetivo.0] ?? "")",
+                                   erroresHabituales: errores, pistas: [Self.definiciones[objetivo.0] ?? pistaConcordancia],
+                                   complejidad: complejidad, datos: datos.merging(["objetivo": objetivo.0]) { $1 })
+                }
             }
         }
         throw ErrorGenerador.sinRecursos(tipo)
@@ -337,31 +515,35 @@ func enumerarPorSemillas(_ g: any GeneradorItems, _ p: Plantilla, recursos: Recu
 
 // MARK: - analisisVerbal
 
-/// Análisis de formas verbales con ruedas (persona, número, tiempo y modo). Solo se preguntan
-/// formas que no son ambiguas dentro del paradigma que ofrecen las ruedas (p. ej., «cantaba» es
-/// 1.ª y 3.ª persona, así que no se pregunta).
+/// Análisis de formas verbales con ruedas: persona, número, tiempo y modo y, con el parámetro
+/// `rasgos = completo` (Fase 05E), también aspecto (perfecto o imperfecto) y forma (simple o
+/// compuesta). Solo se preguntan formas que no son ambiguas dentro del paradigma del nivel (p. ej.,
+/// «cantaba» es 1.ª y 3.ª persona, así que no se pregunta).
+///
+/// Solo verbos regulares de las tres conjugaciones: los irregulares de `verbos.json` no tienen una
+/// tabla completa revisada (Fase 05E, §5) y los copulativos solo sirven a las oraciones.
 ///
 /// | Dif. | Verbos | Tiempos |
 /// |---|---|---|
-/// | 1 | regulares en -ar | presente, pretérito perfecto simple, futuro (indicativo) |
-/// | 2 | regulares de las tres conjugaciones | + imperfecto y condicional |
-/// | 3 | regulares | + presente de subjuntivo |
-/// | 4 | regulares | + compuestos de indicativo |
-/// | 5 | irregulares | simples de indicativo y presente de subjuntivo |
-/// | 6 | irregulares | todos (con imperfecto y compuestos de subjuntivo) |
+/// | 1 | en -ar | presente, pretérito perfecto simple y futuro (indicativo) |
+/// | 2 | tres conjugaciones | + imperfecto y condicional |
+/// | 3 | tres conjugaciones | + presente de subjuntivo y pretérito perfecto compuesto |
+/// | 4 (examen) | tres conjugaciones | todos los de indicativo (salvo el pretérito anterior) y de subjuntivo en -ra con sus compuestos |
+/// | 5 | tres conjugaciones | + imperfecto en -se, pluscuamperfecto con «hubiese» y pretérito anterior |
+/// | 6 | tres conjugaciones | + futuro simple y compuesto de subjuntivo |
 struct GeneradorAnalisisVerbal: GeneradorItems {
     let tipo = "analisisVerbal"
     let mecanicas: Set<Mecanica> = [.ruedas]
     let marcadores: Set<String> = ["forma", "infinitivo", "contexto"]
 
+    /// `tiempo` es la clave de conjugación (con la marca « (-se)» en esa variante).
     struct Opcion: Hashable { let tiempo: String; let modo: String }
 
-    /// Verbos efectivos: los de `verbos.json` y, si hay `compatibilidad.json` (D-086), sus verbos
-    /// con su participio irregular (escrito, abierto) para los tiempos compuestos.
+    /// Verbos regulares efectivos: los de `verbos.json` y, si hay `compatibilidad.json` (D-086), sus
+    /// verbos no copulativos, con su participio irregular (escrito, abierto) para los compuestos.
     static func banco(_ r: RecursosGeneradores) -> BancoVerbos {
-        guard !r.compatibilidad.vacia else { return r.verbos }
         var b = r.verbos
-        for v in r.compatibilidad.verbos {
+        for v in r.compatibilidad.verbos where v.regimen != "copulativo" {
             if !b.regulares.contains(v.infinitivo) { b.regulares.append(v.infinitivo) }
             guard let p = v.participioIrregular else { continue }
             if let i = b.irregulares.firstIndex(where: { $0.infinitivo == v.infinitivo }) {
@@ -370,6 +552,8 @@ struct GeneradorAnalisisVerbal: GeneradorItems {
                 b.irregulares.append(VerboIrregular(infinitivo: v.infinitivo, participio: p, formas: [:]))
             }
         }
+        // Un regular con participio irregular conserva sus formas simples regulares.
+        b.regulares = b.regulares.filter { inf in b.irregulares.first { $0.infinitivo == inf }?.formas.isEmpty ?? true }
         return b
     }
 
@@ -377,17 +561,20 @@ struct GeneradorAnalisisVerbal: GeneradorItems {
         let ind = Conjugador.indicativo, sub = Conjugador.subjuntivo
         let t1 = ["Presente", "Pretérito perfecto simple", "Futuro simple"].map { Opcion(tiempo: $0, modo: ind) }
         let t2 = t1 + ["Pretérito imperfecto", "Condicional simple"].map { Opcion(tiempo: $0, modo: ind) }
-        let t3 = t2 + [Opcion(tiempo: "Presente", modo: sub)]
-        let t4 = t3 + Conjugador.compuestosIndicativo.map { Opcion(tiempo: $0, modo: ind) }
-        let t6 = t4 + [Opcion(tiempo: "Pretérito imperfecto", modo: sub)] + Conjugador.compuestosSubjuntivo.map { Opcion(tiempo: $0, modo: sub) }
-        let irregulares = banco.irregulares.map(\.infinitivo).filter { !["ser", "estar", "haber"].contains($0) }
+        let t3 = t2 + [Opcion(tiempo: "Presente", modo: sub), Opcion(tiempo: "Pretérito perfecto compuesto", modo: ind)]
+        let t4 = t3 + ["Pretérito pluscuamperfecto", "Futuro compuesto", "Condicional compuesto"].map { Opcion(tiempo: $0, modo: ind) }
+            + ["Pretérito imperfecto", "Pretérito perfecto compuesto", "Pretérito pluscuamperfecto"].map { Opcion(tiempo: $0, modo: sub) }
+        let t5 = t4 + [Opcion(tiempo: "Pretérito anterior", modo: ind), Opcion(tiempo: "Pretérito imperfecto" + Conjugador.sufijoSe, modo: sub),
+                       Opcion(tiempo: "Pretérito pluscuamperfecto" + Conjugador.sufijoSe, modo: sub)]
+        let t6 = t5 + [Opcion(tiempo: "Futuro simple", modo: sub), Opcion(tiempo: "Futuro compuesto", modo: sub)]
+        let regulares = banco.regulares
         switch d {
-        case 1: return (banco.regulares.filter { $0.hasSuffix("ar") }, t1)
-        case 2: return (banco.regulares, t2)
-        case 3: return (banco.regulares, t3)
-        case 4: return (banco.regulares, t4)
-        case 5: return (irregulares, t3)
-        default: return (irregulares, t6)
+        case 1: return (regulares.filter { $0.hasSuffix("ar") }, t1)
+        case 2: return (regulares, t2)
+        case 3: return (regulares, t3)
+        case 4: return (regulares, t4)
+        case 5: return (regulares, t5)
+        default: return (regulares, t6)
         }
     }
 
@@ -412,25 +599,47 @@ struct GeneradorAnalisisVerbal: GeneradorItems {
         guard !todos.isEmpty else { throw ErrorGenerador.sinRecursos(tipo) }
         let c = rng.elemento(todos)
         let (_, tiempos) = Self.nivel(p.dificultad, verbos)
-        let nombresTiempo = Array(Set(tiempos.map(\.tiempo))).sorted { a, b in
-            (Conjugador.simplesIndicativo + Conjugador.compuestosIndicativo).firstIndex(of: a) ?? 0 < (Conjugador.simplesIndicativo + Conjugador.compuestosIndicativo).firstIndex(of: b) ?? 0
+        let ordenTiempos = Conjugador.simplesIndicativo + ["Pretérito perfecto compuesto", "Pretérito pluscuamperfecto", "Pretérito anterior", "Futuro compuesto", "Condicional compuesto"]
+        let nombresTiempo = Array(Set(tiempos.map { Conjugador.nombreTiempo($0.tiempo) })).sorted { a, b in
+            (ordenTiempos.firstIndex(of: a) ?? 99, a) < (ordenTiempos.firstIndex(of: b) ?? 99, b)
         }
+        let tiempo = Conjugador.nombreTiempo(c.op.tiempo)
         let persona = Conjugador.personas[c.indice % 3], numero = Conjugador.numeros[c.indice / 3]
-        let ruedas = [
+        let compuesto = Conjugador.esCompuesto(c.op.tiempo)
+        let aspecto = Conjugador.aspecto(c.op.tiempo, modo: c.op.modo)
+        let forma = compuesto ? "Compuesta" : "Simple"
+        let completo = p.textos("rasgos", porDefecto: ["basico"]).first == "completo"
+        var ruedas = [
             Payload.Ruedas.Rueda(id: "persona", nombre: "Persona", opciones: Conjugador.personas, correcta: persona),
             Payload.Ruedas.Rueda(id: "numero", nombre: "Número", opciones: Conjugador.numeros, correcta: numero),
-            Payload.Ruedas.Rueda(id: "tiempo", nombre: "Tiempo", opciones: nombresTiempo, correcta: c.op.tiempo),
+            Payload.Ruedas.Rueda(id: "tiempo", nombre: "Tiempo", opciones: nombresTiempo, correcta: tiempo),
             Payload.Ruedas.Rueda(id: "modo", nombre: "Modo", opciones: [Conjugador.indicativo, Conjugador.subjuntivo], correcta: c.op.modo),
         ]
-        let descripcion = "\(persona) persona del \(numero.lowercased()) del \(c.op.tiempo.lowercased()) de \(c.op.modo.lowercased())"
-        let compuesto = c.forma.contains(" ")
+        if completo {
+            ruedas.append(.init(id: "aspecto", nombre: "Aspecto", opciones: ["Perfecto", "Imperfecto"], correcta: aspecto))
+            ruedas.append(.init(id: "forma", nombre: "Forma", opciones: ["Simple", "Compuesta"], correcta: forma))
+        }
+        let descripcion = "\(persona) persona del \(numero.lowercased()) del \(tiempo.lowercased()) de \(c.op.modo.lowercased())"
+        var explicacion = "«\(c.forma)»: \(descripcion) del verbo \(c.verbo)."
+        if completo {
+            explicacion += compuesto ? " Forma compuesta (haber + participio), de aspecto perfecto: la acción se presenta acabada."
+                : (aspecto == "Perfecto" ? " Forma simple de aspecto perfecto: el pretérito perfecto simple presenta la acción acabada."
+                   : " Forma simple de aspecto imperfecto: la acción no se presenta acabada.")
+        }
+        var errores = [ErrorHabitual(respuesta: "tiempo", feedback: compuesto ? "Las formas con «haber» + participio son tiempos compuestos." : "Fíjate en la terminación: indica el tiempo."),
+                       ErrorHabitual(respuesta: "modo", feedback: "El subjuntivo expresa deseo, duda o posibilidad («que yo cante»).")]
+        if completo {
+            errores.append(ErrorHabitual(respuesta: "aspecto", feedback: "Son perfectos los tiempos compuestos y el pretérito perfecto simple; el resto de los simples son imperfectos."))
+            errores.append(ErrorHabitual(respuesta: "forma", feedback: "Es compuesta si lleva el auxiliar «haber» y un participio."))
+        }
         return Muestra(clave: "\(c.verbo)|\(c.op.tiempo)|\(c.op.modo)|\(c.indice)", valores: ["forma": c.forma, "infinitivo": c.verbo],
                        payload: .ruedas(Payload.Ruedas(ruedas: ruedas)),
-                       explicacion: "«\(c.forma)»: \(descripcion) del verbo \(c.verbo).",
-                       erroresHabituales: [ErrorHabitual(respuesta: "tiempo", feedback: compuesto ? "Las formas con «haber» + participio son tiempos compuestos." : "Fíjate en la terminación: indica el tiempo."),
-                                           ErrorHabitual(respuesta: "modo", feedback: "El subjuntivo expresa deseo, duda o posibilidad («que yo cante»).")],
-                       complejidad: Double(p.dificultad >= 5 ? 3 : 1) + (compuesto ? 1 : 0) + (c.op.modo == Conjugador.subjuntivo ? 1 : 0) + Double(tiempos.count) * 0.1,
-                       datos: ["forma": c.forma, "verbo": c.verbo, "tiempo": c.op.tiempo, "modo": c.op.modo, "persona": persona, "numero": numero])
+                       explicacion: explicacion, erroresHabituales: errores,
+                       pistas: ["Empieza por la terminación: te dice la persona y el número.", "Si lleva «haber» + participio, es una forma compuesta."],
+                       complejidad: Double(tiempos.count) * 0.3 + (compuesto ? 1 : 0) + (c.op.modo == Conjugador.subjuntivo ? 1 : 0)
+                           + (c.op.tiempo.hasSuffix(Conjugador.sufijoSe) || c.op.tiempo == "Pretérito anterior" ? 0.5 : 0),
+                       datos: ["forma": c.forma, "verbo": c.verbo, "tiempo": tiempo, "clave": c.op.tiempo, "modo": c.op.modo, "persona": persona,
+                               "numero": numero, "aspecto": aspecto, "compuesta": compuesto ? "1" : "0"])
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {

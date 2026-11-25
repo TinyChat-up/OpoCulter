@@ -254,6 +254,83 @@
       "infinitivo": "abrir",
       "participio": "abierto",
       "formas": {}
+    },
+    {
+      "infinitivo": "ser",
+      "participio": "sido",
+      "formas": {
+        "Indicativo|Presente": [
+          "soy",
+          "eres",
+          "es",
+          "somos",
+          "sois",
+          "son"
+        ],
+        "Indicativo|Pretérito imperfecto": [
+          "era",
+          "eras",
+          "era",
+          "éramos",
+          "erais",
+          "eran"
+        ],
+        "Indicativo|Pretérito perfecto simple": [
+          "fui",
+          "fuiste",
+          "fue",
+          "fuimos",
+          "fuisteis",
+          "fueron"
+        ],
+        "Indicativo|Futuro simple": [
+          "seré",
+          "serás",
+          "será",
+          "seremos",
+          "seréis",
+          "serán"
+        ]
+      }
+    },
+    {
+      "infinitivo": "estar",
+      "participio": "estado",
+      "formas": {
+        "Indicativo|Presente": [
+          "estoy",
+          "estás",
+          "está",
+          "estamos",
+          "estáis",
+          "están"
+        ],
+        "Indicativo|Pretérito imperfecto": [
+          "estaba",
+          "estabas",
+          "estaba",
+          "estábamos",
+          "estabais",
+          "estaban"
+        ],
+        "Indicativo|Pretérito perfecto simple": [
+          "estuve",
+          "estuviste",
+          "estuvo",
+          "estuvimos",
+          "estuvisteis",
+          "estuvieron"
+        ],
+        "Indicativo|Futuro simple": [
+          "estaré",
+          "estarás",
+          "estará",
+          "estaremos",
+          "estaréis",
+          "estarán"
+        ]
+      }
     }
-  ]
+  ],
+  "nota": "Los irregulares no tienen tabla completa revisada por la dirección: analisisVerbal no los usa (Fase 05E, §5). ser y estar solo sirven a las oraciones copulativas (3.ª persona de 4 tiempos del indicativo)."
 }

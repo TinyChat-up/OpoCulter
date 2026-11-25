@@ -1,6 +1,6 @@
 {
-  "version": 1,
-  "origen": "Lote 02b (parte 1), formato neutro de la dirección. Pendiente de conectar al generador oracionSimple.",
+  "version": 2,
+  "origen": "Lote 02b (parte 1), formato neutro de la dirección; reglas de naturalidad de la Fase 05E (D-090): incontables, CI con artículo o posesivo, CCT con aspecto y verbos copulativos.",
   "sustantivos": [
     {
       "lema": "niño",
@@ -103,7 +103,8 @@
       "genero": "f",
       "plural": "sopas",
       "etiquetas": [
-        "comida"
+        "comida",
+        "incontable"
       ]
     },
     {
@@ -119,7 +120,8 @@
       "genero": "m",
       "plural": "zumos",
       "etiquetas": [
-        "bebida"
+        "bebida",
+        "incontable"
       ]
     },
     {
@@ -127,7 +129,8 @@
       "genero": "f",
       "plural": "leches",
       "etiquetas": [
-        "bebida"
+        "bebida",
+        "incontable"
       ]
     },
     {
@@ -135,7 +138,8 @@
       "genero": "m",
       "plural": "cafés",
       "etiquetas": [
-        "bebida"
+        "bebida",
+        "incontable"
       ]
     },
     {
@@ -347,7 +351,8 @@
       "fp": "simpáticas",
       "etiquetas": [
         "persona"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "amable",
@@ -356,7 +361,8 @@
       "fp": "amables",
       "etiquetas": [
         "persona"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "alto",
@@ -365,7 +371,8 @@
       "fp": "altas",
       "etiquetas": [
         "persona"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "delicioso",
@@ -375,7 +382,8 @@
       "etiquetas": [
         "comida",
         "bebida"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "caliente",
@@ -385,7 +393,8 @@
       "etiquetas": [
         "comida",
         "bebida"
-      ]
+      ],
+      "tipo": "estado"
     },
     {
       "ms": "rojo",
@@ -395,7 +404,8 @@
       "etiquetas": [
         "objeto",
         "ropa"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "azul",
@@ -405,7 +415,8 @@
       "etiquetas": [
         "objeto",
         "ropa"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "nuevo",
@@ -415,7 +426,8 @@
       "etiquetas": [
         "objeto",
         "ropa"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "viejo",
@@ -426,7 +438,8 @@
         "objeto",
         "ropa",
         "lugar"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "grande",
@@ -437,7 +450,8 @@
         "objeto",
         "lugar",
         "animal"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "pequeño",
@@ -448,7 +462,8 @@
         "objeto",
         "lugar",
         "animal"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "largo",
@@ -458,7 +473,8 @@
       "etiquetas": [
         "texto",
         "cancion"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "divertido",
@@ -469,7 +485,8 @@
         "texto",
         "cancion",
         "persona"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "precioso",
@@ -480,7 +497,8 @@
         "texto",
         "cancion",
         "lugar"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "antiguo",
@@ -490,7 +508,8 @@
       "etiquetas": [
         "lugar",
         "objeto"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "difícil",
@@ -499,7 +518,8 @@
       "fp": "difíciles",
       "etiquetas": [
         "leccion"
-      ]
+      ],
+      "tipo": "cualidad"
     },
     {
       "ms": "fácil",
@@ -508,7 +528,116 @@
       "fp": "fáciles",
       "etiquetas": [
         "leccion"
-      ]
+      ],
+      "tipo": "cualidad"
+    },
+    {
+      "ms": "cansado",
+      "fs": "cansada",
+      "mp": "cansados",
+      "fp": "cansadas",
+      "etiquetas": [
+        "persona",
+        "animal"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "contento",
+      "fs": "contenta",
+      "mp": "contentos",
+      "fp": "contentas",
+      "etiquetas": [
+        "persona",
+        "animal"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "nervioso",
+      "fs": "nerviosa",
+      "mp": "nerviosos",
+      "fp": "nerviosas",
+      "etiquetas": [
+        "persona",
+        "animal"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "tranquilo",
+      "fs": "tranquila",
+      "mp": "tranquilos",
+      "fp": "tranquilas",
+      "etiquetas": [
+        "persona",
+        "animal"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "enfadado",
+      "fs": "enfadada",
+      "mp": "enfadados",
+      "fp": "enfadadas",
+      "etiquetas": [
+        "persona",
+        "animal"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "limpio",
+      "fs": "limpia",
+      "mp": "limpios",
+      "fp": "limpias",
+      "etiquetas": [
+        "objeto",
+        "ropa"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "sucio",
+      "fs": "sucia",
+      "mp": "sucios",
+      "fp": "sucias",
+      "etiquetas": [
+        "objeto",
+        "ropa"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "abierto",
+      "fs": "abierta",
+      "mp": "abiertos",
+      "fp": "abiertas",
+      "etiquetas": [
+        "abrible"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "cerrado",
+      "fs": "cerrada",
+      "mp": "cerrados",
+      "fp": "cerradas",
+      "etiquetas": [
+        "abrible"
+      ],
+      "tipo": "estado"
+    },
+    {
+      "ms": "frío",
+      "fs": "fría",
+      "mp": "fríos",
+      "fp": "frías",
+      "etiquetas": [
+        "comida",
+        "bebida"
+      ],
+      "tipo": "estado"
     }
   ],
   "verbos": [
@@ -548,7 +677,7 @@
         "comida",
         "bebida"
       ],
-      "admiteCI": true,
+      "admiteCI": false,
       "participioIrregular": null,
       "sujeto": [
         "persona"
@@ -863,6 +992,88 @@
         "persona",
         "animal"
       ]
+    },
+    {
+      "infinitivo": "ser",
+      "conjugacion": 2,
+      "regimen": "copulativo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "abrible",
+        "animal",
+        "bebida",
+        "cancion",
+        "comida",
+        "comprable",
+        "lavable",
+        "leccion",
+        "lugar",
+        "objeto",
+        "persona",
+        "prestable",
+        "ropa",
+        "texto"
+      ],
+      "atributo": [
+        "cualidad"
+      ]
+    },
+    {
+      "infinitivo": "estar",
+      "conjugacion": 1,
+      "regimen": "copulativo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "abrible",
+        "animal",
+        "bebida",
+        "cancion",
+        "comida",
+        "comprable",
+        "lavable",
+        "leccion",
+        "lugar",
+        "objeto",
+        "persona",
+        "prestable",
+        "ropa",
+        "texto"
+      ],
+      "atributo": [
+        "estado"
+      ]
+    },
+    {
+      "infinitivo": "parecer",
+      "conjugacion": 2,
+      "regimen": "copulativo",
+      "objeto": null,
+      "admiteCI": false,
+      "participioIrregular": null,
+      "sujeto": [
+        "abrible",
+        "animal",
+        "bebida",
+        "cancion",
+        "comida",
+        "comprable",
+        "lavable",
+        "leccion",
+        "lugar",
+        "objeto",
+        "persona",
+        "prestable",
+        "ropa",
+        "texto"
+      ],
+      "atributo": [
+        "cualidad",
+        "estado"
+      ]
     }
   ],
   "complementosCircunstanciales": {
@@ -894,5 +1105,129 @@
       "con sus amigos",
       "con su hermana"
     ]
-  }
+  },
+  "aspectoCCT": {
+    "ayer": "puntual",
+    "el lunes": "puntual",
+    "a las cinco": "puntual",
+    "todos los días": "habitual",
+    "por la mañana": "neutro",
+    "en verano": "neutro"
+  },
+  "sinHabitual": [
+    "comprar",
+    "regalar",
+    "prestar"
+  ],
+  "ccExcluye": {
+    "en el parque": [
+      "nadar",
+      "subir",
+      "lavar",
+      "visitar",
+      "preparar"
+    ],
+    "en casa": [
+      "nadar",
+      "correr",
+      "pasear",
+      "subir",
+      "visitar",
+      "comprar",
+      "vender",
+      "caminar"
+    ],
+    "por la calle": [
+      "nadar",
+      "descansar",
+      "subir",
+      "lavar",
+      "preparar",
+      "aprender",
+      "escribir",
+      "pintar",
+      "dibujar",
+      "abrir",
+      "visitar"
+    ],
+    "en el colegio": [
+      "nadar",
+      "pasear",
+      "subir",
+      "caminar",
+      "visitar",
+      "lavar",
+      "comprar"
+    ],
+    "en la biblioteca": [
+      "nadar",
+      "correr",
+      "bailar",
+      "pasear",
+      "subir",
+      "caminar",
+      "lavar",
+      "preparar",
+      "comprar",
+      "vender",
+      "cantar",
+      "pintar",
+      "comer",
+      "beber",
+      "regalar",
+      "visitar"
+    ],
+    "deprisa": [
+      "descansar",
+      "pasear",
+      "escuchar"
+    ],
+    "despacio": [
+      "descansar"
+    ],
+    "con cuidado": [
+      "descansar",
+      "bailar",
+      "cantar",
+      "escuchar",
+      "saludar"
+    ],
+    "en silencio": [
+      "cantar",
+      "saludar",
+      "bailar"
+    ],
+    "con alegría": [
+      "descansar"
+    ]
+  },
+  "ccSoloPersona": [
+    "con sus amigos",
+    "con su hermana"
+  ],
+  "sinPosesivo": [
+    "niño",
+    "niña",
+    "cocinero"
+  ],
+  "tiemposCopulativos": {
+    "ser": [
+      "Presente",
+      "Pretérito imperfecto"
+    ],
+    "parecer": [
+      "Presente",
+      "Pretérito imperfecto"
+    ],
+    "estar": [
+      "Presente",
+      "Pretérito imperfecto",
+      "Pretérito perfecto simple",
+      "Futuro simple"
+    ]
+  },
+  "ccDelante": [
+    "CCT",
+    "CCL"
+  ]
 }

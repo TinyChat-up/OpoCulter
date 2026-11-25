@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "areas": [
     {
       "id": "LEN",
@@ -20,6 +20,26 @@
               "id": "LEN.SIN.COMPL",
               "nombre": "Complementos del verbo",
               "orden": 2
+            },
+            {
+              "id": "LEN.SIN.SINT",
+              "nombre": "Sintagmas y núcleo",
+              "orden": 3
+            },
+            {
+              "id": "LEN.SIN.MODAL",
+              "nombre": "Tipos de oración por la intención",
+              "orden": 4
+            },
+            {
+              "id": "LEN.SIN.CLASE",
+              "nombre": "Clases de oración",
+              "orden": 5
+            },
+            {
+              "id": "LEN.SIN.COMP",
+              "nombre": "La oración compuesta",
+              "orden": 6
             }
           ]
         },
@@ -53,6 +73,21 @@
               "id": "LEN.ORT.HOM",
               "nombre": "Homófonos frecuentes",
               "orden": 5
+            },
+            {
+              "id": "LEN.ORT.LET",
+              "nombre": "Uso de letras",
+              "orden": 6
+            },
+            {
+              "id": "LEN.ORT.PUNT",
+              "nombre": "Signos de puntuación",
+              "orden": 7
+            },
+            {
+              "id": "LEN.ORT.MAY",
+              "nombre": "Mayúsculas",
+              "orden": 8
             }
           ]
         },
@@ -65,12 +100,34 @@
             {
               "id": "LEN.CLA.SUSTADJ",
               "nombre": "Sustantivo y adjetivo",
-              "orden": 1
+              "orden": 1,
+              "equivaleA": "LEN.CLA.VAR"
             },
             {
               "id": "LEN.CLA.VERBO",
               "nombre": "El verbo",
-              "orden": 2
+              "orden": 2,
+              "equivaleA": "LEN.CLA.VAR"
+            },
+            {
+              "id": "LEN.CLA.VAR",
+              "nombre": "Palabras variables",
+              "orden": 3
+            },
+            {
+              "id": "LEN.CLA.INV",
+              "nombre": "Palabras invariables",
+              "orden": 4
+            },
+            {
+              "id": "LEN.CLA.ADJGRAD",
+              "nombre": "Grados del adjetivo",
+              "orden": 5
+            },
+            {
+              "id": "LEN.CLA.JUST",
+              "nombre": "Justificar la categoría",
+              "orden": 6
             }
           ]
         },
@@ -84,6 +141,21 @@
               "id": "LEN.VER.ANALISIS",
               "nombre": "Análisis de formas verbales",
               "orden": 1
+            },
+            {
+              "id": "LEN.VER.NOPERS",
+              "nombre": "Formas no personales",
+              "orden": 2
+            },
+            {
+              "id": "LEN.VER.IRREG",
+              "nombre": "Verbos irregulares",
+              "orden": 3
+            },
+            {
+              "id": "LEN.VER.VOZ",
+              "nombre": "Voz activa y pasiva",
+              "orden": 4
             }
           ]
         },
@@ -96,12 +168,44 @@
             {
               "id": "LEN.LIT.CRONO",
               "nombre": "Cronología de autores",
-              "orden": 1
+              "orden": 1,
+              "equivaleA": "LEN.LIT.HIST"
             },
             {
               "id": "LEN.LIT.AUTOBRA",
               "nombre": "Autor y obra",
-              "orden": 2
+              "orden": 2,
+              "equivaleA": "LEN.LIT.HIST"
+            },
+            {
+              "id": "LEN.LIT.GEN",
+              "nombre": "Géneros y subgéneros literarios",
+              "orden": 3
+            },
+            {
+              "id": "LEN.LIT.OBRA",
+              "nombre": "Elementos de la obra literaria",
+              "orden": 4
+            },
+            {
+              "id": "LEN.LIT.HIST",
+              "nombre": "Historia de la literatura española",
+              "orden": 5
+            },
+            {
+              "id": "LEN.LIT.UNIV",
+              "nombre": "Literatura universal",
+              "orden": 6
+            },
+            {
+              "id": "LEN.LIT.INF",
+              "nombre": "Literatura infantil y juvenil",
+              "orden": 7
+            },
+            {
+              "id": "LEN.LIT.POP",
+              "nombre": "Refranes, greguerías y literatura popular",
+              "orden": 8
             }
           ]
         },
@@ -157,7 +261,18 @@
             {
               "id": "LEN.REC.FIGURAS",
               "nombre": "Figuras retóricas",
-              "orden": 1
+              "orden": 1,
+              "equivaleA": "LEN.REC.FIG"
+            },
+            {
+              "id": "LEN.REC.FIG",
+              "nombre": "Identificar recursos literarios",
+              "orden": 2
+            },
+            {
+              "id": "LEN.REC.DEF",
+              "nombre": "Definir recursos literarios",
+              "orden": 3
             }
           ]
         },
@@ -166,18 +281,35 @@
           "nombre": "Métrica",
           "prioridad": 2,
           "orden": 8,
-          "competencias": []
+          "competencias": [
+            {
+              "id": "LEN.MET.MED",
+              "nombre": "Medida del verso",
+              "orden": 1
+            },
+            {
+              "id": "LEN.MET.RIMA",
+              "nombre": "Rima consonante y asonante",
+              "orden": 2
+            },
+            {
+              "id": "LEN.MET.ESTR",
+              "nombre": "Estrofas",
+              "orden": 3
+            }
+          ]
         },
         {
           "id": "LEN.LEX",
           "nombre": "Léxico y vocabulario",
-          "prioridad": 2,
+          "prioridad": 3,
           "orden": 9,
           "competencias": [
             {
               "id": "LEN.LEX.SINON",
               "nombre": "Sinónimos",
-              "orden": 99
+              "orden": 99,
+              "equivaleA": "LEN.LEX.SIN"
             },
             {
               "id": "LEN.LEX.SIN",
@@ -226,7 +358,66 @@
           "nombre": "Formación de palabras",
           "prioridad": 2,
           "orden": 10,
-          "competencias": []
+          "competencias": [
+            {
+              "id": "LEN.FOR.ESTR",
+              "nombre": "Lexema y morfemas",
+              "orden": 1
+            },
+            {
+              "id": "LEN.FOR.DER",
+              "nombre": "Prefijos y sufijos",
+              "orden": 2
+            },
+            {
+              "id": "LEN.FOR.COMP",
+              "nombre": "Composición",
+              "orden": 3
+            },
+            {
+              "id": "LEN.FOR.CLAS",
+              "nombre": "Primitivas, derivadas, compuestas y parasintéticas",
+              "orden": 4
+            },
+            {
+              "id": "LEN.FOR.SIGL",
+              "nombre": "Siglas, acrónimos y abreviaturas",
+              "orden": 5
+            }
+          ]
+        },
+        {
+          "id": "LEN.HAB",
+          "nombre": "Las lenguas y sus hablantes",
+          "prioridad": 2,
+          "orden": 11,
+          "competencias": [
+            {
+              "id": "LEN.HAB.ORIG",
+              "nombre": "Origen y evolución del español",
+              "orden": 1
+            },
+            {
+              "id": "LEN.HAB.RAE",
+              "nombre": "La RAE y la norma",
+              "orden": 2
+            },
+            {
+              "id": "LEN.HAB.LENESP",
+              "nombre": "Lenguas y variedades de España",
+              "orden": 3
+            },
+            {
+              "id": "LEN.HAB.SIGNOS",
+              "nombre": "Lenguas de signos y comunicación accesible",
+              "orden": 4
+            },
+            {
+              "id": "LEN.HAB.NODISC",
+              "nombre": "Lenguaje no discriminatorio",
+              "orden": 5
+            }
+          ]
         }
       ]
     },
@@ -243,7 +434,8 @@
             {
               "id": "MAT.UNI.LONG",
               "nombre": "Unidades de longitud",
-              "orden": 1
+              "orden": 1,
+              "equivaleA": "MAT.UNI.LMC"
             },
             {
               "id": "MAT.UNI.LMC",
@@ -269,6 +461,16 @@
               "id": "MAT.UNI.ESC",
               "nombre": "Escalas",
               "orden": 6
+            },
+            {
+              "id": "MAT.UNI.ANG",
+              "nombre": "Medida de ángulos",
+              "orden": 7
+            },
+            {
+              "id": "MAT.UNI.ESTIM",
+              "nombre": "Estimación de medidas",
+              "orden": 8
             }
           ]
         },
@@ -281,7 +483,53 @@
             {
               "id": "MAT.GEO.TRIANG",
               "nombre": "Propiedades del triángulo",
-              "orden": 1
+              "orden": 1,
+              "equivaleA": "MAT.GEO.CLAS"
+            },
+            {
+              "id": "MAT.GEO.CLAS",
+              "nombre": "Figuras planas",
+              "orden": 2
+            },
+            {
+              "id": "MAT.GEO.CUER",
+              "nombre": "Cuerpos geométricos",
+              "orden": 3
+            },
+            {
+              "id": "MAT.GEO.ANG",
+              "nombre": "Ángulos",
+              "orden": 4
+            },
+            {
+              "id": "MAT.GEO.PER",
+              "nombre": "Perímetros",
+              "orden": 5
+            },
+            {
+              "id": "MAT.GEO.AREA",
+              "nombre": "Áreas",
+              "orden": 6
+            },
+            {
+              "id": "MAT.GEO.VOL",
+              "nombre": "Volúmenes",
+              "orden": 7
+            },
+            {
+              "id": "MAT.GEO.CART",
+              "nombre": "Coordenadas cartesianas",
+              "orden": 8
+            },
+            {
+              "id": "MAT.GEO.MOV",
+              "nombre": "Giros, traslaciones y simetrías",
+              "orden": 9
+            },
+            {
+              "id": "MAT.GEO.SEMEJ",
+              "nombre": "Semejanza",
+              "orden": 10
             }
           ]
         },
@@ -294,7 +542,8 @@
             {
               "id": "MAT.POR.PORCENT",
               "nombre": "Porcentajes",
-              "orden": 1
+              "orden": 1,
+              "equivaleA": "MAT.POR.CALC"
             },
             {
               "id": "MAT.POR.CALC",
@@ -315,6 +564,11 @@
               "id": "MAT.POR.PROP",
               "nombre": "Proporcionalidad directa",
               "orden": 5
+            },
+            {
+              "id": "MAT.POR.FIN",
+              "nombre": "Educación financiera",
+              "orden": 6
             }
           ]
         },
@@ -348,6 +602,26 @@
               "id": "MAT.NUM.FRAPROB",
               "nombre": "Problemas con fracciones",
               "orden": 5
+            },
+            {
+              "id": "MAT.NUM.TIPOS",
+              "nombre": "Tipos de números",
+              "orden": 6
+            },
+            {
+              "id": "MAT.NUM.VALPOS",
+              "nombre": "Valor posicional y redondeo",
+              "orden": 7
+            },
+            {
+              "id": "MAT.NUM.EQUIV",
+              "nombre": "Fracción, decimal y porcentaje",
+              "orden": 8
+            },
+            {
+              "id": "MAT.NUM.ENT",
+              "nombre": "Números enteros en contexto",
+              "orden": 9
             }
           ]
         },
@@ -361,6 +635,26 @@
               "id": "MAT.DIV.MCD",
               "nombre": "Máximo común divisor",
               "orden": 1
+            },
+            {
+              "id": "MAT.DIV.REGLAS",
+              "nombre": "Criterios de divisibilidad",
+              "orden": 2
+            },
+            {
+              "id": "MAT.DIV.MULDIV",
+              "nombre": "Múltiplos y divisores",
+              "orden": 3
+            },
+            {
+              "id": "MAT.DIV.PRIMOS",
+              "nombre": "Primos, compuestos y factorización",
+              "orden": 4
+            },
+            {
+              "id": "MAT.DIV.MCM",
+              "nombre": "Mínimo común múltiplo",
+              "orden": 5
             }
           ]
         },
@@ -373,17 +667,20 @@
             {
               "id": "MAT.OPE.JERARQ",
               "nombre": "Jerarquía de operaciones",
-              "orden": 1
+              "orden": 1,
+              "equivaleA": "MAT.OPE.JER"
             },
             {
               "id": "MAT.OPE.FRACSUM",
               "nombre": "Suma de fracciones",
-              "orden": 2
+              "orden": 2,
+              "equivaleA": "MAT.NUM.FRAOP"
             },
             {
               "id": "MAT.OPE.EQUIV",
               "nombre": "Fracciones y decimales equivalentes",
-              "orden": 3
+              "orden": 3,
+              "equivaleA": "MAT.NUM.EQUIV"
             },
             {
               "id": "MAT.OPE.ECUAC",
@@ -399,6 +696,21 @@
               "id": "MAT.OPE.COMB",
               "nombre": "Operaciones combinadas con paréntesis y corchetes",
               "orden": 6
+            },
+            {
+              "id": "MAT.OPE.POT",
+              "nombre": "Potencias",
+              "orden": 7
+            },
+            {
+              "id": "MAT.OPE.RAIZ",
+              "nombre": "Raíz cuadrada exacta",
+              "orden": 8
+            },
+            {
+              "id": "MAT.OPE.MENTAL",
+              "nombre": "Cálculo mental y estimación",
+              "orden": 9
             }
           ]
         },
@@ -411,7 +723,8 @@
             {
               "id": "MAT.ROM.LECTURA",
               "nombre": "Lectura de números romanos",
-              "orden": 1
+              "orden": 1,
+              "equivaleA": "MAT.ROM.LEER"
             },
             {
               "id": "MAT.ROM.LEER",
@@ -428,13 +741,28 @@
         {
           "id": "MAT.EST",
           "nombre": "Estadística",
-          "prioridad": 2,
+          "prioridad": 3,
           "orden": 8,
           "competencias": [
             {
               "id": "MAT.EST.CENTRAL",
               "nombre": "Media, mediana, moda y rango",
               "orden": 1
+            },
+            {
+              "id": "MAT.EST.FREC",
+              "nombre": "Frecuencias absolutas y relativas",
+              "orden": 2
+            },
+            {
+              "id": "MAT.EST.GRAF",
+              "nombre": "Gráficos estadísticos",
+              "orden": 3
+            },
+            {
+              "id": "MAT.EST.POBL",
+              "nombre": "Muestra y población",
+              "orden": 4
             }
           ]
         },
@@ -448,6 +776,39 @@
               "id": "MAT.PRO.LAPLACE",
               "nombre": "Probabilidad de un suceso",
               "orden": 1
+            },
+            {
+              "id": "MAT.PRO.SUCESOS",
+              "nombre": "Tipos de sucesos",
+              "orden": 2
+            },
+            {
+              "id": "MAT.PRO.RECUENTO",
+              "nombre": "Diagramas de árbol y recuento",
+              "orden": 3
+            }
+          ]
+        },
+        {
+          "id": "MAT.ALG",
+          "nombre": "Álgebra y pensamiento computacional",
+          "prioridad": 1,
+          "orden": 10,
+          "competencias": [
+            {
+              "id": "MAT.ALG.PATR",
+              "nombre": "Patrones y series",
+              "orden": 1
+            },
+            {
+              "id": "MAT.ALG.IGUAL",
+              "nombre": "Igualdades y desigualdades",
+              "orden": 2
+            },
+            {
+              "id": "MAT.ALG.ALGO",
+              "nombre": "Algoritmos sencillos",
+              "orden": 3
             }
           ]
         }

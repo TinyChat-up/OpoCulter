@@ -85,12 +85,27 @@ struct PantallaProgreso: View {
                 let acento = Paleta.acento(area: area.id)
                 VStack(alignment: .leading, spacing: Espacio.s) {
                     let d = servicio.dominioArea(area.id, estados: estados)
-                    HStack(spacing: Espacio.m) {
-                        AnilloDominio(fraccion: max(d, 0.02), acento: acento).frame(width: 44, height: 44)
-                        Text(area.nombre).font(.headline).foregroundStyle(Paleta.textoPrincipal)
-                            .fixedSize(horizontal: false, vertical: true).layoutPriority(1)
-                        Spacer()
-                        Text("\(Int((d * 100).rounded())) %").font(.redondeada(.subheadline)).foregroundStyle(Paleta.textoSecundario)
+                    // En horizontal si cabe; si no (texto grande), el porcentaje va debajo del nombre.
+                    // El número nunca se parte ni se corta (§4.3 de la 05E).
+                    let porcentaje = Text("\(Int((d * 100).rounded())) %").font(.redondeada(.subheadline))
+                        .foregroundStyle(Paleta.textoSecundario).fixedSize()
+                    let anillo = AnilloDominio(fraccion: max(d, 0.02), acento: acento).frame(width: 44, height: 44)
+                    let nombre = Text(area.nombre).font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                    ViewThatFits(in: .horizontal) {
+                        HStack(spacing: Espacio.m) {
+                            anillo
+                            nombre.fixedSize()
+                            Spacer(minLength: Espacio.s)
+                            porcentaje
+                        }
+                        HStack(alignment: .top, spacing: Espacio.m) {
+                            anillo
+                            VStack(alignment: .leading, spacing: Espacio.xs) {
+                                nombre.fixedSize(horizontal: false, vertical: true)
+                                porcentaje
+                            }
+                            Spacer(minLength: 0)
+                        }
                     }
                     .accessibilityElement(children: .combine)
                     ForEach(area.bloques.sorted { $0.orden < $1.orden }, id: \.id) { b in

@@ -158,6 +158,47 @@ enum Acentuacion {
     static func nivelDe(_ palabra: String, _ recursos: RecursosGeneradores) -> Int { recursos.palabras.first { $0.analisis.palabra == palabra }?.nivel ?? 1 }
 }
 
+// MARK: - Palabras ambiguas sin contexto (Fase 05E, §4.1)
+
+/// `ambiguas.json`: formas válidas del español que solo se distinguen por la tilde de una palabra
+/// del léxico (revisadas a mano; sin voseo), con su categoría.
+struct PalabrasAmbiguas: Codable, Sendable, Equatable {
+    struct Variante: Codable, Sendable, Equatable { var forma: String; var categoria: String }
+    struct Entrada: Codable, Sendable, Equatable {
+        var palabra: String
+        var categoria: String
+        var variantes: [Variante]
+    }
+    var version = 0
+    var palabras: [Entrada] = []
+
+    /// Todas las formas registradas (palabras y variantes).
+    var formas: Set<String> { Set(palabras.map(\.palabra) + palabras.flatMap { $0.variantes.map(\.forma) }) }
+}
+
+extension Acentuacion {
+    /// Otras acentuaciones de una palabra: sin tilde y con tilde en cada vocal (sin la propia).
+    static func variantes(_ palabra: String) -> Set<String> {
+        let base = Array(palabra.lowercased().map { quitarTilde[$0] ?? $0 })
+        var r: Set<String> = [String(base)]
+        for (i, c) in base.enumerated() {
+            guard let t = ponerTilde[c] else { continue }
+            var v = base
+            v[i] = t
+            r.insert(String(v))
+        }
+        r.remove(palabra.lowercased())
+        return r
+    }
+
+    /// Palabras ambiguas sin contexto: alguna de sus variantes de tilde es otra palabra del léxico
+    /// o una forma válida registrada en `ambiguas.json`. Determinista.
+    static func ambiguas(_ lexico: [String], formasValidas: Set<String>) -> Set<String> {
+        let validas = Set(lexico.map { $0.lowercased() }).union(formasValidas)
+        return Set(lexico.map { $0.lowercased() }.filter { !variantes($0).isDisjoint(with: validas) })
+    }
+}
+
 /// Palabra utilizable con su nivel de dificultad.
 struct PalabraNivelada: Sendable, Equatable {
     let analisis: AnalisisPalabra

@@ -19,5 +19,257 @@
       "estado": "borrador"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.VER.ANALISIS.G02",
+    "competencia": "LEN.VER.ANALISIS",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "ruedas",
+    "tipo": "analisisVerbal",
+    "enunciados": [
+      "Analiza la forma verbal «{{forma}}» (verbo {{infinitivo}})."
+    ],
+    "objetivo": "Analizar formas verbales regulares",
+    "parametros": {
+      "rasgos": "basico"
+    },
+    "pistas": [
+      "Empieza por la terminación: te dice la persona y el número.",
+      "Si lleva «haber» + participio, es una forma compuesta."
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.ANALISIS.G03",
+    "competencia": "LEN.VER.ANALISIS",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "ruedas",
+    "tipo": "analisisVerbal",
+    "enunciados": [
+      "Analiza la forma verbal «{{forma}}» (verbo {{infinitivo}})."
+    ],
+    "objetivo": "Analizar formas verbales de las tres conjugaciones",
+    "parametros": {
+      "rasgos": "basico"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.ANALISIS.G04",
+    "competencia": "LEN.VER.ANALISIS",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "ruedas",
+    "tipo": "analisisVerbal",
+    "enunciados": [
+      "Analiza la forma verbal «{{forma}}» (verbo {{infinitivo}})."
+    ],
+    "objetivo": "Analizar formas verbales con aspecto y forma",
+    "parametros": {
+      "rasgos": "completo"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.ANALISIS.G05",
+    "competencia": "LEN.VER.ANALISIS",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "ruedas",
+    "tipo": "analisisVerbal",
+    "enunciados": [
+      "Analiza la forma verbal «{{forma}}» (verbo {{infinitivo}})."
+    ],
+    "objetivo": "Analizar formas verbales simples y compuestas",
+    "parametros": {
+      "rasgos": "completo"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.ANALISIS.G06",
+    "competencia": "LEN.VER.ANALISIS",
+    "peldano": 5,
+    "dificultad": 5,
+    "mecanica": "ruedas",
+    "tipo": "analisisVerbal",
+    "enunciados": [
+      "Analiza la forma verbal «{{forma}}» (verbo {{infinitivo}})."
+    ],
+    "objetivo": "Analizar formas verbales en formato de examen",
+    "parametros": {
+      "rasgos": "completo"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.NOPERS.G01",
+    "competencia": "LEN.VER.NOPERS",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "clasificar",
+    "tipo": "formasNoPersonales",
+    "enunciados": [
+      "Clasifica cada forma: infinitivo, gerundio o participio."
+    ],
+    "objetivo": "Reconocer las formas no personales",
+    "pistas": [
+      "Infinitivo: -ar, -er, -ir. Gerundio: -ando, -iendo. Participio: -ado, -ido."
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.NOPERS.G02",
+    "competencia": "LEN.VER.NOPERS",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "clasificar",
+    "tipo": "formasNoPersonales",
+    "enunciados": [
+      "Clasifica cada forma: infinitivo, gerundio o participio."
+    ],
+    "objetivo": "Reconocer las formas no personales de las tres conjugaciones",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.NOPERS.G03",
+    "competencia": "LEN.VER.NOPERS",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "formasNoPersonales",
+    "enunciados": [
+      "¿Qué forma no personal es «{{forma}}»?"
+    ],
+    "objetivo": "Identificar una forma no personal",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.NOPERS.G04",
+    "competencia": "LEN.VER.NOPERS",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "eleccion",
+    "tipo": "formasNoPersonales",
+    "enunciados": [
+      "¿Qué forma no personal es «{{forma}}»?"
+    ],
+    "objetivo": "Distinguir formas no personales simples y compuestas",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.VER.NOPERS.G05",
+    "competencia": "LEN.VER.NOPERS",
+    "peldano": 5,
+    "dificultad": 5,
+    "mecanica": "clasificar",
+    "tipo": "formasNoPersonales",
+    "enunciados": [
+      "Clasifica cada forma: infinitivo, gerundio o participio."
+    ],
+    "objetivo": "Clasificar formas no personales simples y compuestas",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
   }
 ]
