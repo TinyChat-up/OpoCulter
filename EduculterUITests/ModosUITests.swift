@@ -137,17 +137,18 @@ final class ModosUITests: CasoUI {
         XCTAssertTrue(app.descendants(matching: .any)["rescateVacio"].waitForExistence(timeout: 10))
         try auditar(app, "Rescate vacío")
         app.buttons["botonCerrarRescate"].tap()
-        // Una ronda con dos errores.
+        // Una ronda con todos los ítems fallados (un acierto posterior de la misma competencia y
+        // peldaño rescataría los fallos anteriores dentro de la misma ronda).
         app.buttons["botonEmpezarRonda"].tap()
         if app.buttons["botonEmpezarTrasTeoria"].waitForExistence(timeout: 5) { app.buttons["botonEmpezarTrasTeoria"].tap() }
         var i = 0
-        while !app.descendants(matching: .any)["resumenRonda"].exists && i < 10 { responder(app, correcto: i >= 2); i += 1 }
+        while !app.descendants(matching: .any)["resumenRonda"].exists && i < 10 { responder(app, correcto: false); i += 1 }
         let terminar = app.buttons["botonTerminar"]
         XCTAssertTrue(terminar.waitForExistence(timeout: 5))
         while !terminar.isHittable { app.scrollViews.firstMatch.swipeUp() }
         terminar.tap()
         XCTAssertTrue(app.buttons["botonRescate"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["botonRescate"].label.contains("2 errores"), app.buttons["botonRescate"].label)
+        XCTAssertTrue(app.buttons["botonRescate"].label.contains("\(i) errores"), app.buttons["botonRescate"].label)
         tocarVisible(app, app.buttons["botonRescate"])
         XCTAssertTrue(app.buttons["botonRescatarTodo"].waitForExistence(timeout: 10))
         try auditar(app, "Rescate")
@@ -168,7 +169,7 @@ final class ModosUITests: CasoUI {
         terminar.tap()
         XCTAssertTrue(app.buttons["botonRescate"].waitForExistence(timeout: 10))
         let etiqueta = app.buttons["botonRescate"].label
-        XCTAssertFalse(etiqueta.contains("2 errores"), "El contador baja de verdad: \(etiqueta)")
+        XCTAssertFalse(etiqueta.contains("\(i) errores"), "El contador baja de verdad: \(etiqueta)")
         XCTAssertTrue(incidencias.isEmpty, incidencias.joined(separator: "\n"))
     }
 

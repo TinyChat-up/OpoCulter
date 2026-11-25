@@ -20,5 +20,166 @@
       "estado": "borrador"
     },
     "version": 1
+  },
+  {
+    "id": "MAT.NUM.ORDEN.G01",
+    "competencia": "MAT.NUM.ORDEN",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "ordenar",
+    "tipo": "ordenarNumeros",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Ordenar fracciones y decimales",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.NUM.ORDEN.G02",
+    "competencia": "MAT.NUM.ORDEN",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "ordenar",
+    "tipo": "ordenarNumeros",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Ordenar fracciones y decimales",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.NUM.FRAOP.G01",
+    "competencia": "MAT.NUM.FRAOP",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "numerico",
+    "tipo": "fraccionesOperar",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Operar con fracciones y simplificar",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.NUM.FRAOP.G02",
+    "competencia": "MAT.NUM.FRAOP",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "fraccionesOperar",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Operar con fracciones y simplificar",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.NUM.FRAOP.G03",
+    "competencia": "MAT.NUM.FRAOP",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "numerico",
+    "tipo": "fraccionesOperar",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Operar con fracciones y simplificar",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.NUM.FRAPROB.G01",
+    "competencia": "MAT.NUM.FRAPROB",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "problemaFraccion",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Resolver problemas con fracciones",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.NUM.FRAPROB.G02",
+    "competencia": "MAT.NUM.FRAPROB",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "numerico",
+    "tipo": "problemaFraccion",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Resolver problemas con fracciones",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
   }
 ]

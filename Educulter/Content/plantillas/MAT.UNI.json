@@ -1,54 +1,220 @@
 [
   {
-    "id": "MAT.UNI.LONG.G01",
-    "competencia": "MAT.UNI.LONG",
+    "id": "MAT.UNI.LMC.G01",
+    "competencia": "MAT.UNI.LMC",
     "peldano": 2,
     "dificultad": 2,
     "mecanica": "numerico",
     "tipo": "conversionUnidades",
     "enunciados": [
-      "Expresa {{cantidad}} en {{hasta}}.",
-      "¿Cuántos {{hasta}} son {{cantidad}}?"
+      "{{pregunta}}"
     ],
-    "objetivo": "Convertir unidades de longitud",
+    "objetivo": "Convertir unidades de longitud, masa y capacidad",
     "parametros": {
-      "magnitudes": [
-        "longitud"
-      ]
+      "familia": "lmc"
     },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
-    "id": "MAT.UNI.LONG.G02",
-    "competencia": "MAT.UNI.LONG",
-    "peldano": 1,
-    "dificultad": 1,
-    "mecanica": "ruedas",
+    "id": "MAT.UNI.LMC.G02",
+    "competencia": "MAT.UNI.LMC",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
     "tipo": "conversionUnidades",
     "enunciados": [
-      "Completa: {{cantidad}} = {{resultado}} ___. Elige la unidad."
+      "{{pregunta}}"
     ],
-    "objetivo": "Reconocer la unidad de una equivalencia",
+    "objetivo": "Convertir unidades de longitud, masa y capacidad",
     "parametros": {
-      "magnitudes": [
-        "longitud"
-      ]
+      "familia": "lmc"
     },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.SUP.G01",
+    "competencia": "MAT.UNI.SUP",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "conversionUnidades",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Convertir unidades de superficie",
+    "parametros": {
+      "familia": "sup"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.VOL.G01",
+    "competencia": "MAT.UNI.VOL",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "conversionUnidades",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Convertir unidades de volumen y capacidad",
+    "parametros": {
+      "familia": "vol"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.TIEM.G01",
+    "competencia": "MAT.UNI.TIEM",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "numerico",
+    "tipo": "sexagesimal",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Operar con el tiempo en el sistema sexagesimal",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.TIEM.G02",
+    "competencia": "MAT.UNI.TIEM",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "ruedas",
+    "tipo": "sexagesimal",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Operar con el tiempo en el sistema sexagesimal",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.TIEM.G03",
+    "competencia": "MAT.UNI.TIEM",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "ruedas",
+    "tipo": "sexagesimal",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Operar con el tiempo en el sistema sexagesimal",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.ESC.G01",
+    "competencia": "MAT.UNI.ESC",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "escala",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Interpretar y calcular escalas",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.UNI.ESC.G02",
+    "competencia": "MAT.UNI.ESC",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "numerico",
+    "tipo": "escala",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Interpretar y calcular escalas",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   }

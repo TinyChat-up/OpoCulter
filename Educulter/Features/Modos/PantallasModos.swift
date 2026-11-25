@@ -333,17 +333,15 @@ struct PantallaRescate: View {
     private func grupo(_ g: GrupoRescate) -> some View {
         TarjetaSuperficie {
             VStack(alignment: .leading, spacing: Espacio.s) {
-                HStack(alignment: .firstTextBaseline) {
-                    Label(g.competencia.nombre, systemImage: SimboloBloque.de(competencia: g.id))
-                        .font(.headline).foregroundStyle(Paleta.textoPrincipal)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .layoutPriority(1)
-                    Spacer(minLength: Espacio.s)
-                    Text(g.area == "LEN" ? "Lengua" : "Matemáticas")
-                        .font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSobreAcento)
-                        .padding(.horizontal, Espacio.s).padding(.vertical, 2)
-                        .background(Paleta.acento(area: g.area), in: Capsule())
-                }
+                // El área va en su propia línea, encima del nombre: en la misma fila, con nombres
+                // largos, se partía sílaba a sílaba (visto en el iPhone).
+                Text(g.area == "LEN" ? "Lengua" : "Matemáticas")
+                    .font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSobreAcento)
+                    .padding(.horizontal, Espacio.s).padding(.vertical, 2)
+                    .background(Paleta.acento(area: g.area), in: Capsule())
+                Label(g.competencia.nombre, systemImage: SimboloBloque.de(competencia: g.id))
+                    .font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                    .fixedSize(horizontal: false, vertical: true)
                 Text("\(g.cantidad == 1 ? "1 error pendiente" : "\(g.cantidad) errores pendientes") · último el \(g.ultimo.formatted(.dateTime.day().month(.wide)))")
                     .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
                 ForEach(Array(g.entradas.enumerated()), id: \.offset) { _, e in

@@ -13,40 +13,66 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: léxico de 818 palabras de la dirección (24/11/2026)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
     "id": "LEN.ORT.AGU.G02",
     "competencia": "LEN.ORT.AGU",
-    "peldano": 2,
+    "peldano": 3,
     "dificultad": 3,
-    "mecanica": "eleccion",
-    "tipo": "clasificarAcentuacion",
+    "mecanica": "colocarTilde",
+    "tipo": "colocarTilde",
     "enunciados": [
-      "¿Cómo es la palabra «{{palabra}}» según su acento?",
-      "Clasifica «{{palabra}}»: ¿aguda, llana o esdrújula?"
+      "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde»."
     ],
-    "objetivo": "Clasificar palabras por su sílaba tónica",
+    "objetivo": "Aplicar las reglas generales de acentuación",
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: léxico de 818 palabras de la dirección (24/11/2026)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
     "id": "LEN.ORT.AGU.G03",
     "competencia": "LEN.ORT.AGU",
-    "peldano": 1,
+    "peldano": 2,
     "dificultad": 2,
+    "mecanica": "clasificar",
+    "tipo": "clasificarAcentuacion",
+    "enunciados": [
+      "Clasifica cada palabra según su sílaba tónica."
+    ],
+    "objetivo": "Clasificar palabras por su sílaba tónica",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: léxico de 818 palabras de la dirección (24/11/2026)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.G04",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 1,
+    "dificultad": 1,
     "mecanica": "marcarTexto",
     "tipo": "silabaTonica",
     "enunciados": [
@@ -56,10 +82,12 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: léxico de 818 palabras de la dirección (24/11/2026)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },

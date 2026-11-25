@@ -312,7 +312,7 @@ struct ChipRacha: View {
     }
 
     private var chip: some View {
-        let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(spacing: Espacio.m))
+        let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(spacing: Espacio.s))
         return disposicion {
             Label {
                 Text(dias == 1 ? "1 día" : "\(dias) días").font(.redondeada(.headline, peso: .semibold))
@@ -322,18 +322,18 @@ struct ChipRacha: View {
             }
             if !tamano.isAccessibilitySize { Divider().frame(height: 20) }
             Label {
-                Text("\(protectores)").font(.redondeada(.subheadline))
+                Text("\(protectores)").font(.redondeada(.subheadline)).fixedSize()
             } icon: {
                 Image(systemName: "shield.fill").foregroundStyle(Paleta.matematicasTinta)
             }
             Label {
-                Text("\(record)").font(.redondeada(.subheadline))
+                Text("\(record)").font(.redondeada(.subheadline)).fixedSize()
             } icon: {
                 Image(systemName: "trophy.fill").foregroundStyle(Paleta.recompensaTexto)
             }
         }
         .foregroundStyle(Paleta.textoPrincipal)
-        .padding(.horizontal, Espacio.l)
+        .padding(.horizontal, Espacio.m)
         .padding(.vertical, tamano.isAccessibilitySize ? Espacio.m : 0)
         .frame(minHeight: Medidas.tactilMinimo)
         .superficiePulsable(Paleta.superficie, radio: 22)

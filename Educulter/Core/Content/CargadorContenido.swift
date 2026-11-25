@@ -47,6 +47,7 @@ enum ErrorCarga: Error, Equatable, CustomStringConvertible {
 /// simulacros/<id>.json       (un simulacro por archivo)
 /// plantillas/<bloque>.json   (array de plantillas de generador, Fase 05C)
 /// lexico/palabras.json       (léxico de los generadores de Lengua)
+/// lexico/formas_verbales.json (formas verbales del léxico, para su nivel)
 /// gramatica/piezas.json · verbos.json · frases.json
 /// ```
 struct CargadorContenido: Sendable {
@@ -96,6 +97,7 @@ struct CargadorContenido: Sendable {
         }
         return RecursosGeneradores(
             lexico: try opcional("lexico/palabras.json") ?? [],
+            formasVerbales: try opcional("lexico/formas_verbales.json") ?? [],
             gramatica: try opcional("gramatica/piezas.json") ?? PiezasGramatica(),
             verbos: try opcional("gramatica/verbos.json") ?? BancoVerbos(),
             frases: try opcional("gramatica/frases.json") ?? BancoFrases()

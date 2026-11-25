@@ -106,31 +106,50 @@ final class PilotoUITests: CasoUI {
     @MainActor
     func testRondaDeMatematicasConFraccionBarras() throws {
         let app = lanzar(["-politicaRelease"])
+        // Hoy → Matemáticas: la competencia en curso del área con el contenido de Release (lote 02:
+        // MAT.UNI.LMC, la primera por prioridad de bloque y orden del catálogo).
         let mates = app.buttons["Matemáticas"].firstMatch
         XCTAssertTrue(mates.waitForExistence(timeout: 5))
         mates.tap()
-        XCTAssertTrue(app.staticTexts["Representar fracciones"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Longitud, masa y capacidad"].waitForExistence(timeout: 5))
         try auditar(app, "Hoy · Matemáticas", bordesDelScroll: true)
-        let respondidas = try jugarConToquesReales(app, mecanica: "fraccionBarras")
-        XCTAssertGreaterThanOrEqual(respondidas, 2, "La ronda de Matemáticas debe incluir fraccionBarras")
+        // fraccionBarras con toques reales: Camino → Matemáticas → «Representar fracciones» → Practicar.
+        app.tabBars.buttons["Camino"].firstMatch.tap()
+        let selector = app.segmentedControls["areaCamino"].buttons["Matemáticas"]
+        XCTAssertTrue(selector.waitForExistence(timeout: 10))
+        selector.tap()
+        let nodo = app.buttons["nodo_MAT.NUM.FRAREP"]
+        XCTAssertTrue(nodo.waitForExistence(timeout: 10))
+        var vueltas = 0
+        while !nodo.isHittable && vueltas < 10 { app.scrollViews.firstMatch.swipeUp(); vueltas += 1 }
+        nodo.tap()
+        XCTAssertTrue(app.buttons["botonPracticar"].waitForExistence(timeout: 10))
+        app.buttons["botonPracticar"].tap()
+        let respondidas = try jugarConToquesReales(app, mecanica: "fraccionBarras", empezar: false, volverA: "nodo_MAT.NUM.FRAREP")
+        XCTAssertGreaterThanOrEqual(respondidas, 2, "Practicar «Representar fracciones» debe incluir fraccionBarras")
         // La misión de Matemáticas (si es la de área de hoy) queda cumplida.
+        app.tabBars.buttons["Hoy"].firstMatch.tap()
         let mision = app.descendants(matching: .any)["mision_rondaMatematicas"]
         if mision.waitForExistence(timeout: 5) { XCTAssertEqual(mision.value as? String, "completada") }
     }
 
     @MainActor
     func testRondaDeLenguaConColocarTilde() throws {
-        let app = lanzar(["-politicaRelease"], base: ["-enMemoria", "-semilla", "10", "-ayudasDePrueba", "-avatar", "0"])
+        // Desde el lote 02 el peldaño 1 de LEN.ORT.AGU se practica con silabaTonica y las palabras de
+        // colocarTilde generadas salen del léxico de 818: se juegan 4 ítems aprobados concretos.
+        let ids = "LEN.ORT.AGU.0010,LEN.ORT.AGU.0012,LEN.ORT.AGU.0016,LEN.ORT.AGU.0020"
+        let app = lanzar(["-politicaRelease", "-rondaItems", ids], base: ["-enMemoria", "-semilla", "10", "-ayudasDePrueba", "-avatar", "0"])
         XCTAssertTrue(app.staticTexts["Agudas, llanas y esdrújulas"].waitForExistence(timeout: 5))
         let respondidas = try jugarConToquesReales(app, mecanica: "colocarTilde")
-        XCTAssertGreaterThanOrEqual(respondidas, 1, "La ronda de Lengua debe incluir colocarTilde")
+        XCTAssertEqual(respondidas, 4, "Los 4 ítems de colocarTilde se responden tocando la vocal o «Sin tilde»")
     }
 
     /// Juega la ronda: la mecánica indicada con toques reales (y auditoría antes y después de
     /// comprobar); el resto, con el botón de pruebas. Devuelve cuántos ítems de esa mecánica hubo.
     @MainActor
-    private func jugarConToquesReales(_ app: XCUIApplication, mecanica: String) throws -> Int {
-        app.buttons["botonEmpezarRonda"].tap()
+    private func jugarConToquesReales(_ app: XCUIApplication, mecanica: String, empezar: Bool = true,
+                                      volverA: String = "botonEmpezarRonda") throws -> Int {
+        if empezar { app.buttons["botonEmpezarRonda"].tap() }
         if app.buttons["botonEmpezarTrasTeoria"].waitForExistence(timeout: 5) {
             try auditar(app, "Teoría previa")
             app.buttons["botonEmpezarTrasTeoria"].tap()
@@ -159,7 +178,7 @@ final class PilotoUITests: CasoUI {
         let terminar = app.buttons["botonTerminar"]
         while !terminar.isHittable { app.scrollViews.firstMatch.swipeUp() }
         terminar.tap()
-        XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons[volverA].waitForExistence(timeout: 5))
         return reales
     }
 

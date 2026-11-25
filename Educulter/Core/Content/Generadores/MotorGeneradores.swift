@@ -21,10 +21,24 @@ struct Muestra: Sendable, Equatable {
 
 /// Recursos de los generadores de Lengua (léxico, piezas de gramática, bancos de frases).
 struct RecursosGeneradores: Sendable, Equatable {
-    var lexico: [EntradaLexico] = []
-    var gramatica: PiezasGramatica = PiezasGramatica()
-    var verbos: BancoVerbos = BancoVerbos()
-    var frases: BancoFrases = BancoFrases()
+    let lexico: [EntradaLexico]
+    /// Formas verbales del léxico (para el nivel 6: formas verbales con hiato; lote 02).
+    let formasVerbales: [String]
+    var gramatica: PiezasGramatica
+    var verbos: BancoVerbos
+    var frases: BancoFrases
+    /// Palabras utilizables del léxico, analizadas una sola vez, con su nivel (1–6).
+    let palabras: [PalabraNivelada]
+
+    init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
+         verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases()) {
+        self.lexico = lexico
+        self.formasVerbales = formasVerbales
+        self.gramatica = gramatica
+        self.verbos = verbos
+        self.frases = frases
+        self.palabras = Acentuacion.nivelar(lexico, formasVerbales: Set(formasVerbales))
+    }
 
     static let vacios = RecursosGeneradores()
 }
@@ -65,6 +79,8 @@ enum MotorGeneradores {
             GeneradorPorcentaje(), GeneradorConversionUnidades(), GeneradorFraccionBarras(), GeneradorOrdenarNumeros(),
             GeneradorRomanos(), GeneradorOperacionesCombinadas(), GeneradorMcmMcd(), GeneradorEstadistica(),
             GeneradorProbabilidad(), GeneradorEcuacionLineal(),
+            // Lote 02 (D-077).
+            GeneradorReglaDeTres(), GeneradorSexagesimal(), GeneradorEscala(), GeneradorFraccionesOperar(), GeneradorProblemaFraccion(),
             GeneradorColocarTilde(), GeneradorClasificarAcentuacion(), GeneradorSilabaTonica(),
             GeneradorOracionSimple(), GeneradorAnalisisVerbal(), GeneradorFraseHueco(),
         ]

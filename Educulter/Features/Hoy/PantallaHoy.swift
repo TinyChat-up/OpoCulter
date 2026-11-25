@@ -140,15 +140,17 @@ struct PantallaHoy: View {
     // MARK: Cabecera
 
     private var cabecera: some View {
-        let grande = tamano >= .xxxLarge
-        let disposicion = grande ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.s)) : AnyLayout(HStackLayout(alignment: .center, spacing: Espacio.m))
+        // Desde el tamaño de texto XL, la píldora de la racha baja a la segunda línea: en una sola no
+        // cabe sin recortar los números del protector y del récord (visto en el iPhone).
+        let grande = tamano >= .xLarge
+        let disposicion = grande ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.s)) : AnyLayout(HStackLayout(alignment: .center, spacing: Espacio.s))
         return VStack(alignment: .leading, spacing: Espacio.m) {
             disposicion {
                 HStack(spacing: Espacio.m) {
                     botonAvatar
                     titulo
                 }
-                if !grande { Spacer(minLength: Espacio.s) }
+                if !grande { Spacer(minLength: 0) }
                 if let estado = modelo.estado {
                     ChipRacha(dias: estado.racha.actual, protectores: estado.racha.protectores, record: estado.racha.record,
                               abrirAyudaAlAparecer: entorno.opciones.captura == "hoy:globo")
