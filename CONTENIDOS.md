@@ -253,6 +253,29 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 - **`pendiente/LEN.COM.json`**: ítems con el esquema de §2.3 y un campo nuevo, `textoRef` (opcional): el id del texto base que se muestra junto al enunciado. Se moverán a `items/` cuando el motor admita textos base (pendiente con Mac).
 - **`pendiente/teoria_<bloque>.json`**: tarjetas de teoría (§2.6) de un bloque cuyos ítems siguen en `pendiente/`. Pasan a `teoria/<bloque>.json` junto con sus ítems, para que no haya teoría sin práctica en Release.
 - **Validación sin Swift**: `python3 scripts/validar_items.py` reproduce las reglas principales de `ValidadorContenido` sobre todo `Content/`: catálogo, ítems (incluidos los de `pendiente/`), teoría, textos base y simulacros. Comprueba ids, competencias, payload por mecánica, explicación de 280 caracteres o menos, pistas solo en los peldaños 1–2, bloques de teoría de 40 palabras o menos, procedencia y validación, y que cada `textoRef` exista. No valida `plantillas/` (necesita los generadores de Swift). El test de Swift sigue siendo la referencia.
+### 2.15 Exámenes oficiales del Modo Tribunal (datos, D-083)
+`pendiente/tribunal/<año>_<convocatoria>.json`, un examen por archivo. La app no los lee: el motor del Tribunal llega en la Fase 05E.
+
+```json
+{ "id": "OF.2026.O", "anio": 2026, "convocatoria": "ordinaria|aplazada", "duracionMin": 90,
+  "fuente": "<URL oficial>", "fuentePlantilla": "<URL> (solo 2026)", "fechaConsulta": "2026-11-23",
+  "aviso": "…sin alteraciones… no está patrocinada ni avalada por la Comunidad de Madrid.",
+  "textoBase": { "texto": "…|null", "autor": "…", "obra": "…", "protegido": false, "anioMuerteAutor": 1870 },
+  "preguntas": [ { "numero": 1, "numeroEnArea": 1, "area": "LEN|MAT", "enunciado": "<literal>",
+                   "competencias": ["LEN.COM.RESU"], "solucionModelo": "…",
+                   "rubrica": { "bien": "…", "regular": "…", "mal": "…" },
+                   "fuenteSolucion": "direccion", "fuenteRubrica": "oficial|direccion", "notaRubrica": "(opcional)", "puntos": 1 } ],
+  "notas": "(opcional)", "validacion": { "estado": "borrador", "revisor": "", "fecha": "" } }
+```
+
+- **Enunciados**: literales. Las correcciones de OCR, las tablas transcritas en línea y las figuras descritas entre corchetes se registran en `docs/examenes/CORRECCIONES_OCR.md`.
+- **Textos protegidos** (Salinas en 2019 O; Laforet en 2019 A): `"protegido": true`, `texto: null` y aviso de protección. Las citas del texto dentro de un enunciado se sustituyen por «[Cita del texto base protegido: consúltese en el PDF oficial]».
+- **Pregunta anulada** (2022 O L7): `"anulada": true` y `puntos: 0`.
+- **Rúbricas**: las de 2026 son las plantillas oficiales copiadas literalmente (`fuenteRubrica: "oficial"`). Las demás son de redacción propia según ese modelo (`direccion`). `fuenteSolucion` es siempre `direccion`: la plantilla oficial da criterios, no soluciones. Cuando una rúbrica oficial no casa del todo con la pregunta, `notaRubrica` explica cómo la aplica la app (2026 O L6 y 2026 A L5).
+- **Erratas y ambigüedades de los enunciados oficiales** (D-084): el enunciado no se toca. La `solucionModelo` termina con una «Nota de la app» que explica cómo se resuelve: se aceptan todas las respuestas defendibles y, en las definiciones imprecisas, se da la respuesta esperada más la definición de la NGLE.
+- **Penalización ortográfica**: `pendiente/tribunal/reglas.json` (`palabraIncorrecta`, `tilde`, `unirSepararPalabras`, `abreviatura`, `limite: null`, `fuente` y `notas` con la redacción literal del BOCM). En la autocorrección del Tribunal (05E), el usuario indica cuántas faltas ha cometido y la app resta según esta regla, sin límite.
+- **Soluciones de Matemáticas**: se calculan con aritmética exacta en `scripts/tribunal/matematicas.py`. `scripts/tribunal/construir.py` genera los JSON y la hoja de revisión `docs/examenes/SOLUCIONES_REVISION_<n>.md`.
+- **Validación**: `python3 scripts/validar_tribunal.py` (comprueba además que todo JSON de `Content/` es válido).
 
 ## 3. Registro de procedencia
 
@@ -266,6 +289,9 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 | Lote 03a · `LEN.LEX.*` (30 ítems), `LEN.COM.*` (19 ítems), 8 tarjetas y textos `TXT.ORI.ABEJAS`, `TXT.ORI.DEBERES` y `TXT.ORI.FARO` | original | Redacción original de la dirección del proyecto | propia | 2026-11-24 |
 | Lote 03a · `TXT.BEC.R21` (Rima XXI) y `TXT.MAC.CAM` («Proverbios y cantares», XXIX) | dominio público | Gustavo Adolfo Bécquer (†1870), *Rimas*; Antonio Machado (†1939), *Campos de Castilla*. Texto original en español | dominio publico | 2026-11-24 |
 | Lote 02b (parte 1) · frases con hueco y piezas de gramática | original | Redacción original de la dirección del proyecto. Los sintagmas de `piezas.json` se derivan mecánicamente de sus sustantivos (artículo o «a» + posesivo) | propia | 2026-11-24 |
+| Datos Tribunal · enunciados y textos base de los 7 cuadernillos (`pendiente/tribunal/`) | oficial reutilizable + dominio público | Comunidad de Madrid, prueba común de Maestros 2017–2026 (URL y fecha en cada archivo y en `docs/examenes/FUENTES.md`); reutilización sin alterar el contenido y citando la fuente (aviso legal de comunidad.madrid). Textos base de dominio público: Bécquer, Muñoz Seca, Lope de Vega, Cervantes y García Lorca. Salinas y Laforet no se reproducen | reutilización (aviso legal) / dominio público | 2026-11-24 |
+| Datos Tribunal · rúbricas de 2026 | oficial reutilizable | Plantillas de corrección oficiales de 2026 (ordinaria y aplazada), copiadas literalmente | reutilización (aviso legal) | 2026-11-24 |
+| Datos Tribunal · soluciones modelo y rúbricas 2017–2024 | original | Redacción de Claude Code para revisión de la dirección (borrador) | propia | 2026-11-24 |
 
 ## 4. Proceso de revisión y calidad
 
@@ -287,6 +313,7 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 | Lote 02b (parte 1) · 101 frases con hueco · 39 sustantivos, 17 adjetivos, 27 verbos, 20 complementos circunstanciales · aprobado por la dirección 24/11/2026 | LEN.ORT (DIA, PQ, HOM) y gramática de LEN.SIN, LEN.CLA y LEN.VER | — | — | Aprobado por la dirección 24/11/2026. Las piezas y los verbos sustituyen a los de prueba; las frases quedan en `frases_lote02b.json` hasta tener `dificultad` y `uso` | `gramatica/piezas.json`, `gramatica/verbos.json`, `gramatica/compatibilidad.json`, `gramatica/frases_lote02b.json` |
 | Lote 02b · errata 1 | LEN.ORT (DIA, PQ, HOM) y gramática | 100 frases (versión 2) | — | Aprobada por la dirección 24/11/2026. `frases.json` pasa a tener las 28 familias reales con `uso` y `dificultad` (se quitan «ti» y su frase; FR.0074 «Te ___ de menos»; `revelar_rebelar` con formas paralelas). Etiquetas finas del CD (`abrible`, `comprable`, `prestable`, `lavable`); `pasear` sustituye a `vivir`; se conservan los irregulares tener, decir, poner y hacer. Plantillas `LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01` (familias nuevas) y `LEN.ORT.HOM.G01`/`G02` (nuevas), en borrador | `gramatica/frases.json`, `gramatica/piezas.json`, `gramatica/verbos.json`, `gramatica/compatibilidad.json`, `plantillas/LEN.ORT.json` |
 | Lote 02b · errata 2 | Gramática | — | — | Aprobada por la dirección 24/11/2026. «regalo» pierde `comprable` y «libro» pierde `texto` («escribir» solo admite carta, cuento, mensaje y poema) | `gramatica/compatibilidad.json`, `gramatica/piezas.json` |
+| Datos Tribunal · 7 exámenes · borrador pendiente de revisión de la dirección | Modo Tribunal (05E) | 139 preguntas (69 L + 70 M) | — | Borrador pendiente de revisión de la dirección | `pendiente/tribunal/*.json`, `docs/examenes/SOLUCIONES_REVISION_1–3.md`, `docs/examenes/CORRECCIONES_OCR.md` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 

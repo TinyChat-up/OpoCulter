@@ -61,6 +61,8 @@
 3. **Lote 02b · tests**: el test de concordancia del atributo (`GeneradoresTests`, caso `oracionSimple`) debe admitir adjetivos invariables (amable, azul, grande, caliente, fácil, difícil). El test de conjugación sigue teniendo sus irregulares: tener, decir, poner y hacer se mantienen en `verbos.json` con sus formas de prueba.
 4. **Lote 02b · plantillas**: `LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01`, `LEN.ORT.HOM.G01` y `LEN.ORT.HOM.G02` están en borrador. Hay que aprobarlas cuando pasen los tests de propiedades (1000 semillas) y actualizar `ContenidoTests`, porque ahora hay 25 plantillas, no 23.
 5. **Lote 02b**: pasar `xcodebuild test` con las frases y las piezas nuevas (propiedades y complejidad de `fraseHueco` y `oracionSimple`) y el archive.
+1. **Datos del Tribunal (rama `contenido/tribunal-datos`)**: el motor del Modo Tribunal (05E) leerá `Content/pendiente/tribunal/*.json` (esquema en CONTENIDOS §2.15), que todavía no se carga. Antes, la dirección debe revisar `docs/examenes/SOLUCIONES_REVISION_1–3.md` y aprobar los 7 exámenes, que hoy están en borrador.
+   - Tribunal: soluciones aprobadas por la dirección (24/11/2026). Las 139 preguntas y los 7 exámenes tienen `validacion: aprobado`; los datos siguen en `pendiente/tribunal/` hasta que haya Mac.
 
 ## Fase 05B — Resultado
 
