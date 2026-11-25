@@ -322,12 +322,12 @@ struct ChipRacha: View {
             }
             if !tamano.isAccessibilitySize { Divider().frame(height: 20) }
             Label {
-                Text("\(protectores)").font(.redondeada(.subheadline))
+                Text("\(protectores)").font(.redondeada(.subheadline)).fixedSize()
             } icon: {
                 Image(systemName: "shield.fill").foregroundStyle(Paleta.matematicasTinta)
             }
             Label {
-                Text("\(record)").font(.redondeada(.subheadline))
+                Text("\(record)").font(.redondeada(.subheadline)).fixedSize()
             } icon: {
                 Image(systemName: "trophy.fill").foregroundStyle(Paleta.recompensaTexto)
             }
