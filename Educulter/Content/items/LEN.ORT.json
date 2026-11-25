@@ -1028,7 +1028,7 @@
     "id": "LEN.ORT.DIA.0008",
     "competencia": "LEN.ORT.DIA",
     "peldano": 4,
-    "dificultad": 2,
+    "dificultad": 4,
     "objetivo": "Justificar la tilde diacrítica de «mí».",
     "mecanica": "construir",
     "enunciado": "Completa la justificación con las piezas.",
@@ -1095,13 +1095,13 @@
       "revisor": "direccion",
       "fecha": "2026-11-23"
     },
-    "version": 2
+    "version": 3
   },
   {
     "id": "LEN.ORT.DIA.0009",
     "competencia": "LEN.ORT.DIA",
     "peldano": 4,
-    "dificultad": 3,
+    "dificultad": 4,
     "objetivo": "Justificar la diferencia entre «aún» y «aun».",
     "mecanica": "construir",
     "enunciado": "Completa la justificación con las piezas.",
@@ -1168,7 +1168,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-23"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.ORT.HIA.0001",
@@ -2264,7 +2264,7 @@
     "id": "LEN.ORT.HOM.0008",
     "competencia": "LEN.ORT.HOM",
     "peldano": 4,
-    "dificultad": 2,
+    "dificultad": 4,
     "objetivo": "Justificar la escritura de «hay» y «ahí».",
     "mecanica": "construir",
     "enunciado": "Completa la justificación con las piezas.",
@@ -2331,7 +2331,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-23"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.ORT.AGU.0010",

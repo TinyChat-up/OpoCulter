@@ -1,0 +1,1261 @@
+{
+  "version": 1,
+  "nota": "Anclas de la calibración «nivel examen» (Fase 05E, §3). Escala: 1–2 base, 3 intermedio, 4 = examen oficial, 5–6 por encima. Las anclas con «comprobacion» las verifica el test de anclas con 1000 semillas en el nivel 4. Generado por scripts/anclas_calibracion.py.",
+  "anclas": [
+    {
+      "pregunta": "OF.2019.O-M20",
+      "competencia": "MAT.OPE.COMB",
+      "plantilla": "MAT.OPE.COMB.G02",
+      "perfil": {
+        "pasos": 7,
+        "numeros": "naturales de hasta 2 cifras",
+        "agrupacion": "paréntesis y corchetes",
+        "formato": "calcular el resultado"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "operacionesCombinadas",
+        "operaciones": 7,
+        "maximoNumero": 99,
+        "soloNaturales": true,
+        "profundidad": 2
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4: de 4 operaciones a 7, con dos niveles de agrupación y números hasta 20."
+    },
+    {
+      "pregunta": "OF.2019.A-M20",
+      "competencia": "MAT.OPE.COMB",
+      "plantilla": "MAT.OPE.COMB.G02",
+      "perfil": {
+        "pasos": 7,
+        "numeros": "naturales de hasta 2 cifras",
+        "agrupacion": "paréntesis y corchetes",
+        "formato": "calcular el resultado"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "operacionesCombinadas",
+        "operaciones": 7,
+        "maximoNumero": 99,
+        "soloNaturales": true,
+        "profundidad": 2
+      },
+      "nota": "",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-M19",
+      "competencia": "MAT.OPE.COMB",
+      "plantilla": "MAT.OPE.COMB.G02",
+      "perfil": {
+        "pasos": 7,
+        "numeros": "naturales de hasta 2 cifras",
+        "agrupacion": "paréntesis",
+        "formato": "calcular el resultado"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "operacionesCombinadas",
+        "operaciones": 7,
+        "maximoNumero": 99,
+        "soloNaturales": true
+      },
+      "nota": "Mismos pasos y números; el nivel 4 añade un nivel de agrupación (corchetes).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-M20",
+      "competencia": "MAT.OPE.COMB",
+      "plantilla": "MAT.OPE.COMB.G02",
+      "perfil": {
+        "pasos": 7,
+        "numeros": "naturales de 1 cifra o 2",
+        "agrupacion": "paréntesis, corchetes y llaves",
+        "formato": "calcular el resultado"
+      },
+      "nivelQueLaReproduce": 5,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Tres niveles de agrupación: los da el nivel 5, que además añade una potencia (lo supera).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-M13",
+      "competencia": "MAT.OPE.JER",
+      "plantilla": "MAT.OPE.JER.G01",
+      "perfil": {
+        "pasos": 3,
+        "numeros": "decimales de hasta 3 cifras decimales",
+        "agrupacion": "ninguna",
+        "formato": "calcular el resultado"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: el generador de operaciones combinadas solo usa naturales y fracciones.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-M11",
+      "competencia": "MAT.NUM.ORDEN",
+      "plantilla": "MAT.NUM.ORDEN.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "4 números: fracciones (denominador ≤ 24, también impropias) y decimales (1–3 cifras) mezclados",
+        "formato": "ordenar"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "ordenarNumeros",
+        "cantidad": 4,
+        "mezcla": true,
+        "maximoDecimales": 3,
+        "maximoDenominador": 24
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4: de 5 fracciones del mismo denominador o numerador a 4 números mezclados (fracciones y decimales)."
+    },
+    {
+      "pregunta": "OF.2019.A-M14",
+      "competencia": "MAT.NUM.ORDEN",
+      "plantilla": "MAT.NUM.ORDEN.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "4 números: fracciones (denominador ≤ 24, también impropias) y decimales (1–3 cifras) mezclados",
+        "formato": "ordenar"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "ordenarNumeros",
+        "cantidad": 4,
+        "mezcla": true,
+        "maximoDecimales": 3,
+        "maximoDenominador": 24
+      },
+      "nota": "",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.O-M14",
+      "competencia": "MAT.NUM.ORDEN",
+      "plantilla": "MAT.NUM.ORDEN.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "4 números: fracciones (denominador ≤ 24, también impropias) y decimales (1–3 cifras) mezclados",
+        "formato": "ordenar"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "ordenarNumeros",
+        "cantidad": 4,
+        "mezcla": true,
+        "maximoDecimales": 3,
+        "maximoDenominador": 24
+      },
+      "nota": "",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-M14",
+      "competencia": "MAT.NUM.ORDEN",
+      "plantilla": "MAT.NUM.ORDEN.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "4 números: fracciones (denominador ≤ 24, también impropias) y decimales (1–3 cifras) mezclados",
+        "formato": "ordenar"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "ordenarNumeros",
+        "cantidad": 4,
+        "mezcla": true,
+        "maximoDecimales": 3,
+        "maximoDenominador": 24
+      },
+      "nota": "",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-M12",
+      "competencia": "MAT.NUM.ORDEN",
+      "plantilla": "MAT.NUM.ORDEN.G02",
+      "perfil": {
+        "pasos": 2,
+        "numeros": "3 fracciones dadas con palabras (la mitad, tres cuartas partes…)",
+        "formato": "problema: quién ha leído más"
+      },
+      "nivelQueLaReproduce": 3,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "El nivel 3 ordena fracciones; el enunciado con palabras no se genera.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2024.O-M11",
+      "competencia": "MAT.NUM.ORDEN",
+      "plantilla": "MAT.NUM.ORDEN.G02",
+      "perfil": {
+        "pasos": "4 cálculos y ordenar",
+        "numeros": "expresiones con fracciones, decimales y potencias",
+        "formato": "calcular y ordenar"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: hay que calcular expresiones antes de ordenar.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.O-M11",
+      "competencia": "MAT.NUM.FRAOP",
+      "plantilla": "MAT.NUM.FRAOP.G03",
+      "perfil": {
+        "pasos": "2–3 operaciones",
+        "numeros": "3–4 fracciones con denominadores distintos ≤ 15",
+        "operaciones": "sumas y restas",
+        "formato": "resultado simplificado"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "fraccionesOperar",
+        "fracciones": [
+          3,
+          4
+        ],
+        "operadores": [
+          "+",
+          "−"
+        ],
+        "maximoDenominador": 15
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4: de multiplicar o dividir dos fracciones a sumar y restar 3–4 fracciones (el producto y el cociente pasan al 3)."
+    },
+    {
+      "pregunta": "OF.2024.O-M12",
+      "competencia": "MAT.NUM.FRAOP",
+      "plantilla": "MAT.NUM.FRAOP.G03",
+      "perfil": {
+        "pasos": 6,
+        "numeros": "fracciones y un entero",
+        "agrupacion": "paréntesis y corchetes",
+        "formato": "resultado simplificado"
+      },
+      "nivelQueLaReproduce": 6,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Combinada con agrupaciones: nivel 6 (con una sola agrupación).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-M11",
+      "competencia": "MAT.NUM.FRAPROB",
+      "plantilla": "MAT.NUM.FRAPROB.G02",
+      "perfil": {
+        "pasos": 3,
+        "numeros": "total 360; tres fracciones, cada una sobre lo que queda",
+        "formato": "cuánto queda"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "problemaFraccion",
+        "fracciones": 3,
+        "sobreLoQueQueda": true
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4: de dos gastos sobre el total a tres gastos sucesivos sobre lo que queda (antes era el nivel 6)."
+    },
+    {
+      "pregunta": "OF.2019.A-M11",
+      "competencia": "MAT.NUM.FRAPROB",
+      "plantilla": "MAT.NUM.FRAPROB.G02",
+      "perfil": {
+        "pasos": 3,
+        "numeros": "total 60; tres fracciones, cada una sobre lo que queda",
+        "formato": "cuánto queda"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "problemaFraccion",
+        "fracciones": 3,
+        "sobreLoQueQueda": true
+      },
+      "nota": "Las fracciones del examen llegan a denominador 15 (2/11, 3/15); el generador, a 8.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.O-M13",
+      "competencia": "MAT.NUM.FRAPROB",
+      "plantilla": "MAT.NUM.FRAPROB.G01",
+      "perfil": {
+        "pasos": 2,
+        "numeros": "3 fracciones del total y el resto",
+        "formato": "fracción del resto"
+      },
+      "nivelQueLaReproduce": 3,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Fracciones sobre el total (nivel 3), pero se pide la fracción, no la cantidad: perfil parcial.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-M12",
+      "competencia": "MAT.UNI.TIEM",
+      "plantilla": "MAT.UNI.TIEM.G01",
+      "perfil": {
+        "pasos": "pasar 3 tiempos a una unidad y sumar",
+        "numeros": "h, min y s sin normalizar («165 min 900 s»)",
+        "formato": "total en segundos"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "sexagesimal",
+        "tiempos": 3,
+        "sinNormalizar": true
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4: de sumar o restar dos tiempos normalizados a sumar tres tiempos sin normalizar."
+    },
+    {
+      "pregunta": "OF.2019.A-M12",
+      "competencia": "MAT.UNI.TIEM",
+      "plantilla": "MAT.UNI.TIEM.G01",
+      "perfil": {
+        "pasos": "pasar 3 tiempos a una unidad y sumar",
+        "numeros": "h, min y s sin normalizar («165 min 900 s»)",
+        "formato": "total en minutos"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "sexagesimal",
+        "tiempos": 3,
+        "sinNormalizar": true
+      },
+      "nota": "",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.O-M12",
+      "competencia": "MAT.UNI.TIEM",
+      "plantilla": "MAT.UNI.TIEM.G01",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "un tiempo sin normalizar («170′ 600″»)",
+        "formato": "en una unidad (s, h o min)"
+      },
+      "nivelQueLaReproduce": 2,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "El nivel 2 convierte h y min a segundos; el tiempo sin normalizar solo aparece en los niveles 4–5, dentro de una suma.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-M14",
+      "competencia": "MAT.UNI.LMC",
+      "plantilla": "MAT.UNI.LMC.G02",
+      "perfil": {
+        "pasos": "3 conversiones y una suma",
+        "numeros": "cantidad compleja de 3 términos (alguno de 2 cifras)",
+        "formato": "a una unidad intermedia, resultado decimal"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "conversionUnidades",
+        "terminos": 3,
+        "destinoIntermedio": true
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4 (lmc): de 2–3 términos a la unidad mayor a 3 términos a una unidad intermedia; el 5 suma 3 cantidades con decimales."
+    },
+    {
+      "pregunta": "OF.2024.O-M16",
+      "competencia": "MAT.UNI.LMC",
+      "plantilla": "MAT.UNI.LMC.G02",
+      "perfil": {
+        "pasos": "sumar 3 cantidades complejas y comparar",
+        "numeros": "kg, hg, dag y dg",
+        "formato": "razonar si se supera un límite"
+      },
+      "nivelQueLaReproduce": 5,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Suma de cantidades: nivel 5 (sin la comparación final).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-M18",
+      "competencia": "MAT.UNI.LMC",
+      "plantilla": "MAT.UNI.LMC.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "conversiones simples, algunas con decimales; también ha y dm³",
+        "formato": "completar la igualdad"
+      },
+      "nivelQueLaReproduce": 2,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Una conversión por apartado: nivel 2 (lmc) y las plantillas de SUP y VOL.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.O-M14",
+      "competencia": "MAT.UNI.LMC",
+      "plantilla": "MAT.UNI.LMC.G02",
+      "perfil": {
+        "pasos": "2 conversiones y una suma",
+        "numeros": "cantidad de 2 términos",
+        "formato": "a metros"
+      },
+      "nivelQueLaReproduce": 3,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Compleja → incompleja: nivel 3.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.O-M20",
+      "competencia": "MAT.UNI.ESC",
+      "plantilla": "MAT.UNI.ESC.G02",
+      "perfil": {
+        "pasos": "multiplicar por la escala y pasar a metros",
+        "numeros": "medida decimal en cm o entera en mm; escalas 1:20–1:1000",
+        "formato": "resultado en m"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "escala",
+        "modo": "mrPlano",
+        "maximaEscala": 1000
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4: de la realidad al mapa pasa al 5; el 4 es el plano con medida decimal o en mm y resultado en metros."
+    },
+    {
+      "pregunta": "OF.2017.O-M16",
+      "competencia": "MAT.POR.VAR",
+      "plantilla": "MAT.POR.VAR.G01",
+      "perfil": {
+        "pasos": "1–2",
+        "numeros": "15 % de 675 €, resultado con 2 decimales",
+        "formato": "precio final"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "porcentajeDe",
+        "porcentajeNoRedondo": true,
+        "base": [
+          100,
+          2000
+        ],
+        "maximoDecimales": 2
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4: se añaden 15 % y 22 % y la base pasa a 100–2000 (antes 20–2000)."
+    },
+    {
+      "pregunta": "OF.2022.O-M16",
+      "competencia": "MAT.POR.CALC",
+      "plantilla": "MAT.POR.CALC.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "22 %, 20 %, 10 % de 1250",
+        "formato": "cantidad"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "porcentajeDe",
+        "porcentajeNoRedondo": true,
+        "base": [
+          100,
+          2000
+        ],
+        "maximoDecimales": 2
+      },
+      "nota": "",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.O-M16",
+      "competencia": "MAT.POR.CALC",
+      "plantilla": "MAT.POR.CALC.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "35 % de 1920 €",
+        "formato": "cantidad"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "porcentajeDe",
+        "porcentajeNoRedondo": true,
+        "base": [
+          100,
+          2000
+        ],
+        "maximoDecimales": 2
+      },
+      "nota": "",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-M15",
+      "competencia": "MAT.POR.PROP",
+      "plantilla": "MAT.POR.PROP.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "de 6 a 15 personas (factor 5/2); cantidades de 3 cifras",
+        "formato": "receta"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "reglaDeTres",
+        "factorNoEntero": true,
+        "maximoDato": 1100
+      },
+      "nota": "Sin cambios: el nivel 4 ya era factor fraccionario con cantidades de hasta 3 cifras. El dato decimal (1,2 l) no se genera.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.A-M15",
+      "competencia": "MAT.POR.PROP",
+      "plantilla": "MAT.POR.PROP.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "de 4 a 5 personas (factor 5/4); un resultado decimal (8,75 g)",
+        "formato": "receta"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "reglaDeTres",
+        "factorNoEntero": true,
+        "maximoDato": 1100
+      },
+      "nota": "En el nivel 4 las recetas dan resultados enteros; el examen admite decimales.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-M19",
+      "competencia": "MAT.POR.PROP",
+      "plantilla": "MAT.POR.PROP.G02",
+      "perfil": {
+        "pasos": 2,
+        "numeros": "precios con decimales",
+        "formato": "precio unitario y ahorro"
+      },
+      "nivelQueLaReproduce": 5,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Reducción a la unidad con decimales: nivel 5.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2024.O-M15",
+      "competencia": "MAT.POR.PROP",
+      "plantilla": "MAT.POR.PROP.G02",
+      "perfil": {
+        "pasos": 3,
+        "numeros": "días de trabajo",
+        "formato": "trabajo conjunto (proporcionalidad inversa)"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: el generador solo hace proporcionalidad directa.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.A-M19",
+      "competencia": "MAT.ROM.LEER",
+      "plantilla": "MAT.ROM.LEER.G02",
+      "perfil": {
+        "pasos": "3 conversiones",
+        "numeros": "MMCCCXLV, CCCXLVII, CDXCIII",
+        "formato": "romano → arábigo"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "romanos",
+        "rango": [
+          300,
+          3999
+        ],
+        "sustractivos": 1
+      },
+      "nota": "El examen pide 3 números; cada ítem, uno.",
+      "cambioEnLaTabla": "Nivel 4: de 2000–3999 a 300–3999 con al menos un grupo sustractivo; el 5 exige dos."
+    },
+    {
+      "pregunta": "OF.2026.A-M19",
+      "competencia": "MAT.ROM.LEER",
+      "plantilla": "MAT.ROM.LEER.G02",
+      "perfil": {
+        "pasos": "3 conversiones",
+        "numeros": "MDXLVIII, CMXCIV, MMCDLIII",
+        "formato": "romano → arábigo"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "romanos",
+        "rango": [
+          300,
+          3999
+        ],
+        "sustractivos": 1
+      },
+      "nota": "El examen pide 3 números; cada ítem, uno.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-M15",
+      "competencia": "MAT.ROM.ESCR",
+      "plantilla": "MAT.ROM.ESCR.G02",
+      "perfil": {
+        "pasos": "3 conversiones",
+        "numeros": "334, 975, 2069",
+        "formato": "arábigo → romano"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "romanos",
+        "rango": [
+          300,
+          3999
+        ],
+        "sustractivos": 1
+      },
+      "nota": "El examen pide 3 números; cada ítem, uno.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.O-M19",
+      "competencia": "MAT.ROM.ESCR",
+      "plantilla": "MAT.ROM.ESCR.G02",
+      "perfil": {
+        "pasos": "3 conversiones",
+        "numeros": "824, 1223, 793",
+        "formato": "arábigo → romano"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "romanos",
+        "rango": [
+          300,
+          3999
+        ],
+        "sustractivos": 1
+      },
+      "nota": "El examen pide 3 números; cada ítem, uno. 1223 no tiene grupo sustractivo.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-M10",
+      "competencia": "MAT.OPE.ECUAC",
+      "plantilla": "MAT.OPE.ECUAC.G03",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "1,5 · a = 300; 8888 : b = 40",
+        "formato": "a · x = N y N : x = M"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.A-M13",
+      "competencia": "MAT.OPE.ECUAC",
+      "plantilla": "MAT.OPE.ECUAC.G03",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "23 · a = 9591; 24024 : b = 88",
+        "formato": "a · x = N y N : x = M"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.O-M13",
+      "competencia": "MAT.OPE.ECUAC",
+      "plantilla": "MAT.OPE.ECUAC.G03",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "44 · a = 1012; 2425 : b = 485",
+        "formato": "a · x = N y N : x = M"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-M13",
+      "competencia": "MAT.OPE.ECUAC",
+      "plantilla": "MAT.OPE.ECUAC.G03",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "36 · a = 10.404; 28.560 : b = 84",
+        "formato": "a · x = N y N : x = M"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-M11",
+      "competencia": "MAT.DIV.MCD",
+      "plantilla": "MAT.DIV.MCD.G01",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "24, 12 y 18",
+        "formato": "m.c.d. en un reparto"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "mcmMcd",
+        "numeros": [
+          2,
+          3
+        ],
+        "maximoNumero": 99
+      },
+      "nota": "Plantilla en borrador: el nivel 4 (3 números de 2 a 40) reproduce el perfil, sin el contexto.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-M17",
+      "competencia": "MAT.DIV.MCM",
+      "plantilla": "MAT.DIV.MCD.G01",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "36 y 48",
+        "formato": "m.c.m. en coincidencias"
+      },
+      "nivelQueLaReproduce": 3,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Dos números con contexto: nivel 3. No hay plantilla de MAT.DIV.MCM.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2024.O-M14",
+      "competencia": "MAT.DIV.MCM",
+      "plantilla": "MAT.DIV.MCD.G01",
+      "perfil": {
+        "pasos": 2,
+        "numeros": "3, 4 y 5; entre 300 y 350",
+        "formato": "múltiplo común entre cotas"
+      },
+      "nivelQueLaReproduce": 6,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Nivel 6.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-M16",
+      "competencia": "MAT.PRO.LAPLACE",
+      "plantilla": "MAT.PRO.LAPLACE.G01",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "12 tarjetas",
+        "formato": "probabilidad de sucesos"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "probabilidadSimple",
+        "experimento": "tarjetas"
+      },
+      "nota": "Plantilla en borrador. Tarjetas numeradas de 1 a n (n = 8–20).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.A-M16",
+      "competencia": "MAT.PRO.LAPLACE",
+      "plantilla": "MAT.PRO.LAPLACE.G01",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "10 bolas del 0 al 9",
+        "formato": "probabilidad de sucesos"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "probabilidadSimple",
+        "experimento": "tarjetas"
+      },
+      "nota": "Plantilla en borrador. Tarjetas numeradas de 1 a n (n = 8–20).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.A-M18",
+      "competencia": "MAT.EST.CENTRAL",
+      "plantilla": "MAT.EST.CENTRAL.G01",
+      "perfil": {
+        "pasos": "1 por medida",
+        "numeros": "5 datos de 4 a 9",
+        "formato": "media, mediana, moda y rango"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "estadisticaBasica",
+        "datos": [
+          5,
+          7
+        ],
+        "maximoValor": 99
+      },
+      "nota": "Plantilla en borrador. El examen pide varias medidas; cada ítem, una.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.O-M16",
+      "competencia": "MAT.EST.CENTRAL",
+      "plantilla": "MAT.EST.CENTRAL.G01",
+      "perfil": {
+        "pasos": "1 por medida",
+        "numeros": "5 datos de 4 a 9",
+        "formato": "media, mediana, moda y rango"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "estadisticaBasica",
+        "datos": [
+          5,
+          7
+        ],
+        "maximoValor": 99
+      },
+      "nota": "Plantilla en borrador. El examen pide varias medidas; cada ítem, una.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-M18",
+      "competencia": "MAT.EST.CENTRAL",
+      "plantilla": "MAT.EST.CENTRAL.G01",
+      "perfil": {
+        "pasos": "1 por medida",
+        "numeros": "6 datos de 6 a 11",
+        "formato": "media, mediana, moda y rango"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "estadisticaBasica",
+        "datos": [
+          5,
+          7
+        ],
+        "maximoValor": 99
+      },
+      "nota": "Plantilla en borrador. El examen pide varias medidas; cada ítem, una.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-M17",
+      "competencia": "MAT.EST.CENTRAL",
+      "plantilla": "MAT.EST.CENTRAL.G01",
+      "perfil": {
+        "pasos": 4,
+        "numeros": "tabla de frecuencias con decimales",
+        "formato": "4 medidas"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: el generador no usa tablas de frecuencias.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2024.O-M20",
+      "competencia": "MAT.EST.CENTRAL",
+      "plantilla": "MAT.EST.CENTRAL.G01",
+      "perfil": {
+        "pasos": 3,
+        "numeros": "30 datos",
+        "formato": "medidas de centralización"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: 30 datos (el generador usa 5–8).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2024.O-L5",
+      "competencia": "LEN.VER.ANALISIS",
+      "plantilla": "LEN.VER.ANALISIS.G05",
+      "perfil": {
+        "pasos": "1 por forma",
+        "numeros": "habréis cantado, cantaría, hubiéramos hablado (+ irregulares)",
+        "formato": "persona, número, tiempo, modo (y aspecto)"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "analisisVerbal",
+        "tiempos": [
+          "Pretérito pluscuamperfecto|Subjuntivo",
+          "Futuro compuesto|Indicativo",
+          "Condicional simple|Indicativo",
+          "Pretérito imperfecto|Subjuntivo"
+        ]
+      },
+      "nota": "Las formas irregulares (es, estuvieras, visto, oí, era…) no se generan: no hay tabla de irregulares revisada.",
+      "cambioEnLaTabla": "Nivel 4: todos los tiempos de indicativo (salvo el pretérito anterior) y de subjuntivo en -ra con sus compuestos; antes llegaba a los compuestos de indicativo."
+    },
+    {
+      "pregunta": "OF.2019.O-L6",
+      "competencia": "LEN.VER.ANALISIS",
+      "plantilla": "LEN.VER.ANALISIS.G05",
+      "perfil": {
+        "pasos": "1 por forma",
+        "numeros": "llamaras, espero, llamas",
+        "formato": "persona, número, tiempo, modo (y aspecto)"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "analisisVerbal",
+        "tiempos": [
+          "Pretérito pluscuamperfecto|Subjuntivo",
+          "Futuro compuesto|Indicativo",
+          "Condicional simple|Indicativo",
+          "Pretérito imperfecto|Subjuntivo"
+        ]
+      },
+      "nota": "Las formas irregulares (es, estuvieras, visto, oí, era…) no se generan: no hay tabla de irregulares revisada.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-L4",
+      "competencia": "LEN.VER.ANALISIS",
+      "plantilla": "LEN.VER.ANALISIS.G05",
+      "perfil": {
+        "pasos": "1 por forma",
+        "numeros": "perdiste, hundiré (+ sonrío)",
+        "formato": "persona, número, tiempo, modo (y aspecto)"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "analisisVerbal",
+        "tiempos": [
+          "Pretérito pluscuamperfecto|Subjuntivo",
+          "Futuro compuesto|Indicativo",
+          "Condicional simple|Indicativo",
+          "Pretérito imperfecto|Subjuntivo"
+        ]
+      },
+      "nota": "Las formas irregulares (es, estuvieras, visto, oí, era…) no se generan: no hay tabla de irregulares revisada.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-L6",
+      "competencia": "LEN.VER.ANALISIS",
+      "plantilla": "LEN.VER.ANALISIS.G05",
+      "perfil": {
+        "pasos": "1 por forma",
+        "numeros": "ignoras, sucede, has venido…",
+        "formato": "persona, número, tiempo, modo (y aspecto)"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "analisisVerbal",
+        "tiempos": [
+          "Pretérito pluscuamperfecto|Subjuntivo",
+          "Futuro compuesto|Indicativo",
+          "Condicional simple|Indicativo",
+          "Pretérito imperfecto|Subjuntivo"
+        ]
+      },
+      "nota": "Las formas irregulares (es, estuvieras, visto, oí, era…) no se generan: no hay tabla de irregulares revisada.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.A-L6",
+      "competencia": "LEN.VER.ANALISIS",
+      "plantilla": "LEN.VER.ANALISIS.G05",
+      "perfil": {
+        "pasos": "1 por forma",
+        "numeros": "desgarrara (+ oí, era)",
+        "formato": "persona, número, tiempo, modo (y aspecto)"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "analisisVerbal",
+        "tiempos": [
+          "Pretérito pluscuamperfecto|Subjuntivo",
+          "Futuro compuesto|Indicativo",
+          "Condicional simple|Indicativo",
+          "Pretérito imperfecto|Subjuntivo"
+        ]
+      },
+      "nota": "Las formas irregulares (es, estuvieras, visto, oí, era…) no se generan: no hay tabla de irregulares revisada.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-L9",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V + CCM + CCL",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": 5,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Nivel 4 de la tabla de §4.2 = copulativa: el examen corresponde al 5 (intransitivo + dos CC).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2024.O-L10",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V + CD + CI",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": 5,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Nivel 5 (CD + CI).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.O-L10",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V + CD + CCL",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Ningún nivel da CD + un CC en orden canónico (el 6 lo antepone).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-L10",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V + CD (a + persona) + CCL",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "Igual que la anterior.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.A-L10",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V + predicativo + CCL",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: complemento predicativo.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.O-L10",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V semicopulativo + predicativo + CCL",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: verbo semicopulativo.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-L10",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V + CD con CN + CCT + CCL",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: complemento del nombre.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2017.O-L8",
+      "competencia": "LEN.LIT.HIST",
+      "plantilla": "LEN.LIT.HIST.G05",
+      "perfil": {
+        "pasos": "ordenar",
+        "numeros": "5 autores; separación mínima 35 años",
+        "formato": "del más antiguo al más moderno"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "literatura",
+        "separacion": [
+          30,
+          90
+        ],
+        "ambito": "espanola"
+      },
+      "nota": "El examen ordena 5–6 autores; la plantilla, 4 (§5).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.A-L9",
+      "competencia": "LEN.LIT.HIST",
+      "plantilla": "LEN.LIT.HIST.G05",
+      "perfil": {
+        "pasos": "ordenar",
+        "numeros": "5 autores; separación mínima 29 años",
+        "formato": "del más antiguo al más moderno"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "literatura",
+        "separacion": [
+          30,
+          90
+        ],
+        "ambito": "espanola"
+      },
+      "nota": "El examen ordena 5–6 autores; la plantilla, 4 (§5).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2019.O-L9",
+      "competencia": "LEN.LIT.HIST",
+      "plantilla": "LEN.LIT.HIST.G05",
+      "perfil": {
+        "pasos": "ordenar",
+        "numeros": "5 autores; separación mínima 28 años",
+        "formato": "del más antiguo al más moderno"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "literatura",
+        "separacion": [
+          30,
+          90
+        ],
+        "ambito": "espanola"
+      },
+      "nota": "El examen ordena 5–6 autores; la plantilla, 4 (§5).",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2022.O-L9",
+      "competencia": "LEN.ORT.DIA",
+      "plantilla": "LEN.ORT.DIA.G01",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "dé/de, mí/mi…",
+        "formato": "elegir la forma correcta en una frase"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "fraseHueco",
+        "opciones": [
+          2,
+          4
+        ]
+      },
+      "nota": "Sin el razonamiento que pide el examen.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2026.A-L7",
+      "competencia": "LEN.ORT.HOM",
+      "plantilla": "LEN.ORT.HOM.G02",
+      "perfil": {
+        "pasos": 1,
+        "numeros": "porque/por qué, hay/ahí…",
+        "formato": "elegir la forma correcta en una frase"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "fraseHueco",
+        "opciones": [
+          2,
+          4
+        ]
+      },
+      "nota": "Sin el razonamiento que pide el examen.",
+      "cambioEnLaTabla": ""
+    },
+    {
+      "pregunta": "OF.2024.O-L7",
+      "competencia": "LEN.ORT.AGU",
+      "plantilla": "LEN.ORT.AGU.G02",
+      "perfil": {
+        "pasos": "revisar un texto",
+        "numeros": "tildes diacríticas e interrogativas en contexto",
+        "formato": "texto"
+      },
+      "nivelQueLaReproduce": null,
+      "reproducible": false,
+      "comprobacion": null,
+      "nota": "No reproducible: colocarTilde trabaja palabras sueltas; el texto con contexto está pendiente (tildeContexto.json).",
+      "cambioEnLaTabla": ""
+    }
+  ]
+}

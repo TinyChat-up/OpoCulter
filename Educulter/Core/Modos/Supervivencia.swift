@@ -83,6 +83,8 @@ enum PesosSupervivencia {
         "LEN.CLA": 5, "LEN.ORT": 4, "LEN.FOR": 4, "LEN.MET": 1,
         "MAT.NUM": 13, "MAT.OPE": 12, "MAT.GEO": 10, "MAT.POR": 8, "MAT.UNI": 8, "MAT.EST": 7,
         "MAT.ROM": 4, "MAT.DIV": 4, "MAT.PRO": 4,
+        // Bloques nuevos del mapa de la A1 (Fase 05E): peso 0 mientras no tengan contenido.
+        "LEN.HAB": 0, "MAT.ALG": 0,
     ]
 
     /// Peso del bloque en el examen dentro de su área (suma 1 por área).
@@ -107,7 +109,8 @@ struct SelectorSupervivencia: Sendable {
     /// Bloques con contenido para Supervivencia en un área (`nil`: las dos).
     func bloques(area: String?) -> [String] {
         banco.catalogo.todosLosBloques.map(\.id).filter { b in
-            (area == nil || Catalogo.area(de: b) == area) && (!estaticos(b).isEmpty || !plantillas(b).isEmpty)
+            (area == nil || Catalogo.area(de: b) == area) && PesosSupervivencia.pesoExamen(b) > 0
+                && (!estaticos(b).isEmpty || !plantillas(b).isEmpty)
         }
     }
 

@@ -17,7 +17,7 @@ private typealias A = AyudaMat
 /// | 1 | 10, 50 | múltiplos de 10 hasta 200 | 1 |
 /// | 2 | 25, 20, 5 | múltiplos de 20 hasta 400 | 1 |
 /// | 3 | 15, 30, 40, 75 | hasta 1000, resultado entero | 1 |
-/// | 4 | 12, 35, 60, 12,5 | hasta 2000, ≤ 2 decimales | 1–2 |
+/// | 4 (examen) | 12, 15, 22, 35, 60, 12,5 | de 100 a 2000, ≤ 2 decimales | 1–2 |
 /// | 5 | 1–99 | hasta 5000 | 2 |
 /// | 6 | `var`: dos variaciones encadenadas; `total`: precio original tras una rebaja; `calc`: % con medios | hasta 10 000 | 2–3 |
 struct GeneradorPorcentaje: GeneradorItems {
@@ -32,7 +32,8 @@ struct GeneradorPorcentaje: GeneradorItems {
         case 1: return Nivel(ps: [10, 50].map { rac($0) }, bases: Array(stride(from: 10, through: 200, by: 10)), maxDec: 0)
         case 2: return Nivel(ps: [25, 20, 5].map { rac($0) }, bases: Array(stride(from: 20, through: 400, by: 20)), maxDec: 0)
         case 3: return Nivel(ps: [15, 30, 40, 75].map { rac($0) }, bases: Array(20...1000), maxDec: 0)
-        case 4: return Nivel(ps: [rac(12), rac(35), rac(60), rac(25, 2)], bases: Array(20...2000), maxDec: 2)
+        // Perfil del examen (2017 M16, 2022 M16, 2026 M16): porcentaje no redondo y base de 3 o 4 cifras.
+        case 4: return Nivel(ps: [rac(12), rac(15), rac(22), rac(35), rac(60), rac(25, 2)], bases: Array(100...2000), maxDec: 2)
         case 5: return Nivel(ps: (1...99).map { rac($0) }, bases: Array(100...5000), maxDec: 2)
         default:
             if variante == "calc" { return Nivel(ps: (0...99).map { rac(2 * $0 + 1, 2) }, bases: Array(stride(from: 1000, through: 10_000, by: 10)), maxDec: 2) }

@@ -219,3 +219,15 @@ Los tests de fluidez localizan ahora celdas y vocales **por su posición en pant
 - Repetición de la batería de interfaz con el panel adaptable: 17 tests (1 omitido a propósito), en verde y sin incidencias de auditoría.
 - iPhone 16 físico (Debug compilado desde cero, 0 avisos): `RecorridoUITests` en verde (incluye la ronda de comprensión con texto base y la de frases con hueco) y arranque en frío **0,67 s** de media (0,63–0,71; `XCTApplicationLaunchMetric`, 5 iteraciones). Archive Release sin avisos, no subido.
 - Catálogo (`ESTIMAR=1`): Release **≥ 146 933** preguntas distintas.
+
+## 14. Fase 05E · parte 1 (25/11/2026)
+
+| Suite | Qué comprueba |
+|---|---|
+| `GramaticaCompatibilidadTests` | D-090 con 1000 semillas por plantilla y nivel. Oráculo que reconstruye la oración y su análisis a partir de la estructura (lemas, número, determinantes, CC, orden) y de los datos. Además: incontables, CI, preposiciones, aspecto del CCT, copulativas, estructura de cada nivel y 50 oraciones distintas por nivel |
+| `Fase05ETests` | Mapa curricular (ids conservados, `equivaleA`, prioridades), Camino («En preparación» y antiguas ocultas), peso 0 de LEN.HAB y MAT.ALG, Homero y Esopo, palabras ambiguas (fuera de los 3 generadores y de los ítems estáticos), paradigmas de amar, temer y partir escritos a mano frente a la tabla por reglas y al conjugador, `analisisVerbal` (6 ruedas, 1000 semillas × 6 niveles) y oráculos de `formasNoPersonales` y `literatura` |
+| `AnclasTests` | Cada ancla reproducible de `calibracion/anclas.json`: 1000 semillas en el nivel 4 con el mismo perfil estructural que la pregunta oficial |
+| `GeneradoresTests` | Las 87 plantillas (Debug) con los oráculos nuevos; dificultad creciente 1→6 conservando los parámetros que fijan la pregunta (`modo`, `rasgos`, `pregunta`, `ambitos`) |
+| `RondasLenguaUITests` | Una ronda de LEN.SIN, otra de LEN.VER y otra de LEN.LIT por el Camino, con capturas y auditoría (simulador e iPhone) |
+
+Herramientas sin Mac de Xcode: `scripts/cargar_mapa_a1.py`, `ambiguas_tilde.py`, `plantillas_05e.py`, `anclas_calibracion.py`, `equivalencias_tribunal.py` y `auditoria_05e.py` (Python 3, solo biblioteca estándar).

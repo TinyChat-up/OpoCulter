@@ -6,6 +6,7 @@ import SwiftUI
 struct PantallaProgreso: View {
     let servicio: ServicioSesion
     @Environment(EntornoApp.self) private var entorno
+    @Environment(\.dynamicTypeSize) private var tamanoTexto
     @State private var estadisticas: EstadisticasProgreso?
     @State private var logros: [(logro: Logro, obtenido: Date?)] = []
     @State private var preguntas: RecuentoCatalogo?
@@ -85,12 +86,24 @@ struct PantallaProgreso: View {
                 let acento = Paleta.acento(area: area.id)
                 VStack(alignment: .leading, spacing: Espacio.s) {
                     let d = servicio.dominioArea(area.id, estados: estados)
-                    HStack(spacing: Espacio.m) {
+                    // Con texto de accesibilidad, el porcentaje va debajo del nombre; si no, en la misma
+                    // línea y con prioridad de diseño, para que el número nunca se parta (§4.3 de la 05E).
+                    // ViewThatFits daba en la auditoría «Dynamic Type font sizes are partially unsupported»
+                    // sobre el nombre del área y el porcentaje (textos de la variante no mostrada), D-097.
+                    let porcentaje = Text("\(Int((d * 100).rounded())) %").font(.redondeada(.subheadline))
+                        .foregroundStyle(Paleta.textoSecundario)
+                    let nombre = Text(area.nombre).font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                        .fixedSize(horizontal: false, vertical: true)
+                    let disposicion = tamanoTexto.isAccessibilitySize
+                        ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs))
+                        : AnyLayout(HStackLayout(spacing: Espacio.s))
+                    HStack(alignment: tamanoTexto.isAccessibilitySize ? .top : .center, spacing: Espacio.m) {
                         AnilloDominio(fraccion: max(d, 0.02), acento: acento).frame(width: 44, height: 44)
-                        Text(area.nombre).font(.headline).foregroundStyle(Paleta.textoPrincipal)
-                            .fixedSize(horizontal: false, vertical: true).layoutPriority(1)
-                        Spacer()
-                        Text("\(Int((d * 100).rounded())) %").font(.redondeada(.subheadline)).foregroundStyle(Paleta.textoSecundario)
+                        disposicion {
+                            nombre.layoutPriority(1)
+                            if !tamanoTexto.isAccessibilitySize { Spacer(minLength: Espacio.s) }
+                            porcentaje.layoutPriority(2)
+                        }
                     }
                     .accessibilityElement(children: .combine)
                     ForEach(area.bloques.sorted { $0.orden < $1.orden }, id: \.id) { b in

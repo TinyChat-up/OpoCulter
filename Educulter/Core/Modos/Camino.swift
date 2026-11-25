@@ -75,6 +75,9 @@ struct ConstructorCamino: Sendable {
                 let estado = estados[c.id]
                 let peldano = estado?.escalera.peldano ?? 1
                 let contenido = tieneContenido(c.id)
+                // Una competencia antigua sustituida por otra del mapa (D-091) solo aparece si tiene
+                // contenido o progreso: si no, sería un duplicado «En preparación» de la nueva.
+                if c.equivaleA != nil && !contenido && estado == nil { continue }
                 let dominada = estado?.escalera.dominada(escalera) ?? false
                 let empezada = estado?.leitner != nil || peldano > 1
                 let e: EstadoNodo = !contenido ? .sinContenido : (dominada ? .dominada : ((empezada || c.id == enCurso) ? .enCurso : .disponible))

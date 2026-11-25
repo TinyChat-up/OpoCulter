@@ -310,12 +310,16 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-6 * max(1, esperado), "\(item.id): \(sol!) ≠ \(esperado)")
     case "sexagesimal":
         let t1 = Int(d["t1"]!)!, t2 = Int(d["t2"]!)!, k = Int(d["k"]!)!
+        let partes: [[Int]] = (d["partes"] ?? "").split(separator: ";").map { p in p.split(separator: ":").map { Int($0)! } }
+        let sumaPartes: Int = partes.map { $0[0] * 3600 + $0[1] * 60 + $0[2] }.reduce(0, +)
         let segundos: Int = switch d["op"]! {
         case "suma": t1 + t2
         case "resta": t1 - t2
         case "dur": t2 - t1
         case "medianoche": (t2 + 86_400 - t1) % 86_400
         case "mul": t1 * k
+        // Suma de tiempos sin normalizar (05E): cada uno «h:min:s», calculado aquí.
+        case "sumaN": sumaPartes
         default: t1
         }
         #expect(segundos > 0 && Int(d["segundos"]!)! == segundos)
@@ -330,6 +334,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         let n = Oraculo.numeros(item.enunciado)
         let esperado: Double = switch d["modo"]! {
         case "mr": n[1] * n[2] / (d["unidad"] == "km" ? 100_000 : 100)   // 1:e, d cm
+        case "mrPlano": n[1] * n[2] / (d["unidadPlano"] == "mm" ? 1000 : 100)   // 1:e, d cm o mm → m
         case "rm": n[0] * 100_000 / n[2]                                  // D km, 1:e
         default: n[0] * 100_000 / n[1]                                    // D km, d cm
         }
@@ -429,32 +434,21 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         #expect(mt.tokens.count == o.silabas, "\(item.id): \(mt.tokens.map(\.texto)) frente a \(o.silabas) sílabas")
         #expect(mt.tokens.firstIndex { $0.id == mt.correctos.first } == o.tonica, "\(item.id): \(d["palabra"]!)")
     case "oracionSimple":
-        let numero = d["numero"]!, funciones = d["funciones"]!.split(separator: ";").map { $0.split(separator: ":") }
-        let tokens = d["oracion"]!.split(separator: " ").map(String.init)
-        let nv = funciones.first { $0[0] == "NV" }!
-        let indiceVerbo = Int(nv[1].split(separator: "-")[0])!
-        let suj = funciones.first { $0[0] == "SUJ" }!
-        // El sujeto va primero, salvo detrás de un CCT antepuesto con coma (D-086).
-        let inicioSujeto = Int(suj[1].split(separator: "-")[0])!
-        if inicioSujeto != 0 {
-            let cct = funciones.first { $0[0] == "CCT" }
-            #expect(cct.map { Int($0[1].split(separator: "-")[0]) == 0 && Int($0[1].split(separator: "-")[1])! + 1 == inicioSujeto } == true,
-                    "\(d["oracion"]!): solo un CCT puede ir delante del sujeto")
-            #expect(tokens[inicioSujeto - 1].hasSuffix(","), "\(d["oracion"]!): el CCT antepuesto va seguido de coma")
-        }
-        #expect(Int(suj[1].split(separator: "-")[1])! + 1 == indiceVerbo, "El verbo sigue al sujeto")
-        // Concordancia: 3.ª plural termina en -n en todos los tiempos simples usados; la singular, no.
-        #expect(tokens[indiceVerbo].hasSuffix("n") == (numero == "p"), "\(d["oracion"]!): concordancia sujeto-verbo")
-        if let atr = d["atributo"], !atr.isEmpty {
-            let sufijo = (d["genero"] == "f" ? "a" : "o") + (numero == "p" ? "s" : "")
-            #expect(atr.hasSuffix(sufijo), "\(d["oracion"]!): concordancia del atributo")
-        }
+        // Oráculo de la estructura y reglas de naturalidad (D-090): GramaticaCompatibilidadTests.
+        let f = OraculoOracion.comprobar(m, item, p)
+        #expect(f.isEmpty, "\(item.id): \(f)")
     case "analisisVerbal":
-        guard case .ruedas(let rr) = item.payload else { Issue.record("payload"); return }
-        let correctas = rr.ruedas.map(\.correcta)
-        if let esperado = Oraculo.formas[d["forma"]!] {
-            #expect(correctas == [esperado.0, esperado.1, esperado.2, esperado.3], "\(d["forma"]!)")
+        let f = Oraculo05E.comprobarAnalisis(m, item)
+        #expect(f.isEmpty, "\(item.id): \(f)")
+        if case .ruedas(let rr) = item.payload, let esperado = Oraculo.formas[d["forma"]!] {
+            #expect(Array(rr.ruedas.map(\.correcta).prefix(4)) == [esperado.0, esperado.1, esperado.2, esperado.3], "\(d["forma"]!)")
         }
+    case "formasNoPersonales":
+        let f = Oraculo05E.comprobarNoPersonales(m, item)
+        #expect(f.isEmpty, "\(item.id): \(f)")
+    case "literatura":
+        let f = Oraculo05E.comprobarLiteratura(m, item)
+        #expect(f.isEmpty, "\(item.id): \(f)")
     case "fraseHueco":
         if let c = respuestaCorrecta(item) { #expect(c == d["correcta"]) }
     default: Issue.record("Sin oráculo para \(p.tipo)")
@@ -467,7 +461,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
 struct GeneradoresPropiedadesTests {
     static let plantillas = bancoGeneradores.plantillas
 
-    @Test("Hay plantillas para los 21 tipos y todas sus mecánicas; las del lote 02 están aprobadas")
+    @Test("Hay plantillas para los 23 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
     func cobertura() {
         let tipos = Set(Self.plantillas.map(\.tipo))
         #expect(tipos == Set(MotorGeneradores.generadores.keys))
@@ -478,10 +472,13 @@ struct GeneradoresPropiedadesTests {
         // Lote 02 (38) y frases del lote 02b (4, D-089): aprobadas por la dirección; el resto (05C) siguen en borrador.
         let lote02 = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Lote 02") == true }
         let lote02b = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Plantilla del lote 02b") == true }
-        #expect(lote02.count == 38 && lote02b.count == 4)
+        let fase05E = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05E") == true }
+        #expect(lote02.count == 38 && lote02b.count == 4 && fase05E.count == 37)
         #expect(lote02.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-24") })
         #expect(lote02b.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
-        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) }.allSatisfy { $0.validacion.estado == .borrador })
+        // Las de la 05E: aprobadas solo si superan estos tests (ver PlantillasNuevas05ETests); el resto (05C), en borrador.
+        #expect(fase05E.allSatisfy { $0.validacion.estado == .borrador || $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -518,7 +515,7 @@ struct GeneradoresPropiedadesTests {
             var p = base
             p.dificultad = d
             // Parámetros por defecto del generador (salvo los que fijan qué se pregunta).
-            p.parametros = base.parametros.filter { ["operacion", "variante", "familia", "agrupaciones"].contains($0.key) }
+            p.parametros = base.parametros.filter { ["operacion", "variante", "familia", "agrupaciones", "modo", "rasgos", "pregunta", "ambitos"].contains($0.key) }
             var suma = 0.0
             for semilla in UInt64(0)..<200 { suma += try MotorGeneradores.muestra(p, semilla: semilla, recursos: bancoGeneradores.recursos).complejidad }
             medias.append(suma / 200)
@@ -560,7 +557,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 42)
+        #expect(banco.plantillas.count == 79)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }
@@ -603,7 +600,8 @@ struct GeneradoresMotorTests {
                          "hiciste": "hacer", "saltaron": "saltar", "comeréis": "comer", "hubierais puesto": "poner"][forma]!
             #expect(Conjugador.formas(verbo, tiempo: tiempo, modo: modo, irregulares: irr)?[i] == forma, "\(forma)")
         }
-        #expect(Conjugador.formas("cantar", tiempo: "Futuro compuesto", modo: "Subjuntivo", irregulares: []) == nil)
+        #expect(Conjugador.formas("cantar", tiempo: "Condicional compuesto", modo: "Subjuntivo", irregulares: []) == nil)
+        #expect(Conjugador.formas("cantar", tiempo: "Pretérito anterior", modo: "Subjuntivo", irregulares: []) == nil)
     }
 
     @Test("Las formas ambiguas no se preguntan")
@@ -642,8 +640,9 @@ struct LexicoTests {
         for linea in informe { print("LEXICO \(linea)") }
         #expect(informe.isEmpty, "\(informe)")
         #expect(validador.avisos(bancoGeneradores).isEmpty)
-        // Todas las palabras no diacríticas de 2+ sílabas se pueden usar en los generadores.
-        #expect(bancoGeneradores.recursos.palabras.count == Acentuacion.utilizables(lexico).count)
+        // Todas las palabras no diacríticas de 2+ sílabas se pueden usar en los generadores, salvo las
+        // ambiguas sin contexto (05E, §4.1).
+        #expect(bancoGeneradores.recursos.palabras.count == Acentuacion.utilizables(lexico).count - bancoGeneradores.recursos.palabrasAmbiguas.count)
         let usadas = Set(bancoGeneradores.recursos.palabras.map(\.analisis.palabra))
         for e in lexico where !Acentuacion.analizar(e).coherente { #expect(!usadas.contains(e.palabra.lowercased()), "«\(e.palabra)» con discrepancia no debe usarse") }
         // Oráculo independiente: clase y tónica de todas las palabras utilizables.
@@ -662,7 +661,8 @@ struct LexicoTests {
     @Test("Niveles de palabra del lote 02 (plural que cambia la tilde, excepciones, formas verbales)")
     func niveles() {
         let n = Dictionary(uniqueKeysWithValues: bancoGeneradores.recursos.palabras.map { ($0.analisis.palabra, $0.nivel) })
-        #expect(n["casa"] == 1 && n["camino"] == 2 && n["país"] == 3)
+        #expect(n["casa"] == 1 && n["ventana"] == 2 && n["país"] == 3)
+        #expect(n["camino"] == nil, "camino/caminó: ambigua sin contexto (05E)")
         #expect(n["canciones"] == 4 && n["exámenes"] == 4 && n["jóvenes"] == 4)
         #expect(n["caracteres"] == 5 && n["bíceps"] == 5 && n["robots"] == 5)
         #expect(n["comía"] == 6 && n["dígaselo"] == 6 && n["actúa"] == 6)

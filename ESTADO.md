@@ -1,8 +1,34 @@
 # Estado del proyecto
 
-**Fase actual:** Recuperación (lote 02, verificación de la 05D e integración de las ramas de datos) · **Terminada y fusionada en `main`**.
-**Siguiente:** Fase 05E (Tribunal), a la espera del prompt de la dirección.
+**Fase actual:** 05E parte 1 (auditoría, mapa curricular, calibración «nivel examen», arreglos y Lengua inmediata) · **Terminada y fusionada en `main`**.
+**Siguiente:** 05E parte 2 (identidad, sesión diaria, errores y ejemplos resueltos), a la espera del prompt de la dirección.
 **Última actualización:** 2026-11-25
+
+## Fase 05E parte 1 — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| Auditoría real | ✅ Inventario, cobertura del mapa (0 completas, 48 parciales, 63 vacías), enseñanza y 20 ítems revisados | [docs/AUDITORIA_05E.md](docs/AUDITORIA_05E.md) |
+| Cobertura del examen real | ✅ La app entrena el **33,1 %** de las 139 preguntas (sí + parcial: 63,3 %) | `tribunal/equivalencias.json`, D-097 |
+| Mapa curricular en la app | ✅ 21 bloques, 111 competencias del mapa, ids conservados | D-091, [docs/MAPA_CURRICULAR_A1.md](docs/MAPA_CURRICULAR_A1.md) |
+| Calibración «nivel examen» | ✅ 67 anclas; 39 reproducidas en el nivel 4 (1000 semillas cada una) | `calibracion/anclas.json`, `AnclasTests`, D-096 |
+| Palabras ambiguas | ✅ 70 fuera de los generadores sin contexto | D-092 |
+| Gramática natural (D-090) | ✅ Test de propiedades por regla y nivel | `GramaticaCompatibilidadTests` |
+| LEN.SIN, LEN.VER y LEN.LIT | ✅ 37 plantillas aprobadas, 0 en borrador | D-093–D-095 |
+| Progreso con texto grande y base literaria | ✅ | D-097, D-094 |
+| Tests unitarios + UI | ✅ 219 en verde (202 unitarios y 17 de interfaz) y 2 omitidos a propósito, en una sola ejecución | `** TEST SUCCEEDED **` |
+| Cobertura | ✅ Core **95,8 %** (generadores 94,9 %, `Core/Modos` 97,9 %) · Features 87,5 % · App 83,2 % | `xccov` |
+| Auditoría de accesibilidad | ✅ Sin incidencias (también en el iPhone) | Tests de UI |
+| Avisos del compilador | ✅ 0 (Debug, tests, iPhone y archive Release) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada; una ronda real de LEN.SIN, LEN.VER y LEN.LIT; arranque en frío **0,87 s** (0,81–0,92) | `RondasLenguaUITests`, `RendimientoUITests` en el dispositivo |
+| Catálogo de preguntas (Release) | **≥ 230 813** (LEN 76 289 · MAT 154 524) | `CatalogoPreguntas` |
+
+## Pendiente
+1. **Decisiones para la dirección**: ver el informe de la 05E parte 1 (sintaxis en el nivel 4, ecuaciones del examen, 33 tarjetas de teoría, plantillas en borrador de MAT.DIV, MAT.EST y MAT.PRO, frases con contexto de las 70 palabras ambiguas).
+2. Arranque 0,87 s frente a 0,67 s: generar bajo demanda las variantes de las plantillas (mejora propuesta).
+3. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
+4. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
 
 ## Recuperación — Resultado
 
@@ -20,8 +46,8 @@
 | iPhone físico | ✅ Instalada con todo integrado; arranque en frío **0,67 s** de media (0,63–0,71); recorrido completo (bienvenida → … → Ajustes, comprensión y frases) en verde | `xcodebuild test` en el dispositivo |
 | Catálogo de preguntas (Release) | **≥ 146 933** preguntas distintas: LEN 3849 (LEN.ORT 3800, LEN.LEX 30, LEN.COM 19) y MAT 143 084 | `CatalogoPreguntas` |
 
-## Pendiente
-1. **Decisiones para la dirección** (informe de la recuperación): palabras del léxico que sin tilde son otra palabra válida (`colocarTilde` no da contexto), oraciones forzadas de la gramática generativa, «5 %» partido en dos líneas en la cabecera de Lengua de Progreso con texto grande, y la correspondencia entre las competencias del Tribunal y las del catálogo (25 propuestas no existen con ese nombre).
+## Pendiente (recuperación, histórico)
+1. **Decisiones para la dirección** (informe de la recuperación; resueltas en la 05E salvo la redacción de frases con contexto): palabras del léxico que sin tilde son otra palabra válida (`colocarTilde` no da contexto), oraciones forzadas de la gramática generativa, «5 %» partido en dos líneas en la cabecera de Lengua de Progreso con texto grande, y la correspondencia entre las competencias del Tribunal y las del catálogo (25 propuestas no existen con ese nombre).
 2. Revisar las 28 competencias que propone la matriz en el lote de contenido correspondiente (no se añaden todavía). El lote 03a resolvió 5 de las 33 iniciales.
 3. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
 4. Runtime de iOS 17 en el simulador: Fase 07 (D-008).

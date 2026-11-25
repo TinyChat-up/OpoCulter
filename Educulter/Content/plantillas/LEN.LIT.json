@@ -1,0 +1,396 @@
+[
+  {
+    "id": "LEN.LIT.HIST.G01",
+    "competencia": "LEN.LIT.HIST",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "eleccion",
+    "tipo": "literatura",
+    "enunciados": [
+      "¿De qué siglo es «{{obra}}», de {{autor}}?"
+    ],
+    "objetivo": "Situar obras de la literatura española en su siglo",
+    "parametros": {
+      "ambitos": [
+        "espanola"
+      ],
+      "pregunta": "siglo"
+    },
+    "pistas": [
+      "El siglo XVII va de 1601 a 1700: suma uno a las centenas del año."
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.HIST.G02",
+    "competencia": "LEN.LIT.HIST",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "emparejar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Une cada autor con su obra."
+    ],
+    "objetivo": "Relacionar autores y obras de la literatura española",
+    "parametros": {
+      "ambitos": [
+        "espanola"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.HIST.G03",
+    "competencia": "LEN.LIT.HIST",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "ordenar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Ordena estos movimientos literarios del más antiguo al más moderno."
+    ],
+    "objetivo": "Ordenar los periodos de la literatura española",
+    "parametros": {
+      "ambitos": [
+        "espanola"
+      ],
+      "pregunta": "movimientos"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.HIST.G04",
+    "competencia": "LEN.LIT.HIST",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "literatura",
+    "enunciados": [
+      "¿A qué movimiento o época pertenece «{{obra}}», de {{autor}}?"
+    ],
+    "objetivo": "Situar obras en su movimiento",
+    "parametros": {
+      "ambitos": [
+        "espanola"
+      ],
+      "pregunta": "movimiento"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.HIST.G05",
+    "competencia": "LEN.LIT.HIST",
+    "peldano": 5,
+    "dificultad": 4,
+    "mecanica": "ordenar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Ordena a estos autores del más antiguo al más moderno."
+    ],
+    "objetivo": "Ordenar autores de la literatura española por época",
+    "parametros": {
+      "ambitos": [
+        "espanola"
+      ],
+      "pregunta": "autores"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.UNIV.G01",
+    "competencia": "LEN.LIT.UNIV",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "emparejar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Une cada autor con su obra."
+    ],
+    "objetivo": "Relacionar autores y obras de la literatura universal e hispanoamericana",
+    "parametros": {
+      "ambitos": [
+        "universal",
+        "hispanoamericana"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.UNIV.G02",
+    "competencia": "LEN.LIT.UNIV",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "literatura",
+    "enunciados": [
+      "¿De qué siglo es «{{obra}}», de {{autor}}?"
+    ],
+    "objetivo": "Situar obras de la literatura universal en su siglo",
+    "parametros": {
+      "ambitos": [
+        "universal",
+        "hispanoamericana"
+      ],
+      "pregunta": "siglo"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.UNIV.G03",
+    "competencia": "LEN.LIT.UNIV",
+    "peldano": 5,
+    "dificultad": 4,
+    "mecanica": "ordenar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Ordena a estos autores del más antiguo al más moderno."
+    ],
+    "objetivo": "Ordenar autores de la literatura universal por época",
+    "parametros": {
+      "ambitos": [
+        "universal",
+        "hispanoamericana"
+      ],
+      "pregunta": "autores"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.INF.G01",
+    "competencia": "LEN.LIT.INF",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "emparejar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Une cada autor con su obra."
+    ],
+    "objetivo": "Relacionar autores y obras de la literatura infantil y juvenil",
+    "parametros": {
+      "ambitos": [
+        "infantil"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.INF.G02",
+    "competencia": "LEN.LIT.INF",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "literatura",
+    "enunciados": [
+      "¿De qué siglo es «{{obra}}», de {{autor}}?"
+    ],
+    "objetivo": "Situar obras de la literatura infantil en su siglo",
+    "parametros": {
+      "ambitos": [
+        "infantil"
+      ],
+      "pregunta": "siglo"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.INF.G03",
+    "competencia": "LEN.LIT.INF",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "ordenar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Ordena a estos autores del más antiguo al más moderno."
+    ],
+    "objetivo": "Ordenar autores de la literatura infantil por época",
+    "parametros": {
+      "ambitos": [
+        "infantil"
+      ],
+      "pregunta": "autores"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.GEN.G01",
+    "competencia": "LEN.LIT.GEN",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "clasificar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Clasifica cada obra según su género literario."
+    ],
+    "objetivo": "Reconocer el género de una obra",
+    "pistas": [
+      "El teatro se escribe para representarse; la narrativa cuenta una historia; la lírica expresa sentimientos."
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.GEN.G02",
+    "competencia": "LEN.LIT.GEN",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "clasificar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Clasifica cada obra según su género literario."
+    ],
+    "objetivo": "Clasificar obras por su género",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LIT.GEN.G03",
+    "competencia": "LEN.LIT.GEN",
+    "peldano": 5,
+    "dificultad": 5,
+    "mecanica": "clasificar",
+    "tipo": "literatura",
+    "enunciados": [
+      "Clasifica cada obra según su género literario."
+    ],
+    "objetivo": "Clasificar obras por su género, con ensayo",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  }
+]

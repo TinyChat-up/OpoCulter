@@ -43,6 +43,8 @@ struct BaseLiteraria: Codable, Sendable, Equatable {
         var nacimiento: Int?
         var muerte: Int?
         var aproximado: Bool
+        /// Época escrita (p. ej. «s. VIII a. C.») de los autores antiguos sin años (Fase 05E, §4.4).
+        var epoca: String? = nil
         var ambito: String
         var pais: String
         var movimiento: String

@@ -1,0 +1,750 @@
+{
+  "version": 1,
+  "nota": "Palabras del léxico que no se pueden preguntar sin contexto (Fase 05E, §4.1). Pendiente: la dirección redactará frases con contexto para cada una. Generado por scripts/ambiguas_tilde.py.",
+  "palabras": [
+    {
+      "palabra": "mamá",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "mama",
+          "categoria": "sustantivo (glándula) / verbo mamar: presente, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "papá",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "papa",
+          "categoria": "sustantivo (patata; pontífice)"
+        }
+      ]
+    },
+    {
+      "palabra": "bebé",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "bebe",
+          "categoria": "verbo beber: presente, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "dominó",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "domino",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (dominar)"
+        }
+      ]
+    },
+    {
+      "palabra": "compás",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "compas",
+          "categoria": "sustantivo coloquial (plural de compa)"
+        }
+      ]
+    },
+    {
+      "palabra": "inglés",
+      "categoria": "adjetivo / sustantivo",
+      "variantes": [
+        {
+          "forma": "ingles",
+          "categoria": "sustantivo (plural de ingle)"
+        }
+      ]
+    },
+    {
+      "palabra": "cortés",
+      "categoria": "adjetivo",
+      "variantes": [
+        {
+          "forma": "cortes",
+          "categoria": "sustantivo (plural de corte) / verbo cortar: presente de subjuntivo, 2.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "marqués",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "marques",
+          "categoria": "verbo marcar: presente de subjuntivo, 2.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "llegó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "llego",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "cantó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "canto",
+          "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (cantar)"
+        }
+      ]
+    },
+    {
+      "palabra": "habló",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "hablo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "miró",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "miro",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "jugó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "jugo",
+          "categoria": "sustantivo"
+        }
+      ]
+    },
+    {
+      "palabra": "pasó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "paso",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular / sustantivo"
+        }
+      ]
+    },
+    {
+      "palabra": "dejó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "dejo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular / sustantivo"
+        }
+      ]
+    },
+    {
+      "palabra": "terminó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "termino",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        },
+        {
+          "forma": "término",
+          "categoria": "sustantivo"
+        }
+      ]
+    },
+    {
+      "palabra": "estudió",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "estudio",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular / sustantivo"
+        }
+      ]
+    },
+    {
+      "palabra": "cerró",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "cerro",
+          "categoria": "sustantivo"
+        }
+      ]
+    },
+    {
+      "palabra": "llamó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "llamo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "cantará",
+      "categoria": "verbo: futuro simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "cantara",
+          "categoria": "verbo: pretérito imperfecto de subjuntivo, 1.ª y 3.ª persona del singular"
+        },
+        {
+          "forma": "cántara",
+          "categoria": "sustantivo"
+        }
+      ]
+    },
+    {
+      "palabra": "será",
+      "categoria": "verbo ser: futuro simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "sera",
+          "categoria": "sustantivo (espuerta grande)"
+        }
+      ]
+    },
+    {
+      "palabra": "cantarán",
+      "categoria": "verbo: futuro simple, 3.ª persona del plural",
+      "variantes": [
+        {
+          "forma": "cantaran",
+          "categoria": "verbo: pretérito imperfecto de subjuntivo, 3.ª persona del plural"
+        }
+      ]
+    },
+    {
+      "palabra": "está",
+      "categoria": "verbo estar: presente, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "esta",
+          "categoria": "determinante / pronombre demostrativo"
+        }
+      ]
+    },
+    {
+      "palabra": "estás",
+      "categoria": "verbo estar: presente, 2.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "estas",
+          "categoria": "determinante / pronombre demostrativo"
+        }
+      ]
+    },
+    {
+      "palabra": "esté",
+      "categoria": "verbo estar: presente de subjuntivo, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "este",
+          "categoria": "determinante / pronombre demostrativo / sustantivo (punto cardinal)"
+        }
+      ]
+    },
+    {
+      "palabra": "libro",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (librar)",
+      "variantes": [
+        {
+          "forma": "libró",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (librar)"
+        }
+      ]
+    },
+    {
+      "palabra": "mano",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "manó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (manar)"
+        }
+      ]
+    },
+    {
+      "palabra": "camino",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (caminar)",
+      "variantes": [
+        {
+          "forma": "caminó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (caminar)"
+        }
+      ]
+    },
+    {
+      "palabra": "aire",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "airé",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (airar)"
+        }
+      ]
+    },
+    {
+      "palabra": "abrigo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (abrigar)",
+      "variantes": [
+        {
+          "forma": "abrigó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (abrigar)"
+        }
+      ]
+    },
+    {
+      "palabra": "recreo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (recrear)",
+      "variantes": [
+        {
+          "forma": "recreó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (recrear)"
+        }
+      ]
+    },
+    {
+      "palabra": "primo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (primar)",
+      "variantes": [
+        {
+          "forma": "primó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (primar)"
+        }
+      ]
+    },
+    {
+      "palabra": "verso",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (versar)",
+      "variantes": [
+        {
+          "forma": "versó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (versar)"
+        }
+      ]
+    },
+    {
+      "palabra": "sujeto",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (sujetar)",
+      "variantes": [
+        {
+          "forma": "sujetó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (sujetar)"
+        }
+      ]
+    },
+    {
+      "palabra": "nombre",
+      "categoria": "sustantivo / verbo nombrar: presente de subjuntivo",
+      "variantes": [
+        {
+          "forma": "nombré",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (nombrar)"
+        }
+      ]
+    },
+    {
+      "palabra": "tilde",
+      "categoria": "sustantivo / verbo tildar: presente de subjuntivo",
+      "variantes": [
+        {
+          "forma": "tildé",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (tildar)"
+        }
+      ]
+    },
+    {
+      "palabra": "entero",
+      "categoria": "adjetivo / verbo: presente de indicativo, 1.ª persona del singular (enterar)",
+      "variantes": [
+        {
+          "forma": "enteró",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (enterar)"
+        }
+      ]
+    },
+    {
+      "palabra": "segundo",
+      "categoria": "sustantivo / adjetivo ordinal",
+      "variantes": [
+        {
+          "forma": "segundó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (segundar)"
+        }
+      ]
+    },
+    {
+      "palabra": "canto",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (cantar)",
+      "variantes": [
+        {
+          "forma": "cantó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "paseo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (pasear)",
+      "variantes": [
+        {
+          "forma": "paseó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (pasear)"
+        }
+      ]
+    },
+    {
+      "palabra": "deseo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (desear)",
+      "variantes": [
+        {
+          "forma": "deseó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (desear)"
+        }
+      ]
+    },
+    {
+      "palabra": "reino",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (reinar)",
+      "variantes": [
+        {
+          "forma": "reinó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (reinar)"
+        }
+      ]
+    },
+    {
+      "palabra": "peine",
+      "categoria": "sustantivo / verbo peinar: presente de subjuntivo",
+      "variantes": [
+        {
+          "forma": "peiné",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (peinar)"
+        }
+      ]
+    },
+    {
+      "palabra": "aceite",
+      "categoria": "sustantivo / verbo aceitar: presente de subjuntivo",
+      "variantes": [
+        {
+          "forma": "aceité",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (aceitar)"
+        }
+      ]
+    },
+    {
+      "palabra": "revólver",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "revolver",
+          "categoria": "verbo (infinitivo)"
+        }
+      ]
+    },
+    {
+      "palabra": "médico",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "medico",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (medicar)"
+        },
+        {
+          "forma": "medicó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (medicar)"
+        }
+      ]
+    },
+    {
+      "palabra": "número",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "numero",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (numerar)"
+        },
+        {
+          "forma": "numeró",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (numerar)"
+        }
+      ]
+    },
+    {
+      "palabra": "último",
+      "categoria": "adjetivo",
+      "variantes": [
+        {
+          "forma": "ultimo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (ultimar)"
+        },
+        {
+          "forma": "ultimó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (ultimar)"
+        }
+      ]
+    },
+    {
+      "palabra": "máquina",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "maquina",
+          "categoria": "verbo maquinar: presente, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "página",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "pagina",
+          "categoria": "verbo paginar: presente, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "público",
+      "categoria": "adjetivo / sustantivo",
+      "variantes": [
+        {
+          "forma": "publico",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (publicar)"
+        },
+        {
+          "forma": "publicó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (publicar)"
+        }
+      ]
+    },
+    {
+      "palabra": "sílaba",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "silaba",
+          "categoria": "verbo silabar: presente, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "órdenes",
+      "categoria": "sustantivo (plural)",
+      "variantes": [
+        {
+          "forma": "ordenes",
+          "categoria": "verbo ordenar: presente de subjuntivo, 2.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "azúcares",
+      "categoria": "sustantivo (plural)",
+      "variantes": [
+        {
+          "forma": "azucares",
+          "categoria": "verbo azucarar: presente de subjuntivo, 2.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "triángulo",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "triangulo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (triangular)"
+        }
+      ]
+    },
+    {
+      "palabra": "círculo",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "circulo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (circular)"
+        },
+        {
+          "forma": "circuló",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (circular)"
+        }
+      ]
+    },
+    {
+      "palabra": "término",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "termino",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        },
+        {
+          "forma": "terminó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "sábana",
+      "categoria": "sustantivo (ropa de cama)",
+      "variantes": [
+        {
+          "forma": "sabana",
+          "categoria": "sustantivo (llanura)"
+        }
+      ]
+    },
+    {
+      "palabra": "práctico",
+      "categoria": "adjetivo",
+      "variantes": [
+        {
+          "forma": "practico",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (practicar)"
+        },
+        {
+          "forma": "practicó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (practicar)"
+        }
+      ]
+    },
+    {
+      "palabra": "líquido",
+      "categoria": "sustantivo / adjetivo",
+      "variantes": [
+        {
+          "forma": "liquido",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (liquidar)"
+        },
+        {
+          "forma": "liquidó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (liquidar)"
+        }
+      ]
+    },
+    {
+      "palabra": "artículo",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "articulo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (articular)"
+        },
+        {
+          "forma": "articuló",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (articular)"
+        }
+      ]
+    },
+    {
+      "palabra": "río",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "rio",
+          "categoria": "verbo reír: pretérito perfecto simple, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "frío",
+      "categoria": "adjetivo / sustantivo",
+      "variantes": [
+        {
+          "forma": "frio",
+          "categoria": "verbo freír: pretérito perfecto simple, 3.ª persona del singular"
+        }
+      ]
+    },
+    {
+      "palabra": "comisaría",
+      "categoria": "sustantivo (oficina)",
+      "variantes": [
+        {
+          "forma": "comisaria",
+          "categoria": "sustantivo (mujer comisario)"
+        }
+      ]
+    },
+    {
+      "palabra": "tenía",
+      "categoria": "verbo tener: pretérito imperfecto, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "tenia",
+          "categoria": "sustantivo (gusano)"
+        }
+      ]
+    },
+    {
+      "palabra": "hacía",
+      "categoria": "verbo hacer: pretérito imperfecto, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "hacia",
+          "categoria": "preposición"
+        }
+      ]
+    },
+    {
+      "palabra": "sabía",
+      "categoria": "verbo saber: pretérito imperfecto, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "sabia",
+          "categoria": "adjetivo (femenino de sabio)"
+        }
+      ]
+    },
+    {
+      "palabra": "venía",
+      "categoria": "verbo venir: pretérito imperfecto, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "venia",
+          "categoria": "sustantivo (permiso)"
+        }
+      ]
+    },
+    {
+      "palabra": "sería",
+      "categoria": "verbo ser: condicional, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "seria",
+          "categoria": "adjetivo (femenino de serio)"
+        }
+      ]
+    },
+    {
+      "palabra": "continúa",
+      "categoria": "verbo continuar: presente, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "continua",
+          "categoria": "adjetivo (femenino de continuo)"
+        }
+      ]
+    }
+  ]
+}

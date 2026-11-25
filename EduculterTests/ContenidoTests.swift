@@ -17,7 +17,7 @@ struct ContenidoEmpaquetadoTests {
         // + lote 03a: LEN.LEX (30 ítems y 4 tarjetas) y LEN.COM (19 ítems y 4 tarjetas).
         #expect(banco.numeroEstaticos == 133)
         // Fase 05C: 8 plantillas de prueba (borrador) que siguen + 38 del lote 02 + 4 del lote 02b.
-        #expect(banco.plantillas.count == 50)
+        #expect(banco.plantillas.count == 87)
         #expect(banco.items.count > 133)
         #expect(banco.teoria.count == 17)
         #expect(banco.textos.count == 5 && banco.literatura?.autores.count == 142)
@@ -25,8 +25,9 @@ struct ContenidoEmpaquetadoTests {
         #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber ítems de todas las mecánicas")
         for m in Mecanica.allCases { #expect(banco.items.filter { $0.mecanica == m }.count >= 3, "Al menos 3 ítems de \(m)") }
         #expect(banco.catalogo.areas.map(\.id) == ["LEN", "MAT"])
-        #expect(banco.catalogo.areas[0].bloques.count == 10)
-        #expect(banco.catalogo.areas[1].bloques.count == 9)
+        // Mapa curricular de la A1 (Fase 05E): 11 bloques de Lengua (con LEN.HAB) y 10 de Matemáticas (con MAT.ALG).
+        #expect(banco.catalogo.areas[0].bloques.count == 11)
+        #expect(banco.catalogo.areas[1].bloques.count == 10)
     }
 
     /// Test obligatorio: protege el contenido real en el futuro.
@@ -45,7 +46,7 @@ struct ContenidoEmpaquetadoTests {
         #expect(!todos.items.isEmpty, "El bundle debe tener borradores para que el test tenga sentido")
         let release = try cargador.cargar(politica: .soloAprobados)
         #expect(release.items.allSatisfy { $0.validacion.estado == .aprobado })
-        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 42)
+        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 79)
         #expect(release.teoria.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.simulacros.allSatisfy { $0.validacion.estado == .aprobado })
         // Aprobado: LEN.ORT (50 ítems y 5 tarjetas), MAT.NUM (9 y 2), LEN.LEX (30 y 4) y LEN.COM (19 y 4,
@@ -105,7 +106,7 @@ struct ContenidoEmpaquetadoTests {
         #expect(banco.catalogo.bloque(deCompetencia: "MAT.GEO.TRIANG")?.id == "MAT.GEO")
         #expect(Catalogo.area(de: "MAT.GEO.TRIANG") == "MAT")
         // 24 + MAT.OPE.ECUAC, MAT.EST.CENTRAL y MAT.PRO.LAPLACE (Fase 05C) + 16 del lote 02 + 15 del lote 03a.
-        #expect(banco.catalogo.todasLasCompetencias.count == 58)
+        #expect(banco.catalogo.todasLasCompetencias.count == 124, "58 anteriores + las del mapa de la A1 (Fase 05E)")
     }
 }
 

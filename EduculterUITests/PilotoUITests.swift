@@ -33,7 +33,8 @@ final class PilotoUITests: CasoUI {
         jugarRonda(app)
         let antes = estadoVisible(app)
         XCTAssertTrue(antes.racha.hasPrefix("1 día"), "Racha tras la ronda: \(antes.racha)")
-        XCTAssertTrue(antes.diagnostico.contains("LEN.ORT.AGU:p"), "Peldaño y Leitner guardados: \(antes.diagnostico)")
+        // Desde la 05E, la ronda recomendada de Lengua es «Sujeto y predicado» (LEN.SIN tiene contenido).
+        XCTAssertTrue(antes.diagnostico.contains("LEN.SIN.SUJPRED:p"), "Peldaño y Leitner guardados: \(antes.diagnostico)")
         XCTAssertTrue(antes.diagnostico.contains("avatar:5"))
 
         // Cerrar y reabrir la app sobre el mismo almacén.
@@ -139,7 +140,9 @@ final class PilotoUITests: CasoUI {
         // colocarTilde generadas salen del léxico de 818: se juegan 4 ítems aprobados concretos.
         let ids = "LEN.ORT.AGU.0010,LEN.ORT.AGU.0012,LEN.ORT.AGU.0016,LEN.ORT.AGU.0020"
         let app = lanzar(["-politicaRelease", "-rondaItems", ids], base: ["-enMemoria", "-semilla", "10", "-ayudasDePrueba", "-avatar", "0"])
-        XCTAssertTrue(app.staticTexts["Agudas, llanas y esdrújulas"].waitForExistence(timeout: 5))
+        // La propuesta de Lengua de Hoy es la primera competencia con contenido (desde la 05E, LEN.SIN.SUJPRED);
+        // la ronda con los 4 ítems de -rondaItems empieza desde ahí.
+        XCTAssertTrue(app.staticTexts["Sujeto y predicado"].waitForExistence(timeout: 5))
         let respondidas = try jugarConToquesReales(app, mecanica: "colocarTilde")
         XCTAssertEqual(respondidas, 4, "Los 4 ítems de colocarTilde se responden tocando la vocal o «Sin tilde»")
     }

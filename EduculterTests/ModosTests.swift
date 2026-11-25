@@ -452,6 +452,6 @@ struct RecordatorioSonidoTests {
         let r = s.preguntasDisponibles()
         #expect(r.estaticos == bancoDebug.itemsEstaticos.filter { $0.validacion.estado == .aprobado }.count)
         // Lotes 02 y 02b: cuentan las variantes de las 42 plantillas aprobadas; las de prueba (borrador), no.
-        #expect(r.plantillas.count == 42 && r.generados > 10_000)
+        #expect(r.plantillas.count == 79 && r.generados > 10_000)
     }
 }

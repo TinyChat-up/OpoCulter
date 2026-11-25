@@ -131,6 +131,13 @@ struct ValidadorContenido: Sendable {
                 }
             }
         }
+        // `equivaleA` apunta a una competencia del catálogo distinta de sí misma (D-091).
+        let todas = Set(catalogo.todasLasCompetencias.map(\.id))
+        for c in catalogo.todasLasCompetencias {
+            if let destino = c.equivaleA, destino == c.id || !todas.contains(destino) {
+                errores.append(.init(elemento: c.id, mensaje: "equivaleA «\(destino)» no es otra competencia del catálogo"))
+            }
+        }
         return errores
     }
 
@@ -353,7 +360,7 @@ struct ValidadorContenido: Sendable {
 
     private func validarRuedas(_ p: Payload.Ruedas) -> [String] {
         var m = Self.idsUnicos(p.ruedas.map(\.id), "ruedas")
-        if !(1...5).contains(p.ruedas.count) { m.append("ruedas necesita 1–5 selectores (tiene \(p.ruedas.count))") }
+        if !(1...6).contains(p.ruedas.count) { m.append("ruedas necesita 1–6 selectores (tiene \(p.ruedas.count))") }
         for r in p.ruedas {
             if r.opciones.count < 2 { m.append("la rueda «\(r.id)» necesita al menos 2 opciones") }
             if Set(r.opciones).count != r.opciones.count { m.append("la rueda «\(r.id)» tiene opciones repetidas") }
@@ -550,6 +557,10 @@ struct ValidadorContenido: Sendable {
             if a.dominioPublico != dominio { error(a.id, "dominioPublico debería ser \(dominio)") }
             let fragmentos = a.dominioPublico && BaseLiteraria.ambitosConFragmentos.contains(a.ambito)
             if a.fragmentosPermitidos != fragmentos { error(a.id, "fragmentosPermitidos debería ser \(fragmentos)") }
+            // `epoca` (autores antiguos sin años, Fase 05E §4.4): aproximado y sin fragmentos.
+            if let epoca = a.epoca, epoca.trimmingCharacters(in: .whitespaces).isEmpty || !a.aproximado || a.fragmentosPermitidos {
+                error(a.id, "«epoca» exige aproximado, sin fragmentos permitidos y texto no vacío")
+            }
         }
         return errores
     }

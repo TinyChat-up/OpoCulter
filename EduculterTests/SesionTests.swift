@@ -181,7 +181,10 @@ struct ServicioSesionTests {
         }
         let rescate = try s.prepararRonda(.rescate)
         #expect(rescate.items.count == 2 && rescate.items.allSatisfy { $0.motivo == .rescate })
-        #expect(rescate.items.first?.itemId == "LEN.SIN.SUJPRED.0002", "Se rescata con la variante")
+        // Se rescata con una variante de la misma competencia y peldaño (desde la 05E, generada).
+        let variante = try #require(rescate.items.first.flatMap { banco.item(id: $0.itemId) })
+        let fallado = try #require(banco.item(id: "LEN.SIN.SUJPRED.0001"))
+        #expect(variante.id != fallado.id && variante.competencia == fallado.competencia && variante.peldano == fallado.peldano, "Se rescata con la variante")
         let orto = try s.prepararRonda(.ortografiaExpres)
         #expect(orto.items.count == 5 && orto.items.allSatisfy { $0.itemId.hasPrefix("LEN.ORT.") })
         let fija = try s.prepararRonda(.items(["MAT.ROM.LECTURA.0001", "NO.EXISTE"]))

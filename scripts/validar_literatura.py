@@ -39,6 +39,9 @@ CAMPOS_AUTOR = {
 }
 AMBITOS_CON_FRAGMENTOS = {"espanola", "hispanoamericana"}
 CAMPOS_OBRA = {"titulo": str, "anio": (int, type(None)), "genero": str}
+# Campos opcionales del autor: `epoca` (texto, p. ej. «s. VIII a. C.») para los autores antiguos
+# sin años (Fase 05E, §4.4): exige `aproximado` y que no haya fragmentos permitidos.
+CAMPOS_AUTOR_OPCIONALES = {"epoca": str}
 
 
 def es_tipo(valor, tipos):
@@ -48,7 +51,8 @@ def es_tipo(valor, tipos):
     return isinstance(valor, tipos)
 
 
-def comprobar_campos(obj, campos, donde, errores):
+def comprobar_campos(obj, campos, donde, errores, opcionales=None):
+    opcionales = opcionales or {}
     if not isinstance(obj, dict):
         errores.append(f"{donde}: no es un objeto")
         return False
@@ -58,7 +62,10 @@ def comprobar_campos(obj, campos, donde, errores):
         elif not es_tipo(obj[clave], tipos):
             errores.append(f"{donde}: «{clave}» tiene un tipo no válido ({obj[clave]!r})")
     for clave in obj:
-        if clave not in campos:
+        if clave in opcionales:
+            if not es_tipo(obj[clave], opcionales[clave]):
+                errores.append(f"{donde}: «{clave}» tiene un tipo no válido ({obj[clave]!r})")
+        elif clave not in campos:
             errores.append(f"{donde}: campo desconocido «{clave}»")
     return all(clave in obj and es_tipo(obj[clave], t) for clave, t in campos.items())
 
@@ -111,9 +118,11 @@ def validar(doc):
     ids_aut = set()
     for i, a in enumerate(autores):
         donde = f"autores[{i}]"
-        if not comprobar_campos(a, CAMPOS_AUTOR, donde, errores):
+        if not comprobar_campos(a, CAMPOS_AUTOR, donde, errores, CAMPOS_AUTOR_OPCIONALES):
             continue
         donde = f"autor {a['id']}"
+        if "epoca" in a and (not a["aproximado"] or a["fragmentosPermitidos"] or not a["epoca"].strip()):
+            errores.append(f"{donde}: «epoca» exige aproximado = true, sin fragmentos permitidos y texto no vacío")
         if a["id"] in ids_aut:
             errores.append(f"{donde}: id repetido")
         if a["id"] in ids_mov:

@@ -177,7 +177,7 @@ struct ValidadorTests {
         #expect(contiene(errores(.ruedas(.init(ruedas: [R(id: "r", nombre: "n", opciones: ["a", "b"], correcta: "c")]))), "no incluye"))
         #expect(contiene(errores(.ruedas(.init(ruedas: [R(id: "r", nombre: "n", opciones: ["a"], correcta: "a")]))), "al menos 2"))
         #expect(contiene(errores(.ruedas(.init(ruedas: [R(id: "r", nombre: "n", opciones: ["a", "a"], correcta: "a")]))), "repetidas"))
-        #expect(contiene(errores(.ruedas(.init(ruedas: []))), "1–5"))
+        #expect(contiene(errores(.ruedas(.init(ruedas: []))), "1–6"))
 
         let piezas: [ElementoTexto] = [.init(id: "p1", texto: "aguda"), .init(id: "p2", texto: "llana")]
         let ok = Payload.Construir(plantilla: "Es {h1}.", huecos: [.init(id: "h1", correcta: "p1")], piezas: piezas)

@@ -182,8 +182,8 @@ def v_segmentar(p):
 
 def v_ruedas(p):
     m = ids_unicos(p["ruedas"], "ruedas")
-    if not 1 <= len(p["ruedas"]) <= 5:
-        m.append(f"ruedas necesita 1–5 selectores (tiene {len(p['ruedas'])})")
+    if not 1 <= len(p["ruedas"]) <= 6:
+        m.append(f"ruedas necesita 1–6 selectores (tiene {len(p['ruedas'])})")
     for r in p["ruedas"]:
         if len(r["opciones"]) < 2:
             m.append(f"la rueda «{r['id']}» necesita al menos 2 opciones")
