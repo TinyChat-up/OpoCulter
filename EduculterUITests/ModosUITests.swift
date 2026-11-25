@@ -104,7 +104,8 @@ final class ModosUITests: CasoUI {
         pestana(app, "Camino")
         let nodo = app.buttons["nodo_LEN.ORT.AGU"]
         XCTAssertTrue(nodo.waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["nodo_LEN.SIN.SUJPRED"].exists == false || app.buttons["nodo_LEN.SIN.SUJPRED"].isEnabled == false,
+        // Desde la 05E, LEN.SIN.SUJPRED tiene contenido; LEN.SIN.SINT sigue sin él.
+        XCTAssertTrue(app.buttons["nodo_LEN.SIN.SINT"].exists == false || app.buttons["nodo_LEN.SIN.SINT"].isEnabled == false,
                       "Sin contenido aprobado: no se puede pulsar")
         try auditar(app, "Camino", bordesDelScroll: true)
         while !nodo.isHittable { app.scrollViews.firstMatch.swipeUp() }

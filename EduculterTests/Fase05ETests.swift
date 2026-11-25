@@ -423,6 +423,11 @@ struct AmbiguasTests {
         let pendiente = try JSONDecoder().decode(Pendiente.self, from: Data(contentsOf: url))
         #expect(Set(pendiente.palabras.map(\.palabra)) == Self.recursos.palabrasAmbiguas)
         #expect(pendiente.palabras.allSatisfy { !$0.variantes.isEmpty && $0.variantes.allSatisfy { !$0.categoria.isEmpty } })
+        // Los ítems estáticos de colocarTilde tampoco usan palabras ambiguas.
+        let ambiguasSinTilde = Set(Self.recursos.palabrasAmbiguas.map { String($0.map { Acentuacion.quitarTilde[$0] ?? $0 }) })
+        for item in banco05E.itemsEstaticos {
+            if case .colocarTilde(let c) = item.payload { #expect(!ambiguasSinTilde.contains(c.palabra), "\(item.id): «\(c.palabra)»") }
+        }
     }
 
     @Test("Ninguna palabra ambigua sale en colocarTilde, clasificarAcentuacion ni silabaTonica (1000 semillas × 6 niveles)",

@@ -578,9 +578,31 @@ struct GeneradorAnalisisVerbal: GeneradorItems {
         }
     }
 
+    typealias Caso = (verbo: String, op: Opcion, indice: Int, forma: String)
+
+    /// Caché de `casos` por nivel y banco de verbos: el paradigma completo se calcula una vez y no en
+    /// cada muestra (al cargar el banco se materializan 12 variantes por plantilla; Fase 05E).
+    private final class CacheCasos: @unchecked Sendable {
+        let cerrojo = NSLock()
+        var valores: [String: [Caso]] = [:]
+    }
+    private static let cache = CacheCasos()
+
     /// Formas no ambiguas: (verbo, tiempo, modo, persona) cuya forma solo aparece una vez en el
     /// paradigma del nivel.
-    func casos(_ d: Int, _ banco: BancoVerbos) -> [(verbo: String, op: Opcion, indice: Int, forma: String)] {
+    func casos(_ d: Int, _ banco: BancoVerbos) -> [Caso] {
+        let clave = "\(d)|\(banco.regulares.joined(separator: ","))|\(banco.irregulares.map { "\($0.infinitivo)\($0.participio ?? "")\($0.formas.count)" }.joined(separator: ","))"
+        Self.cache.cerrojo.lock()
+        if let c = Self.cache.valores[clave] { Self.cache.cerrojo.unlock(); return c }
+        Self.cache.cerrojo.unlock()
+        let r = calcularCasos(d, banco)
+        Self.cache.cerrojo.lock()
+        Self.cache.valores[clave] = r
+        Self.cache.cerrojo.unlock()
+        return r
+    }
+
+    private func calcularCasos(_ d: Int, _ banco: BancoVerbos) -> [Caso] {
         let (verbos, tiempos) = Self.nivel(d, banco)
         var out: [(String, Opcion, Int, String)] = []
         for v in verbos {

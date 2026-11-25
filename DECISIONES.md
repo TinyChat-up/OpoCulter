@@ -492,3 +492,64 @@ Al integrar las ramas en `integracion/recuperacion` (25/11/2026), varias ramas h
 | `contenido/lote-02b` | D-073 | D-082 |
 | `contenido/tribunal-datos` | D-074 | D-083 |
 | `contenido/tribunal-datos` | D-075 | D-084 |
+
+### D-090 · 2026-11-25 · Fase 05E · Vigente (dirección)
+**Gramática generativa: naturalidad.** Reglas de la dirección (§4.2 de la 05E), con test de propiedades de 1000 semillas por plantilla y nivel (`GramaticaCompatibilidadTests`, oráculo que deduce el análisis de la estructura elegida y de los datos, sin leer el texto).
+- **Datos** (`compatibilidad.json` v2): `incontable` en leche, café, sopa y zumo (nunca en plural); `preparar` sin CI; adjetivos con `tipo` (`cualidad` o `estado`) y 10 adjetivos de estado nuevos; verbos copulativos `ser`, `estar` y `parecer` con `atributo`; `aspectoCCT` (puntual, habitual, neutro) y `sinHabitual` (comprar, regalar, prestar).
+- **CD y CI de persona o animal**: «a» + artículo definido (con «al») o posesivo; niño y niña, solo artículo. El CI siempre es persona.
+- **CC**: dos CC de una oración no empiezan por la misma preposición. «Ayer», solo con pretérito perfecto simple; puntual, sin imperfecto; habitual, solo presente o imperfecto.
+- **Copulativas**: ser + cualidad, estar + estado, parecer + ambas; predicado **nominal** (núcleo, el verbo copulativo; el adjetivo, atributo). En `segmentar`, la etiqueta del predicado dice «Predicado nominal» o «Predicado verbal».
+- **Niveles**: 1 S + V intransitivo · 2 S + V + CD · 3 S + V + CC · 4 copulativa · 5 S + V + CD + CI, o dos CC · 6 CC delante con coma (y sujeto pospuesto con verbo intransitivo). En `segmentar` el predicado tiene que ir seguido: su nivel 6 es S + V + CD + CI + CC en orden canónico. Las preguntas que comparan oraciones (clase, función, concordancia, pronombre) mezclan niveles, porque con uno solo la respuesta sería siempre la misma.
+- **Decisiones técnicas añadidas** al leer 50 oraciones por nivel (no las pedía la dirección; se pueden quitar): `ccExcluye` (CC que no casan con un verbo: «nadar en la biblioteca», «descansar deprisa»), `ccSoloPersona` («con su hermana» solo con sujeto de persona), `sinPosesivo` (cocinero, además de niño y niña), `tiemposCopulativos` (ser y parecer solo en presente e imperfecto: «El libro será grande» sonaba forzado) y `ccDelante` (solo CCT o CCL van delante).
+- **«a las cinco»** vuelve a usarse: el numeral se marca `num` y, como la contracción «al» (`contr`), no se pregunta en `clasificar`. «junto al río» sigue excluido.
+- `ser` y `estar` llevan en `verbos.json` la 3.ª persona de los 4 tiempos que usan las oraciones; `analisisVerbal` no los usa (D-093).
+
+### D-091 · 2026-11-25 · Fase 05E · Vigente
+**Mapa curricular de la A1 en el catálogo** (`scripts/cargar_mapa_a1.py`, idempotente; copia en `docs/MAPA_CURRICULAR_A1.md`).
+- Se conservan todos los ids y nombres existentes y solo se añaden bloques (LEN.HAB, MAT.ALG) y competencias: 21 bloques (el anexo dice 22, pero sus tablas tienen 21) y 124 competencias (111 del mapa + 13 antiguas). LEN.VER.ANAL del mapa es la existente LEN.VER.ANALISIS.
+- **`equivaleA`** (campo nuevo y opcional de la competencia): las 13 antiguas sustituidas por otra del mapa conservan su id y su progreso, pero el Camino no las muestra mientras no tengan contenido ni progreso (si no, saldrían duplicadas «En preparación»). El validador exige que apunte a otra competencia del catálogo.
+- **Prioridad del mapa**: LEN.LEX y MAT.EST pasan a ★★★ (entran en el diagnóstico); LEN.HAB ★★, MAT.ALG ★.
+- **Supervivencia**: LEN.HAB y MAT.ALG con peso 0 (no se sortean) mientras no tengan contenido. Símbolos de bloque nuevos: `globe.europe.africa` y `arrow.triangle.branch`.
+- **Hoy**: como LEN.SIN (primer bloque de Lengua) ya tiene contenido aprobado, la propuesta de Lengua pasa a ser «Sujeto y predicado» en lugar de «Agudas, llanas y esdrújulas». Es la consecuencia directa del orden del catálogo; los tests se adaptan.
+
+### D-092 · 2026-11-25 · Fase 05E · Vigente
+**Palabras ambiguas sin contexto** (§4.1).
+- **Detección determinista** (`Acentuacion.ambiguas`, igual en `scripts/ambiguas_tilde.py`): las variantes de tilde de la palabra (sin tilde y con tilde en cada vocal) se buscan en el léxico y en `Content/ambiguas.json`. Esa lista se ha revisado a mano palabra por palabra sobre las 818 del léxico (70 con otra forma válida, cada variante con su categoría). **Sin voseo** (cantá, comé): la app es de español de España. Se incluyen formas poco frecuentes del DLE (airé, segundó, compas) por prudencia: sacar una palabra de más solo reduce el léxico.
+- Salen de `colocarTilde`, `clasificarAcentuacion` y `silabaTonica` (las 70 de 818). Un test falla si alguna aparece en ellos, en sus enumeraciones o en los ítems estáticos de `colocarTilde`.
+- `Content/pendiente/tildeContexto.json`: palabra, variantes válidas y categoría, para que la dirección redacte frases con contexto.
+
+### D-093 · 2026-11-25 · Fase 05E · Vigente
+**El verbo: análisis completo y formas no personales.**
+- `analisisVerbal` con `rasgos = completo`: 6 ruedas (persona, número, tiempo, modo, aspecto y forma). El validador admite ahora de 1 a 6 selectores (la mecánica las muestra en vertical).
+- **Aspecto**: perfecto en los compuestos y en el pretérito perfecto simple; imperfecto en el resto.
+- **Conjugador**: añade pretérito anterior, imperfecto en -se, pluscuamperfecto con «hubiese» y futuro de subjuntivo simple y compuesto.
+- **Solo regulares** de las tres conjugaciones (con participios irregulares de los datos: escrito, abierto). Los irregulares de `verbos.json` (tener, hacer, poner, decir y ahora ser y estar) no tienen tabla completa revisada: quedan fuera. Los copulativos tampoco se analizan.
+- **Niveles**: 1 -ar, presente, pretérito perfecto simple y futuro · 2 tres conjugaciones + imperfecto y condicional · 3 + presente de subjuntivo y pretérito perfecto compuesto · 4 todo el indicativo (sin el anterior) y el subjuntivo en -ra con sus compuestos · 5 + -se, «hubiese» y pretérito anterior · 6 + futuro de subjuntivo.
+- **Oráculo**: tabla de conjugación por reglas escrita en el test, comprobada contra los paradigmas completos de amar, temer y partir escritos a mano (18 tiempos, imperativo y formas no personales).
+- **`formasNoPersonales`** (nuevo, LEN.VER.NOPERS): infinitivo, gerundio y participio, simples y compuestos, en `clasificar` y `eleccion`.
+
+### D-094 · 2026-11-25 · Fase 05E · Vigente
+**Generador `literatura`** sobre la base del lote 05a (LEN.LIT.HIST, UNIV, INF y GEN).
+- **Ámbitos**: HIST = literatura española; UNIV = universal e hispanoamericana; INF = infantil y juvenil; GEN = todas.
+- **Autor ↔ obra** (`emparejar`, 4 parejas): sin autores anónimos ni con fechas aproximadas (autoría discutida: Homero, Esopo…). Ningún título mostrado puede ser también obra de otro de los autores: el oráculo encontró «Soledades» (Góngora y Machado). Dificultad por la cercanía de los nacimientos.
+- **Obra → movimiento** (`eleccion`): solo si el año de la obra está dentro del rango del movimiento (D-079); los distractores son movimientos de la periodización española cuyo rango no contiene ese año (sin ambigüedad), más cercanos cuanto más alto el nivel. **Obra → siglo**: sin años de cambio de siglo (…00 y …01).
+- **Línea del tiempo** (`ordenar`, 4 autores por nacimiento o 4 movimientos por inicio): nunca fechas aproximadas y al menos 15 años entre fechas consecutivas. La separación mínima de cada nivel es proporcional al intervalo de fechas disponible (la literatura infantil abarca menos siglos), nunca por debajo de 15.
+- **Género** (`clasificar`): sin las greguerías (su género es una convención); las obras anónimas se muestran «(anónimo)».
+- **Homero y Esopo**: campo opcional `epoca` («s. VIII a. C.», «s. VI a. C.»), con `aproximado` y sin fragmentos (§4.4). Lo comprueban los dos validadores.
+
+### D-095 · 2026-11-25 · Fase 05E · Vigente (criterio de la dirección)
+**37 plantillas nuevas aprobadas** (LEN.SIN 13, LEN.VER 10, LEN.LIT 14; revisor «direccion», 25/11/2026), porque superan las condiciones de §5: 1000 semillas por plantilla con validador, oráculo independiente, sin ambigüedad, distractores distintos de la solución y entre sí, determinismo y dificultad creciente 1→6. Ninguna queda en borrador. Release carga ahora 79 plantillas. `scripts/plantillas_05e.py` las escribe y cambia su estado.
+
+### D-096 · 2026-11-25 · Fase 05E · Vigente
+**Calibración «nivel examen»** (§3). Escala común: 1–2 base, 3 intermedio, **4 = examen oficial**, 5–6 por encima.
+- **Anclas** (`Content/calibracion/anclas.json`, `scripts/anclas_calibracion.py`): perfil estructural de las 67 preguntas oficiales de competencias con generador; 39 se reproducen en el nivel 4 y `AnclasTests` lo comprueba con 1000 semillas cada una. El resto lleva el nivel que las reproduce o el motivo por el que no se puede.
+- **Tablas ajustadas** (nivel 4 = perfil del examen; 5–6 lo superan en al menos un rasgo): ordenar (4 números, fracciones y decimales mezclados), operar con fracciones (3–4 fracciones con sumas y restas), problemas de fracciones (tres gastos sobre lo que queda; antes era el nivel 6), operaciones combinadas (7 operaciones con paréntesis y corchetes), romanos (300–3999 con grupo sustractivo), porcentajes (15 % y 22 %, base de 3–4 cifras), conversiones (3 términos a una unidad intermedia), tiempo (suma de tres tiempos sin normalizar) y escalas (plano con medida decimal o en mm, resultado en metros; de la realidad al mapa pasa al 5). Las tablas siguen siendo crecientes (test de complejidad).
+- **Sin cambios**: proporcionalidad (el 4 ya era el examen), probabilidad, estadística y m.c.m./m.c.d. (el 4 ya tiene el perfil; sus plantillas siguen en borrador). Ecuaciones: el examen pide «a · x = N» con números grandes (estructura del nivel 2), así que no se ha forzado; lo decide la dirección.
+- **Sintaxis**: el nivel 4 de la tabla de D-090 es la copulativa; las oraciones del examen corresponden al nivel 5. Se señala a la dirección.
+- **Ítems curados de Lengua**: 6 pasan a dificultad 4 por tener el perfil de la pregunta oficial de su competencia (elegir y justificar la tilde diacrítica o el homófono, palabra culta en contexto, sentido de un verso). El resto mantiene su dificultad.
+- **Corrección**: la explicación de las operaciones combinadas y de las fracciones perdía la división al quitar el nombre del paso («3 = 1» en lugar de «3 : 3 = 1»).
+
+### D-097 · 2026-11-25 · Fase 05E · Vigente
+**Auditoría y equivalencias del Tribunal** (§1).
+- `Content/tribunal/equivalencias.json` (`scripts/equivalencias_tribunal.py`): cada una de las 139 preguntas oficiales con su competencia del mapa (las 25 provisionales, a su id del mapa; las dudosas, a la principal) y si la app la entrena: «si» (contenido aprobado que ejercita la misma destreza), «parcial» (hay contenido aprobado, pero el examen pide redactar, definir o justificar y la app pide reconocer, o faltan rasgos como los irregulares) o «no». El script comprueba la coherencia con el contenido aprobado real.
+- **Progreso**: la cabecera de cada área usa `ViewThatFits` (en horizontal si cabe; si no, el porcentaje debajo del nombre, sin partirse).
