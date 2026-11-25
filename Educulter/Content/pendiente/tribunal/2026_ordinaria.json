@@ -1,0 +1,485 @@
+{
+  "id": "OF.2026.O",
+  "anio": 2026,
+  "convocatoria": "ordinaria",
+  "duracionMin": 90,
+  "fuente": "https://sede.comunidad.madrid/medias/examenes20261zip/download",
+  "fuentePlantilla": "https://www.comunidad.madrid/docs/2026-08/rh02_plantillas_prueba_comun_ordinaria_26.pdf",
+  "fechaConsulta": "2026-11-23",
+  "aviso": "Examen oficial publicado por la Comunidad de Madrid. Reproducido sin alteraciones según sus condiciones de reutilización. Esta app no está patrocinada ni avalada por la Comunidad de Madrid.",
+  "textoBase": {
+    "texto": "\"La libertad, Sancho, es uno de los más preciosos dones que a los hombres dieron los cielos; con ella no pueden igualarse los tesoros que encierra la tierra ni el mar encubre; por la libertad, así como por la honra, se puede y debe aventurar la vida; y, por el contrario, el cautiverio es el mayor mal que puede venir a los hombres. Digo esto, Sancho, porque bien has visto el regalo, la abundancia que en este castillo que dejamos hemos tenido; pues en mitad de aquellos banquetes sazonados y de aquellas bebidas de nieve me parecía a mí que estaba metido entre las estrechezas de la hambre, porque no lo gozaba con la libertad que lo gozara si fueran míos.”",
+    "autor": "Miguel de Cervantes",
+    "obra": "Don Quijote de la Mancha, segunda parte, capítulo LVIII",
+    "protegido": false,
+    "anioMuerteAutor": 1616
+  },
+  "preguntas": [
+    {
+      "numero": 1,
+      "numeroEnArea": 1,
+      "area": "LEN",
+      "enunciado": "Resuma el tema y el contenido del fragmento.",
+      "competencias": [
+        "LEN.COM.RESU"
+      ],
+      "solucionModelo": "Tema: el elogio de la libertad como el mayor bien del ser humano. Contenido: don Quijote explica a Sancho que la libertad es el don más precioso que el cielo dio a los hombres, superior a todos los tesoros, y que por ella, como por la honra, se debe arriesgar la vida, mientras que el cautiverio es el mayor mal. Lo ilustra con su experiencia: pese a la abundancia y los banquetes del castillo que acaban de dejar, se sentía hambriento porque no los disfrutaba con libertad, al no ser suyos.",
+      "rubrica": {
+        "bien": "Resume correctamente el contenido y el tema del fragmento.",
+        "regular": "Resume parcialmente el contenido principal.",
+        "mal": "No identifica bien el tema o el resumen es incorrecto o insuficiente."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 2,
+      "numeroEnArea": 2,
+      "area": "LEN",
+      "enunciado": "Explique qué tipo de texto es y cite al menos tres características o ideas principales del texto.",
+      "competencias": [
+        "LEN.COM.TIPO"
+      ],
+      "solucionModelo": "Es un texto literario narrativo (fragmento de novela) que reproduce, en estilo directo, un parlamento de don Quijote de carácter argumentativo: defiende una tesis con argumentos. Características e ideas: tesis inicial (la libertad es el mayor don); comparaciones que la refuerzan (vale más que los tesoros de la tierra y del mar; se equipara a la honra); antítesis libertad / cautiverio; ejemplo de la propia experiencia (los banquetes del castillo); vocativo dirigido a Sancho; lengua culta del Siglo de Oro con periodos amplios e hipérbatos.",
+      "rubrica": {
+        "bien": "Reconoce el tipo de texto y explica los rasgos del texto con claridad.",
+        "regular": "Identifica el texto, pero explica solo algunos rasgos del texto.",
+        "mal": "No identifica correctamente el tipo de texto ni sus características."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 3,
+      "numeroEnArea": 3,
+      "area": "LEN",
+      "enunciado": "Contextualice brevemente el fragmento en su periodo histórico e indique el nombre de la obra y de su autor.",
+      "competencias": [
+        "LEN.LIT.AUTOBRA"
+      ],
+      "solucionModelo": "Pertenece a la segunda parte del Quijote (El ingenioso caballero don Quijote de la Mancha, 1615), capítulo 58, de Miguel de Cervantes (1547-1616). Se sitúa en el Siglo de Oro, entre el Renacimiento y el Barroco, bajo el reinado de Felipe III, época de crisis y desengaño. Don Quijote y Sancho acaban de dejar el castillo de los duques. Cervantes estuvo cautivo en Argel (1575-1580), lo que da hondura personal a este elogio de la libertad. El Quijote, parodia de los libros de caballerías, se considera la primera novela moderna.",
+      "rubrica": {
+        "bien": "Sitúa correctamente la obra, el autor y el periodo histórico.",
+        "regular": "Menciona solo parte de los datos o los explica con imprecisión.",
+        "mal": "No identifica correctamente autor, obra o contexto."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 4,
+      "numeroEnArea": 4,
+      "area": "LEN",
+      "enunciado": "Escriba el prefijo de cada una de estas palabras derivadas, especificando a continuación el significado que aporta.\nPalabra / Prefijo / Significado del prefijo\ndeshacer\ninvisible\nreleer\nsubmarino\nantinatural",
+      "competencias": [
+        "LEN.FOR.DERIV"
+      ],
+      "solucionModelo": "Deshacer: des- (inversión o negación de la acción). Invisible: in- (negación, «no»). Releer: re- (repetición, «de nuevo»). Submarino: sub- («debajo de»). Antinatural: anti- («contrario a, opuesto a»).",
+      "rubrica": {
+        "bien": "Escribe correctamente todos los prefijos y su significado.",
+        "regular": "Presenta un error en los prefijos o en algún significado.",
+        "mal": "Comete varios errores o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 5,
+      "numeroEnArea": 5,
+      "area": "LEN",
+      "enunciado": "Explique qué es un diccionario y cuáles son sus principales utilidades.",
+      "competencias": [
+        "LEN.LEX.DICC"
+      ],
+      "solucionModelo": "Un diccionario es una obra de consulta que recoge, generalmente por orden alfabético, las palabras de una lengua (o de una materia) y explica su significado (acepciones), su categoría gramatical, y a menudo su etimología, su uso y ejemplos. Utilidades: conocer el significado de las palabras, comprobar su ortografía, su categoría y su género, resolver dudas de uso y conjugación, buscar sinónimos y antónimos y traducir (diccionarios bilingües). Hay diccionarios de la lengua (DLE), de sinónimos, de dudas, etimológicos, bilingües, etc.",
+      "rubrica": {
+        "bien": "Explica con claridad qué es un diccionario y sus utilidades.",
+        "regular": "Da una explicación general, pero incompleta.",
+        "mal": "No define correctamente el diccionario ni sus usos."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 6,
+      "numeroEnArea": 6,
+      "area": "LEN",
+      "enunciado": "Analice morfológicamente las siguientes palabras del fragmento: libertad, hombres, aquellos, gozaba.\nEn cada caso debe indicar: el tipo de palabra; el género y el número, si se trata de un nombre, adjetivo, determinante o pronombre; y, si es un verbo, la persona, el número, el tiempo, el modo y el infinitivo. Añada también cualquier otra observación relevante, por ejemplo si el sustantivo es común o abstracto, o si una palabra puede funcionar como determinante o como pronombre según el contexto.",
+      "competencias": [
+        "LEN.CLA.VERBO"
+      ],
+      "solucionModelo": "Libertad: sustantivo común, abstracto, femenino, singular. Hombres: sustantivo común, concreto, masculino, plural (aquí con valor genérico, «los seres humanos»). Aquellos: determinante demostrativo de lejanía, masculino plural (acompaña a «banquetes»); sin sustantivo funcionaría como pronombre. Gozaba: verbo gozar, 1.ª persona del singular (la forma coincide con la 3.ª), pretérito imperfecto de indicativo, 1.ª conjugación, aspecto imperfectivo, voz activa.",
+      "rubrica": {
+        "bien": "Clasifica correctamente las clases de palabras.",
+        "regular": "Comete un error en la clasificación.",
+        "mal": "Comete más de un error o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "notaRubrica": "La rúbrica oficial habla de «clases de palabras», pero la pregunta pide el análisis morfológico completo. La app aplica: Bien, las 4 palabras con su clase y todos sus rasgos correctos; Regular, un error (en la clase o en un rasgo); Mal, más de un error.",
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 7,
+      "numeroEnArea": 7,
+      "area": "LEN",
+      "enunciado": "Seleccione la opción correcta de las dos facilitadas y razone su elección.\nOración con opciones / Opción correcta / Explicación\nAyer (anduve / andé) mucho por el campo.\nNo (había / habían habido) suficientes sillas.\nEl capitán dijo que quizá (vendría / vendrá) mañana.\nHabía (demasiado / demasiados) ruido en la plaza.\nMis primos y yo (fuimos / fuemos) al museo.\nOjalá (haya / haiga) tiempo para terminar.\nEse libro es (de él / suyo).",
+      "competencias": [
+        "LEN.VER.NORMA"
+      ],
+      "solucionModelo": "Anduve: pretérito perfecto simple irregular de andar («andé» es incorrecto). Había: «haber» impersonal (existencial) solo se usa en 3.ª persona del singular; «habían habido» es incorrecto. Vendría: en estilo indirecto con verbo de lengua en pasado («dijo»), el futuro del enunciado original pasa a condicional (concordancia de tiempos); «vendrá» se admite si el hecho sigue siendo futuro respecto al momento en que se habla. Demasiado: concuerda en masculino singular con «ruido». Fuimos: pretérito perfecto simple de ir («fuemos» es un vulgarismo). Haya: presente de subjuntivo de haber («haiga» es un vulgarismo). Suyo: el posesivo es la opción esperada en registro culto. Nota de la app: se aceptan las dos opciones en dos casos. «Vendría» es la esperada (estilo indirecto en pasado), pero «vendrá» es correcta si el hecho sigue siendo futuro cuando se habla. «Suyo» es la esperada, pero «de él» también es gramatical y evita la ambigüedad de «suyo».",
+      "rubrica": {
+        "bien": "Selecciona correctamente las opciones y justifica adecuadamente.",
+        "regular": "Tiene un error o justificaciones poco precisas.",
+        "mal": "Presenta varios errores o no justifica."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 8,
+      "numeroEnArea": 8,
+      "area": "LEN",
+      "enunciado": "Defina los siguientes términos.\nTérmino / Definición\nNarrador\nNovela\nHipérbole\nAdjetivo",
+      "competencias": [
+        "LEN.REC.FIGURAS"
+      ],
+      "solucionModelo": "Narrador: voz que cuenta los hechos en un texto narrativo; puede ser interno (en 1.ª persona, protagonista o testigo) o externo (en 3.ª persona, omnisciente u observador). Novela: obra literaria narrativa extensa, en prosa y de ficción, con una trama compleja, personajes, tiempo y espacio desarrollados. Hipérbole: figura retórica que exagera intencionadamente la realidad. Adjetivo: clase de palabra variable que acompaña al sustantivo o se predica de él para expresar cualidades o propiedades, y concuerda con él en género y número.",
+      "rubrica": {
+        "bien": "Define correctamente todos los términos.",
+        "regular": "Define parcialmente los términos, con alguna imprecisión.",
+        "mal": "No define correctamente la mayoría de los términos."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 9,
+      "numeroEnArea": 9,
+      "area": "LEN",
+      "enunciado": "Una el término con la definición que le corresponda.\nPor ejemplo: 8 G, ya que la definición que corresponde al término \"sustantivo\" es la G.\nA. Palabra que expresa una cualidad o característica del sustantivo.\nB. Persona, animal o cosa que realiza la acción del verbo en una oración.\nC. Parte variable de la oración que puede expresar tiempo, modo, número y persona.\nD. Palabra que sustituye al nombre para evitar su repetición.\nE. Recurso literario que exagera de forma intencionada la realidad.\nF. Persona que cuenta lo que ocurre en una narración.\nG. Palabra que nombra seres, objetos, lugares, ideas o sentimientos.\nH. Conjunto formado por sujeto y predicado.\nTérminos: 1. Adjetivo · 2. Sujeto · 3. Verbo · 4. Hipérbole · 5. Narrador · 6. Oración · 7. Pronombre · 8. Sustantivo (G)",
+      "competencias": [
+        "LEN.CLA.SUSTADJ"
+      ],
+      "solucionModelo": "1 A (adjetivo); 2 B (sujeto); 3 C (verbo); 4 E (hipérbole); 5 F (narrador); 6 H (oración); 7 D (pronombre); 8 G (sustantivo, dado como ejemplo). Nota de la app: es la respuesta esperada por el tribunal, pero dos definiciones del enunciado son imprecisas. Según la NGLE, el sujeto es una función sintáctica: el elemento que concuerda en número y persona con el verbo, haga o no la acción (en «El ladrón fue detenido», el sujeto no detiene). Y el verbo es una clase de palabra, no una «parte de la oración»: expresa acciones, procesos o estados, se flexiona en persona, número, tiempo, aspecto y modo, y es el núcleo del predicado.",
+      "rubrica": {
+        "bien": "Relaciona correctamente todos los términos con sus definiciones.",
+        "regular": "Comete un error en las relaciones.",
+        "mal": "Comete varios errores o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 10,
+      "numeroEnArea": 10,
+      "area": "LEN",
+      "enunciado": "Analice sintácticamente la siguiente oración: Los viajeros encontraron refugio en la venta.",
+      "competencias": [
+        "LEN.SIN.COMPL"
+      ],
+      "solucionModelo": "Oración simple, enunciativa afirmativa, predicativa, transitiva y activa. Sujeto: «Los viajeros» (SN: Det «Los» + N «viajeros»). Predicado verbal: N «encontraron»; CD «refugio» (SN); CCL «en la venta» (SPrep: E «en» + término SN «la venta»).",
+      "rubrica": {
+        "bien": "Realiza un análisis sintáctico correcto de la oración.",
+        "regular": "El análisis es parcialmente correcto.",
+        "mal": "El análisis es incorrecto o incompleto."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 11,
+      "numeroEnArea": 1,
+      "area": "MAT",
+      "enunciado": "Responda razonadamente: ¿Es 1,25 un número decimal exacto? Expréselo además en forma de fracción irreducible.",
+      "competencias": [
+        "MAT.OPE.EQUIV"
+      ],
+      "solucionModelo": "1) 1,25 tiene un número finito de cifras decimales: es un decimal exacto. 2) 1,25 = 125/100; m.c.d.(125, 100) = 25 → 5/4. Resultado: Sí, es decimal exacto; 1,25 = 5/4.",
+      "rubrica": {
+        "bien": "Responde correctamente y expresa también la fracción irreducible.",
+        "regular": "Responde de forma parcialmente correcta.",
+        "mal": "La respuesta es incorrecta o incompleta."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 12,
+      "numeroEnArea": 2,
+      "area": "MAT",
+      "enunciado": "Exprese mediante una potencia cada una de las siguientes afirmaciones:\na. Un teatro tiene cuatro filas con cuatro asientos en cada una.\nb. En una exposición hay tres vitrinas; en cada vitrina hay tres baldas y en cada balda tres maquetas.\nc. Una pastelería vende seis cajas con seis galletas en cada una.",
+      "competencias": [
+        "MAT.NUM.POT10"
+      ],
+      "solucionModelo": "1) a) 4 filas × 4 asientos = 4 × 4. 2) b) 3 vitrinas × 3 baldas × 3 maquetas = 3 × 3 × 3. 3) c) 6 cajas × 6 galletas = 6 × 6. Resultado: a) 4² (= 16); b) 3³ (= 27); c) 6² (= 36).",
+      "rubrica": {
+        "bien": "Expresa correctamente las tres potencias.",
+        "regular": "Comete un error en una de las potencias.",
+        "mal": "Comete más de un error."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 13,
+      "numeroEnArea": 3,
+      "area": "MAT",
+      "enunciado": "En una biblioteca escolar, 1/4 de los libros son de aventuras, 1/5 son de ciencia, 1/10 son de poesía y el resto son de historia. Calcule la fracción de libros de historia.",
+      "competencias": [
+        "MAT.OPE.FRACSUM"
+      ],
+      "solucionModelo": "1) m.c.m.(4, 5, 10) = 20: 1/4 + 1/5 + 1/10 = 5/20 + 4/20 + 2/20 = 11/20. 2) Historia: 1 − 11/20. Resultado: 9/20 de los libros.",
+      "rubrica": {
+        "bien": "Calcula correctamente la fracción restante.",
+        "regular": "Plantea bien el problema, pero comete un error de cálculo.",
+        "mal": "No resuelve correctamente el problema."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 14,
+      "numeroEnArea": 4,
+      "area": "MAT",
+      "enunciado": "Complete la siguiente tabla según el ejemplo.\nEn cada fila, convierta a metros las cantidades que aparecen en las distintas columnas y escriba en la última columna el resultado total.\nRecuerde: cada número vale según la unidad de la columna en la que está escrito. Después hay que pasarlo a metros y sumar.\nEjemplo: 3 km + 2 hm = 3200 m.\n(Tabla con columnas km | hm | dam | m | dm | cm | Resultado. Filas: 3 km, 2 hm → 3200 m; 5 dam, 4 m; 7 hm, 6 cm; 8 m, 5 dm; 6 km.)",
+      "competencias": [
+        "MAT.UNI.LONG"
+      ],
+      "solucionModelo": "1) Fila 2: 5 dam = 50 m; 4 m → 54 m. 2) Fila 3: 7 hm = 700 m; 6 cm = 0,06 m → 700,06 m. 3) Fila 4: 8 m; 5 dm = 0,5 m → 8,5 m. Fila 5: 6 km = 6000 m. Resultado: 54 m; 700,06 m; 8,5 m; 6000 m.",
+      "rubrica": {
+        "bien": "Completa correctamente toda la tabla.",
+        "regular": "Comete un error en una equivalencia.",
+        "mal": "Presenta más de un error."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 15,
+      "numeroEnArea": 5,
+      "area": "MAT",
+      "enunciado": "La siguiente tabla representa los tiros libres encestados por un jugador de baloncesto en cinco partidos. Calcule la probabilidad estimada de que, en su próximo lanzamiento, enceste un tiro libre. No es necesario hallar el porcentaje, puede responder con una fracción.\n(Partidos 1.º a 5.º. Tiros libres lanzados: 12, 10, 8, 14, 16. Tiros libres encestados: 9, 7, 5, 10, 12.)",
+      "competencias": [
+        "MAT.PRO.LAPLACE"
+      ],
+      "solucionModelo": "1) Tiros lanzados: 12 + 10 + 8 + 14 + 16 = 60. Encestados: 9 + 7 + 5 + 10 + 12 = 43. 2) Probabilidad estimada = frecuencia relativa = encestados / lanzados. Resultado: 43/60 (≈ 0,72).",
+      "rubrica": {
+        "bien": "Calcula correctamente la probabilidad estimada.",
+        "regular": "Plantea bien el procedimiento, pero comete un error.",
+        "mal": "No calcula correctamente la probabilidad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 16,
+      "numeroEnArea": 6,
+      "area": "MAT",
+      "enunciado": "Una asociación vende 240 entradas para una actividad solidaria. El 35 % de lo recaudado se destina a material escolar. Si se han obtenido 1.920 euros, calcule cuánto dinero se dedica a material escolar.",
+      "competencias": [
+        "MAT.POR.PORCENT"
+      ],
+      "solucionModelo": "1) 35 % de 1920 = 1920 × 0,35. 2) (El número de entradas, 240, no es necesario.) Resultado: 672 €.",
+      "rubrica": {
+        "bien": "Calcula correctamente el porcentaje pedido.",
+        "regular": "Comete un error de cálculo.",
+        "mal": "No resuelve correctamente."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 17,
+      "numeroEnArea": 7,
+      "area": "MAT",
+      "enunciado": "En esta zona ajardinada se plantarán margaritas en la parte sombreada y césped en el resto. Calcule el área exacta de la superficie destinada al césped. Tómese π = 3,14.\n[Figura: zona en forma de L de 10 m de ancho total; parte izquierda de 8 m de alto; a la derecha, un rectángulo de 4 m de ancho y 3 m de alto; dentro de la parte izquierda, un círculo sombreado de r = 2 m.]",
+      "competencias": [
+        "MAT.GEO.AREAS"
+      ],
+      "solucionModelo": "1) Zona en L: rectángulo de (10 − 4) × 8 = 48 m² más rectángulo de 4 × 3 = 12 m² → 60 m². 2) Círculo (margaritas): 3,14 × 2² = 12,56 m². 3) Césped: 60 − 12,56. Resultado: 47,44 m².",
+      "rubrica": {
+        "bien": "Calcula correctamente el área exterior, el círculo y la superficie final.",
+        "regular": "Realiza parte del procedimiento correctamente.",
+        "mal": "No resuelve correctamente el problema."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 18,
+      "numeroEnArea": 8,
+      "area": "MAT",
+      "enunciado": "Escriba SÍ/NO en las celdas correspondientes según los divisores de cada número.\n(Divisible entre 2 | 3 | 5 | 9 | 10. Números: 246, 315, 540, 913, 720.)",
+      "competencias": [
+        "MAT.DIV.CRITERIOS"
+      ],
+      "solucionModelo": "1) Criterios: 2 (termina en cifra par); 3 y 9 (la suma de cifras es múltiplo de 3 o de 9); 5 (termina en 0 o 5); 10 (termina en 0). 2) Sumas de cifras: 246 → 12; 315 → 9; 540 → 9; 913 → 13; 720 → 9. Resultado: 246: 2 SÍ, 3 SÍ, 5 NO, 9 NO, 10 NO · 315: 2 NO, 3 SÍ, 5 SÍ, 9 SÍ, 10 NO · 540: 2 SÍ, 3 SÍ, 5 SÍ, 9 SÍ, 10 SÍ · 913: 2 NO, 3 NO, 5 NO, 9 NO, 10 NO · 720: 2 SÍ, 3 SÍ, 5 SÍ, 9 SÍ, 10 SÍ.",
+      "rubrica": {
+        "bien": "Completa correctamente la tabla de divisibilidad.",
+        "regular": "Comete uno o dos errores.",
+        "mal": "Comete más de dos errores."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 19,
+      "numeroEnArea": 9,
+      "area": "MAT",
+      "enunciado": "En una encuesta sobre actividades extraescolares, complete la tabla de frecuencias.\n(Actividad | Frecuencia absoluta | Frecuencia relativa: Ajedrez 5 | 0,25; Teatro 4 | __; Baloncesto __ | 0,30; Música 5 | __; Total 20 | 1.)",
+      "competencias": [
+        "MAT.EST.FRECUENCIAS"
+      ],
+      "solucionModelo": "1) Frecuencia relativa = absoluta / 20. 2) Teatro: 4/20 = 0,20. Baloncesto: 0,30 × 20 = 6. Música: 5/20 = 0,25. 3) Comprobación: 5 + 4 + 6 + 5 = 20; 0,25 + 0,20 + 0,30 + 0,25 = 1. Resultado: Teatro 0,20; Baloncesto 6; Música 0,25.",
+      "rubrica": {
+        "bien": "Completa correctamente la tabla de frecuencias.",
+        "regular": "Comete un error en la tabla.",
+        "mal": "No completa correctamente la tabla."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 20,
+      "numeroEnArea": 10,
+      "area": "MAT",
+      "enunciado": "Calcule cuánto miden en la realidad las siguientes medidas tomadas en un plano con la escala que se indica. Realice las conversiones necesarias y escriba siempre el resultado final en metros.\n(Medida en el plano | Escala utilizada: 2,5 cm | 1:200; 8 cm | 1:50; 4,2 cm | 1:1.000; 35 mm | 1:20.)",
+      "competencias": [
+        "MAT.POR.ESCALAS"
+      ],
+      "solucionModelo": "1) Medida real = medida en el plano × denominador de la escala. 2) 2,5 × 200 = 500 cm; 8 × 50 = 400 cm; 4,2 × 1000 = 4200 cm; 35 × 20 = 700 mm. 3) En metros: ÷100 (cm) o ÷1000 (mm). Resultado: 5 m; 4 m; 42 m; 0,7 m.",
+      "rubrica": {
+        "bien": "Calcula correctamente todas las medidas reales.",
+        "regular": "Comete un error en una equivalencia.",
+        "mal": "Presenta más de un error."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "oficial",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    }
+  ],
+  "validacion": {
+    "estado": "aprobado",
+    "revisor": "direccion",
+    "fecha": "2026-11-24"
+  }
+}

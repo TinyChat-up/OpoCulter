@@ -10,14 +10,27 @@ final class HoyViewModel {
     var rondaActiva: RondaViewModel?
     /// Área elegida en el panel protagonista (por defecto, la de la competencia en curso).
     var area: String?
+    /// Bienvenida (avatar → diagnóstico → plan) a pantalla completa. Se decide al primer cargar.
+    var mostrarBienvenida = false
+    private var bienvenidaDecidida = false
+    var mostrarRescate = false
+    var mostrarSupervivencia = false
+    /// Ronda que se lanza al cerrar una hoja (Rescate o Supervivencia).
+    var pendiente: TipoRonda?
 
     init(servicio: ServicioSesion) {
         self.servicio = servicio
     }
 
-    func cargar() {
+    func cargar(forzarBienvenida: Bool = false) {
         do {
             estado = try servicio.estadoHoy()
+            if !bienvenidaDecidida {
+                bienvenidaDecidida = true
+                mostrarBienvenida = estado?.avatar == nil || forzarBienvenida
+            } else if estado?.avatar == nil {
+                mostrarBienvenida = true   // tras "Borrar mi progreso"
+            }
             mensajeError = nil
             if area == nil || !(estado?.propuestas.contains { $0.area == area } ?? false) {
                 area = estado?.competenciaEnCurso.map { Catalogo.area(de: $0.id) } ?? estado?.propuestas.first?.area
@@ -49,6 +62,18 @@ final class HoyViewModel {
     func elegirAvatar(_ id: Int) {
         try? servicio.elegirAvatar(id)
         cargar()
+    }
+
+    func terminarBienvenida() {
+        mostrarBienvenida = false
+        cargar()
+    }
+
+    func lanzarPendiente() {
+        if let tipo = pendiente {
+            pendiente = nil
+            empezar(tipo)
+        }
     }
 }
 
@@ -83,13 +108,21 @@ struct PantallaHoy: View {
         .background(Paleta.fondo.ignoresSafeArea())
         .onAppear {
             if entorno.opciones.captura == "hoy:mates", modelo.area == nil { modelo.area = "MAT" }
-            modelo.cargar()
+            modelo.cargar(forzarBienvenida: entorno.opciones.forzarBienvenida)
         }
         .fullScreenCover(item: $modelo.rondaActiva) { ronda in
             PantallaRonda(modelo: ronda, ayudasDePrueba: entorno.opciones.ayudasDePrueba) { modelo.cerrarRonda() }
         }
-        .fullScreenCover(isPresented: necesitaBienvenida) {
-            PantallaBienvenida { id in modelo.elegirAvatar(id) }
+        .fullScreenCover(isPresented: $modelo.mostrarBienvenida) {
+            PantallaBienvenida(servicio: modelo.servicio, ayudasDePrueba: entorno.opciones.ayudasDePrueba,
+                               elegir: { id in try? modelo.servicio.elegirAvatar(id) },
+                               terminar: { modelo.terminarBienvenida() })
+        }
+        .sheet(isPresented: $modelo.mostrarRescate, onDismiss: { modelo.lanzarPendiente(); modelo.cargar() }) {
+            PantallaRescate(servicio: modelo.servicio) { tipo in modelo.pendiente = tipo }
+        }
+        .sheet(isPresented: $modelo.mostrarSupervivencia, onDismiss: { modelo.lanzarPendiente() }) {
+            PantallaInicioSupervivencia(servicio: modelo.servicio) { area in modelo.pendiente = .supervivencia(area: area) }
         }
         .sheet(isPresented: $mostrarPerfil) {
             PantallaPerfil(avatar: modelo.estado?.avatar) { id in modelo.elegirAvatar(id) }
@@ -103,23 +136,21 @@ struct PantallaHoy: View {
         .accessibilityIdentifier("pantallaHoy")
     }
 
-    /// La bienvenida aparece mientras no haya avatar elegido.
-    private var necesitaBienvenida: Binding<Bool> {
-        Binding(get: { modelo.estado != nil && modelo.estado?.avatar == nil }, set: { _ in })
-    }
 
     // MARK: Cabecera
 
     private var cabecera: some View {
-        let grande = tamano >= .xxxLarge
-        let disposicion = grande ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.s)) : AnyLayout(HStackLayout(alignment: .center, spacing: Espacio.m))
+        // Desde el tamaño de texto XL, la píldora de la racha baja a la segunda línea: en una sola no
+        // cabe sin recortar los números del protector y del récord (visto en el iPhone).
+        let grande = tamano >= .xLarge
+        let disposicion = grande ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.s)) : AnyLayout(HStackLayout(alignment: .center, spacing: Espacio.s))
         return VStack(alignment: .leading, spacing: Espacio.m) {
             disposicion {
                 HStack(spacing: Espacio.m) {
                     botonAvatar
                     titulo
                 }
-                if !grande { Spacer(minLength: Espacio.s) }
+                if !grande { Spacer(minLength: 0) }
                 if let estado = modelo.estado {
                     ChipRacha(dias: estado.racha.actual, protectores: estado.racha.protectores, record: estado.racha.record,
                               abrirAyudaAlAparecer: entorno.opciones.captura == "hoy:globo")
@@ -258,7 +289,7 @@ struct PantallaHoy: View {
         .accessibilityIdentifier("panelRonda")
     }
 
-    /// Baldosas neutras compactas: dos modos activos y dos que llegan en la 05D (desactivados
+    /// Baldosas compactas: Rescate, Ortografía exprés y Supervivencia activas; Tribunal llega en la 05E (desactivada
     /// con su motivo, no botones falsos).
     private func baldosas(_ estado: EstadoHoy) -> some View {
         // Pilas normales (no `LazyVGrid`, que no reajusta el texto al cambiar su tamaño): dos
@@ -276,11 +307,13 @@ struct PantallaHoy: View {
             Baldosa(titulo: "Rescate", icono: "lifepreserver",
                     detalle: estado.rescatesPendientes == 0 ? "Sin errores pendientes" :
                         (estado.rescatesPendientes == 1 ? "1 error por rescatar" : "\(estado.rescatesPendientes) errores por rescatar"),
-                    activa: estado.rescatesPendientes > 0, id: "botonRescate") { modelo.empezar(.rescate) },
+                    activa: true, id: "botonRescate") { modelo.mostrarRescate = true },
             Baldosa(titulo: "Ortografía exprés", icono: "character.cursor.ibeam", detalle: "5 ítems de ortografía y tildes",
                     activa: estado.itemsOrtografia > 0, id: "botonOrtografia") { modelo.empezar(.ortografiaExpres) },
-            Baldosa(titulo: "Supervivencia", icono: "heart", detalle: "Llega en 05D", activa: false, id: "baldosaSupervivencia") {},
-            Baldosa(titulo: "Tribunal", icono: "checkmark.seal", detalle: "Llega en 05D", activa: false, id: "baldosaTribunal") {},
+            Baldosa(titulo: "Supervivencia", icono: "heart",
+                    detalle: estado.supervivenciaDisponible ? (estado.recordSupervivencia.map { "Récord: \($0) puntos" } ?? "3 vidas · sin récord aún") : "Contenido en preparación",
+                    activa: estado.supervivenciaDisponible, id: "baldosaSupervivencia") { modelo.mostrarSupervivencia = true },
+            Baldosa(titulo: "Tribunal", icono: "checkmark.seal", detalle: "Llega en 05E", activa: false, id: "baldosaTribunal") {},
         ]
     }
 
@@ -359,10 +392,10 @@ struct Baldosa: View {
                 HStack(spacing: Espacio.s) {
                     Image(systemName: icono).font(.body.weight(.semibold)).accessibilityHidden(true)
                     Text(titulo).font(.exhibicion(.headline))
+                        .fixedSize(horizontal: false, vertical: true)
+                    // Sin chevrón: la sombra dura ya marca que se puede pulsar (D-059) y el título
+                    // («Supervivencia») cabe sin partirse.
                     Spacer(minLength: 0)
-                    if activa {
-                        Image(systemName: "chevron.right").font(.footnote.weight(.semibold)).foregroundStyle(Paleta.textoSecundario).accessibilityHidden(true)
-                    }
                 }
                 .foregroundStyle(Paleta.textoPrincipal)
                 Text(detalle).font(.subheadline).foregroundStyle(Paleta.textoSecundario)

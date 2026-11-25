@@ -76,3 +76,10 @@ struct DiaCivil: Hashable, Comparable, Codable, Sendable, CustomStringConvertibl
         return cal
     }
 }
+
+extension DiaCivil {
+    /// Mediodía de este día en el calendario dado (para gráficos y notificaciones).
+    func fecha(calendario: Calendar) -> Date {
+        calendario.date(from: DateComponents(year: anio, month: mes, day: dia, hour: 12)) ?? .distantPast
+    }
+}

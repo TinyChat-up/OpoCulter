@@ -1,44 +1,93 @@
 [
   {
-    "id": "MAT.ROM.LECTURA.G01",
-    "competencia": "MAT.ROM.LECTURA",
+    "id": "MAT.ROM.LEER.G01",
+    "competencia": "MAT.ROM.LEER",
     "peldano": 2,
-    "dificultad": 3,
+    "dificultad": 2,
     "mecanica": "numerico",
     "tipo": "romanos",
     "enunciados": [
-      "¿Qué número es {{romano}}?",
-      "Escribe en cifras: {{romano}}"
+      "{{pregunta}}"
     ],
     "objetivo": "Leer números romanos",
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
-    "id": "MAT.ROM.LECTURA.G02",
-    "competencia": "MAT.ROM.LECTURA",
+    "id": "MAT.ROM.LEER.G02",
+    "competencia": "MAT.ROM.LEER",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "romanos",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Leer números romanos",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.ROM.ESCR.G01",
+    "competencia": "MAT.ROM.ESCR",
     "peldano": 2,
     "dificultad": 2,
     "mecanica": "construir",
     "tipo": "romanos",
     "enunciados": [
-      "Escribe {{numero}} en números romanos con las piezas."
+      "{{pregunta}}"
     ],
     "objetivo": "Escribir números romanos",
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.ROM.ESCR.G02",
+    "competencia": "MAT.ROM.ESCR",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "construir",
+    "tipo": "romanos",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Escribir números romanos",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   }

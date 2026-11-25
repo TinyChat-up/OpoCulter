@@ -10,17 +10,30 @@ struct PantallaRonda: View {
     /// XP que muestra el contador de la cabecera (se actualiza cuando aterriza el vuelo).
     @State private var xpMostrado = 0
     @State private var vuelo: VueloXP.Datos?
+    /// Panel del texto base plegado (se conserva entre ítems; se despliega con cada texto nuevo).
+    @State private var textoPlegado = false
+    /// Alto de la pantalla, para limitar el panel del texto base a una parte de ella.
+    @State private var altoPantalla: CGFloat = 800
     @Environment(\.accessibilityReduceMotion) private var reducir
     @Environment(\.dynamicTypeSize) private var tamano
+    @Environment(\.vibracionActiva) private var vibracionActiva
+    @Environment(\.sonido) private var sonido
+    @Environment(EntornoApp.self) private var entorno
 
     var body: some View {
         ZStack {
             Paleta.fondo.ignoresSafeArea()
             switch modelo.fase {
             case .resumen:
-                if let resumen = modelo.resumen {
+                if let plan = modelo.plan {
+                    PantallaPlan(plan: plan, servicio: modelo.servicio, terminar: cerrar)
+                        .transition(Movimiento.transicion(reducir: reducir))
+                } else if let r = modelo.resultadoPartida {
+                    PantallaFinPartida(resultado: r, servicio: modelo.servicio, otraPartida: { modelo.otraRonda() }, terminar: cerrar)
+                        .transition(Movimiento.transicion(reducir: reducir))
+                } else if let resumen = modelo.resumen {
                     PantallaResumen(resumen: resumen, nombreCompetencia: modelo.nombreCompetencia,
-                                    otraRonda: { modelo.otraRonda() }, terminar: cerrar)
+                                    resultadoModo: textoModo, otraRonda: { modelo.otraRonda() }, terminar: cerrar)
                         .transition(Movimiento.transicion(reducir: reducir))
                 }
             case .vacia:
@@ -32,6 +45,13 @@ struct PantallaRonda: View {
             }
         }
         .animacionApp(modelo.fase)
+        .background {
+            GeometryReader { g in
+                Color.clear
+                    .onAppear { altoPantalla = g.size.height }
+                    .onChange(of: g.size.height) { _, nuevo in altoPantalla = nuevo }
+            }
+        }
         .sheet(item: $modelo.teoriaAbierta) { tarjeta in
             NavigationStack {
                 ScrollView {
@@ -49,12 +69,37 @@ struct PantallaRonda: View {
             }
             .presentationDetents([.medium, .large])
         }
-        .confirmationDialog("¿Salir de la ronda?", isPresented: $confirmarSalida, titleVisibility: .visible) {
-            Button("Salir", role: .destructive, action: cerrar)
+        .confirmationDialog(modelo.esSupervivencia ? "¿Abandonar la partida?" : "¿Salir de la ronda?", isPresented: $confirmarSalida, titleVisibility: .visible) {
+            Button(modelo.esSupervivencia ? "Abandonar" : "Salir", role: .destructive) {
+                modelo.abandonar()
+                cerrar()
+            }
             Button("Seguir jugando", role: .cancel) {}
         } message: {
-            Text("Lo que has respondido ya está guardado.")
+            Text(modelo.esSupervivencia ? "Lo jugado se guarda, pero una partida abandonada no cuenta para el récord." : "Lo que has respondido ya está guardado.")
         }
+        // Tras la primera ronda completada se pregunta una vez, en contexto, por el recordatorio.
+        .alert("¿Te aviso cada día?", isPresented: $modelo.preguntarRecordatorio) {
+            Button("Sí") { Task { await entorno.activarRecordatorio() } }
+            Button("Ahora no", role: .cancel) { modelo.responderRecordatorio(false); entorno.recargarAjustes() }
+        } message: {
+            Text("¿Te aviso cada día a las \(entorno.ajustes.horaTexto) para no perder la racha? Puedes cambiarlo en Progreso → Ajustes.")
+        }
+        .onAppear { modelo.sonido = sonido }
+        .onChange(of: modelo.fase) { _, nueva in if nueva == .resumen { entorno.rondaCompletada() } }
+    }
+
+    /// Resultado de la prueba de nivel o del Reto de bloque, para el resumen.
+    private var textoModo: String? {
+        guard let e = modelo.efectoFinal else { return nil }
+        if let superada = e.pruebaNivelSuperada {
+            return superada ? "Prueba de nivel superada: los peldaños 1 y 2 quedan superados y empiezas en el 3."
+                : "Prueba de nivel no superada (hacen falta 4 aciertos de 5). Puedes practicar desde el principio o repetirla."
+        }
+        if let superado = e.retoSuperado {
+            return superado ? "¡Reto superado! Has ganado la medalla del bloque." : "Reto no superado (hacen falta 6 aciertos de 8). Inténtalo otra vez cuando quieras."
+        }
+        return nil
     }
 
     // MARK: Ítem
@@ -64,6 +109,16 @@ struct PantallaRonda: View {
         let acento = item.map { Paleta.acento(competencia: $0.competencia) } ?? Paleta.matematicas
         return VStack(spacing: 0) {
             cabecera(acento: acento)
+            if let texto = modelo.textoBase {
+                // Texto base fijo arriba: el ítem se responde debajo sin perderlo de vista.
+                // Como mucho un 30 % de la pantalla (22 % con texto de accesibilidad): el ítem y el pie
+                // con «Comprobar» caben siempre debajo.
+                VistaTextoBase(texto: texto, anio: modelo.anioTextoBase, plegado: $textoPlegado,
+                               altoMaximo: max(110, altoPantalla * (tamano.isAccessibilitySize ? 0.22 : 0.3)))
+                    .padding(.horizontal, Espacio.l)
+                    .padding(.bottom, Espacio.s)
+                    .transition(Movimiento.transicion(reducir: reducir))
+            }
             GeometryReader { geo in
             ScrollView {
                 if let item {
@@ -117,10 +172,10 @@ struct PantallaRonda: View {
                 .background(Paleta.fondo)
         }
         .sensoryFeedback(trigger: modelo.resultado) { _, nuevo in
-            guard let nuevo else { return nil }
+            guard vibracionActiva, let nuevo else { return nil }
             return nuevo.correcto ? .success : .error
         }
-        .sensoryFeedback(.impact(weight: .heavy), trigger: modelo.hitosCombo)
+        .retroHaptica(.impact(weight: .heavy), trigger: modelo.hitosCombo)
         .overlayPreferenceValue(AnclasVueloXP.self) { anclas in
             GeometryReader { geo in
                 if let vuelo, let destino = anclas["destino"] {
@@ -147,14 +202,33 @@ struct PantallaRonda: View {
                 if vuelo?.id == datos.id { vuelo = nil }
             }
         }
+        .onChange(of: modelo.textoBase?.id) { anterior, nuevo in
+            if nuevo != nil && nuevo != anterior { textoPlegado = false }
+        }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaRonda")
     }
 
     @ViewBuilder
     private func cabecera(acento: Color) -> some View {
-        // Con texto de accesibilidad, la barra de progreso pasa a una segunda línea.
-        if tamano.isAccessibilitySize {
+        if let estado = modelo.supervivencia {
+            CabeceraSupervivencia(estado: estado, puntosUltimo: modelo.puntosUltimo, salir: { botonSalir })
+                .padding(.horizontal, Espacio.l)
+                .padding(.vertical, Espacio.s)
+        } else if modelo.esDiagnostico {
+            HStack(spacing: Espacio.m) {
+                botonSalir
+                BarraProgresoRonda(actual: modelo.respondidos, total: max(modelo.totalDiagnostico, 1), acento: acento)
+                Text("\(min(modelo.indice + 1, modelo.totalDiagnostico)) de \(modelo.totalDiagnostico)")
+                    .font(.redondeada(.subheadline))
+                    .foregroundStyle(Paleta.textoPrincipal)
+                    .fixedSize()
+                    .accessibilityIdentifier("progresoDiagnostico")
+            }
+            .padding(.horizontal, Espacio.l)
+            .padding(.vertical, Espacio.s)
+        } else if tamano.isAccessibilitySize {
+            // Con texto de accesibilidad, la barra de progreso pasa a una segunda línea.
             VStack(spacing: Espacio.xs) {
                 HStack(spacing: Espacio.m) {
                     botonSalir
@@ -212,12 +286,22 @@ struct PantallaRonda: View {
             VStack(spacing: Espacio.s) {
                 #if DEBUG
                 if ayudasDePrueba {
-                    Button {
-                        modelo.rellenarParaPruebas()
-                    } label: {
-                        Text("Rellenar (pruebas)").font(.footnote).frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
-                    }
+                    HStack {
+                        Button {
+                            modelo.rellenarParaPruebas()
+                        } label: {
+                            Text("Rellenar (pruebas)").font(.footnote).fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
+                        }
                         .accessibilityIdentifier("botonRellenarDebug")
+                        Button {
+                            modelo.rellenarParaPruebas(correcta: false)
+                        } label: {
+                            Text("Con error (pruebas)").font(.footnote).fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
+                        }
+                        .accessibilityIdentifier("botonRellenarErrorDebug")
+                    }
                 }
                 #endif
                 // Con texto de accesibilidad, Pista y Comprobar se apilan a todo el ancho.
@@ -279,6 +363,8 @@ struct PantallaRonda: View {
 struct PantallaResumen: View {
     let resumen: RondaViewModel.Resumen
     let nombreCompetencia: (String) -> String
+    /// Resultado de la prueba de nivel o del Reto de bloque (Fase 05D).
+    var resultadoModo: String? = nil
     let otraRonda: () -> Void
     let terminar: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reducir
@@ -301,6 +387,19 @@ struct PantallaResumen: View {
                             .accessibilityAddTraits(.isHeader)
                     }
                     .padding(.top, Espacio.xl)
+
+                    if let resultadoModo {
+                        Text(resultadoModo)
+                            .font(.headline)
+                            .foregroundStyle(Paleta.textoPrincipal)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .padding(Espacio.m)
+                            .frame(maxWidth: .infinity)
+                            .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+                            .contornoTinta(radio: Radio.ficha)
+                            .accessibilityIdentifier("resultadoModo")
+                    }
 
                     let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(spacing: Espacio.m)) : AnyLayout(HStackLayout(spacing: Espacio.m))
                     disposicion {

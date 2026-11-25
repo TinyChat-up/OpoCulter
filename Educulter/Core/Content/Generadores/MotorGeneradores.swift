@@ -21,10 +21,28 @@ struct Muestra: Sendable, Equatable {
 
 /// Recursos de los generadores de Lengua (léxico, piezas de gramática, bancos de frases).
 struct RecursosGeneradores: Sendable, Equatable {
-    var lexico: [EntradaLexico] = []
-    var gramatica: PiezasGramatica = PiezasGramatica()
-    var verbos: BancoVerbos = BancoVerbos()
-    var frases: BancoFrases = BancoFrases()
+    let lexico: [EntradaLexico]
+    /// Formas verbales del léxico (para el nivel 6: formas verbales con hiato; lote 02).
+    let formasVerbales: [String]
+    var gramatica: PiezasGramatica
+    var verbos: BancoVerbos
+    var frases: BancoFrases
+    /// Compatibilidad semántica de la gramática generativa (lote 02b, D-086).
+    var compatibilidad: CompatibilidadGramatica
+    /// Palabras utilizables del léxico, analizadas una sola vez, con su nivel (1–6).
+    let palabras: [PalabraNivelada]
+
+    init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
+         verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases(),
+         compatibilidad: CompatibilidadGramatica = CompatibilidadGramatica()) {
+        self.lexico = lexico
+        self.formasVerbales = formasVerbales
+        self.gramatica = gramatica
+        self.verbos = verbos
+        self.frases = frases
+        self.compatibilidad = compatibilidad
+        self.palabras = Acentuacion.nivelar(lexico, formasVerbales: Set(formasVerbales))
+    }
 
     static let vacios = RecursosGeneradores()
 }
@@ -65,6 +83,8 @@ enum MotorGeneradores {
             GeneradorPorcentaje(), GeneradorConversionUnidades(), GeneradorFraccionBarras(), GeneradorOrdenarNumeros(),
             GeneradorRomanos(), GeneradorOperacionesCombinadas(), GeneradorMcmMcd(), GeneradorEstadistica(),
             GeneradorProbabilidad(), GeneradorEcuacionLineal(),
+            // Lote 02 (D-077).
+            GeneradorReglaDeTres(), GeneradorSexagesimal(), GeneradorEscala(), GeneradorFraccionesOperar(), GeneradorProblemaFraccion(),
             GeneradorColocarTilde(), GeneradorClasificarAcentuacion(), GeneradorSilabaTonica(),
             GeneradorOracionSimple(), GeneradorAnalisisVerbal(), GeneradorFraseHueco(),
         ]
@@ -109,7 +129,32 @@ enum MotorGeneradores {
                     dificultad: p.dificultad, objetivo: p.objetivo ?? "Practicar \(p.tipo)",
                     enunciado: Marcadores.rellenar(redaccion, con: valores), payload: m.payload, pistas: pistas,
                     explicacion: m.explicacion, erroresHabituales: m.erroresHabituales,
-                    procedencia: p.procedencia, validacion: p.validacion, version: p.version)
+                    procedencia: p.procedencia, validacion: p.validacion, version: p.version,
+                    claveGenerada: "\(p.tipo)|\(m.clave)")
+    }
+
+    /// Copia de una plantilla con otra dificultad (y, opcionalmente, otro peldaño) para Supervivencia
+    /// y los Retos de bloque (Fase 05D). Su id lleva el ajuste (`<id>@d5` o `<id>@d5p3`), así que
+    /// los ítems generados (`<id>@d5p3#semilla`) se reproducen exactamente desde su id.
+    static func ajustada(_ p: Plantilla, dificultad: Int, peldano: Int? = nil) -> Plantilla {
+        var copia = p
+        copia.dificultad = dificultad
+        if let peldano { copia.peldano = peldano }
+        copia.id = "\(p.id)@d\(dificultad)" + (peldano.map { "p\($0)" } ?? "")
+        return copia
+    }
+
+    /// Separa `<id>@d5p3` en `(id, dificultad, peldaño)`.
+    static func ajuste(de id: String) -> (base: String, dificultad: Int, peldano: Int?)? {
+        guard let arroba = id.lastIndex(of: "@") else { return nil }
+        let resto = id[id.index(after: arroba)...]
+        guard resto.first == "d" else { return nil }
+        let cuerpo = resto.dropFirst()
+        let partes = cuerpo.split(separator: "p", maxSplits: 1)
+        guard let d = partes.first.flatMap({ Int($0) }) else { return nil }
+        let pel = partes.count > 1 ? Int(partes[1]) : nil
+        if partes.count > 1 && pel == nil { return nil }
+        return (String(id[..<arroba]), d, pel)
     }
 
     /// Separa un id generado en `(plantilla, semilla)`; `nil` si es un id de ítem estático.

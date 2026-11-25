@@ -96,7 +96,7 @@ struct MecanicaEleccion: View {
                 .accessibilityIdentifier("opcion_\(opcion.id)")
             }
         }
-        .sensoryFeedback(.selection, trigger: elegida)
+        .retroHaptica(.selection, trigger: elegida)
     }
 
     private func estado(de id: String) -> EstadoFicha {
@@ -156,7 +156,7 @@ struct MecanicaVerdaderoFalso: View {
                 boton(valor: true, titulo: "Verdadero", icono: "hand.thumbsup")
             }
         }
-        .sensoryFeedback(.selection, trigger: elegida)
+        .retroHaptica(.selection, trigger: elegida)
     }
 
     private var colorBorde: Color {
@@ -219,7 +219,7 @@ struct MecanicaMarcarTexto: View {
                 }
             }
         }
-        .sensoryFeedback(.selection, trigger: marcados)
+        .retroHaptica(.selection, trigger: marcados)
     }
 
     private func estado(de id: String) -> EstadoFicha {
@@ -325,7 +325,7 @@ struct MecanicaRuedas: View {
                 fila(rueda)
             }
         }
-        .sensoryFeedback(.selection, trigger: valores)
+        .retroHaptica(.selection, trigger: valores)
     }
 
     private func fila(_ rueda: Payload.Ruedas.Rueda) -> some View {

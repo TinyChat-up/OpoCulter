@@ -47,8 +47,12 @@ enum ErrorCarga: Error, Equatable, CustomStringConvertible {
 /// simulacros/<id>.json       (un simulacro por archivo)
 /// plantillas/<bloque>.json   (array de plantillas de generador, Fase 05C)
 /// lexico/palabras.json       (léxico de los generadores de Lengua)
-/// gramatica/piezas.json · verbos.json · frases.json
+/// lexico/formas_verbales.json (formas verbales del léxico, para su nivel)
+/// gramatica/piezas.json · verbos.json · frases.json · compatibilidad.json
+/// textos/<archivo>.json      (array de textos base de comprensión, D-085)
+/// literatura/literatura.json (base literaria del lote 05a, D-078)
 /// ```
+/// `pendiente/` (contenido aprobado que el motor aún no muestra, p. ej. el Tribunal) no se lee.
 struct CargadorContenido: Sendable {
     /// Nombre de la carpeta de contenido dentro del bundle de la app.
     static let carpetaEnBundle = "Content"
@@ -75,6 +79,10 @@ struct CargadorContenido: Sendable {
         let teoria: [TarjetaTeoria] = try archivosJSON(en: "teoria").flatMap { try decodificar($0) as [TarjetaTeoria] }
         let simulacros: [Simulacro] = try archivosJSON(en: "simulacros").map { try decodificar($0) }
         let plantillas: [Plantilla] = try archivosJSON(en: "plantillas").flatMap { try decodificar($0) as [Plantilla] }
+        let textos: [TextoBase] = try archivosJSON(en: "textos").flatMap { try decodificar($0) as [TextoBase] }
+        let literaturaURL = raiz.appendingPathComponent("literatura/literatura.json")
+        var literatura: BaseLiteraria?
+        if FileManager.default.fileExists(atPath: literaturaURL.path) { literatura = try decodificar(literaturaURL) as BaseLiteraria }
 
         return BancoContenido(
             catalogo: catalogo,
@@ -83,6 +91,8 @@ struct CargadorContenido: Sendable {
             simulacros: simulacros.filter { politica.admite($0.validacion) },
             plantillas: plantillas.filter { politica.admite($0.validacion) },
             recursos: try recursos(),
+            textos: textos.filter { politica.admite($0.validacion) },
+            literatura: literatura,
             semillaBase: semillaBase
         )
     }
@@ -96,9 +106,11 @@ struct CargadorContenido: Sendable {
         }
         return RecursosGeneradores(
             lexico: try opcional("lexico/palabras.json") ?? [],
+            formasVerbales: try opcional("lexico/formas_verbales.json") ?? [],
             gramatica: try opcional("gramatica/piezas.json") ?? PiezasGramatica(),
             verbos: try opcional("gramatica/verbos.json") ?? BancoVerbos(),
-            frases: try opcional("gramatica/frases.json") ?? BancoFrases()
+            frases: try opcional("gramatica/frases.json") ?? BancoFrases(),
+            compatibilidad: try opcional("gramatica/compatibilidad.json") ?? CompatibilidadGramatica()
         )
     }
 

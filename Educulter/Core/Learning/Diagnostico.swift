@@ -118,10 +118,49 @@ struct SesionDiagnostico: Sendable {
         return candidatos.filter { abs($0.dificultad - config.dificultadInicial) == mejor }.randomElement(using: &rng)
     }
 
-    /// Ítems de peldaños 2–4 del bloque (si no hay, cualquiera salvo el peldaño 5).
+    /// Ítems de peldaños 2–4 del bloque (si no hay, cualquiera salvo el peldaño 5). Desde la 05D
+    /// se prefieren los generados de dificultad 2–3 si el bloque los tiene (dan una medida más
+    /// estable que un ítem estático concreto y no gastan el banco curado).
     private func itemsDiagnosticables(bloque: String) -> [Item] {
         let todos = banco.items(bloque: bloque)
         let preferidos = todos.filter { (2...4).contains($0.peldano) }
-        return preferidos.isEmpty ? todos.filter { $0.peldano < 5 } : preferidos
+        let base = preferidos.isEmpty ? todos.filter { $0.peldano < 5 } : preferidos
+        let generados = base.filter { $0.id.contains("#") && (2...3).contains($0.dificultad) }
+        return generados.count >= 2 ? generados : base
+    }
+}
+
+/// Lectura del diagnóstico para la pantalla del plan (Fase 05D).
+struct PlanDiagnostico: Sendable, Equatable {
+    enum Nivel: String, Sendable, Equatable { case fuerte, medio, debil }
+
+    struct Bloque: Sendable, Equatable, Identifiable {
+        var bloque: Catalogo.Bloque
+        var nivel: Nivel
+        var aciertos: Int
+        var respondidos: Int
+        var id: String { bloque.id }
+    }
+
+    var bloques: [Bloque]
+    /// Las 2 competencias con las que empezar (por el orden del plan: debilidad × prioridad).
+    var recomendadas: [Catalogo.Competencia]
+    /// Bloques del temario sin contenido todavía (aviso honesto: "sin datos").
+    var sinDatos: [Catalogo.Bloque]
+
+    init(resultado: ResultadoDiagnostico, banco: BancoContenido, tieneContenido: (String) -> Bool) {
+        let todos = banco.catalogo.todosLosBloques
+        bloques = resultado.niveles.compactMap { n in
+            guard let b = todos.first(where: { $0.id == n.bloqueId }) else { return nil }
+            return Bloque(bloque: b, nivel: n.nivel >= 1 ? .fuerte : (n.nivel > 0 ? .medio : .debil),
+                          aciertos: n.aciertos, respondidos: n.respondidos)
+        }
+        var elegidas: [Catalogo.Competencia] = []
+        for entrada in resultado.plan where elegidas.count < 2 {
+            guard let b = todos.first(where: { $0.id == entrada.bloqueId }) else { continue }
+            if let c = b.competencias.sorted(by: { $0.orden < $1.orden }).first(where: { tieneContenido($0.id) }) { elegidas.append(c) }
+        }
+        recomendadas = elegidas
+        sinDatos = todos.filter { b in !b.competencias.contains { tieneContenido($0.id) } }
     }
 }

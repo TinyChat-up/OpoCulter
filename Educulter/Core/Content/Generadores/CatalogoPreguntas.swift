@@ -38,6 +38,9 @@ enum CatalogoPreguntas {
     /// `ordenarNumeros` no cuenta para el objetivo de volumen (D-064): su espacio combinatorio
     /// (millones de combinaciones) inflaría la cifra. Aporta como mucho 2000 variantes representativas.
     static let maximoOrdenarNumeros = 2_000
+    /// Generadores cuyo espacio se enumera por muestreo (cota inferior; el recuento no es exacto).
+    static let muestreados: Set<String> = ["operacionesCombinadas", "estadisticaBasica", "oracionSimple", "reglaDeTres", "conversionUnidades",
+                                           "sexagesimal", "escala", "ecuacionLineal", "fraccionesOperar", "problemaFraccion", "ordenarNumeros"]
 
     private final class Cache: @unchecked Sendable {
         let cerrojo = NSLock()
@@ -98,7 +101,7 @@ enum CatalogoPreguntas {
             var nuevas = 0
             for c in lista where claves.insert("\(p.tipo)|\(c)").inserted { nuevas += 1 }
             r.generados += nuevas
-            let muestreo = ["operacionesCombinadas", "estadisticaBasica", "oracionSimple"].contains(p.tipo)
+            let muestreo = muestreados.contains(p.tipo) || (p.tipo == "clasificarAcentuacion" && p.mecanica == .clasificar)
             let limitado = p.tipo == "ordenarNumeros"
             r.plantillas.append(.init(id: p.id, tipo: p.tipo, competencia: p.competencia, variantes: nuevas,
                                       exacto: !muestreo && !limitado && lista.count < limitePorPlantilla,

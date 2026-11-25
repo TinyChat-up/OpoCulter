@@ -155,3 +155,18 @@ extension Payload.FraccionBarras {
         return (total, total * n / d)
     }
 }
+
+extension Item {
+    /// Huella de la pregunta (D-087): la clave canónica del caso en los ítems generados (dos
+    /// semillas, o dos plantillas del mismo tipo, pueden dar la misma pregunta) y el id en los
+    /// estáticos. Ninguna ronda repite una huella.
+    var huella: String { claveGenerada.map { "gen|" + $0 } ?? "id|" + id }
+}
+
+extension Array where Element == Item {
+    /// Los ítems sin repetir huella, en su orden (se queda el primero de cada pregunta).
+    func sinPreguntasRepetidas(excluyendo previas: Set<String> = []) -> [Item] {
+        var vistas = previas
+        return filter { vistas.insert($0.huella).inserted }
+    }
+}

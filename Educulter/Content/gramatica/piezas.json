@@ -3,6 +3,34 @@
     {
       "tokens": [
         [
+          "el",
+          "det"
+        ],
+        [
+          "niño",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
+          "la",
+          "det"
+        ],
+        [
+          "niña",
+          "sust"
+        ]
+      ],
+      "genero": "f",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
           "la",
           "det"
         ],
@@ -17,11 +45,67 @@
     {
       "tokens": [
         [
-          "mi",
+          "el",
           "det"
         ],
         [
-          "hermano",
+          "médico",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
+          "la",
+          "det"
+        ],
+        [
+          "abuela",
+          "sust"
+        ]
+      ],
+      "genero": "f",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
+          "el",
+          "det"
+        ],
+        [
+          "vecino",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
+          "la",
+          "det"
+        ],
+        [
+          "alumna",
+          "sust"
+        ]
+      ],
+      "genero": "f",
+      "numero": "s"
+    },
+    {
+      "tokens": [
+        [
+          "el",
+          "det"
+        ],
+        [
+          "cocinero",
           "sust"
         ]
       ],
@@ -35,7 +119,7 @@
           "det"
         ],
         [
-          "alumnos",
+          "niños",
           "sust"
         ]
       ],
@@ -49,7 +133,7 @@
           "det"
         ],
         [
-          "vecinas",
+          "niñas",
           "sust"
         ]
       ],
@@ -59,62 +143,2494 @@
     {
       "tokens": [
         [
-          "el",
+          "las",
           "det"
         ],
         [
-          "cartero",
-          "sust"
-        ]
-      ],
-      "genero": "m",
-      "numero": "s"
-    },
-    {
-      "tokens": [
-        [
-          "Ana",
+          "profesoras",
           "sust"
         ]
       ],
       "genero": "f",
-      "numero": "s"
+      "numero": "p"
+    },
+    {
+      "tokens": [
+        [
+          "los",
+          "det"
+        ],
+        [
+          "médicos",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "p"
+    },
+    {
+      "tokens": [
+        [
+          "las",
+          "det"
+        ],
+        [
+          "abuelas",
+          "sust"
+        ]
+      ],
+      "genero": "f",
+      "numero": "p"
+    },
+    {
+      "tokens": [
+        [
+          "los",
+          "det"
+        ],
+        [
+          "vecinos",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "p"
+    },
+    {
+      "tokens": [
+        [
+          "las",
+          "det"
+        ],
+        [
+          "alumnas",
+          "sust"
+        ]
+      ],
+      "genero": "f",
+      "numero": "p"
+    },
+    {
+      "tokens": [
+        [
+          "los",
+          "det"
+        ],
+        [
+          "cocineros",
+          "sust"
+        ]
+      ],
+      "genero": "m",
+      "numero": "p"
     }
   ],
   "verbos": [
     {
-      "infinitivo": "caminar",
-      "regimen": "intransitivo"
-    },
-    {
-      "infinitivo": "llegar",
-      "regimen": "intransitivo"
-    },
-    {
-      "infinitivo": "descansar",
-      "regimen": "intransitivo"
-    },
-    {
-      "infinitivo": "trabajar",
-      "regimen": "intransitivo"
-    },
-    {
-      "infinitivo": "leer",
+      "infinitivo": "cantar",
       "regimen": "transitivo",
-      "ci": true,
       "cd": [
         {
           "tokens": [
             [
-              "un",
+              "la",
               "det"
             ],
             [
-              "cuento",
+              "canción",
               "sust"
             ]
-          ]
+          ],
+          "genero": "f",
+          "numero": "s"
         },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "himno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "comprar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "manzana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "bocadillo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "sopa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "pastel",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "zumo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "leche",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "café",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "libro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "caja",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "coche",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "bicicleta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "cuaderno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "camisa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "abrigo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ],
+      "ci": true
+    },
+    {
+      "infinitivo": "preparar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "manzana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "bocadillo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "sopa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "pastel",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "zumo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "leche",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "café",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ],
+      "ci": true
+    },
+    {
+      "infinitivo": "lavar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "mesa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "ventana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "coche",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "bicicleta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "camisa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "abrigo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "mirar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niño",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niña",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "profesora",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "médico",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "abuela",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "vecino",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "alumna",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "cocinero",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "perro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "gata",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "libro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "mesa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "ventana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "caja",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "coche",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "bicicleta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "cuaderno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "puerta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "regalo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "escuchar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niño",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niña",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "profesora",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "médico",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "abuela",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "vecino",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "alumna",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "cocinero",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "canción",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "himno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "dibujar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niño",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niña",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "profesora",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "médico",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "abuela",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "vecino",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "alumna",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "cocinero",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "perro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "gata",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "libro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "mesa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "ventana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "caja",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "coche",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "bicicleta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "cuaderno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "puerta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "regalo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "pintar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "libro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "mesa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "ventana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "caja",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "coche",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "bicicleta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "cuaderno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "puerta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "regalo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "visitar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niño",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niña",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "profesora",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "médico",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "abuela",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "vecino",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "alumna",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "cocinero",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "museo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "ciudad",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "pueblo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "saludar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niño",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niña",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "profesora",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "médico",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "abuela",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "vecino",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "alumna",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "cocinero",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "ayudar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niño",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "niña",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "profesora",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "médico",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "abuela",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "vecino",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "alumna",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "a",
+              "prep"
+            ],
+            [
+              "su",
+              "det"
+            ],
+            [
+              "cocinero",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "regalar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "manzana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "bocadillo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "sopa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "pastel",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "libro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "caja",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "coche",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "bicicleta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "cuaderno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "camisa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "abrigo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ],
+      "ci": true
+    },
+    {
+      "infinitivo": "prestar",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "libro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "coche",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "bicicleta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "cuaderno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "abrigo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ],
+      "ci": true
+    },
+    {
+      "infinitivo": "comer",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "manzana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "bocadillo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "sopa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "pastel",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "beber",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "zumo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "leche",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "café",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "aprender",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "lección",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "idioma",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ]
+    },
+    {
+      "infinitivo": "vender",
+      "regimen": "transitivo",
+      "cd": [
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "manzana",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "bocadillo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "sopa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "pastel",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "libro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "caja",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "coche",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "bicicleta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "cuaderno",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "camisa",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "abrigo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        }
+      ],
+      "ci": true
+    },
+    {
+      "infinitivo": "escribir",
+      "regimen": "transitivo",
+      "cd": [
         {
           "tokens": [
             [
@@ -125,46 +2641,73 @@
               "carta",
               "sust"
             ]
-          ]
-        }
-      ]
-    },
-    {
-      "infinitivo": "escribir",
-      "regimen": "transitivo",
-      "ci": true,
-      "cd": [
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
         {
           "tokens": [
             [
-              "un",
+              "el",
+              "det"
+            ],
+            [
+              "cuento",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
               "det"
             ],
             [
               "mensaje",
               "sust"
             ]
-          ]
+          ],
+          "genero": "m",
+          "numero": "s"
         },
         {
           "tokens": [
             [
-              "una",
+              "el",
               "det"
             ],
             [
-              "postal",
+              "poema",
               "sust"
             ]
-          ]
+          ],
+          "genero": "m",
+          "numero": "s"
         }
-      ]
+      ],
+      "ci": true
     },
     {
-      "infinitivo": "preparar",
+      "infinitivo": "abrir",
       "regimen": "transitivo",
-      "ci": true,
       "cd": [
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "libro",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
         {
           "tokens": [
             [
@@ -172,55 +2715,102 @@
               "det"
             ],
             [
-              "cena",
+              "ventana",
               "sust"
             ]
-          ]
+          ],
+          "genero": "f",
+          "numero": "s"
         },
         {
           "tokens": [
             [
-              "un",
+              "la",
               "det"
             ],
             [
-              "pastel",
+              "caja",
               "sust"
             ]
-          ]
-        }
-      ]
-    },
-    {
-      "infinitivo": "comprar",
-      "regimen": "transitivo",
-      "ci": true,
-      "cd": [
-        {
-          "tokens": [
-            [
-              "fruta",
-              "sust"
-            ]
-          ]
+          ],
+          "genero": "f",
+          "numero": "s"
         },
         {
           "tokens": [
             [
-              "unos",
+              "el",
               "det"
             ],
             [
-              "libros",
+              "cuaderno",
               "sust"
             ]
-          ]
+          ],
+          "genero": "m",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "la",
+              "det"
+            ],
+            [
+              "puerta",
+              "sust"
+            ]
+          ],
+          "genero": "f",
+          "numero": "s"
+        },
+        {
+          "tokens": [
+            [
+              "el",
+              "det"
+            ],
+            [
+              "regalo",
+              "sust"
+            ]
+          ],
+          "genero": "m",
+          "numero": "s"
         }
       ]
     },
     {
-      "infinitivo": "estar",
-      "regimen": "copulativo"
+      "infinitivo": "trabajar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "caminar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "bailar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "nadar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "descansar",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "correr",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "pasear",
+      "regimen": "intransitivo"
+    },
+    {
+      "infinitivo": "subir",
+      "regimen": "intransitivo"
     }
   ],
   "complementos": {
@@ -232,14 +2822,16 @@
             "prep"
           ],
           [
-            "sus",
+            "su",
             "det"
           ],
           [
-            "abuelos",
+            "niño",
             "sust"
           ]
-        ]
+        ],
+        "genero": "m",
+        "numero": "s"
       },
       {
         "tokens": [
@@ -248,14 +2840,16 @@
             "prep"
           ],
           [
-            "la",
+            "su",
             "det"
           ],
           [
-            "directora",
+            "niña",
             "sust"
           ]
-        ]
+        ],
+        "genero": "f",
+        "numero": "s"
       },
       {
         "tokens": [
@@ -264,10 +2858,106 @@
             "prep"
           ],
           [
-            "Pedro",
+            "su",
+            "det"
+          ],
+          [
+            "profesora",
             "sust"
           ]
-        ]
+        ],
+        "genero": "f",
+        "numero": "s"
+      },
+      {
+        "tokens": [
+          [
+            "a",
+            "prep"
+          ],
+          [
+            "su",
+            "det"
+          ],
+          [
+            "médico",
+            "sust"
+          ]
+        ],
+        "genero": "m",
+        "numero": "s"
+      },
+      {
+        "tokens": [
+          [
+            "a",
+            "prep"
+          ],
+          [
+            "su",
+            "det"
+          ],
+          [
+            "abuela",
+            "sust"
+          ]
+        ],
+        "genero": "f",
+        "numero": "s"
+      },
+      {
+        "tokens": [
+          [
+            "a",
+            "prep"
+          ],
+          [
+            "su",
+            "det"
+          ],
+          [
+            "vecino",
+            "sust"
+          ]
+        ],
+        "genero": "m",
+        "numero": "s"
+      },
+      {
+        "tokens": [
+          [
+            "a",
+            "prep"
+          ],
+          [
+            "su",
+            "det"
+          ],
+          [
+            "alumna",
+            "sust"
+          ]
+        ],
+        "genero": "f",
+        "numero": "s"
+      },
+      {
+        "tokens": [
+          [
+            "a",
+            "prep"
+          ],
+          [
+            "su",
+            "det"
+          ],
+          [
+            "cocinero",
+            "sust"
+          ]
+        ],
+        "genero": "m",
+        "numero": "s"
       }
     ],
     "CCL": [
@@ -314,6 +3004,38 @@
             "sust"
           ]
         ]
+      },
+      {
+        "tokens": [
+          [
+            "en",
+            "prep"
+          ],
+          [
+            "el",
+            "det"
+          ],
+          [
+            "colegio",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "en",
+            "prep"
+          ],
+          [
+            "la",
+            "det"
+          ],
+          [
+            "biblioteca",
+            "sust"
+          ]
+        ]
       }
     ],
     "CCT": [
@@ -331,17 +3053,6 @@
       {
         "tokens": [
           [
-            "mañana",
-            "adv"
-          ]
-        ],
-        "tiempo": [
-          "Futuro simple"
-        ]
-      },
-      {
-        "tokens": [
-          [
             "por",
             "prep"
           ],
@@ -350,7 +3061,19 @@
             "det"
           ],
           [
-            "tarde",
+            "mañana",
+            "adv"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "el",
+            "det"
+          ],
+          [
+            "lunes",
             "sust"
           ]
         ]
@@ -374,13 +3097,25 @@
           "Presente",
           "Pretérito imperfecto"
         ]
+      },
+      {
+        "tokens": [
+          [
+            "en",
+            "prep"
+          ],
+          [
+            "verano",
+            "sust"
+          ]
+        ]
       }
     ],
     "CCM": [
       {
         "tokens": [
           [
-            "tranquilamente",
+            "deprisa",
             "adv"
           ]
         ]
@@ -400,7 +3135,39 @@
       {
         "tokens": [
           [
-            "deprisa",
+            "tranquilamente",
+            "adv"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "con",
+            "prep"
+          ],
+          [
+            "alegría",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "en",
+            "prep"
+          ],
+          [
+            "silencio",
+            "sust"
+          ]
+        ]
+      },
+      {
+        "tokens": [
+          [
+            "despacio",
             "adv"
           ]
         ]
@@ -410,26 +3177,138 @@
   "atributos": [
     {
       "formas": {
-        "ms": "contento",
-        "fs": "contenta",
-        "mp": "contentos",
-        "fp": "contentas"
+        "ms": "simpático",
+        "fs": "simpática",
+        "mp": "simpáticos",
+        "fp": "simpáticas"
       }
     },
     {
       "formas": {
-        "ms": "cansado",
-        "fs": "cansada",
-        "mp": "cansados",
-        "fp": "cansadas"
+        "ms": "amable",
+        "fs": "amable",
+        "mp": "amables",
+        "fp": "amables"
       }
     },
     {
       "formas": {
-        "ms": "tranquilo",
-        "fs": "tranquila",
-        "mp": "tranquilos",
-        "fp": "tranquilas"
+        "ms": "alto",
+        "fs": "alta",
+        "mp": "altos",
+        "fp": "altas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "delicioso",
+        "fs": "deliciosa",
+        "mp": "deliciosos",
+        "fp": "deliciosas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "caliente",
+        "fs": "caliente",
+        "mp": "calientes",
+        "fp": "calientes"
+      }
+    },
+    {
+      "formas": {
+        "ms": "rojo",
+        "fs": "roja",
+        "mp": "rojos",
+        "fp": "rojas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "azul",
+        "fs": "azul",
+        "mp": "azules",
+        "fp": "azules"
+      }
+    },
+    {
+      "formas": {
+        "ms": "nuevo",
+        "fs": "nueva",
+        "mp": "nuevos",
+        "fp": "nuevas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "viejo",
+        "fs": "vieja",
+        "mp": "viejos",
+        "fp": "viejas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "grande",
+        "fs": "grande",
+        "mp": "grandes",
+        "fp": "grandes"
+      }
+    },
+    {
+      "formas": {
+        "ms": "pequeño",
+        "fs": "pequeña",
+        "mp": "pequeños",
+        "fp": "pequeñas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "largo",
+        "fs": "larga",
+        "mp": "largos",
+        "fp": "largas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "divertido",
+        "fs": "divertida",
+        "mp": "divertidos",
+        "fp": "divertidas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "precioso",
+        "fs": "preciosa",
+        "mp": "preciosos",
+        "fp": "preciosas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "antiguo",
+        "fs": "antigua",
+        "mp": "antiguos",
+        "fp": "antiguas"
+      }
+    },
+    {
+      "formas": {
+        "ms": "difícil",
+        "fs": "difícil",
+        "mp": "difíciles",
+        "fp": "difíciles"
+      }
+    },
+    {
+      "formas": {
+        "ms": "fácil",
+        "fs": "fácil",
+        "mp": "fáciles",
+        "fp": "fáciles"
       }
     }
   ]

@@ -14,6 +14,7 @@ struct MecanicaSegmentar: View {
     let p: Payload.Segmentar
     let ctx: ContextoMecanica
     @Binding var respuesta: Respuesta?
+    @Environment(\.vibracionActiva) private var vibracionActiva
     @State private var inicio: Int?
     @State private var fin: Int?
     @State private var aviso: String?
@@ -87,8 +88,8 @@ struct MecanicaSegmentar: View {
                 arbol
             }
         }
-        .sensoryFeedback(.selection, trigger: segmentos.count)
-        .sensoryFeedback(.error, trigger: aviso) { _, nuevo in nuevo != nil }
+        .retroHaptica(.selection, trigger: segmentos.count)
+        .sensoryFeedback(.error, trigger: aviso) { _, nuevo in nuevo != nil && vibracionActiva }
     }
 
     private var textoInstruccion: String {

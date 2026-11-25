@@ -1,47 +1,177 @@
 [
   {
-    "id": "MAT.POR.PORCENT.G01",
-    "competencia": "MAT.POR.PORCENT",
+    "id": "MAT.POR.CALC.G01",
+    "competencia": "MAT.POR.CALC",
     "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "numerico",
+    "tipo": "porcentajeDe",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Calcular el tanto por ciento de una cantidad",
+    "parametros": {
+      "variante": "calc"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.POR.CALC.G02",
+    "competencia": "MAT.POR.CALC",
+    "peldano": 3,
     "dificultad": 3,
     "mecanica": "numerico",
     "tipo": "porcentajeDe",
     "enunciados": [
       "{{pregunta}}"
     ],
-    "objetivo": "Calcular porcentajes, aumentos y descuentos",
+    "objetivo": "Calcular el tanto por ciento de una cantidad",
+    "parametros": {
+      "variante": "calc"
+    },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
-    "id": "MAT.POR.PORCENT.G02",
-    "competencia": "MAT.POR.PORCENT",
-    "peldano": 2,
-    "dificultad": 2,
-    "mecanica": "eleccion",
+    "id": "MAT.POR.TOTAL.G01",
+    "competencia": "MAT.POR.TOTAL",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
     "tipo": "porcentajeDe",
     "enunciados": [
-      "{{pregunta}}",
-      "Elige el resultado. {{pregunta}}"
+      "{{pregunta}}"
     ],
-    "objetivo": "Calcular porcentajes",
+    "objetivo": "Hallar el total a partir de una parte y su porcentaje",
     "parametros": {
-      "unidad": "€"
+      "variante": "total"
     },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.POR.VAR.G01",
+    "competencia": "MAT.POR.VAR",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "porcentajeDe",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Calcular aumentos y descuentos porcentuales",
+    "parametros": {
+      "variante": "var"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.POR.VAR.G02",
+    "competencia": "MAT.POR.VAR",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "construir",
+    "tipo": "porcentajeDe",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Justificar un aumento o un descuento con su factor",
+    "parametros": {
+      "variante": "var"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.POR.PROP.G01",
+    "competencia": "MAT.POR.PROP",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "numerico",
+    "tipo": "reglaDeTres",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Resolver problemas de proporcionalidad directa",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.POR.PROP.G02",
+    "competencia": "MAT.POR.PROP",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "numerico",
+    "tipo": "reglaDeTres",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Resolver problemas de proporcionalidad directa",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: especificación de la dirección (24/11/2026); redacciones en el generador (D-077)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   }

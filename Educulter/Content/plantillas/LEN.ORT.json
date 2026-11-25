@@ -13,40 +13,66 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: léxico de 818 palabras de la dirección (24/11/2026)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
     "id": "LEN.ORT.AGU.G02",
     "competencia": "LEN.ORT.AGU",
-    "peldano": 2,
+    "peldano": 3,
     "dificultad": 3,
-    "mecanica": "eleccion",
-    "tipo": "clasificarAcentuacion",
+    "mecanica": "colocarTilde",
+    "tipo": "colocarTilde",
     "enunciados": [
-      "¿Cómo es la palabra «{{palabra}}» según su acento?",
-      "Clasifica «{{palabra}}»: ¿aguda, llana o esdrújula?"
+      "¿Dónde va la tilde? Si no lleva, pulsa «Sin tilde»."
     ],
-    "objetivo": "Clasificar palabras por su sílaba tónica",
+    "objetivo": "Aplicar las reglas generales de acentuación",
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: léxico de 818 palabras de la dirección (24/11/2026)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
   {
     "id": "LEN.ORT.AGU.G03",
     "competencia": "LEN.ORT.AGU",
-    "peldano": 1,
+    "peldano": 2,
     "dificultad": 2,
+    "mecanica": "clasificar",
+    "tipo": "clasificarAcentuacion",
+    "enunciados": [
+      "Clasifica cada palabra según su sílaba tónica."
+    ],
+    "objetivo": "Clasificar palabras por su sílaba tónica",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Lote 02: léxico de 818 palabras de la dirección (24/11/2026)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.AGU.G04",
+    "competencia": "LEN.ORT.AGU",
+    "peldano": 1,
+    "dificultad": 1,
     "mecanica": "marcarTexto",
     "tipo": "silabaTonica",
     "enunciados": [
@@ -56,10 +82,12 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Lote 02: léxico de 818 palabras de la dirección (24/11/2026)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
     },
     "version": 1
   },
@@ -76,26 +104,32 @@
     "objetivo": "Usar la tilde diacrítica",
     "parametros": {
       "familias": [
-        "tu",
-        "el",
-        "mi",
-        "se",
-        "si",
-        "de",
-        "te",
-        "mas",
-        "aun"
+        "tu_tú",
+        "el_él",
+        "mi_mí",
+        "si_sí",
+        "te_té",
+        "de_dé",
+        "se_sé",
+        "mas_más",
+        "aun_aún",
+        "que_qué",
+        "como_cómo",
+        "cuando_cuándo",
+        "donde_dónde"
       ]
     },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. Aprobada al superar los tests de propiedades en el Mac (25/11/2026, D-089)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.ORT.PQ.G01",
@@ -116,10 +150,94 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. Aprobada al superar los tests de propiedades en el Mac (25/11/2026, D-089)."
     },
     "validacion": {
-      "estado": "borrador"
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 2
+  },
+  {
+    "id": "LEN.ORT.HOM.G01",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "eleccion",
+    "tipo": "fraseHueco",
+    "enunciados": [
+      "Elige la forma correcta: {{frase}}"
+    ],
+    "objetivo": "Distinguir homófonos frecuentes",
+    "parametros": {
+      "familias": [
+        "hay_ahí_ay",
+        "haber_aver",
+        "echo_hecho",
+        "vaya_valla_baya",
+        "tuvo_tubo",
+        "hola_ola",
+        "botar_votar",
+        "grabar_gravar",
+        "sabia_savia",
+        "revelar_rebelar",
+        "hasta_asta",
+        "halla_haya",
+        "hierba_hierva",
+        "bello_vello"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. Aprobada al superar los tests de propiedades en el Mac (25/11/2026, D-089)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.G02",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "fraseHueco",
+    "enunciados": [
+      "Elige la forma correcta: {{frase}}"
+    ],
+    "objetivo": "Distinguir homófonos frecuentes",
+    "parametros": {
+      "familias": [
+        "hay_ahí_ay",
+        "haber_aver",
+        "echo_hecho",
+        "vaya_valla_baya",
+        "tuvo_tubo",
+        "hola_ola",
+        "botar_votar",
+        "grabar_gravar",
+        "sabia_savia",
+        "revelar_rebelar",
+        "hasta_asta",
+        "halla_haya",
+        "hierba_hierva",
+        "bello_vello"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Plantilla del lote 02b (errata 1) sobre frases aprobadas por la dirección. Aprobada al superar los tests de propiedades en el Mac (25/11/2026, D-089)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
     },
     "version": 1
   }

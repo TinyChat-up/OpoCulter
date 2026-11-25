@@ -1,49 +1,2459 @@
 [
   {
+    "palabra": "café"
+  },
+  {
+    "palabra": "sofá"
+  },
+  {
+    "palabra": "mamá"
+  },
+  {
+    "palabra": "papá"
+  },
+  {
+    "palabra": "bebé"
+  },
+  {
+    "palabra": "menú"
+  },
+  {
+    "palabra": "champú"
+  },
+  {
+    "palabra": "colibrí"
+  },
+  {
+    "palabra": "jabalí"
+  },
+  {
+    "palabra": "rubí"
+  },
+  {
+    "palabra": "dominó"
+  },
+  {
+    "palabra": "también"
+  },
+  {
+    "palabra": "además"
+  },
+  {
+    "palabra": "jamás"
+  },
+  {
+    "palabra": "quizás"
+  },
+  {
+    "palabra": "compás"
+  },
+  {
+    "palabra": "francés"
+  },
+  {
+    "palabra": "inglés"
+  },
+  {
+    "palabra": "japonés"
+  },
+  {
+    "palabra": "portugués"
+  },
+  {
+    "palabra": "autobús"
+  },
+  {
+    "palabra": "camión"
+  },
+  {
     "palabra": "canción"
   },
   {
-    "palabra": "árbol"
+    "palabra": "corazón"
   },
   {
-    "palabra": "examen"
+    "palabra": "ratón"
   },
   {
-    "palabra": "música"
+    "palabra": "balcón"
   },
   {
-    "palabra": "café"
+    "palabra": "avión"
+  },
+  {
+    "palabra": "limón"
+  },
+  {
+    "palabra": "melón"
+  },
+  {
+    "palabra": "jamón"
+  },
+  {
+    "palabra": "botón"
+  },
+  {
+    "palabra": "cajón"
+  },
+  {
+    "palabra": "colchón"
+  },
+  {
+    "palabra": "sillón"
+  },
+  {
+    "palabra": "salón"
+  },
+  {
+    "palabra": "ladrón"
+  },
+  {
+    "palabra": "millón"
+  },
+  {
+    "palabra": "montón"
+  },
+  {
+    "palabra": "pantalón"
+  },
+  {
+    "palabra": "razón"
+  },
+  {
+    "palabra": "región"
+  },
+  {
+    "palabra": "estación"
+  },
+  {
+    "palabra": "lección"
+  },
+  {
+    "palabra": "nación"
+  },
+  {
+    "palabra": "opinión"
+  },
+  {
+    "palabra": "atención"
+  },
+  {
+    "palabra": "emoción"
+  },
+  {
+    "palabra": "ilusión"
+  },
+  {
+    "palabra": "pasión"
+  },
+  {
+    "palabra": "misión"
+  },
+  {
+    "palabra": "decisión"
+  },
+  {
+    "palabra": "televisión"
+  },
+  {
+    "palabra": "educación"
+  },
+  {
+    "palabra": "información"
+  },
+  {
+    "palabra": "situación"
+  },
+  {
+    "palabra": "población"
+  },
+  {
+    "palabra": "revolución"
+  },
+  {
+    "palabra": "solución"
+  },
+  {
+    "palabra": "oración"
+  },
+  {
+    "palabra": "función"
+  },
+  {
+    "palabra": "unión"
+  },
+  {
+    "palabra": "alemán"
+  },
+  {
+    "palabra": "capitán"
+  },
+  {
+    "palabra": "volcán"
+  },
+  {
+    "palabra": "refrán"
+  },
+  {
+    "palabra": "galán"
+  },
+  {
+    "palabra": "sartén"
+  },
+  {
+    "palabra": "andén"
+  },
+  {
+    "palabra": "almacén"
+  },
+  {
+    "palabra": "rehén"
+  },
+  {
+    "palabra": "adiós"
+  },
+  {
+    "palabra": "anís"
+  },
+  {
+    "palabra": "interés"
+  },
+  {
+    "palabra": "revés"
+  },
+  {
+    "palabra": "ciprés"
+  },
+  {
+    "palabra": "después"
+  },
+  {
+    "palabra": "cortés"
+  },
+  {
+    "palabra": "marqués"
+  },
+  {
+    "palabra": "burgués"
+  },
+  {
+    "palabra": "campeón"
+  },
+  {
+    "palabra": "cartón"
+  },
+  {
+    "palabra": "tiburón"
+  },
+  {
+    "palabra": "escorpión"
+  },
+  {
+    "palabra": "acordeón"
+  },
+  {
+    "palabra": "algodón"
+  },
+  {
+    "palabra": "perdón"
+  },
+  {
+    "palabra": "jardín"
+  },
+  {
+    "palabra": "delfín"
+  },
+  {
+    "palabra": "violín"
+  },
+  {
+    "palabra": "bombón"
+  },
+  {
+    "palabra": "calcetín"
+  },
+  {
+    "palabra": "maletín"
+  },
+  {
+    "palabra": "cojín"
+  },
+  {
+    "palabra": "festín"
+  },
+  {
+    "palabra": "patín"
+  },
+  {
+    "palabra": "jazmín"
+  },
+  {
+    "palabra": "comí"
+  },
+  {
+    "palabra": "viví"
+  },
+  {
+    "palabra": "salí"
+  },
+  {
+    "palabra": "llegó"
+  },
+  {
+    "palabra": "cantó"
+  },
+  {
+    "palabra": "bebió"
+  },
+  {
+    "palabra": "comió"
+  },
+  {
+    "palabra": "salió"
+  },
+  {
+    "palabra": "habló"
+  },
+  {
+    "palabra": "miró"
+  },
+  {
+    "palabra": "jugó"
+  },
+  {
+    "palabra": "pasó"
+  },
+  {
+    "palabra": "dejó"
+  },
+  {
+    "palabra": "terminó"
+  },
+  {
+    "palabra": "empezó"
+  },
+  {
+    "palabra": "estudió"
+  },
+  {
+    "palabra": "escribió"
+  },
+  {
+    "palabra": "aprendió"
+  },
+  {
+    "palabra": "abrió"
+  },
+  {
+    "palabra": "cerró"
+  },
+  {
+    "palabra": "encontró"
+  },
+  {
+    "palabra": "llamó"
+  },
+  {
+    "palabra": "pensó"
+  },
+  {
+    "palabra": "sintió"
+  },
+  {
+    "palabra": "cantará"
+  },
+  {
+    "palabra": "comerá"
+  },
+  {
+    "palabra": "vivirá"
+  },
+  {
+    "palabra": "será"
+  },
+  {
+    "palabra": "estará"
+  },
+  {
+    "palabra": "tendrá"
+  },
+  {
+    "palabra": "podrá"
+  },
+  {
+    "palabra": "sabrá"
+  },
+  {
+    "palabra": "hará"
+  },
+  {
+    "palabra": "dirá"
+  },
+  {
+    "palabra": "vendrá"
+  },
+  {
+    "palabra": "saldrá"
+  },
+  {
+    "palabra": "querrá"
+  },
+  {
+    "palabra": "habrá"
+  },
+  {
+    "palabra": "cantarán"
+  },
+  {
+    "palabra": "comerán"
+  },
+  {
+    "palabra": "está"
+  },
+  {
+    "palabra": "están"
+  },
+  {
+    "palabra": "estás"
+  },
+  {
+    "palabra": "esté"
+  },
+  {
+    "palabra": "estén"
   },
   {
     "palabra": "reloj"
   },
   {
+    "palabra": "pared"
+  },
+  {
+    "palabra": "verdad"
+  },
+  {
+    "palabra": "ciudad"
+  },
+  {
+    "palabra": "libertad"
+  },
+  {
+    "palabra": "amistad"
+  },
+  {
+    "palabra": "bondad"
+  },
+  {
+    "palabra": "salud"
+  },
+  {
+    "palabra": "juventud"
+  },
+  {
+    "palabra": "virtud"
+  },
+  {
+    "palabra": "actitud"
+  },
+  {
+    "palabra": "papel"
+  },
+  {
+    "palabra": "hotel"
+  },
+  {
+    "palabra": "cartel"
+  },
+  {
+    "palabra": "pastel"
+  },
+  {
+    "palabra": "nivel"
+  },
+  {
+    "palabra": "caracol"
+  },
+  {
+    "palabra": "farol"
+  },
+  {
+    "palabra": "animal"
+  },
+  {
+    "palabra": "final"
+  },
+  {
+    "palabra": "general"
+  },
+  {
+    "palabra": "hospital"
+  },
+  {
+    "palabra": "igual"
+  },
+  {
+    "palabra": "natural"
+  },
+  {
+    "palabra": "normal"
+  },
+  {
+    "palabra": "señal"
+  },
+  {
+    "palabra": "total"
+  },
+  {
+    "palabra": "cristal"
+  },
+  {
+    "palabra": "metal"
+  },
+  {
+    "palabra": "canal"
+  },
+  {
+    "palabra": "ideal"
+  },
+  {
+    "palabra": "mortal"
+  },
+  {
+    "palabra": "abril"
+  },
+  {
+    "palabra": "feliz"
+  },
+  {
+    "palabra": "nariz"
+  },
+  {
+    "palabra": "perdiz"
+  },
+  {
+    "palabra": "actriz"
+  },
+  {
+    "palabra": "cicatriz"
+  },
+  {
+    "palabra": "codorniz"
+  },
+  {
+    "palabra": "matiz"
+  },
+  {
+    "palabra": "tapiz"
+  },
+  {
+    "palabra": "avestruz"
+  },
+  {
+    "palabra": "arroz"
+  },
+  {
+    "palabra": "capaz"
+  },
+  {
+    "palabra": "eficaz"
+  },
+  {
+    "palabra": "veloz"
+  },
+  {
+    "palabra": "feroz"
+  },
+  {
+    "palabra": "atroz"
+  },
+  {
+    "palabra": "disfraz"
+  },
+  {
+    "palabra": "altavoz"
+  },
+  {
+    "palabra": "cantar"
+  },
+  {
+    "palabra": "comer"
+  },
+  {
+    "palabra": "vivir"
+  },
+  {
+    "palabra": "amor"
+  },
+  {
+    "palabra": "calor"
+  },
+  {
+    "palabra": "color"
+  },
+  {
+    "palabra": "dolor"
+  },
+  {
+    "palabra": "favor"
+  },
+  {
+    "palabra": "motor"
+  },
+  {
+    "palabra": "mujer"
+  },
+  {
+    "palabra": "placer"
+  },
+  {
+    "palabra": "poder"
+  },
+  {
+    "palabra": "saber"
+  },
+  {
+    "palabra": "señor"
+  },
+  {
+    "palabra": "sabor"
+  },
+  {
+    "palabra": "temor"
+  },
+  {
+    "palabra": "terror"
+  },
+  {
+    "palabra": "valor"
+  },
+  {
+    "palabra": "autor"
+  },
+  {
+    "palabra": "doctor"
+  },
+  {
+    "palabra": "pintor"
+  },
+  {
+    "palabra": "profesor"
+  },
+  {
+    "palabra": "lector"
+  },
+  {
+    "palabra": "escritor"
+  },
+  {
+    "palabra": "jugador"
+  },
+  {
+    "palabra": "trabajador"
+  },
+  {
+    "palabra": "hogar"
+  },
+  {
+    "palabra": "lugar"
+  },
+  {
+    "palabra": "collar"
+  },
+  {
+    "palabra": "altar"
+  },
+  {
+    "palabra": "azar"
+  },
+  {
+    "palabra": "bienestar"
+  },
+  {
+    "palabra": "caminar"
+  },
+  {
+    "palabra": "estudiar"
+  },
+  {
+    "palabra": "nadar"
+  },
+  {
+    "palabra": "jugar"
+  },
+  {
+    "palabra": "bailar"
+  },
+  {
+    "palabra": "escribir"
+  },
+  {
+    "palabra": "dormir"
+  },
+  {
+    "palabra": "sentir"
+  },
+  {
+    "palabra": "servir"
+  },
+  {
+    "palabra": "pedir"
+  },
+  {
+    "palabra": "ordenador"
+  },
+  {
+    "palabra": "ascensor"
+  },
+  {
+    "palabra": "tractor"
+  },
+  {
+    "palabra": "error"
+  },
+  {
+    "palabra": "honor"
+  },
+  {
+    "palabra": "olor"
+  },
+  {
+    "palabra": "sudor"
+  },
+  {
+    "palabra": "humor"
+  },
+  {
+    "palabra": "interior"
+  },
+  {
+    "palabra": "exterior"
+  },
+  {
+    "palabra": "mejor"
+  },
+  {
+    "palabra": "peor"
+  },
+  {
+    "palabra": "menor"
+  },
+  {
+    "palabra": "mayor"
+  },
+  {
+    "palabra": "anterior"
+  },
+  {
+    "palabra": "posterior"
+  },
+  {
+    "palabra": "superior"
+  },
+  {
+    "palabra": "inferior"
+  },
+  {
+    "palabra": "robot"
+  },
+  {
+    "palabra": "zigzag"
+  },
+  {
+    "palabra": "construir"
+  },
+  {
+    "palabra": "destruir"
+  },
+  {
+    "palabra": "divisor"
+  },
+  {
+    "palabra": "casa"
+  },
+  {
+    "palabra": "mesa"
+  },
+  {
+    "palabra": "silla"
+  },
+  {
+    "palabra": "libro"
+  },
+  {
+    "palabra": "perro"
+  },
+  {
+    "palabra": "gato"
+  },
+  {
+    "palabra": "mano"
+  },
+  {
+    "palabra": "cabeza"
+  },
+  {
+    "palabra": "ventana"
+  },
+  {
+    "palabra": "puerta"
+  },
+  {
+    "palabra": "escuela"
+  },
+  {
+    "palabra": "maestro"
+  },
+  {
+    "palabra": "alumno"
+  },
+  {
+    "palabra": "profesora"
+  },
+  {
+    "palabra": "palabra"
+  },
+  {
+    "palabra": "lengua"
+  },
+  {
+    "palabra": "problema"
+  },
+  {
+    "palabra": "sistema"
+  },
+  {
+    "palabra": "tema"
+  },
+  {
+    "palabra": "idea"
+  },
+  {
+    "palabra": "cosa"
+  },
+  {
+    "palabra": "tiempo"
+  },
+  {
+    "palabra": "mundo"
+  },
+  {
+    "palabra": "vida"
+  },
+  {
+    "palabra": "pueblo"
+  },
+  {
+    "palabra": "camino"
+  },
+  {
+    "palabra": "montaña"
+  },
+  {
+    "palabra": "playa"
+  },
+  {
+    "palabra": "arena"
+  },
+  {
+    "palabra": "agua"
+  },
+  {
+    "palabra": "fuego"
+  },
+  {
+    "palabra": "tierra"
+  },
+  {
+    "palabra": "aire"
+  },
+  {
+    "palabra": "nube"
+  },
+  {
+    "palabra": "lluvia"
+  },
+  {
+    "palabra": "nieve"
+  },
+  {
+    "palabra": "viento"
+  },
+  {
+    "palabra": "luna"
+  },
+  {
+    "palabra": "estrella"
+  },
+  {
+    "palabra": "planeta"
+  },
+  {
+    "palabra": "hoja"
+  },
+  {
+    "palabra": "rama"
+  },
+  {
+    "palabra": "flores"
+  },
+  {
+    "palabra": "plantas"
+  },
+  {
+    "palabra": "jardines"
+  },
+  {
+    "palabra": "examen"
+  },
+  {
+    "palabra": "joven"
+  },
+  {
+    "palabra": "orden"
+  },
+  {
+    "palabra": "origen"
+  },
+  {
+    "palabra": "imagen"
+  },
+  {
+    "palabra": "margen"
+  },
+  {
+    "palabra": "virgen"
+  },
+  {
+    "palabra": "volumen"
+  },
+  {
+    "palabra": "resumen"
+  },
+  {
+    "palabra": "crimen"
+  },
+  {
+    "palabra": "germen"
+  },
+  {
+    "palabra": "polen"
+  },
+  {
+    "palabra": "abdomen"
+  },
+  {
+    "palabra": "certamen"
+  },
+  {
+    "palabra": "dictamen"
+  },
+  {
+    "palabra": "lunes"
+  },
+  {
+    "palabra": "martes"
+  },
+  {
+    "palabra": "jueves"
+  },
+  {
+    "palabra": "viernes"
+  },
+  {
+    "palabra": "crisis"
+  },
+  {
+    "palabra": "tesis"
+  },
+  {
+    "palabra": "dosis"
+  },
+  {
+    "palabra": "virus"
+  },
+  {
+    "palabra": "campus"
+  },
+  {
+    "palabra": "cactus"
+  },
+  {
+    "palabra": "zapato"
+  },
+  {
+    "palabra": "camisa"
+  },
+  {
+    "palabra": "pantalones"
+  },
+  {
+    "palabra": "vestido"
+  },
+  {
+    "palabra": "falda"
+  },
+  {
+    "palabra": "abrigo"
+  },
+  {
+    "palabra": "bufanda"
+  },
+  {
+    "palabra": "guante"
+  },
+  {
+    "palabra": "sombrero"
+  },
+  {
+    "palabra": "calcetines"
+  },
+  {
+    "palabra": "cuaderno"
+  },
+  {
+    "palabra": "lapicero"
+  },
+  {
+    "palabra": "goma"
+  },
+  {
+    "palabra": "regla"
+  },
+  {
+    "palabra": "mochila"
+  },
+  {
+    "palabra": "pizarra"
+  },
+  {
+    "palabra": "tiza"
+  },
+  {
+    "palabra": "recreo"
+  },
+  {
+    "palabra": "deberes"
+  },
+  {
+    "palabra": "hermano"
+  },
+  {
+    "palabra": "hermana"
+  },
+  {
+    "palabra": "abuelo"
+  },
+  {
+    "palabra": "abuela"
+  },
+  {
+    "palabra": "padre"
+  },
+  {
+    "palabra": "madre"
+  },
+  {
+    "palabra": "hijo"
+  },
+  {
+    "palabra": "hija"
+  },
+  {
+    "palabra": "primo"
+  },
+  {
+    "palabra": "familia"
+  },
+  {
+    "palabra": "historia"
+  },
+  {
+    "palabra": "gloria"
+  },
+  {
+    "palabra": "memoria"
+  },
+  {
+    "palabra": "colegio"
+  },
+  {
+    "palabra": "idioma"
+  },
+  {
+    "palabra": "programa"
+  },
+  {
+    "palabra": "cultura"
+  },
+  {
+    "palabra": "literatura"
+  },
+  {
+    "palabra": "novela"
+  },
+  {
+    "palabra": "cuento"
+  },
+  {
+    "palabra": "teatro"
+  },
+  {
+    "palabra": "verso"
+  },
+  {
+    "palabra": "estrofa"
+  },
+  {
+    "palabra": "rima"
+  },
+  {
+    "palabra": "poema"
+  },
+  {
+    "palabra": "ejemplo"
+  },
+  {
+    "palabra": "pregunta"
+  },
+  {
+    "palabra": "respuesta"
+  },
+  {
+    "palabra": "ejercicio"
+  },
+  {
+    "palabra": "lectura"
+  },
+  {
+    "palabra": "escritura"
+  },
+  {
+    "palabra": "frase"
+  },
+  {
+    "palabra": "sujeto"
+  },
+  {
+    "palabra": "predicado"
+  },
+  {
+    "palabra": "verbo"
+  },
+  {
+    "palabra": "nombre"
+  },
+  {
+    "palabra": "adjetivo"
+  },
+  {
+    "palabra": "adverbio"
+  },
+  {
+    "palabra": "pronombre"
+  },
+  {
+    "palabra": "sustantivo"
+  },
+  {
+    "palabra": "palabras"
+  },
+  {
+    "palabra": "acento"
+  },
+  {
+    "palabra": "tilde"
+  },
+  {
+    "palabra": "coma"
+  },
+  {
+    "palabra": "punto"
+  },
+  {
+    "palabra": "suma"
+  },
+  {
+    "palabra": "resta"
+  },
+  {
+    "palabra": "producto"
+  },
+  {
+    "palabra": "cociente"
+  },
+  {
+    "palabra": "dividendo"
+  },
+  {
+    "palabra": "entero"
+  },
+  {
+    "palabra": "cuadrado"
+  },
+  {
+    "palabra": "recta"
+  },
+  {
+    "palabra": "curva"
+  },
+  {
+    "palabra": "metro"
+  },
+  {
+    "palabra": "litro"
+  },
+  {
+    "palabra": "gramo"
+  },
+  {
+    "palabra": "kilogramo"
+  },
+  {
+    "palabra": "segundo"
+  },
+  {
+    "palabra": "minuto"
+  },
+  {
+    "palabra": "hora"
+  },
+  {
+    "palabra": "porcentaje"
+  },
+  {
+    "palabra": "media"
+  },
+  {
+    "palabra": "mediana"
+  },
+  {
+    "palabra": "moda"
+  },
+  {
+    "palabra": "canciones"
+  },
+  {
+    "palabra": "camiones"
+  },
+  {
+    "palabra": "corazones"
+  },
+  {
+    "palabra": "ratones"
+  },
+  {
+    "palabra": "balcones"
+  },
+  {
+    "palabra": "aviones"
+  },
+  {
+    "palabra": "limones"
+  },
+  {
+    "palabra": "botones"
+  },
+  {
+    "palabra": "cajones"
+  },
+  {
+    "palabra": "razones"
+  },
+  {
+    "palabra": "regiones"
+  },
+  {
+    "palabra": "estaciones"
+  },
+  {
+    "palabra": "lecciones"
+  },
+  {
+    "palabra": "naciones"
+  },
+  {
+    "palabra": "opiniones"
+  },
+  {
+    "palabra": "emociones"
+  },
+  {
+    "palabra": "ilusiones"
+  },
+  {
+    "palabra": "pasiones"
+  },
+  {
+    "palabra": "misiones"
+  },
+  {
+    "palabra": "decisiones"
+  },
+  {
+    "palabra": "soluciones"
+  },
+  {
+    "palabra": "oraciones"
+  },
+  {
+    "palabra": "funciones"
+  },
+  {
+    "palabra": "alemanes"
+  },
+  {
+    "palabra": "capitanes"
+  },
+  {
+    "palabra": "volcanes"
+  },
+  {
+    "palabra": "refranes"
+  },
+  {
+    "palabra": "andenes"
+  },
+  {
+    "palabra": "almacenes"
+  },
+  {
+    "palabra": "sartenes"
+  },
+  {
+    "palabra": "franceses"
+  },
+  {
+    "palabra": "ingleses"
+  },
+  {
+    "palabra": "intereses"
+  },
+  {
+    "palabra": "cipreses"
+  },
+  {
+    "palabra": "marqueses"
+  },
+  {
+    "palabra": "japoneses"
+  },
+  {
+    "palabra": "portugueses"
+  },
+  {
+    "palabra": "delfines"
+  },
+  {
+    "palabra": "violines"
+  },
+  {
+    "palabra": "cojines"
+  },
+  {
+    "palabra": "patines"
+  },
+  {
+    "palabra": "ciudades"
+  },
+  {
+    "palabra": "papeles"
+  },
+  {
+    "palabra": "relojes"
+  },
+  {
+    "palabra": "señales"
+  },
+  {
+    "palabra": "motores"
+  },
+  {
+    "palabra": "colores"
+  },
+  {
+    "palabra": "actrices"
+  },
+  {
+    "palabra": "narices"
+  },
+  {
+    "palabra": "felices"
+  },
+  {
+    "palabra": "veloces"
+  },
+  {
+    "palabra": "capaces"
+  },
+  {
+    "palabra": "caracteres"
+  },
+  {
+    "palabra": "canto"
+  },
+  {
+    "palabra": "cantas"
+  },
+  {
+    "palabra": "canta"
+  },
+  {
+    "palabra": "cantamos"
+  },
+  {
+    "palabra": "cantan"
+  },
+  {
+    "palabra": "comes"
+  },
+  {
+    "palabra": "vives"
+  },
+  {
+    "palabra": "estudia"
+  },
+  {
+    "palabra": "juegan"
+  },
+  {
+    "palabra": "poeta"
+  },
+  {
+    "palabra": "toalla"
+  },
+  {
+    "palabra": "cohete"
+  },
+  {
+    "palabra": "aeropuerto"
+  },
+  {
+    "palabra": "museo"
+  },
+  {
+    "palabra": "paseo"
+  },
+  {
+    "palabra": "deseo"
+  },
+  {
+    "palabra": "correo"
+  },
+  {
+    "palabra": "trofeo"
+  },
+  {
+    "palabra": "feo"
+  },
+  {
+    "palabra": "oasis"
+  },
+  {
+    "palabra": "piedra"
+  },
+  {
+    "palabra": "cielo"
+  },
+  {
+    "palabra": "huevo"
+  },
+  {
+    "palabra": "bueno"
+  },
+  {
+    "palabra": "nuevo"
+  },
+  {
+    "palabra": "siete"
+  },
+  {
+    "palabra": "nueve"
+  },
+  {
+    "palabra": "ruido"
+  },
+  {
+    "palabra": "cuidado"
+  },
+  {
+    "palabra": "viuda"
+  },
+  {
+    "palabra": "jaula"
+  },
+  {
+    "palabra": "causa"
+  },
+  {
+    "palabra": "pausa"
+  },
+  {
+    "palabra": "aula"
+  },
+  {
+    "palabra": "auto"
+  },
+  {
+    "palabra": "reino"
+  },
+  {
+    "palabra": "peine"
+  },
+  {
+    "palabra": "aceite"
+  },
+  {
+    "palabra": "boina"
+  },
+  {
+    "palabra": "oigo"
+  },
+  {
+    "palabra": "caos"
+  },
+  {
+    "palabra": "árbol"
+  },
+  {
     "palabra": "lápiz"
   },
   {
+    "palabra": "fácil"
+  },
+  {
+    "palabra": "difícil"
+  },
+  {
+    "palabra": "útil"
+  },
+  {
+    "palabra": "débil"
+  },
+  {
+    "palabra": "móvil"
+  },
+  {
+    "palabra": "ágil"
+  },
+  {
+    "palabra": "frágil"
+  },
+  {
+    "palabra": "hábil"
+  },
+  {
+    "palabra": "cárcel"
+  },
+  {
+    "palabra": "césped"
+  },
+  {
+    "palabra": "azúcar"
+  },
+  {
+    "palabra": "carácter"
+  },
+  {
+    "palabra": "cráter"
+  },
+  {
+    "palabra": "mártir"
+  },
+  {
+    "palabra": "dólar"
+  },
+  {
+    "palabra": "néctar"
+  },
+  {
+    "palabra": "ámbar"
+  },
+  {
+    "palabra": "fútbol"
+  },
+  {
+    "palabra": "béisbol"
+  },
+  {
+    "palabra": "túnel"
+  },
+  {
+    "palabra": "mármol"
+  },
+  {
+    "palabra": "cóndor"
+  },
+  {
+    "palabra": "revólver"
+  },
+  {
+    "palabra": "álbum"
+  },
+  {
+    "palabra": "récord"
+  },
+  {
+    "palabra": "huésped"
+  },
+  {
+    "palabra": "almíbar"
+  },
+  {
+    "palabra": "alcázar"
+  },
+  {
+    "palabra": "trébol"
+  },
+  {
+    "palabra": "cáliz"
+  },
+  {
+    "palabra": "alférez"
+  },
+  {
+    "palabra": "mástil"
+  },
+  {
+    "palabra": "fértil"
+  },
+  {
+    "palabra": "fósil"
+  },
+  {
+    "palabra": "dócil"
+  },
+  {
+    "palabra": "inútil"
+  },
+  {
+    "palabra": "cónsul"
+  },
+  {
+    "palabra": "tórax"
+  },
+  {
+    "palabra": "clímax"
+  },
+  {
+    "palabra": "ónix"
+  },
+  {
+    "palabra": "fénix"
+  },
+  {
+    "palabra": "látex"
+  },
+  {
+    "palabra": "bíceps"
+  },
+  {
+    "palabra": "fórceps"
+  },
+  {
+    "palabra": "cómics"
+  },
+  {
+    "palabra": "récords"
+  },
+  {
+    "palabra": "música"
+  },
+  {
+    "palabra": "médico"
+  },
+  {
+    "palabra": "pájaro"
+  },
+  {
     "palabra": "teléfono"
+  },
+  {
+    "palabra": "sábado"
+  },
+  {
+    "palabra": "miércoles"
+  },
+  {
+    "palabra": "número"
+  },
+  {
+    "palabra": "último"
+  },
+  {
+    "palabra": "rápido"
+  },
+  {
+    "palabra": "plátano"
+  },
+  {
+    "palabra": "lámpara"
+  },
+  {
+    "palabra": "cámara"
+  },
+  {
+    "palabra": "máquina"
+  },
+  {
+    "palabra": "página"
+  },
+  {
+    "palabra": "público"
+  },
+  {
+    "palabra": "química"
+  },
+  {
+    "palabra": "física"
+  },
+  {
+    "palabra": "matemáticas"
+  },
+  {
+    "palabra": "gramática"
+  },
+  {
+    "palabra": "sílaba"
+  },
+  {
+    "palabra": "árboles"
+  },
+  {
+    "palabra": "exámenes"
+  },
+  {
+    "palabra": "jóvenes"
+  },
+  {
+    "palabra": "imágenes"
+  },
+  {
+    "palabra": "órdenes"
+  },
+  {
+    "palabra": "orígenes"
+  },
+  {
+    "palabra": "volúmenes"
+  },
+  {
+    "palabra": "resúmenes"
+  },
+  {
+    "palabra": "márgenes"
+  },
+  {
+    "palabra": "crímenes"
+  },
+  {
+    "palabra": "gérmenes"
+  },
+  {
+    "palabra": "certámenes"
+  },
+  {
+    "palabra": "dictámenes"
+  },
+  {
+    "palabra": "abdómenes"
+  },
+  {
+    "palabra": "vírgenes"
+  },
+  {
+    "palabra": "lápices"
+  },
+  {
+    "palabra": "fáciles"
+  },
+  {
+    "palabra": "difíciles"
+  },
+  {
+    "palabra": "útiles"
+  },
+  {
+    "palabra": "débiles"
+  },
+  {
+    "palabra": "móviles"
+  },
+  {
+    "palabra": "ágiles"
+  },
+  {
+    "palabra": "frágiles"
+  },
+  {
+    "palabra": "hábiles"
+  },
+  {
+    "palabra": "cárceles"
+  },
+  {
+    "palabra": "céspedes"
+  },
+  {
+    "palabra": "azúcares"
+  },
+  {
+    "palabra": "mártires"
+  },
+  {
+    "palabra": "dólares"
+  },
+  {
+    "palabra": "túneles"
+  },
+  {
+    "palabra": "mármoles"
+  },
+  {
+    "palabra": "cóndores"
+  },
+  {
+    "palabra": "fértiles"
+  },
+  {
+    "palabra": "fósiles"
+  },
+  {
+    "palabra": "dóciles"
+  },
+  {
+    "palabra": "inútiles"
+  },
+  {
+    "palabra": "cónsules"
+  },
+  {
+    "palabra": "tréboles"
+  },
+  {
+    "palabra": "mástiles"
+  },
+  {
+    "palabra": "ángulo"
+  },
+  {
+    "palabra": "triángulo"
+  },
+  {
+    "palabra": "círculo"
+  },
+  {
+    "palabra": "rectángulo"
+  },
+  {
+    "palabra": "perímetro"
+  },
+  {
+    "palabra": "kilómetro"
+  },
+  {
+    "palabra": "centímetro"
+  },
+  {
+    "palabra": "milímetro"
+  },
+  {
+    "palabra": "término"
+  },
+  {
+    "palabra": "década"
+  },
+  {
+    "palabra": "época"
+  },
+  {
+    "palabra": "víspera"
+  },
+  {
+    "palabra": "cántaro"
+  },
+  {
+    "palabra": "cáscara"
+  },
+  {
+    "palabra": "brújula"
+  },
+  {
+    "palabra": "murciélago"
+  },
+  {
+    "palabra": "relámpago"
+  },
+  {
+    "palabra": "sábana"
+  },
+  {
+    "palabra": "pirámide"
+  },
+  {
+    "palabra": "espátula"
+  },
+  {
+    "palabra": "oxígeno"
+  },
+  {
+    "palabra": "hidrógeno"
+  },
+  {
+    "palabra": "fantástico"
+  },
+  {
+    "palabra": "simpático"
+  },
+  {
+    "palabra": "romántico"
+  },
+  {
+    "palabra": "clásico"
+  },
+  {
+    "palabra": "básico"
+  },
+  {
+    "palabra": "práctico"
+  },
+  {
+    "palabra": "histórico"
+  },
+  {
+    "palabra": "político"
+  },
+  {
+    "palabra": "económico"
+  },
+  {
+    "palabra": "eléctrico"
+  },
+  {
+    "palabra": "científico"
+  },
+  {
+    "palabra": "artístico"
+  },
+  {
+    "palabra": "mágico"
+  },
+  {
+    "palabra": "trágico"
+  },
+  {
+    "palabra": "lógico"
+  },
+  {
+    "palabra": "típico"
+  },
+  {
+    "palabra": "único"
+  },
+  {
+    "palabra": "cómodo"
+  },
+  {
+    "palabra": "tímido"
+  },
+  {
+    "palabra": "húmedo"
+  },
+  {
+    "palabra": "sólido"
+  },
+  {
+    "palabra": "líquido"
+  },
+  {
+    "palabra": "árido"
+  },
+  {
+    "palabra": "espíritu"
+  },
+  {
+    "palabra": "análisis"
+  },
+  {
+    "palabra": "paréntesis"
+  },
+  {
+    "palabra": "hipótesis"
+  },
+  {
+    "palabra": "síntesis"
+  },
+  {
+    "palabra": "énfasis"
+  },
+  {
+    "palabra": "metáfora"
+  },
+  {
+    "palabra": "anáfora"
+  },
+  {
+    "palabra": "hipérbole"
+  },
+  {
+    "palabra": "epíteto"
+  },
+  {
+    "palabra": "sinónimo"
+  },
+  {
+    "palabra": "antónimo"
+  },
+  {
+    "palabra": "homónimo"
+  },
+  {
+    "palabra": "pretérito"
+  },
+  {
+    "palabra": "artículo"
+  },
+  {
+    "palabra": "mayúscula"
+  },
+  {
+    "palabra": "minúscula"
+  },
+  {
+    "palabra": "incógnita"
+  },
+  {
+    "palabra": "estadística"
+  },
+  {
+    "palabra": "gráfico"
+  },
+  {
+    "palabra": "línea"
+  },
+  {
+    "palabra": "área"
+  },
+  {
+    "palabra": "océano"
+  },
+  {
+    "palabra": "aéreo"
+  },
+  {
+    "palabra": "héroe"
+  },
+  {
+    "palabra": "cantábamos"
+  },
+  {
+    "palabra": "estábamos"
+  },
+  {
+    "palabra": "íbamos"
+  },
+  {
+    "palabra": "éramos"
+  },
+  {
+    "palabra": "comíamos"
+  },
+  {
+    "palabra": "teníamos"
+  },
+  {
+    "palabra": "hablábamos"
+  },
+  {
+    "palabra": "jugábamos"
+  },
+  {
+    "palabra": "cantáramos"
+  },
+  {
+    "palabra": "comiéramos"
+  },
+  {
+    "palabra": "viviéramos"
+  },
+  {
+    "palabra": "estuviéramos"
+  },
+  {
+    "palabra": "tuviéramos"
+  },
+  {
+    "palabra": "pudiéramos"
+  },
+  {
+    "palabra": "quisiéramos"
+  },
+  {
+    "palabra": "dijéramos"
+  },
+  {
+    "palabra": "hiciéramos"
+  },
+  {
+    "palabra": "fuéramos"
+  },
+  {
+    "palabra": "dámelo"
+  },
+  {
+    "palabra": "dígaselo"
+  },
+  {
+    "palabra": "cómpramelo"
+  },
+  {
+    "palabra": "explícaselo"
+  },
+  {
+    "palabra": "cuéntamelo"
+  },
+  {
+    "palabra": "entrégaselo"
+  },
+  {
+    "palabra": "devuélvemelo"
+  },
+  {
+    "palabra": "escríbeselo"
+  },
+  {
+    "palabra": "pregúntaselo"
+  },
+  {
+    "palabra": "llévatelo"
+  },
+  {
+    "palabra": "país"
+  },
+  {
+    "palabra": "maíz"
+  },
+  {
+    "palabra": "raíz"
+  },
+  {
+    "palabra": "día"
+  },
+  {
+    "palabra": "tía"
+  },
+  {
+    "palabra": "tío"
+  },
+  {
+    "palabra": "río"
+  },
+  {
+    "palabra": "frío"
+  },
+  {
+    "palabra": "mío"
+  },
+  {
+    "palabra": "búho"
+  },
+  {
+    "palabra": "baúl"
+  },
+  {
+    "palabra": "oído"
+  },
+  {
+    "palabra": "leído"
+  },
+  {
+    "palabra": "reír"
+  },
+  {
+    "palabra": "oír"
+  },
+  {
+    "palabra": "caída"
+  },
+  {
+    "palabra": "poesía"
+  },
+  {
+    "palabra": "policía"
+  },
+  {
+    "palabra": "alegría"
+  },
+  {
+    "palabra": "energía"
+  },
+  {
+    "palabra": "geografía"
+  },
+  {
+    "palabra": "biología"
+  },
+  {
+    "palabra": "fotografía"
+  },
+  {
+    "palabra": "sandía"
+  },
+  {
+    "palabra": "librería"
+  },
+  {
+    "palabra": "panadería"
+  },
+  {
+    "palabra": "cafetería"
+  },
+  {
+    "palabra": "frutería"
+  },
+  {
+    "palabra": "ataúd"
+  },
+  {
+    "palabra": "laúd"
+  },
+  {
+    "palabra": "reúne"
+  },
+  {
+    "palabra": "prohíbe"
+  },
+  {
+    "palabra": "transeúnte"
+  },
+  {
+    "palabra": "increíble"
+  },
+  {
+    "palabra": "egoísta"
+  },
+  {
+    "palabra": "heroína"
+  },
+  {
+    "palabra": "ahínco"
+  },
+  {
+    "palabra": "rehúso"
+  },
+  {
+    "palabra": "aúlla"
+  },
+  {
+    "palabra": "maúlla"
+  },
+  {
+    "palabra": "ríe"
+  },
+  {
+    "palabra": "guía"
+  },
+  {
+    "palabra": "garantía"
+  },
+  {
+    "palabra": "economía"
+  },
+  {
+    "palabra": "filosofía"
+  },
+  {
+    "palabra": "ortografía"
+  },
+  {
+    "palabra": "compañía"
+  },
+  {
+    "palabra": "categoría"
+  },
+  {
+    "palabra": "mayoría"
+  },
+  {
+    "palabra": "minoría"
+  },
+  {
+    "palabra": "cortesía"
+  },
+  {
+    "palabra": "travesía"
+  },
+  {
+    "palabra": "lejanía"
+  },
+  {
+    "palabra": "cercanía"
+  },
+  {
+    "palabra": "sabiduría"
+  },
+  {
+    "palabra": "abadía"
+  },
+  {
+    "palabra": "armonía"
+  },
+  {
+    "palabra": "melodía"
+  },
+  {
+    "palabra": "sinfonía"
+  },
+  {
+    "palabra": "alcaldía"
+  },
+  {
+    "palabra": "comisaría"
+  },
+  {
+    "palabra": "batería"
+  },
+  {
+    "palabra": "lotería"
+  },
+  {
+    "palabra": "avería"
+  },
+  {
+    "palabra": "tontería"
+  },
+  {
+    "palabra": "ferretería"
+  },
+  {
+    "palabra": "zapatería"
+  },
+  {
+    "palabra": "joyería"
+  },
+  {
+    "palabra": "pastelería"
+  },
+  {
+    "palabra": "carnicería"
+  },
+  {
+    "palabra": "pescadería"
+  },
+  {
+    "palabra": "comía"
+  },
+  {
+    "palabra": "vivía"
+  },
+  {
+    "palabra": "tenía"
+  },
+  {
+    "palabra": "hacía"
+  },
+  {
+    "palabra": "decía"
+  },
+  {
+    "palabra": "sabía"
+  },
+  {
+    "palabra": "podía"
+  },
+  {
+    "palabra": "quería"
+  },
+  {
+    "palabra": "salía"
+  },
+  {
+    "palabra": "venía"
+  },
+  {
+    "palabra": "cantaría"
+  },
+  {
+    "palabra": "comería"
+  },
+  {
+    "palabra": "viviría"
+  },
+  {
+    "palabra": "sería"
+  },
+  {
+    "palabra": "estaría"
+  },
+  {
+    "palabra": "tendría"
+  },
+  {
+    "palabra": "podría"
+  },
+  {
+    "palabra": "haría"
+  },
+  {
+    "palabra": "diría"
+  },
+  {
+    "palabra": "envía"
+  },
+  {
+    "palabra": "confía"
+  },
+  {
+    "palabra": "actúa"
+  },
+  {
+    "palabra": "continúa"
+  },
+  {
+    "palabra": "gradúa"
+  },
+  {
+    "palabra": "evalúa"
+  },
+  {
+    "palabra": "sitúa"
+  },
+  {
+    "palabra": "países"
+  },
+  {
+    "palabra": "maíces"
+  },
+  {
+    "palabra": "raíces"
+  },
+  {
+    "palabra": "león"
+  },
+  {
+    "palabra": "peón"
+  },
+  {
+    "palabra": "leer"
+  },
+  {
+    "palabra": "creer"
+  },
+  {
+    "palabra": "poseer"
+  },
+  {
+    "palabra": "real"
   },
   {
     "palabra": "robots",
     "tonica": 1
   },
   {
-    "palabra": "jóvenes"
+    "palabra": "tictacs",
+    "tonica": 1
   },
   {
-    "palabra": "país"
-  },
-  {
-    "palabra": "río"
-  },
-  {
-    "palabra": "dígaselo"
-  },
-  {
-    "palabra": "bíceps"
-  },
-  {
-    "palabra": "él",
-    "diacritica": true
+    "palabra": "zigzags",
+    "tonica": 1
   }
 ]

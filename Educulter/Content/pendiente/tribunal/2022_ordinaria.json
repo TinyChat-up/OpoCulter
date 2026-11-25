@@ -1,0 +1,484 @@
+{
+  "id": "OF.2022.O",
+  "anio": 2022,
+  "convocatoria": "ordinaria",
+  "duracionMin": 90,
+  "fuente": "https://www.comunidad.madrid/docs/assets/2022/06/18/rh02_2122_prueba_comun.pdf",
+  "fechaConsulta": "2026-11-23",
+  "aviso": "Examen oficial publicado por la Comunidad de Madrid. Reproducido sin alteraciones según sus condiciones de reutilización. Esta app no está patrocinada ni avalada por la Comunidad de Madrid.",
+  "textoBase": {
+    "texto": "Mendo.— ¿Te haces cargo, di, amor mío?\n¿Te haces cargo de mis males?\n¿Ves ya por qué no sonrío?\n¿Comprendes por qué este río\nbrota de mis lagrimales? (Se seca una lágrima de cada ojo.)\nYo mal no quedo, ¡no quedo!\n¡Quien diga que yo un borrón\neché a mi grey que alce el dedo!\nY como pagar no puedo\nlos dineros al Barón,\npara acabar de sufrir\nhe decidido... partir\na otras tierras, a otro abrigo.\nMagdalena.— (Ocultando su alegría.) ¿Qué me dices?... ¿Vas a huir?\nMendo.— Voy a huir, pero contigo.\nMagdalena.— ¿Perdiste el juicio?\nMendo.— No tal.\nResuelto está, vive Dios.\nY si te parece mal,\naquí mesmo, este puñal (Saca un puñal enorme.)\nnos dará muerte a los dos.\nPrimero lo hundiré en ti,\ny te daré muerte, sí,\n¡lo juro por Belcebú!\ny luego tú misma, tú,\nhundes el acero en mí.\nMagdalena.— (Ocultando su miedo.) Es que tú puedes pagar\ncon algo... que alguien te preste...\ny luego para medrar\npuedes partir con la hueste\nque organiza el del Melgar.\nY yo aquí te aguardaría\ny al Conde prepararía,\ny al volver de tu cruzada\nnuestra unión sancionaría.\nMendo.— ¡Calla!\nMagdalena.— ¡Sí!... ¿Qué piensas?\nMendo.— ¡Nada!\nMagdalena.— ¡Salvado, don Mendo,\nestás! Pagas las deudas, te vas,\nluchas, vences y al regreso\nloca de amor me hallarás\naquí.\nMendo.— ¡Nunca!... ¡Nunca!...\nMagdalena.— ¿Y eso?\nMendo.— Porque... ¿cómo a pagar voy?\nMagdalena.— ¿Cómo? (Se dirige a un mueble y saca un estuche de orfebrería.)\nSi ya tuya soy\ny lo mío tuyo es... (Le da el estuche.)\neste collar que te doy\nhas de aceptarlo, Marqués.",
+    "autor": "Pedro Muñoz Seca",
+    "obra": "La venganza de Don Mendo",
+    "protegido": false,
+    "anioMuerteAutor": 1936
+  },
+  "preguntas": [
+    {
+      "numero": 1,
+      "numeroEnArea": 1,
+      "area": "LEN",
+      "enunciado": "Resuma el contenido del texto.",
+      "competencias": [
+        "LEN.COM.RESU"
+      ],
+      "solucionModelo": "Don Mendo, arruinado y sin poder pagar sus deudas al Barón, anuncia a Magdalena que piensa huir a otras tierras y llevarla consigo, y amenaza con matarlos a ambos con un puñal si ella se niega. Magdalena, que oculta primero su alegría y luego su miedo, le propone que pague con dinero prestado y parta a la cruzada con la hueste del Melgar mientras ella lo espera. Como Mendo no sabe cómo pagar, ella le entrega un collar para que salde sus deudas. Tema: el conflicto entre el honor y el dinero, tratado en clave de parodia del drama romántico.",
+      "rubrica": {
+        "bien": "Recoge el contenido principal en orden, con palabras propias y sin detalles accesorios, e identifica el tema.",
+        "regular": "Recoge solo parte del contenido principal o copia frases del texto.",
+        "mal": "No identifica el tema o el resumen es incorrecto o insuficiente."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 2,
+      "numeroEnArea": 2,
+      "area": "LEN",
+      "enunciado": "¿De qué tipo de texto se trata? Enumere al menos tres características de este tipo de textos.",
+      "competencias": [
+        "LEN.COM.TIPO"
+      ],
+      "solucionModelo": "Es un texto teatral (género dramático), en verso: un fragmento de La venganza de Don Mendo (1918), astracanada que parodia el drama histórico romántico. Características: diálogo entre personajes, con el nombre de cada uno ante su intervención; acotaciones entre paréntesis que indican gestos y acciones («Se seca una lágrima de cada ojo»); ausencia de narrador; escrito para ser representado; versificación (versos de distintas medidas, sobre todo octosílabos, con rima consonante); y, en este caso, humor por exageración, rimas forzadas y lenguaje arcaizante.",
+      "rubrica": {
+        "bien": "Identifica el texto teatral y explica al menos tres características.",
+        "regular": "Identifica el tipo de texto pero explica solo una o dos características.",
+        "mal": "No identifica el tipo de texto ni sus características."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 3,
+      "numeroEnArea": 3,
+      "area": "LEN",
+      "enunciado": "Explique el significado de las siguientes palabras, atendiendo a su sentido en el texto.\ngrey\nmedrar\nhueste\norfebrería",
+      "competencias": [
+        "LEN.LEX.CTX"
+      ],
+      "solucionModelo": "Grey: conjunto de personas con un carácter común; aquí, el linaje o la familia de don Mendo (en sentido propio, rebaño). Medrar: prosperar, mejorar de posición o fortuna. Hueste: ejército en campaña, tropa. Orfebrería: arte de labrar objetos de oro, plata u otros metales preciosos; aquí, un estuche labrado de ese modo.",
+      "rubrica": {
+        "bien": "Explica correctamente las 4 palabras según su sentido en el texto.",
+        "regular": "Explica bien 2 o 3 palabras.",
+        "mal": "Explica bien una palabra o ninguna."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 4,
+      "numeroEnArea": 4,
+      "area": "LEN",
+      "enunciado": "Analice las siguientes formas verbales que aparecen en el texto:\nsonrío\nperdiste\nhundiré",
+      "competencias": [
+        "LEN.VER.ANALISIS"
+      ],
+      "solucionModelo": "Sonrío: 1.ª persona del singular del presente de indicativo del verbo sonreír (irregular). Perdiste: 2.ª persona del singular del pretérito perfecto simple de indicativo del verbo perder. Hundiré: 1.ª persona del singular del futuro simple de indicativo del verbo hundir.",
+      "rubrica": {
+        "bien": "Analiza correctamente las 3 formas (persona, número, tiempo, modo e infinitivo).",
+        "regular": "Comete un error en una de las formas o en uno de sus rasgos.",
+        "mal": "Comete varios errores o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 5,
+      "numeroEnArea": 5,
+      "area": "LEN",
+      "enunciado": "En el texto aparece la palabra polisémica “sancionar”. Explique dos de sus acepciones.\nAcepción en el texto / Otra acepción",
+      "competencias": [
+        "LEN.LEX.POLI"
+      ],
+      "solucionModelo": "Acepción en el texto: autorizar, aprobar o dar validez a algo (el Conde aprobaría su unión). Otra acepción: aplicar una sanción o un castigo («sancionar a un conductor»).",
+      "rubrica": {
+        "bien": "Explica correctamente las dos acepciones.",
+        "regular": "Explica bien una de las dos.",
+        "mal": "No explica correctamente ninguna."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 6,
+      "numeroEnArea": 6,
+      "area": "LEN",
+      "enunciado": "Explique el sentido de la siguiente oración en el texto:\n“¡Quien diga que yo un borrón\neché a mi grey que alce el dedo!”",
+      "competencias": [
+        "LEN.COM.INFER"
+      ],
+      "solucionModelo": "Don Mendo afirma que no ha deshonrado a su linaje: desafía a cualquiera que sostenga que él ha manchado el honor de su familia («echar un borrón a la grey») a que lo diga levantando la mano. El hipérbaton y el tono grandilocuente parodian el sentido del honor del drama romántico.",
+      "rubrica": {
+        "bien": "Explica que Mendo defiende su honra y desafía a quien lo acuse de deshonrar a su linaje.",
+        "regular": "La explicación es correcta pero incompleta o imprecisa.",
+        "mal": "La explicación es incorrecta o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 7,
+      "numeroEnArea": 7,
+      "area": "LEN",
+      "enunciado": "Analice la métrica de los siguientes versos del texto:\n“¿Cómo? Si ya tuya\nsoy y lo mío tuyo es...\neste collar que te doy\nhas de aceptarlo, Marqués”.\nANULADA\nAdvertido error en el enunciado de la pregunta se procede a anularla, no siendo tenida en cuenta a efectos de puntuación.",
+      "competencias": [
+        "LEN.MET.MEDIDA"
+      ],
+      "solucionModelo": "Pregunta anulada por el tribunal (el enunciado no reproduce bien los versos del texto: en él son «¿Cómo? / Si ya tuya soy / y lo mío tuyo es...»). No puntúa.",
+      "rubrica": {
+        "bien": "Pregunta anulada: no puntúa.",
+        "regular": "Pregunta anulada: no puntúa.",
+        "mal": "Pregunta anulada: no puntúa."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 0,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      },
+      "anulada": true
+    },
+    {
+      "numero": 8,
+      "numeroEnArea": 8,
+      "area": "LEN",
+      "enunciado": "Defina los siguientes términos: metáfora, palabras homónimas, verso libre, comparación.",
+      "competencias": [
+        "LEN.REC.FIGURAS"
+      ],
+      "solucionModelo": "Metáfora: figura que identifica un término real con otro imaginario por su semejanza, sin nexo comparativo. Palabras homónimas: palabras que coinciden en la forma (pronunciación y, en su caso, escritura) pero tienen significados y orígenes distintos («vino» de venir / «vino», bebida); pueden ser homógrafas u homófonas. Verso libre: verso que no se ajusta a una medida ni a una rima fijas. Comparación o símil: figura que relaciona dos términos por su semejanza mediante un nexo comparativo (como, cual, igual que).",
+      "rubrica": {
+        "bien": "Define correctamente los 4 términos.",
+        "regular": "Define bien 2 o 3 términos o con alguna imprecisión.",
+        "mal": "Define bien un término o ninguno."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 9,
+      "numeroEnArea": 9,
+      "area": "LEN",
+      "enunciado": "Escoja en cada apartado la opción correcta. Razone su respuesta.\na.1) Ojalá se dé cuenta.   a.2) Ojalá se de cuenta.\nb.1) ¿Confías en mí?   b.2) ¿Confías en mi?\nc.1) Mi bebida favorita es el te verde.   c.2) Mi bebida favorita es el té verde.\nd.1) Se paciente y espera tu turno.   d.2) Sé paciente y espera tu turno.",
+      "competencias": [
+        "LEN.ORT.DIA"
+      ],
+      "solucionModelo": "a.1: «dé» es forma del verbo dar (presente de subjuntivo) y lleva tilde diacrítica frente a la preposición «de». b.1: «mí» es pronombre personal tónico tras preposición; «mi» sin tilde es determinante posesivo. c.2: «té» es el sustantivo (la bebida); «te» es pronombre. d.2: «sé» es el imperativo de ser; «se» es pronombre.",
+      "rubrica": {
+        "bien": "Elige y razona correctamente los 4 elementos.",
+        "regular": "Comete un error en uno de los 4 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 10,
+      "numeroEnArea": 10,
+      "area": "LEN",
+      "enunciado": "Analice sintácticamente la siguiente oración:\nMaría tiene clase de teatro mañana en el centro cultural.",
+      "competencias": [
+        "LEN.SIN.COMPL"
+      ],
+      "solucionModelo": "Oración simple, enunciativa afirmativa, predicativa, transitiva y activa. Sujeto: «María» (SN). Predicado verbal: N «tiene»; CD «clase de teatro» (SN: N «clase» + CN «de teatro», SPrep); CCT «mañana» (SAdv); CCL «en el centro cultural» (SPrep: E «en» + término SN «el centro cultural», con Det «el», N «centro» y Adj «cultural»).",
+      "rubrica": {
+        "bien": "Realiza un análisis sintáctico correcto y completo de la oración (sujeto, predicado y complementos).",
+        "regular": "El análisis es parcialmente correcto: identifica sujeto y predicado pero yerra en algún complemento.",
+        "mal": "El análisis es incorrecto o incompleto."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 11,
+      "numeroEnArea": 1,
+      "area": "MAT",
+      "enunciado": "María quiere hacer varios collares. Tiene 24 abalorios blancos, 12 rojos y 18 azules. Si quiere poner la misma cantidad de abalorios de cada color en cada collar, ¿de qué forma pondrá más abalorios en cada uno?",
+      "competencias": [
+        "MAT.DIV.MCD"
+      ],
+      "solucionModelo": "1) Para repartir por igual cada color en los collares, el número de collares debe dividir a 24, 12 y 18. 2) m.c.d.(24, 12, 18) = 6. 3) 24 : 6 = 4 blancos; 12 : 6 = 2 rojos; 18 : 6 = 3 azules. Resultado: 6 collares, cada uno con 4 blancos, 2 rojos y 3 azules (9 abalorios). Nota de la app: el enunciado pide «más abalorios en cada uno», pero repartir cada color por igual entre los collares lleva al m.c.d. (6 collares de 9 abalorios). Se aceptan también, si se justifican, los otros repartos en collares iguales (3 collares de 18, 2 de 27) y un solo collar con los 54 abalorios, que es literalmente el que más lleva.",
+      "rubrica": {
+        "bien": "Aplica el m.c.d. y da el reparto correcto.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 12,
+      "numeroEnArea": 2,
+      "area": "MAT",
+      "enunciado": "Ainara, Lucas y Berta están leyendo la misma revista. Ainara ha leído la mitad, Lucas las tres cuartas partes, y Berta lleva leídas dos quintas partes. Calcule quién de los tres ha leído más páginas.",
+      "competencias": [
+        "MAT.NUM.ORDEN"
+      ],
+      "solucionModelo": "1) Denominador común 20: 1/2 = 10/20; 3/4 = 15/20; 2/5 = 8/20. 2) Como la revista es la misma, más fracción = más páginas. Resultado: Lucas ha leído más: Lucas (3/4) > Ainara (1/2) > Berta (2/5).",
+      "rubrica": {
+        "bien": "Compara correctamente las tres fracciones y responde.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 13,
+      "numeroEnArea": 3,
+      "area": "MAT",
+      "enunciado": "Resuelva las siguientes operaciones:\na) 71,46 – 14,7 × 5,32 + 13,051 =\nb) 2,45 + 146,9 : 5 =",
+      "competencias": [
+        "MAT.OPE.JERARQ"
+      ],
+      "solucionModelo": "1) a) Primero el producto: 14,7 × 5,32 = 78,204. 2) a) 71,46 − 78,204 + 13,051 = 6,307. 3) b) Primero la división: 146,9 : 5 = 29,38; después 2,45 + 29,38. Resultado: a) 6,307; b) 31,83.",
+      "rubrica": {
+        "bien": "Resuelve correctamente los 2 elementos.",
+        "regular": "Comete un error en uno de los 2 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 14,
+      "numeroEnArea": 4,
+      "area": "MAT",
+      "enunciado": "Exprese las siguientes medidas en la unidad que se indica:\na) 3 km 4 hm 3 dam = ___ m\nb) 2 kg 24 hg 16 dag = ___ hg\nc) 8 dal 9 cl 15 ml = ___ l",
+      "competencias": [
+        "MAT.UNI.CONV"
+      ],
+      "solucionModelo": "1) a) 3 km = 3000 m; 4 hm = 400 m; 3 dam = 30 m. 2) b) 2 kg = 20 hg; 16 dag = 1,6 hg; 20 + 24 + 1,6. 3) c) 8 dal = 80 l; 9 cl = 0,09 l; 15 ml = 0,015 l. Resultado: a) 3430 m; b) 45,6 hg; c) 80,105 l.",
+      "rubrica": {
+        "bien": "Expresa correctamente los 3 elementos.",
+        "regular": "Comete un error en uno de los 3 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 15,
+      "numeroEnArea": 5,
+      "area": "MAT",
+      "enunciado": "Calcule cuánto costaría pintar la fachada del siguiente edificio, teniendo en cuenta que el precio por pintar un metro cuadrado es de 3,5 €.\n[Figura: fachada formada por un rectángulo de 12 m de base y 8,5 m de altura; encima, un rectángulo de 4 m de ancho y 3 m de alto rematado por un triángulo de 4 m de base y 2,5 m de altura.]",
+      "competencias": [
+        "MAT.GEO.AREAS"
+      ],
+      "solucionModelo": "1) Planta baja: 12 × 8,5 = 102 m². Torre: 4 × 3 = 12 m². 2) Triángulo: (4 × 2,5) : 2 = 5 m². 3) Fachada: 102 + 12 + 5 = 119 m²; coste 119 × 3,5. Resultado: 416,50 €.",
+      "rubrica": {
+        "bien": "Calcula correctamente el área de la fachada y su coste.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 16,
+      "numeroEnArea": 6,
+      "area": "MAT",
+      "enunciado": "En una librería tienen a la venta 1250 libros. El 22% son novelas, el 20% son libros de poesía, el 10% son libros de historia, el 22% son libros de ciencias y el 26% son enciclopedias. Calcule cuántos libros de cada tipo hay en la librería.",
+      "competencias": [
+        "MAT.POR.PORCENT"
+      ],
+      "solucionModelo": "1) El 1 % de 1250 es 12,5. 2) Cada tipo: porcentaje × 12,5. Resultado: Novelas: 275; Poesía: 250; Historia: 125; Ciencias: 275; Enciclopedias: 325 (suman 1250).",
+      "rubrica": {
+        "bien": "Calcula correctamente los 5 elementos.",
+        "regular": "Comete un error en uno de los 5 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 17,
+      "numeroEnArea": 7,
+      "area": "MAT",
+      "enunciado": "Una estación meteorológica registra la temperatura ambiente todos los días a la misma hora. Observe los datos y calcule la temperatura media y la moda, mediana y rango de las temperaturas registradas en abril.\nTEMPERATURAS REGISTRADAS EN ABRIL (temperatura en °C: frecuencia): 16: 3; 17: 3; 18: 5; 19: 6; 20,5: 4; 21: 4; 22: 3; 23,5: 2.",
+      "competencias": [
+        "MAT.EST.CENTRAL"
+      ],
+      "solucionModelo": "1) N = 30 días; Σ(x · f) = 48 + 51 + 90 + 114 + 82 + 84 + 66 + 47 = 582. 2) Media: 582 : 30 = 19,4 °C. Moda: 19 °C (frecuencia 6). 3) Mediana: los datos 15.º y 16.º (frecuencias acumuladas 3, 6, 11, 17) valen 19 °C. 4) Rango: 23,5 − 16 = 7,5 °C. Resultado: Media 19,4 °C; moda 19 °C; mediana 19 °C; rango 7,5 °C.",
+      "rubrica": {
+        "bien": "Calcula correctamente los 4 elementos.",
+        "regular": "Comete un error en uno de los 4 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 18,
+      "numeroEnArea": 8,
+      "area": "MAT",
+      "enunciado": "Complete las siguientes igualdades:\na) 7 × 10³ = ___   c) 29 × 10^___ = 290.000   e) ___ × 10⁶ = 53.000.000\nb) 34 × 10⁷ = ___   d) 3 × 10^___ = 3.000.000   f) ___ × 10⁵ = 57.200.000",
+      "competencias": [
+        "MAT.NUM.POT10"
+      ],
+      "solucionModelo": "1) Multiplicar por 10ⁿ añade n ceros (o desplaza la coma n lugares). 2) c) 290.000 : 29 = 10⁴; d) 3.000.000 : 3 = 10⁶. 3) e) 53.000.000 : 10⁶ = 53; f) 57.200.000 : 10⁵ = 572. Resultado: a) 7000; b) 340.000.000; c) 10⁴; d) 10⁶; e) 53; f) 572.",
+      "rubrica": {
+        "bien": "Completa correctamente los 6 elementos.",
+        "regular": "Comete un error en uno de los 6 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 19,
+      "numeroEnArea": 9,
+      "area": "MAT",
+      "enunciado": "Un viaje en tranvía cuesta 0,85 € y un abono de 10 viajes 6,80 €.\na) ¿Cuánto cuesta cada viaje comprando un abono?\nb) ¿Cuánto nos ahorramos comprando abonos?",
+      "competencias": [
+        "MAT.POR.PROPORC"
+      ],
+      "solucionModelo": "1) a) 6,80 : 10 = 0,68 € por viaje. 2) b) Ahorro por viaje: 0,85 − 0,68 = 0,17 €; en un abono de 10 viajes: 8,50 − 6,80 = 1,70 €. Resultado: a) 0,68 €; b) 0,17 € por viaje (1,70 € por cada abono de 10 viajes).",
+      "rubrica": {
+        "bien": "Responde correctamente los 2 elementos.",
+        "regular": "Comete un error en uno de los 2 elementos.",
+        "mal": "Comete más de un error o no completa la actividad."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    },
+    {
+      "numero": 20,
+      "numeroEnArea": 10,
+      "area": "MAT",
+      "enunciado": "Ana ha estado jugando a las construcciones. Calcule el volumen total de la figura que ha creado, expresado en cm³.\n[Figura: tres ortoedros apilados. Superior: c = 0,1 dm, b = 2 cm, a = 80 mm. Central: d = 0,3 dm, e = 2,5 cm, f = 0,09 m. Inferior: g = 0,0012 hm, i = 11 cm, h = 30 mm.]",
+      "competencias": [
+        "MAT.GEO.VOLUMEN"
+      ],
+      "solucionModelo": "1) Todo en cm: c = 0,1 dm = 1 cm; a = 80 mm = 8 cm; d = 0,3 dm = 3 cm; f = 0,09 m = 9 cm; h = 30 mm = 3 cm; g = 0,0012 hm = 12 cm. 2) Bloque superior: 1 × 2 × 8 = 16 cm³. Bloque central: 3 × 2,5 × 9 = 67,5 cm³. 3) Bloque inferior: 12 × 11 × 3 = 396 cm³. Resultado: 479,5 cm³.",
+      "rubrica": {
+        "bien": "Convierte las medidas y calcula correctamente el volumen total.",
+        "regular": "Plantea bien el procedimiento, pero comete un error de cálculo o en un apartado.",
+        "mal": "No plantea correctamente el problema o no responde."
+      },
+      "fuenteSolucion": "direccion",
+      "fuenteRubrica": "direccion",
+      "puntos": 1,
+      "validacion": {
+        "estado": "aprobado",
+        "revisor": "direccion",
+        "fecha": "2026-11-24"
+      }
+    }
+  ],
+  "validacion": {
+    "estado": "aprobado",
+    "revisor": "direccion",
+    "fecha": "2026-11-24"
+  }
+}

@@ -1,0 +1,3760 @@
+{
+  "version": 2,
+  "movimientos": [
+    {
+      "id": "EDADMEDIA",
+      "nombre": "Literatura medieval",
+      "periodo": "medieval",
+      "inicio": 1100,
+      "fin": 1492,
+      "rasgos": [
+        "Mester de juglaría (épica oral, anónima) y mester de clerecía (cuaderna vía, culto)",
+        "Intención didáctica y religiosa; nacen la prosa en castellano y la lírica popular"
+      ]
+    },
+    {
+      "id": "PRERRENAC",
+      "nombre": "Prerrenacimiento",
+      "periodo": "medieval",
+      "inicio": 1400,
+      "fin": 1500,
+      "rasgos": [
+        "Transición hacia el Renacimiento",
+        "Reflexión sobre la muerte y el amor; aparece La Celestina"
+      ]
+    },
+    {
+      "id": "RENAC",
+      "nombre": "Renacimiento",
+      "periodo": "siglo_de_oro",
+      "inicio": 1500,
+      "fin": 1600,
+      "rasgos": [
+        "Imitación de los clásicos grecolatinos e influencia italiana (endecasílabo, soneto)",
+        "Idealización de la naturaleza y del amor; mística y ascética"
+      ]
+    },
+    {
+      "id": "BARROCO",
+      "nombre": "Barroco",
+      "periodo": "siglo_de_oro",
+      "inicio": 1600,
+      "fin": 1700,
+      "rasgos": [
+        "Pesimismo, desengaño y contraste",
+        "Culteranismo (Góngora: forma recargada) y conceptismo (Quevedo: juego de ideas); comedia nueva de Lope"
+      ]
+    },
+    {
+      "id": "ILUSTRA",
+      "nombre": "Ilustración y Neoclasicismo",
+      "periodo": "siglo_xviii",
+      "inicio": 1700,
+      "fin": 1800,
+      "rasgos": [
+        "Razón, crítica y afán educativo",
+        "Teatro con normas clásicas, ensayo y fábulas"
+      ]
+    },
+    {
+      "id": "ROMANT",
+      "nombre": "Romanticismo",
+      "periodo": "siglo_xix",
+      "inicio": 1830,
+      "fin": 1850,
+      "rasgos": [
+        "Libertad creadora, subjetividad y rebeldía",
+        "Exaltación del yo, de la naturaleza salvaje y del pasado medieval"
+      ]
+    },
+    {
+      "id": "POSROMANT",
+      "nombre": "Posromanticismo",
+      "periodo": "siglo_xix",
+      "inicio": 1850,
+      "fin": 1880,
+      "rasgos": [
+        "Lírica intimista y sencilla",
+        "Bécquer y Rosalía de Castro"
+      ]
+    },
+    {
+      "id": "REALISMO",
+      "nombre": "Realismo y Naturalismo",
+      "periodo": "siglo_xix",
+      "inicio": 1870,
+      "fin": 1905,
+      "rasgos": [
+        "Retrato objetivo de la sociedad",
+        "Narrador omnisciente; el Naturalismo añade el determinismo social y biológico"
+      ]
+    },
+    {
+      "id": "MODERNISMO",
+      "nombre": "Modernismo",
+      "periodo": "siglo_xx",
+      "inicio": 1888,
+      "fin": 1915,
+      "rasgos": [
+        "Búsqueda de la belleza y renovación métrica",
+        "Exotismo, cosmopolitismo y musicalidad; Rubén Darío"
+      ]
+    },
+    {
+      "id": "G98",
+      "nombre": "Generación del 98",
+      "periodo": "siglo_xx",
+      "inicio": 1898,
+      "fin": 1920,
+      "rasgos": [
+        "Preocupación por España tras el desastre de 1898",
+        "Paisaje castellano, angustia existencial y estilo sobrio"
+      ]
+    },
+    {
+      "id": "NOVECENT",
+      "nombre": "Novecentismo (Generación del 14)",
+      "periodo": "siglo_xx",
+      "inicio": 1910,
+      "fin": 1925,
+      "rasgos": [
+        "Intelectualismo, europeísmo y ensayo",
+        "Poesía pura y depurada; greguería"
+      ]
+    },
+    {
+      "id": "G27",
+      "nombre": "Generación del 27",
+      "periodo": "siglo_xx",
+      "inicio": 1920,
+      "fin": 1936,
+      "rasgos": [
+        "Unión de tradición (romance, Góngora) y vanguardia (surrealismo)",
+        "Homenaje a Góngora en 1927; metáfora audaz"
+      ]
+    },
+    {
+      "id": "POSGUERRA",
+      "nombre": "Literatura de posguerra",
+      "periodo": "siglo_xx",
+      "inicio": 1939,
+      "fin": 1975,
+      "rasgos": [
+        "Años 40: existencialismo y tremendismo",
+        "Años 50: realismo social; años 60: renovación experimental"
+      ]
+    },
+    {
+      "id": "G50",
+      "nombre": "Generación del 50 (poesía)",
+      "periodo": "siglo_xx",
+      "inicio": 1950,
+      "fin": 1970,
+      "rasgos": [
+        "Poesía de la experiencia personal",
+        "Tono conversacional e ironía"
+      ]
+    },
+    {
+      "id": "ACTUAL",
+      "nombre": "Literatura actual",
+      "periodo": "actual",
+      "inicio": 1975,
+      "fin": null,
+      "rasgos": [
+        "Diversidad de tendencias y recuperación de la trama",
+        "Novela histórica, policiaca e intimista"
+      ]
+    },
+    {
+      "id": "HISPANO",
+      "nombre": "Literatura hispanoamericana",
+      "periodo": "siglo_xx",
+      "inicio": 1888,
+      "fin": null,
+      "rasgos": [
+        "Modernismo, vanguardias y boom de los años 60",
+        "Realismo mágico: lo fantástico como cotidiano"
+      ]
+    },
+    {
+      "id": "CLASICA",
+      "nombre": "Literatura clásica grecolatina",
+      "periodo": "antigua",
+      "inicio": -800,
+      "fin": 500,
+      "rasgos": [
+        "Épica, tragedia y lírica fundacionales de Occidente",
+        "Mitología y héroes"
+      ]
+    },
+    {
+      "id": "UNIVERSAL",
+      "nombre": "Literatura universal moderna",
+      "periodo": "universal",
+      "inicio": 1300,
+      "fin": null,
+      "rasgos": [
+        "Grandes obras de otras lenguas",
+        "Del Renacimiento italiano a la narrativa del siglo XX"
+      ]
+    },
+    {
+      "id": "INFANTIL",
+      "nombre": "Literatura infantil y juvenil",
+      "periodo": "infantil",
+      "inicio": 1697,
+      "fin": null,
+      "rasgos": [
+        "Cuentos populares recopilados, fábulas y aventuras",
+        "Fantasía, humor y protagonistas infantiles"
+      ]
+    },
+    {
+      "id": "TEATRO1900",
+      "nombre": "Teatro de principios del siglo XX",
+      "periodo": "siglo_xx",
+      "inicio": 1900,
+      "fin": 1936,
+      "rasgos": [
+        "Alta comedia burguesa (Benavente)",
+        "Teatro cómico popular: sainete, astracán y tragedia grotesca (Arniches, Muñoz Seca)"
+      ]
+    },
+    {
+      "id": "G36",
+      "nombre": "Generación del 36",
+      "periodo": "siglo_xx",
+      "inicio": 1936,
+      "fin": 1950,
+      "rasgos": [
+        "Poetas que empiezan a publicar en torno a la Guerra Civil",
+        "Poesía humana y comprometida, cercana al 27"
+      ]
+    }
+  ],
+  "autores": [
+    {
+      "id": "anon_cid",
+      "nombre": "Anónimo (Cantar de mio Cid)",
+      "nacimiento": null,
+      "muerte": null,
+      "aproximado": true,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "EDADMEDIA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Cantar de mio Cid",
+          "anio": 1200,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Cantar de gesta del mester de juglaría sobre el destierro del Cid",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "anon_lazarillo",
+      "nombre": "Anónimo (Lazarillo de Tormes)",
+      "nacimiento": null,
+      "muerte": null,
+      "aproximado": true,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "RENAC",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Lazarillo de Tormes",
+          "anio": 1554,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Inaugura la novela picaresca, narrada en primera persona",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "berceo",
+      "nombre": "Gonzalo de Berceo",
+      "nacimiento": 1198,
+      "muerte": 1264,
+      "aproximado": true,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "EDADMEDIA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Milagros de Nuestra Señora",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Primer poeta castellano de nombre conocido; mester de clerecía",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "alfonsox",
+      "nombre": "Alfonso X el Sabio",
+      "nacimiento": 1221,
+      "muerte": 1284,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "EDADMEDIA",
+      "generos": [
+        "narrativa",
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Cantigas de Santa María",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Impulsó la prosa en castellano y la Escuela de Traductores de Toledo",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "juanmanuel",
+      "nombre": "Don Juan Manuel",
+      "nacimiento": 1282,
+      "muerte": 1348,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "EDADMEDIA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El conde Lucanor",
+          "anio": 1335,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Cuentos (exemplos) con moraleja final",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "hita",
+      "nombre": "Juan Ruiz, Arcipreste de Hita",
+      "nacimiento": 1283,
+      "muerte": 1350,
+      "aproximado": true,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "EDADMEDIA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Libro de buen amor",
+          "anio": 1330,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Mezcla de humor, amor y enseñanza en cuaderna vía",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "santillana",
+      "nombre": "Marqués de Santillana",
+      "nacimiento": 1398,
+      "muerte": 1458,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "PRERRENAC",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Serranillas",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Introduce el soneto en castellano (sonetos fechos al itálico modo)",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "manrique",
+      "nombre": "Jorge Manrique",
+      "nacimiento": 1440,
+      "muerte": 1479,
+      "aproximado": true,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "PRERRENAC",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Coplas por la muerte de su padre",
+          "anio": 1476,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Elegía sobre la fugacidad de la vida; copla manriqueña",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "rojas",
+      "nombre": "Fernando de Rojas",
+      "nacimiento": 1470,
+      "muerte": 1541,
+      "aproximado": true,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "PRERRENAC",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "La Celestina",
+          "anio": 1499,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Tragicomedia dialogada entre la Edad Media y el Renacimiento",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "garcilaso",
+      "nombre": "Garcilaso de la Vega",
+      "nacimiento": 1501,
+      "muerte": 1536,
+      "aproximado": true,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "RENAC",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Églogas",
+          "anio": null,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Sonetos",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Aclimata el endecasílabo y el soneto italianos; amor y naturaleza idealizada",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "frayluis",
+      "nombre": "Fray Luis de León",
+      "nacimiento": 1527,
+      "muerte": 1591,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "RENAC",
+      "generos": [
+        "poesia",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Oda a la vida retirada",
+          "anio": null,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "De los nombres de Cristo",
+          "anio": 1583,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Poesía ascética: elogio de la vida sencilla",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "juancruz",
+      "nombre": "San Juan de la Cruz",
+      "nacimiento": 1542,
+      "muerte": 1591,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "RENAC",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Cántico espiritual",
+          "anio": null,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Noche oscura del alma",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Cumbre de la poesía mística",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "teresa",
+      "nombre": "Santa Teresa de Jesús",
+      "nacimiento": 1515,
+      "muerte": 1582,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "RENAC",
+      "generos": [
+        "narrativa",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Libro de la vida",
+          "anio": null,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Las moradas",
+          "anio": 1577,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Prosa mística de estilo llano",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "cervantes",
+      "nombre": "Miguel de Cervantes",
+      "nacimiento": 1547,
+      "muerte": 1616,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "BARROCO",
+      "generos": [
+        "narrativa",
+        "teatro",
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Don Quijote de la Mancha",
+          "anio": 1605,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Novelas ejemplares",
+          "anio": 1613,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Entremeses",
+          "anio": 1615,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Creador de la novela moderna",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "lope",
+      "nombre": "Lope de Vega",
+      "nacimiento": 1562,
+      "muerte": 1635,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "BARROCO",
+      "generos": [
+        "teatro",
+        "poesia",
+        "narrativa",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Fuenteovejuna",
+          "anio": 1619,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "El caballero de Olmedo",
+          "anio": 1641,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "Arte nuevo de hacer comedias",
+          "anio": 1609,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Crea la comedia nueva: tres actos y mezcla de lo trágico y lo cómico",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "gongora",
+      "nombre": "Luis de Góngora",
+      "nacimiento": 1561,
+      "muerte": 1627,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "BARROCO",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Fábula de Polifemo y Galatea",
+          "anio": 1612,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Soledades",
+          "anio": 1613,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Máximo representante del culteranismo",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "quevedo",
+      "nombre": "Francisco de Quevedo",
+      "nacimiento": 1580,
+      "muerte": 1645,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "BARROCO",
+      "generos": [
+        "poesia",
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El Buscón",
+          "anio": 1626,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Sueños",
+          "anio": 1627,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Máximo representante del conceptismo; sátira",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "calderon",
+      "nombre": "Pedro Calderón de la Barca",
+      "nacimiento": 1600,
+      "muerte": 1681,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "BARROCO",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "La vida es sueño",
+          "anio": 1635,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "El gran teatro del mundo",
+          "anio": null,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Teatro filosófico y autos sacramentales",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "tirso",
+      "nombre": "Tirso de Molina",
+      "nacimiento": 1579,
+      "muerte": 1648,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "BARROCO",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "El burlador de Sevilla",
+          "anio": 1630,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Crea el mito de don Juan",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "gracian",
+      "nombre": "Baltasar Gracián",
+      "nacimiento": 1601,
+      "muerte": 1658,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "BARROCO",
+      "generos": [
+        "narrativa",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "El Criticón",
+          "anio": 1651,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Prosa conceptista y moral",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "aleman",
+      "nombre": "Mateo Alemán",
+      "nacimiento": 1547,
+      "muerte": 1615,
+      "aproximado": true,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "BARROCO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Guzmán de Alfarache",
+          "anio": 1599,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela picaresca",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "feijoo",
+      "nombre": "Benito Jerónimo Feijoo",
+      "nacimiento": 1676,
+      "muerte": 1764,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ILUSTRA",
+      "generos": [
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Teatro crítico universal",
+          "anio": 1726,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Ensayo contra supersticiones y errores comunes",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "cadalso",
+      "nombre": "José Cadalso",
+      "nacimiento": 1741,
+      "muerte": 1782,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ILUSTRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Cartas marruecas",
+          "anio": 1789,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Crítica de la sociedad española en forma epistolar",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "jovellanos",
+      "nombre": "Gaspar Melchor de Jovellanos",
+      "nacimiento": 1744,
+      "muerte": 1811,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ILUSTRA",
+      "generos": [
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Informe sobre la ley agraria",
+          "anio": 1795,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Ilustrado reformista",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "moratin",
+      "nombre": "Leandro Fernández de Moratín",
+      "nacimiento": 1760,
+      "muerte": 1828,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ILUSTRA",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "El sí de las niñas",
+          "anio": 1806,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Comedia neoclásica que critica los matrimonios concertados",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "samaniego",
+      "nombre": "Félix María Samaniego",
+      "nacimiento": 1745,
+      "muerte": 1801,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ILUSTRA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Fábulas morales",
+          "anio": 1781,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Fábulas en verso con moraleja",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "iriarte",
+      "nombre": "Tomás de Iriarte",
+      "nacimiento": 1750,
+      "muerte": 1791,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ILUSTRA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Fábulas literarias",
+          "anio": 1782,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Fábulas sobre la creación literaria",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "espronceda",
+      "nombre": "José de Espronceda",
+      "nacimiento": 1808,
+      "muerte": 1842,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ROMANT",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Canción del pirata",
+          "anio": 1835,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "El estudiante de Salamanca",
+          "anio": 1840,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Rebeldía y exaltación de la libertad",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "zorrilla",
+      "nombre": "José Zorrilla",
+      "nacimiento": 1817,
+      "muerte": 1893,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ROMANT",
+      "generos": [
+        "teatro",
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Don Juan Tenorio",
+          "anio": 1844,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Drama romántico del don Juan que se salva por amor",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "larra",
+      "nombre": "Mariano José de Larra",
+      "nacimiento": 1809,
+      "muerte": 1837,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ROMANT",
+      "generos": [
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Vuelva usted mañana",
+          "anio": 1833,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Artículos periodísticos de crítica social",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "rivas",
+      "nombre": "Duque de Rivas",
+      "nacimiento": 1791,
+      "muerte": 1865,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ROMANT",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "Don Álvaro o la fuerza del sino",
+          "anio": 1835,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Drama que consagra el Romanticismo en España",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "becquer",
+      "nombre": "Gustavo Adolfo Bécquer",
+      "nacimiento": 1836,
+      "muerte": 1870,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSROMANT",
+      "generos": [
+        "poesia",
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Rimas",
+          "anio": 1871,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Leyendas",
+          "anio": null,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Poesía intimista y breve; leyendas de misterio",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "rosalia",
+      "nombre": "Rosalía de Castro",
+      "nacimiento": 1837,
+      "muerte": 1885,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSROMANT",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Cantares gallegos",
+          "anio": 1863,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "En las orillas del Sar",
+          "anio": 1884,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía en gallego y castellano; tristeza y paisaje",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "galdos",
+      "nombre": "Benito Pérez Galdós",
+      "nacimiento": 1843,
+      "muerte": 1920,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "REALISMO",
+      "generos": [
+        "narrativa",
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "Fortunata y Jacinta",
+          "anio": 1887,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Episodios nacionales",
+          "anio": 1873,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Marianela",
+          "anio": 1878,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Gran novelista del Realismo; retrato del Madrid del XIX",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "clarin",
+      "nombre": "Leopoldo Alas, Clarín",
+      "nacimiento": 1852,
+      "muerte": 1901,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "REALISMO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La Regenta",
+          "anio": 1884,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela realista ambientada en Vetusta (Oviedo)",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "pardobazan",
+      "nombre": "Emilia Pardo Bazán",
+      "nacimiento": 1851,
+      "muerte": 1921,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "REALISMO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Los pazos de Ulloa",
+          "anio": 1886,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Introduce el Naturalismo en España",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "valera",
+      "nombre": "Juan Valera",
+      "nacimiento": 1824,
+      "muerte": 1905,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "REALISMO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Pepita Jiménez",
+          "anio": 1874,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela realista de estilo cuidado",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "blasco",
+      "nombre": "Vicente Blasco Ibáñez",
+      "nacimiento": 1867,
+      "muerte": 1928,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "REALISMO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La barraca",
+          "anio": 1898,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Cañas y barro",
+          "anio": 1902,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Naturalismo de ambiente valenciano",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "dario",
+      "nombre": "Rubén Darío",
+      "nacimiento": 1867,
+      "muerte": 1916,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Nicaragua",
+      "movimiento": "MODERNISMO",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Azul...",
+          "anio": 1888,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Prosas profanas",
+          "anio": 1896,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Padre del Modernismo",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "unamuno",
+      "nombre": "Miguel de Unamuno",
+      "nacimiento": 1864,
+      "muerte": 1936,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G98",
+      "generos": [
+        "narrativa",
+        "ensayo",
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Niebla",
+          "anio": 1914,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "San Manuel Bueno, mártir",
+          "anio": 1931,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Angustia existencial; la nivola",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "baroja",
+      "nombre": "Pío Baroja",
+      "nacimiento": 1872,
+      "muerte": 1956,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G98",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El árbol de la ciencia",
+          "anio": 1911,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela de estilo sencillo y pesimista",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "azorin",
+      "nombre": "Azorín",
+      "nacimiento": 1873,
+      "muerte": 1967,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G98",
+      "generos": [
+        "narrativa",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Castilla",
+          "anio": 1912,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Prosa detallista y paisaje castellano; dio nombre a la Generación del 98",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "amachado",
+      "nombre": "Antonio Machado",
+      "nacimiento": 1875,
+      "muerte": 1939,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G98",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Campos de Castilla",
+          "anio": 1912,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Soledades",
+          "anio": 1903,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía del paisaje castellano y del paso del tiempo",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "valle",
+      "nombre": "Ramón María del Valle-Inclán",
+      "nacimiento": 1866,
+      "muerte": 1936,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G98",
+      "generos": [
+        "teatro",
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Luces de bohemia",
+          "anio": 1920,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "Sonatas",
+          "anio": 1902,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Crea el esperpento: deformación grotesca de la realidad",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "benavente",
+      "nombre": "Jacinto Benavente",
+      "nacimiento": 1866,
+      "muerte": 1954,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "TEATRO1900",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "Los intereses creados",
+          "anio": 1907,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Premio Nobel de Literatura en 1922",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "jrj",
+      "nombre": "Juan Ramón Jiménez",
+      "nacimiento": 1881,
+      "muerte": 1958,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "NOVECENT",
+      "generos": [
+        "poesia",
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Platero y yo",
+          "anio": 1914,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Diario de un poeta recién casado",
+          "anio": 1917,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía pura; Premio Nobel en 1956",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "ortega",
+      "nombre": "José Ortega y Gasset",
+      "nacimiento": 1883,
+      "muerte": 1955,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "NOVECENT",
+      "generos": [
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "La rebelión de las masas",
+          "anio": 1930,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Ensayista y filósofo",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "gomezserna",
+      "nombre": "Ramón Gómez de la Serna",
+      "nacimiento": 1888,
+      "muerte": 1963,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "NOVECENT",
+      "generos": [
+        "narrativa",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Greguerías",
+          "anio": 1917,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Inventor de la greguería: humorismo + metáfora",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "munozseca",
+      "nombre": "Pedro Muñoz Seca",
+      "nacimiento": 1879,
+      "muerte": 1936,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "TEATRO1900",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "La venganza de don Mendo",
+          "anio": 1918,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Astracán: parodia del drama histórico en verso",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "arniches",
+      "nombre": "Carlos Arniches",
+      "nacimiento": 1866,
+      "muerte": 1943,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "TEATRO1900",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "La señorita de Trevélez",
+          "anio": 1916,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Sainete madrileño y tragedia grotesca",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "lorca",
+      "nombre": "Federico García Lorca",
+      "nacimiento": 1898,
+      "muerte": 1936,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G27",
+      "generos": [
+        "poesia",
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "Romancero gitano",
+          "anio": 1928,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Poeta en Nueva York",
+          "anio": 1940,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Bodas de sangre",
+          "anio": 1933,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "La casa de Bernarda Alba",
+          "anio": 1936,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Lo popular andaluz y la vanguardia; destino trágico",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "alberti",
+      "nombre": "Rafael Alberti",
+      "nacimiento": 1902,
+      "muerte": 1999,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G27",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Marinero en tierra",
+          "anio": 1925,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Neopopularismo y nostalgia del mar",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "salinas",
+      "nombre": "Pedro Salinas",
+      "nacimiento": 1891,
+      "muerte": 1951,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G27",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "La voz a ti debida",
+          "anio": 1933,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poeta del amor",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "guillen",
+      "nombre": "Jorge Guillén",
+      "nacimiento": 1893,
+      "muerte": 1984,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G27",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Cántico",
+          "anio": 1928,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía pura y celebración del mundo",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "gdiego",
+      "nombre": "Gerardo Diego",
+      "nacimiento": 1896,
+      "muerte": 1987,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G27",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Manual de espumas",
+          "anio": 1924,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Vanguardia (creacionismo) y tradición",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "aleixandre",
+      "nombre": "Vicente Aleixandre",
+      "nacimiento": 1898,
+      "muerte": 1984,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G27",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Sombra del paraíso",
+          "anio": 1944,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Surrealismo; Premio Nobel en 1977",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "cernuda",
+      "nombre": "Luis Cernuda",
+      "nacimiento": 1902,
+      "muerte": 1963,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G27",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "La realidad y el deseo",
+          "anio": 1936,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Conflicto entre realidad y deseo; exilio",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "damaso",
+      "nombre": "Dámaso Alonso",
+      "nacimiento": 1898,
+      "muerte": 1990,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G27",
+      "generos": [
+        "poesia",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Hijos de la ira",
+          "anio": 1944,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía desarraigada; crítico literario",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "mhernandez",
+      "nombre": "Miguel Hernández",
+      "nacimiento": 1910,
+      "muerte": 1942,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G36",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "El rayo que no cesa",
+          "anio": 1936,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Viento del pueblo",
+          "anio": 1937,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Amor, vida y muerte; poesía comprometida. Cercano a la Generación del 27",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "cela",
+      "nombre": "Camilo José Cela",
+      "nacimiento": 1916,
+      "muerte": 2002,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La familia de Pascual Duarte",
+          "anio": 1942,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "La colmena",
+          "anio": 1951,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Tremendismo; Premio Nobel en 1989",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "laforet",
+      "nombre": "Carmen Laforet",
+      "nacimiento": 1921,
+      "muerte": 2004,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Nada",
+          "anio": 1945,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Primer Premio Nadal; posguerra en Barcelona",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "delibes",
+      "nombre": "Miguel Delibes",
+      "nacimiento": 1920,
+      "muerte": 2010,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El camino",
+          "anio": 1950,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Cinco horas con Mario",
+          "anio": 1966,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Los santos inocentes",
+          "anio": 1981,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Mundo rural castellano y crítica social",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "matute",
+      "nombre": "Ana María Matute",
+      "nacimiento": 1925,
+      "muerte": 2014,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Primera memoria",
+          "anio": 1960,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Infancia y guerra; Premio Cervantes",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "ferlosio",
+      "nombre": "Rafael Sánchez Ferlosio",
+      "nacimiento": 1927,
+      "muerte": 2019,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El Jarama",
+          "anio": 1955,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Realismo social objetivista",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "martingaite",
+      "nombre": "Carmen Martín Gaite",
+      "nacimiento": 1925,
+      "muerte": 2000,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Entre visillos",
+          "anio": 1958,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "El cuarto de atrás",
+          "anio": 1978,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Mundo femenino de la posguerra",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "buero",
+      "nombre": "Antonio Buero Vallejo",
+      "nacimiento": 1916,
+      "muerte": 2000,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "Historia de una escalera",
+          "anio": 1949,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Teatro de crítica social y existencial",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "mihura",
+      "nombre": "Miguel Mihura",
+      "nacimiento": 1905,
+      "muerte": 1977,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "Tres sombreros de copa",
+          "anio": 1952,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Teatro del humor absurdo",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "martinsantos",
+      "nombre": "Luis Martín-Santos",
+      "nacimiento": 1924,
+      "muerte": 1964,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Tiempo de silencio",
+          "anio": 1962,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Renovación técnica de la novela",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "sender",
+      "nombre": "Ramón J. Sender",
+      "nacimiento": 1901,
+      "muerte": 1982,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Réquiem por un campesino español",
+          "anio": 1953,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela del exilio",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "otero",
+      "nombre": "Blas de Otero",
+      "nacimiento": 1916,
+      "muerte": 1979,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Pido la paz y la palabra",
+          "anio": 1955,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía social",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "celaya",
+      "nombre": "Gabriel Celaya",
+      "nacimiento": 1911,
+      "muerte": 1991,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Cantos íberos",
+          "anio": 1955,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía social: la poesía como arma",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "hierro",
+      "nombre": "José Hierro",
+      "nacimiento": 1922,
+      "muerte": 2002,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Quinta del 42",
+          "anio": 1952,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía testimonial y del tiempo",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "agonzalez",
+      "nombre": "Ángel González",
+      "nacimiento": 1925,
+      "muerte": 2008,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G50",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Áspero mundo",
+          "anio": 1956,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Ironía y poesía de la experiencia",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "gilbiedma",
+      "nombre": "Jaime Gil de Biedma",
+      "nacimiento": 1929,
+      "muerte": 1990,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "G50",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Moralidades",
+          "anio": 1966,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía de la experiencia",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "mendoza",
+      "nombre": "Eduardo Mendoza",
+      "nacimiento": 1943,
+      "muerte": null,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ACTUAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La verdad sobre el caso Savolta",
+          "anio": 1975,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Inaugura la narrativa de la Transición",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "munozmolina",
+      "nombre": "Antonio Muñoz Molina",
+      "nacimiento": 1956,
+      "muerte": null,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ACTUAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El jinete polaco",
+          "anio": 1991,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela de memoria",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "marias",
+      "nombre": "Javier Marías",
+      "nacimiento": 1951,
+      "muerte": 2022,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ACTUAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Corazón tan blanco",
+          "anio": 1992,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Narrativa reflexiva de largas digresiones",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "reverte",
+      "nombre": "Arturo Pérez-Reverte",
+      "nacimiento": 1951,
+      "muerte": null,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ACTUAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El capitán Alatriste",
+          "anio": 1996,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela de aventuras e histórica",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "marse",
+      "nombre": "Juan Marsé",
+      "nacimiento": 1933,
+      "muerte": 2020,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "POSGUERRA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Últimas tardes con Teresa",
+          "anio": 1966,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Barcelona de posguerra; Premio Cervantes",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "grandes",
+      "nombre": "Almudena Grandes",
+      "nacimiento": 1960,
+      "muerte": 2021,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ACTUAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Inés y la alegría",
+          "anio": 2010,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Episodios de una guerra interminable",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "garciamontero",
+      "nombre": "Luis García Montero",
+      "nacimiento": 1958,
+      "muerte": null,
+      "aproximado": false,
+      "ambito": "espanola",
+      "pais": "España",
+      "movimiento": "ACTUAL",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Habitaciones separadas",
+          "anio": 1994,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía de la experiencia",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "sorjuana",
+      "nombre": "Sor Juana Inés de la Cruz",
+      "nacimiento": 1648,
+      "muerte": 1695,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "México",
+      "movimiento": "BARROCO",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Primero sueño",
+          "anio": 1692,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Barroco novohispano; defensa del saber de las mujeres",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "marti",
+      "nombre": "José Martí",
+      "nacimiento": 1853,
+      "muerte": 1895,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Cuba",
+      "movimiento": "MODERNISMO",
+      "generos": [
+        "poesia",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Versos sencillos",
+          "anio": 1891,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Precursor del Modernismo",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "quiroga",
+      "nombre": "Horacio Quiroga",
+      "nacimiento": 1878,
+      "muerte": 1937,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Uruguay",
+      "movimiento": "HISPANO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Cuentos de la selva",
+          "anio": 1918,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Maestro del cuento",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "vallejo",
+      "nombre": "César Vallejo",
+      "nacimiento": 1892,
+      "muerte": 1938,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Perú",
+      "movimiento": "HISPANO",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Trilce",
+          "anio": 1922,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Vanguardia poética",
+      "dominioPublico": true,
+      "fragmentosPermitidos": true
+    },
+    {
+      "id": "mistral",
+      "nombre": "Gabriela Mistral",
+      "nacimiento": 1889,
+      "muerte": 1957,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Chile",
+      "movimiento": "HISPANO",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Desolación",
+          "anio": 1922,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Premio Nobel en 1945; primera autora hispanoamericana en lograrlo",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "neruda",
+      "nombre": "Pablo Neruda",
+      "nacimiento": 1904,
+      "muerte": 1973,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Chile",
+      "movimiento": "HISPANO",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Veinte poemas de amor y una canción desesperada",
+          "anio": 1924,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Canto general",
+          "anio": 1950,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Premio Nobel en 1971",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "borges",
+      "nombre": "Jorge Luis Borges",
+      "nacimiento": 1899,
+      "muerte": 1986,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Argentina",
+      "movimiento": "HISPANO",
+      "generos": [
+        "narrativa",
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Ficciones",
+          "anio": 1944,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "El Aleph",
+          "anio": 1949,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Cuentos fantásticos y laberintos",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "rulfo",
+      "nombre": "Juan Rulfo",
+      "nacimiento": 1917,
+      "muerte": 1986,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "México",
+      "movimiento": "HISPANO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Pedro Páramo",
+          "anio": 1955,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Precursor del realismo mágico",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "cortazar",
+      "nombre": "Julio Cortázar",
+      "nacimiento": 1914,
+      "muerte": 1984,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Argentina",
+      "movimiento": "HISPANO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Rayuela",
+          "anio": 1963,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela experimental del boom",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "garciamarquez",
+      "nombre": "Gabriel García Márquez",
+      "nacimiento": 1927,
+      "muerte": 2014,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Colombia",
+      "movimiento": "HISPANO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Cien años de soledad",
+          "anio": 1967,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Realismo mágico; Premio Nobel en 1982",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "vargasllosa",
+      "nombre": "Mario Vargas Llosa",
+      "nacimiento": 1936,
+      "muerte": 2025,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Perú",
+      "movimiento": "HISPANO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La ciudad y los perros",
+          "anio": 1963,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Boom latinoamericano; Premio Nobel en 2010",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "paz",
+      "nombre": "Octavio Paz",
+      "nacimiento": 1914,
+      "muerte": 1998,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "México",
+      "movimiento": "HISPANO",
+      "generos": [
+        "poesia",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "El laberinto de la soledad",
+          "anio": 1950,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Premio Nobel en 1990",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "allende",
+      "nombre": "Isabel Allende",
+      "nacimiento": 1942,
+      "muerte": null,
+      "aproximado": false,
+      "ambito": "hispanoamericana",
+      "pais": "Chile",
+      "movimiento": "HISPANO",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La casa de los espíritus",
+          "anio": 1982,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Realismo mágico y saga familiar",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "homero",
+      "nombre": "Homero",
+      "nacimiento": null,
+      "muerte": null,
+      "aproximado": true,
+      "ambito": "universal",
+      "pais": "Grecia",
+      "movimiento": "CLASICA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Ilíada",
+          "anio": null,
+          "genero": "poesia"
+        },
+        {
+          "titulo": "Odisea",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Épica griega atribuida a Homero (siglo VIII a. C.)",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "sofocles",
+      "nombre": "Sófocles",
+      "nacimiento": -496,
+      "muerte": -406,
+      "aproximado": true,
+      "ambito": "universal",
+      "pais": "Grecia",
+      "movimiento": "CLASICA",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "Edipo rey",
+          "anio": null,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "Antígona",
+          "anio": null,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Tragedia griega",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "virgilio",
+      "nombre": "Virgilio",
+      "nacimiento": -70,
+      "muerte": -19,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Italia",
+      "movimiento": "CLASICA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Eneida",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Épica latina",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "ovidio",
+      "nombre": "Ovidio",
+      "nacimiento": -43,
+      "muerte": 17,
+      "aproximado": true,
+      "ambito": "universal",
+      "pais": "Italia",
+      "movimiento": "CLASICA",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Metamorfosis",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Mitos de transformaciones",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "esopo",
+      "nombre": "Esopo",
+      "nacimiento": null,
+      "muerte": null,
+      "aproximado": true,
+      "ambito": "universal",
+      "pais": "Grecia",
+      "movimiento": "CLASICA",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Fábulas",
+          "anio": null,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Fábulas de animales con moraleja (siglo VI a. C.)",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "dante",
+      "nombre": "Dante Alighieri",
+      "nacimiento": 1265,
+      "muerte": 1321,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Italia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Divina comedia",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Viaje por Infierno, Purgatorio y Paraíso",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "petrarca",
+      "nombre": "Francesco Petrarca",
+      "nacimiento": 1304,
+      "muerte": 1374,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Italia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Cancionero",
+          "anio": null,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Modelo del soneto amoroso renacentista",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "boccaccio",
+      "nombre": "Giovanni Boccaccio",
+      "nacimiento": 1313,
+      "muerte": 1375,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Italia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Decamerón",
+          "anio": null,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Cien cuentos enmarcados",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "shakespeare",
+      "nombre": "William Shakespeare",
+      "nacimiento": 1564,
+      "muerte": 1616,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Reino Unido",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "teatro",
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Hamlet",
+          "anio": null,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "Romeo y Julieta",
+          "anio": null,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "Macbeth",
+          "anio": null,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Cumbre del teatro inglés",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "moliere",
+      "nombre": "Molière",
+      "nacimiento": 1622,
+      "muerte": 1673,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Francia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "El avaro",
+          "anio": 1668,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "Tartufo",
+          "anio": 1664,
+          "genero": "teatro"
+        }
+      ],
+      "rasgo": "Comedia de costumbres y de caracteres",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "lafontaine",
+      "nombre": "Jean de La Fontaine",
+      "nacimiento": 1621,
+      "muerte": 1695,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Francia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Fábulas",
+          "anio": 1668,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Fábulas en verso",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "defoe",
+      "nombre": "Daniel Defoe",
+      "nacimiento": 1660,
+      "muerte": 1731,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Reino Unido",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Robinson Crusoe",
+          "anio": 1719,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela de aventuras y supervivencia",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "swift",
+      "nombre": "Jonathan Swift",
+      "nacimiento": 1667,
+      "muerte": 1745,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Irlanda",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Los viajes de Gulliver",
+          "anio": 1726,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Sátira en forma de viajes fantásticos",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "goethe",
+      "nombre": "Johann Wolfgang von Goethe",
+      "nacimiento": 1749,
+      "muerte": 1832,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Alemania",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "poesia",
+        "teatro",
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Fausto",
+          "anio": 1808,
+          "genero": "teatro"
+        },
+        {
+          "titulo": "Las desventuras del joven Werther",
+          "anio": 1774,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Del Sturm und Drang al clasicismo de Weimar; cumbre de la literatura alemana",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "austen",
+      "nombre": "Jane Austen",
+      "nacimiento": 1775,
+      "muerte": 1817,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Reino Unido",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Orgullo y prejuicio",
+          "anio": 1813,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela de costumbres e ironía",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "mshelley",
+      "nombre": "Mary Shelley",
+      "nacimiento": 1797,
+      "muerte": 1851,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Reino Unido",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Frankenstein",
+          "anio": 1818,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Precursora de la ciencia ficción",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "vhugo",
+      "nombre": "Victor Hugo",
+      "nacimiento": 1802,
+      "muerte": 1885,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Francia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa",
+        "poesia",
+        "teatro"
+      ],
+      "obras": [
+        {
+          "titulo": "Los miserables",
+          "anio": 1862,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Romanticismo francés",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "poe",
+      "nombre": "Edgar Allan Poe",
+      "nacimiento": 1809,
+      "muerte": 1849,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Estados Unidos",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa",
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "El cuervo",
+          "anio": 1845,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Cuento de terror y policiaco",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "dickens",
+      "nombre": "Charles Dickens",
+      "nacimiento": 1812,
+      "muerte": 1870,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Reino Unido",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Oliver Twist",
+          "anio": 1838,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Canción de Navidad",
+          "anio": 1843,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Realismo social inglés",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "baudelaire",
+      "nombre": "Charles Baudelaire",
+      "nacimiento": 1821,
+      "muerte": 1867,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Francia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Las flores del mal",
+          "anio": 1857,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Precursor del Simbolismo",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "flaubert",
+      "nombre": "Gustave Flaubert",
+      "nacimiento": 1821,
+      "muerte": 1880,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Francia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Madame Bovary",
+          "anio": 1857,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Realismo francés",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "dostoievski",
+      "nombre": "Fiódor Dostoievski",
+      "nacimiento": 1821,
+      "muerte": 1881,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Rusia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Crimen y castigo",
+          "anio": 1866,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela psicológica rusa",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "tolstoi",
+      "nombre": "León Tolstói",
+      "nacimiento": 1828,
+      "muerte": 1910,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Rusia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Guerra y paz",
+          "anio": 1869,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Ana Karénina",
+          "anio": 1877,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Realismo ruso",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "kafka",
+      "nombre": "Franz Kafka",
+      "nacimiento": 1883,
+      "muerte": 1924,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Chequia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La metamorfosis",
+          "anio": 1915,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Lo absurdo y angustioso",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "proust",
+      "nombre": "Marcel Proust",
+      "nacimiento": 1871,
+      "muerte": 1922,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Francia",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "En busca del tiempo perdido",
+          "anio": 1913,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Memoria y tiempo",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "joyce",
+      "nombre": "James Joyce",
+      "nacimiento": 1882,
+      "muerte": 1941,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Irlanda",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Ulises",
+          "anio": 1922,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Monólogo interior",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "woolf",
+      "nombre": "Virginia Woolf",
+      "nacimiento": 1882,
+      "muerte": 1941,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Reino Unido",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La señora Dalloway",
+          "anio": 1925,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Flujo de conciencia",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "orwell",
+      "nombre": "George Orwell",
+      "nacimiento": 1903,
+      "muerte": 1950,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Reino Unido",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "1984",
+          "anio": 1949,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Rebelión en la granja",
+          "anio": 1945,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Distopía y crítica del totalitarismo",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "hemingway",
+      "nombre": "Ernest Hemingway",
+      "nacimiento": 1899,
+      "muerte": 1961,
+      "aproximado": false,
+      "ambito": "universal",
+      "pais": "Estados Unidos",
+      "movimiento": "UNIVERSAL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El viejo y el mar",
+          "anio": 1952,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Estilo seco y directo; Premio Nobel en 1954",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "perrault",
+      "nombre": "Charles Perrault",
+      "nacimiento": 1628,
+      "muerte": 1703,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Francia",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Cuentos de antaño",
+          "anio": 1697,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Caperucita, Cenicienta o El gato con botas",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "grimm",
+      "nombre": "Hermanos Grimm",
+      "nacimiento": 1785,
+      "muerte": 1863,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Alemania",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Cuentos de la infancia y del hogar",
+          "anio": 1812,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Jacob (1785-1863) y Wilhelm (1786-1859) recopilaron cuentos populares alemanes",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "andersen",
+      "nombre": "Hans Christian Andersen",
+      "nacimiento": 1805,
+      "muerte": 1875,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Dinamarca",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El patito feo",
+          "anio": 1843,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "La sirenita",
+          "anio": 1837,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Cuentos de autor",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "carroll",
+      "nombre": "Lewis Carroll",
+      "nacimiento": 1832,
+      "muerte": 1898,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Reino Unido",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Alicia en el país de las maravillas",
+          "anio": 1865,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Lo absurdo y los juegos de lógica",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "collodi",
+      "nombre": "Carlo Collodi",
+      "nacimiento": 1826,
+      "muerte": 1890,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Italia",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Las aventuras de Pinocho",
+          "anio": 1883,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "El muñeco que quiere ser niño",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "verne",
+      "nombre": "Julio Verne",
+      "nacimiento": 1828,
+      "muerte": 1905,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Francia",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La vuelta al mundo en ochenta días",
+          "anio": 1872,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Veinte mil leguas de viaje submarino",
+          "anio": 1870,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Aventura y anticipación científica",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "twain",
+      "nombre": "Mark Twain",
+      "nacimiento": 1835,
+      "muerte": 1910,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Estados Unidos",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Las aventuras de Tom Sawyer",
+          "anio": 1876,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Aventuras a orillas del Misisipi",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "stevenson",
+      "nombre": "Robert Louis Stevenson",
+      "nacimiento": 1850,
+      "muerte": 1894,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Reino Unido",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La isla del tesoro",
+          "anio": 1883,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela de piratas",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "kipling",
+      "nombre": "Rudyard Kipling",
+      "nacimiento": 1865,
+      "muerte": 1936,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Reino Unido",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El libro de la selva",
+          "anio": 1894,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Relatos con Mowgli",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "saintexupery",
+      "nombre": "Antoine de Saint-Exupéry",
+      "nacimiento": 1900,
+      "muerte": 1944,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Francia",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "El principito",
+          "anio": 1943,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Fábula poética sobre la amistad",
+      "dominioPublico": true,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "fortun",
+      "nombre": "Elena Fortún",
+      "nacimiento": 1886,
+      "muerte": 1952,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "España",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Celia, lo que dice",
+          "anio": 1929,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Serie de Celia",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "fuertes",
+      "nombre": "Gloria Fuertes",
+      "nacimiento": 1917,
+      "muerte": 1998,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "España",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "poesia"
+      ],
+      "obras": [
+        {
+          "titulo": "Cangura para todo",
+          "anio": 1967,
+          "genero": "poesia"
+        }
+      ],
+      "rasgo": "Poesía infantil de humor y juego verbal",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "dahl",
+      "nombre": "Roald Dahl",
+      "nacimiento": 1916,
+      "muerte": 1990,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Reino Unido",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Matilda",
+          "anio": 1988,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Charlie y la fábrica de chocolate",
+          "anio": 1964,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Humor negro y niños valientes",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "lindgren",
+      "nombre": "Astrid Lindgren",
+      "nacimiento": 1907,
+      "muerte": 2002,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Suecia",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Pippi Calzaslargas",
+          "anio": 1945,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Niña libre y fuerte",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "ende",
+      "nombre": "Michael Ende",
+      "nacimiento": 1929,
+      "muerte": 1995,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Alemania",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "La historia interminable",
+          "anio": 1979,
+          "genero": "narrativa"
+        },
+        {
+          "titulo": "Momo",
+          "anio": 1973,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Fantasía",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "rodari",
+      "nombre": "Gianni Rodari",
+      "nacimiento": 1920,
+      "muerte": 1980,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "Italia",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa",
+        "ensayo"
+      ],
+      "obras": [
+        {
+          "titulo": "Gramática de la fantasía",
+          "anio": 1973,
+          "genero": "ensayo"
+        }
+      ],
+      "rasgo": "Técnicas para inventar historias",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "lindo",
+      "nombre": "Elvira Lindo",
+      "nacimiento": 1962,
+      "muerte": null,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "España",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Manolito Gafotas",
+          "anio": 1994,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Humor y vida de barrio",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "gallego",
+      "nombre": "Laura Gallego",
+      "nacimiento": 1977,
+      "muerte": null,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "España",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Memorias de Idhún",
+          "anio": 2004,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Fantasía juvenil",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    },
+    {
+      "id": "sierrafabra",
+      "nombre": "Jordi Sierra i Fabra",
+      "nacimiento": 1947,
+      "muerte": null,
+      "aproximado": false,
+      "ambito": "infantil",
+      "pais": "España",
+      "movimiento": "INFANTIL",
+      "generos": [
+        "narrativa"
+      ],
+      "obras": [
+        {
+          "titulo": "Campos de fresas",
+          "anio": 1997,
+          "genero": "narrativa"
+        }
+      ],
+      "rasgo": "Novela juvenil realista",
+      "dominioPublico": false,
+      "fragmentosPermitidos": false
+    }
+  ]
+}

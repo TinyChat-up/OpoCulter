@@ -1,8 +1,49 @@
 # Estado del proyecto
 
-**Fase actual:** 05C — Estilo Rubber Hose, avatares del propietario, generadores y matriz de exámenes · **Terminada**
-**Siguiente:** Fase 05D (modos de juego) y lotes de contenido 02 y 02b, a la espera de instrucciones de la dirección.
-**Última actualización:** 2026-11-23
+**Fase actual:** Recuperación (lote 02, verificación de la 05D e integración de las ramas de datos) · **Terminada y fusionada en `main`**.
+**Siguiente:** Fase 05E (Tribunal), a la espera del prompt de la dirección.
+**Última actualización:** 2026-11-25
+
+## Recuperación — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| Lote 02 terminado | ✅ Las 38 plantillas superan los tests de propiedades; léxico con 0 discrepancias | D-077, TESTING §12 |
+| Verificación conjunta 05D + lote 02 | ✅ Suite completa, archive Release sin avisos, arranque y recorrido en el iPhone | D-077, TESTING §11–12 |
+| Integración (6 fusiones en orden) | ✅ Compilación y tests unitarios en verde tras cada fusión (con 2 commits de ajuste) | DECISIONES «Renumeración de la recuperación» |
+| Textos base, gramática con compatibilidad, frases y base literaria | ✅ | D-085–D-089 |
+| Tests unitarios + UI | ✅ 189 unitarios (41 suites) y 17 de interfaz (1 omitido a propósito, solo para Instruments), en verde | TESTING §13 |
+| Cobertura | ✅ Core **95,3 %** (generadores 93,6 %, `Core/Modos` 98,1 %) · Features 87,6 % · App 83,2 % | `xccov` |
+| Auditoría de accesibilidad | ✅ Sin incidencias, también en las pantallas nuevas (texto base desplegado, plegado y corregido) | Tests de UI |
+| Avisos del compilador | ✅ 0 (Debug desde cero en el iPhone y archive Release) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada con todo integrado; arranque en frío **0,67 s** de media (0,63–0,71); recorrido completo (bienvenida → … → Ajustes, comprensión y frases) en verde | `xcodebuild test` en el dispositivo |
+| Catálogo de preguntas (Release) | **≥ 146 933** preguntas distintas: LEN 3849 (LEN.ORT 3800, LEN.LEX 30, LEN.COM 19) y MAT 143 084 | `CatalogoPreguntas` |
+
+## Pendiente
+1. **Decisiones para la dirección** (informe de la recuperación): palabras del léxico que sin tilde son otra palabra válida (`colocarTilde` no da contexto), oraciones forzadas de la gramática generativa, «5 %» partido en dos líneas en la cabecera de Lengua de Progreso con texto grande, y la correspondencia entre las competencias del Tribunal y las del catálogo (25 propuestas no existen con ese nombre).
+2. Revisar las 28 competencias que propone la matriz en el lote de contenido correspondiente (no se añaden todavía). El lote 03a resolvió 5 de las 33 iniciales.
+3. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
+4. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
+5. Ramas temporales locales `wip/seccion4` y `wip/seccion4b` (solo en este Mac, no subidas): copias de trabajo de la recuperación, sin uso.
+
+## Fase 05D — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| Camino, Supervivencia, Rescate, diagnóstico y plan, Progreso, ajustes, sonido y recordatorio | ✅ | D-069–D-074, UX_UI §4.12 |
+| Tests unitarios | ✅ 173 (37 suites), en verde en 4 ejecuciones | `xcodebuild test` |
+| Tests de interfaz nuevos (5) | ✅ Los 5 en verde en la suite completa del 24/11 | `ModosUITests` |
+| Tests de interfaz anteriores (9) | ✅ Cada uno ha pasado tras las correcciones, pero no todos en la misma ejecución. La última suite completa se cortó porque el Mac entró en reposo (batería) | TESTING §11 |
+| Auditoría de accesibilidad | ✅ Sin incidencias en las pantallas nuevas. El contraste se audita en una pasada aparte (D-075) | Tests de UI |
+| Cobertura | ✅ Core **96,2 %** (`Core/Modos` 98,0 %) · App 82,1 % · Features 73,3 % (ejecución cortada) | `xccov` |
+| Avisos del compilador | ✅ 0 (app y tests, tras corregir 3) | logs |
+| iPhone físico | ✅ Instalada y abierta (Debug) | `devicectl` |
+| Archive Release y arranque medido en el iPhone | ✅ En la recuperación (D-077) | `xcodebuild archive`, `RendimientoUITests` |
+| Capturas | Omitidas por decisión del propietario | — |
+
+## Pendiente (05D, histórico)
+Resuelto en la recuperación: suite completa en verde, archive Release, arranque medido en el iPhone y `testCaminoNodoYPruebaDeNivel` en verde.
 
 ## Fase 05C — Resultado
 
@@ -23,10 +64,8 @@
 | Capturas | ✅ [docs/capturas/fase05c](docs/capturas/fase05c/) (48 + HOJA.png: claro, oscuro, AX5) | `scripts/capturas.sh … 05c` |
 | Catálogo de preguntas | Release **59** (contenido aprobado); Debug **≥ 55 943** con las plantillas de prueba | `CatalogoPreguntas` |
 
-## Pendiente
-1. Revisar las 33 competencias que propone la matriz en el lote de contenido correspondiente (no se añaden todavía).
-2. **Cuenta de Apple:** Personal Team hasta que el propietario active la membresía de pago (antes de la Fase 06). Los perfiles caducan cada 7 días.
-3. Runtime de iOS 17 en el simulador: Fase 07 (D-008).
+## Pendiente (05C, histórico)
+Las competencias propuestas por la matriz y la cuenta de Apple siguen en el «Pendiente» de arriba. Los «pendientes con Mac» de las ramas de datos (literatura, lote 03a, lote 02b y Tribunal) se resolvieron en la recuperación (D-085–D-089).
 
 ## Fase 05B — Resultado
 

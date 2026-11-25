@@ -62,7 +62,7 @@ struct TecladoNumerico: View {
             }
         }
         .disabled(desactivado)
-        .sensoryFeedback(.selection, trigger: texto)
+        .retroHaptica(.selection, trigger: texto)
     }
 
     private func boton(_ tecla: Tecla) -> some View {

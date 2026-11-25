@@ -207,18 +207,64 @@ struct RevisionRecuentos: View {
     }
 }
 
+/// Progreso real generado con el motor (solo Debug, `-progresoDemo`) para capturas de Progreso,
+/// Camino y Rescate: responde rondas y una partida con las mismas llamadas que la interfaz.
+enum ProgresoDemo {
+    @MainActor
+    static func jugar(_ servicio: ServicioSesion) {
+        for (k, tipo) in [TipoRonda.area("LEN"), .area("MAT"), .area("LEN")].enumerated() {
+            let modelo = RondaViewModel(servicio: servicio, tipo: tipo)
+            var i = 0
+            while modelo.fase == .respondiendo || modelo.fase == .teoria, i < 20 {
+                if modelo.fase == .teoria { modelo.empezarTrasTeoria(); continue }
+                modelo.rellenarParaPruebas(correcta: (i + k) % 4 != 3)
+                modelo.comprobar()
+                modelo.continuar()
+                i += 1
+            }
+        }
+        let partida = RondaViewModel(servicio: servicio, tipo: .supervivencia(area: nil))
+        var i = 0
+        while partida.fase == .respondiendo, i < 40 { partida.rellenarParaPruebas(correcta: i < 7); partida.comprobar(); partida.continuar(); i += 1 }
+    }
+}
+
 /// Escenas fijas para generar capturas (`-captura <escena>`).
 struct VistaCaptura: View {
     @Environment(EntornoApp.self) private var entorno
     let escena: String
     @State private var ronda: RondaViewModel?
+    @State private var listo = false
 
     var body: some View {
         Group {
+            if !listo && entorno.opciones.progresoDemo { Paleta.fondo } else { escenaVista }
+        }
+        .task { preparar() }
+    }
+
+    @ViewBuilder
+    private var escenaVista: some View {
+        Group {
             let partes = escena.split(separator: ":").map(String.init)
             switch partes.first {
-            case "item", "resumen":
+            case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba":
                 if let ronda { PantallaRonda(modelo: ronda) {} } else { Paleta.fondo }
+            case "camino":
+                if let servicio = entorno.servicio { PantallaCamino(servicio: servicio) }
+            case "nodo":
+                if let servicio = entorno.servicio, let n = try? servicio.camino(area: "LEN").flatMap(\.nodos).first(where: { $0.id == (partes.dropFirst().first ?? "") }) {
+                    HojaNodo(nodo: n, servicio: servicio, recomendada: "Agudas, llanas y esdrújulas") { _ in }
+                }
+            case "progreso":
+                if let servicio = entorno.servicio { PantallaProgreso(servicio: servicio) }
+            case "ajustes":
+                if let servicio = entorno.servicio { NavigationStack { PantallaAjustes(servicio: servicio) } }
+            case "rescate":
+                if let servicio = entorno.servicio { PantallaRescate(servicio: servicio) { _ in } }
+            case "supervivencia":
+                if let servicio = entorno.servicio { PantallaInicioSupervivencia(servicio: servicio) { _ in } }
+
             case "teoria":
                 ScrollView {
                     if let t = entorno.banco?.teoria.first(where: { $0.id == partes.dropFirst().first }) {
@@ -249,12 +295,49 @@ struct VistaCaptura: View {
                 VistaRaiz()
             }
         }
-        .task { preparar() }
     }
 
     private func preparar() {
         guard ronda == nil, let servicio = entorno.servicio, let banco = entorno.banco else { return }
         let partes = escena.split(separator: ":").map(String.init)
+        if entorno.opciones.progresoDemo { ProgresoDemo.jugar(servicio) }
+        listo = true
+        func jugarHastaElFinal(_ modelo: RondaViewModel, aciertaHasta: Int) {
+            var i = 0
+            while modelo.fase == .respondiendo, i < 60 {
+                modelo.rellenarParaPruebas(correcta: i < aciertaHasta)
+                modelo.comprobar()
+                modelo.continuar()
+                i += 1
+            }
+        }
+        switch partes.first {
+        case "partida":
+            let modelo = RondaViewModel(servicio: servicio, tipo: .supervivencia(area: nil))
+            for _ in 0..<5 { modelo.rellenarParaPruebas(correcta: true); modelo.comprobar(); modelo.continuar() }
+            ronda = modelo
+            return
+        case "finPartida":
+            let modelo = RondaViewModel(servicio: servicio, tipo: .supervivencia(area: nil))
+            jugarHastaElFinal(modelo, aciertaHasta: 9)
+            ronda = modelo
+            return
+        case "diagnostico":
+            ronda = RondaViewModel(servicio: servicio, tipo: .diagnostico)
+            return
+        case "plan":
+            let modelo = RondaViewModel(servicio: servicio, tipo: .diagnostico)
+            var i = 0
+            while modelo.fase == .respondiendo, i < 40 { modelo.rellenarParaPruebas(correcta: i % 3 != 1); modelo.comprobar(); modelo.continuar(); i += 1 }
+            ronda = modelo
+            return
+        case "prueba":
+            let modelo = RondaViewModel(servicio: servicio, tipo: .pruebaNivel(partes.dropFirst().first ?? "LEN.ORT.AGU"))
+            jugarHastaElFinal(modelo, aciertaHasta: 4)
+            ronda = modelo
+            return
+        default: break
+        }
         if partes.first == "item", partes.count >= 2 {
             let modelo = RondaViewModel(servicio: servicio, tipo: .items([partes[1]]))
             let modo = partes.count >= 3 ? partes[2] : "antes"

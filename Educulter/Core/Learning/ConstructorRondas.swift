@@ -22,6 +22,8 @@ struct ConfiguracionRonda: Sendable, Equatable {
 struct ItemRonda: Sendable, Equatable {
     enum Motivo: String, Sendable, Codable {
         case repaso, rescate, enCurso, intercalado, relleno
+        /// Modos de la Fase 05D.
+        case pruebaNivel, reto, supervivencia, diagnostico, practica
     }
     var itemId: String
     var motivo: Motivo
@@ -37,7 +39,8 @@ struct Ronda: Sendable, Equatable {
 /// Compone rondas de 6–8 ítems con esta prioridad:
 /// 1. repasos vencidos; 2. Rescate (máx. 2); 3. competencia en curso en su peldaño;
 /// 4. un ítem intercalado de otra competencia en el peldaño 3 o superior.
-/// Evita ítems vistos en las últimas 24 h si hay alternativa.
+/// Evita ítems vistos en las últimas 24 h si hay alternativa y nunca repite una pregunta en la
+/// misma ronda, aunque cambie el id (huella, D-087).
 struct ConstructorRondas: Sendable {
     let banco: BancoContenido
     var config = ConfiguracionRonda.estandar
@@ -63,10 +66,12 @@ struct ConstructorRondas: Sendable {
         }
         var elegidos: [ItemRonda] = []
         var usados = Set<String>()
+        var huellas = Set<String>()
 
         func anadir(_ item: Item?, _ motivo: ItemRonda.Motivo) -> Bool {
             guard let item, !usados.contains(item.id), elegidos.count < config.maximo else { return false }
             usados.insert(item.id)
+            guard huellas.insert(banco.huella(item)).inserted else { return false }
             elegidos.append(ItemRonda(itemId: item.id, motivo: motivo))
             return true
         }
@@ -78,7 +83,7 @@ struct ConstructorRondas: Sendable {
         var repasos = 0
         for estado in vencidas where repasos < config.maxRepasos {
             let candidatos = candidatos(competencia: estado.competenciaId, peldano: estado.escalera.peldano)
-            if anadir(elegir(candidatos, usados: usados, esReciente: esReciente, rng: &rng), .repaso) { repasos += 1 }
+            if anadir(elegir(candidatos, usados: usados, huellas: huellas, esReciente: esReciente, rng: &rng), .repaso) { repasos += 1 }
         }
 
         // 2. Rescate.
@@ -89,7 +94,7 @@ struct ConstructorRondas: Sendable {
         }
 
         // 4 (se reserva el hueco antes de llenar con la competencia en curso).
-        let intercalable = competenciaIntercalable(estados: estados, enCurso: enCurso, usados: usados,
+        let intercalable = competenciaIntercalable(estados: estados, enCurso: enCurso, usados: usados, huellas: huellas,
                                                    esReciente: esReciente, rng: &rng)
         let reserva = intercalable == nil ? 0 : 1
 
@@ -100,7 +105,9 @@ struct ConstructorRondas: Sendable {
             let peldano = estados[enCurso]?.escalera.peldano ?? 1
             let candidatos = candidatos(competencia: enCurso, peldano: peldano)
             while elegidos.count + enCursoElegidos.count + reserva < config.objetivo,
-                  let item = elegir(candidatos, usados: usados.union(enCursoElegidos.map(\.id)), esReciente: esReciente,
+                  let item = elegir(candidatos, usados: usados.union(enCursoElegidos.map(\.id)),
+                                    huellas: huellas.union(enCursoElegidos.map(banco.huella)
+                                        + (intercalable.map { [banco.huella($0)] } ?? [])), esReciente: esReciente,
                                     permitirRecientes: false, rng: &rng) {
                 enCursoElegidos.append(item)
             }
@@ -127,12 +134,12 @@ struct ConstructorRondas: Sendable {
         for permitirRecientes in [false, true] where elegidos.count < config.minimo {
             for estado in empezadas where elegidos.count < config.minimo {
                 let candidatos = candidatos(competencia: estado.competenciaId, peldano: estado.escalera.peldano)
-                _ = anadir(elegir(candidatos, usados: usados, esReciente: esReciente,
+                _ = anadir(elegir(candidatos, usados: usados, huellas: huellas, esReciente: esReciente,
                                   permitirRecientes: permitirRecientes, rng: &rng), .relleno)
             }
             for grupo in [restoArea, resto] {
                 while elegidos.count < config.minimo,
-                      let item = elegir(grupo, usados: usados, esReciente: esReciente, permitirRecientes: permitirRecientes, rng: &rng) {
+                      let item = elegir(grupo, usados: usados, huellas: huellas, esReciente: esReciente, permitirRecientes: permitirRecientes, rng: &rng) {
                     _ = anadir(item, .relleno)
                 }
             }
@@ -163,7 +170,7 @@ struct ConstructorRondas: Sendable {
     }
 
     private func competenciaIntercalable(estados: [String: EstadoCompetencia], enCurso: String?, usados: Set<String>,
-                                         esReciente: (String) -> Bool,
+                                         huellas: Set<String>, esReciente: (String) -> Bool,
                                          rng: inout some RandomNumberGenerator) -> Item? {
         let usadasEnRonda = Set(usados.compactMap { banco.item(id: $0)?.competencia })
         let opciones = estados.values
@@ -172,16 +179,16 @@ struct ConstructorRondas: Sendable {
         let preferidas = opciones.filter { !usadasEnRonda.contains($0.competenciaId) }
         for estado in (preferidas.isEmpty ? opciones : preferidas).shuffled(using: &rng) {
             let items = candidatos(competencia: estado.competenciaId, peldano: estado.escalera.peldano)
-            if let item = elegir(items, usados: usados, esReciente: esReciente, rng: &rng) { return item }
+            if let item = elegir(items, usados: usados, huellas: huellas, esReciente: esReciente, rng: &rng) { return item }
         }
         return nil
     }
 
-    /// Elige un ítem no usado, prefiriendo los no vistos recientemente. Con
-    /// `permitirRecientes == false` nunca devuelve un ítem reciente.
-    private func elegir(_ candidatos: [Item], usados: Set<String>, esReciente: (String) -> Bool,
+    /// Elige un ítem no usado y cuya pregunta no esté ya en la ronda, prefiriendo los no vistos
+    /// recientemente. Con `permitirRecientes == false` nunca devuelve un ítem reciente.
+    private func elegir(_ candidatos: [Item], usados: Set<String>, huellas: Set<String>, esReciente: (String) -> Bool,
                         permitirRecientes: Bool = true, rng: inout some RandomNumberGenerator) -> Item? {
-        let libres = candidatos.filter { !usados.contains($0.id) }
+        let libres = candidatos.filter { !usados.contains($0.id) && !huellas.contains(banco.huella($0)) }
         let frescos = libres.filter { !esReciente($0.id) }
         return (frescos.isEmpty && permitirRecientes ? libres : frescos).randomElement(using: &rng)
     }

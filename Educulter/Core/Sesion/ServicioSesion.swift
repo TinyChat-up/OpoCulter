@@ -12,6 +12,18 @@ enum TipoRonda: Sendable, Equatable {
     case items([String])
     /// Ronda de un área (`LEN` o `MAT`) con su competencia en curso.
     case area(String)
+    /// Practicar una competencia concreta (Camino).
+    case competencia(String)
+    /// Prueba de nivel: 5 ítems del peldaño 3; con 4 aciertos se superan los peldaños 1–2 (D-070).
+    case pruebaNivel(String)
+    /// Reto de bloque: 8 ítems sin ayudas de dificultad 4–5; con 6 aciertos, medalla (D-070).
+    case retoBloque(String)
+    /// Rescate de una sola competencia.
+    case rescateCompetencia(String)
+    /// Supervivencia (los ítems se piden uno a uno); `area` nil = mixta (D-069).
+    case supervivencia(area: String?)
+    /// Diagnóstico inicial (adaptativo, ítem a ítem).
+    case diagnostico
 }
 
 /// Propuesta de ronda por área para el panel protagonista de Hoy.
@@ -46,6 +58,10 @@ struct EfectoRonda: Sendable, Equatable {
     var racha = EstadoRacha()
     var misionesCompletadas: [Mision] = []
     var logrosNuevos: [Logro] = []
+    /// Prueba de nivel: `true` si se han superado los peldaños 1–2.
+    var pruebaNivelSuperada: Bool?
+    /// Reto de bloque: `true` si se ha ganado la medalla.
+    var retoSuperado: Bool?
 }
 
 /// Lo que muestra la pestaña Hoy.
@@ -67,6 +83,9 @@ struct EstadoHoy: Sendable, Equatable {
     /// Racha en riesgo: hay racha, hoy no hay ronda y quedan menos de 4 h (D-054).
     var rachaEnRiesgo = false
     var horasHastaMedianoche = 24
+    /// Récord de Supervivencia (puntos) y si hay contenido para jugar.
+    var recordSupervivencia: Int?
+    var supervivenciaDisponible = false
 }
 
 /// Orquesta el núcleo para una sesión de juego: compone rondas, registra respuestas y
@@ -85,7 +104,7 @@ final class ServicioSesion {
     var configRonda = ConfiguracionRonda.estandar
     var curva = CurvaNiveles.estandar
     var motorLogros = MotorLogros()
-    private var rng: GeneradorConSemilla
+    var rng: GeneradorConSemilla
 
     init(banco: BancoContenido, repositorio: any RepositorioProgreso, reloj: any Reloj = RelojSistema(),
          calendario: Calendar = .current, rng: GeneradorConSemilla = .aleatorio()) {
@@ -121,7 +140,9 @@ final class ServicioSesion {
             propuestas: try propuestas(enCurso: enCurso),
             avatar: perfil.avatar,
             rachaEnRiesgo: ReglasPersonaje.rachaEnRiesgo(perfil.racha.vigente(hoy: hoy), ahora: reloj.ahora, calendario: calendario),
-            horasHastaMedianoche: ReglasPersonaje.horasHastaMedianoche(ahora: reloj.ahora, calendario: calendario)
+            horasHastaMedianoche: ReglasPersonaje.horasHastaMedianoche(ahora: reloj.ahora, calendario: calendario),
+            recordSupervivencia: RecordsSupervivencia(partidas: try repositorio.partidas()).global?.puntos,
+            supervivenciaDisponible: !SelectorSupervivencia(banco: banco).bloques(area: nil).isEmpty
         )
     }
 
@@ -230,6 +251,35 @@ final class ServicioSesion {
         case .items(let ids):
             let items = ids.filter { banco.item(id: $0) != nil }.map { ItemRonda(itemId: $0, motivo: .relleno) }
             return RondaPreparada(tipo: tipo, items: items, competenciaEnCurso: nil, teoriaPrevia: [])
+        case .competencia(let id):
+            return try prepararPractica(id, esReciente: esReciente)
+        case .pruebaNivel(let id):
+            let items = ConstructorCamino(banco: banco).itemsPruebaNivel(id).shuffled(using: &rng).sinPreguntasRepetidas()
+                .prefix(ConfiguracionCamino.estandar.itemsPruebaNivel).map { ItemRonda(itemId: $0.id, motivo: .pruebaNivel) }
+            return RondaPreparada(tipo: tipo, items: items.count == ConfiguracionCamino.estandar.itemsPruebaNivel ? Array(items) : [],
+                                  competenciaEnCurso: id, teoriaPrevia: [])
+        case .retoBloque(let bloque):
+            let items = ConstructorCamino(banco: banco).itemsReto(bloque, rng: &rng).map { ItemRonda(itemId: $0.id, motivo: .reto) }
+            return RondaPreparada(tipo: tipo, items: items, competenciaEnCurso: nil, teoriaPrevia: [])
+        case .rescateCompetencia(let id):
+            let cola = try repositorio.colaRescate()
+            var usados = Set<String>()
+            var items: [ItemRonda] = []
+            for entrada in cola.entradas where entrada.competencia == id && items.count < Self.maxItemsRescate {
+                if let item = cola.itemParaRescatar(entrada, banco: banco, excluir: usados, esReciente: esReciente, rng: &rng) {
+                    usados.insert(item.id)
+                    items.append(ItemRonda(itemId: item.id, motivo: .rescate))
+                }
+            }
+            return RondaPreparada(tipo: tipo, items: items, competenciaEnCurso: nil, teoriaPrevia: [])
+        case .supervivencia(let area):
+            let primero = try siguienteSupervivencia(dificultad: ReglasSupervivencia.estandar.dificultadInicial, area: area, usados: [])
+            return RondaPreparada(tipo: tipo, items: primero.map { [ItemRonda(itemId: $0.id, motivo: .supervivencia)] } ?? [],
+                                  competenciaEnCurso: nil, teoriaPrevia: [])
+        case .diagnostico:
+            let sesion = nuevaSesionDiagnostico()
+            return RondaPreparada(tipo: tipo, items: sesion.siguienteItem.map { [ItemRonda(itemId: $0.id, motivo: .diagnostico)] } ?? [],
+                                  competenciaEnCurso: nil, teoriaPrevia: [])
         }
     }
 
@@ -288,11 +338,13 @@ final class ServicioSesion {
         return efecto
     }
 
-    /// Cierra una ronda terminada: racha, métricas, misiones y logros.
-    func completarRonda(_ ronda: RondaPreparada) throws -> EfectoRonda {
+    /// Cierra una ronda terminada: racha, métricas, misiones y logros. `aciertos` decide la prueba
+    /// de nivel y el Reto de bloque.
+    func completarRonda(_ ronda: RondaPreparada, aciertos: Int? = nil) throws -> EfectoRonda {
         var perfil = try repositorio.perfil()
         try asegurarMisiones(&perfil)
         var efecto = EfectoRonda()
+        try aplicarModo(ronda, aciertos: aciertos, perfil: &perfil, efecto: &efecto)
         efecto.cambiosRacha = perfil.racha.registrarRonda(hoy: hoy)
         efecto.racha = perfil.racha
         perfil.metricas[.rondasCompletadas, default: 0] += 1
@@ -308,14 +360,14 @@ final class ServicioSesion {
             area = (ronda.competenciaEnCurso ?? competencias.first).map(Catalogo.area(de:))
         }
         efecto.misionesCompletadas += GeneradorMisiones.registrar(.rondaCompletada(area: area), en: &perfil.misiones)
-        efecto.logrosNuevos = try comprobarLogros(perfil, fecha: reloj.ahora)
+        efecto.logrosNuevos += try comprobarLogros(perfil, fecha: reloj.ahora)
         try repositorio.guardar(perfil)
         return efecto
     }
 
     // MARK: - Auxiliares
 
-    private func asegurarMisiones(_ perfil: inout PerfilJugador) throws {
+    func asegurarMisiones(_ perfil: inout PerfilJugador) throws {
         guard perfil.diaMisiones != hoy else { return }
         let estados = try repositorio.estadosCompetencia()
         perfil.misiones = GeneradorMisiones.generar(dia: hoy, contexto: ContextoMisiones(
@@ -335,7 +387,7 @@ final class ServicioSesion {
         return Double(dominadas) / Double(ids.count)
     }
 
-    private func comprobarLogros(_ perfil: PerfilJugador, fecha: Date) throws -> [Logro] {
+    func comprobarLogros(_ perfil: PerfilJugador, fecha: Date) throws -> [Logro] {
         let obtenidos = Set(try repositorio.logros().map(\.logroId))
         let nuevos = motorLogros.nuevos(metricas: perfil.metricas, obtenidos: obtenidos)
         for logro in nuevos { try repositorio.registrarLogro(LogroObtenido(logroId: logro.id, fecha: fecha)) }

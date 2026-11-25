@@ -56,7 +56,7 @@ Objetivo: cobertura de `Core/` ≥ 90 % (desde la 05A). Última medición (Fase 
 | `PilotoUITests.testRondaDeLenguaConColocarTilde` | Contenido de Release, semilla 10: ronda de LEN.ORT.AGU con `colocarTilde` respondida **tocando la vocal o «Sin tilde»** |
 | `RendimientoUITests` | Arranque en frío (`XCTApplicationLaunchMetric`) y manipulación de `fraccionBarras` (colorear, dividir) y `colocarTilde` (`XCTHitchMetric`, `XCTCPUMetric`, `XCTClockMetric`) |
 
-Opciones de arranque (solo Debug): `-enMemoria -semilla N -ayudasDePrueba -avatar N [-rondaDemostracion] [-politicaRelease] [-almacenPruebas NOMBRE -borrarAlmacen] [-captura ESCENA]` (D-044, D-058).
+Opciones de arranque (solo Debug): `-enMemoria -semilla N -ayudasDePrueba -avatar N [-rondaDemostracion] [-rondaItems ID1,ID2…] [-politicaRelease] [-almacenPruebas NOMBRE -borrarAlmacen] [-captura ESCENA]` (D-044, D-058, D-077). `-rondaItems` hace que «Empezar ronda» lance esos ítems en orden (también ids generados `<plantilla>#<semilla>`).
 
 `RondaViewModelTests` usa ayudas que solo existen en Debug y va dentro de `#if DEBUG`; así el paquete de tests también compila en Release (para medir el arranque con la app optimizada).
 
@@ -129,3 +129,93 @@ Conclusión: el arranque (≈ 0,6 s en el simulador desde el inicio del proceso 
 | Generar una ronda de 8 ítems con plantillas | < 50 ms (test) |
 
 Los tests de fluidez localizan ahora celdas y vocales **por su posición en pantalla** (ordenadas de arriba abajo y de izquierda a derecha), no por un índice fijo. El primer intento en el dispositivo falló porque el iPhone se bloqueó durante el test; con el bloqueo automático desactivado, pasaron los tres.
+
+## 11. Fase 05D: modos de juego
+
+**Tests unitarios nuevos** (`EduculterTests/ModosTests.swift`; 173 en total, 37 suites):
+- **Supervivencia**:
+  - sube un nivel cada 4 aciertos seguidos, hasta el 6, y un fallo quita una vida y baja un nivel;
+  - puntos: 10 × dificultad × combo, hasta ×2;
+  - récords: las partidas abandonadas no cuentan;
+  - pesos por bloque de la MATRIZ;
+  - el selector da ítems de la dificultad exacta, reproducibles por id;
+  - partida completa con efectos reales.
+- **Camino**:
+  - estados de nodo y candado orientativo;
+  - prueba de nivel: 4 de 5 supera, 3 de 5 no;
+  - Reto de bloque con ítems fijos y con plantillas: 8 ítems de dificultad 4–5, y 6 aciertos dan la medalla;
+  - Practicar.
+- **Diagnóstico, Rescate y estadísticas**:
+  - plan con bloques fuerte, medio y débil y con 2 recomendaciones;
+  - historial de diagnósticos;
+  - Rescate por competencia: el contador baja de verdad;
+  - estadísticas contra un historial sintético.
+- **Recordatorio**, con `CentroNotificaciones` simulado:
+  - programa 7 días;
+  - no avisa hoy si ya se ha jugado.
+- **Sonido**: un espía comprueba que no suena con el sonido desactivado, y cada sonido dura ≤ 250 ms y no satura.
+- **Persistencia y contenido**:
+  - ajustes, partidas, desbloqueos y diagnósticos se guardan en disco;
+  - borrar el progreso conserva los ajustes;
+  - los créditos coinciden con CREDITOS.md;
+  - las preguntas disponibles son solo las del contenido aprobado.
+
+**Tests de interfaz nuevos** (`EduculterUITests/ModosUITests.swift`, todos con auditoría de accesibilidad):
+
+| Test | Qué comprueba |
+|---|---|
+| `testBienvenidaDiagnosticoYPlan` | Avatar → diagnóstico → plan → Hoy |
+| `testSupervivenciaHastaPerderLasTresVidas` | Semilla fija; partida hasta perder las 3 vidas, con la puntuación exacta en la pantalla final |
+| `testCaminoNodoYPruebaDeNivel` | Camino → hoja del nodo → prueba de nivel superada → nodo actualizado |
+| `testRescatePorCompetencia` | Estado vacío → errores reales → rescate de una competencia → ver un ítem de nuevo |
+| `testRecordYAjustesTrasCerrarYReabrir` | El récord y los ajustes siguen ahí tras cerrar y reabrir la app (almacén en disco) |
+
+**Auditoría (D-075):** `CasoUI.auditarUnaVez` audita primero `.contrast` y después el resto de tipos. En una sola pasada, la comprobación de Dynamic Type desplazaba Hoy cuando estaba al final del scroll, y el contraste se medía fuera del texto.
+
+**Cobertura (05D):**
+- Core **96,2 %** (5 252 / 5 457); `Core/Modos` 98,0 %.
+- App 82,1 %.
+- Features 73,3 %: en esa ejecución, el Mac entró en reposo y 6 tests de interfaz se cortaron antes de recorrer sus pantallas.
+
+**Lección:** la suite completa se lanza con `caffeinate -dims` y el Mac enchufado. En reposo, `testmanagerd` pierde el simulador y los tests fallan por tiempo de espera, no por la app.
+
+## 12. Lote 02: propiedades de las plantillas aprobadas
+
+`EduculterTests/GeneradoresTests.swift`, sobre las 38 plantillas del lote 02 (y las 10 de prueba de la 05C que quedan):
+- **1000 semillas por plantilla** (`GeneradoresPropiedadesTests.propiedades`): cada ítem pasa el validador, no deja marcadores sin rellenar, es determinista y su clave pertenece al espacio enumerado (cuando se enumera entero).
+- **Oráculo independiente por tipo**: recalcula la solución sin usar el código del generador (fórmulas propias de porcentajes, regla de tres, unidades con su tabla de factores, sexagesimal, escalas, fracciones con un evaluador de expresiones propio, romanos con su propio parser, ecuaciones por fuerza bruta y acentuación con un contador de núcleos vocálicos y las reglas generales).
+- **Distractores**: distintos de la solución y entre sí, por texto y **por valor** (0,5 y 1/2 cuentan como el mismo).
+- **Dificultad 1→6** (`dificultadCreciente`): la complejidad media de 200 semillas crece de un nivel al siguiente en las de Matemáticas y no decrece en las de Lengua; el nivel 6 siempre supera al 1.
+- **Aprobación**: `cobertura` exige que las 38 plantillas del lote estén aprobadas por la dirección y que el resto siga en borrador; `release` comprueba que Release carga exactamente esas 38.
+- **Léxico** (`LexicoTests.coherente`): 818 palabras, **0 discrepancias** entre la tilde escrita y el silabeador con las reglas de la RAE, ninguna palabra apartada de los generadores y el oráculo independiente coincide en sílabas, tónica y clase de todas. `deduccion` comprueba el hiato con *h* intercalada (prohíbe, ahínco, rehúso, búho).
+- **Recuento del catálogo**: `enumerar` aplica los mismos filtros que `muestra`, de modo que solo se cuentan casos que se pueden generar.
+
+## 13. Recuperación (25/11/2026): integración y datos conectados
+
+**Tests unitarios nuevos:**
+- `TextosYLiteraturaTests` (D-085, D-088): carga de los 5 textos base con su procedencia (también en Release); cada ítem de comprensión con `textoRef` lo resuelve (13 de 19; los otros 6 son conceptuales); el validador falla con un `textoRef` inexistente, un texto de dominio público sin año de muerte o con menos de 80 años y un autor que no coincide; «Autor · Obra (año)» con el año de la base literaria. Base literaria: carga y validación sin errores, cada autor tiene obras y años (los únicos sin ningún año son anónimos o antiguos marcados como aproximados) y `fragmentosPermitidos` solo en dominio público y en español.
+- `GramaticaCompatibilidadTests` (D-086): 1000 semillas por mecánica de `oracionSimple` (segmentar, clasificar y elección) y por nivel 1–6. El oráculo solo usa los datos de `compatibilidad.json` y tablas escritas en el test (artículos, terminaciones de 3.ª persona, tiempos de los CCT): CD con etiqueta compatible y distinto del sujeto, CI de persona y ≠ sujeto, ≤ 2 CC de tipos distintos y de la lista de su tipo, CCT antepuesto como primer constituyente y con coma (nunca en `segmentar`), adjetivos compatibles y concordados con las cuatro formas de los datos (invariables en género solo en número), concordancia artículo-sustantivo y sujeto-verbo. `analisisVerbal`: participios irregulares (escrito, abierto) y conjugación según el infinitivo.
+- `FrasesHuecoTests` (D-089): datos coherentes (100 frases, 28 familias, una sola forma correcta por frase con su uso); 1000 semillas por plantilla y nivel: opciones o piezas = las formas de la familia, la correcta una sola vez, explicación con el `uso` de la forma correcta y frase del nivel pedido (o el inferior más próximo); dificultad no decreciente 1→6; ninguna frase repetida en una práctica, una ronda del motor, un Reto de LEN.ORT ni una partida de Supervivencia (D-087).
+- `ContenidoTests` con las cifras reales del contenido integrado.
+
+**Tests de interfaz nuevos:** `ComprensionUITests.testTextoBasePlegadoYDesplegado` (Camino → «Tema del texto» → panel desplegado encima del enunciado → plegado en «Ver texto» → desplegado → sigue a la vista al comprobar; auditoría en los tres estados) y `RecorridoUITests.testRecorridoCompleto` (recorrido de extremo a extremo con capturas, también en el iPhone).
+
+**Verificación después de cada fusión** (tests unitarios en el simulador, `integracion/recuperacion`):
+
+| Paso | Resultado |
+|---|---|
+| 1. `fase-05d/modos` | 173 en verde |
+| 2. `contenido/lote-02` (árbol idéntico al de la rama verificada) | 175 en verde |
+| 3. `contenido/literatura-05a` | 175 en verde |
+| 4. `contenido/lote-03a` | 5 fallos de recuento en `ContenidoTests` → commit de ajuste con las cifras reales → 175 en verde |
+| 5. `contenido/lote-02b` | Recuento de plantillas y complejidad de `oracionSimple` (sin verbos copulativos el nivel 4 bajaba del 3) → commit de la §4.2 → 178 en verde |
+| 6. `contenido/tribunal-datos` | 178 en verde |
+| Sección 4 completa | 189 en verde (41 suites) |
+
+**Cierre (25/11/2026):**
+- Suite completa con cobertura: 189 unitarios en verde; 17 de interfaz (1 omitido a propósito, solo para Instruments). `ComprensionUITests` detectó en la auditoría texto recortado en el pie con texto grande: el panel del texto base pasa a ocupar como mucho el 30 % de la pantalla (D-085) y se repite la batería de interfaz.
+- Cobertura: Core **95,3 %** (6 615 / 6 942; generadores 93,6 %, `Core/Modos` 98,1 %) · Features 87,6 % · App 83,2 %.
+- Lección: en iOS 26+ la barra de pestañas flotante se minimiza al desplazar; en el iPhone un toque en una pestaña puede no llegar («hit point {-1, -1}»). `RecorridoUITests` desplaza hacia arriba hasta poder pulsarla y comprueba el destino.
+- Repetición de la batería de interfaz con el panel adaptable: 17 tests (1 omitido a propósito), en verde y sin incidencias de auditoría.
+- iPhone 16 físico (Debug compilado desde cero, 0 avisos): `RecorridoUITests` en verde (incluye la ronda de comprensión con texto base y la de frases con hueco) y arranque en frío **0,67 s** de media (0,63–0,71; `XCTApplicationLaunchMetric`, 5 iteraciones). Archive Release sin avisos, no subido.
+- Catálogo (`ESTIMAR=1`): Release **≥ 146 933** preguntas distintas.

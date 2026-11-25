@@ -1,0 +1,110 @@
+[
+  {
+    "id": "LEN.LEX.SIN.T01",
+    "competencia": "LEN.LEX.SIN",
+    "titulo": "Sinónimos y antónimos",
+    "bloques": [
+      {
+        "tipo": "texto",
+        "contenido": "Sinónimos: significado igual o parecido (rápido, veloz). Antónimos: significado opuesto (ancho, estrecho)."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Sinonimia: depende del contexto (agua clara = transparente)\nAntonimia léxica: palabra distinta (subir, bajar)\nAntonimia gramatical: prefijo negativo (posible, imposible)"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    }
+  },
+  {
+    "id": "LEN.LEX.POLI.T01",
+    "competencia": "LEN.LEX.POLI",
+    "titulo": "Polisemia, homonimia y paronimia",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Polisemia: una palabra con varios significados relacionados (hoja)\nHomonimia: palabras distintas con la misma forma (vino, de venir / vino, la bebida)\nHomófonas: suenan igual y se escriben distinto (vaca, baca)\nParónimas: se parecen sin ser iguales (actitud, aptitud)"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    }
+  },
+  {
+    "id": "LEN.LEX.CAMPO.T01",
+    "competencia": "LEN.LEX.CAMPO",
+    "titulo": "Campo semántico y familia léxica",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Campo semántico: comparten significado (martillo, sierra, alicates)\nFamilia léxica: comparten lexema (flor, florero, floristería)"
+      },
+      {
+        "tipo": "regla",
+        "contenido": "Truco: si se repite la raíz, es familia léxica; si solo se parecen en el significado, es campo semántico."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    }
+  },
+  {
+    "id": "LEN.LEX.DICC.T01",
+    "competencia": "LEN.LEX.DICC",
+    "titulo": "El diccionario",
+    "bloques": [
+      {
+        "tipo": "texto",
+        "contenido": "Recoge las palabras de una lengua en orden alfabético y explica sus significados (acepciones), su categoría y otros datos."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Verbos: en infinitivo (cantar)\nSustantivos y adjetivos con variación de género: en masculino singular (bonito, niño)\nSin variación: tal cual, en singular (casa, árbol)\nAbreviaturas: m., f., adj., tr., intr., adv."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-24"
+    }
+  }
+]

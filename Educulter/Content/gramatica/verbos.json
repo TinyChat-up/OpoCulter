@@ -1,81 +1,34 @@
 {
   "regulares": [
     "cantar",
-    "saltar",
-    "mirar",
-    "caminar",
-    "descansar",
-    "trabajar",
     "comprar",
     "preparar",
+    "lavar",
+    "mirar",
+    "escuchar",
+    "dibujar",
+    "pintar",
+    "visitar",
+    "saludar",
+    "ayudar",
+    "regalar",
+    "prestar",
     "comer",
     "beber",
-    "temer",
-    "vivir",
-    "subir",
-    "partir"
+    "aprender",
+    "vender",
+    "escribir",
+    "abrir",
+    "trabajar",
+    "caminar",
+    "bailar",
+    "nadar",
+    "descansar",
+    "correr",
+    "pasear",
+    "subir"
   ],
   "irregulares": [
-    {
-      "infinitivo": "estar",
-      "participio": "estado",
-      "formas": {
-        "Indicativo|Presente": [
-          "estoy",
-          "estás",
-          "está",
-          "estamos",
-          "estáis",
-          "están"
-        ],
-        "Indicativo|Pretérito perfecto simple": [
-          "estuve",
-          "estuviste",
-          "estuvo",
-          "estuvimos",
-          "estuvisteis",
-          "estuvieron"
-        ],
-        "Subjuntivo|Presente": [
-          "esté",
-          "estés",
-          "esté",
-          "estemos",
-          "estéis",
-          "estén"
-        ],
-        "Subjuntivo|Pretérito imperfecto": [
-          "estuviera",
-          "estuvieras",
-          "estuviera",
-          "estuviéramos",
-          "estuvierais",
-          "estuvieran"
-        ]
-      }
-    },
-    {
-      "infinitivo": "leer",
-      "participio": "leído",
-      "formas": {
-        "Indicativo|Pretérito perfecto simple": [
-          "leí",
-          "leíste",
-          "leyó",
-          "leímos",
-          "leísteis",
-          "leyeron"
-        ],
-        "Subjuntivo|Pretérito imperfecto": [
-          "leyera",
-          "leyeras",
-          "leyera",
-          "leyéramos",
-          "leyerais",
-          "leyeran"
-        ]
-      }
-    },
     {
       "infinitivo": "tener",
       "participio": "tenido",
@@ -291,6 +244,16 @@
           "dijeran"
         ]
       }
+    },
+    {
+      "infinitivo": "escribir",
+      "participio": "escrito",
+      "formas": {}
+    },
+    {
+      "infinitivo": "abrir",
+      "participio": "abierto",
+      "formas": {}
     }
   ]
 }

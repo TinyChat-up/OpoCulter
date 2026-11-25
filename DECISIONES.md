@@ -316,3 +316,179 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
 
 ### D-068 · 2026-11-23 · Fase 05C · Vigente
 **Competencias nuevas en el catálogo** para las plantillas de prueba que no tenían competencia: `MAT.OPE.ECUAC` (ecuaciones), `MAT.EST.CENTRAL` (media, mediana, moda y rango) y `MAT.PRO.LAPLACE` (probabilidad de un suceso). El catálogo pasa a la versión 2 con 27 competencias. Las demás competencias que propone la matriz (marcadas con † en MATRIZ.md) se dejan a la dirección. En Release estas competencias no tienen ítems todavía y `ServicioSesion` las salta (`valida` exige ítems).
+
+### D-069 · 2026-11-23 · Fase 05D · Vigente (dirección)
+**Supervivencia.**
+- **Reglas**: 3 vidas y sin cronómetro, por accesibilidad. La dificultad empieza en 1, sube un nivel cada 4 aciertos seguidos hasta el 6 «Experto» y un fallo resta una vida y baja un nivel (mínimo 1).
+- **Puntuación**: 10 × dificultad con un multiplicador de combo de +0,25 por acierto seguido a partir del segundo, con tope ×2 (desde el 5.º acierto seguido). Todo está en `ReglasSupervivencia`.
+- **Selección de bloque**: por el peso del bloque en los exámenes oficiales (`PesosSupervivencia`, derivado de la MATRIZ: preguntas del bloque entre las de su área), multiplicado por `0,5 + debilidad`. La debilidad sale del peldaño medio de sus competencias, del último diagnóstico o, si no hay ninguno de los dos, vale 0,5.
+- **Selección de ítem**: dentro del bloque, un ítem de la dificultad exacta, que puede ser estático (peldaño ≥ 2) o generado con `MotorGeneradores.ajustada` (`<plantilla>@dN#semilla`, reproducible por id, de modo que Rescate funciona). Si no hay ninguno de esa dificultad, se usa el estático más cercano.
+- **Efectos reales**: cada respuesta pasa por `ServicioSesion.registrar`, así que hay escalera, Leitner, Rescate y XP sin bonificaciones. La partida terminada cuenta como ronda para la racha y las misiones y se guarda con su historial (`PartidaRegistro`).
+- **Récords**: global y por área (Lengua, Matemáticas o mezcla). Se marca récord solo cuando se bate una partida anterior terminada: la primera no cuenta como récord. Las partidas abandonadas se guardan, pero no cuentan.
+- **Logros**: Superviviente, Nuevo récord y Nivel Experto. El modo contrarreloj se apunta en el ROADMAP para después del MVP.
+
+### D-070 · 2026-11-23 · Fase 05D · Vigente (dirección)
+**Camino, prueba de nivel y Reto de bloque.**
+- **Nodos**: `sinContenido` (trazo discontinuo, "En preparación", no se puede pulsar), `disponible`, `enCurso` (con anillo de dominio) y `dominada`.
+- **Candado orientativo**: lo llevan las competencias sin empezar que van después de la primera sin dominar del área. Es una recomendación, no un muro: se pueden practicar igualmente o abrir con la prueba de nivel.
+- **Prueba de nivel**: 5 ítems del peldaño 3. Con 4 aciertos o más, la competencia pasa al peldaño 3 y queda registrada en `PerfilJugador.desbloqueos`; se concede el logro «Salto de nivel». Solo se ofrece si hay al menos 5 ítems del peldaño 3.
+- **Reto de bloque**: 8 ítems sin ayudas (peldaño ≥ 3) de dificultad 4–5, estáticos o generados a esa dificultad. Con 6 aciertos o más se gana la medalla del bloque (`medalla-<bloque>`) y el logro «Primera medalla». Solo aparece si el bloque tiene 8 estáticos válidos o alguna plantilla.
+
+### D-071 · 2026-11-23 · Fase 05D · Vigente
+**Diagnóstico en la bienvenida.**
+- **Flujo**: avatar → oferta, con "Saltar" → diagnóstico adaptativo (motor de la Fase 04, ítem a ítem en la pantalla de ronda, con «x de N») → plan → Hoy.
+- **Contenido**: el diagnóstico usa solo bloques con contenido cargado (en Release, el aprobado) y prefiere los generados de dificultad 2–3 cuando el bloque tiene al menos 2.
+- **Plan**: cada bloque como fuerte, medio o débil, «Empezamos por…» con 2 competencias según el orden de debilidad × prioridad, y un aviso honesto de los bloques sin contenido.
+- **Historial**: el repositorio conserva todos los diagnósticos; `diagnostico()` devuelve el último. Desde Ajustes se puede repetir.
+
+### D-072 · 2026-11-23 · Fase 05D · Vigente (dirección)
+**Recordatorio diario local**, con `UNUserNotificationCenter` y sin servidor.
+- **Programación**: notificaciones sueltas para los próximos 7 días (no una repetitiva), de modo que se pueda cancelar solo la de hoy cuando ya se ha hecho una ronda. Se reprograman al abrir la app y al cambiar los ajustes.
+- **Permiso en contexto**: se pide tras la primera ronda (o partida) completada, con una explicación previa ("¿Te aviso cada día a las 20:00…?") y los botones "Sí" / "Ahora no". Se pregunta una sola vez.
+- **Texto**: útil y sin culpa. Para hoy menciona la racha; para los días siguientes es general, porque esa racha aún no se conoce.
+- **Ajustes**: activación y hora.
+- **Tests**: el centro de notificaciones se inyecta (`CentroNotificaciones`), y los tests usan uno simulado.
+
+### D-073 · 2026-11-23 · Fase 05D · Vigente (dirección)
+**Sonido sintetizado y vibración.**
+- **Sonido**: `SonidoSintetizado` genera tonos con AVAudioEngine (seno con un armónico suave y envolvente sin clics), sin archivos de audio de terceros. Cada sonido dura como mucho 250 ms y el de fallo es una nota grave suave.
+- **Sesión de audio**: categoría `.ambient` con `mixWithOthers`, así que respeta el interruptor de silencio y no interrumpe la música del usuario.
+- **Ajustes**: `SonidoConAjustes` solo reproduce si el sonido está activado. El modificador `retroHaptica` aplica `sensoryFeedback` solo con la vibración activada; sustituye a los 17 usos anteriores.
+- **Momentos con sonido**: acierto, fallo, hito de combo, fin de ronda, récord, tilde que cae y celda que se colorea.
+
+### D-074 · 2026-11-23 · Fase 05D · Vigente
+**Progreso y persistencia nueva.**
+- **Progreso**: dominio (peldaño medio por área y bloque, con la misma medida en los dos), evolución de 4 semanas con Swift Charts (aciertos o XP por día, con `AXChartDescriptor` para el gráfico de audio de VoiceOver), estadísticas, preguntas disponibles (solo contenido aprobado, con `CatalogoPreguntas`), logros obtenidos y pendientes con su condición, ajustes y créditos.
+- **Créditos**: se leen de `Resources/Creditos.md`, una copia de CREDITOS.md; un test comprueba que son idénticos.
+- **"Borrar mi progreso"**: doble confirmación. Conserva los ajustes.
+- **Modelos SwiftData nuevos** (migración ligera: entidades nuevas y atributos opcionales): `PartidaRegistro`, `AjustesRegistro` y `PerfilRegistro.desbloqueosJSON`.
+- **Opciones de arranque nuevas (solo Debug)**:
+  - `-sinAvisoRecordatorio`: tests de UI y capturas.
+  - `-forzarBienvenida`.
+  - `-progresoDemo`: capturas. Juega rondas y una partida reales con el motor antes de mostrar la escena.
+  - Además, un botón de pruebas "Con error".
+
+### D-075 · 2026-11-24 · Fase 05D · Vigente
+**El contraste se audita en una pasada propia, antes que el resto de comprobaciones.**
+- **Problema**: con Hoy desplazado hasta el final, la comprobación de Dynamic Type de `performAccessibilityAudit` cambia el tamaño del texto y desplaza el contenido. En una sola pasada, el contraste llegaba a medirse con el marco del elemento ya movido (unos 42 pt más abajo que el texto visible), sobre píxeles que no eran suyos. El elemento afectado cambiaba de una ejecución a otra («Empezar ronda», «5 ítems de ortografía y tildes»), aunque el contraste real del texto es de unos 7:1.
+- **Solución**: `CasoUI.auditarUnaVez` ejecuta primero `.contrast` y después todos los demás tipos, con el mismo filtro de excepciones (D-048). No se relaja ninguna regla.
+- **Baldosas de Hoy**: se quita el chevrón y el título se parte en dos líneas si no cabe (antes, `lineLimit(1)` + `minimumScaleFactor` recortaban «Supervivencia» y «Ortografía exprés»).
+
+### D-076 · 2026-11-24 · Fase 05D · Vigente (propietario)
+**Cierre de la 05D sin capturas y con la fusión aplazada.**
+- **Capturas**: el propietario pide no hacerlas en esta fase porque retrasan mucho el trabajo. `scripts/capturas.sh … 05d` queda preparado por si se piden.
+- **Tests**: el propietario pide no seguir ejecutándolos. La 05D se guarda con un commit en su rama, pero **no se fusiona en `main`** hasta tener una suite completa en verde y el archive Release, como exige CLAUDE.md. Se puede hacer junto con el cierre de la siguiente fase.
+- **Suites largas**: se ejecutan con `caffeinate` y con el Mac enchufado.
+
+### D-077 · 2026-11-24 · Lote 02 · Vigente
+**Lote 02: generadores de Matemáticas y de acentuación, y criterio de aprobación.**
+- **Alcance**: 11 generadores de Matemáticas (5 nuevos y 6 reescritos con las tablas de dificultad 1–6 de la dirección) y 3 de acentuación (`colocarTilde`, `clasificarAcentuacion`, `silabaTonica`) sobre el léxico de 818 palabras con niveles 1–6. 38 plantillas y 16 competencias nuevas (catálogo v2).
+- **Redacciones**: las literales de la dirección viven en el generador (`{{pregunta}}`) para que cada contexto solo se use con datos que tengan sentido; las propias se marcan «A.2» en el código.
+- **Aprobación**: una plantilla del lote solo queda `aprobada` si supera los tests de propiedades (1000 semillas, oráculo independiente, dificultad no decreciente 1→6, distractores distintos de la solución y entre sí también por valor, ids únicos). Las 38 los superan.
+- **Correcciones al terminar el lote** (el código se adapta; ningún dato cambia):
+  - `conversionUnidades`, volumen con dos saltos (×1.000.000, dificultad 2): con valores de 1 a 999 solo valía ~1 % de los casos y una de cada tres semillas no encontraba caso. Ahora se usan cantidades de una cifra al bajar y millones exactos al subir.
+  - La medida de complejidad de `conversionUnidades` suma 1 por cada término adicional que hay que convertir y sumar, y mide el número por sus cifras significativas. Sin esto, «cantidad compleja → unidad mayor» (nivel 4) salía menos compleja que «volumen ↔ capacidad» (nivel 3), al revés que la tabla de la dirección.
+  - `enumerar` aplica exactamente los mismos filtros que `muestra` en `conversionUnidades` (resultado entero hasta la dificultad 3) y `reglaDeTres` (factor no entero en 3–4): el recuento del catálogo solo cuenta casos que se pueden generar.
+  - **Silabeador**: la *h* intercalada delante de la vocal cerrada tónica no impide el hiato («prohíbe», «ahínco», «rehúso»). Eran las 3 discrepancias del informe del léxico; el dato era correcto. El test del léxico exige ahora 0 discrepancias.
+- **Tests adaptados al contenido real**: con el lote 02 en Release, la competencia de Matemáticas en curso es `MAT.UNI.LMC` (primera por prioridad de bloque y orden del catálogo), no `MAT.NUM.FRAREP`. `PilotoTests` comprueba la propuesta real y `fraccionBarras` se prueba al practicar «Representar fracciones»; el test de interfaz llega a ella por Camino → nodo → Practicar.
+- **Verificación conjunta con la 05D** (tests de interfaz):
+  - El peldaño 1 de LEN.ORT.AGU se practica ahora con `silabaTonica` (G04) y las palabras de `colocarTilde` generadas salen del léxico de 818, que el test no conoce. `testRondaDeLenguaConColocarTilde` juega 4 ítems aprobados concretos con la opción nueva `-rondaItems` (solo Debug) y los responde todos con toques reales.
+  - En `testRescatePorCompetencia`, con casi toda la ronda en LEN.ORT.AGU peldaño 1, cada acierto posterior rescataba los fallos anteriores de la misma competencia y peldaño (comportamiento de la Fase 04). El test falla ahora todos los ítems y comprueba ese número.
+  - `RecorridoUITests`: recorrido de extremo a extremo con una captura de cada pantalla, para revisar en el iPhone lo que ve el usuario.
+### D-078 · 2026-11-24 · Lote 05a · Vigente
+**Base literaria como datos aparte, sin código.**
+- **Ubicación**: `Educulter/Content/literatura/literatura.json`, que en la documentación se cita como `Content/literatura/`, igual que el resto del contenido. `Content` es una carpeta explícita del target, así que el archivo se copiará al bundle sin tocar el `.pbxproj`. `CargadorContenido` solo lee `items`, `teoria`, `simulacros`, `plantillas`, `lexico` y `gramatica`, de modo que la app lo ignora hasta que exista el motor literario (Fase 05F).
+- **Validación**: `scripts/validar_literatura.py` (Python 3, solo biblioteca estándar) para validar sin Mac. Cuando exista el motor, sus tests de Swift deberán repetir estas comprobaciones.
+- **Dominio público**: regla de la dirección. Muerte en 1945 o antes, o autor anónimo o antiguo sin fechas. Un autor con nacimiento y sin muerte cuenta como vivo.
+
+### D-079 · 2026-11-24 · Lote 05a · errata 1 · Vigente (dirección)
+**Base literaria, versión 2.**
+- **Géneros**: se añade `ensayo` a Fray Luis y a Lope. Santa Teresa pasa a tener `narrativa` y `ensayo`, y «Las moradas» pasa a `ensayo`. Las greguerías siguen siendo `ensayo` por convención.
+- **Clasificación**: dos movimientos nuevos, `TEATRO1900` (Benavente, Arniches y Muñoz Seca) y `G36` (Miguel Hernández). Marsé pasa a `POSGUERRA`, REALISMO termina en 1905 y se corrigen los rasgos de Goethe y de los hermanos Grimm.
+- **Fechas**: la obra de Hierro pasa a ser «Quinta del 42» (1952), la de Gil de Biedma, «Moralidades» (1966), y «La casa de Bernarda Alba» lleva el año de escritura (1936).
+- **Motor 05F**: las preguntas de movimiento se hacen sobre el autor. Sobre una obra, solo si su año está dentro del rango del movimiento.
+- **País**: «Reino Unido» unifica Inglaterra y Escocia, y «Roma» pasa a «Italia».
+- **Fragmentos**: se añade el campo `fragmentosPermitidos`, que es `dominioPublico` y además ámbito español o hispanoamericano. De los extranjeros de dominio público solo se admite una traducción propia de la dirección. El validador comprueba esta regla.
+### D-080 · 2026-11-24 · Lote 03a · Vigente
+**Carpeta `pendiente/` y validador de contenido en Python.**
+- **`Content/pendiente/`**: guarda contenido aprobado que necesita algo que el motor aún no tiene (aquí, los textos base de comprensión con `textoRef`). Va dentro de la carpeta `Content`, así que se empaqueta, pero `CargadorContenido` no la lee: no afecta a la app ni a los tests hasta que el motor la admita y los ítems pasen a `items/`.
+- **`scripts/validar_items.py`**: reproduce sin Swift las reglas principales de `ValidadorContenido` (CONTENIDOS §2.14) para revisar lotes sin Mac. Cuando el motor admita `textoRef`, el validador de Swift deberá comprobar también que el texto existe.
+### D-081 · 2026-11-24 · Lote 02b · Vigente
+**Conversión del formato neutro de gramática al esquema de Swift.**
+- **Sin inventar contenido**: `FraseHueco.dificultad` y `FamiliaFormas.Forma.uso` son obligatorios y el formato neutro no los trae. Escribir `frases.json` sin ellos haría fallar la decodificación y, con ella, la carga de todo el contenido. Por eso las frases reales quedan en `gramatica/frases_lote02b.json` (que la app no lee) y `frases.json` mantiene los datos de prueba.
+- **Derivación gramatical**: sujetos = sustantivos de persona (singular y plural, con artículo). CD = sustantivos compatibles con `objeto` (con artículo; personas y animales con «a» + posesivo, para evitar «al»). CI = «a» + posesivo + persona. «ayer» y «todos los días» restringen el tiempo verbal, como en D-066. Se excluyen de `piezas.json` «junto al río» y «a las cinco», que no tienen una clase de palabra inequívoca.
+- **Lo que el esquema no admite** (etiquetas, `admiteCI` completo, CCC…) va a `gramatica/compatibilidad.json`, en formato neutro.
+- **Validación**: `scripts/validar_gramatica.py`. El conversor (`scripts/convertir_gramatica_02b.py`) se conserva para regenerar los archivos.
+
+### D-082 · 2026-11-24 · Lote 02b · errata 1 · Vigente (dirección)
+**Frases reales y etiquetas finas.**
+- `frases.json` pasa a tener las 100 frases y 28 familias reales, ya con `dificultad` y `uso` (deja sin efecto la reserva de D-081).
+- `piezas.json` usa las etiquetas finas del CD.
+- `verbos.json` conserva tener, decir, poner y hacer (formas de prueba de la Fase 05C) para `analisisVerbal` 5–6 y para el test de conjugación.
+- **Plantilla HOM**: el esquema de plantilla admite un solo peldaño, así que «peldaños 2 y 3» se cubre con dos plantillas, `LEN.ORT.HOM.G01` (peldaño 2, dificultad 2) y `LEN.ORT.HOM.G02` (peldaño 3, dificultad 3).
+- Las 4 plantillas de `fraseHueco` siguen en borrador hasta pasar los tests de propiedades.
+### D-083 · 2026-11-24 · Datos del Tribunal · Vigente
+**Exámenes oficiales literales para el Modo Tribunal (borrador).**
+- **Ubicación**: `Content/pendiente/tribunal/`, un JSON por examen (esquema en CONTENIDOS §2.15). No lo lee la app; lo hará el motor de la Fase 05E.
+- **Literalidad**: los enunciados se copian del texto extraído y se cotejan con el PDF. Cada corrección de OCR, cada tabla transcrita en línea y cada figura descrita se registra en `docs/examenes/CORRECCIONES_OCR.md`.
+- **Derechos**: no se reproducen los textos de Salinas (2019 O) y Laforet (2019 A), ni las citas de esos textos dentro de los enunciados. Cada examen lleva fuente, fecha de consulta y aviso de no patrocinio (aviso legal de comunidad.madrid).
+- **Soluciones**: las de Matemáticas se calculan con código (`scripts/tribunal/matematicas.py`, aritmética exacta). Las de Lengua y las rúbricas de 2017–2024 son de redacción propia; las rúbricas de 2026 son las plantillas oficiales literales. Todo queda en borrador.
+- **Validación**: `scripts/validar_tribunal.py` es un script aparte (no amplía `validar_items.py`, que solo existe en la rama `contenido/lote-03a`), para no crear conflictos al fusionar.
+- **Convocatoria 2026**: se descarga la disposición BOCM-20260212-7 para citar la penalización ortográfica (FUENTES §4). Para ello se crea el entorno personal «OpoCulter», con acceso a www.bocm.es y a comunidad.madrid.
+
+### D-084 · 2026-11-24 · Datos del Tribunal · Vigente (dirección)
+**Decisiones sobre los datos del Tribunal.**
+- **Enunciados oficiales**: no se alteran, ni siquiera con erratas (2024 L8, 2017 M1, 2024 M7).
+- **Notas de la app**: la «Nota de la app» al final de `solucionModelo` resuelve las erratas, las ambigüedades (2022 M1, 2026 O L7, 2026 A M6, donde «relacione» se lee como «escriba la probabilidad») y las definiciones imprecisas (2026 O L9 y 2026 A L8, con la definición de la NGLE).
+- **Fuentes**: `fuenteSolucion` es `direccion` en todos los exámenes; `fuenteRubrica` es `oficial` en 2026 y `direccion` en el resto. `notaRubrica` explica cómo se aplica la rúbrica oficial en 2026 O L6 y 2026 A L5 (2 de 4 apartados = Regular).
+- **Textos protegidos**: sus citas dentro de los enunciados se siguen sustituyendo por la remisión al PDF. No se usa el derecho de cita, por prudencia ante la revisión de Apple.
+- **2017**: 1 punto por pregunta, con aviso de que la puntuación la asigna la app.
+- **Penalización ortográfica**: `pendiente/tribunal/reglas.json` guarda la regla como datos, sin límite.
+
+### D-085 · 2026-11-25 · Recuperación · Vigente
+**Textos base de comprensión (`textoRef`) en el motor y en la ronda.**
+- **Datos**: los textos pasan de `pendiente/textos.json` a `textos/textos.json` (carpeta de arrays, como `items/`). Los ítems de `pendiente/LEN.COM.json` pasan a `items/LEN.COM.json` y su teoría a `teoria/LEN.COM.json`. `pendiente/tribunal/` sigue donde está hasta la Fase 05E. `scripts/validar_items.py` lee las rutas nuevas.
+- **Modelo**: `Item.textoRef` (opcional) y `TextoBase` (`id`, `titulo`, `autor`, `obra`, `tipo`, `texto`, `procedencia`, `validacion`). El banco filtra los textos con la misma política que el resto (Release: solo aprobados).
+- **Validador**: id `TXT.XXX.CLAVE`; título, tipo y texto no vacíos; procedencia (§2.7: un texto de dominio público exige `anioMuerteAutor` y que hayan pasado más de 80 años); en dominio público, `autor` = `procedencia.autorTexto`; un texto original no lleva autor; cada `textoRef` apunta a un texto cargado con la misma política.
+- **Vista**: panel superior plegable (`VistaTextoBase`) en una superficie neutra (el panel tintado sigue siendo el de la mecánica), con título y, si es literario, «Autor · Obra (año)». El año sale de la base literaria (Rimas, 1871; Campos de Castilla, 1912), porque `textos.json` no lo trae. Desplegado ocupa como mucho el 30 % del alto de la pantalla (22 % con texto de accesibilidad) y el texto se desplaza dentro si no cabe; el ítem y el pie con «Comprobar» caben siempre debajo (con un alto fijo de 260 pt, la auditoría detectaba texto recortado en el pie con texto grande). Plegado queda la pestaña «Ver texto». Se despliega solo al llegar un texto distinto. Tipo dinámico, VoiceOver (cabecera, botones con etiqueta) y Reducir movimiento. En «Ver de nuevo» de Rescate el texto va entero encima del enunciado.
+
+### D-086 · 2026-11-25 · Recuperación · Vigente
+**`compatibilidad.json` conectada a la gramática generativa.**
+- `oracionSimple` construye las oraciones con las etiquetas de `compatibilidad.json` (si el archivo existe; si no, con `piezas.json`):
+  - **Sujeto** de un sustantivo cuyas etiquetas admite el verbo (`sujeto`): ahora también animales con los verbos que los admiten.
+  - **CD** de un sustantivo con una etiqueta de `objeto` del verbo (las finas incluidas: `abrible`, `comprable`, `prestable`, `lavable`…), distinto del sujeto. Personas y animales, con «a su…» como en `piezas.json` (sin la contracción «al», D-081).
+  - **CI** de persona, solo con verbos `admiteCI`, nunca el mismo referente que el sujeto (ni que el CD).
+  - **Complementos circunstanciales**: como mucho 2, de tipos distintos, de CCL, CCT, CCM y **CCC** (compañía, nuevo en las funciones y en las opciones). «junto al río» y «a las cinco» se siguen excluyendo, como en la conversión de 02b. Un **CCT puede ir delante** (desde el nivel 3, salvo en `segmentar`, donde el predicado quedaría partido): entonces es el primer constituyente y va seguido de coma. Las restricciones de tiempo de los CCT («ayer» → pretérito perfecto simple) salen de `piezas.json`.
+  - **Adjetivos** de etiqueta compatible con el sustantivo (sujeto desde el nivel 4; CD desde el 5), concordados con las cuatro formas de los datos: nunca se deriva una forma, así que los invariables en género (amable, azul, caliente, difícil, fácil, grande) solo cambian en número.
+  - **Concordancia** artículo-sustantivo (género y número) y sujeto-verbo (número).
+  - **Nivel 4**: no hay verbos copulativos en los datos, así que pasa a S (+ adjetivo) + V + CD + CI (+ 0–1 CC) con verbos que admiten CI (si no, el nivel 4 quedaba por debajo del 3 tras fusionar el lote 02b).
+- `analisisVerbal` usa los verbos de `compatibilidad.json` y su `participioIrregular` en los tiempos compuestos (escrito, abierto).
+- **Validador**: conjugación según el infinitivo, etiquetas de sujeto y objeto que existen en algún sustantivo, formas completas y tipos de complemento válidos.
+
+### D-087 · 2026-11-25 · Recuperación · Vigente
+**Ninguna ronda repite una pregunta, aunque cambie el id.** Dos semillas, o dos plantillas del mismo tipo que recurren al mismo nivel de frases (HOM.G01 y HOM.G02 a dificultad 4–5), pueden generar la misma pregunta con ids distintos.
+- **Huella** (`Item.huella`): en los ítems generados, la clave canónica del caso (`tipo|clave`, que el motor guarda en `Item.claveGenerada`; en las frases incluye el id de la frase); en los estáticos, su id. Una primera versión por enunciado y solución se descartó: confundía ítems estáticos distintos con enunciado genérico y la misma respuesta.
+- La usan el constructor de rondas, la práctica del Camino, la prueba de nivel, el Reto de bloque y Supervivencia (que recibe las huellas de la partida).
+- **Frases con hueco**: si no hay frases del nivel pedido ni de los inferiores, el generador usa las del nivel más fácil que haya (antes, todas), para que la dificultad no decrezca (la familia «porque» no tiene frases de dificultad 1).
+
+### D-088 · 2026-11-25 · Recuperación · Vigente
+**Base literaria cargada y validada en Swift.** `CargadorContenido` lee `literatura/literatura.json` (`BaseLiteraria`) y el validador repite las reglas de `scripts/validar_literatura.py`: ids únicos, movimiento existente, dos rasgos por movimiento, nacimiento anterior a la muerte, año de cada obra entre el nacimiento y la muerte + 10, géneros y ámbitos válidos, `dominioPublico` coherente con la regla de la dirección y `fragmentosPermitidos` solo en dominio público y en ámbito español o hispanoamericano. Todavía no se generan preguntas (Fase 05F); la app solo la usa para fechar los textos base literarios.
+
+### D-089 · 2026-11-25 · Recuperación · Vigente
+**Las 4 plantillas de frases con hueco del lote 02b quedan aprobadas** (`LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01`, `LEN.ORT.HOM.G01` y `LEN.ORT.HOM.G02`; revisor «direccion», 25/11/2026), porque superan las condiciones de la dirección (`FrasesHuecoTests`, 1000 semillas por plantilla y nivel): una sola opción correcta por frase y distractores = las otras formas de su familia; explicación con el `uso` de la forma correcta; dificultad de la frase 1–6, no decreciente con el nivel pedido; ninguna frase repetida en una práctica, una ronda del motor, un Reto ni una partida de Supervivencia (D-087). Ninguna queda en borrador. Release carga ahora 42 plantillas.
+
+## Renumeración de la recuperación
+
+Al integrar las ramas en `integracion/recuperacion` (25/11/2026), varias ramas habían usado los mismos números. Se conservan los de la primera rama fusionada (`fase-05d/modos`: D-069–D-076) y las decisiones de las ramas siguientes reciben números nuevos consecutivos; sus referencias en CONTENIDOS, ESTADO y el resto de documentos se han actualizado.
+
+| Rama | Número antiguo | Número nuevo |
+|---|---|---|
+| `fase-05d/modos` | D-069–D-076 | sin cambios |
+| `contenido/lote-02` | D-077 | sin cambios |
+| `contenido/literatura-05a` | D-069 | D-078 |
+| `contenido/literatura-05a` | D-070 | D-079 |
+| `contenido/lote-03a` | D-071 | D-080 |
+| `contenido/lote-02b` | D-072 | D-081 |
+| `contenido/lote-02b` | D-073 | D-082 |
+| `contenido/tribunal-datos` | D-074 | D-083 |
+| `contenido/tribunal-datos` | D-075 | D-084 |

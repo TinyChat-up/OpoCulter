@@ -34,6 +34,7 @@ Content/
   items/<bloque>.json        Array de ítems de un bloque (p. ej. items/LEN.SIN.json)
   teoria/<bloque>.json       Array de tarjetas de teoría de un bloque
   simulacros/<id>.json       Un simulacro por archivo (p. ej. simulacros/SIM.01.json)
+  pendiente/                 Contenido aprobado que el motor aún no sabe mostrar (no se carga; §2.14)
 ```
 
 Modelos Swift: [Core/Content](Educulter/Core/Content). El validador ([ValidadorContenido.swift](Educulter/Core/Content/ValidadorContenido.swift)) se ejecuta en los tests sobre todo el contenido del bundle; **un contenido que no lo pase rompe la compilación verificada**.
@@ -212,10 +213,69 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 - **`lexico/palabras.json`**: `[{"palabra": "canción"}, {"palabra": "robots", "tonica": 1}, {"palabra": "él", "diacritica": true}]`. Solo `palabra` es obligatoria. `tonica` es el índice de la sílaba (desde 0) cuando las reglas no lo deducen. Las palabras incoherentes con las reglas de la RAE salen como errores del validador (D-065).
 - **`gramatica/piezas.json`**: `sujetos` (tokens `[texto, clase]`, `genero`, `numero`); `verbos` (`infinitivo`, `regimen`: intransitivo, transitivo o copulativo; `cd` compatibles; `ci`); `complementos` (`CI`, `CCL`, `CCT` (con `tiempo` opcional), `CCM`); `atributos` (formas `ms`, `fs`, `mp`, `fp`). Clases: det, sust, verbo, adj, prep, adv, pron.
 - **`gramatica/verbos.json`**: `regulares` (infinitivos) e `irregulares` (`infinitivo`, `participio`, `formas` por `"Modo|Tiempo"` con 6 personas).
-- **`gramatica/frases.json`**: `familias` (formas con su uso) y `frases` (`id`, `familia`, `texto` con `___`, `correcta`, `dificultad`).
+- **`gramatica/frases.json`**: `familias` (formas con su uso) y `frases` (`id`, `familia`, `texto` con `___`, `correcta`, `dificultad`). La forma correcta lleva mayúscula si el hueco abre la frase; el generador capitaliza entonces también los distractores (`GeneradorFraseHueco.ajustar`).
+- **Frases reales (Lote 02b, errata 1, D-082)**: `frases.json` tiene 28 familias (60 formas con su `uso`) y 100 frases con `dificultad` y `competencia` (LEN.ORT.DIA, PQ u HOM; Swift ignora este campo). El hueco puede ir pegado a texto («___se»): en `construir`, ese texto viaja con el hueco. Las plantillas `LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01` y `LEN.ORT.HOM.G01`/`G02` usan sus familias. **Aprobadas el 25/11/2026** al superar los tests de propiedades (D-089).
+- **`gramatica/compatibilidad.json`** (Lote 02b): el formato neutro completo de la dirección (sustantivos y adjetivos con `etiquetas`, incluidas las finas para el CD: `abrible`, `comprable`, `prestable` y `lavable`; verbos con `objeto`, `sujeto`, `admiteCI` y `participioIrregular`; CC por tipo, incluido CCC). Guarda lo que el esquema de `piezas.json` no admite. **Desde la recuperación (D-086) la app lo lee**: `oracionSimple` construye las oraciones con sus etiquetas y `analisisVerbal` usa sus verbos y participios irregulares. `scripts/convertir_gramatica_02b.py` genera `piezas.json`, `verbos.json`, `frases.json` y este archivo a partir de los anexos. En `verbos.json` conserva los irregulares de prueba con formas completas (tener, decir, poner y hacer).
+- **Validación sin Swift**: `python3 scripts/validar_gramatica.py`.
 
 ### 2.12 Catálogo de preguntas (D-064)
 `CatalogoPreguntas` suma los ítems estáticos y las variantes únicas de las plantillas (sin duplicados, por clave canónica). Lo hace por área, bloque, competencia, peldaño y dificultad, y marca como cota inferior ("≥") los espacios que se muestrean. La tabla está en Revisión → "Recuentos del catálogo de preguntas".
+
+### 2.13 Base literaria (Lote 05a, D-078 y D-079)
+Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Content/literatura/`): `{"version": 2, "movimientos": […], "autores": […]}`. Desde la recuperación (D-088), `CargadorContenido` lo carga y `ValidadorContenido` repite las reglas de `scripts/validar_literatura.py`; la app solo lo usa para fechar los textos base literarios. Las preguntas las generará el motor literario de la Fase 05F.
+
+- **Movimiento**: `{id, nombre, periodo, inicio, fin|null, rasgos[2]}`. `rasgos` lleva exactamente dos textos. `fin: null` indica que el movimiento sigue abierto.
+- **Autor**: `{id, nombre, nacimiento|null, muerte|null, aproximado, ambito, pais, movimiento, generos[], obras[{titulo, anio|null, genero}], rasgo, dominioPublico, fragmentosPermitidos}`.
+  - `ambito`: `espanola`, `hispanoamericana`, `universal` o `infantil`.
+  - `movimiento`: `id` de un movimiento existente.
+  - `generos` y `obras[].genero`: `poesia`, `narrativa`, `teatro` o `ensayo`. Cada género de una obra figura también en los géneros del autor.
+  - Los años negativos son a. C. `aproximado: true` indica fechas aproximadas.
+  - `pais`: nombre del Estado actual («Reino Unido», no «Inglaterra» ni «Escocia»; «Italia», no «Roma»).
+  - `dominioPublico`: si la obra original del autor es de dominio público en España. Es `true` si el autor murió en 1945 o antes, o si es anónimo o antiguo (sin fechas).
+  - `fragmentosPermitidos` (versión 2): si se pueden reproducir fragmentos del autor. Es `true` solo si `dominioPublico` es `true` y el ámbito es `espanola` o `hispanoamericana`. Una traducción publicada tiene sus propios derechos, así que de un autor extranjero de dominio público solo se pueden usar fragmentos traducidos por la dirección (traducción propia), nunca tomados de traducciones publicadas.
+- **Convenciones**:
+  - **Géneros**: las greguerías se clasifican como `ensayo`, por ser prosa breve, y la prosa mística doctrinal también («Las moradas»).
+  - **Año de una obra**: el de publicación o estreno. Si la obra se publicó mucho después de escribirse, se usa el año de escritura («La casa de Bernarda Alba», 1936).
+- **Regla para el motor 05F**: las preguntas «¿a qué movimiento pertenece?» se hacen sobre el autor. Sobre una obra, solo si su año está dentro del rango (`inicio`–`fin`) del movimiento del autor.
+- **Validación**: `python3 scripts/validar_literatura.py` (solo biblioteca estándar) comprueba:
+  - que el JSON es válido y los ids son únicos;
+  - que existe el movimiento de cada autor;
+  - que el nacimiento es anterior a la muerte;
+  - que el año de cada obra está entre el nacimiento y la muerte + 10 (ediciones póstumas);
+  - que `dominioPublico` y `fragmentosPermitidos` son coherentes con sus reglas;
+  - que no hay espacios dobles.
+
+  Avisa, sin fallar, si el género de una obra no figura en los géneros del autor.
+- **Errata**: `scripts/errata_literatura_05a.py` reescribió la versión 1 como versión 2 (errata 1). Se conserva como registro, pero no debe volver a ejecutarse.
+### 2.14 Textos base y carpeta `pendiente/` (Lote 03a, D-080)
+`pendiente/` guarda contenido aprobado que el motor todavía no sabe mostrar. `CargadorContenido` no lee esta carpeta, así que no llega a la app ni a los tests de Swift. **Desde la recuperación (D-085)** el motor ya admite textos base: los textos están en `textos/textos.json`, los ítems de comprensión en `items/LEN.COM.json` y su teoría en `teoria/LEN.COM.json`. En `pendiente/` solo queda `tribunal/` (Fase 05E). Lo que sigue describe el formato, que no cambia.
+- **`pendiente/textos.json`**: array de textos base `{id, titulo, autor|null, obra|null, tipo, texto, procedencia, validacion}`. El id tiene el formato `TXT.<origen>.<clave>` (p. ej. `TXT.ORI.ABEJAS`, `TXT.BEC.R21`). `texto` es texto plano con `\n` para los saltos de verso. La procedencia sigue §2.7; si es de dominio público, `autor` coincide con `procedencia.autorTexto`.
+- **`pendiente/LEN.COM.json`**: ítems con el esquema de §2.3 y un campo nuevo, `textoRef` (opcional): el id del texto base que se muestra junto al enunciado. Se moverán a `items/` cuando el motor admita textos base (pendiente con Mac).
+- **`pendiente/teoria_<bloque>.json`**: tarjetas de teoría (§2.6) de un bloque cuyos ítems siguen en `pendiente/`. Pasan a `teoria/<bloque>.json` junto con sus ítems, para que no haya teoría sin práctica en Release.
+- **Validación sin Swift**: `python3 scripts/validar_items.py` reproduce las reglas principales de `ValidadorContenido` sobre todo `Content/`: catálogo, ítems (incluidos los de `pendiente/`), teoría, textos base y simulacros. Comprueba ids, competencias, payload por mecánica, explicación de 280 caracteres o menos, pistas solo en los peldaños 1–2, bloques de teoría de 40 palabras o menos, procedencia y validación, y que cada `textoRef` exista. No valida `plantillas/` (necesita los generadores de Swift). El test de Swift sigue siendo la referencia.
+### 2.15 Exámenes oficiales del Modo Tribunal (datos, D-083)
+`pendiente/tribunal/<año>_<convocatoria>.json`, un examen por archivo. La app no los lee: el motor del Tribunal llega en la Fase 05E.
+
+```json
+{ "id": "OF.2026.O", "anio": 2026, "convocatoria": "ordinaria|aplazada", "duracionMin": 90,
+  "fuente": "<URL oficial>", "fuentePlantilla": "<URL> (solo 2026)", "fechaConsulta": "2026-11-23",
+  "aviso": "…sin alteraciones… no está patrocinada ni avalada por la Comunidad de Madrid.",
+  "textoBase": { "texto": "…|null", "autor": "…", "obra": "…", "protegido": false, "anioMuerteAutor": 1870 },
+  "preguntas": [ { "numero": 1, "numeroEnArea": 1, "area": "LEN|MAT", "enunciado": "<literal>",
+                   "competencias": ["LEN.COM.RESU"], "solucionModelo": "…",
+                   "rubrica": { "bien": "…", "regular": "…", "mal": "…" },
+                   "fuenteSolucion": "direccion", "fuenteRubrica": "oficial|direccion", "notaRubrica": "(opcional)", "puntos": 1 } ],
+  "notas": "(opcional)", "validacion": { "estado": "borrador", "revisor": "", "fecha": "" } }
+```
+
+- **Enunciados**: literales. Las correcciones de OCR, las tablas transcritas en línea y las figuras descritas entre corchetes se registran en `docs/examenes/CORRECCIONES_OCR.md`.
+- **Textos protegidos** (Salinas en 2019 O; Laforet en 2019 A): `"protegido": true`, `texto: null` y aviso de protección. Las citas del texto dentro de un enunciado se sustituyen por «[Cita del texto base protegido: consúltese en el PDF oficial]».
+- **Pregunta anulada** (2022 O L7): `"anulada": true` y `puntos: 0`.
+- **Rúbricas**: las de 2026 son las plantillas oficiales copiadas literalmente (`fuenteRubrica: "oficial"`). Las demás son de redacción propia según ese modelo (`direccion`). `fuenteSolucion` es siempre `direccion`: la plantilla oficial da criterios, no soluciones. Cuando una rúbrica oficial no casa del todo con la pregunta, `notaRubrica` explica cómo la aplica la app (2026 O L6 y 2026 A L5).
+- **Erratas y ambigüedades de los enunciados oficiales** (D-084): el enunciado no se toca. La `solucionModelo` termina con una «Nota de la app» que explica cómo se resuelve: se aceptan todas las respuestas defendibles y, en las definiciones imprecisas, se da la respuesta esperada más la definición de la NGLE.
+- **Penalización ortográfica**: `pendiente/tribunal/reglas.json` (`palabraIncorrecta`, `tilde`, `unirSepararPalabras`, `abreviatura`, `limite: null`, `fuente` y `notas` con la redacción literal del BOCM). En la autocorrección del Tribunal (05E), el usuario indica cuántas faltas ha cometido y la app resta según esta regla, sin límite.
+- **Soluciones de Matemáticas**: se calculan con aritmética exacta en `scripts/tribunal/matematicas.py`. `scripts/tribunal/construir.py` genera los JSON y la hoja de revisión `docs/examenes/SOLUCIONES_REVISION_<n>.md`.
+- **Validación**: `python3 scripts/validar_tribunal.py` (comprueba además que todo JSON de `Content/` es válido).
 
 ## 3. Registro de procedencia
 
@@ -223,6 +283,15 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 |---|---|---|---|---|
 | Ítems, tarjetas y SIM.01 de prueba (Fases 04 y 05A) | original | Claude Code, solo para tests y desarrollo (estado `borrador`, solo Debug) | propia | 2026-11-23 |
 | Lote 01 · `LEN.ORT.*` (38 ítems y 5 tarjetas) | original | Redacción original de la dirección del proyecto | propia | 2026-11-23 |
+| Lote 02 · 38 plantillas (MAT y LEN.ORT.AGU), léxico de 818 palabras y formas verbales | original | Especificación de la dirección del proyecto; redacciones literales de la dirección en los generadores y redacciones propias marcadas «A.2» | propia | 2026-11-24 |
+| Lote 05a · Base literaria (`literatura/literatura.json`) | original | Datos biográficos y bibliográficos de conocimiento general, con rasgos redactados por la dirección del proyecto. No incluye fragmentos de obras | propia | 2026-11-24 |
+| Fragmentos literarios (regla del lote 05a · errata 1) | original o dominio público | Solo de autores con `fragmentosPermitidos: true` (dominio público y en lengua original española). De un autor extranjero de dominio público solo se usa una traducción propia de la dirección, registrada aquí con el autor y la obra; nunca una traducción publicada | propia (traducciones) o dominio público (originales) | 2026-11-24 |
+| Lote 03a · `LEN.LEX.*` (30 ítems), `LEN.COM.*` (19 ítems), 8 tarjetas y textos `TXT.ORI.ABEJAS`, `TXT.ORI.DEBERES` y `TXT.ORI.FARO` | original | Redacción original de la dirección del proyecto | propia | 2026-11-24 |
+| Lote 03a · `TXT.BEC.R21` (Rima XXI) y `TXT.MAC.CAM` («Proverbios y cantares», XXIX) | dominio público | Gustavo Adolfo Bécquer (†1870), *Rimas*; Antonio Machado (†1939), *Campos de Castilla*. Texto original en español | dominio publico | 2026-11-24 |
+| Lote 02b (parte 1) · frases con hueco y piezas de gramática | original | Redacción original de la dirección del proyecto. Los sintagmas de `piezas.json` se derivan mecánicamente de sus sustantivos (artículo o «a» + posesivo) | propia | 2026-11-24 |
+| Datos Tribunal · enunciados y textos base de los 7 cuadernillos (`pendiente/tribunal/`) | oficial reutilizable + dominio público | Comunidad de Madrid, prueba común de Maestros 2017–2026 (URL y fecha en cada archivo y en `docs/examenes/FUENTES.md`); reutilización sin alterar el contenido y citando la fuente (aviso legal de comunidad.madrid). Textos base de dominio público: Bécquer, Muñoz Seca, Lope de Vega, Cervantes y García Lorca. Salinas y Laforet no se reproducen | reutilización (aviso legal) / dominio público | 2026-11-24 |
+| Datos Tribunal · rúbricas de 2026 | oficial reutilizable | Plantillas de corrección oficiales de 2026 (ordinaria y aplazada), copiadas literalmente | reutilización (aviso legal) | 2026-11-24 |
+| Datos Tribunal · soluciones modelo y rúbricas 2017–2024 | original | Redacción de Claude Code para revisión de la dirección (borrador) | propia | 2026-11-24 |
 
 ## 4. Proceso de revisión y calidad
 
@@ -235,6 +304,18 @@ La tabla de cómo escala cada generador con la dificultad (1–6) y sus reglas d
 | Lote 01 | LEN.ORT (Ortografía y tildes) | 38 | 5 | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `teoria/LEN.ORT.json` |
 | Lote 01 · errata 1 | LEN.ORT | 3 (versión 2) | — | Aprobada por la dirección 23/11/2026 | `items/LEN.ORT.json` |
 | Lote 02 · piloto 05B | LEN.ORT (`colocarTilde`) y MAT.NUM (Fracciones) | 12 + 9 | 2 (MAT.NUM) | Aprobado por la dirección 23/11/2026 | `items/LEN.ORT.json`, `items/MAT.NUM.json`, `teoria/MAT.NUM.json` |
+| Lote 02 | MAT (5 bloques) y LEN.ORT.AGU | 38 plantillas | — | Aprobado por la dirección 24/11/2026; las 38 superan los tests de propiedades (24/11/2026) | `plantillas/MAT.*.json`, `plantillas/LEN.ORT.json`, `lexico/palabras.json`, `lexico/formas_verbales.json`, `catalogo.json` |
+| Lote 05a · Base literaria | Literatura (142 autores · 19 movimientos) | — | — | Aprobado por la dirección 24/11/2026 · pendiente del motor literario (Fase 05F) | `literatura/literatura.json` |
+| Lote 05a · errata 1 · versión 2 | Literatura (142 autores · 21 movimientos · 50 con fragmentos permitidos) | — | — | Aprobada por la dirección 24/11/2026 | `literatura/literatura.json` |
+| Lote 03a | LEN.LEX 30 ítems + LEN.COM 19 ítems (pendiente) + 8 tarjetas + 5 textos | 30 + 19 | 8 (4 LEN.LEX, 4 LEN.COM) | Aprobado por la dirección 24/11/2026 | `items/LEN.LEX.json`, `teoria/LEN.LEX.json`, `teoria/LEN.COM.json`, `pendiente/LEN.COM.json`, `pendiente/textos.json` |
+| Lote 03a · errata 1 | LEN.COM (pendiente) y LEN.LEX | 4 (versión 2: PROP.0002, INFER.0003, TIPO.0001, RESU.0004) | 1 (LEN.LEX.DICC.T01) | Aprobada por la dirección 24/11/2026. Las 4 tarjetas de LEN.COM pasan a `pendiente/` hasta que se activen sus ítems. `LEN.LEX.SINON` pasa a orden 99 y el bloque LEN.COM se llama «Comunicación y comprensión». En la matriz de exámenes, 5 propuestas (†) pasan a competencias del catálogo | `pendiente/LEN.COM.json`, `pendiente/teoria_LEN.COM.json`, `teoria/LEN.LEX.json`, `catalogo.json`, `docs/examenes/MATRIZ.md`, `scripts/matriz/datos.py` |
+| Lote 03a · errata 2 | LEN.COM (pendiente) | 1 (versión 3: TIPO.0001, la explicación incluye el tipo descriptivo) | — | Aprobada por la dirección 24/11/2026 | `pendiente/LEN.COM.json` |
+| Lote 02b (parte 1) · 101 frases con hueco · 39 sustantivos, 17 adjetivos, 27 verbos, 20 complementos circunstanciales · aprobado por la dirección 24/11/2026 | LEN.ORT (DIA, PQ, HOM) y gramática de LEN.SIN, LEN.CLA y LEN.VER | — | — | Aprobado por la dirección 24/11/2026. Las piezas y los verbos sustituyen a los de prueba; las frases quedan en `frases_lote02b.json` hasta tener `dificultad` y `uso` | `gramatica/piezas.json`, `gramatica/verbos.json`, `gramatica/compatibilidad.json`, `gramatica/frases_lote02b.json` |
+| Lote 02b · errata 1 | LEN.ORT (DIA, PQ, HOM) y gramática | 100 frases (versión 2) | — | Aprobada por la dirección 24/11/2026. `frases.json` pasa a tener las 28 familias reales con `uso` y `dificultad` (se quitan «ti» y su frase; FR.0074 «Te ___ de menos»; `revelar_rebelar` con formas paralelas). Etiquetas finas del CD (`abrible`, `comprable`, `prestable`, `lavable`); `pasear` sustituye a `vivir`; se conservan los irregulares tener, decir, poner y hacer. Plantillas `LEN.ORT.DIA.G01`, `LEN.ORT.PQ.G01` (familias nuevas) y `LEN.ORT.HOM.G01`/`G02` (nuevas), en borrador | `gramatica/frases.json`, `gramatica/piezas.json`, `gramatica/verbos.json`, `gramatica/compatibilidad.json`, `plantillas/LEN.ORT.json` |
+| Lote 02b · errata 2 | Gramática | — | — | Aprobada por la dirección 24/11/2026. «regalo» pierde `comprable` y «libro» pierde `texto` («escribir» solo admite carta, cuento, mensaje y poema) | `gramatica/compatibilidad.json`, `gramatica/piezas.json` |
+| Datos Tribunal · 7 exámenes · borrador pendiente de revisión de la dirección | Modo Tribunal (05E) | 139 preguntas (69 L + 70 M) | — | Borrador pendiente de revisión de la dirección | `pendiente/tribunal/*.json`, `docs/examenes/SOLUCIONES_REVISION_1–3.md`, `docs/examenes/CORRECCIONES_OCR.md` |
+| Datos Tribunal · aprobación | Modo Tribunal (05E) | 139 preguntas (69 L + 70 M) | — | Soluciones aprobadas por la dirección 24/11/2026; siguen en `pendiente/tribunal/` hasta la Fase 05E | `pendiente/tribunal/` |
+| Recuperación · activación | LEN.COM (comprensión con textos base) y plantillas de frases del lote 02b | 19 ítems + 4 plantillas | 4 (LEN.COM) | Ítems y textos ya aprobados; se activan al admitir el motor textos base (D-085). Plantillas aprobadas al superar sus tests (D-089), 25/11/2026 | `items/LEN.COM.json`, `teoria/LEN.COM.json`, `textos/textos.json`, `plantillas/LEN.ORT.json` |
 
 **Lote 01 · LEN.ORT · 38 ítems · 5 tarjetas · aprobado por la dirección 23/11/2026.** Competencias (sustituyen a la de prueba `LEN.ORT.TILDES`, cuyos 5 borradores y su tarjeta se eliminaron):
 
@@ -262,3 +343,38 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 
 ### Fase 05C · Plantillas de prueba (borrador)
 23 plantillas en borrador (`Content/plantillas/*.json`) que cubren los 16 tipos y todas sus mecánicas, más un léxico de 15 palabras, piezas de gramática, 14 verbos regulares y 6 irregulares, y 19 frases de 10 familias. Todo es original y **no se carga en Release**: sirve para probar el motor hasta que llegue el contenido real del lote 02. Se añaden las competencias `MAT.OPE.ECUAC`, `MAT.EST.CENTRAL` y `MAT.PRO.LAPLACE` (catálogo v2, D-068).
+
+### Lote 02 · Matemáticas y acentuación (24/11/2026, verificado en el Mac el mismo día)
+38 plantillas aprobadas por la dirección (`validacion.estado = aprobado`, revisor `direccion`, 24/11/2026) y 16 competencias nuevas en el catálogo (v2). **Una plantilla solo queda aprobada si supera los tests de propiedades** (TESTING §12): las 38 los superan, ninguna vuelve a borrador.
+
+| Competencia | Plantillas (tipo · mecánica · dificultad) |
+|---|---|
+| LEN.ORT.AGU Agudas, llanas y esdrújulas | G01 `colocarTilde` d2 · G02 `colocarTilde` d3 · G03 `clasificarAcentuacion` (clasificar) d2 · G04 `silabaTonica` (marcar texto) d1 |
+| MAT.NUM.ORDEN Ordenar fracciones y decimales | G01 `ordenarNumeros` d2 · G02 d3 |
+| MAT.NUM.FRAOP Operaciones con fracciones | G01 `fraccionesOperar` d2 · G02 d3 · G03 d4 |
+| MAT.NUM.FRAPROB Problemas con fracciones | G01 `problemaFraccion` d3 · G02 d4 |
+| MAT.OPE.JER Jerarquía de las operaciones | G01 `operacionesCombinadas` (numérico) d2 · G02 (ordenar) d3 |
+| MAT.OPE.COMB Operaciones combinadas con paréntesis y corchetes | G01 `operacionesCombinadas` (ordenar) d3 · G02 (numérico) d4 |
+| MAT.OPE.ECUAC Ecuaciones de primer grado | G01 `ecuacionLineal` d2 · G02 d3 · G03 d4 |
+| MAT.POR.CALC Tanto por ciento de una cantidad | G01 `porcentajeDe` d2 · G02 d3 |
+| MAT.POR.TOTAL Total a partir de una parte | G01 `porcentajeDe` d3 |
+| MAT.POR.VAR Aumentos y descuentos | G01 `porcentajeDe` d3 · G02 (construir, «Justifica») d4 |
+| MAT.POR.PROP Proporcionalidad directa | G01 `reglaDeTres` d2 · G02 d3 |
+| MAT.ROM.LEER / MAT.ROM.ESCR Números romanos | LEER G01 `romanos` (numérico) d2 · G02 (elección) d3 · ESCR G01 (construir) d2 · G02 d3 |
+| MAT.UNI.LMC / SUP / VOL Unidades | LMC G01 `conversionUnidades` d2 · G02 d3 · SUP G01 d3 · VOL G01 d3 |
+| MAT.UNI.TIEM Tiempo sexagesimal | G01 `sexagesimal` (numérico) d2 · G02 (ruedas) d3 · G03 (ruedas) d4 |
+| MAT.UNI.ESC Escalas | G01 `escala` d3 · G02 d4 |
+
+- **Generadores**: 5 nuevos (`reglaDeTres`, `sexagesimal`, `escala`, `fraccionesOperar`, `problemaFraccion`) y 6 reescritos con las tablas de dificultad 1–6 de la dirección (`porcentajeDe`, `conversionUnidades`, `romanos`, `operacionesCombinadas`, `ecuacionLineal`, `ordenarNumeros`). Las tablas están documentadas en cada generador (`Core/Content/Generadores/GeneradoresLote02*.swift`).
+- **Redacciones**: las literales de la especificación viven en el generador (la plantilla usa `{{pregunta}}`), para que cada contexto solo se use con datos que tengan sentido (alumnos enteros, euros con dos decimales…). Las redacciones propias van marcadas con «A.2» en el código. Nombres propios de los enunciados: los 12 de la lista A.6.
+- **Léxico**: `lexico/palabras.json` con 818 palabras y `lexico/formas_verbales.json`. Niveles de palabra 1–6 (D-077): 322 · 319 · 65 · 58 · 8 · 46. **0 discrepancias** entre la tilde escrita y el silabeador con las reglas de la RAE (las 3 que señalaba el informe WIP —«prohíbe», «ahínco», «rehúso»— eran un fallo del código con la *h* intercalada, no del dato).
+- **Release**: carga las 38 plantillas y ninguna de las 10 de prueba de la 05C que quedan (siguen en borrador: LEN.CLA, LEN.ORT.DIA/PQ, LEN.SIN, LEN.VER, MAT.DIV, MAT.EST, MAT.NUM.FRAREP y MAT.PRO).
+
+### Recuperación · contenido integrado (25/11/2026)
+- **Textos base** (D-085): `textos/textos.json` con 5 textos aprobados (Bécquer, Rima XXI; Machado, «Proverbios y cantares», XXIX; y 3 originales de la dirección). 13 de los 19 ítems de comprensión los citan con `textoRef`; los otros 6 son conceptuales.
+- **Gramática** (D-086): `compatibilidad.json` alimenta `oracionSimple` y `analisisVerbal`. Las plantillas que usan esos generadores (LEN.CLA, LEN.SIN y LEN.VER) siguen siendo las de prueba de la 05C, en borrador.
+- **Plantillas**: 50 en total, 42 aprobadas (38 del lote 02 y 4 de frases del lote 02b). Siguen en borrador 8 de prueba de la 05C (LEN.CLA.SUSTADJ.G01, LEN.SIN.COMPL.G01/G02, LEN.VER.ANALISIS.G01, MAT.DIV.MCD.G01, MAT.EST.CENTRAL.G01, MAT.NUM.FRAREP.G01 y MAT.PRO.LAPLACE.G01). Las versiones de prueba de LEN.ORT.DIA.G01 y LEN.ORT.PQ.G01 las sustituyeron las del lote 02b.
+- **Release**: 108 ítems estáticos (LEN.ORT 50, LEN.LEX 30, LEN.COM 19, MAT.NUM 9), 15 tarjetas, 5 textos y 42 plantillas. Catálogo de preguntas únicas (`CatalogoPreguntas`, cota inferior porque varios generadores se muestrean): **≥ 146 933** = LEN 3849 (LEN.ORT 3800 · LEN.LEX 30 · LEN.COM 19) + MAT 143 084 (MAT.UNI 74 019 · MAT.OPE 35 901 · MAT.POR 21 228 · MAT.NUM 8016 · MAT.ROM 3920). LEN.SIN, LEN.CLA, LEN.VER, LEN.LIT, MAT.DIV, MAT.EST, MAT.PRO y MAT.GEO no tienen todavía contenido aprobado.
+- **Base literaria** (D-088): cargada y validada; todavía sin preguntas (Fase 05F).
+- **Tribunal**: `pendiente/tribunal/` no cambia (Fase 05E).
+
