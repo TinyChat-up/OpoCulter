@@ -374,7 +374,7 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 - **Textos base** (D-085): `textos/textos.json` con 5 textos aprobados (Bécquer, Rima XXI; Machado, «Proverbios y cantares», XXIX; y 3 originales de la dirección). 13 de los 19 ítems de comprensión los citan con `textoRef`; los otros 6 son conceptuales.
 - **Gramática** (D-086): `compatibilidad.json` alimenta `oracionSimple` y `analisisVerbal`. Las plantillas que usan esos generadores (LEN.CLA, LEN.SIN y LEN.VER) siguen siendo las de prueba de la 05C, en borrador.
 - **Plantillas**: 50 en total, 42 aprobadas (38 del lote 02 y 4 de frases del lote 02b). Siguen en borrador 8 de prueba de la 05C (LEN.CLA.SUSTADJ.G01, LEN.SIN.COMPL.G01/G02, LEN.VER.ANALISIS.G01, MAT.DIV.MCD.G01, MAT.EST.CENTRAL.G01, MAT.NUM.FRAREP.G01 y MAT.PRO.LAPLACE.G01). Las versiones de prueba de LEN.ORT.DIA.G01 y LEN.ORT.PQ.G01 las sustituyeron las del lote 02b.
-- **Release**: 108 ítems estáticos (LEN.ORT 50, LEN.LEX 30, LEN.COM 19, MAT.NUM 9), 15 tarjetas, 5 textos y 42 plantillas. Catálogo de preguntas únicas: @@CATALOGO@@
+- **Release**: 108 ítems estáticos (LEN.ORT 50, LEN.LEX 30, LEN.COM 19, MAT.NUM 9), 15 tarjetas, 5 textos y 42 plantillas. Catálogo de preguntas únicas (`CatalogoPreguntas`, cota inferior porque varios generadores se muestrean): **≥ 146 933** = LEN 3849 (LEN.ORT 3800 · LEN.LEX 30 · LEN.COM 19) + MAT 143 084 (MAT.UNI 74 019 · MAT.OPE 35 901 · MAT.POR 21 228 · MAT.NUM 8016 · MAT.ROM 3920). LEN.SIN, LEN.CLA, LEN.VER, LEN.LIT, MAT.DIV, MAT.EST, MAT.PRO y MAT.GEO no tienen todavía contenido aprobado.
 - **Base literaria** (D-088): cargada y validada; todavía sin preguntas (Fase 05F).
 - **Tribunal**: `pendiente/tribunal/` no cambia (Fase 05E).
 

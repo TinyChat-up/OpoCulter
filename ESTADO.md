@@ -12,13 +12,13 @@
 | Verificación conjunta 05D + lote 02 | ✅ Suite completa, archive Release sin avisos, arranque y recorrido en el iPhone | D-077, TESTING §11–12 |
 | Integración (6 fusiones en orden) | ✅ Compilación y tests unitarios en verde tras cada fusión (con 2 commits de ajuste) | DECISIONES «Renumeración de la recuperación» |
 | Textos base, gramática con compatibilidad, frases y base literaria | ✅ | D-085–D-089 |
-| Tests unitarios + UI | @@TESTS@@ | TESTING §13 |
-| Cobertura | @@COBERTURA@@ | `xccov` |
-| Auditoría de accesibilidad | @@AUDITORIA@@ | Tests de UI |
-| Avisos del compilador | @@AVISOS@@ | logs |
-| Archive Release | @@ARCHIVE@@ | `xcodebuild archive` |
-| iPhone físico | @@IPHONE@@ | `xcodebuild test` en el dispositivo |
-| Catálogo de preguntas (Release) | @@CATALOGO@@ | `CatalogoPreguntas` |
+| Tests unitarios + UI | ✅ 189 unitarios (41 suites) y 17 de interfaz (1 omitido a propósito, solo para Instruments), en verde | TESTING §13 |
+| Cobertura | ✅ Core **95,3 %** (generadores 93,6 %, `Core/Modos` 98,1 %) · Features 87,6 % · App 83,2 % | `xccov` |
+| Auditoría de accesibilidad | ✅ Sin incidencias, también en las pantallas nuevas (texto base desplegado, plegado y corregido) | Tests de UI |
+| Avisos del compilador | ✅ 0 (Debug desde cero en el iPhone y archive Release) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada con todo integrado; arranque en frío **0,67 s** de media (0,63–0,71); recorrido completo (bienvenida → … → Ajustes, comprensión y frases) en verde | `xcodebuild test` en el dispositivo |
+| Catálogo de preguntas (Release) | **≥ 146 933** preguntas distintas: LEN 3849 (LEN.ORT 3800, LEN.LEX 30, LEN.COM 19) y MAT 143 084 | `CatalogoPreguntas` |
 
 ## Pendiente
 1. **Decisiones para la dirección** (informe de la recuperación): palabras del léxico que sin tilde son otra palabra válida (`colocarTilde` no da contexto), oraciones forzadas de la gramática generativa, «5 %» partido en dos líneas en la cabecera de Lengua de Progreso con texto grande, y la correspondencia entre las competencias del Tribunal y las del catálogo (25 propuestas no existen con ese nombre).

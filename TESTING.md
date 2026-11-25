@@ -216,3 +216,6 @@ Los tests de fluidez localizan ahora celdas y vocales **por su posición en pant
 - Suite completa con cobertura: 189 unitarios en verde; 17 de interfaz (1 omitido a propósito, solo para Instruments). `ComprensionUITests` detectó en la auditoría texto recortado en el pie con texto grande: el panel del texto base pasa a ocupar como mucho el 30 % de la pantalla (D-085) y se repite la batería de interfaz.
 - Cobertura: Core **95,3 %** (6 615 / 6 942; generadores 93,6 %, `Core/Modos` 98,1 %) · Features 87,6 % · App 83,2 %.
 - Lección: en iOS 26+ la barra de pestañas flotante se minimiza al desplazar; en el iPhone un toque en una pestaña puede no llegar («hit point {-1, -1}»). `RecorridoUITests` desplaza hacia arriba hasta poder pulsarla y comprueba el destino.
+- Repetición de la batería de interfaz con el panel adaptable: 17 tests (1 omitido a propósito), en verde y sin incidencias de auditoría.
+- iPhone 16 físico (Debug compilado desde cero, 0 avisos): `RecorridoUITests` en verde (incluye la ronda de comprensión con texto base y la de frases con hueco) y arranque en frío **0,67 s** de media (0,63–0,71; `XCTApplicationLaunchMetric`, 5 iteraciones). Archive Release sin avisos, no subido.
+- Catálogo (`ESTIMAR=1`): Release **≥ 146 933** preguntas distintas.
