@@ -16,8 +16,8 @@ struct ContenidoEmpaquetadoTests {
         // 25 borradores de prueba + LEN.ORT (50 ítems y 5 tarjetas) + MAT.NUM (9 ítems y 2 tarjetas)
         // + lote 03a: LEN.LEX (30 ítems y 4 tarjetas).
         #expect(banco.numeroEstaticos == 114)
-        // Fase 05C: 10 plantillas de prueba (borrador) que siguen + 38 aprobadas del lote 02.
-        #expect(banco.plantillas.count == 48)
+        // Fase 05C: 8 plantillas de prueba (borrador) que siguen + 38 del lote 02 + 4 del lote 02b (borrador).
+        #expect(banco.plantillas.count == 50)
         #expect(banco.items.count > 114)
         #expect(banco.teoria.count == 13)
         #expect(banco.simulacros.count == 1)

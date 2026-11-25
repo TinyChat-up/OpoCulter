@@ -75,6 +75,7 @@ struct ValidadorContenido: Sendable {
             }
             errores += validar(simulacro: simulacro, competencias: competencias)
         }
+        if !banco.recursos.compatibilidad.vacia { errores += validar(compatibilidad: banco.recursos.compatibilidad) }
         return errores
     }
 
@@ -469,6 +470,35 @@ struct ValidadorContenido: Sendable {
         }
         m += validar(validacion: simulacro.validacion)
         return m.map { ErrorValidacion(elemento: simulacro.id, mensaje: $0) }
+    }
+
+    /// Coherencia de `compatibilidad.json` (D-086): conjugación según el infinitivo, etiquetas de
+    /// sujeto y objeto que existen en algún sustantivo y formas completas.
+    func validar(compatibilidad c: CompatibilidadGramatica) -> [ErrorValidacion] {
+        var errores: [ErrorValidacion] = []
+        func error(_ id: String, _ m: String) { errores.append(.init(elemento: "compatibilidad · \(id)", mensaje: m)) }
+        let etiquetas = Set(c.sustantivos.flatMap(\.etiquetas))
+        for s in c.sustantivos {
+            if s.lema.isEmpty || s.plural.isEmpty { error(s.lema, "sustantivo sin lema o plural") }
+            if !["m", "f"].contains(s.genero) { error(s.lema, "género «\(s.genero)» no válido") }
+            if s.etiquetas.isEmpty { error(s.lema, "sin etiquetas") }
+        }
+        if Set(c.sustantivos.map(\.lema)).count != c.sustantivos.count { error("sustantivos", "lemas repetidos") }
+        for a in c.adjetivos where [a.ms, a.fs, a.mp, a.fp].contains(where: \.isEmpty) || a.etiquetas.isEmpty {
+            error(a.ms, "adjetivo sin sus cuatro formas o sin etiquetas")
+        }
+        for v in c.verbos {
+            let terminacion = ["ar": 1, "er": 2, "ir": 3][String(v.infinitivo.suffix(2))]
+            if terminacion != v.conjugacion { error(v.infinitivo, "conjugación \(v.conjugacion) no coincide con el infinitivo") }
+            if !["transitivo", "intransitivo", "copulativo"].contains(v.regimen) { error(v.infinitivo, "régimen «\(v.regimen)» no válido") }
+            if v.regimen == "transitivo" && (v.objeto ?? []).isEmpty { error(v.infinitivo, "transitivo sin objeto") }
+            for e in (v.objeto ?? []) + v.sujeto where !etiquetas.contains(e) { error(v.infinitivo, "ningún sustantivo tiene la etiqueta «\(e)»") }
+        }
+        for (tipo, lista) in c.complementosCircunstanciales {
+            if !["CCL", "CCT", "CCM", "CCC"].contains(tipo) { error(tipo, "tipo de complemento no válido") }
+            if lista.contains(where: \.isEmpty) { error(tipo, "complemento vacío") }
+        }
+        return errores
     }
 
     // MARK: - Metadatos

@@ -48,7 +48,7 @@ enum ErrorCarga: Error, Equatable, CustomStringConvertible {
 /// plantillas/<bloque>.json   (array de plantillas de generador, Fase 05C)
 /// lexico/palabras.json       (léxico de los generadores de Lengua)
 /// lexico/formas_verbales.json (formas verbales del léxico, para su nivel)
-/// gramatica/piezas.json · verbos.json · frases.json
+/// gramatica/piezas.json · verbos.json · frases.json · compatibilidad.json
 /// ```
 struct CargadorContenido: Sendable {
     /// Nombre de la carpeta de contenido dentro del bundle de la app.
@@ -100,7 +100,8 @@ struct CargadorContenido: Sendable {
             formasVerbales: try opcional("lexico/formas_verbales.json") ?? [],
             gramatica: try opcional("gramatica/piezas.json") ?? PiezasGramatica(),
             verbos: try opcional("gramatica/verbos.json") ?? BancoVerbos(),
-            frases: try opcional("gramatica/frases.json") ?? BancoFrases()
+            frases: try opcional("gramatica/frases.json") ?? BancoFrases(),
+            compatibilidad: try opcional("gramatica/compatibilidad.json") ?? CompatibilidadGramatica()
         )
     }
 

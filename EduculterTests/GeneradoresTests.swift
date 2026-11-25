@@ -434,7 +434,14 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         let nv = funciones.first { $0[0] == "NV" }!
         let indiceVerbo = Int(nv[1].split(separator: "-")[0])!
         let suj = funciones.first { $0[0] == "SUJ" }!
-        #expect(Int(suj[1].split(separator: "-")[0]) == 0, "El sujeto va primero")
+        // El sujeto va primero, salvo detrás de un CCT antepuesto con coma (D-086).
+        let inicioSujeto = Int(suj[1].split(separator: "-")[0])!
+        if inicioSujeto != 0 {
+            let cct = funciones.first { $0[0] == "CCT" }
+            #expect(cct.map { Int($0[1].split(separator: "-")[0]) == 0 && Int($0[1].split(separator: "-")[1])! + 1 == inicioSujeto } == true,
+                    "\(d["oracion"]!): solo un CCT puede ir delante del sujeto")
+            #expect(tokens[inicioSujeto - 1].hasSuffix(","), "\(d["oracion"]!): el CCT antepuesto va seguido de coma")
+        }
         #expect(Int(suj[1].split(separator: "-")[1])! + 1 == indiceVerbo, "El verbo sigue al sujeto")
         // Concordancia: 3.ª plural termina en -n en todos los tiempos simples usados; la singular, no.
         #expect(tokens[indiceVerbo].hasSuffix("n") == (numero == "p"), "\(d["oracion"]!): concordancia sujeto-verbo")

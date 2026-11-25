@@ -135,14 +135,16 @@ enum Conjugador {
 /// Oraciones simples construidas con piezas tipadas y concordancia (sujeto y verbo en número;
 /// atributo en género y número). El análisis correcto se conoce por construcción y sirve para
 /// `segmentar` (funciones), `clasificar` (clases de palabras) y `eleccion` (función de un sintagma).
+/// Con `compatibilidad.json` (lote 02b, D-086) las oraciones salen de sus etiquetas semánticas:
+/// ver `construirCompatible`. Sin ese archivo se usan las piezas de `piezas.json`.
 ///
 /// | Dif. | Estructura |
 /// |---|---|
 /// | 1 | S + V intransitivo (+ 1 CC) |
 /// | 2 | S + V + CD |
-/// | 3 | S + V + CD + CC, o intransitivo + 2 CC |
-/// | 4 | S + V copulativo + Atributo (+ CC), o S + V + CD + CI |
-/// | 5 | S + V + CD + CI + CC |
+/// | 3 | S + V + CD + CC, o intransitivo + 2 CC (un CCT puede ir delante, con coma) |
+/// | 4 | S + V copulativo + Atributo (+ CC), o S + V + CD + CI; con compatibilidad: S (+ adj) + V + CD + CI (+ CC) |
+/// | 5 | S + V + CD (+ adj) + CI + CC |
 /// | 6 | S + V + CD (+ CI) + 2 CC |
 struct GeneradorOracionSimple: GeneradorItems {
     let tipo = "oracionSimple"
@@ -151,7 +153,7 @@ struct GeneradorOracionSimple: GeneradorItems {
 
     static let nombres: [String: String] = [
         "SUJ": "Sujeto", "PRED": "Predicado", "NV": "Núcleo verbal", "CD": "Complemento directo", "CI": "Complemento indirecto",
-        "CCL": "CC de lugar", "CCT": "CC de tiempo", "CCM": "CC de modo", "ATR": "Atributo",
+        "CCL": "CC de lugar", "CCT": "CC de tiempo", "CCM": "CC de modo", "CCC": "CC de compañía", "ATR": "Atributo",
     ]
     static let clases: [String: String] = [
         "det": "Determinante", "sust": "Sustantivo", "verbo": "Verbo", "adj": "Adjetivo", "prep": "Preposición", "adv": "Adverbio", "pron": "Pronombre",
@@ -163,6 +165,7 @@ struct GeneradorOracionSimple: GeneradorItems {
         "CCL": "El complemento circunstancial de lugar responde a «¿dónde?».",
         "CCT": "El complemento circunstancial de tiempo responde a «¿cuándo?».",
         "CCM": "El complemento circunstancial de modo responde a «¿cómo?».",
+        "CCC": "El complemento circunstancial de compañía responde a «¿con quién?».",
         "ATR": "El atributo acompaña a un verbo copulativo (ser, estar, parecer) y concuerda con el sujeto.",
     ]
 
@@ -175,9 +178,11 @@ struct GeneradorOracionSimple: GeneradorItems {
         var verbo: String
         var regimen: String
         var atributo: String?
+        /// Índice del token tras el que va una coma (CCT antepuesto).
+        var comaTras: Int? = nil
 
-        static func == (a: Oracion, b: Oracion) -> Bool { a.tokens.map(\.0) == b.tokens.map(\.0) }
-        var texto: String { tokens.map(\.0).joined(separator: " ") }
+        static func == (a: Oracion, b: Oracion) -> Bool { a.tokens.map(\.0) == b.tokens.map(\.0) && a.comaTras == b.comaTras }
+        var texto: String { tokens.enumerated().map { $0.offset == comaTras ? $0.element.0 + "," : $0.element.0 }.joined(separator: " ") }
     }
 
     func construir(_ d: Int, _ g: PiezasGramatica, verbos: BancoVerbos, rng: inout GeneradorConSemilla) -> Oracion? {
@@ -237,7 +242,19 @@ struct GeneradorOracionSimple: GeneradorItems {
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
         for _ in 0..<200 {
-            guard let o = construir(p.dificultad, recursos.gramatica, verbos: recursos.verbos, rng: &rng) else { continue }
+            let o: Oracion
+            var concordancia: Concordancia?
+            if !recursos.compatibilidad.vacia {
+                // Un CCT puede ir delante desde el nivel 3, salvo en `segmentar` (el predicado quedaría partido).
+                let anteponer = p.mecanica != .segmentar && p.dificultad >= 3 && rng.probabilidad(0.4)
+                guard let (oracion, datos) = construirCompatible(p.dificultad, recursos.compatibilidad, piezas: recursos.gramatica,
+                                                                 verbos: recursos.verbos, anteponerCCT: anteponer, rng: &rng) else { continue }
+                o = oracion
+                concordancia = datos
+            } else {
+                guard let oracion = construir(p.dificultad, recursos.gramatica, verbos: recursos.verbos, rng: &rng) else { continue }
+                o = oracion
+            }
             let ids = o.tokens.indices.map { "t\($0 + 1)" }
             let elementos = zip(ids, o.tokens).map { ElementoTexto(id: $0, texto: $1.0) }
             let analisis = o.constituyentes.filter { $0.0 != "PRED" && $0.0 != "SUJ" }
@@ -245,8 +262,14 @@ struct GeneradorOracionSimple: GeneradorItems {
             let sujetoTexto = o.tokens[o.constituyentes[0].1...o.constituyentes[0].2].map(\.0).joined(separator: " ")
             let explicacion = "Sujeto: «\(sujetoTexto)» (concuerda con «\(o.tokens[o.constituyentes[1].1].0)»). " + analisis.joined(separator: "; ") + "."
             let complejidad = Double(o.constituyentes.count) + Double(o.tokens.count) * 0.1 + (o.regimen == "copulativo" ? 0.5 : 0)
-            let datos = ["oracion": o.texto, "numero": o.sujetoNumero, "genero": o.sujetoGenero, "verbo": o.verbo, "regimen": o.regimen,
-                         "funciones": o.constituyentes.map { "\($0.0):\($0.1)-\($0.2)" }.joined(separator: ";"), "atributo": o.atributo ?? ""]
+                + (o.comaTras != nil ? 0.5 : 0)
+            var datos = ["oracion": o.texto, "numero": o.sujetoNumero, "genero": o.sujetoGenero, "verbo": o.verbo, "regimen": o.regimen,
+                         "funciones": o.constituyentes.map { "\($0.0):\($0.1)-\($0.2)" }.joined(separator: ";"), "atributo": o.atributo ?? "",
+                         "tokens": o.tokens.map { "\($0.0)/\($0.1)" }.joined(separator: " "), "coma": o.comaTras.map(String.init) ?? ""]
+            if let c = concordancia {
+                datos.merge(["sujetoLema": c.sujetoLema, "cdLema": c.cdLema ?? "", "ciLema": c.ciLema ?? "", "adjetivos": c.adjetivos.joined(separator: ";"),
+                             "circunstanciales": c.circunstanciales.joined(separator: ";"), "tiempo": c.tiempo]) { $1 }
+            }
             switch p.mecanica {
             case .segmentar:
                 var segmentos: [Payload.Segmentar.Segmento] = []
@@ -257,7 +280,7 @@ struct GeneradorOracionSimple: GeneradorItems {
                     segmentos.append(.init(id: "s\(segmentos.count + 1)", desde: ids[c.1], hasta: ids[c.2], etiqueta: c.0, padre: "s2"))
                 }
                 let usadas = Set(segmentos.map(\.etiqueta))
-                let etiquetas = ["SUJ", "PRED", "NV", "CD", "CI", "ATR", "CCL", "CCT", "CCM"].filter(usadas.contains).map { ElementoNombre(id: $0, nombre: Self.nombres[$0]!) }
+                let etiquetas = ["SUJ", "PRED", "NV", "CD", "CI", "ATR", "CCL", "CCT", "CCM", "CCC"].filter(usadas.contains).map { ElementoNombre(id: $0, nombre: Self.nombres[$0]!) }
                 return Muestra(clave: "segmentar|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""],
                                payload: .segmentar(Payload.Segmentar(tokens: elementos, etiquetas: etiquetas, segmentos: segmentos)),
                                explicacion: explicacion, pistas: ["Busca primero el verbo y pregúntale «¿quién?» para encontrar el sujeto."],
@@ -277,7 +300,7 @@ struct GeneradorOracionSimple: GeneradorItems {
                 let candidatos = o.constituyentes.filter { $0.0 != "PRED" && $0.0 != "NV" }
                 let objetivo = rng.elemento(candidatos)
                 let texto = o.tokens[objetivo.1...objetivo.2].map(\.0).joined(separator: " ")
-                let otras = rng.barajar(["SUJ", "CD", "CI", "CCL", "CCT", "CCM", "ATR"].filter { $0 != objetivo.0 })
+                let otras = rng.barajar(["SUJ", "CD", "CI", "CCL", "CCT", "CCM", "CCC", "ATR"].filter { $0 != objetivo.0 })
                 let (e, errores) = Opciones.eleccion(correcta: Self.nombres[objetivo.0]!,
                                                      distractores: otras.map { (Self.nombres[$0]!, Self.definiciones[objetivo.0] ?? "") }, rng: &rng)
                 return Muestra(clave: "eleccion|\(o.texto)|\(objetivo.0)", valores: ["oracion": o.texto, "sintagma": texto],
@@ -333,6 +356,23 @@ struct GeneradorAnalisisVerbal: GeneradorItems {
 
     struct Opcion: Hashable { let tiempo: String; let modo: String }
 
+    /// Verbos efectivos: los de `verbos.json` y, si hay `compatibilidad.json` (D-086), sus verbos
+    /// con su participio irregular (escrito, abierto) para los tiempos compuestos.
+    static func banco(_ r: RecursosGeneradores) -> BancoVerbos {
+        guard !r.compatibilidad.vacia else { return r.verbos }
+        var b = r.verbos
+        for v in r.compatibilidad.verbos {
+            if !b.regulares.contains(v.infinitivo) { b.regulares.append(v.infinitivo) }
+            guard let p = v.participioIrregular else { continue }
+            if let i = b.irregulares.firstIndex(where: { $0.infinitivo == v.infinitivo }) {
+                if b.irregulares[i].participio == nil { b.irregulares[i].participio = p }
+            } else {
+                b.irregulares.append(VerboIrregular(infinitivo: v.infinitivo, participio: p, formas: [:]))
+            }
+        }
+        return b
+    }
+
     static func nivel(_ d: Int, _ banco: BancoVerbos) -> (verbos: [String], tiempos: [Opcion]) {
         let ind = Conjugador.indicativo, sub = Conjugador.subjuntivo
         let t1 = ["Presente", "Pretérito perfecto simple", "Futuro simple"].map { Opcion(tiempo: $0, modo: ind) }
@@ -367,10 +407,11 @@ struct GeneradorAnalisisVerbal: GeneradorItems {
     }
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
-        let todos = casos(p.dificultad, recursos.verbos)
+        let verbos = Self.banco(recursos)
+        let todos = casos(p.dificultad, verbos)
         guard !todos.isEmpty else { throw ErrorGenerador.sinRecursos(tipo) }
         let c = rng.elemento(todos)
-        let (_, tiempos) = Self.nivel(p.dificultad, recursos.verbos)
+        let (_, tiempos) = Self.nivel(p.dificultad, verbos)
         let nombresTiempo = Array(Set(tiempos.map(\.tiempo))).sorted { a, b in
             (Conjugador.simplesIndicativo + Conjugador.compuestosIndicativo).firstIndex(of: a) ?? 0 < (Conjugador.simplesIndicativo + Conjugador.compuestosIndicativo).firstIndex(of: b) ?? 0
         }
@@ -393,7 +434,7 @@ struct GeneradorAnalisisVerbal: GeneradorItems {
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
-        Array(casos(p.dificultad, recursos.verbos).map { "\($0.verbo)|\($0.op.tiempo)|\($0.op.modo)|\($0.indice)" }.prefix(limite))
+        Array(casos(p.dificultad, Self.banco(recursos)).map { "\($0.verbo)|\($0.op.tiempo)|\($0.op.modo)|\($0.indice)" }.prefix(limite))
     }
 }
 

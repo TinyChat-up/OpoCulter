@@ -27,16 +27,20 @@ struct RecursosGeneradores: Sendable, Equatable {
     var gramatica: PiezasGramatica
     var verbos: BancoVerbos
     var frases: BancoFrases
+    /// Compatibilidad semántica de la gramática generativa (lote 02b, D-086).
+    var compatibilidad: CompatibilidadGramatica
     /// Palabras utilizables del léxico, analizadas una sola vez, con su nivel (1–6).
     let palabras: [PalabraNivelada]
 
     init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
-         verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases()) {
+         verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases(),
+         compatibilidad: CompatibilidadGramatica = CompatibilidadGramatica()) {
         self.lexico = lexico
         self.formasVerbales = formasVerbales
         self.gramatica = gramatica
         self.verbos = verbos
         self.frases = frases
+        self.compatibilidad = compatibilidad
         self.palabras = Acentuacion.nivelar(lexico, formasVerbales: Set(formasVerbales))
     }
 
