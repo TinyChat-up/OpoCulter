@@ -395,3 +395,17 @@ Con `-almacenPruebas`, Hoy muestra una línea de diagnóstico (`ServicioSesion.r
   - El peldaño 1 de LEN.ORT.AGU se practica ahora con `silabaTonica` (G04) y las palabras de `colocarTilde` generadas salen del léxico de 818, que el test no conoce. `testRondaDeLenguaConColocarTilde` juega 4 ítems aprobados concretos con la opción nueva `-rondaItems` (solo Debug) y los responde todos con toques reales.
   - En `testRescatePorCompetencia`, con casi toda la ronda en LEN.ORT.AGU peldaño 1, cada acierto posterior rescataba los fallos anteriores de la misma competencia y peldaño (comportamiento de la Fase 04). El test falla ahora todos los ítems y comprueba ese número.
   - `RecorridoUITests`: recorrido de extremo a extremo con una captura de cada pantalla, para revisar en el iPhone lo que ve el usuario.
+### D-078 · 2026-11-24 · Lote 05a · Vigente
+**Base literaria como datos aparte, sin código.**
+- **Ubicación**: `Educulter/Content/literatura/literatura.json`, que en la documentación se cita como `Content/literatura/`, igual que el resto del contenido. `Content` es una carpeta explícita del target, así que el archivo se copiará al bundle sin tocar el `.pbxproj`. `CargadorContenido` solo lee `items`, `teoria`, `simulacros`, `plantillas`, `lexico` y `gramatica`, de modo que la app lo ignora hasta que exista el motor literario (Fase 05F).
+- **Validación**: `scripts/validar_literatura.py` (Python 3, solo biblioteca estándar) para validar sin Mac. Cuando exista el motor, sus tests de Swift deberán repetir estas comprobaciones.
+- **Dominio público**: regla de la dirección. Muerte en 1945 o antes, o autor anónimo o antiguo sin fechas. Un autor con nacimiento y sin muerte cuenta como vivo.
+
+### D-079 · 2026-11-24 · Lote 05a · errata 1 · Vigente (dirección)
+**Base literaria, versión 2.**
+- **Géneros**: se añade `ensayo` a Fray Luis y a Lope. Santa Teresa pasa a tener `narrativa` y `ensayo`, y «Las moradas» pasa a `ensayo`. Las greguerías siguen siendo `ensayo` por convención.
+- **Clasificación**: dos movimientos nuevos, `TEATRO1900` (Benavente, Arniches y Muñoz Seca) y `G36` (Miguel Hernández). Marsé pasa a `POSGUERRA`, REALISMO termina en 1905 y se corrigen los rasgos de Goethe y de los hermanos Grimm.
+- **Fechas**: la obra de Hierro pasa a ser «Quinta del 42» (1952), la de Gil de Biedma, «Moralidades» (1966), y «La casa de Bernarda Alba» lleva el año de escritura (1936).
+- **Motor 05F**: las preguntas de movimiento se hacen sobre el autor. Sobre una obra, solo si su año está dentro del rango del movimiento.
+- **País**: «Reino Unido» unifica Inglaterra y Escocia, y «Roma» pasa a «Italia».
+- **Fragmentos**: se añade el campo `fragmentosPermitidos`, que es `dominioPublico` y además ámbito español o hispanoamericano. De los extranjeros de dominio público solo se admite una traducción propia de la dirección. El validador comprueba esta regla.
