@@ -101,6 +101,8 @@ enum MotorGeneradores {
             GeneradorOracionSimple(), GeneradorAnalisisVerbal(), GeneradorFraseHueco(),
             // Fase 05E.
             GeneradorFormasNoPersonales(), GeneradorLiteratura(),
+            // Fase 05E parte 2 (D-100).
+            GeneradorTerminoDesconocido(),
         ]
         return Dictionary(uniqueKeysWithValues: todos.map { ($0.tipo, $0) })
     }()

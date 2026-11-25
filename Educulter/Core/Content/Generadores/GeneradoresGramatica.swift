@@ -287,8 +287,8 @@ struct GeneradorOracionSimple: GeneradorItems {
         let mezclas: [[Int]]? = switch modo {
         case "clase": [[1, 2], [1, 2, 3], [1, 2, 3, 4], [2, 3, 4, 5], [3, 4, 5, 6], [4, 5, 6]]
         case "funcion": [[2, 3], [2, 3, 4], [3, 4, 5], [3, 4, 5, 6], [4, 5, 6], [5, 6]]
-        case "concordancia": [[2, 3], [2, 3], [3, 5], [5, 6], [5, 6], [6]]
-        case "pronombre": [[2], [2], [2, 5], [2, 5, 6], [5, 6], [5, 6]]
+        case "concordancia": [[2, 3], [2, 3], [3, 4], [4, 5], [5, 6], [6]]
+        case "pronombre": [[2], [2], [2, 4], [4, 5], [4, 5, 6], [5, 6]]
         default: nil
         }
         return mezclas.map { rng.elemento($0[i]) } ?? (i + 1)

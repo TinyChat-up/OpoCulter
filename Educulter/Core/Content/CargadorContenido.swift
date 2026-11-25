@@ -84,6 +84,13 @@ struct CargadorContenido: Sendable {
         let literaturaURL = raiz.appendingPathComponent("literatura/literatura.json")
         var literatura: BaseLiteraria?
         if FileManager.default.fileExists(atPath: literaturaURL.path) { literatura = try decodificar(literaturaURL) as BaseLiteraria }
+        // Preguntas oficiales por competencia (equivalencias del Tribunal, D-097): ordenan el plan (D-103).
+        struct Equivalencias: Decodable { struct P: Decodable { var competencia: String }; var preguntas: [P] }
+        let equivalenciasURL = raiz.appendingPathComponent("tribunal/equivalencias.json")
+        var preguntasOficiales: [String: Int] = [:]
+        if FileManager.default.fileExists(atPath: equivalenciasURL.path) {
+            for p in (try decodificar(equivalenciasURL) as Equivalencias).preguntas { preguntasOficiales[p.competencia, default: 0] += 1 }
+        }
 
         return BancoContenido(
             catalogo: catalogo,
@@ -94,6 +101,7 @@ struct CargadorContenido: Sendable {
             recursos: try recursos(),
             textos: textos.filter { politica.admite($0.validacion) },
             literatura: literatura,
+            preguntasOficiales: preguntasOficiales,
             semillaBase: semillaBase
         )
     }

@@ -171,5 +171,28 @@
       "fecha": "2026-11-24"
     },
     "version": 1
+  },
+  {
+    "id": "MAT.OPE.INCOG.G02",
+    "competencia": "MAT.OPE.INCOG",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "numerico",
+    "tipo": "terminoDesconocido",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Calcular el término desconocido de una igualdad",
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05E (parte 2): plantilla de la dirección (§1b.3); se aprueba si supera los tests de propiedades y de anclas."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    },
+    "version": 1
   }
 ]

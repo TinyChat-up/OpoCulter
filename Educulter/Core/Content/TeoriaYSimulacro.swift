@@ -5,6 +5,8 @@ struct TarjetaTeoria: Codable, Sendable, Equatable, Identifiable {
     struct BloqueTeoria: Codable, Sendable, Equatable {
         enum Tipo: String, Codable, Sendable {
             case texto, regla, ejemplo, esquema
+            /// Consejo práctico, mostrado como texto destacado (ANEXO B de la 05E parte 2).
+            case truco
         }
         var tipo: Tipo
         var contenido: String

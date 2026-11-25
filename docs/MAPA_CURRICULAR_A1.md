@@ -5,7 +5,7 @@ Copia del ANEXO A del prompt de la Fase 05E (parte 1), tal como lo dio la direcc
 ## Cómo se ha cargado (D-091)
 
 - **Ids**: se conservan todos los existentes y solo se añaden bloques y competencias. Los nombres existentes no se cambian.
-- **Recuento real**: el anexo habla de 22 bloques, pero sus tablas tienen **21** (11 de Lengua y 10 de Matemáticas), y **111** competencias. El catálogo tiene 124: las 111 del mapa y 13 antiguas sustituidas.
+- **Recuento real**: **21** bloques (11 de Lengua y 10 de Matemáticas), y **111** competencias. El catálogo tiene 125: las 111 del mapa, MAT.OPE.INCOG (término desconocido, D-100) y 13 antiguas sustituidas.
 - **LEN.VER.ANAL** es la competencia existente **LEN.VER.ANALISIS** (se conserva ese id; no se crea un duplicado).
 - **Prioridad**: ★ = 1, ★★ = 2, ★★★ = 3. Cambian LEN.LEX (2 → 3) y MAT.EST (2 → 3).
 - **Competencias antiguas sustituidas** (`equivaleA` en `catalogo.json`): conservan su id y su progreso; el Camino no las muestra mientras no tengan contenido ni progreso.
@@ -59,4 +59,4 @@ Leyenda de estado: ✅ contenido aprobado · 🟦 lote 02 en curso · ⚙️ gen
 | **MAT.PRO** Probabilidad | LAPLACE ⚙️ · SUCESOS: seguro, posible e imposible; frecuencia relativa · RECUENTO: diagramas de árbol y recuento sencillo | mixto | ★★ |
 | **MAT.ROM** Numeración romana | LEER 🟦 · ESCR 🟦 | 🟦 | ★★ |
 
-**Total: 22 bloques y unas 100 competencias** (texto del anexo; ver el recuento real arriba). Con el lote 02, unas 26 competencias tienen contenido. El resto llega en los lotes 02b a 07 (ver PLAN_CONTENIDOS §7), siempre por prioridad.
+**Total: 21 bloques y unas 100 competencias** (corregido en la 05E parte 2: las tablas tienen 21; ver el recuento real arriba). Con el lote 02, unas 26 competencias tienen contenido. El resto llega en los lotes 02b a 07 (ver PLAN_CONTENIDOS §7), siempre por prioridad.

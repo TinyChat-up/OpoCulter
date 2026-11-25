@@ -4,12 +4,135 @@
     "competencia": "LEN.SIN.SUJPRED",
     "titulo": "Sujeto y predicado",
     "bloques": [
-      { "tipo": "texto", "contenido": "La oración tiene dos partes: el sujeto, de quien se dice algo, y el predicado, lo que se dice de él." },
-      { "tipo": "regla", "contenido": "El núcleo del sujeto concuerda en número y persona con el verbo." },
-      { "tipo": "ejemplo", "contenido": "[El gato] sujeto · [duerme] predicado" },
-      { "tipo": "esquema", "contenido": "Oración → Sujeto (SN) + Predicado (SV)" }
+      {
+        "tipo": "texto",
+        "contenido": "La oración tiene dos partes: el sujeto, de quien se dice algo, y el predicado, lo que se dice de él."
+      },
+      {
+        "tipo": "regla",
+        "contenido": "El núcleo del sujeto concuerda en número y persona con el verbo."
+      },
+      {
+        "tipo": "ejemplo",
+        "contenido": "[El gato] sujeto · [duerme] predicado"
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Oración → Sujeto (SN) + Predicado (SV)"
+      }
     ],
-    "procedencia": { "tipo": "original", "autorTexto": null, "anioMuerteAutor": null, "fuente": null, "licencia": "propia", "notas": "Contenido de prueba de la Fase 04." },
-    "validacion": { "estado": "borrador", "revisor": "", "fecha": "" }
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Contenido de prueba de la Fase 04."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": "",
+      "fecha": ""
+    }
+  },
+  {
+    "id": "LEN.SIN.SUJPRED.T02",
+    "competencia": "LEN.SIN.SUJPRED",
+    "titulo": "Sujeto y predicado",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "El sujeto es el grupo de palabras que concuerda con el verbo en número y persona. El predicado es todo lo demás: el verbo y sus complementos."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Cambia el verbo de singular a plural. La palabra que también tiene que cambiar es el núcleo del sujeto."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Oración: Las niñas cantan una canción\nSujeto: Las niñas\nNúcleo del sujeto: niñas\nPredicado: cantan una canción\nNúcleo del predicado: cantan"
+      },
+      {
+        "tipo": "texto",
+        "contenido": "El sujeto puede ir detrás del verbo («Llegaron los alumnos») o no aparecer («Cantamos»: sujeto omitido, nosotros)."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
+  },
+  {
+    "id": "LEN.SIN.COMPL.T01",
+    "competencia": "LEN.SIN.COMPL",
+    "titulo": "Los complementos del verbo",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "CD: recibe la acción; se sustituye por lo, la, los, las\nCI: destinatario de la acción; lleva «a» y se sustituye por le, les\nCC: circunstancia de lugar, tiempo, modo, compañía, cantidad, causa, finalidad o instrumento\nAtributo: con ser, estar o parecer, dice cómo es o está el sujeto; se sustituye por «lo»"
+      },
+      {
+        "tipo": "texto",
+        "contenido": "«Compró el libro» → «Lo compró» (CD). «Escribió a su abuela» → «Le escribió» (CI). «Está contenta» → «Lo está» (atributo)."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "El CD de persona también lleva «a»: «Saludó a la vecina» → «La saludó». Si se sustituye por «la», es CD, no CI."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
+  },
+  {
+    "id": "LEN.SIN.CLASE.T01",
+    "competencia": "LEN.SIN.CLASE",
+    "titulo": "Clases de oraciones",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Con ser, estar o parecer y un atributo, la oración es copulativa (o atributiva) y su predicado es nominal. Con cualquier otro verbo, es predicativa y su predicado es verbal."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Transitiva: lleva CD («Lee un cuento»)\nIntransitiva: no lleva CD («Corre por el parque»)\nImpersonal: no tiene sujeto («Llueve», «Hay niños», «Hace frío»)"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Primero mira el verbo: ¿es ser, estar o parecer con atributo? Si no, busca el CD para saber si es transitiva."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
   }
 ]

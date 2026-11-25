@@ -1,6 +1,6 @@
 {
-  "version": 2,
-  "origen": "Lote 02b (parte 1), formato neutro de la dirección; reglas de naturalidad de la Fase 05E (D-090): incontables, CI con artículo o posesivo, CCT con aspecto y verbos copulativos.",
+  "version": 3,
+  "origen": "Lote 02b (parte 1), formato neutro de la dirección; reglas de naturalidad de la Fase 05E (D-090): incontables, CI con artículo o posesivo, CCT con aspecto y verbos copulativos; Fase 05E parte 2 (D-099): regalar y vender solo comprable, pintable, subir con destino y posesivo solo en singular.",
   "sustantivos": [
     {
       "lema": "niño",
@@ -207,7 +207,8 @@
       "plural": "mesas",
       "etiquetas": [
         "objeto",
-        "lavable"
+        "lavable",
+        "pintable"
       ]
     },
     {
@@ -217,7 +218,8 @@
       "etiquetas": [
         "objeto",
         "abrible",
-        "lavable"
+        "lavable",
+        "pintable"
       ]
     },
     {
@@ -227,7 +229,8 @@
       "etiquetas": [
         "objeto",
         "abrible",
-        "comprable"
+        "comprable",
+        "pintable"
       ]
     },
     {
@@ -238,7 +241,8 @@
         "objeto",
         "comprable",
         "prestable",
-        "lavable"
+        "lavable",
+        "pintable"
       ]
     },
     {
@@ -249,7 +253,8 @@
         "objeto",
         "comprable",
         "prestable",
-        "lavable"
+        "lavable",
+        "pintable"
       ]
     },
     {
@@ -269,7 +274,8 @@
       "plural": "puertas",
       "etiquetas": [
         "objeto",
-        "abrible"
+        "abrible",
+        "pintable"
       ]
     },
     {
@@ -745,7 +751,7 @@
       "conjugacion": 1,
       "regimen": "transitivo",
       "objeto": [
-        "objeto"
+        "pintable"
       ],
       "admiteCI": false,
       "participioIrregular": null,
@@ -798,8 +804,7 @@
       "conjugacion": 1,
       "regimen": "transitivo",
       "objeto": [
-        "comprable",
-        "comida"
+        "comprable"
       ],
       "admiteCI": true,
       "participioIrregular": null,
@@ -864,8 +869,7 @@
       "conjugacion": 2,
       "regimen": "transitivo",
       "objeto": [
-        "comprable",
-        "comida"
+        "comprable"
       ],
       "admiteCI": true,
       "participioIrregular": null,
@@ -1148,7 +1152,8 @@
       "pintar",
       "dibujar",
       "abrir",
-      "visitar"
+      "visitar",
+      "mirar"
     ],
     "en el colegio": [
       "nadar",
@@ -1180,22 +1185,40 @@
     "deprisa": [
       "descansar",
       "pasear",
-      "escuchar"
+      "escuchar",
+      "regalar",
+      "prestar",
+      "vender",
+      "visitar"
     ],
     "despacio": [
-      "descansar"
+      "descansar",
+      "regalar",
+      "prestar",
+      "vender",
+      "visitar"
     ],
     "con cuidado": [
       "descansar",
       "bailar",
       "cantar",
       "escuchar",
-      "saludar"
+      "saludar",
+      "visitar",
+      "regalar",
+      "vender",
+      "comprar",
+      "prestar",
+      "mirar"
     ],
     "en silencio": [
       "cantar",
       "saludar",
-      "bailar"
+      "bailar",
+      "comprar",
+      "vender",
+      "regalar",
+      "prestar"
     ],
     "con alegría": [
       "descansar"
@@ -1208,7 +1231,8 @@
   "sinPosesivo": [
     "niño",
     "niña",
-    "cocinero"
+    "cocinero",
+    "alumna"
   ],
   "tiemposCopulativos": {
     "ser": [
@@ -1229,5 +1253,20 @@
   "ccDelante": [
     "CCT",
     "CCL"
-  ]
+  ],
+  "requiereDestino": [
+    "subir"
+  ],
+  "cclDestino": [],
+  "objetoExcluye": {
+    "regalar": [
+      "coche"
+    ],
+    "preparar": [
+      "leche"
+    ],
+    "mirar": [
+      "mesa"
+    ]
+  }
 }

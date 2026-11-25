@@ -457,7 +457,7 @@ struct ValidadorContenido: Sendable {
         if tarjeta.bloques.isEmpty { m.append("la tarjeta no tiene bloques") }
         for (i, b) in tarjeta.bloques.enumerated() {
             if b.contenido.isEmpty { m.append("bloque \(i + 1) vacío") }
-            if b.tipo == .texto || b.tipo == .regla {
+            if b.tipo == .texto || b.tipo == .regla || b.tipo == .truco {
                 let palabras = Self.contarPalabras(b.contenido)
                 if palabras > Self.maxPalabrasBloqueTeoria {
                     m.append("el bloque \(i + 1) (\(b.tipo.rawValue)) tiene \(palabras) palabras (máximo \(Self.maxPalabrasBloqueTeoria))")

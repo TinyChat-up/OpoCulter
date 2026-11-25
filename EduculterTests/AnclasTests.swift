@@ -39,9 +39,12 @@ struct Ancla: Decodable, Sendable, CustomTestStringConvertible {
         var separacion: [Int]?
         var opciones: [Int]?
         var ambito: String?
+        var cd: Bool?
+        var ci: Bool?
+        var cc: Int?
 
         private enum CodingKeys: String, CodingKey {
-            case generador, operaciones, profundidad, maximoNumero, soloNaturales, cantidad, mezcla, maximoDecimales, maximoDenominador,
+            case cd, ci, cc, generador, operaciones, profundidad, maximoNumero, soloNaturales, cantidad, mezcla, maximoDecimales, maximoDenominador,
                  fracciones, sobreLoQueQueda, tiempos, sinNormalizar, terminos, destinoIntermedio, modo, maximaEscala, porcentajeNoRedondo,
                  base, factorNoEntero, maximoDato, rango, sustractivos, numeros, experimento, datos, maximoValor, separacion, opciones, ambito
         }
@@ -80,6 +83,9 @@ struct Ancla: Decodable, Sendable, CustomTestStringConvertible {
             separacion = try? c.decode([Int].self, forKey: .separacion)
             opciones = try? c.decode([Int].self, forKey: .opciones)
             ambito = try? c.decode(String.self, forKey: .ambito)
+            cd = try? c.decode(Bool.self, forKey: .cd)
+            ci = try? c.decode(Bool.self, forKey: .ci)
+            cc = try? c.decode(Int.self, forKey: .cc)
         }
     }
     var pregunta: String
@@ -200,6 +206,16 @@ enum PerfilEstructural {
             guard case .eleccion(let e) = item.payload else { return ["payload"] }
             if let r = c.opciones, !(r[0]...r[1]).contains(e.opciones.count) { f.append("\(e.opciones.count) opciones") }
             if !item.enunciado.contains("_____") { f.append("sin hueco") }
+        case "terminoDesconocido":
+            let partes = d["igualdades"]!.split(separator: "|")
+            if partes.count != 1 { f.append("\(partes.count) igualdades") }
+            let n = partes[0].split(separator: ":")[2].replacingOccurrences(of: ".", with: "")
+            if let r = c.numeros, !(r[0]...r[1]).contains(n.count) || n.contains(",") { f.append("N = \(n)") }
+        case "oracionSimple":
+            if d["regimen"] != "transitivo" || d["orden"] != "canonico" { f.append("\(d["oracion"]!): estructura") }
+            if (!(d["cdLema"] ?? "").isEmpty) != (c.cd ?? false) { f.append("\(d["oracion"]!): CD") }
+            if (!(d["ciLema"] ?? "").isEmpty) != (c.ci ?? false) { f.append("\(d["oracion"]!): CI") }
+            if (d["textosCC"] ?? "").split(separator: ";").count != (c.cc ?? 0) { f.append("\(d["oracion"]!): CC") }
         default: f.append("generador sin perfil: \(c.generador)")
         }
         return f

@@ -443,6 +443,19 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         if case .ruedas(let rr) = item.payload, let esperado = Oraculo.formas[d["forma"]!] {
             #expect(Array(rr.ruedas.map(\.correcta).prefix(4)) == [esperado.0, esperado.1, esperado.2, esperado.3], "\(d["forma"]!)")
         }
+    case "terminoDesconocido":
+        // Se resuelve aquí cada igualdad con su operación inversa.
+        let partes = d["igualdades"]!.split(separator: "|").map { $0.split(separator: ":").map(String.init) }
+        let f1 = partes[0], a1 = Oraculo.racional(f1[1])!, n1 = Oraculo.racional(f1[2])!
+        let x: Double = switch f1[0] { case "mul", "div": n1 / a1; case "suma": n1 - a1; default: n1 + a1 }
+        var esperado = x
+        if partes.count == 2 {
+            let k = Double(partes[1][1])!
+            esperado = switch partes[1][0] { case "div": x / k; case "suma": x - k; default: x + k }
+            #expect(abs(Double(d["a"]!)! - x) < 1e-9, "\(item.id): a")
+        }
+        #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-9, "\(item.id): \(item.enunciado) → \(sol!) ≠ \(esperado)")
+        #expect(esperado == esperado.rounded() && esperado > 0, "\(item.id): solución natural")
     case "formasNoPersonales":
         let f = Oraculo05E.comprobarNoPersonales(m, item)
         #expect(f.isEmpty, "\(item.id): \(f)")
@@ -473,12 +486,15 @@ struct GeneradoresPropiedadesTests {
         let lote02 = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Lote 02") == true }
         let lote02b = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Plantilla del lote 02b") == true }
         let fase05E = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05E") == true }
-        #expect(lote02.count == 38 && lote02b.count == 4 && fase05E.count == 37)
+        #expect(lote02.count == 38 && lote02b.count == 4 && fase05E.count == 38)
         #expect(lote02.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-24") })
         #expect(lote02b.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
         // Las de la 05E: aprobadas solo si superan estos tests (ver PlantillasNuevas05ETests); el resto (05C), en borrador.
         #expect(fase05E.allSatisfy { $0.validacion.estado == .borrador || $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
-        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) }.allSatisfy { $0.validacion.estado == .borrador })
+        // Aprobadas en la 05E parte 2 (D-101): MCD, CENTRAL y LAPLACE (plantillas de la 05C que superan propiedades y anclas).
+        let aprobadas05C: Set<String> = ["MAT.DIV.MCD.G01", "MAT.EST.CENTRAL.G01", "MAT.PRO.LAPLACE.G01"]
+        #expect(Self.plantillas.filter { aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -557,7 +573,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 79)
+        #expect(banco.plantillas.count == 83)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }

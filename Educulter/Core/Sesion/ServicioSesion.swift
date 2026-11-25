@@ -117,8 +117,6 @@ final class ServicioSesion {
 
     var hoy: DiaCivil { DiaCivil(reloj.ahora, calendario: calendario) }
 
-    /// Ítems utilizables en rondas (peldaños 1–4).
-    private var itemsDeRonda: [Item] { banco.items.filter { $0.peldano <= configRonda.peldanoMaximoEnRonda } }
 
     // MARK: - Hoy
 
@@ -135,7 +133,7 @@ final class ServicioSesion {
             misiones: perfil.misiones,
             rescatesPendientes: try repositorio.colaRescate().cantidad,
             competenciaEnCurso: enCurso.flatMap { id in banco.catalogo.todasLasCompetencias.first { $0.id == id } },
-            hayContenido: itemsDeRonda.count >= configRonda.minimo,
+            hayContenido: banco.cuentaSinGenerar(peldanoMaximo: configRonda.peldanoMaximoEnRonda) >= configRonda.minimo,
             itemsOrtografia: itemsOrtografia.count,
             propuestas: try propuestas(enCurso: enCurso),
             avatar: perfil.avatar,
@@ -185,14 +183,14 @@ final class ServicioSesion {
         }
     }
 
-    private func competenciasOrdenadas() -> [String] {
-        let bloques = banco.catalogo.todosLosBloques.enumerated().sorted { ($1.element.prioridad, $0.offset) < ($0.element.prioridad, $1.offset) }
-        return bloques.flatMap { $0.element.competencias.sorted { $0.orden < $1.orden } }.map(\.id)
+    /// Orden de lo nuevo (D-103): prioridad × debilidad del diagnóstico × preguntas oficiales.
+    func competenciasOrdenadas() -> [String] {
+        PlanEstudio(banco: banco, diagnostico: try? repositorio.diagnostico()).ordenadas()
     }
 
     private func valida(_ id: String, _ estados: [String: EstadoCompetencia]) -> Bool {
         !(estados[id]?.escalera.dominada(configAprendizaje.escalera) ?? false)
-            && banco.items(competencia: id).contains { $0.peldano <= configRonda.peldanoMaximoEnRonda }
+            && banco.tieneItems(competencia: id, peldanoMaximo: configRonda.peldanoMaximoEnRonda)
     }
 
     /// Competencia en curso: se mantiene la guardada mientras no esté dominada y tenga

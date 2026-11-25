@@ -129,15 +129,23 @@ struct ConstructorRondas: Sendable {
         let empezadas = estados.values.sorted {
             ($0.competenciaId.hasPrefix(area ?? "") ? 0 : 1, $0.competenciaId) < ($1.competenciaId.hasPrefix(area ?? "") ? 0 : 1, $1.competenciaId)
         }
-        let resto = banco.items.filter { $0.peldano <= config.peldanoMaximoEnRonda }
-        let restoArea = area.map { a in resto.filter { Catalogo.area(de: $0.competencia) == a } } ?? []
+        // El resto del banco solo se pide si hace falta rellenar (genera variantes de todas las plantillas, D-102).
+        var restoCalculado: (area: [Item], todo: [Item])?
+        func resto() -> (area: [Item], todo: [Item]) {
+            if let r = restoCalculado { return r }
+            let todo = banco.items.filter { $0.peldano <= config.peldanoMaximoEnRonda }
+            let r = (area.map { a in todo.filter { Catalogo.area(de: $0.competencia) == a } } ?? [], todo)
+            restoCalculado = r
+            return r
+        }
         for permitirRecientes in [false, true] where elegidos.count < config.minimo {
             for estado in empezadas where elegidos.count < config.minimo {
                 let candidatos = candidatos(competencia: estado.competenciaId, peldano: estado.escalera.peldano)
                 _ = anadir(elegir(candidatos, usados: usados, huellas: huellas, esReciente: esReciente,
                                   permitirRecientes: permitirRecientes, rng: &rng), .relleno)
             }
-            for grupo in [restoArea, resto] {
+            guard elegidos.count < config.minimo else { break }
+            for grupo in [resto().area, resto().todo] {
                 while elegidos.count < config.minimo,
                       let item = elegir(grupo, usados: usados, huellas: huellas, esReciente: esReciente, permitirRecientes: permitirRecientes, rng: &rng) {
                     _ = anadir(item, .relleno)

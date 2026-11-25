@@ -108,9 +108,9 @@
       "competenciaOriginal": [
         "MAT.OPE.INCOG"
       ],
-      "competencia": "MAT.OPE.ECUAC",
-      "entrena": "parcial",
-      "nota": "Provisional MAT.OPE.INCOG: término desconocido con números grandes y decimales."
+      "competencia": "MAT.OPE.INCOG",
+      "entrena": "si",
+      "nota": "Provisional MAT.OPE.INCOG: término desconocido (D-100)."
     },
     {
       "examen": "OF.2017.O",
@@ -350,9 +350,9 @@
       "competenciaOriginal": [
         "MAT.OPE.INCOG"
       ],
-      "competencia": "MAT.OPE.ECUAC",
-      "entrena": "parcial",
-      "nota": "Provisional MAT.OPE.INCOG."
+      "competencia": "MAT.OPE.INCOG",
+      "entrena": "si",
+      "nota": "Provisional MAT.OPE.INCOG: término desconocido (D-100)."
     },
     {
       "examen": "OF.2019.A",
@@ -384,8 +384,8 @@
         "MAT.PRO.LAPLACE"
       ],
       "competencia": "MAT.PRO.LAPLACE",
-      "entrena": "no",
-      "nota": "Plantilla en borrador."
+      "entrena": "si",
+      "nota": "Sucesos con 10 bolas numeradas."
     },
     {
       "examen": "OF.2019.A",
@@ -406,8 +406,8 @@
         "MAT.EST.CENTRAL"
       ],
       "competencia": "MAT.EST.CENTRAL",
-      "entrena": "no",
-      "nota": "Plantilla en borrador."
+      "entrena": "si",
+      "nota": "Media, mediana y rango de 5 datos."
     },
     {
       "examen": "OF.2019.A",
@@ -570,9 +570,9 @@
       "competenciaOriginal": [
         "MAT.OPE.INCOG"
       ],
-      "competencia": "MAT.OPE.ECUAC",
-      "entrena": "parcial",
-      "nota": "Provisional MAT.OPE.INCOG."
+      "competencia": "MAT.OPE.INCOG",
+      "entrena": "si",
+      "nota": "Provisional MAT.OPE.INCOG: término desconocido (D-100)."
     },
     {
       "examen": "OF.2019.O",
@@ -604,8 +604,8 @@
         "MAT.EST.CENTRAL"
       ],
       "competencia": "MAT.EST.CENTRAL",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "si",
+      "nota": "Media, moda y rango de 5 datos."
     },
     {
       "examen": "OF.2019.O",
@@ -769,8 +769,8 @@
         "MAT.DIV.MCD"
       ],
       "competencia": "MAT.DIV.MCD",
-      "entrena": "no",
-      "nota": "Plantilla en borrador."
+      "entrena": "si",
+      "nota": "m.c.d. de tres números en un reparto (plantilla aprobada en la 05E parte 2)."
     },
     {
       "examen": "OF.2022.O",
@@ -835,8 +835,8 @@
         "MAT.EST.CENTRAL"
       ],
       "competencia": "MAT.EST.CENTRAL",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "parcial",
+      "nota": "Tabla de frecuencias con decimales: el generador da listas de datos."
     },
     {
       "examen": "OF.2022.O",
@@ -1088,8 +1088,8 @@
         "MAT.EST.CENTRAL"
       ],
       "competencia": "MAT.EST.CENTRAL",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "parcial",
+      "nota": "30 datos: el generador usa de 5 a 8."
     },
     {
       "examen": "OF.2026.A",
@@ -1231,9 +1231,9 @@
       "competenciaOriginal": [
         "MAT.OPE.INCOG"
       ],
-      "competencia": "MAT.OPE.ECUAC",
-      "entrena": "parcial",
-      "nota": "Provisional MAT.OPE.INCOG."
+      "competencia": "MAT.OPE.INCOG",
+      "entrena": "si",
+      "nota": "Provisional MAT.OPE.INCOG: término desconocido (D-100)."
     },
     {
       "examen": "OF.2026.A",
@@ -1265,8 +1265,8 @@
         "MAT.PRO.LAPLACE"
       ],
       "competencia": "MAT.PRO.LAPLACE",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "si",
+      "nota": "Sucesos con 12 tarjetas."
     },
     {
       "examen": "OF.2026.A",
@@ -1287,8 +1287,8 @@
         "MAT.EST.CENTRAL"
       ],
       "competencia": "MAT.EST.CENTRAL",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "si",
+      "nota": "Media, mediana, moda y rango de 6 datos."
     },
     {
       "examen": "OF.2026.A",

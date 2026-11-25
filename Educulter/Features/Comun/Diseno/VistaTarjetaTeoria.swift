@@ -53,6 +53,20 @@ struct VistaTarjetaTeoria: View {
             .accessibilityElement(children: .combine)
         case .esquema:
             VistaEsquema(filas: FilaEsquema.filas(de: bloque.contenido), acento: acento)
+        case .truco:
+            HStack(alignment: .top, spacing: Espacio.m) {
+                Image(systemName: "lightbulb.fill").font(.body).foregroundStyle(Paleta.recompensaTexto).accessibilityHidden(true)
+                VStack(alignment: .leading, spacing: Espacio.xs) {
+                    Text("Truco").font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).textCase(.uppercase)
+                    Text(bloque.contenido).font(.body).foregroundStyle(Paleta.textoPrincipal)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(Espacio.m)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+            .contornoTinta(radio: Radio.ficha, grosor: Trazo.fino)
+            .accessibilityElement(children: .combine)
         }
     }
 }

@@ -18,7 +18,7 @@ extension ServicioSesion {
     // MARK: Contenido
 
     func tieneContenido(_ competencia: String) -> Bool {
-        banco.items(competencia: competencia).contains { $0.peldano <= configRonda.peldanoMaximoEnRonda }
+        banco.tieneItems(competencia: competencia, peldanoMaximo: configRonda.peldanoMaximoEnRonda)
     }
 
     // MARK: Camino
