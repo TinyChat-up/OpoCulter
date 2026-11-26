@@ -283,7 +283,8 @@ struct PantallaProgreso: View {
     private var seccionLogros: some View {
         VStack(alignment: .leading, spacing: Espacio.m) {
             titulo("Logros · \(logros.filter { $0.obtenido != nil }.count) de \(logros.count)")
-            LazyVStack(spacing: Espacio.s) {
+            // Pila normal (no `LazyVStack`): la perezosa no reajusta el texto al cambiar su tamaño (D-097).
+            VStack(spacing: Espacio.s) {
                 ForEach(logros, id: \.logro.id) { l in
                     HStack(spacing: Espacio.m) {
                         Image(systemName: l.obtenido == nil ? "trophy" : "trophy.fill")

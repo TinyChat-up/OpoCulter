@@ -39,13 +39,10 @@ extension ServicioSesion {
         return UInt64(hoy.clave) &* 1_000_003 &+ UInt64(respuestas)
     }
 
-    /// Primer uso: sin progreso ni diagnóstico. La sesión lanza el diagnóstico.
-    func esPrimerUso() throws -> Bool {
-        try repositorio.estadosCompetencia().isEmpty && repositorio.diagnostico() == nil
-    }
-
+    /// Sesión diaria. El diagnóstico se ofrece en la bienvenida (con «Saltar») y en Ajustes; la sesión
+    /// solo lo lanza si no hay nada que componer (sin repasos, remedios ni plan con contenido). Sin
+    /// diagnóstico, el plan usa la debilidad por defecto (D-103), así que «Saltar» se respeta (D-110).
     func prepararSesion(duracion: DuracionSesion, foco: FocoSesion) throws -> RondaPreparada {
-        if try esPrimerUso() { return try prepararRonda(.diagnostico) }
         let ahora = reloj.ahora
         let n = ConstructorSesion.numeroItems(duracion, intentos: try repositorio.intentos(desde: ahora.addingTimeInterval(-30 * 24 * 3600)))
         let sesion = ConstructorSesion(banco: banco, config: configRonda).construir(

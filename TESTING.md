@@ -231,3 +231,19 @@ Los tests de fluidez localizan ahora celdas y vocales **por su posición en pant
 | `RondasLenguaUITests` | Una ronda de LEN.SIN, otra de LEN.VER y otra de LEN.LIT por el Camino, con capturas y auditoría (simulador e iPhone) |
 
 Herramientas sin Mac de Xcode: `scripts/cargar_mapa_a1.py`, `ambiguas_tilde.py`, `plantillas_05e.py`, `anclas_calibracion.py`, `equivalencias_tribunal.py` y `auditoria_05e.py` (Python 3, solo biblioteca estándar).
+
+## 15. Fase 05E · parte 2 (26/11/2026)
+
+| Suite | Qué comprueba |
+|---|---|
+| `ConstructorSesionTests` | 1000 historiales sintéticos: remedios ≤ 20 %, repaso ≤ 50 %, nuevo ≥ 25 % (−1), bloques, intercalado (≤ 2 de la misma competencia, ≤ 3 de la misma área en Mixto), sin repetir ítems ni preguntas, determinista (D-106, D-108) |
+| `CatalogoErroresTests`, `EstadoErroresTests`, `ErroresExtremoTests` | Catálogo (93 errores con remedio generable), validador, 0 distractores sin etiquetar en las plantillas aprobadas, los 13 estáticos sin etiquetar solo en competencias sin errores (D-113), detección por distractor y por valor, activación, corrección y el usuario que falla dos veces el mismo porcentaje |
+| `MetaYDescansoTests`, `SesionSinDiagnosticoTests` | Meta semanal, límite del modo descanso (7 días por mes), ajustes antiguos, la sesión cuenta para la meta; el diagnóstico saltado se respeta (D-110) |
+| `PaletaTests` | Contraste WCAG ≥ 4,5:1 de cada par texto/fondo en claro y oscuro, ≥ 3:1 de tinta y bosque sobre el papel, tokens de la tabla de la dirección y `Paleta.textoSobre` (D-109) |
+| `PersonajesV3Tests` | Reglas de aparición, intérprete SVG, renders de los 18 estados y prueba instantánea del estado neutro con las referencias recoloreadas y revisadas |
+| `PasosResueltosTests` | 1000 semillas por plantilla con pasos (Matemáticas aprobadas y `oracionSimple`): 2–5 pasos, frases ≤ 60, porqué ≤ 70 en al menos un paso, último paso = solución; determinismo; muestra de 20 ítems de la auditoría (18/20 con porqué) |
+| `EjemploResueltoTests`, `EjemploEnRondaTests` | Lo nuevo del peldaño 1 empieza con ejemplo y gemelo; paso a paso («Comprobar» solo al final); gemelo sin pasos; pasos tras un fallo; pista del peldaño 2 = primer paso; sin pistas desde el 3; nivel examen alcanzado; lectura de VoiceOver de cada paso |
+| `SesionDiariaUITests` | Sesión de 5 minutos con ejemplo resuelto y resumen; error activo en Rescate, Progreso y en la sesión (remedio); meta semanal y modo descanso; auditoría en modo oscuro, con texto grande y con los dos |
+| `RecorridoParte2UITests` | Recorrido con una captura por pantalla (simulador e iPhone) |
+
+Opciones de arranque nuevas (solo Debug): `-errorDemo` y `-modoOscuro`. El texto grande se pide con el argumento del sistema `-UIPreferredContentSizeCategoryName UICTContentSizeCategoryAccessibilityL`: fijar el tamaño desde la app hacía que la auditoría lo marcara como «no admitido».

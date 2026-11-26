@@ -523,3 +523,30 @@ struct AnclasVueloXP: PreferenceKey {
         value.merge(nextValue()) { $1 }
     }
 }
+
+// MARK: - Fila de dato
+
+/// Etiqueta y valor. Con el texto en tamaño normal, en una línea; con texto grande (desde XXL) el
+/// valor va debajo, para que ninguno se recorte ni se pise con el otro. Los dos admiten varias líneas.
+struct FilaDato: View {
+    let etiqueta: String
+    let valor: String
+    var fuenteValor: Font = .body.weight(.semibold)
+    @Environment(\.dynamicTypeSize) private var tamano
+
+    var body: some View {
+        let apilar = tamano >= .xxLarge
+        let disposicion = apilar ? AnyLayout(VStackLayout(alignment: .leading, spacing: 2)) : AnyLayout(HStackLayout(alignment: .firstTextBaseline, spacing: Espacio.m))
+        disposicion {
+            Text(etiqueta).foregroundStyle(Paleta.textoSecundario)
+                .fixedSize(horizontal: false, vertical: true)
+            if !apilar { Spacer(minLength: Espacio.s) }
+            Text(valor).font(fuenteValor).foregroundStyle(Paleta.textoPrincipal)
+                .multilineTextAlignment(apilar ? .leading : .trailing)
+                .fixedSize(horizontal: false, vertical: true)
+                .layoutPriority(1)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .accessibilityElement(children: .combine)
+    }
+}

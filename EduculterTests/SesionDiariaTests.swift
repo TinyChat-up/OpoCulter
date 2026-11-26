@@ -72,6 +72,13 @@ struct CatalogoErroresTests {
         let etiquetados = bancoTodo.itemsEstaticos.flatMap(\.erroresHabituales).filter { $0.error != nil }
         #expect(etiquetados.count >= 40)
         #expect(etiquetados.allSatisfy { bancoTodo.recursos.errores[$0.error!] != nil })
+        // Punto 4 de la continuación: un distractor estático solo queda sin etiquetar si su competencia
+        // no tiene errores en el catálogo (no tiene plantilla con la que generar el remedio). Hoy son 13,
+        // de LEN.COM.TEMA, LEN.COM.INFER, LEN.LEX.SIN, LEN.LEX.POLI, LEN.LEX.CAMPO, LEN.LEX.DICC y MAT.NUM.FRAEQ.
+        let conErrores = Set(bancoAprobado.recursos.errores.errores.map(\.competencia))
+        let sin = bancoAprobado.itemsEstaticos.flatMap { i in i.erroresHabituales.filter { $0.error == nil }.map { (i.competencia, $0) } }
+        #expect(sin.allSatisfy { !conErrores.contains($0.0) }, "\(sin.filter { conErrores.contains($0.0) }.map(\.0))")
+        #expect(sin.count == 13 && Set(sin.map(\.0)) == ["LEN.COM.TEMA", "LEN.COM.INFER", "LEN.LEX.SIN", "LEN.LEX.POLI", "LEN.LEX.CAMPO", "LEN.LEX.DICC", "MAT.NUM.FRAEQ"])
     }
 
     @Test("Detección por distractor y por valor numérico")
@@ -343,5 +350,17 @@ struct ErroresExtremoTests {
         let despues = try s.erroresSeguidos()
         #expect(despues.activos.isEmpty && despues.corregidos.map(\.id) == [id])
         #expect(try s.prepararRonda(.sesion(duracion: .diez, foco: .mixto)).items.allSatisfy { $0.motivo != .remedio })
+    }
+}
+
+@Suite("Sesión diaria sin diagnóstico (D-110)")
+struct SesionSinDiagnosticoTests {
+    @Test("Sin progreso ni diagnóstico (se saltó en la bienvenida), la sesión es de lo nuevo del plan, no el diagnóstico")
+    @MainActor
+    func saltarDiagnostico() throws {
+        let repo = RepositorioSwiftData(contenedor: try EsquemaProgreso.contenedor(enMemoria: true))
+        let s = servicio(repo, Fx.fecha(2026, 11, 26, 10))
+        let r = try s.prepararRonda(.sesion(duracion: .cinco, foco: .mixto))
+        #expect(r.tipo == .sesion(duracion: .cinco, foco: .mixto) && r.items.count == 8 && r.items.allSatisfy { $0.motivo == .nuevo })
     }
 }

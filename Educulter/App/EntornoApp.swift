@@ -33,6 +33,9 @@ struct OpcionesArranque: Equatable {
     /// Historial de prueba (solo Debug): dos fallos del mismo error de porcentajes, que queda activo
     /// y trae su remedio a la siguiente sesión.
     var errorDemo = false
+    /// Tests de interfaz (Debug): modo oscuro, para la auditoría. El texto grande se pide con el
+    /// argumento del sistema `-UIPreferredContentSizeCategoryName` (no fija el tamaño).
+    var modoOscuro = false
 
     static func desde(_ argumentos: [String]) -> OpcionesArranque {
         #if DEBUG
@@ -52,6 +55,7 @@ struct OpcionesArranque: Equatable {
         o.forzarBienvenida = argumentos.contains("-forzarBienvenida")
         o.progresoDemo = argumentos.contains("-progresoDemo")
         o.errorDemo = argumentos.contains("-errorDemo")
+        o.modoOscuro = argumentos.contains("-modoOscuro")
         o.sinAvisoRecordatorio = argumentos.contains("-sinAvisoRecordatorio") || o.captura != nil
         return o
         #else

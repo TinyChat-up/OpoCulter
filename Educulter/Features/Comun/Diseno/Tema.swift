@@ -231,8 +231,8 @@ extension Font {
     /// demás. Escala con Dynamic Type.
     static func exhibicion(_ estilo: Font.TextStyle) -> Font {
         switch estilo {
-        case .largeTitle, .title, .title2, .title3: .system(estilo, design: .serif).weight(.semibold)
-        default: .system(estilo).weight(.semibold)
+        case .largeTitle, .title, .title2, .title3: return .system(estilo, design: .serif).weight(.semibold)
+        default: return .system(estilo).weight(.semibold)
         }
     }
 

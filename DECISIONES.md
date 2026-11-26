@@ -555,3 +555,72 @@ Al integrar las ramas en `integracion/recuperacion` (25/11/2026), varias ramas h
 - **Progreso (§4.3)**: se probó `ViewThatFits`, pero la auditoría daba «Dynamic Type font sizes are partially unsupported» sobre el nombre del área y el porcentaje (los textos de la variante no mostrada siguen en el árbol de accesibilidad, aun ocultos). La cabecera elige la disposición por el tamaño de texto (`AnyLayout`): en horizontal con el porcentaje con prioridad de diseño (nunca se parte) y, con texto de accesibilidad, el porcentaje debajo del nombre. Pasa la auditoría completa.
 - **Arranque**: `analisisVerbal` guarda en caché el paradigma de cada nivel (se calculaba en cada muestra y, al materializar 12 variantes por plantilla, el arranque en el iPhone subió a 0,95 s). Con la caché: 0,87 s (objetivo < 1,5 s; 0,67 s en la recuperación, por las 37 plantillas nuevas que se materializan al cargar).
 - **Auditoría en las rondas**: se audita con la pantalla quieta; durante la transición de entrada el contraste da falsos positivos en el iPhone.
+
+## Fase 05E parte 2 — Identidad, sesión diaria, errores y ejemplos resueltos
+
+### D-098 · 2026-11-25 · Fase 05E parte 2 · Vigente
+**Sintaxis: el nivel 4 es la oración del examen** (§1b.1). Nueva tabla de `oracionSimple`: 1 S + V intransitivo · 2 S + V + CD · 3 copulativa o S + V + CC · 4 S + V + CD o CI + CC (perfil del examen) · 5 S + V + CD + CI + CC o dos CC · 6 CC o CCT delante con coma, sujeto pospuesto o CI. El test de anclas se actualiza. El predicativo y el complemento del nombre quedan como perfil pendiente (lote de datos de la dirección).
+
+### D-099 · 2026-11-25 · Fase 05E parte 2 · Vigente
+**Naturalidad de la gramática generativa** (§1b.2): `regalar` y `vender` solo con objetos `comprable`; etiqueta nueva `pintable` para `pintar`; `subir` solo con CCL de destino; CI con posesivo solo en singular; se mantienen las restricciones de D-090. Revisión de 300 oraciones: 3 forzadas (1 %; objetivo < 2 %).
+
+### D-100 · 2026-11-25 · Fase 05E parte 2 · Vigente
+**Término desconocido con números grandes** (`MAT.OPE.INCOG.G02`, generador `terminoDesconocido`, §1b.3): «a · x = N», «N : x = a», «x + a = N» y «x − a = N». Nivel 4: 4–5 cifras y una sola operación inversa (perfil de las 4 preguntas oficiales); 5–6: dos igualdades encadenadas. Con oráculo y 4 anclas.
+
+### D-101 · 2026-11-25 · Fase 05E parte 2 · Vigente (criterio de la dirección)
+**Plantillas aprobadas** (§1b.4): MCD, CENTRAL y LAPLACE (y la nueva INCOG.G02) superan los tests de propiedades y de anclas. Las otras 5 plantillas de prueba de la 05C siguen en borrador.
+
+### D-102 · 2026-11-25 · Fase 05E parte 2 · Vigente
+**Catálogo perezoso y tarjetas del ANEXO B** (§1b.6–7). Al arrancar no se genera ninguna variante: el catálogo de una plantilla se genera al pedir una ronda de su competencia y se guarda en caché. Las 9 tarjetas del ANEXO B se importan sin cambiar el texto (`scripts/teoria_anexo_b.py`), con el bloque `truco` (texto destacado).
+
+### D-103 · 2026-11-25 · Fase 05E parte 2 · Vigente
+**Orden de lo nuevo** (§1b.5, `PlanEstudio`): prioridad del bloque (★) × debilidad del diagnóstico × preguntas oficiales de la competencia (`equivalencias.json`); sin diagnóstico, debilidad 0,5. En Mixto se alternan Lengua y Matemáticas.
+
+### D-104 · 2026-11-25 · Fase 05E parte 2 · Sustituida por D-109
+Paleta v3 (tinta marina, coral, amarillo y azul) con variantes de texto AA y test de contraste WCAG. El test de contraste se conserva con la paleta editorial.
+
+### D-105 · 2026-11-25 · Fase 05E parte 2 · Vigente (modificada por D-109)
+**Personajes del propietario** (Tilde, Cuarto y Mimo) dibujados pieza a pieza desde los SVG de la dirección (`docs/arte/v3/`), con 6 estados (neutro, alegre, pensando, ánimo, guiño, descanso), cada uno con su evento real, sin movimiento con «Reducir movimiento» y prueba instantánea del estado neutro. Avatares por datos (`Content/avatares.json`, `AvatarCatalogo`).
+
+### D-106 · 2026-11-25 · Fase 05E parte 2 · Vigente
+**Sesión diaria, meta semanal y modo descanso** (§3.2–3.3). `ConstructorSesion` (determinista con la semilla del día y las respuestas de hoy): 8, 15 o 22 ítems (o los minutos entre la mediana de los últimos 50 intervalos, entre 6 y 30); remedios ≤ 20 %, repaso vencido ≤ 50 %, nuevo ≥ 25 % (máx(3, ⌈n/4⌉)) en bloques de 3. Meta semanal 3–7 días (por defecto 4) de lunes a domingo. Modo descanso: hasta 7 días por mes natural; congela racha y meta. Recordatorio: uno al día y nunca si ya hay sesión completada.
+
+### D-107 · 2026-11-25 · Fase 05E parte 2 · Vigente
+**Motor de errores** (§4). `Content/errores.json` (`scripts/errores_tipicos.py`): 93 errores en 34 competencias, con remedio generable. Todos los distractores de las plantillas aprobadas se etiquetan (por patrón del feedback); los estáticos, con el generador «estatico». Sucesos en SwiftData (`EventoErrorRegistro`, sin relaciones obligatorias, compatible con CloudKit). Activo con 2 apariciones en 7 días; corregido con 3 aciertos seguidos en su remedio. Remedio en la sesión: 3 ítems de su plantilla, un punto por debajo de la dificultad del último fallo.
+
+### D-108 · 2026-11-26 · Fase 05E parte 2 · Vigente
+**Causa raíz del test de 1000 historiales y corrección del constructor.** El constructor componía la sesión sin mirar el intercalado (repasos sueltos de una sola competencia sin tope; remedios y repasos concentrados en un área) y el ordenador, al no poder separarlos, relajaba las reglas. Las proporciones del test ya eran las de la dirección (máximos para remedios y repaso, mínimo para lo nuevo): **el fallo era del constructor, no del test**. Ahora la sesión se coloca pieza a pieza: en cada hueco va la primera pieza por prioridad (remedio, repaso, nuevo) que no rompe el intercalado, y lo que no cabe se sustituye por nuevo de otra competencia o área. Solo se relaja si no cabe nada (contenido de una sola competencia). 1000 historiales en verde y 0 relajaciones.
+
+### D-109 · 2026-11-26 · Fase 05E parte 2 · Vigente (cambio de identidad del propietario)
+**Identidad sobria y editorial**, derivada del logo v5 (`docs/arte/v5/`). Sustituye a D-104 y a la estética Rubber Hose de D-059.
+- **Paleta**: tinta, papel, papel2, salvia (Lengua), bosque (Matemáticas y botones primarios), ámbar (recompensa), error y correcto, con los valores claro/oscuro de la dirección. Variantes de texto AA: `LenguaTinta` #536948 (salvia oscurecida), `RecompensaTexto` #855B1E, `Fallo` #A14935 / #E8846E, `Exito` #396E4C, `TextoSecundario` #545F5A / #9BA598. `TextoSobreBosque` (#F4F8F0 / #142019) para el texto sobre bosque y sobre el relleno de acierto; `Paleta.textoSobre(_:)` elige el color del texto de cada relleno. Retirados turquesa, violeta y oliva (sin uso).
+- **Tipografía**: SF Pro con Dynamic Type; títulos (`largeTitle`–`title3`) y números de resultado en la serif del sistema (New York). Fredoka sale del paquete, de los créditos y del registro de derechos.
+- **Estilo**: superficies planas, bordes de 1 pt en el color suave `Borde` (2 pt solo para marcar un estado), sin sombra dura, esquinas de 20–24 pt, pulsación por atenuado y animaciones suaves sin rebote.
+- **Personajes**: mismas formas y estados, recoloreados (Tilde salvia con brote ámbar; Cuarto bosque con barriga menta y brote salvia; Mimo menta con brote bosque y corazón ámbar). Ojos y boca en tinta, salvo la boca y el guiño de Cuarto, que van en papel porque en tinta no se verían sobre el cuerpo bosque. Solo aparecen en la bienvenida, el resumen y el ánimo tras un error repetido. El estado «descanso» se conserva, pero ninguna de esas tres pantallas lo usa (se informa a la dirección).
+- **Marca**: `MarcaView` dibuja la cuadrícula v5 en Path (módulos de tinta con el token `Tinta`, que se aclara en oscuro); en la bienvenida los cuatro módulos entran uno a uno en 0,6 s. La pantalla de lanzamiento usa la marca v5 con una banda de rayas salvia y bosque (`scripts/marca_lanzamiento.swift`, variante clara y oscura). El «libro vivo» queda retirado.
+
+### D-110 · 2026-11-26 · Fase 05E parte 2 · Vigente
+**El diagnóstico saltado se respeta.** Antes, sin progreso ni diagnóstico, «Empezar» lanzaba el diagnóstico aunque el usuario lo hubiera saltado en la bienvenida. Como el plan (D-103) existe sin diagnóstico, la sesión solo lanza el diagnóstico si no hay nada que componer. El diagnóstico sigue ofreciéndose en la bienvenida y en Ajustes.
+
+### D-111 · 2026-11-26 · Fase 05E parte 2 · Vigente
+**Interfaz de la sesión diaria y del motor de errores.**
+- **Hoy**: la semana (7 puntos, con los días de descanso) y la racha debajo; un único «Empezar» con «≈ N min · M preguntas» debajo; selectores de duración y de foco (se recuerdan); baldosas Camino, Supervivencia, Rescate (con su número: ítems más errores activos) y Tribunal («Próximamente»). Sin nivel ni misiones ni aviso de racha en riesgo (sin culpa). El motor de misiones sigue en el núcleo, pero ya no se muestra (se informa a la dirección).
+- **Resumen**: XP en ámbar con la serif de los resultados; dominio (competencias que suben, con el nombre del peldaño); errores detectados (activos: «Volverá el <día>», la siguiente sesión; no activos: «lo vigilamos»); «5 minutos más» (otra sesión de 5 minutos con el mismo foco) y «Terminar». Racha sin culpa («Empiezas una racha nueva»).
+- **Rescate**: primero los errores activos («descripción · N veces», con «Practicar el remedio») y después por competencia.
+- **Progreso**: «Errores que estás corrigiendo» (activos y corregidos en el último mes) y «Nivel examen».
+- **Ajustes**: meta semanal (3–7) y modo descanso, con los días que quedan.
+- **Peldaños**: Descubrir · Practicar · Resolver · Transferir · Dominar (solo las etiquetas).
+- Debug: `-errorDemo` (dos fallos reales del mismo error de porcentajes) y `-modoOscuro` para las auditorías (el texto grande, con el argumento del sistema `-UIPreferredContentSizeCategoryName`).
+
+### D-112 · 2026-11-26 · Fase 05E parte 2 · Vigente
+**Ejemplos resueltos** (§5).
+- **Pasos**: `PasoResuelto` (frase ≤ 60, operación con su resultado intermedio, valor y porqué ≤ 70) en `Muestra` e `Item`, calculados por los 15 generadores aprobados de Matemáticas con los datos del caso y por `oracionSimple` desde la estructura de la oración. Con mecánicas no numéricas (ordenar, construir, ruedas, elección), el último paso es la solución tal como la describe la app. Las explicaciones de Matemáticas terminan con la frase de porqué. `oracionSimple` en el modo de clases de palabras no tiene pasos (no se resuelve con sujeto y predicado).
+- **Mecánica `ejemploResuelto`**: un `ItemRonda` marcado como ejemplo enseña los pasos uno a uno («Siguiente paso»), el último lo completa el usuario con la mecánica del ítem y el siguiente ítem es un gemelo (misma plantilla, otra semilla). Se aplica a lo nuevo de la sesión y a las rondas de Camino y Practicar cuando la competencia está en el peldaño 1.
+- **Retirada de ayudas**: peldaño 1, ejemplo + gemelo (y las pistas de siempre en el resto); peldaño 2, la pista es solo el primer paso; desde el 3, sin pistas; los pasos se ven en el feedback tras un fallo («Cómo se resuelve»).
+- **Nivel examen**: distintivo «Nivel examen» (dificultad 4) y «Por encima del examen» (5–6) en la ronda; en Progreso, «Nivel examen alcanzado» con ≥ 8 aciertos en los últimos 10 ítems de dificultad ≥ 4 de la competencia.
+
+### D-113 · 2026-11-26 · Fase 05E parte 2 · Vigente
+**Los 13 distractores estáticos sin etiquetar se quedan así.** Son de 7 competencias sin plantilla (LEN.COM.TEMA, LEN.COM.INFER, LEN.LEX.SIN, LEN.LEX.POLI, LEN.LEX.CAMPO, LEN.LEX.DICC y MAT.NUM.FRAEQ), que no tienen ningún error en el catálogo porque un error exige un remedio generable. Un test fija que solo pueden quedar sin etiquetar distractores de competencias sin errores catalogados.
+
+### D-114 · 2026-11-26 · Fase 05E parte 2 · Vigente
+**Rendimiento de una ronda medido en tiempo de CPU del hilo**: < 50 ms en caliente y < 200 ms en frío (la primera ronda de una competencia genera su catálogo, D-102). Con los tests en paralelo, el reloj contaba la espera por la CPU (121 ms de reloj en la batería completa frente a 95 ms para cuatro rondas en frío con el test solo); y en frío, con la batería en paralelo, el tiempo de CPU llegó a 83 ms.

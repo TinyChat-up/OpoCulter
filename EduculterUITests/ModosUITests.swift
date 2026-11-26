@@ -124,7 +124,7 @@ final class ModosUITests: CasoUI {
         while !terminar.isHittable { app.scrollViews.firstMatch.swipeUp() }
         terminar.tap()
         XCTAssertTrue(nodo.waitForExistence(timeout: 10))
-        XCTAssertTrue((nodo.value as? String ?? "").contains("Peldaño 3"), nodo.value as? String ?? "")
+        XCTAssertTrue((nodo.value as? String ?? "").contains("Resolver · peldaño 3"), nodo.value as? String ?? "")
         XCTAssertTrue(incidencias.isEmpty, incidencias.joined(separator: "\n"))
     }
 
@@ -140,16 +140,18 @@ final class ModosUITests: CasoUI {
         app.buttons["botonCerrarRescate"].tap()
         // Una ronda con todos los ítems fallados (un acierto posterior de la misma competencia y
         // peldaño rescataría los fallos anteriores dentro de la misma ronda).
+        elegirDuracion(app, 5)
+        app.scrollViews.firstMatch.swipeDown()
         app.buttons["botonEmpezarRonda"].tap()
         if app.buttons["botonEmpezarTrasTeoria"].waitForExistence(timeout: 5) { app.buttons["botonEmpezarTrasTeoria"].tap() }
         var i = 0
-        while !app.descendants(matching: .any)["resumenRonda"].exists && i < 10 { responder(app, correcto: false); i += 1 }
+        while !app.descendants(matching: .any)["resumenRonda"].exists && i < 12 { responder(app, correcto: false); i += 1 }
         let terminar = app.buttons["botonTerminar"]
         XCTAssertTrue(terminar.waitForExistence(timeout: 5))
         while !terminar.isHittable { app.scrollViews.firstMatch.swipeUp() }
         terminar.tap()
         XCTAssertTrue(app.buttons["botonRescate"].waitForExistence(timeout: 10))
-        XCTAssertTrue(app.buttons["botonRescate"].label.contains("\(i) errores"), app.buttons["botonRescate"].label)
+        XCTAssertTrue(app.buttons["botonRescate"].label.contains("\(i) ítems"), app.buttons["botonRescate"].label)
         tocarVisible(app, app.buttons["botonRescate"])
         XCTAssertTrue(app.buttons["botonRescatarTodo"].waitForExistence(timeout: 10))
         try auditar(app, "Rescate")
@@ -170,7 +172,7 @@ final class ModosUITests: CasoUI {
         terminar.tap()
         XCTAssertTrue(app.buttons["botonRescate"].waitForExistence(timeout: 10))
         let etiqueta = app.buttons["botonRescate"].label
-        XCTAssertFalse(etiqueta.contains("\(i) errores"), "El contador baja de verdad: \(etiqueta)")
+        XCTAssertFalse(etiqueta.contains("\(i) ítems"), "El contador baja de verdad: \(etiqueta)")
         XCTAssertTrue(incidencias.isEmpty, incidencias.joined(separator: "\n"))
     }
 
@@ -204,7 +206,8 @@ final class ModosUITests: CasoUI {
         ajustes.tap()
         let sonido = app.switches["ajusteSonido"]
         XCTAssertTrue(sonido.waitForExistence(timeout: 10))
-        try auditar(app, "Ajustes")
+        // Con el grupo «Tu semana», el final de Ajustes queda bajo la barra de pestañas flotante (D-048).
+        try auditar(app, "Ajustes", bordesDelScroll: true)
         sonido.switches.firstMatch.tap()
         XCTAssertEqual(sonido.value as? String, "0")
         // Cerrar y reabrir.

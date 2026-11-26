@@ -180,8 +180,12 @@ struct HojaNodo: View {
                     TarjetaSuperficie {
                         VStack(alignment: .leading, spacing: Espacio.s) {
                             fila("Peldaño", "\(estado.escalera.peldano) de 5 · \(Peldano.nombre(estado.escalera.peldano))")
-                            fila("Caja de repaso", estado.leitner.map { "\($0.caja) de 5" } ?? "Aún sin repasos")
-                            fila("Próximo repaso", estado.leitner.map { $0.proximoRepaso.fecha(calendario: servicio.calendario).formatted(.dateTime.day().month(.wide)) } ?? "Sin repasos todavía")
+                            if let l = estado.leitner {
+                                fila("Caja de repaso", "\(l.caja) de 5")
+                                fila("Próximo repaso", l.proximoRepaso.fecha(calendario: servicio.calendario).formatted(.dateTime.day().month(.wide)))
+                            } else {
+                                fila("Repaso", "Aún sin repasos")
+                            }
                         }
                     }
                     .accessibilityIdentifier("estadoNodo")
@@ -234,12 +238,8 @@ struct HojaNodo: View {
         .accessibilityIdentifier("botonPracticar")
     }
 
+    /// Etiqueta y valor: en una línea si caben; si no, el valor debajo (nunca se recortan ni se pisan).
     private func fila(_ t: String, _ v: String) -> some View {
-        HStack {
-            Text(t).foregroundStyle(Paleta.textoSecundario)
-            Spacer()
-            Text(v).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).multilineTextAlignment(.trailing)
-        }
-        .accessibilityElement(children: .combine)
+        FilaDato(etiqueta: t, valor: v)
     }
 }

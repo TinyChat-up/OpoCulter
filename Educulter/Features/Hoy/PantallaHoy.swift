@@ -196,12 +196,19 @@ struct PantallaHoy: View {
 
     private func semana(_ meta: MetaSemanal, _ estado: EstadoHoy) -> some View {
         VStack(alignment: .leading, spacing: Espacio.m) {
-            HStack(alignment: .firstTextBaseline) {
+            // Con texto grande, el recuento va debajo del título (en una línea se recortaría).
+            let apilar = tamano >= .xxLarge
+            let cabecera = apilar ? AnyLayout(VStackLayout(alignment: .leading, spacing: 2)) : AnyLayout(HStackLayout(alignment: .firstTextBaseline))
+            cabecera {
                 Text("Tu semana").font(.headline).foregroundStyle(Paleta.textoPrincipal)
-                Spacer(minLength: Espacio.s)
+                    .fixedSize(horizontal: false, vertical: true)
+                if !apilar { Spacer(minLength: Espacio.s) }
                 Text("\(meta.hechos) de \(meta.metaEfectiva) días")
                     .font(.numerica(.subheadline))
                     .foregroundStyle(meta.cumplida ? Paleta.exito : Paleta.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityLabel("Meta semanal: \(meta.hechos) de \(meta.metaEfectiva) días")
+                    .accessibilityIdentifier("metaSemanalTexto")
             }
             PuntosSemana(meta: meta)
             VStack(alignment: .leading, spacing: Espacio.xs) {
@@ -241,12 +248,13 @@ struct PantallaHoy: View {
                 BotonPrincipal(titulo: "Empezar", icono: "play.fill", acento: Paleta.primario) {
                     modelo.empezar(entorno.tipoRondaPrincipal)
                 }
-                .accessibilityHint("Sesión de unos \(ajustes.duracion.rawValue) minutos, \(items) preguntas")
                 .accessibilityIdentifier("botonEmpezarRonda")
                 Text("≈ \(ajustes.duracion.rawValue) min · \(items) preguntas")
                     .font(.numerica(.footnote, peso: .regular))
                     .foregroundStyle(Paleta.textoSecundario)
-                    .accessibilityHidden(true)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .accessibilityLabel("Unos \(ajustes.duracion.rawValue) minutos, \(items) preguntas")
                     .accessibilityIdentifier("duracionSesion")
             }
             selectores
@@ -323,59 +331,90 @@ struct PantallaHoy: View {
     }
 }
 
-/// Los 7 días de la semana (lunes a domingo): relleno bosque los días con sesión, luna los de
-/// descanso, anillo el de hoy si falta. Un solo elemento para VoiceOver con la lectura completa.
+/// Los 7 días de la semana (lunes a domingo), cada uno con su inicial dentro del círculo: relleno
+/// bosque los días con sesión, anillo grueso hoy si falta, anillo discontinuo los de descanso. Cada
+/// día es un elemento de VoiceOver («Lunes, hecho»); el círculo crece con el tamaño del texto.
 struct PuntosSemana: View {
     let meta: MetaSemanal
     static let iniciales = ["L", "M", "X", "J", "V", "S", "D"]
     static let nombres = ["lunes", "martes", "miércoles", "jueves", "viernes", "sábado", "domingo"]
+    @ScaledMetric(relativeTo: .caption) private var lado: CGFloat = 32
+    @Environment(\.dynamicTypeSize) private var tamano
 
     var body: some View {
-        HStack(spacing: 0) {
+        if tamano.isAccessibilitySize { lista } else { fila }
+    }
+
+    /// Con texto de accesibilidad, un día por línea (siete círculos crecientes no caben en una fila).
+    private var lista: some View {
+        VStack(alignment: .leading, spacing: Espacio.s) {
             ForEach(Array(meta.dias.enumerated()), id: \.offset) { i, d in
-                VStack(spacing: Espacio.xs) {
-                    punto(d.estado)
-                    Text(Self.iniciales[i]).font(.caption2.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+                Label {
+                    Text("\(Self.nombres[i].capitalized): \(Self.estado(d.estado))")
+                        .foregroundStyle(d.estado == .hecho || d.estado == .pendiente ? Paleta.textoPrincipal : Paleta.textoSecundario)
+                } icon: {
+                    Image(systemName: Self.simbolo(d.estado))
+                        .foregroundStyle(d.estado == .hecho || d.estado == .pendiente ? Paleta.matematicas : Paleta.textoSecundario)
                 }
-                .frame(maxWidth: .infinity)
+                .font(.subheadline)
+                .accessibilityIdentifier("dia_\(i)")
             }
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel("Meta semanal")
-        .accessibilityValue(Self.lectura(meta))
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("puntosSemana")
     }
 
-    @ViewBuilder
-    private func punto(_ e: MetaSemanal.EstadoDia) -> some View {
-        let lado: CGFloat = 28
+    static func simbolo(_ e: MetaSemanal.EstadoDia) -> String {
         switch e {
-        case .hecho:
-            Circle().fill(Paleta.matematicas).frame(width: lado, height: lado)
-                .overlay(Image(systemName: "checkmark").font(.caption.weight(.bold)).foregroundStyle(Paleta.textoSobreBosque))
-        case .descanso:
-            Circle().strokeBorder(Paleta.borde, lineWidth: Trazo.fino).frame(width: lado, height: lado)
-                .overlay(Image(systemName: "moon.fill").font(.caption2).foregroundStyle(Paleta.textoSecundario))
-        case .pendiente:
-            Circle().strokeBorder(Paleta.matematicas, lineWidth: Trazo.estado).frame(width: lado, height: lado)
-        case .futuro, .sinSesion:
-            Circle().strokeBorder(Paleta.borde, lineWidth: Trazo.fino).frame(width: lado, height: lado)
+        case .hecho: "checkmark.circle.fill"
+        case .descanso: "moon"
+        case .pendiente: "circle.circle"
+        case .futuro, .sinSesion: "circle"
         }
     }
 
-    /// «2 de 4 días. Lunes, hecho. Martes, descanso. …»
-    static func lectura(_ meta: MetaSemanal) -> String {
-        let dias = meta.dias.enumerated().map { i, d -> String in
-            let estado = switch d.estado {
-            case .hecho: "hecho"
-            case .descanso: "descanso"
-            case .pendiente: "hoy, pendiente"
-            case .futuro: "por llegar"
-            case .sinSesion: "sin sesión"
+    private var fila: some View {
+        HStack(spacing: 0) {
+            ForEach(Array(meta.dias.enumerated()), id: \.offset) { i, d in
+                dia(i, d.estado)
+                    .frame(maxWidth: .infinity)
+                    .accessibilityElement(children: .ignore)
+                    .accessibilityLabel(Self.nombres[i].capitalized)
+                    .accessibilityValue(Self.estado(d.estado))
+                    .accessibilityIdentifier("dia_\(i)")
             }
-            return "\(nombres[i].capitalized), \(estado)"
         }
-        return (["\(meta.hechos) de \(meta.metaEfectiva) días"] + dias).joined(separator: ". ")
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("puntosSemana")
+    }
+
+    private func dia(_ i: Int, _ e: MetaSemanal.EstadoDia) -> some View {
+        let hecho = e == .hecho
+        return Text(Self.iniciales[i])
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(hecho ? Paleta.textoSobreBosque : (e == .pendiente ? Paleta.textoPrincipal : Paleta.textoSecundario))
+            .frame(width: lado, height: lado)
+            .background {
+                if hecho { Circle().fill(Paleta.matematicas) }
+            }
+            .overlay {
+                switch e {
+                case .hecho: EmptyView()
+                case .pendiente: Circle().strokeBorder(Paleta.matematicas, lineWidth: Trazo.estado)
+                case .descanso: Circle().strokeBorder(Paleta.textoSecundario, style: StrokeStyle(lineWidth: Trazo.fino, dash: [3, 3]))
+                case .futuro, .sinSesion: Circle().strokeBorder(Paleta.borde, lineWidth: Trazo.fino)
+                }
+            }
+    }
+
+    static func estado(_ e: MetaSemanal.EstadoDia) -> String {
+        switch e {
+        case .hecho: "hecho"
+        case .descanso: "descanso"
+        case .pendiente: "hoy, pendiente"
+        case .futuro: "por llegar"
+        case .sinSesion: "sin sesión"
+        }
     }
 }
 
@@ -405,7 +444,6 @@ struct Baldosa: View {
                             .padding(.horizontal, Espacio.s)
                             .frame(minWidth: 24, minHeight: 24)
                             .background(Paleta.matematicas, in: Capsule())
-                            .accessibilityHidden(true)
                     }
                 }
                 .foregroundStyle(activa ? Paleta.textoPrincipal : Paleta.textoSecundario)
