@@ -761,23 +761,38 @@ struct CatalogoPreguntasTests {
         #expect(r.plantillas[1].variantes == 0 && r.generados == r.plantillas[0].variantes)
     }
 
-    @Test("Generar una ronda de 8 ítems con plantillas tarda menos de 50 ms")
-    func rendimientoRonda() {
-        let constructor = ConstructorRondas(banco: bancoGeneradores)
+    /// Tiempo de CPU del hilo (no el de reloj): los tests de 1000 semillas corren en paralelo y,
+    /// con el reloj, la espera por la CPU contaba como trabajo de la ronda.
+    static func cpuHilo() -> Double {
+        var t = timespec()
+        clock_gettime(CLOCK_THREAD_CPUTIME_ID, &t)
+        return Double(t.tv_sec) + Double(t.tv_nsec) / 1e9
+    }
+
+    /// La primera ronda de una competencia genera su catálogo (perezoso, D-102); las siguientes lo
+    /// reutilizan. Se mide en tiempo de CPU del hilo con un banco propio (en frío de verdad).
+    @Test("Ronda de 8 ítems con plantillas: < 50 ms de CPU en caliente y < 200 ms en frío")
+    func rendimientoRonda() throws {
+        let banco = try CargadorContenido.desdeBundle().cargar(politica: .todos, semillaBase: 11)
+        let constructor = ConstructorRondas(banco: banco)
         var rng = GeneradorConSemilla(semilla: 3)
         let ahora = Fx.fecha(2026, 11, 23, 10)
-        var peor = 0.0
+        var peorFrio = 0.0, peorCaliente = 0.0
         for competencia in ["MAT.ROM.LEER", "MAT.OPE.JER", "LEN.SIN.COMPL", "MAT.EST.CENTRAL"] {
-            let inicio = Date()
-            let ronda = constructor.construir(estados: [:], rescate: ColaRescate(), enCurso: competencia, vistos: [:], ahora: ahora,
-                                              calendario: Fx.madrid, rng: &rng)
-            // Regenerar cada ítem desde su id (lo que hace la sesión al mostrarlo).
-            let items = ronda.items.compactMap { bancoGeneradores.item(id: $0.itemId) }
-            peor = max(peor, Date().timeIntervalSince(inicio))
-            #expect(items.count == ronda.items.count && items.count >= 6)
-            #expect(items.contains { $0.id.contains("#") }, "\(competencia): la ronda usa ítems generados")
+            for vuelta in 0..<2 {
+                let inicio = Self.cpuHilo()
+                let ronda = constructor.construir(estados: [:], rescate: ColaRescate(), enCurso: competencia, vistos: [:], ahora: ahora,
+                                                  calendario: Fx.madrid, rng: &rng)
+                // Regenerar cada ítem desde su id (lo que hace la sesión al mostrarlo).
+                let items = ronda.items.compactMap { banco.item(id: $0.itemId) }
+                let t = Self.cpuHilo() - inicio
+                if vuelta == 0 { peorFrio = max(peorFrio, t) } else { peorCaliente = max(peorCaliente, t) }
+                #expect(items.count == ronda.items.count && items.count >= 6)
+                #expect(items.contains { $0.id.contains("#") }, "\(competencia): la ronda usa ítems generados")
+            }
         }
-        #expect(peor < 0.05, "Ronda en \(peor * 1000) ms")
+        #expect(peorCaliente < 0.05, "Ronda en caliente en \(peorCaliente * 1000) ms")
+        #expect(peorFrio < 0.2, "Ronda en frío en \(peorFrio * 1000) ms")
     }
 
     @Test("Rescate reproduce el ítem exacto por id y busca variantes con otras semillas")

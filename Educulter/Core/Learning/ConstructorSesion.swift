@@ -63,8 +63,10 @@ struct SesionDiaria: Sendable, Equatable {
 /// 3. **Nuevo** según el plan: al menos `max(3, ⌈n/4⌉)` si hay plan, en bloques de 3 ítems seguidos
 ///    de la misma competencia. El hueco que sobra se rellena con más nuevo.
 ///
-/// Orden: los bloques (remedio y nuevo) van seguidos; el resto se intercala sin más de 2 ítems
-/// seguidos de la misma competencia ni, en Mixto, más de 3 seguidos de la misma área.
+/// Orden (D-108): la sesión se coloca pieza a pieza. En cada hueco va la primera pieza, por
+/// prioridad, que no rompe el intercalado: los bloques (remedio y nuevo) van seguidos y nunca junto a
+/// otra pieza de su competencia; los repasos sueltos, como mucho 2 seguidos de la misma competencia;
+/// en Mixto, como mucho 3 seguidos de la misma área. Lo que no cabe se sustituye por nuevo.
 struct ConstructorSesion: Sendable {
     let banco: BancoContenido
     var config = ConfiguracionRonda.estandar
@@ -113,9 +115,9 @@ struct ConstructorSesion: Sendable {
             return r
         }
         let rondas = ConstructorRondas(banco: banco, config: config)
-        var unidades: [Unidad] = []
 
-        // 1. Remedios.
+        // 1. Remedios: bloques de hasta 3 por error, dentro del cupo.
+        var remediosPendientes: [Unidad] = []
         var cupo = Self.cupoRemedios(n)
         for r in remedios where cupo > 0 && enFoco(r.error.competencia) {
             guard let p = banco.plantilla(id: r.error.remedio.plantilla) else { continue }
@@ -123,10 +125,10 @@ struct ConstructorSesion: Sendable {
             let items = tomar(banco.variantes(de: ajustada), min(Self.tamanoBloque, cupo))
             guard !items.isEmpty else { continue }
             cupo -= items.count
-            unidades.append(Unidad(items.map { ItemRonda(itemId: $0.id, motivo: .remedio, errorId: r.error.id) },
-                                   competencia: p.competencia, tipo: .remedio))
+            remediosPendientes.append(Unidad(items.map { ItemRonda(itemId: $0.id, motivo: .remedio, errorId: r.error.id) },
+                                             competencia: p.competencia, tipo: .remedio))
         }
-        let ocupadoRemedios = unidades.reduce(0) { $0 + $1.items.count }
+        let ocupadoRemedios = remediosPendientes.reduce(0) { $0 + $1.items.count }
 
         // 3 (se reserva antes del repaso). Plan de lo nuevo con contenido.
         let planValido = plan.filter { enFoco($0) && banco.tieneItems(competencia: $0, peldanoMaximo: config.peldanoMaximoEnRonda) }
@@ -135,47 +137,76 @@ struct ConstructorSesion: Sendable {
         // 2. Repaso vencido, por turnos entre competencias (de la más atrasada a la más reciente).
         let vencidas = estados.values.filter { enFoco($0.competenciaId) && $0.vencida(hoy: hoy) }
             .sorted { ($0.leitner?.proximoRepaso ?? hoy, $0.competenciaId) < ($1.leitner?.proximoRepaso ?? hoy, $1.competenciaId) }
+            .map(\.competenciaId)
         let cupoRepaso = min(Self.cupoRepaso(n), max(0, n - ocupadoRemedios - reservaNuevo))
-        var repasos: [Unidad] = []
+
+        // Colocación pieza a pieza: en cada hueco, la primera pieza que cabe sin romper el intercalado,
+        // por prioridad (remedio, repaso y nuevo). Las proporciones son topes (remedios y repaso) y un
+        // mínimo (nuevo, reservado arriba); el hueco que no se puede llenar con remedios o repasos que
+        // quepan se completa con nuevo de otra competencia o área.
+        var secuencia: [Unidad] = []
+        var colocados = 0, repasos = 0, turnoRepaso = 0
         var agotadas = Set<String>()
-        while repasos.count < cupoRepaso, agotadas.count < vencidas.count {
-            for e in vencidas where repasos.count < cupoRepaso && !agotadas.contains(e.competenciaId) {
-                let candidatos = rondas.candidatos(competencia: e.competenciaId, peldano: e.escalera.peldano)
-                if let i = tomar(candidatos, 1).first {
-                    repasos.append(Unidad([ItemRonda(itemId: i.id, motivo: .repaso)], competencia: e.competenciaId, tipo: .repaso))
-                } else {
-                    agotadas.insert(e.competenciaId)
-                }
-            }
-        }
-        unidades += repasos
-
-        // 3. Nuevo: bloques de 3 de las competencias del plan, hasta llenar la sesión.
-        var restante = n - unidades.reduce(0) { $0 + $1.items.count }
+        var colaNuevo = planValido.map { (competencia: $0, vuelta: 0) }
         var enCurso: String?
-        var vueltas = 0
-        while restante > 0, !planValido.isEmpty, vueltas < 3 {
-            var anadido = false
-            for c in planValido where restante > 0 {
-                let peldano = estados[c]?.escalera.peldano ?? 1
-                let items = tomar(rondas.candidatos(competencia: c, peldano: peldano), min(Self.tamanoBloque, restante))
-                guard !items.isEmpty else { continue }
-                enCurso = enCurso ?? c
-                restante -= items.count
-                anadido = true
-                unidades.append(Unidad(items.sorted { ($0.dificultad, $0.id) < ($1.dificultad, $1.id) }
-                                        .map { ItemRonda(itemId: $0.id, motivo: .nuevo) }, competencia: c, tipo: .nuevo))
+
+        func siguienteRemedio(relajar: Bool) -> Unidad? {
+            guard let i = remediosPendientes.firstIndex(where: { relajar || Self.cabe($0, tras: secuencia, mixto: foco == .mixto) }) else { return nil }
+            return remediosPendientes.remove(at: i)
+        }
+        func siguienteRepaso(relajar: Bool) -> Unidad? {
+            guard repasos < cupoRepaso, n - colocados > 0, !vencidas.isEmpty else { return nil }
+            for k in 0..<vencidas.count {
+                let c = vencidas[(turnoRepaso + k) % vencidas.count]
+                guard !agotadas.contains(c) else { continue }
+                let prueba = Unidad([ItemRonda(itemId: "", motivo: .repaso)], competencia: c, tipo: .repaso)
+                guard relajar || Self.cabe(prueba, tras: secuencia, mixto: foco == .mixto) else { continue }
+                let e = estados[c]!
+                guard let i = tomar(rondas.candidatos(competencia: c, peldano: e.escalera.peldano), 1).first else {
+                    agotadas.insert(c)
+                    continue
+                }
+                turnoRepaso = (turnoRepaso + k + 1) % vencidas.count
+                repasos += 1
+                return Unidad([ItemRonda(itemId: i.id, motivo: .repaso)], competencia: c, tipo: .repaso)
             }
-            vueltas += 1
-            if !anadido { break }
+            return nil
+        }
+        func siguienteNuevo(relajar: Bool) -> Unidad? {
+            let cuantos = min(Self.tamanoBloque, n - colocados)
+            var k = 0
+            while k < colaNuevo.count {
+                let (c, vuelta) = colaNuevo[k]
+                let prueba = Unidad(Array(repeating: ItemRonda(itemId: "", motivo: .nuevo), count: cuantos), competencia: c, tipo: .nuevo)
+                guard relajar || Self.cabe(prueba, tras: secuencia, mixto: foco == .mixto) else { k += 1; continue }
+                let peldano = estados[c]?.escalera.peldano ?? 1
+                let items = tomar(rondas.candidatos(competencia: c, peldano: peldano), cuantos)
+                colaNuevo.remove(at: k)
+                guard !items.isEmpty else { continue }
+                if vuelta + 1 < 3 { colaNuevo.append((c, vuelta + 1)) }
+                enCurso = enCurso ?? c
+                return Unidad(items.sorted { ($0.dificultad, $0.id) < ($1.dificultad, $1.id) }
+                                .map { ItemRonda(itemId: $0.id, motivo: .nuevo) }, competencia: c, tipo: .nuevo)
+            }
+            return nil
         }
 
-        let ordenadas = Self.ordenar(unidades, mixto: foco == .mixto, rng: &rng)
+        while colocados < n {
+            var pieza: Unidad?
+            // Sin hueco que respete las reglas (contenido de una sola competencia o área), se relaja.
+            for relajar in [false, true] where pieza == nil {
+                pieza = siguienteRemedio(relajar: relajar) ?? siguienteRepaso(relajar: relajar) ?? siguienteNuevo(relajar: relajar)
+            }
+            guard let pieza else { break }
+            secuencia.append(pieza)
+            colocados += pieza.items.count
+        }
+
         var teoria: [String] = []
         if let enCurso, (estados[enCurso]?.escalera.peldano ?? 1) == Peldano.descubre.rawValue {
             teoria = banco.teoria(competencia: enCurso).map(\.id)
         }
-        return SesionDiaria(items: ordenadas.flatMap(\.items), competenciaEnCurso: enCurso, teoriaPrevia: teoria)
+        return SesionDiaria(items: secuencia.flatMap(\.items), competenciaEnCurso: enCurso, teoriaPrevia: teoria)
     }
 
     // MARK: - Intercalado
@@ -193,23 +224,6 @@ struct ConstructorSesion: Sendable {
             self.competencia = competencia
             self.tipo = tipo
         }
-    }
-
-    /// Ordena las unidades: en cada paso, la primera (remedios, después repasos y nuevo) que no rompe
-    /// las reglas de intercalado, prefiriendo el área con más ítems por colocar para no quedarse al
-    /// final con una sola. Si ninguna cabe (contenido de una sola área o competencia), se relaja.
-    static func ordenar(_ unidades: [Unidad], mixto: Bool, rng: inout GeneradorConSemilla) -> [Unidad] {
-        var pendientes = unidades.enumerated().map { ($0.offset, $0.element) }.shuffled(using: &rng)
-        pendientes.sort { ($0.1.tipo.rawValue, $0.0) < ($1.1.tipo.rawValue, $1.0) }
-        var secuencia: [Unidad] = []
-        while !pendientes.isEmpty {
-            let porArea = Dictionary(grouping: pendientes, by: { $0.1.area }).mapValues { $0.reduce(0) { $0 + $1.1.items.count } }
-            let validas = pendientes.indices.filter { cabe(pendientes[$0].1, tras: secuencia, mixto: mixto) }
-            let elegido = (validas.isEmpty ? Array(pendientes.indices) : validas)
-                .min { (-(porArea[pendientes[$0].1.area] ?? 0), $0) < (-(porArea[pendientes[$1].1.area] ?? 0), $1) }!
-            secuencia.append(pendientes.remove(at: elegido).1)
-        }
-        return secuencia
     }
 
     /// ¿Se puede poner la unidad a continuación sin romper las reglas?
