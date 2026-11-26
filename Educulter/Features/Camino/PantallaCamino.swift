@@ -111,24 +111,23 @@ struct PantallaCamino: View {
                             Circle().strokeBorder(Paleta.borde, style: StrokeStyle(lineWidth: Trazo.grueso, dash: [6, 4]))
                         } else {
                             Circle().fill(nodo.estado == .dominada ? acento : Paleta.superficie)
-                                .overlay(Circle().strokeBorder(Paleta.contorno, lineWidth: Trazo.grueso))
+                                .overlay(Circle().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                             if nodo.estado == .enCurso {
                                 AnilloDominio(fraccion: max(nodo.dominio, 0.06), acento: acento, grosor: 5).padding(7)
                             }
                         }
                         Image(systemName: icono(nodo))
                             .font(.headline)
-                            .foregroundStyle(sinContenido ? Paleta.textoSecundario : Paleta.textoPrincipal)
+                            .foregroundStyle(sinContenido ? Paleta.textoSecundario : (nodo.estado == .dominada ? Paleta.textoSobre(acento) : Paleta.textoPrincipal))
                     }
                     .frame(width: 56, height: 56)
-                    .background { if !sinContenido { Circle().fill(Paleta.contorno).offset(x: 3, y: 3) } }
                     if !ultimo {
                         Rectangle().fill(Paleta.borde).frame(width: 3, height: 22)
                     }
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text(nodo.competencia.nombre).font(.body.weight(.semibold))
-                        .foregroundStyle(sinContenido ? Paleta.textoSecundario : Paleta.textoPrincipal)
+                        .foregroundStyle(sinContenido ? Paleta.textoSecundario : (nodo.estado == .dominada ? Paleta.textoSobre(acento) : Paleta.textoPrincipal))
                     Text(detalle(nodo)).font(.subheadline).foregroundStyle(Paleta.textoSecundario)
                 }
                 .padding(.top, Espacio.s)

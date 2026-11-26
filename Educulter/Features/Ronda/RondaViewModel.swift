@@ -119,14 +119,11 @@ final class RondaViewModel: Identifiable {
         Array(itemActual?.pistas.prefix(pistasVisibles) ?? [])
     }
 
-    /// Personaje del feedback (D-105): alegre al acertar, Mimo ante un error repetido, nadie si no.
+    /// Personaje del feedback (D-109): solo Mimo, con ánimo, ante un error repetido. Los personajes
+    /// aparecen únicamente en la bienvenida, el resumen y ese ánimo.
     var aparicionFeedback: AparicionPersonaje? {
-        guard let resultado, let item = itemActual else { return nil }
-        let area = Catalogo.area(de: item.competencia)
-        if resultado.correcto {
-            return ReglasPersonaje.aparicion(para: efecto?.subioPeldano == true ? .subePeldano(area: area) : .acierto(area: area))
-        }
-        return ReglasPersonaje.aparicion(para: efecto?.errorRepetido != nil ? .errorRepetido : .fallo)
+        guard let resultado, !resultado.correcto, efecto?.errorRepetido != nil else { return nil }
+        return ReglasPersonaje.aparicion(para: .errorRepetido)
     }
 
     var feedbackEspecifico: [String] {

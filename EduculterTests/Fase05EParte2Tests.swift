@@ -72,7 +72,7 @@ struct Ajustes1bTests {
     }
 }
 
-@Suite("Fase 05E parte 2 · Paleta v3 y contraste WCAG")
+@Suite("Fase 05E parte 2 · Paleta editorial y contraste WCAG")
 struct PaletaTests {
     /// Luminancia relativa WCAG de un color del catálogo en el modo indicado.
     static func luminancia(_ nombre: String, oscuro: Bool) -> Double {
@@ -98,7 +98,8 @@ struct PaletaTests {
         ("RecompensaTexto", ["Fondo", "Superficie"]),
         ("Exito", ["Fondo", "Superficie", "LenguaTinte", "MatematicasTinte"]),
         ("Fallo", ["Fondo", "Superficie", "LenguaTinte", "MatematicasTinte"]),
-        ("TextoSobreAcento", ["Lengua", "Matematicas", "ExitoRelleno", "Turquesa", "Violeta", "Oliva"]),
+        ("TextoSobreAcento", ["Lengua"]),
+        ("TextoSobreBosque", ["Matematicas", "ExitoRelleno"]),
         ("TextoSobreRecompensa", ["Recompensa"]),
     ]
 
@@ -110,11 +111,12 @@ struct PaletaTests {
                 #expect(c >= 4.5, "\(texto) sobre \(fondo) (\(oscuro ? "oscuro" : "claro")): \(String(format: "%.2f", c))")
             }
         }
-        // Contornos y sombra dura (componente gráfico): ≥ 3:1 sobre el papel.
+        // Marca e iconos en tinta, y los rellenos de los botones primarios (componentes gráficos): ≥ 3:1.
         #expect(Self.contraste("Tinta", "Fondo", oscuro: oscuro) >= 3)
+        #expect(Self.contraste("Matematicas", "Fondo", oscuro: oscuro) >= 3)
     }
 
-    @Test("Tokens de la identidad v3 (papel, tinta, coral, amarillo y azul)")
+    @Test("Tokens de la identidad editorial (tabla de la dirección del 26/11/2026)")
     func tokens() {
         func hex(_ n: String, _ oscuro: Bool) -> String {
             let rasgos = UITraitCollection(userInterfaceStyle: oscuro ? .dark : .light)
@@ -122,11 +124,16 @@ struct PaletaTests {
             UIColor(named: n, in: .main, compatibleWith: rasgos)!.resolvedColor(with: rasgos).getRed(&r, green: &g, blue: &b, alpha: &a)
             return String(format: "#%02X%02X%02X", Int((r * 255).rounded()), Int((g * 255).rounded()), Int((b * 255).rounded()))
         }
-        #expect(hex("Tinta", false) == "#16294D" && hex("Tinta", true) == "#FFF6EC")
-        #expect(hex("Fondo", false) == "#FFF6EC" && hex("Fondo", true) == "#0E1B33")
-        #expect(hex("Superficie", false) == "#FFF1DE" && hex("Superficie", true) == "#16294D")
-        #expect(hex("Lengua", false) == "#F0604A" && hex("Lengua", true) == "#F47A66")
-        #expect(hex("Recompensa", false) == "#FBBC2E" && hex("Recompensa", true) == "#FBC94F")
-        #expect(hex("Matematicas", false) == "#4A90E2" && hex("Matematicas", true) == "#6AA6EA")
+        let tabla: [(String, String, String)] = [
+            ("Tinta", "#16241F", "#E7F0E0"), ("Fondo", "#F4F8F0", "#142019"), ("Superficie", "#E7F0E0", "#1E302A"),
+            ("Lengua", "#A9BD9F", "#8FA685"), ("Matematicas", "#2F4A40", "#A9BD9F"), ("Recompensa", "#C98A2E", "#E0A84F"),
+            ("ExitoRelleno", "#3F7A55", "#7FBF93"),
+        ]
+        for (n, claro, oscuro) in tabla { #expect(hex(n, false) == claro && hex(n, true) == oscuro, "\(n)") }
+        // Los colores con nombre se comparan por nombre: `textoSobre` elige bien el texto de cada relleno.
+        #expect(Paleta.textoSobre(Paleta.matematicas) == Paleta.textoSobreBosque)
+        #expect(Paleta.textoSobre(Paleta.exitoRelleno) == Paleta.textoSobreBosque)
+        #expect(Paleta.textoSobre(Paleta.lengua) == Paleta.textoSobreAcento)
+        #expect(Paleta.textoSobre(Paleta.recompensa) == Paleta.textoSobreAcento)
     }
 }

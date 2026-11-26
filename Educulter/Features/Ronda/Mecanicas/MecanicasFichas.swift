@@ -99,7 +99,7 @@ struct MecanicaClasificar: View {
             RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous)
                 .strokeBorder(Paleta.contorno, style: StrokeStyle(lineWidth: Trazo.grueso, dash: activa ? [7, 5] : []))
         )
-        .sombraDura(radio: Radio.tarjeta, activa: activa)
+        
         .dropDestination(for: String.self) { ids, _ in
             guard let id = ids.first else { return false }
             colocar(id, en: categoria.id)
@@ -157,7 +157,7 @@ struct MecanicaOrdenar: View {
                 } label: {
                     HStack(spacing: Espacio.m) {
                         Text("\(indice + 1)")
-                            .font(.redondeada(.headline))
+                            .font(.numerica(.headline))
                             .foregroundStyle(ctx.tinta)
                             .frame(minWidth: 28)
                         Ficha(texto: textos[id] ?? id, estado: estado, acento: ctx.acento, anchoCompleto: true, alineacion: .leading)
@@ -270,7 +270,7 @@ struct MecanicaEmparejar: View {
         return HStack(spacing: Espacio.s) {
             if let indicePar, let color {
                 Text("\(indicePar + 1)")
-                    .font(.redondeada(.caption, peso: .semibold))
+                    .font(.numerica(.caption, peso: .semibold))
                     .foregroundStyle(Paleta.superficie)
                     .frame(width: 24, height: 24)
                     .background(color, in: Circle())
@@ -278,7 +278,7 @@ struct MecanicaEmparejar: View {
             }
             Text(texto)
                 .font(.body)
-                .foregroundStyle(seleccionado ? Paleta.textoSobreAcento : Paleta.textoPrincipal)
+                .foregroundStyle(seleccionado ? Paleta.textoSobre(ctx.acento) : Paleta.textoPrincipal)
                 .multilineTextAlignment(.leading)
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: 0)
@@ -293,14 +293,14 @@ struct MecanicaEmparejar: View {
         .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo, alignment: .leading)
         .superficiePulsable(seleccionado ? ctx.acento : Paleta.superficie, radio: Radio.ficha,
                             borde: borde(estado: estado, color: color, seleccionado: seleccionado),
-                            grosor: indicePar == nil ? Trazo.grueso : 3, sombra: estado == nil)
+                            grosor: indicePar == nil ? Trazo.fino : Trazo.estado, sombra: estado == nil)
     }
 
     private func borde(estado: EstadoFicha?, color: Color?, seleccionado: Bool) -> Color {
         if estado == .correcta { return Paleta.exito }
         if estado == .incorrecta { return Paleta.fallo }
-        if seleccionado { return Paleta.contorno }
-        return color ?? Paleta.contorno
+        if seleccionado { return ctx.acento }
+        return color ?? Paleta.borde
     }
 
     private func estado(_ id: String, izquierda: Bool) -> EstadoFicha? {

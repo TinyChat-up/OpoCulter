@@ -839,14 +839,16 @@ struct AvataresFuenteTests {
         #expect(try reabierto.mainContext.fetch(FetchDescriptor<PerfilRegistro>()).first?.avatar == 3, "La migración queda guardada")
     }
 
-    @Test("Fredoka se registra y escala con Dynamic Type")
+    @Test("Sin fuentes empaquetadas: la interfaz usa las del sistema y escala con Dynamic Type")
     func fuente() {
-        #expect(FuenteExhibicion.registrar())
-        let normal = FuenteExhibicion.uiFont(.title1, base: 28, compatibleCon: UITraitCollection(preferredContentSizeCategory: .large))
-        let grande = FuenteExhibicion.uiFont(.title1, base: 28, compatibleCon: UITraitCollection(preferredContentSizeCategory: .accessibilityExtraExtraExtraLarge))
-        #expect(normal.fontName == "Fredoka-SemiBold")
+        #expect(Bundle.main.url(forResource: "Fredoka", withExtension: "ttf") == nil)
+        #expect(Bundle.main.url(forResource: "OFL", withExtension: "txt") == nil)
+        let rasgos = { (c: UIContentSizeCategory) in UITraitCollection(preferredContentSizeCategory: c) }
+        let normal = UIFont.preferredFont(forTextStyle: .title1, compatibleWith: rasgos(.large))
+        let grande = UIFont.preferredFont(forTextStyle: .title1, compatibleWith: rasgos(.accessibilityExtraExtraExtraLarge))
         #expect(grande.pointSize > normal.pointSize * 1.5)
-        #expect(Bundle.main.url(forResource: "OFL", withExtension: "txt") != nil, "La licencia va en el bundle")
+        // La serif del sistema (New York) existe para los títulos.
+        #expect(normal.fontDescriptor.withDesign(.serif) != nil)
     }
 }
 

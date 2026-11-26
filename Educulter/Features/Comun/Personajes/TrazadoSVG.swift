@@ -114,9 +114,6 @@ struct VistaGrupoSVG: View {
             ctx.scaleBy(x: escala, y: escala)
             for pieza in grupo.piezas {
                 let path = pieza.forma.path
-                if siluetaOscura && esquema == .dark && pieza.silueta {
-                    ctx.stroke(path, with: .color(Paleta.contorno), style: StrokeStyle(lineWidth: 6, lineJoin: .round))
-                }
                 if let r = pieza.relleno { ctx.fill(path, with: .color(Color(hex: r))) }
                 if let t = pieza.trazo, pieza.grosor > 0 {
                     ctx.stroke(path, with: .color(Color(hex: t)), style: StrokeStyle(lineWidth: pieza.grosor, lineCap: .round, lineJoin: .round))

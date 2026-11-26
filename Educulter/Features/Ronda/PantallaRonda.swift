@@ -198,7 +198,7 @@ struct PantallaRonda: View {
             vuelo = datos
             Task { @MainActor in
                 try? await Task.sleep(for: .milliseconds(370))
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { xpMostrado = nuevo }
+                withAnimation(.smooth(duration: 0.3)) { xpMostrado = nuevo }
                 if vuelo?.id == datos.id { vuelo = nil }
             }
         }
@@ -220,7 +220,7 @@ struct PantallaRonda: View {
                 botonSalir
                 BarraProgresoRonda(actual: modelo.respondidos, total: max(modelo.totalDiagnostico, 1), acento: acento)
                 Text("\(min(modelo.indice + 1, modelo.totalDiagnostico)) de \(modelo.totalDiagnostico)")
-                    .font(.redondeada(.subheadline))
+                    .font(.numerica(.subheadline))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .fixedSize()
                     .accessibilityIdentifier("progresoDiagnostico")
@@ -493,7 +493,7 @@ struct PantallaResumen: View {
     private func dato(_ valor: String, _ titulo: String, icono: String, color: Color, valorAccesible: String? = nil) -> some View {
         VStack(spacing: Espacio.xs) {
             Image(systemName: icono).foregroundStyle(color).accessibilityHidden(true)
-            Text(valor).font(.redondeada(.title2, peso: .semibold)).foregroundStyle(Paleta.textoPrincipal)
+            Text(valor).font(.numerica(.title2, peso: .semibold)).foregroundStyle(Paleta.textoPrincipal)
                 .contentTransition(.numericText())
                 .lineLimit(1).minimumScaleFactor(0.6)
             Text(titulo).font(.caption).foregroundStyle(Paleta.textoSecundario)
@@ -526,14 +526,14 @@ struct ContadorXP: View {
         HStack(spacing: Espacio.xs) {
             Image(systemName: "sparkles").foregroundStyle(Paleta.recompensaTexto).accessibilityHidden(true)
             Text("\(xp)")
-                .font(.redondeada(.subheadline, peso: .semibold))
+                .font(.numerica(.subheadline, peso: .semibold))
                 .foregroundStyle(Paleta.textoPrincipal)
                 .contentTransition(.numericText(value: Double(xp)))
         }
         .padding(.horizontal, Espacio.m)
         .frame(minHeight: Medidas.tactilMinimo)
         .background(Paleta.superficie, in: Capsule())
-        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+        .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
         .anchorPreference(key: AnclasVueloXP.self, value: .bounds) { ["destino": $0] }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("XP de la ronda")
@@ -556,12 +556,12 @@ struct VueloXP: View {
 
     var body: some View {
         Text("+\(datos.xp) XP")
-            .font(.redondeada(.subheadline, peso: .semibold))
+            .font(.numerica(.subheadline, peso: .semibold))
             .foregroundStyle(Paleta.textoSobreRecompensa)
             .padding(.horizontal, Espacio.s)
             .padding(.vertical, Espacio.xs)
             .background(Paleta.recompensa, in: Capsule())
-            .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+            .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
             .scaleEffect(llegado ? 0.6 : 1.1)
             .opacity(llegado ? 0 : 1)
             .position(llegado ? fin : inicio)
@@ -590,8 +590,8 @@ struct PulsoAcierto: ViewModifier {
                     withAnimation(.easeOut(duration: 0.15)) { brillo = 1 }
                     withAnimation(.easeIn(duration: 0.2).delay(0.15)) { brillo = 0 }
                 } else {
-                    withAnimation(.spring(response: 0.15, dampingFraction: 0.5)) { escala = 1.03 }
-                    withAnimation(.spring(response: 0.2, dampingFraction: 0.8).delay(0.15)) { escala = 1 }
+                    withAnimation(.smooth(duration: 0.15)) { escala = 1.03 }
+                    withAnimation(.smooth(duration: 0.2).delay(0.15)) { escala = 1 }
                 }
             }
     }

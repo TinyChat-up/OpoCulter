@@ -6,18 +6,18 @@ struct EstiloBotonPrincipal: ButtonStyle {
     var acento: Color = Paleta.matematicas
     @Environment(\.isEnabled) private var activo
 
-    /// Relleno de color con texto en tinta, contorno y sombra dura; se hunde al pulsar.
-    /// Desactivado: superficie plana, sin sombra, con texto secundario.
+    /// Relleno de color (bosque por defecto) sin borde ni sombra; al pulsar se atenúa.
+    /// Desactivado: superficie con borde fino y texto secundario.
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .font(.headline)
             .multilineTextAlignment(.center)
-            .foregroundStyle(activo ? Paleta.textoSobreAcento : Paleta.textoSecundario)
+            .foregroundStyle(activo ? Paleta.textoSobre(acento) : Paleta.textoSecundario)
             .frame(maxWidth: .infinity, minHeight: 52)
             .padding(.horizontal, Espacio.l)
             .padding(.vertical, Espacio.xs)
             .superficiePulsable(activo ? acento : Paleta.superficie, radio: Radio.tarjeta,
-                                borde: activo ? Paleta.contorno : Paleta.borde)
+                                borde: activo ? .clear : Paleta.borde)
             .environment(\.pulsado, configuration.isPressed)
     }
 }
@@ -53,7 +53,7 @@ struct EstiloBotonSecundario: ButtonStyle {
             .frame(maxWidth: .infinity, minHeight: Medidas.tactilMinimo)
             .padding(.horizontal, Espacio.l)
             .padding(.vertical, Espacio.xs)
-            .superficiePulsable(Paleta.superficie, radio: Radio.tarjeta, borde: activo ? Paleta.contorno : Paleta.borde)
+            .superficiePulsable(Paleta.superficie, radio: Radio.tarjeta, borde: Paleta.borde)
             .environment(\.pulsado, configuration.isPressed)
     }
 }
@@ -115,7 +115,7 @@ struct Ficha: View {
         .padding(.vertical, Espacio.m)
         .frame(minWidth: Medidas.fichaMinima, maxWidth: anchoCompleto ? .infinity : nil, minHeight: Medidas.fichaMinima, alignment: alineacion)
         .superficiePulsable(colorFondo, radio: Radio.ficha, borde: colorBorde,
-                            grosor: estado == .correcta || estado == .incorrecta ? 3 : Trazo.grueso,
+                            grosor: estado == .normal || estado == .desactivada ? Trazo.fino : Trazo.estado,
                             discontinuo: estado == .faltante || discontinua, sombra: pulsable)
     }
 
@@ -140,7 +140,7 @@ struct Ficha: View {
         switch estado {
         // En correcta/incorrecta el texto mantiene el color principal (contraste AA sobre el
         // fondo tintado); el estado lo indican el icono y el borde.
-        case .seleccionada: Paleta.textoSobreAcento
+        case .seleccionada: Paleta.textoSobre(acento)
         case .desactivada: Paleta.textoSecundario
         case .normal, .enTramo, .correcta, .incorrecta, .faltante: Paleta.textoPrincipal
         }
@@ -158,8 +158,8 @@ struct Ficha: View {
         switch estado {
         case .correcta, .faltante: Paleta.exito
         case .incorrecta: Paleta.fallo
-        case .desactivada: Paleta.borde
-        default: Paleta.contorno
+        case .seleccionada: acento
+        default: Paleta.borde
         }
     }
 }
@@ -192,7 +192,7 @@ struct BarraProgresoRonda: View {
                 ForEach(0..<max(total, 1), id: \.self) { i in
                     Capsule()
                         .fill(i < actual ? acento : Paleta.superficie)
-                        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                        .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                         .frame(height: 12)
                 }
             }
@@ -225,14 +225,14 @@ struct IndicadorCombo: View {
                 .symbolEffect(.bounce, options: .speed(1.5), value: reducir ? 0 : hitos)
                 .accessibilityHidden(true)
             Text("×\(combo)")
-                .font(.redondeada(.subheadline, peso: .semibold))
+                .font(.numerica(.subheadline, peso: .semibold))
                 .contentTransition(.numericText())
         }
         .foregroundStyle(activo ? Paleta.textoSobreRecompensa : Paleta.textoSecundario)
         .padding(.horizontal, Espacio.m)
         .frame(minHeight: Medidas.tactilMinimo)
         .background(activo ? Paleta.recompensa : Paleta.superficie, in: Capsule())
-        .overlay(Capsule().strokeBorder(activo ? Paleta.contorno : Paleta.borde, lineWidth: Trazo.fino))
+        .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
         .opacity(1 - destello * 0.4)
         .scaleEffect(escala)
         .animacionApp(combo)
@@ -243,8 +243,8 @@ struct IndicadorCombo: View {
                 withAnimation(.easeOut(duration: 0.15)) { destello = 1 }
                 withAnimation(.easeIn(duration: 0.2).delay(0.15)) { destello = 0 }
             } else {
-                withAnimation(.spring(response: 0.15, dampingFraction: 0.5)) { escala = 1.3 }
-                withAnimation(.spring(response: 0.2, dampingFraction: 0.8).delay(0.15)) { escala = 1 }
+                withAnimation(.smooth(duration: 0.15)) { escala = 1.08 }
+                withAnimation(.smooth(duration: 0.2).delay(0.15)) { escala = 1 }
             }
         }
         .accessibilityElement(children: .ignore)
@@ -264,8 +264,8 @@ struct AnilloDominio: View {
     var body: some View {
         ZStack {
             Circle().stroke(Paleta.superficie, lineWidth: grosor)
-            Circle().stroke(Paleta.contorno, lineWidth: Trazo.fino).padding(-grosor / 2)
-            Circle().stroke(Paleta.contorno, lineWidth: Trazo.fino).padding(grosor / 2)
+            Circle().stroke(Paleta.borde, lineWidth: Trazo.fino).padding(-grosor / 2)
+            Circle().stroke(Paleta.borde, lineWidth: Trazo.fino).padding(grosor / 2)
             Circle()
                 .trim(from: 0, to: min(max(fraccion, 0), 1))
                 .stroke(acento, style: StrokeStyle(lineWidth: grosor, lineCap: .round))
@@ -315,19 +315,19 @@ struct ChipRacha: View {
         let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(alignment: .leading, spacing: Espacio.xs)) : AnyLayout(HStackLayout(spacing: Espacio.s))
         return disposicion {
             Label {
-                Text(dias == 1 ? "1 día" : "\(dias) días").font(.redondeada(.headline, peso: .semibold))
+                Text(dias == 1 ? "1 día" : "\(dias) días").font(.numerica(.headline, peso: .semibold))
                     .fixedSize()
             } icon: {
                 Image(systemName: "flame.fill").foregroundStyle(dias > 0 ? Paleta.recompensaTexto : Paleta.textoSecundario)
             }
             if !tamano.isAccessibilitySize { Divider().frame(height: 20) }
             Label {
-                Text("\(protectores)").font(.redondeada(.subheadline)).fixedSize()
+                Text("\(protectores)").font(.numerica(.subheadline)).fixedSize()
             } icon: {
                 Image(systemName: "shield.fill").foregroundStyle(Paleta.matematicasTinta)
             }
             Label {
-                Text("\(record)").font(.redondeada(.subheadline)).fixedSize()
+                Text("\(record)").font(.numerica(.subheadline)).fixedSize()
             } icon: {
                 Image(systemName: "trophy.fill").foregroundStyle(Paleta.recompensaTexto)
             }
@@ -439,12 +439,12 @@ struct HojaFeedback: View {
                 Spacer(minLength: Espacio.s)
                 if xp > 0 {
                     Text("+\(xp) XP")
-                        .font(.redondeada(.subheadline, peso: .semibold))
+                        .font(.numerica(.subheadline, peso: .semibold))
                         .foregroundStyle(Paleta.textoSobreRecompensa)
                         .padding(.horizontal, Espacio.s)
                         .padding(.vertical, Espacio.xs)
                         .background(Paleta.recompensa, in: Capsule())
-                        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                        .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                         .anchorPreference(key: AnclasVueloXP.self, value: .bounds) { ["origen": $0] }
                 }
             }

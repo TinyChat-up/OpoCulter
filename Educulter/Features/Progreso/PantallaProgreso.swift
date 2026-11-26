@@ -90,7 +90,7 @@ struct PantallaProgreso: View {
                     // línea y con prioridad de diseño, para que el número nunca se parta (§4.3 de la 05E).
                     // ViewThatFits daba en la auditoría «Dynamic Type font sizes are partially unsupported»
                     // sobre el nombre del área y el porcentaje (textos de la variante no mostrada), D-097.
-                    let porcentaje = Text("\(Int((d * 100).rounded())) %").font(.redondeada(.subheadline))
+                    let porcentaje = Text("\(Int((d * 100).rounded())) %").font(.numerica(.subheadline))
                         .foregroundStyle(Paleta.textoSecundario)
                     let nombre = Text(area.nombre).font(.headline).foregroundStyle(Paleta.textoPrincipal)
                         .fixedSize(horizontal: false, vertical: true)
@@ -113,7 +113,7 @@ struct PantallaProgreso: View {
                                 Text(b.nombre).foregroundStyle(Paleta.textoPrincipal)
                                     .fixedSize(horizontal: false, vertical: true).layoutPriority(1)
                                 Spacer()
-                                Text("\(Int((db * 100).rounded())) %").font(.redondeada(.footnote)).foregroundStyle(Paleta.textoSecundario)
+                                Text("\(Int((db * 100).rounded())) %").font(.numerica(.footnote)).foregroundStyle(Paleta.textoSecundario)
                             } else {
                                 Circle().strokeBorder(Paleta.borde, style: StrokeStyle(lineWidth: 2, dash: [4, 3])).frame(width: 28, height: 28)
                                 Text(b.nombre).foregroundStyle(Paleta.textoSecundario)
@@ -182,7 +182,7 @@ struct PantallaProgreso: View {
         VStack(alignment: .leading, spacing: Espacio.xs) {
             titulo("Preguntas disponibles")
             Text(preguntas.map { "\($0.exacto ? "" : "Al menos ")\($0.total.formatted()) preguntas distintas" } ?? "Contando…")
-                .font(.redondeada(.title3)).foregroundStyle(Paleta.textoPrincipal)
+                .font(.numerica(.title3)).foregroundStyle(Paleta.textoPrincipal)
             Text("Solo cuenta el contenido revisado y aprobado. Crece con cada lote.")
                 .font(.footnote).foregroundStyle(Paleta.textoSecundario)
         }
@@ -224,7 +224,7 @@ struct PantallaProgreso: View {
         HStack {
             Text(t).foregroundStyle(Paleta.textoPrincipal)
             Spacer()
-            Text(v).font(.redondeada(.body)).foregroundStyle(Paleta.textoSecundario)
+            Text(v).font(.numerica(.body)).foregroundStyle(Paleta.textoSecundario)
         }
         .frame(minHeight: Medidas.tactilMinimo)
         .accessibilityElement(children: .combine)

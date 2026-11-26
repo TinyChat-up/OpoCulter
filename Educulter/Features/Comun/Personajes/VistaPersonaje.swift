@@ -87,7 +87,7 @@ struct FiguraV3: View {
         }
         .modifier(Rebote(activo: movimiento && estado == .alegre, golpe: golpe))
         .rotationEffect(.degrees(companero == .mimo && estado == .pensando ? -8 : 0), anchor: .bottom)
-        .animation(movimiento ? .spring(duration: 0.45, bounce: 0.35) : nil, value: estado)
+        .animation(movimiento ? .smooth(duration: 0.4) : nil, value: estado)
         .onAppear { golpe += 1 }
         .onChange(of: estado) { _, _ in golpe += 1 }
         .task(id: movimiento && estado == .neutro) { await parpadear() }
@@ -120,8 +120,8 @@ struct FiguraV3: View {
         let ancla = UnitPoint(x: g.ancla.x / lienzo.width, y: g.ancla.y / lienzo.height)
         if estado == .descanso && Self.ojos.contains(g.id) {
             // Ojos cerrados: una línea curva en lugar del ojo (en la lupa, dentro de la lente). En
-            // Cuarto, en crema, como su guiño, para que se vea sobre el cuerpo marino.
-            VistaGrupoSVG(grupo: Self.ojoCerrado(g, color: companero == .cuarto ? 0xFFF6EC : 0x16294D), lienzo: lienzo)
+            // Cuarto, en papel, como su guiño, para que se vea sobre el cuerpo bosque.
+            VistaGrupoSVG(grupo: Self.ojoCerrado(g, color: companero == .cuarto ? 0xF4F8F0 : 0x16241F), lienzo: lienzo)
         } else {
             VistaGrupoSVG(grupo: pupilas(g), lienzo: lienzo, siluetaOscura: true)
                 .scaleEffect(x: 1, y: parpadeo && Self.ojos.contains(g.id) ? 0.1 : 1, anchor: ancla)
@@ -158,7 +158,7 @@ struct FiguraV3: View {
     }
 
     /// Ojo cerrado: arco por la mitad inferior del ojo, en tinta del personaje.
-    static func ojoCerrado(_ g: GrupoSVG, color: UInt32 = 0x16294D) -> GrupoSVG {
+    static func ojoCerrado(_ g: GrupoSVG, color: UInt32 = 0x16241F) -> GrupoSVG {
         // En la lupa se conservan el mango y la lente (piezas 1 y 2) y se cierra el ojo de dentro (pieza 3).
         let conservadas = g.id == "lupa" ? Array(g.piezas.prefix(2)) : []
         let ojo = g.id == "lupa" ? g.piezas[2] : g.piezas.first
@@ -191,8 +191,8 @@ private struct Rebote: ViewModifier {
         } keyframes: { _ in
             KeyframeTrack {
                 if activo {
-                    CubicKeyframe(0.88, duration: 0.12)
-                    SpringKeyframe(1.07, duration: 0.18, spring: .bouncy)
+                    CubicKeyframe(0.96, duration: 0.12)
+                    SpringKeyframe(1.03, duration: 0.18, spring: .smooth)
                     SpringKeyframe(1, duration: 0.2, spring: .smooth)
                 } else {
                     LinearKeyframe(1, duration: 0.01)
@@ -212,7 +212,7 @@ private struct Latido: ViewModifier {
         } keyframes: { _ in
             KeyframeTrack {
                 if activo {
-                    SpringKeyframe(1.08, duration: 0.2, spring: .bouncy)
+                    SpringKeyframe(1.08, duration: 0.2, spring: .smooth)
                     SpringKeyframe(1, duration: 0.2, spring: .smooth)
                 } else {
                     LinearKeyframe(1, duration: 0.01)
@@ -222,48 +222,48 @@ private struct Latido: ViewModifier {
     }
 }
 
-// MARK: - Marca «libro vivo»
+// MARK: - Marca v5
 
-/// Marca de la app (el libro vivo, `docs/arte/v3/icono.svg` sin el fondo), con contorno de tinta en las
-/// páginas para que se lean sobre el papel. En la bienvenida parpadea una vez y el brote se mece
-/// (≤ 0,6 s; sin movimiento con «Reducir movimiento»).
+/// Marca de la app (`docs/arte/v5/marca.svg`): la cuadrícula de cuatro módulos, sin fondo. Los
+/// módulos de tinta usan el token `Tinta` (claro en modo oscuro) y los salvia, `Lengua`, así que se
+/// leen sobre el papel en los dos modos. Con `animar`, los módulos entran uno a uno (0,6 s en total);
+/// con «Reducir movimiento», aparecen ya colocados.
 struct MarcaView: View {
     var tamano: CGFloat = 120
     var animar = false
     @Environment(\.accessibilityReduceMotion) private var reducirMovimiento
-    @State private var golpe = 0
+    @State private var visibles = 0
+
+    /// Retardo de entrada de cada módulo y su duración: 4 × 0,1 s + 0,2 s = 0,6 s.
+    static let retardo = 0.1
+    static let duracion = 0.2
+
+    private var conMovimiento: Bool { animar && !reducirMovimiento }
 
     var body: some View {
-        ZStack {
-            ForEach(Array(DibujosV3.marca.enumerated()), id: \.offset) { _, g in
-                let ancla = UnitPoint(x: g.ancla.x / DibujosV3.lienzoMarca.width, y: g.ancla.y / DibujosV3.lienzoMarca.height)
-                VistaGrupoSVG(grupo: g, lienzo: DibujosV3.lienzoMarca)
-                    .keyframeAnimator(initialValue: CGFloat(0), trigger: golpe) { vista, t in
-                        vista
-                            .rotationEffect(.degrees(g.id == "brote" ? Double(t) * 8 : 0), anchor: ancla)
-                            .scaleEffect(x: 1, y: g.id == "ojo" ? 1 - 0.9 * abs(t) : 1, anchor: ancla)
-                    } keyframes: { _ in
-                        KeyframeTrack {
-                            if animar && !reducirMovimiento {
-                                CubicKeyframe(1, duration: 0.15)
-                                CubicKeyframe(-0.6, duration: 0.2)
-                                CubicKeyframe(0, duration: 0.2)
-                            } else {
-                                LinearKeyframe(0, duration: 0.01)
-                            }
-                        }
-                    }
+        Canvas { ctx, tam in
+            let escala = min(tam.width / DibujosV3.lienzoMarca.width, tam.height / DibujosV3.lienzoMarca.height)
+            ctx.scaleBy(x: escala, y: escala)
+            for m in DibujosV3.Modulo.allCases where !conMovimiento || m.rawValue < visibles {
+                ctx.fill(m.path, with: .color(m.salvia ? Paleta.lengua : Paleta.contorno))
             }
         }
         .frame(width: tamano, height: tamano)
-        .onAppear { golpe += 1 }
+        .task(id: conMovimiento) {
+            guard conMovimiento else { visibles = DibujosV3.Modulo.allCases.count; return }
+            visibles = 0
+            for i in 1...DibujosV3.Modulo.allCases.count {
+                try? await Task.sleep(for: .seconds(Self.retardo))
+                withAnimation(.easeOut(duration: Self.duracion)) { visibles = i }
+            }
+        }
         .accessibilityHidden(true)
     }
 }
 
 // MARK: - Avatar del usuario
 
-/// Avatar del propietario recortado en círculo, con contorno de tinta (Rubber Hose).
+/// Avatar del propietario recortado en círculo, con borde fino.
 struct VistaAvatar: View {
     let avatar: Avatar
     var tamano: CGFloat = 44
@@ -275,7 +275,7 @@ struct VistaAvatar: View {
             .scaledToFill()
             .frame(width: tamano, height: tamano)
             .clipShape(Circle())
-            .overlay(Circle().strokeBorder(Paleta.contorno, lineWidth: tamano < 48 ? Trazo.fino : Trazo.grueso))
+            .overlay(Circle().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
             .accessibilityElement(children: .ignore)
             .accessibilityLabel("Avatar con \(avatar.nombre)")
     }

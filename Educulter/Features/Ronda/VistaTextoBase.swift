@@ -32,7 +32,7 @@ struct VistaTextoBase: View {
                 cambiar(false)
             } label: {
                 Label("Ver texto", systemImage: "doc.text")
-                    .font(.redondeada(.subheadline))
+                    .font(.numerica(.subheadline))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .padding(.horizontal, Espacio.l)
                     .frame(minHeight: Medidas.tactilMinimo)

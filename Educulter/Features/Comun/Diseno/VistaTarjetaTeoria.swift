@@ -32,7 +32,7 @@ struct VistaTarjetaTeoria: View {
                 .fixedSize(horizontal: false, vertical: true)
         case .regla:
             HStack(alignment: .top, spacing: Espacio.m) {
-                RoundedRectangle(cornerRadius: 3).fill(acento).overlay(RoundedRectangle(cornerRadius: 3).strokeBorder(Paleta.contorno, lineWidth: Trazo.fino)).frame(width: 8).accessibilityHidden(true)
+                RoundedRectangle(cornerRadius: 3).fill(acento).overlay(RoundedRectangle(cornerRadius: 3).strokeBorder(Paleta.borde, lineWidth: Trazo.fino)).frame(width: 8).accessibilityHidden(true)
                 VStack(alignment: .leading, spacing: Espacio.xs) {
                     Text("Regla").font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).textCase(.uppercase)
                     Text(bloque.contenido).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
@@ -117,6 +117,6 @@ struct VistaEsquema: View {
         }
         .padding(Espacio.m)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .overlay(RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous).strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+        .overlay(RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous).strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
     }
 }

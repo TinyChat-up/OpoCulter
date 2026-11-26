@@ -440,7 +440,7 @@ struct RecordatorioSonidoTests {
         let raiz = URL(filePath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
         let original = try String(contentsOf: raiz.appending(path: "CREDITOS.md"), encoding: .utf8)
         #expect(PantallaCreditos.texto == original)
-        #expect(original.contains("Fredoka") && original.contains("Avatares"))
+        #expect(!original.contains("Fredoka") && original.contains("Avatares") && original.contains("Mimo"))
     }
 
     @Test("Preguntas disponibles: solo el contenido aprobado")

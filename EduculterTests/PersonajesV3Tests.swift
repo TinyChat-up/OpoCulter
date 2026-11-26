@@ -4,7 +4,7 @@ import Testing
 import UIKit
 @testable import Educulter
 
-// Fase 05E parte 2, §2.2: personajes v3 (Tilde, Cuarto y Mimo) y marca «libro vivo».
+// Fase 05E parte 2, §2.2: personajes (Tilde, Cuarto y Mimo) con la paleta editorial (D-109).
 
 @MainActor
 enum RenderPersonaje {
@@ -12,7 +12,7 @@ enum RenderPersonaje {
     static func imagen(_ c: Companero, _ e: EstadoPersonaje) -> UIImage? {
         let vista = FiguraV3(companero: c, estado: e, animar: false)
             .frame(width: 400, height: 420)
-            .background(Color(hex: 0xFFF6EC))
+            .background(Color(hex: 0xF4F8F0))
             .environment(\.colorScheme, .light)
         let r = ImageRenderer(content: vista)
         r.scale = 1

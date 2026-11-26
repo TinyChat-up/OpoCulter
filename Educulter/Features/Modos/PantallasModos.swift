@@ -32,21 +32,21 @@ struct CabeceraSupervivencia<Salir: View>: View {
             if !tamano.isAccessibilitySize { Spacer(minLength: 0) }
             HStack(spacing: Espacio.s) {
                 Text("Nivel \(estado.dificultad)\(estado.dificultad == 6 ? " · Experto" : "")")
-                    .font(.redondeada(.subheadline))
+                    .font(.numerica(.subheadline))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .padding(.horizontal, Espacio.m)
                     .frame(minHeight: Medidas.tactilMinimo)
                     .background(Paleta.superficie, in: Capsule())
-                    .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                    .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                     .accessibilityIdentifier("nivelSupervivencia")
                 Text("\(estado.puntos)")
-                    .font(.redondeada(.headline))
+                    .font(.numerica(.headline))
                     .foregroundStyle(Paleta.textoSobreRecompensa)
                     .contentTransition(.numericText(value: Double(estado.puntos)))
                     .padding(.horizontal, Espacio.m)
                     .frame(minHeight: Medidas.tactilMinimo)
                     .background(Paleta.recompensa, in: Capsule())
-                    .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                    .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                     .animacionApp(estado.puntos)
                     .accessibilityLabel("Puntos")
                     .accessibilityValue("\(estado.puntos)")
@@ -119,7 +119,7 @@ struct PantallaInicioSupervivencia: View {
             Text(titulo).foregroundStyle(Paleta.textoPrincipal)
             Spacer()
             Text(p.map { "\($0.puntos) puntos · nivel \($0.nivelMaximo)" } ?? "Sin partidas todavía")
-                .font(.redondeada(.subheadline))
+                .font(.numerica(.subheadline))
                 .foregroundStyle(Paleta.textoSecundario)
         }
         .frame(minHeight: Medidas.tactilMinimo)
@@ -192,7 +192,7 @@ struct PantallaFinPartida: View {
 
     private func dato(_ valor: String, _ titulo: String) -> some View {
         VStack(spacing: Espacio.xs) {
-            Text(valor).font(.redondeada(.title2)).foregroundStyle(Paleta.textoPrincipal).lineLimit(1).minimumScaleFactor(0.6)
+            Text(valor).font(.numerica(.title2)).foregroundStyle(Paleta.textoPrincipal).lineLimit(1).minimumScaleFactor(0.6)
             Text(titulo).font(.caption).foregroundStyle(Paleta.textoSecundario).multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
@@ -291,7 +291,6 @@ struct PantallaRescate: View {
             Group {
                 if grupos.isEmpty {
                     VStack(spacing: Espacio.l) {
-                        VistaPersonaje(companero: .mimo, estado: .alegre)
                         Text("Sin errores pendientes").font(.exhibicion(.title2)).foregroundStyle(Paleta.textoPrincipal)
                             .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                         Text("Cuando falles un ítem aparecerá aquí para que lo rescates con otra variante.")
@@ -336,7 +335,7 @@ struct PantallaRescate: View {
                 // El área va en su propia línea, encima del nombre: en la misma fila, con nombres
                 // largos, se partía sílaba a sílaba (visto en el iPhone).
                 Text(g.area == "LEN" ? "Lengua" : "Matemáticas")
-                    .font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSobreAcento)
+                    .font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSobre(Paleta.acento(area: g.area)))
                     .padding(.horizontal, Espacio.s).padding(.vertical, 2)
                     .background(Paleta.acento(area: g.area), in: Capsule())
                 Label(g.competencia.nombre, systemImage: SimboloBloque.de(competencia: g.id))

@@ -190,15 +190,15 @@ struct PantallaHoy: View {
     private func nivel(_ estado: EstadoHoy) -> some View {
         VStack(alignment: .leading, spacing: Espacio.xs) {
             HStack {
-                Text("Nivel \(estado.nivel)").font(.redondeada(.subheadline, peso: .semibold)).foregroundStyle(Paleta.textoPrincipal)
+                Text("Nivel \(estado.nivel)").font(.numerica(.subheadline, peso: .semibold)).foregroundStyle(Paleta.textoPrincipal)
                 Spacer()
-                Text("\(estado.xpEnNivel)/\(estado.xpParaSiguiente) XP").font(.redondeada(.subheadline)).foregroundStyle(Paleta.textoSecundario)
+                Text("\(estado.xpEnNivel)/\(estado.xpParaSiguiente) XP").font(.numerica(.subheadline)).foregroundStyle(Paleta.textoSecundario)
             }
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
                     Capsule().fill(Paleta.superficie)
                     Capsule().fill(Paleta.recompensa).frame(width: max(10, geo.size.width * estado.fraccionNivel))
-                    Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino)
+                    Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino)
                 }
             }
             .frame(height: 10)
@@ -339,7 +339,7 @@ struct PantallaHoy: View {
                 .fixedSize(horizontal: false, vertical: true)
             Spacer(minLength: Espacio.s)
             Text("\(min(mision.progreso, mision.objetivo))/\(mision.objetivo)")
-                .font(.redondeada(.subheadline, peso: .semibold))
+                .font(.numerica(.subheadline, peso: .semibold))
                 .foregroundStyle(mision.completada ? Paleta.exito : Paleta.textoSecundario)
         }
         .padding(.vertical, Espacio.m)
@@ -402,7 +402,7 @@ struct Baldosa: View {
             .padding(Espacio.m)
             .frame(maxWidth: .infinity, minHeight: 76, alignment: .topLeading)
             // Activa: contorno de tinta y sombra dura. Desactivada: plana y con borde suave.
-            .superficiePulsable(Paleta.superficie, radio: Radio.ficha, borde: activa ? Paleta.contorno : Paleta.borde, sombra: activa)
+            .superficiePulsable(Paleta.superficie, radio: Radio.ficha, borde: Paleta.borde, sombra: activa)
         }
         .buttonStyle(.pulsable)
         .allowsHitTesting(activa)
@@ -443,17 +443,17 @@ struct VistaPreviaMecanica: View {
             HStack(spacing: 2) {
                 ForEach(0..<4, id: \.self) { i in
                     RoundedRectangle(cornerRadius: Radio.celda).fill(i < 3 ? color : Paleta.superficie)
-                        .overlay(RoundedRectangle(cornerRadius: Radio.celda).strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                        .overlay(RoundedRectangle(cornerRadius: Radio.celda).strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                 }
             }
         case .colocarTilde:
             HStack(spacing: 2) {
                 ForEach(Array("café".enumerated()), id: \.offset) { i, letra in
-                    Text(String(letra)).font(.redondeada(.headline, peso: .semibold))
+                    Text(String(letra)).font(.numerica(.headline, peso: .semibold))
                         .foregroundStyle(i == 3 ? Paleta.tinta(area: area) : Paleta.textoPrincipal)
                         .frame(width: 20, height: 30)
                         .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.celda))
-                        .overlay(RoundedRectangle(cornerRadius: Radio.celda).strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                        .overlay(RoundedRectangle(cornerRadius: Radio.celda).strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                 }
             }
         default:

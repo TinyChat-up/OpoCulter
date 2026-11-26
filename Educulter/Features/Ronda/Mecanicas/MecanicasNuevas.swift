@@ -71,7 +71,7 @@ struct MecanicaColocarTilde: View {
 
     private func ficha(_ letra: Character, conTilde: Bool, vocal: Bool, tonica: Bool, mal: Bool) -> some View {
         let base = Text(String(letra))
-            .font(.redondeada(.largeTitle, peso: .semibold))
+            .font(.numerica(.largeTitle, peso: .semibold))
             .lineLimit(1)
             .minimumScaleFactor(0.5)
             .foregroundStyle(vocal || ctx.corregido ? Paleta.textoPrincipal : Paleta.textoSecundario)
@@ -96,11 +96,11 @@ struct MecanicaColocarTilde: View {
             .overlay(alignment: .bottom) {
                 if tonica {
                     Capsule().fill(ctx.acento)
-                        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                        .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                         .frame(height: 7).padding(.horizontal, 2).offset(y: 10).accessibilityHidden(true)
                 }
             }
-            .animation(reducir ? .easeInOut(duration: 0.2) : .spring(response: 0.3, dampingFraction: 0.6), value: conTilde)
+            .animation(reducir ? .easeInOut(duration: 0.2) : .smooth(duration: 0.3), value: conTilde)
     }
 
     /// Vocales (tocables) en el fondo claro; consonantes, sin fondo, sobre el tinte del panel.
@@ -202,7 +202,7 @@ struct MecanicaFraccionBarras: View {
                 Barra(partes: partes, coloreadas: coloreadas, color: colorRelleno, borde: colorBorde,
                       interactiva: !ctx.corregido, reducir: reducir) { i in alternar(i) }
                 Text("\(coloreadas.count)/\(partes)")
-                    .font(.redondeada(.title2, peso: .semibold))
+                    .font(.numerica(.title2, peso: .semibold))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .contentTransition(.numericText())
                     .accessibilityLabel("Coloreado")
@@ -223,7 +223,7 @@ struct MecanicaFraccionBarras: View {
     }
 
     private var colorBorde: Color {
-        guard let r = ctx.resultado else { return Paleta.contorno }
+        guard let r = ctx.resultado else { return Paleta.borde }
         return r.correcto ? Paleta.exito : Paleta.fallo
     }
 
@@ -246,7 +246,7 @@ struct MecanicaFraccionBarras: View {
             botonPaso("minus", etiqueta: "Menos partes", id: "botonMenosPartes", activo: partes > Payload.FraccionBarras.rangoPartes.lowerBound) { cambiarPartes(-1) }
             VStack(spacing: 0) {
                 Text("\(partes)")
-                    .font(.redondeada(.title, peso: .semibold))
+                    .font(.numerica(.title, peso: .semibold))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .contentTransition(.numericText())
                 Text("partes").font(.subheadline).foregroundStyle(Paleta.textoSecundario)
@@ -276,7 +276,7 @@ struct MecanicaFraccionBarras: View {
                 .foregroundStyle(activo ? Paleta.textoPrincipal : Paleta.textoSecundario)
                 .frame(width: Medidas.fichaMinima, height: Medidas.fichaMinima)
                 .superficiePulsable(activo ? ctx.acento : Paleta.superficie, radio: Radio.ficha,
-                                    borde: activo ? Paleta.contorno : Paleta.borde, sombra: activo)
+                                    borde: Paleta.borde, sombra: activo)
         }
         .buttonStyle(.pulsable)
         .allowsHitTesting(activo)
@@ -291,7 +291,7 @@ struct MecanicaFraccionBarras: View {
             Barra(partes: partesSol, coloreadas: Set(0..<coloreadasSol), color: Paleta.exitoRelleno, borde: Paleta.contorno,
                   interactiva: false, reducir: reducir) { _ in }
             Text(DescripcionSolucion.texto(.fraccionBarras(p)))
-                .font(.redondeada(.title3, peso: .semibold))
+                .font(.numerica(.title3, peso: .semibold))
                 .foregroundStyle(Paleta.textoPrincipal)
         }
         .accessibilityElement(children: .combine)
@@ -335,7 +335,7 @@ struct Barra: View {
             }
         }
         .frame(minHeight: Medidas.tactilMinimo)
-        .animation(reducir ? .easeInOut(duration: 0.2) : .spring(response: 0.25, dampingFraction: 0.8), value: partes)
+        .animation(reducir ? .easeInOut(duration: 0.2) : .smooth(duration: 0.25), value: partes)
         .animation(reducir ? nil : .easeOut(duration: 0.15), value: coloreadas)
     }
 }
