@@ -38,12 +38,15 @@ struct RecursosGeneradores: Sendable, Equatable {
     let palabras: [PalabraNivelada]
     /// Base literaria del lote 05a (generador `literatura`, Fase 05E).
     var literatura: BaseLiteraria?
+    /// Catálogo de errores típicos (05E parte 2 §4): etiqueta los distractores de cada muestra.
+    var errores: CatalogoErrores
 
     init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
          verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases(),
          compatibilidad: CompatibilidadGramatica = CompatibilidadGramatica(), ambiguas: PalabrasAmbiguas = PalabrasAmbiguas(),
-         literatura: BaseLiteraria? = nil) {
+         literatura: BaseLiteraria? = nil, errores: CatalogoErrores = CatalogoErrores()) {
         self.literatura = literatura
+        self.errores = errores
         self.lexico = lexico
         self.formasVerbales = formasVerbales
         self.gramatica = gramatica
@@ -124,7 +127,9 @@ enum MotorGeneradores {
         guard let g = generadores[p.tipo] else { throw ErrorGenerador.tipoDesconocido(p.tipo) }
         guard g.mecanicas.contains(p.mecanica) else { throw ErrorGenerador.mecanicaNoAdmitida(tipo: p.tipo, mecanica: p.mecanica) }
         var r = rng(p, semilla: semilla)
-        return try g.muestra(p, recursos: recursos, rng: &r)
+        var m = try g.muestra(p, recursos: recursos, rng: &r)
+        m.erroresHabituales = recursos.errores.etiquetar(m.erroresHabituales, competencia: p.competencia, generador: p.tipo)
+        return m
     }
 
     /// Genera el ítem `<plantilla.id>#<semilla>`.

@@ -9,6 +9,41 @@ struct Ajustes: Codable, Sendable, Equatable {
     var minutoRecordatorio = 20 * 60
     /// Ya se ha preguntado por el recordatorio tras la primera ronda (se pregunta una sola vez).
     var recordatorioPreguntado = false
+    /// Sesión diaria (05E parte 2 §3): duración y foco recordados, y meta semanal (3–7 días).
+    var duracion = DuracionSesion.diez
+    var foco = FocoSesion.mixto
+    var metaSemanal = MetaSemanal.porDefecto
+
+    init(sonido: Bool = true, vibracion: Bool = true, recordatorio: Bool = false, minutoRecordatorio: Int = 20 * 60,
+         recordatorioPreguntado: Bool = false, duracion: DuracionSesion = .diez, foco: FocoSesion = .mixto,
+         metaSemanal: Int = MetaSemanal.porDefecto) {
+        self.sonido = sonido
+        self.vibracion = vibracion
+        self.recordatorio = recordatorio
+        self.minutoRecordatorio = minutoRecordatorio
+        self.recordatorioPreguntado = recordatorioPreguntado
+        self.duracion = duracion
+        self.foco = foco
+        self.metaSemanal = metaSemanal
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case sonido, vibracion, recordatorio, minutoRecordatorio, recordatorioPreguntado, duracion, foco, metaSemanal
+    }
+
+    /// Los ajustes guardados por versiones anteriores no tienen las claves nuevas: se leen con su valor por defecto.
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        let d = Ajustes()
+        sonido = try c.decodeIfPresent(Bool.self, forKey: .sonido) ?? d.sonido
+        vibracion = try c.decodeIfPresent(Bool.self, forKey: .vibracion) ?? d.vibracion
+        recordatorio = try c.decodeIfPresent(Bool.self, forKey: .recordatorio) ?? d.recordatorio
+        minutoRecordatorio = try c.decodeIfPresent(Int.self, forKey: .minutoRecordatorio) ?? d.minutoRecordatorio
+        recordatorioPreguntado = try c.decodeIfPresent(Bool.self, forKey: .recordatorioPreguntado) ?? d.recordatorioPreguntado
+        duracion = try c.decodeIfPresent(DuracionSesion.self, forKey: .duracion) ?? d.duracion
+        foco = try c.decodeIfPresent(FocoSesion.self, forKey: .foco) ?? d.foco
+        metaSemanal = try c.decodeIfPresent(Int.self, forKey: .metaSemanal) ?? d.metaSemanal
+    }
 
     var hora: Int { minutoRecordatorio / 60 }
     var minuto: Int { minutoRecordatorio % 60 }

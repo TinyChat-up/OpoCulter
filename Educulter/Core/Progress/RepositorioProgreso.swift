@@ -29,6 +29,16 @@ struct PerfilJugador: Codable, Sendable, Equatable {
     var avatar: Int?
     /// Competencias abiertas con prueba de nivel (Fase 05D).
     var desbloqueos: [Desbloqueo] = []
+    /// Días con al menos una sesión diaria completada (meta semanal, 05E parte 2 §3.3); los últimos 120.
+    var diasSesion: [DiaCivil] = []
+
+    static let maxDiasSesion = 120
+
+    mutating func registrarSesion(_ dia: DiaCivil) {
+        guard !diasSesion.contains(dia) else { return }
+        diasSesion.append(dia)
+        diasSesion = Array(diasSesion.sorted().suffix(Self.maxDiasSesion))
+    }
 }
 
 struct LogroObtenido: Codable, Sendable, Equatable {
@@ -69,11 +79,15 @@ protocol RepositorioProgreso: AnyObject {
     /// Inserta o actualiza (por id) una partida.
     func guardar(_ partida: PartidaSupervivencia) throws
 
+    /// Sucesos del motor de errores (05E parte 2 §4), en orden de fecha.
+    func eventosError() throws -> [EventoError]
+    func registrar(_ evento: EventoError) throws
+
     func ajustes() throws -> Ajustes
     func guardar(_ ajustes: Ajustes) throws
 
-    /// Borra todo el progreso (intentos, estados, Rescate, perfil, logros, diagnósticos y
-    /// partidas). Los ajustes se conservan.
+    /// Borra todo el progreso (intentos, estados, Rescate, perfil, logros, diagnósticos, partidas
+    /// y sucesos de errores). Los ajustes se conservan.
     func borrarProgreso() throws
 }
 
@@ -128,6 +142,10 @@ final class RepositorioEnMemoria: RepositorioProgreso {
         if let i = partidasGuardadas.firstIndex(where: { $0.id == partida.id }) { partidasGuardadas[i] = partida } else { partidasGuardadas.append(partida) }
     }
 
+    private var eventosGuardados: [EventoError] = []
+    func eventosError() throws -> [EventoError] { eventosGuardados.sorted { $0.fecha < $1.fecha } }
+    func registrar(_ evento: EventoError) throws { eventosGuardados.append(evento) }
+
     func ajustes() throws -> Ajustes { ajustesGuardados }
     func guardar(_ ajustes: Ajustes) throws { ajustesGuardados = ajustes }
 
@@ -139,5 +157,6 @@ final class RepositorioEnMemoria: RepositorioProgreso {
         logrosGuardados = []
         diagnosticosGuardados = []
         partidasGuardadas = []
+        eventosGuardados = []
     }
 }

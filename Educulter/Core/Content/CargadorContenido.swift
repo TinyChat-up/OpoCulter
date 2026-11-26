@@ -52,6 +52,7 @@ enum ErrorCarga: Error, Equatable, CustomStringConvertible {
 /// textos/<archivo>.json      (array de textos base de comprensión, D-085)
 /// literatura/literatura.json (base literaria del lote 05a, D-078)
 /// ambiguas.json              (formas que solo se distinguen por la tilde, 05E §4.1)
+/// errores.json               (errores típicos y su detección en los distractores, 05E parte 2 §4)
 /// ```
 /// `pendiente/` (contenido aprobado que el motor aún no muestra, p. ej. el Tribunal) no se lee.
 struct CargadorContenido: Sendable {
@@ -92,13 +93,20 @@ struct CargadorContenido: Sendable {
             for p in (try decodificar(equivalenciasURL) as Equivalencias).preguntas { preguntasOficiales[p.competencia, default: 0] += 1 }
         }
 
+        let recursos = try recursos()
+        // Los distractores de los ítems estáticos también se etiquetan con su error típico (generador «estatico»).
+        let etiquetados = items.filter { politica.admite($0.validacion) }.map { i in
+            var i = i
+            i.erroresHabituales = recursos.errores.etiquetar(i.erroresHabituales, competencia: i.competencia, generador: "estatico")
+            return i
+        }
         return BancoContenido(
             catalogo: catalogo,
-            items: items.filter { politica.admite($0.validacion) },
+            items: etiquetados,
             teoria: teoria.filter { politica.admite($0.validacion) },
             simulacros: simulacros.filter { politica.admite($0.validacion) },
             plantillas: plantillas.filter { politica.admite($0.validacion) },
-            recursos: try recursos(),
+            recursos: recursos,
             textos: textos.filter { politica.admite($0.validacion) },
             literatura: literatura,
             preguntasOficiales: preguntasOficiales,
@@ -121,7 +129,8 @@ struct CargadorContenido: Sendable {
             frases: try opcional("gramatica/frases.json") ?? BancoFrases(),
             compatibilidad: try opcional("gramatica/compatibilidad.json") ?? CompatibilidadGramatica(),
             ambiguas: try opcional("ambiguas.json") ?? PalabrasAmbiguas(),
-            literatura: try opcional("literatura/literatura.json")
+            literatura: try opcional("literatura/literatura.json"),
+            errores: try opcional("errores.json") ?? CatalogoErrores()
         )
     }
 

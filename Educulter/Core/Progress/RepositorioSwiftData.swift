@@ -125,6 +125,15 @@ final class RepositorioSwiftData: RepositorioProgreso {
         try contexto.save()
     }
 
+    func eventosError() throws -> [EventoError] {
+        try contexto.fetch(FetchDescriptor<EventoErrorRegistro>(sortBy: [SortDescriptor(\.fecha)])).compactMap(\.valor)
+    }
+
+    func registrar(_ evento: EventoError) throws {
+        contexto.insert(EventoErrorRegistro(evento))
+        try contexto.save()
+    }
+
     func ajustes() throws -> Ajustes {
         guard let datos = try contexto.fetch(FetchDescriptor<AjustesRegistro>()).first?.datos else { return Ajustes() }
         return try JSONDecoder().decode(Ajustes.self, from: datos)
@@ -145,6 +154,7 @@ final class RepositorioSwiftData: RepositorioProgreso {
         try contexto.delete(model: LogroRegistro.self)
         try contexto.delete(model: DiagnosticoRegistro.self)
         try contexto.delete(model: PartidaRegistro.self)
+        try contexto.delete(model: EventoErrorRegistro.self)
         try contexto.save()
     }
 }

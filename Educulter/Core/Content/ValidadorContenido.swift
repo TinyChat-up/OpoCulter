@@ -91,6 +91,48 @@ struct ValidadorContenido: Sendable {
         }
         if let literatura = banco.literatura { errores += validar(literatura: literatura) }
         if !banco.recursos.compatibilidad.vacia { errores += validar(compatibilidad: banco.recursos.compatibilidad) }
+        errores += validar(errores: banco.recursos.errores, banco: banco)
+        return errores
+    }
+
+    // MARK: - Errores típicos (05E parte 2 §4)
+
+    static let maxPalabrasDescripcionError = 12
+    static let maxCaracteresRegla = 140
+
+    /// Catálogo de errores: ids, competencias, textos, remedios y patrones; y que los errores
+    /// puestos a mano en los ítems estáticos existan.
+    func validar(errores c: CatalogoErrores, banco: BancoContenido) -> [ErrorValidacion] {
+        var errores: [ErrorValidacion] = []
+        func error(_ id: String, _ m: String) { errores.append(.init(elemento: "errores · \(id)", mensaje: m)) }
+        let competencias = Set(banco.catalogo.todasLasCompetencias.map(\.id))
+        let plantillas = Set(banco.plantillas.map(\.id))
+        let tarjetas = Set(banco.teoria.map(\.id))
+        var vistos = Set<String>()
+        for e in c.errores {
+            if !vistos.insert(e.id).inserted { error(e.id, "id duplicado") }
+            if !competencias.contains(e.competencia) { error(e.id, "competencia desconocida «\(e.competencia)»") }
+            if !e.id.hasPrefix("ERR.\(e.competencia).") || Int(e.id.dropFirst("ERR.\(e.competencia).".count)) == nil {
+                error(e.id, "el id debe ser ERR.<competencia>.<n>")
+            }
+            let palabras = Self.contarPalabras(e.descripcion)
+            if palabras == 0 || palabras > Self.maxPalabrasDescripcionError {
+                error(e.id, "la descripción tiene \(palabras) palabras (1–\(Self.maxPalabrasDescripcionError))")
+            }
+            if e.remedio.explicacion.isEmpty || e.remedio.explicacion.count > Self.maxCaracteresRegla {
+                error(e.id, "la regla del remedio tiene \(e.remedio.explicacion.count) caracteres (1–\(Self.maxCaracteresRegla))")
+            }
+            if !plantillas.contains(e.remedio.plantilla) { error(e.id, "la plantilla del remedio «\(e.remedio.plantilla)» no existe o no está cargada") }
+            if !Self.rangoDificultad.contains(e.remedio.dificultad) { error(e.id, "dificultad del remedio fuera de 1–6") }
+            if let t = e.remedio.tarjeta, !tarjetas.contains(t) { error(e.id, "la tarjeta «\(t)» no existe") }
+            if e.detecta.isEmpty { error(e.id, "sin patrones de detección") }
+        }
+        for p in c.patronesInvalidos { error("patrón", "expresión regular no válida: \(p)") }
+        for item in banco.itemsEstaticos {
+            for h in item.erroresHabituales {
+                if let id = h.error, c[id] == nil { errores.append(.init(elemento: item.id, mensaje: "el error «\(id)» no está en errores.json")) }
+            }
+        }
         return errores
     }
 

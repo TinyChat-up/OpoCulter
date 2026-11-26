@@ -1,0 +1,1609 @@
+{
+ "version": 1,
+ "errores": [
+  {
+   "id": "ERR.LEN.ORT.AGU.1",
+   "competencia": "LEN.ORT.AGU",
+   "descripcion": "Te cuesta localizar la sílaba tónica.",
+   "remedio": {
+    "plantilla": "LEN.ORT.AGU.G04",
+    "dificultad": 1,
+    "explicacion": "Di la palabra despacio, como si llamaras a alguien: la sílaba que suena más fuerte es la tónica."
+   },
+   "detecta": [
+    {
+     "generador": "silabaTonica",
+     "patron": "^Pronuncia la palabra despacio"
+    },
+    {
+     "generador": "colocarTilde",
+     "patron": "^La sílaba tónica es"
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)pronúncia|suena más fuerte|sílaba tónica|la tónica es"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.AGU.2",
+   "competencia": "LEN.ORT.AGU",
+   "descripcion": "Confundes palabras agudas, llanas y esdrújulas.",
+   "remedio": {
+    "plantilla": "LEN.ORT.AGU.G03",
+    "dificultad": 2,
+    "explicacion": "Cuenta desde el final: tónica en la última, aguda; en la penúltima, llana; antes, esdrújula."
+   },
+   "detecta": [
+    {
+     "generador": "clasificarAcentuacion",
+     "patron": "\\) es (aguda|llana|esdrújula|sobresdrújula):"
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)(aguda|llana|esdrújula) (sería|es la|tiene)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.AGU.3",
+   "competencia": "LEN.ORT.AGU",
+   "descripcion": "Olvidas la tilde del hiato con vocal cerrada tónica.",
+   "remedio": {
+    "plantilla": "LEN.ORT.AGU.G02",
+    "dificultad": 3,
+    "explicacion": "Si la i o la u tónica va junto a a, e, o y forman hiato, llevan tilde siempre: rí-o, ba-úl."
+   },
+   "detecta": [
+    {
+     "generador": "colocarTilde",
+     "patron": "con hiato: hiato"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.AGU.4",
+   "competencia": "LEN.ORT.AGU",
+   "descripcion": "Olvidas la tilde que exige la regla.",
+   "remedio": {
+    "plantilla": "LEN.ORT.AGU.G01",
+    "dificultad": 2,
+    "explicacion": "Agudas con tilde si acaban en vocal, -n o -s; llanas si no; esdrújulas, siempre."
+   },
+   "detecta": [
+    {
+     "generador": "colocarTilde",
+     "patron": "^«[^»]*» es (aguda|llana|esdrújula|sobresdrújula)"
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)lleva tilde|necesita tilde|falta la tilde"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.AGU.5",
+   "competencia": "LEN.ORT.AGU",
+   "descripcion": "Pones tilde donde la regla no la pide.",
+   "remedio": {
+    "plantilla": "LEN.ORT.AGU.G01",
+    "dificultad": 2,
+    "explicacion": "Las llanas en vocal, -n o -s y las agudas en otra consonante no llevan tilde."
+   },
+   "detecta": [
+    {
+     "generador": "colocarTilde",
+     "patron": "^«[^»]*»: "
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)no lleva tilde|sin tilde"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.HIA.1",
+   "competencia": "LEN.ORT.HIA",
+   "descripcion": "Confundes hiato y diptongo.",
+   "remedio": {
+    "plantilla": "LEN.ORT.AGU.G02",
+    "dificultad": 3,
+    "explicacion": "Vocal cerrada tónica junto a una abierta forma hiato y lleva tilde: rí-o, pa-ís, ba-úl."
+   },
+   "detecta": [
+    {
+     "generador": "estatico",
+     "patron": "."
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.DIA.1",
+   "competencia": "LEN.ORT.DIA",
+   "descripcion": "Confundes interrogativos con tilde y relativos sin ella.",
+   "remedio": {
+    "plantilla": "LEN.ORT.DIA.G01",
+    "dificultad": 2,
+    "explicacion": "Qué, cómo, cuándo y dónde llevan tilde cuando preguntan o exclaman, también en preguntas indirectas."
+   },
+   "detecta": [
+    {
+     "generador": "fraseHueco",
+     "patron": "es (interrogativo|relativo o conjunción|comparativo o de modo|adverbio relativo)"
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)interrogativ|exclamativ|relativo"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.DIA.2",
+   "competencia": "LEN.ORT.DIA",
+   "descripcion": "Confundes monosílabos con y sin tilde diacrítica.",
+   "remedio": {
+    "plantilla": "LEN.ORT.DIA.G01",
+    "dificultad": 2,
+    "explicacion": "La tilde distingue funciones: tú pronombre / tu posesivo; él / el artículo; sí afirmación / si condición."
+   },
+   "detecta": [
+    {
+     "generador": "fraseHueco",
+     "patron": "Aquí va «"
+    },
+    {
+     "generador": "estatico",
+     "patron": "."
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.PQ.1",
+   "competencia": "LEN.ORT.PQ",
+   "descripcion": "Confundes porque, por qué, porqué y por que.",
+   "remedio": {
+    "plantilla": "LEN.ORT.PQ.G01",
+    "dificultad": 3,
+    "explicacion": "Por qué pregunta; porque responde (causa); el porqué es un sustantivo; por que es preposición + que."
+   },
+   "detecta": [
+    {
+     "generador": "fraseHueco",
+     "patron": "."
+    },
+    {
+     "generador": "estatico",
+     "patron": "."
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.HOM.1",
+   "competencia": "LEN.ORT.HOM",
+   "descripcion": "Confundes homófonos con h y sin h.",
+   "remedio": {
+    "plantilla": "LEN.ORT.HOM.G01",
+    "dificultad": 2,
+    "explicacion": "Hay es de haber, ahí es lugar, ay es queja; hecho es de hacer, echo de echar; a ver es mirar."
+   },
+   "detecta": [
+    {
+     "generador": "fraseHueco",
+     "patron": "es (verbo haber|adverbio de lugar|interjección|preposición \\+ verbo ver|verbo echar|verbo hacer|verbo hallar|verbo haber o árbol|saludo|onda del mar|preposición de límite|palo de la bandera)"
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)\\bh|hay|ahí|ay\\b|haber|hecho|echo"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.ORT.HOM.2",
+   "competencia": "LEN.ORT.HOM",
+   "descripcion": "Confundes homófonos con b y con v.",
+   "remedio": {
+    "plantilla": "LEN.ORT.HOM.G01",
+    "dificultad": 2,
+    "explicacion": "Mira el significado: tubo es pieza hueca y tuvo es de tener; votar es elegir y botar es saltar."
+   },
+   "detecta": [
+    {
+     "generador": "fraseHueco",
+     "patron": "Aquí va «"
+    },
+    {
+     "generador": "estatico",
+     "patron": "."
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.SUJPRED.1",
+   "competencia": "LEN.SIN.SUJPRED",
+   "descripcion": "No localizas el sujeto por la concordancia con el verbo.",
+   "remedio": {
+    "plantilla": "LEN.SIN.SUJPRED.G01",
+    "dificultad": 1,
+    "explicacion": "El sujeto concuerda con el verbo: cambia el número del verbo y mira qué palabras cambian con él."
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "^El sujeto concuerda"
+    },
+    {
+     "generador": "oracionSimple",
+     "patron": "no concuerda con el verbo"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.COMPL.1",
+   "competencia": "LEN.SIN.COMPL",
+   "descripcion": "No localizas el sujeto por la concordancia con el verbo.",
+   "remedio": {
+    "plantilla": "LEN.SIN.COMPL.G03",
+    "dificultad": 2,
+    "explicacion": "El sujeto concuerda con el verbo: cambia el número del verbo y mira qué palabras cambian con él."
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "^El sujeto concuerda"
+    },
+    {
+     "generador": "oracionSimple",
+     "patron": "no concuerda con el verbo"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.COMPL.2",
+   "competencia": "LEN.SIN.COMPL",
+   "descripcion": "Confundes los pronombres de CD (lo, la) y CI (le).",
+   "remedio": {
+    "plantilla": "LEN.SIN.COMPL.G06",
+    "dificultad": 4,
+    "explicacion": "El CD se sustituye por lo, la, los, las; el CI, por le o les (se ante lo, la)."
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "se sustituye por"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.COMPL.3",
+   "competencia": "LEN.SIN.COMPL",
+   "descripcion": "Confundes el complemento directo con otra función.",
+   "remedio": {
+    "plantilla": "LEN.SIN.COMPL.G03",
+    "dificultad": 2,
+    "explicacion": "El CD responde a «¿qué?» o «¿a quién?» y se sustituye por lo, la, los, las."
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "^El complemento directo responde"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.COMPL.4",
+   "competencia": "LEN.SIN.COMPL",
+   "descripcion": "Confundes el complemento indirecto con otra función.",
+   "remedio": {
+    "plantilla": "LEN.SIN.COMPL.G03",
+    "dificultad": 2,
+    "explicacion": "El CI lleva «a» o «para» y se sustituye por le o les."
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "^El complemento indirecto lleva"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.COMPL.5",
+   "competencia": "LEN.SIN.COMPL",
+   "descripcion": "Confundes los complementos circunstanciales.",
+   "remedio": {
+    "plantilla": "LEN.SIN.COMPL.G03",
+    "dificultad": 2,
+    "explicacion": "Pregunta al verbo: ¿dónde? (lugar), ¿cuándo? (tiempo), ¿cómo? (modo), ¿con quién? (compañía)…"
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "^El complemento circunstancial"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.COMPL.6",
+   "competencia": "LEN.SIN.COMPL",
+   "descripcion": "No reconoces el atributo de los verbos copulativos.",
+   "remedio": {
+    "plantilla": "LEN.SIN.COMPL.G03",
+    "dificultad": 2,
+    "explicacion": "Con ser, estar o parecer, lo que se dice del sujeto es el atributo: predicado nominal."
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "atributo"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.CLASE.1",
+   "competencia": "LEN.SIN.CLASE",
+   "descripcion": "No reconoces el atributo de los verbos copulativos.",
+   "remedio": {
+    "plantilla": "LEN.SIN.CLASE.G01",
+    "dificultad": 2,
+    "explicacion": "Con ser, estar o parecer, lo que se dice del sujeto es el atributo: predicado nominal."
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "atributo"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.SIN.CLASE.2",
+   "competencia": "LEN.SIN.CLASE",
+   "descripcion": "Confundes oraciones transitivas e intransitivas.",
+   "remedio": {
+    "plantilla": "LEN.SIN.CLASE.G01",
+    "dificultad": 2,
+    "explicacion": "Si el verbo lleva CD, la oración es transitiva; si no lo lleva ni tiene atributo, intransitiva."
+   },
+   "detecta": [
+    {
+     "generador": "oracionSimple",
+     "patron": "predicado verbal (con|sin) CD"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.VER.ANALISIS.1",
+   "competencia": "LEN.VER.ANALISIS",
+   "descripcion": "Confundes el tiempo verbal.",
+   "remedio": {
+    "plantilla": "LEN.VER.ANALISIS.G02",
+    "dificultad": 1,
+    "explicacion": "La terminación marca el tiempo (-aba, pretérito imperfecto); haber + participio forma los compuestos."
+   },
+   "detecta": [
+    {
+     "generador": "analisisVerbal",
+     "patron": "^(Fíjate en la terminación|Las formas con)"
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)pretérito|presente|futuro|condicional"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.VER.ANALISIS.2",
+   "competencia": "LEN.VER.ANALISIS",
+   "descripcion": "Confundes indicativo y subjuntivo.",
+   "remedio": {
+    "plantilla": "LEN.VER.ANALISIS.G04",
+    "dificultad": 3,
+    "explicacion": "El indicativo presenta hechos; el subjuntivo, deseos, dudas o posibilidades: «que yo cante»."
+   },
+   "detecta": [
+    {
+     "generador": "analisisVerbal",
+     "patron": "^El subjuntivo"
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)subjuntivo|indicativo"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.VER.ANALISIS.3",
+   "competencia": "LEN.VER.ANALISIS",
+   "descripcion": "Confundes el aspecto perfecto y el imperfecto.",
+   "remedio": {
+    "plantilla": "LEN.VER.ANALISIS.G04",
+    "dificultad": 3,
+    "explicacion": "Son perfectos los tiempos compuestos y el pretérito perfecto simple; el resto de simples, imperfectos."
+   },
+   "detecta": [
+    {
+     "generador": "analisisVerbal",
+     "patron": "^Son perfectos"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.VER.ANALISIS.4",
+   "competencia": "LEN.VER.ANALISIS",
+   "descripcion": "Confundes formas simples y compuestas.",
+   "remedio": {
+    "plantilla": "LEN.VER.ANALISIS.G04",
+    "dificultad": 3,
+    "explicacion": "Es compuesta si lleva el auxiliar haber y un participio: he cantado, habrás comido."
+   },
+   "detecta": [
+    {
+     "generador": "analisisVerbal",
+     "patron": "^Es compuesta"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.VER.NOPERS.1",
+   "competencia": "LEN.VER.NOPERS",
+   "descripcion": "Confundes formas simples y compuestas no personales.",
+   "remedio": {
+    "plantilla": "LEN.VER.NOPERS.G03",
+    "dificultad": 3,
+    "explicacion": "Las compuestas llevan haber: haber cantado (infinitivo), habiendo cantado (gerundio)."
+   },
+   "detecta": [
+    {
+     "generador": "formasNoPersonales",
+     "patron": "Las compuestas"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.VER.NOPERS.2",
+   "competencia": "LEN.VER.NOPERS",
+   "descripcion": "Confundes infinitivo, gerundio y participio.",
+   "remedio": {
+    "plantilla": "LEN.VER.NOPERS.G01",
+    "dificultad": 1,
+    "explicacion": "Infinitivo en -ar, -er, -ir; gerundio en -ando, -iendo; participio en -ado, -ido (o irregular)."
+   },
+   "detecta": [
+    {
+     "generador": "formasNoPersonales",
+     "patron": "^El infinitivo acaba"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LIT.HIST.1",
+   "competencia": "LEN.LIT.HIST",
+   "descripcion": "Sitúas la obra en el siglo equivocado.",
+   "remedio": {
+    "plantilla": "LEN.LIT.HIST.G01",
+    "dificultad": 1,
+    "explicacion": "El siglo XVI va de 1501 a 1600: el siglo es la centena siguiente al año (1605 → siglo XVII)."
+   },
+   "detecta": [
+    {
+     "generador": "literatura",
+     "patron": "^El siglo [IVXL]+ va de"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LIT.HIST.2",
+   "competencia": "LEN.LIT.HIST",
+   "descripcion": "Confundes el movimiento literario de la obra.",
+   "remedio": {
+    "plantilla": "LEN.LIT.HIST.G03",
+    "dificultad": 2,
+    "explicacion": "Asocia cada obra a su periodo y comprueba que el año cae dentro de sus fechas."
+   },
+   "detecta": [
+    {
+     "generador": "literatura",
+     "patron": "^[A-ZÁÉÍÓÚ][^«]*: \\d{3,4}–"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LIT.UNIV.1",
+   "competencia": "LEN.LIT.UNIV",
+   "descripcion": "Sitúas la obra en el siglo equivocado.",
+   "remedio": {
+    "plantilla": "LEN.LIT.UNIV.G02",
+    "dificultad": 3,
+    "explicacion": "El siglo XVI va de 1501 a 1600: el siglo es la centena siguiente al año (1605 → siglo XVII)."
+   },
+   "detecta": [
+    {
+     "generador": "literatura",
+     "patron": "^El siglo [IVXL]+ va de"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LIT.INF.1",
+   "competencia": "LEN.LIT.INF",
+   "descripcion": "Sitúas la obra en el siglo equivocado.",
+   "remedio": {
+    "plantilla": "LEN.LIT.INF.G02",
+    "dificultad": 3,
+    "explicacion": "El siglo XVI va de 1501 a 1600: el siglo es la centena siguiente al año (1605 → siglo XVII)."
+   },
+   "detecta": [
+    {
+     "generador": "literatura",
+     "patron": "^El siglo [IVXL]+ va de"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.DIV.MCD.1",
+   "competencia": "MAT.DIV.MCD",
+   "descripcion": "Das el número menor como m.c.d. sin comprobarlo.",
+   "remedio": {
+    "plantilla": "MAT.DIV.MCD.G01",
+    "dificultad": 3,
+    "explicacion": "El m.c.d. divide a todos los números: comprueba la división antes de darlo por bueno."
+   },
+   "detecta": [
+    {
+     "generador": "mcmMcd",
+     "patron": "^El menor número no siempre divide"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.DIV.MCD.2",
+   "competencia": "MAT.DIV.MCD",
+   "descripcion": "Confundes el m.c.d. con el m.c.m.",
+   "remedio": {
+    "plantilla": "MAT.DIV.MCD.G01",
+    "dificultad": 3,
+    "explicacion": "m.c.d.: factores comunes con el menor exponente. m.c.m.: comunes y no comunes con el mayor."
+   },
+   "detecta": [
+    {
+     "generador": "mcmMcd",
+     "patron": "mínimo común múltiplo|Multiplicar los números"
+    },
+    {
+     "generador": "estatico",
+     "patron": "."
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.EST.CENTRAL.1",
+   "competencia": "MAT.EST.CENTRAL",
+   "descripcion": "Calculas mal el rango.",
+   "remedio": {
+    "plantilla": "MAT.EST.CENTRAL.G01",
+    "dificultad": 2,
+    "explicacion": "El rango es el dato mayor menos el dato menor."
+   },
+   "detecta": [
+    {
+     "generador": "estadisticaBasica",
+     "patron": "^El rango es"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.EST.CENTRAL.2",
+   "competencia": "MAT.EST.CENTRAL",
+   "descripcion": "Confundes la moda con el valor mayor.",
+   "remedio": {
+    "plantilla": "MAT.EST.CENTRAL.G01",
+    "dificultad": 2,
+    "explicacion": "La moda es el dato que más se repite, sea grande o pequeño."
+   },
+   "detecta": [
+    {
+     "generador": "estadisticaBasica",
+     "patron": "^La moda es"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.EST.CENTRAL.3",
+   "competencia": "MAT.EST.CENTRAL",
+   "descripcion": "Buscas la mediana sin ordenar los datos.",
+   "remedio": {
+    "plantilla": "MAT.EST.CENTRAL.G01",
+    "dificultad": 2,
+    "explicacion": "Ordena los datos de menor a mayor; la mediana es el del centro (o la media de los dos centrales)."
+   },
+   "detecta": [
+    {
+     "generador": "estadisticaBasica",
+     "patron": "ordenar los datos"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.EST.CENTRAL.4",
+   "competencia": "MAT.EST.CENTRAL",
+   "descripcion": "Divides mal al calcular la media.",
+   "remedio": {
+    "plantilla": "MAT.EST.CENTRAL.G01",
+    "dificultad": 2,
+    "explicacion": "La media es la suma de los datos dividida entre cuántos datos hay."
+   },
+   "detecta": [
+    {
+     "generador": "estadisticaBasica",
+     "patron": "^(La media se divide|Falta dividir)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.NUM.ORDEN.1",
+   "competencia": "MAT.NUM.ORDEN",
+   "descripcion": "Comparas decimales sin igualar las cifras decimales.",
+   "remedio": {
+    "plantilla": "MAT.NUM.ORDEN.G01",
+    "dificultad": 2,
+    "explicacion": "Iguala las cifras decimales (0,5 = 0,50) y pasa las fracciones a decimal antes de comparar."
+   },
+   "detecta": [
+    {
+     "generador": "ordenarNumeros",
+     "patron": "^Iguala las cifras decimales"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.NUM.FRAOP.1",
+   "competencia": "MAT.NUM.FRAOP",
+   "descripcion": "Sumas fracciones sin buscar un denominador común.",
+   "remedio": {
+    "plantilla": "MAT.NUM.FRAOP.G01",
+    "dificultad": 2,
+    "explicacion": "Para sumar o restar fracciones, primero se reducen a común denominador."
+   },
+   "detecta": [
+    {
+     "generador": "fraccionesOperar",
+     "patron": "^Para sumar fracciones"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.NUM.FRAOP.2",
+   "competencia": "MAT.NUM.FRAOP",
+   "descripcion": "Divides fracciones sin invertir la segunda.",
+   "remedio": {
+    "plantilla": "MAT.NUM.FRAOP.G03",
+    "dificultad": 4,
+    "explicacion": "Dividir entre una fracción es multiplicar por su inversa: a/b : c/d = (a·d)/(b·c)."
+   },
+   "detecta": [
+    {
+     "generador": "fraccionesOperar",
+     "patron": "^Para dividir fracciones"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.NUM.FRAOP.3",
+   "competencia": "MAT.NUM.FRAOP",
+   "descripcion": "Multiplicas fracciones de forma incorrecta.",
+   "remedio": {
+    "plantilla": "MAT.NUM.FRAOP.G02",
+    "dificultad": 3,
+    "explicacion": "Se multiplican numerador por numerador y denominador por denominador."
+   },
+   "detecta": [
+    {
+     "generador": "fraccionesOperar",
+     "patron": "^Para multiplicar fracciones"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.NUM.FRAPROB.1",
+   "competencia": "MAT.NUM.FRAPROB",
+   "descripcion": "Das lo gastado en vez de lo que queda.",
+   "remedio": {
+    "plantilla": "MAT.NUM.FRAPROB.G01",
+    "dificultad": 3,
+    "explicacion": "Lee la pregunta: si piden lo que queda, resta lo gastado del total."
+   },
+   "detecta": [
+    {
+     "generador": "problemaFraccion",
+     "patron": "^Eso es lo que gasta"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.NUM.FRAPROB.2",
+   "competencia": "MAT.NUM.FRAPROB",
+   "descripcion": "Olvidas restar uno de los gastos.",
+   "remedio": {
+    "plantilla": "MAT.NUM.FRAPROB.G01",
+    "dificultad": 3,
+    "explicacion": "Resta cada gasto, uno detrás de otro, antes de dar el resultado."
+   },
+   "detecta": [
+    {
+     "generador": "problemaFraccion",
+     "patron": "^Te falta restar"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.NUM.FRAPROB.3",
+   "competencia": "MAT.NUM.FRAPROB",
+   "descripcion": "Aplicas la segunda fracción al total, no al resto.",
+   "remedio": {
+    "plantilla": "MAT.NUM.FRAPROB.G02",
+    "dificultad": 4,
+    "explicacion": "«De lo que queda» significa que la segunda fracción se calcula sobre el resto, no sobre el total."
+   },
+   "detecta": [
+    {
+     "generador": "problemaFraccion",
+     "patron": "^La segunda fracción se aplica"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.JER.1",
+   "competencia": "MAT.OPE.JER",
+   "descripcion": "No respetas la jerarquía de las operaciones.",
+   "remedio": {
+    "plantilla": "MAT.OPE.JER.G01",
+    "dificultad": 2,
+    "explicacion": "Primero paréntesis, después multiplicaciones y divisiones, y por último sumas y restas."
+   },
+   "detecta": [
+    {
+     "generador": "operacionesCombinadas",
+     "patron": "^Primero paréntesis"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.JER.2",
+   "competencia": "MAT.OPE.JER",
+   "descripcion": "Sumas fracciones sin buscar un denominador común.",
+   "remedio": {
+    "plantilla": "MAT.OPE.JER.G01",
+    "dificultad": 2,
+    "explicacion": "Para sumar o restar fracciones, primero se reducen a común denominador."
+   },
+   "detecta": [
+    {
+     "generador": "operacionesCombinadas",
+     "patron": "^Para sumar fracciones"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.COMB.1",
+   "competencia": "MAT.OPE.COMB",
+   "descripcion": "No respetas la jerarquía de las operaciones.",
+   "remedio": {
+    "plantilla": "MAT.OPE.COMB.G01",
+    "dificultad": 3,
+    "explicacion": "Primero paréntesis, después multiplicaciones y divisiones, y por último sumas y restas."
+   },
+   "detecta": [
+    {
+     "generador": "operacionesCombinadas",
+     "patron": "^Primero paréntesis"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.COMB.2",
+   "competencia": "MAT.OPE.COMB",
+   "descripcion": "Sumas fracciones sin buscar un denominador común.",
+   "remedio": {
+    "plantilla": "MAT.OPE.COMB.G01",
+    "dificultad": 3,
+    "explicacion": "Para sumar o restar fracciones, primero se reducen a común denominador."
+   },
+   "detecta": [
+    {
+     "generador": "operacionesCombinadas",
+     "patron": "^Para sumar fracciones"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.ECUAC.1",
+   "competencia": "MAT.OPE.ECUAC",
+   "descripcion": "Al pasar un término no le cambias el signo.",
+   "remedio": {
+    "plantilla": "MAT.OPE.ECUAC.G01",
+    "dificultad": 2,
+    "explicacion": "Lo que suma pasa restando y lo que resta pasa sumando al otro miembro."
+   },
+   "detecta": [
+    {
+     "generador": "ecuacionLineal",
+     "patron": "cambia de signo"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.ECUAC.2",
+   "competencia": "MAT.OPE.ECUAC",
+   "descripcion": "Despejas mal el número que multiplica a la x.",
+   "remedio": {
+    "plantilla": "MAT.OPE.ECUAC.G01",
+    "dificultad": 2,
+    "explicacion": "Si 3x = 12, el 3 que multiplica pasa dividiendo: x = 12 : 3."
+   },
+   "detecta": [
+    {
+     "generador": "ecuacionLineal",
+     "patron": "^Lo que multiplica"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.ECUAC.3",
+   "competencia": "MAT.OPE.ECUAC",
+   "descripcion": "Agrupas mal los términos con x.",
+   "remedio": {
+    "plantilla": "MAT.OPE.ECUAC.G02",
+    "dificultad": 3,
+    "explicacion": "x es 1x: al agrupar, x + 2x = 3x."
+   },
+   "detecta": [
+    {
+     "generador": "ecuacionLineal",
+     "patron": "^El número también cuenta"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.ECUAC.4",
+   "competencia": "MAT.OPE.ECUAC",
+   "descripcion": "No multiplicas por todos los términos del paréntesis.",
+   "remedio": {
+    "plantilla": "MAT.OPE.ECUAC.G03",
+    "dificultad": 4,
+    "explicacion": "El número de fuera multiplica a cada término de dentro: 2(x + 3) = 2x + 6."
+   },
+   "detecta": [
+    {
+     "generador": "ecuacionLineal",
+     "patron": "^Multiplica .* paréntesis"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.INCOG.1",
+   "competencia": "MAT.OPE.INCOG",
+   "descripcion": "Te quedas en el primer paso de dos.",
+   "remedio": {
+    "plantilla": "MAT.OPE.INCOG.G02",
+    "dificultad": 4,
+    "explicacion": "Cuando hay dos igualdades, el valor de la primera se usa en la segunda."
+   },
+   "detecta": [
+    {
+     "generador": "terminoDesconocido",
+     "patron": "^Ese es el valor de a"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.OPE.INCOG.2",
+   "competencia": "MAT.OPE.INCOG",
+   "descripcion": "No usas la operación contraria para despejar.",
+   "remedio": {
+    "plantilla": "MAT.OPE.INCOG.G02",
+    "dificultad": 4,
+    "explicacion": "La resta deshace la suma y la división deshace la multiplicación."
+   },
+   "detecta": [
+    {
+     "generador": "terminoDesconocido",
+     "patron": "^Para despejar"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.CALC.1",
+   "competencia": "MAT.POR.CALC",
+   "descripcion": "Te equivocas con la coma al calcular un porcentaje.",
+   "remedio": {
+    "plantilla": "MAT.POR.CALC.G01",
+    "dificultad": 2,
+    "explicacion": "El 15 % son 15 de cada 100: multiplica por 15 y divide entre 100."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Revisa la coma decimal"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has dividido entre el porcentaje"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Aquí .* ya es el"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.CALC.2",
+   "competencia": "MAT.POR.CALC",
+   "descripcion": "Calculas lo que queda en lugar del porcentaje pedido.",
+   "remedio": {
+    "plantilla": "MAT.POR.CALC.G01",
+    "dificultad": 2,
+    "explicacion": "Lee qué se pide: el 20 % de algo no es lo que queda tras quitar el 20 %."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has calculado lo que queda"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has usado el porcentaje que falta"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^El precio rebajado es el"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.TOTAL.1",
+   "competencia": "MAT.POR.TOTAL",
+   "descripcion": "Te equivocas con la coma al calcular un porcentaje.",
+   "remedio": {
+    "plantilla": "MAT.POR.TOTAL.G01",
+    "dificultad": 3,
+    "explicacion": "El 15 % son 15 de cada 100: multiplica por 15 y divide entre 100."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Revisa la coma decimal"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has dividido entre el porcentaje"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Aquí .* ya es el"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.TOTAL.2",
+   "competencia": "MAT.POR.TOTAL",
+   "descripcion": "Calculas lo que queda en lugar del porcentaje pedido.",
+   "remedio": {
+    "plantilla": "MAT.POR.TOTAL.G01",
+    "dificultad": 3,
+    "explicacion": "Lee qué se pide: el 20 % de algo no es lo que queda tras quitar el 20 %."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has calculado lo que queda"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has usado el porcentaje que falta"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^El precio rebajado es el"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.TOTAL.3",
+   "competencia": "MAT.POR.TOTAL",
+   "descripcion": "Sumas o restas los puntos del porcentaje como si fueran euros.",
+   "remedio": {
+    "plantilla": "MAT.POR.TOTAL.G01",
+    "dificultad": 3,
+    "explicacion": "Un 10 % no son 10 €: calcula primero cuánto es ese porcentaje de la cantidad."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "puntos del porcentaje"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.TOTAL.4",
+   "competencia": "MAT.POR.TOTAL",
+   "descripcion": "Aplicas el porcentaje sobre la cantidad equivocada.",
+   "remedio": {
+    "plantilla": "MAT.POR.TOTAL.G01",
+    "dificultad": 3,
+    "explicacion": "El porcentaje se calcula sobre la cantidad inicial, no sobre el resultado."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "sobre el resultado, no sobre la cantidad inicial"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.VAR.1",
+   "competencia": "MAT.POR.VAR",
+   "descripcion": "Te equivocas con la coma al calcular un porcentaje.",
+   "remedio": {
+    "plantilla": "MAT.POR.VAR.G01",
+    "dificultad": 3,
+    "explicacion": "El 15 % son 15 de cada 100: multiplica por 15 y divide entre 100."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Revisa la coma decimal"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has dividido entre el porcentaje"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Aquí .* ya es el"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.VAR.2",
+   "competencia": "MAT.POR.VAR",
+   "descripcion": "Sumas o restas los puntos del porcentaje como si fueran euros.",
+   "remedio": {
+    "plantilla": "MAT.POR.VAR.G01",
+    "dificultad": 3,
+    "explicacion": "Un 10 % no son 10 €: calcula primero cuánto es ese porcentaje de la cantidad."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "puntos del porcentaje"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.VAR.3",
+   "competencia": "MAT.POR.VAR",
+   "descripcion": "Confundes subir y bajar un porcentaje.",
+   "remedio": {
+    "plantilla": "MAT.POR.VAR.G01",
+    "dificultad": 3,
+    "explicacion": "Una rebaja se resta del precio; un aumento se suma."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has sumado la rebaja"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Has restado el aumento"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.VAR.4",
+   "competencia": "MAT.POR.VAR",
+   "descripcion": "Te quedas en la variación y no das el precio final.",
+   "remedio": {
+    "plantilla": "MAT.POR.VAR.G01",
+    "dificultad": 3,
+    "explicacion": "Calcula la rebaja o el aumento y después réstalo o súmalo al precio inicial."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Esa es la rebaja"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Ese es solo el aumento"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.VAR.5",
+   "competencia": "MAT.POR.VAR",
+   "descripcion": "Sumas los porcentajes sucesivos en lugar de encadenarlos.",
+   "remedio": {
+    "plantilla": "MAT.POR.VAR.G01",
+    "dificultad": 3,
+    "explicacion": "La segunda variación se aplica sobre el precio ya modificado: multiplica los factores."
+   },
+   "detecta": [
+    {
+     "generador": "porcentajeDe",
+     "patron": "sucesiv"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "segunda variación"
+    },
+    {
+     "generador": "porcentajeDe",
+     "patron": "^Quitar el .* es multiplicar"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.PROP.1",
+   "competencia": "MAT.POR.PROP",
+   "descripcion": "Sumas la diferencia en lugar de multiplicar.",
+   "remedio": {
+    "plantilla": "MAT.POR.PROP.G01",
+    "dificultad": 2,
+    "explicacion": "En la proporcionalidad se multiplica por la razón; no se suma ni se resta la diferencia."
+   },
+   "detecta": [
+    {
+     "generador": "reglaDeTres",
+     "patron": "(No se suma la diferencia|pero no se (suma|resta))"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.PROP.2",
+   "competencia": "MAT.POR.PROP",
+   "descripcion": "Confundes la proporcionalidad directa con la inversa.",
+   "remedio": {
+    "plantilla": "MAT.POR.PROP.G02",
+    "dificultad": 3,
+    "explicacion": "Directa: si una cantidad aumenta, la otra también. Inversa: si una aumenta, la otra disminuye."
+   },
+   "detecta": [
+    {
+     "generador": "reglaDeTres",
+     "patron": "^Es proporcionalidad (directa|inversa)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.POR.PROP.3",
+   "competencia": "MAT.POR.PROP",
+   "descripcion": "Dejas la regla de tres a medias.",
+   "remedio": {
+    "plantilla": "MAT.POR.PROP.G01",
+    "dificultad": 2,
+    "explicacion": "Multiplica en cruz y divide entre el tercer dato; si hay dos pasos, haz los dos."
+   },
+   "detecta": [
+    {
+     "generador": "reglaDeTres",
+     "patron": "^(Has multiplicado|Ese es el coste|Eso son los litros)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.PRO.LAPLACE.1",
+   "competencia": "MAT.PRO.LAPLACE",
+   "descripcion": "Das la probabilidad del suceso contrario.",
+   "remedio": {
+    "plantilla": "MAT.PRO.LAPLACE.G01",
+    "dificultad": 3,
+    "explicacion": "Cuenta los casos favorables al suceso que se pregunta, no los del contrario."
+   },
+   "detecta": [
+    {
+     "generador": "probabilidadSimple",
+     "patron": "suceso contrario"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.PRO.LAPLACE.2",
+   "competencia": "MAT.PRO.LAPLACE",
+   "descripcion": "Cuentas mal los casos posibles.",
+   "remedio": {
+    "plantilla": "MAT.PRO.LAPLACE.G01",
+    "dificultad": 3,
+    "explicacion": "Probabilidad = casos favorables : casos posibles (todos los resultados)."
+   },
+   "detecta": [
+    {
+     "generador": "probabilidadSimple",
+     "patron": "^Los casos posibles|no entre desfavorables"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.ROM.LEER.1",
+   "competencia": "MAT.ROM.LEER",
+   "descripcion": "Sumas el símbolo menor que va delante del mayor.",
+   "remedio": {
+    "plantilla": "MAT.ROM.LEER.G01",
+    "dificultad": 2,
+    "explicacion": "Un símbolo menor delante de uno mayor se resta: IV = 4, IX = 9, XL = 40, CM = 900."
+   },
+   "detecta": [
+    {
+     "generador": "romanos",
+     "patron": "^Un símbolo menor delante"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.ROM.LEER.2",
+   "competencia": "MAT.ROM.LEER",
+   "descripcion": "Te equivocas en el valor de una parte del número.",
+   "remedio": {
+    "plantilla": "MAT.ROM.LEER.G01",
+    "dificultad": 2,
+    "explicacion": "Lee por partes: millares, centenas, decenas y unidades (MCMXC = 1000 + 900 + 90)."
+   },
+   "detecta": [
+    {
+     "generador": "romanos",
+     "patron": "^Revisa [IVXLCDM]+: vale"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.ROM.LEER.3",
+   "competencia": "MAT.ROM.LEER",
+   "descripcion": "Repites o restas símbolos de forma no permitida.",
+   "remedio": {
+    "plantilla": "MAT.ROM.LEER.G01",
+    "dificultad": 2,
+    "explicacion": "V, L y D no se repiten; I, X y C, como mucho tres veces; solo se resta I, X o C."
+   },
+   "detecta": [
+    {
+     "generador": "romanos",
+     "patron": "^V, L y D no se repiten|está bien escrito"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.ROM.ESCR.1",
+   "competencia": "MAT.ROM.ESCR",
+   "descripcion": "Repites o restas símbolos de forma no permitida.",
+   "remedio": {
+    "plantilla": "MAT.ROM.ESCR.G01",
+    "dificultad": 2,
+    "explicacion": "V, L y D no se repiten; I, X y C, como mucho tres veces; solo se resta I, X o C."
+   },
+   "detecta": [
+    {
+     "generador": "romanos",
+     "patron": "^V, L y D no se repiten|está bien escrito"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.LMC.1",
+   "competencia": "MAT.UNI.LMC",
+   "descripcion": "Operas con medidas sin pasarlas a la misma unidad.",
+   "remedio": {
+    "plantilla": "MAT.UNI.LMC.G01",
+    "dificultad": 2,
+    "explicacion": "Antes de sumar o comparar, pasa todas las medidas a la misma unidad."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "^Has sumado los números sin pasarlos"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.LMC.2",
+   "competencia": "MAT.UNI.LMC",
+   "descripcion": "Das un salto de unidad de más o de menos.",
+   "remedio": {
+    "plantilla": "MAT.UNI.LMC.G01",
+    "dificultad": 2,
+    "explicacion": "Cuenta los escalones entre las dos unidades: cada uno multiplica o divide por 10 (100 o 1000 en superficie y volumen)."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "salto de (más|menos)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.LMC.3",
+   "competencia": "MAT.UNI.LMC",
+   "descripcion": "Multiplicas cuando hay que dividir, o al revés.",
+   "remedio": {
+    "plantilla": "MAT.UNI.LMC.G01",
+    "dificultad": 2,
+    "explicacion": "Al pasar a una unidad menor se multiplica; a una mayor, se divide."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "^Al pasar a una unidad menor"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.LMC.4",
+   "competencia": "MAT.UNI.LMC",
+   "descripcion": "Confundes las equivalencias de capacidad, volumen y masa.",
+   "remedio": {
+    "plantilla": "MAT.UNI.LMC.G01",
+    "dificultad": 2,
+    "explicacion": "1 dm³ = 1 l y 1 cm³ = 1 ml; 1 l de agua pesa 1 kg."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "l de agua pesa|tienen unidades distintas|Revisa la equivalencia"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.SUP.1",
+   "competencia": "MAT.UNI.SUP",
+   "descripcion": "Operas con medidas sin pasarlas a la misma unidad.",
+   "remedio": {
+    "plantilla": "MAT.UNI.SUP.G01",
+    "dificultad": 3,
+    "explicacion": "Antes de sumar o comparar, pasa todas las medidas a la misma unidad."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "^Has sumado los números sin pasarlos"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.SUP.2",
+   "competencia": "MAT.UNI.SUP",
+   "descripcion": "Das un salto de unidad de más o de menos.",
+   "remedio": {
+    "plantilla": "MAT.UNI.SUP.G01",
+    "dificultad": 3,
+    "explicacion": "Cuenta los escalones entre las dos unidades: cada uno multiplica o divide por 10 (100 o 1000 en superficie y volumen)."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "salto de (más|menos)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.SUP.3",
+   "competencia": "MAT.UNI.SUP",
+   "descripcion": "Multiplicas cuando hay que dividir, o al revés.",
+   "remedio": {
+    "plantilla": "MAT.UNI.SUP.G01",
+    "dificultad": 3,
+    "explicacion": "Al pasar a una unidad menor se multiplica; a una mayor, se divide."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "^Al pasar a una unidad menor"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.SUP.4",
+   "competencia": "MAT.UNI.SUP",
+   "descripcion": "Usas saltos de 10 en superficie o volumen.",
+   "remedio": {
+    "plantilla": "MAT.UNI.SUP.G01",
+    "dificultad": 3,
+    "explicacion": "En superficie cada escalón es ×100; en volumen, ×1000."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "^En (volumen|superficie), cada salto"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.VOL.1",
+   "competencia": "MAT.UNI.VOL",
+   "descripcion": "Operas con medidas sin pasarlas a la misma unidad.",
+   "remedio": {
+    "plantilla": "MAT.UNI.VOL.G01",
+    "dificultad": 3,
+    "explicacion": "Antes de sumar o comparar, pasa todas las medidas a la misma unidad."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "^Has sumado los números sin pasarlos"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.VOL.2",
+   "competencia": "MAT.UNI.VOL",
+   "descripcion": "Das un salto de unidad de más o de menos.",
+   "remedio": {
+    "plantilla": "MAT.UNI.VOL.G01",
+    "dificultad": 3,
+    "explicacion": "Cuenta los escalones entre las dos unidades: cada uno multiplica o divide por 10 (100 o 1000 en superficie y volumen)."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "salto de (más|menos)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.VOL.3",
+   "competencia": "MAT.UNI.VOL",
+   "descripcion": "Multiplicas cuando hay que dividir, o al revés.",
+   "remedio": {
+    "plantilla": "MAT.UNI.VOL.G01",
+    "dificultad": 3,
+    "explicacion": "Al pasar a una unidad menor se multiplica; a una mayor, se divide."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "^Al pasar a una unidad menor"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.VOL.4",
+   "competencia": "MAT.UNI.VOL",
+   "descripcion": "Usas saltos de 10 en superficie o volumen.",
+   "remedio": {
+    "plantilla": "MAT.UNI.VOL.G01",
+    "dificultad": 3,
+    "explicacion": "En superficie cada escalón es ×100; en volumen, ×1000."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "^En (volumen|superficie), cada salto"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.VOL.5",
+   "competencia": "MAT.UNI.VOL",
+   "descripcion": "Confundes las equivalencias de capacidad, volumen y masa.",
+   "remedio": {
+    "plantilla": "MAT.UNI.VOL.G01",
+    "dificultad": 3,
+    "explicacion": "1 dm³ = 1 l y 1 cm³ = 1 ml; 1 l de agua pesa 1 kg."
+   },
+   "detecta": [
+    {
+     "generador": "conversionUnidades",
+     "patron": "l de agua pesa|tienen unidades distintas|Revisa la equivalencia"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.TIEM.1",
+   "competencia": "MAT.UNI.TIEM",
+   "descripcion": "No haces las llevadas de 60 en 60.",
+   "remedio": {
+    "plantilla": "MAT.UNI.TIEM.G01",
+    "dificultad": 2,
+    "explicacion": "Cada 60 segundos son 1 minuto y cada 60 minutos, 1 hora."
+   },
+   "detecta": [
+    {
+     "generador": "sexagesimal",
+     "patron": "^Revisa las llevadas"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.TIEM.2",
+   "competencia": "MAT.UNI.TIEM",
+   "descripcion": "Tratas horas y minutos como números decimales.",
+   "remedio": {
+    "plantilla": "MAT.UNI.TIEM.G01",
+    "dificultad": 2,
+    "explicacion": "1 h 30 min no es 1,30 h sino 1,5 h: el tiempo va de 60 en 60."
+   },
+   "detecta": [
+    {
+     "generador": "sexagesimal",
+     "patron": "^El tiempo no es decimal"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.TIEM.3",
+   "competencia": "MAT.UNI.TIEM",
+   "descripcion": "Dejas la conversión de tiempo a medias.",
+   "remedio": {
+    "plantilla": "MAT.UNI.TIEM.G02",
+    "dificultad": 3,
+    "explicacion": "Pasa todo a la unidad más pequeña (minutos o segundos) y suma."
+   },
+   "detecta": [
+    {
+     "generador": "sexagesimal",
+     "patron": "^Te has quedado a medias"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.TIEM.4",
+   "competencia": "MAT.UNI.TIEM",
+   "descripcion": "Calculas mal los intervalos que pasan la medianoche.",
+   "remedio": {
+    "plantilla": "MAT.UNI.TIEM.G03",
+    "dificultad": 4,
+    "explicacion": "Cuenta hasta las 24:00 y suma lo que falta desde las 0:00."
+   },
+   "detecta": [
+    {
+     "generador": "sexagesimal",
+     "patron": "medianoche"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.ESC.1",
+   "competencia": "MAT.UNI.ESC",
+   "descripcion": "Olvidas pasar el resultado a la unidad pedida.",
+   "remedio": {
+    "plantilla": "MAT.UNI.ESC.G01",
+    "dificultad": 3,
+    "explicacion": "La escala da centímetros: pásalos a metros o kilómetros si lo pide el enunciado."
+   },
+   "detecta": [
+    {
+     "generador": "escala",
+     "patron": "^Has dejado el resultado"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.ESC.2",
+   "competencia": "MAT.UNI.ESC",
+   "descripcion": "No pasas las distancias a la misma unidad.",
+   "remedio": {
+    "plantilla": "MAT.UNI.ESC.G02",
+    "dificultad": 4,
+    "explicacion": "Mapa y realidad deben estar en la misma unidad (normalmente centímetros) antes de dividir."
+   },
+   "detecta": [
+    {
+     "generador": "escala",
+     "patron": "^(Revisa|Pasa|Las dos distancias)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.UNI.ESC.3",
+   "competencia": "MAT.UNI.ESC",
+   "descripcion": "Multiplicas o divides por la escala al revés.",
+   "remedio": {
+    "plantilla": "MAT.UNI.ESC.G01",
+    "dificultad": 3,
+    "explicacion": "Del mapa a la realidad se multiplica por la escala; de la realidad al mapa, se divide."
+   },
+   "detecta": [
+    {
+     "generador": "escala",
+     "patron": "^(En el mapa|En el plano|Para pasar de la realidad)"
+    }
+   ]
+  }
+ ]
+}

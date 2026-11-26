@@ -115,6 +115,13 @@ final class PerfilRegistro {
     var avatar: Int?
     /// Desbloqueos por prueba de nivel (JSON, Fase 05D).
     var desbloqueosJSON: Data?
+    /// Días de sesión y periodos de descanso (JSON, 05E parte 2 §3.3).
+    var diasJSON: Data?
+
+    private struct Dias: Codable {
+        var sesion: [DiaCivil]
+        var descanso: [PeriodoDescanso]
+    }
 
     init() {}
 
@@ -130,6 +137,7 @@ final class PerfilRegistro {
         avatar = p.avatar
         misionesJSON = try JSONEncoder().encode(p.misiones)
         desbloqueosJSON = try JSONEncoder().encode(p.desbloqueos)
+        diasJSON = try JSONEncoder().encode(Dias(sesion: p.diasSesion, descanso: p.racha.descanso))
         metricasJSON = try JSONEncoder().encode(Dictionary(uniqueKeysWithValues: p.metricas.map { ($0.key.rawValue, $0.value) }))
     }
 
@@ -137,13 +145,16 @@ final class PerfilRegistro {
         let misiones = try misionesJSON.map { try JSONDecoder().decode([Mision].self, from: $0) } ?? []
         let crudas = try metricasJSON.map { try JSONDecoder().decode([String: Int].self, from: $0) } ?? [:]
         let metricas = Dictionary(uniqueKeysWithValues: crudas.compactMap { k, v in Metrica(rawValue: k).map { ($0, v) } })
-        let racha = EstadoRacha(actual: rachaActual, record: rachaRecord, protectores: protectores,
+        let dias = try diasJSON.map { try JSONDecoder().decode(Dias.self, from: $0) }
+        var racha = EstadoRacha(actual: rachaActual, record: rachaRecord, protectores: protectores,
                                 ultimoDiaActivo: ultimoDiaActivo.flatMap(DiaCivil.init(clave:)),
                                 ultimoDiaProcesado: ultimoDiaProcesado.flatMap(DiaCivil.init(clave:)))
+        racha.descanso = dias?.descanso ?? []
         return PerfilJugador(xpTotal: xpTotal, racha: racha, misiones: misiones,
                              diaMisiones: diaMisiones.flatMap(DiaCivil.init(clave:)), metricas: metricas,
                              competenciaEnCurso: competenciaEnCurso, avatar: Avatar.migrar(avatar),
-                             desbloqueos: try desbloqueosJSON.map { try JSONDecoder().decode([Desbloqueo].self, from: $0) } ?? [])
+                             desbloqueos: try desbloqueosJSON.map { try JSONDecoder().decode([Desbloqueo].self, from: $0) } ?? [],
+                             diasSesion: dias?.sesion ?? [])
     }
 }
 
@@ -193,11 +204,34 @@ final class AjustesRegistro {
     }
 }
 
+/// Suceso del motor de errores (05E parte 2 §4): solo se añaden, nunca se modifican.
+@Model
+final class EventoErrorRegistro {
+    var uuid: UUID = UUID()
+    var fecha: Date = Date.distantPast
+    var errorId: String = ""
+    var tipo: String = EventoError.Tipo.fallo.rawValue
+    var itemId: String = ""
+
+    init(_ e: EventoError) {
+        uuid = e.id
+        fecha = e.fecha
+        errorId = e.errorId
+        tipo = e.tipo.rawValue
+        itemId = e.itemId
+    }
+
+    var valor: EventoError? {
+        EventoError.Tipo(rawValue: tipo).map { EventoError(id: uuid, fecha: fecha, errorId: errorId, tipo: $0, itemId: itemId) }
+    }
+}
+
 /// Esquema y contenedor del progreso.
 enum EsquemaProgreso {
     static var modelos: [any PersistentModel.Type] {
         [IntentoRegistro.self, EstadoCompetenciaRegistro.self, RescateRegistro.self,
-         PerfilRegistro.self, LogroRegistro.self, DiagnosticoRegistro.self, PartidaRegistro.self, AjustesRegistro.self]
+         PerfilRegistro.self, LogroRegistro.self, DiagnosticoRegistro.self, PartidaRegistro.self, AjustesRegistro.self,
+         EventoErrorRegistro.self]
     }
 
     /// Contenedor local (sin CloudKit). `enMemoria` para tests.

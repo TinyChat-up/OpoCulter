@@ -43,4 +43,7 @@ struct ErrorHabitual: Codable, Sendable, Equatable {
     /// Id de la opción/ficha elegida o valor de la respuesta errónea.
     var respuesta: String
     var feedback: String
+    /// Error típico que delata (`ERR.…` de `errores.json`, 05E parte 2 §4). En los ítems generados lo
+    /// pone el catálogo de errores; en los estáticos puede venir en el JSON.
+    var error: String? = nil
 }

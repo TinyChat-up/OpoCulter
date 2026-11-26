@@ -99,7 +99,7 @@ final class EntornoApp {
 
     func reprogramarRecordatorio() async {
         guard let servicio else { return }
-        await recordatorio.reprogramar(ajustes: ajustes, racha: servicio.racha, ahora: servicio.reloj.ahora)
+        await recordatorio.reprogramar(ajustes: ajustes, sesionHoy: (try? servicio.sesionCompletadaHoy()) ?? false, ahora: servicio.reloj.ahora)
     }
 
     /// Activa el recordatorio tras pedir el permiso en contexto (después de la primera ronda).
@@ -111,9 +111,9 @@ final class EntornoApp {
         guardar(a)
     }
 
-    /// Al completar una ronda: la notificación de hoy ya no hace falta.
+    /// Al completar una ronda: si ya está la sesión diaria de hoy, la notificación de hoy sobra.
     func rondaCompletada() {
-        guard let servicio else { return }
+        guard let servicio, (try? servicio.sesionCompletadaHoy()) == true else { return }
         recordatorio.cancelarHoy(ahora: servicio.reloj.ahora)
     }
 

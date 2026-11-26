@@ -199,7 +199,7 @@ final class RondaViewModel: Identifiable {
         sesionDiagnostico?.registrar(itemId: item.id, correcto: r.correcto)
         do {
             let e = try servicio.registrar(item: item, resultado: r, usoPista: usoPista, combo: comboActual,
-                                           motivo: ronda.items[indice].motivo)
+                                           motivo: ronda.items[indice].motivo, errorRemedio: ronda.items[indice].errorId)
             efecto = e
             xpRonda += e.xp
             if e.subioPeldano, !subidas.contains(item.competencia) { subidas.append(item.competencia) }

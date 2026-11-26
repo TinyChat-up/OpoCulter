@@ -24,9 +24,13 @@ struct ItemRonda: Sendable, Equatable {
         case repaso, rescate, enCurso, intercalado, relleno
         /// Modos de la Fase 05D.
         case pruebaNivel, reto, supervivencia, diagnostico, practica
+        /// Sesión diaria (05E parte 2): ítem nuevo y remedio de un error típico activo.
+        case nuevo, remedio
     }
     var itemId: String
     var motivo: Motivo
+    /// Error típico que trabaja un ítem de remedio.
+    var errorId: String? = nil
 }
 
 struct Ronda: Sendable, Equatable {

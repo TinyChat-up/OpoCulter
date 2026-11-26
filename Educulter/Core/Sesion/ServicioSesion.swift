@@ -24,6 +24,10 @@ enum TipoRonda: Sendable, Equatable {
     case supervivencia(area: String?)
     /// Diagnóstico inicial (adaptativo, ítem a ítem).
     case diagnostico
+    /// Sesión diaria mixta (05E parte 2 §3).
+    case sesion(duracion: DuracionSesion, foco: FocoSesion)
+    /// Rescate de un error típico activo: 3 ítems de su remedio (05E parte 2 §4).
+    case rescateError(String)
 }
 
 /// Propuesta de ronda por área para el panel protagonista de Hoy.
@@ -190,7 +194,7 @@ final class ServicioSesion {
         PlanEstudio(banco: banco, diagnostico: try? repositorio.diagnostico()).ordenadas()
     }
 
-    private func valida(_ id: String, _ estados: [String: EstadoCompetencia]) -> Bool {
+    func valida(_ id: String, _ estados: [String: EstadoCompetencia]) -> Bool {
         !(estados[id]?.escalera.dominada(configAprendizaje.escalera) ?? false)
             && banco.tieneItems(competencia: id, peldanoMaximo: configRonda.peldanoMaximoEnRonda)
     }
@@ -276,6 +280,10 @@ final class ServicioSesion {
             let primero = try siguienteSupervivencia(dificultad: ReglasSupervivencia.estandar.dificultadInicial, area: area, usados: [])
             return RondaPreparada(tipo: tipo, items: primero.map { [ItemRonda(itemId: $0.id, motivo: .supervivencia)] } ?? [],
                                   competenciaEnCurso: nil, teoriaPrevia: [])
+        case .sesion(let duracion, let foco):
+            return try prepararSesion(duracion: duracion, foco: foco)
+        case .rescateError(let id):
+            return try prepararRescateError(id) ?? RondaPreparada(tipo: tipo, items: [], competenciaEnCurso: nil, teoriaPrevia: [])
         case .diagnostico:
             let sesion = nuevaSesionDiagnostico()
             return RondaPreparada(tipo: tipo, items: sesion.siguienteItem.map { [ItemRonda(itemId: $0.id, motivo: .diagnostico)] } ?? [],
@@ -288,9 +296,10 @@ final class ServicioSesion {
     /// Registra una respuesta y actualiza todo el progreso. `combo` incluye esta respuesta.
     @discardableResult
     func registrar(item: Item, resultado: Resultado, usoPista: Bool, combo: Int,
-                   motivo: ItemRonda.Motivo?, confianza: Int? = nil) throws -> EfectoRespuesta {
+                   motivo: ItemRonda.Motivo?, confianza: Int? = nil, errorRemedio: String? = nil) throws -> EfectoRespuesta {
         let ahora = reloj.ahora
         var efecto = EfectoRespuesta()
+        try registrarErrores(item: item, resultado: resultado, errorRemedio: errorRemedio, fecha: ahora, efecto: &efecto)
         var perfil = try repositorio.perfil()
         try asegurarMisiones(&perfil)
 
@@ -338,6 +347,29 @@ final class ServicioSesion {
         return efecto
     }
 
+    /// Motor de errores (05E parte 2 §4, D-107): guarda los fallos que delatan un error típico y las
+    /// respuestas a su remedio. `errorRepetido` es el error activo que esta respuesta repite.
+    private func registrarErrores(item: Item, resultado: Resultado, errorRemedio: String?, fecha: Date,
+                                  efecto: inout EfectoRespuesta) throws {
+        var eventos: [EventoError] = []
+        if let errorRemedio {
+            eventos.append(EventoError(fecha: fecha, errorId: errorRemedio, tipo: resultado.correcto ? .remedioAcierto : .remedioFallo, itemId: item.id))
+        }
+        for id in EstadoErrores.errores(de: resultado, item: item) where id != errorRemedio {
+            eventos.append(EventoError(fecha: fecha, errorId: id, tipo: .fallo, itemId: item.id))
+        }
+        guard !eventos.isEmpty else { return }
+        var estado = EstadoErrores(eventos: try repositorio.eventosError())
+        for e in eventos {
+            try repositorio.registrar(e)
+            let s = estado.aplicar(e)
+            if e.tipo == .fallo, s.activo, efecto.errorRepetido == nil { efecto.errorRepetido = banco.recursos.errores[e.errorId] }
+        }
+    }
+
+    /// Estado del motor de errores del usuario.
+    func estadoErrores() throws -> EstadoErrores { EstadoErrores(eventos: try repositorio.eventosError()) }
+
     /// Cierra una ronda terminada: racha, métricas, misiones y logros. `aciertos` decide la prueba
     /// de nivel y el Reto de bloque.
     func completarRonda(_ ronda: RondaPreparada, aciertos: Int? = nil) throws -> EfectoRonda {
@@ -346,6 +378,7 @@ final class ServicioSesion {
         var efecto = EfectoRonda()
         try aplicarModo(ronda, aciertos: aciertos, perfil: &perfil, efecto: &efecto)
         efecto.cambiosRacha = perfil.racha.registrarRonda(hoy: hoy)
+        if case .sesion = ronda.tipo { perfil.registrarSesion(hoy) }
         efecto.racha = perfil.racha
         perfil.metricas[.rondasCompletadas, default: 0] += 1
         perfil.metricas[.rachaRecord] = max(perfil.metricas[.rachaRecord] ?? 0, perfil.racha.record)
