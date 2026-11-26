@@ -1,8 +1,31 @@
 # Estado del proyecto
 
-**Fase actual:** 05E parte 1 (auditoría, mapa curricular, calibración «nivel examen», arreglos y Lengua inmediata) · **Terminada y fusionada en `main`**.
-**Siguiente:** 05E parte 2 (identidad, sesión diaria, errores y ejemplos resueltos), a la espera del prompt de la dirección.
-**Última actualización:** 2026-11-25
+**Fase actual:** 05E parte 2 (identidad editorial, sesión diaria, motor de errores y ejemplos resueltos) · **Terminada y fusionada en `main`**.
+**Siguiente:** lo que decida la dirección tras el informe de la parte 2 (lotes de datos pendientes y Fase 05F/06).
+**Última actualización:** 2026-11-26
+
+## Fase 05E parte 2 — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| Test de 1000 historiales de `ConstructorSesion` | ✅ En verde. Causa raíz en el constructor (no en el test): se corrigió la colocación pieza a pieza | D-108 |
+| Identidad editorial (logo v5) | ✅ Paleta, fuentes del sistema, estilo plano, personajes recoloreados, `MarcaView` y lanzamiento | D-109, `PaletaTests`, `PersonajesV3Tests` |
+| Interfaz de §3 y §4 | ✅ Hoy, resumen, Rescate por error, errores en Progreso, Ajustes (meta y descanso), peldaños | D-111, `SesionDiariaUITests` |
+| §5 ejemplos resueltos | ✅ Pasos con porqué en 15 generadores y `oracionSimple`; ejemplo + gemelo; retirada de ayudas; «Nivel examen» | D-112, `PasosResueltosTests`, `EjemploResueltoTests` |
+| Distractores estáticos sin etiquetar | 13, todos de competencias sin errores en el catálogo (se quedan así) | D-113 |
+| Tests unitarios | ✅ **662** en verde (batería completa) | `xcodebuild test` |
+| Tests de interfaz | ✅ 23 de interfaz: la batería completa dio 9 fallos (adaptación a la interfaz nueva); corregidos y repetidos hasta 0 fallos | t17, t32, t33 |
+| Cobertura | ✅ Core **96,0 %** · Features 87,6 % · App 83,8 % | `xccov` |
+| Auditoría de accesibilidad | ✅ Sin incidencias en claro, oscuro y texto grande (Hoy, ejemplo resuelto, resumen, Progreso, Ajustes, Rescate) | `SesionDiariaUITests` |
+| Avisos del compilador | ✅ 0 (Debug, tests y archive Release) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Recorrido con capturas (`RecorridoParte2UITests`) y arranque en frío **0,86 s** de mediana (0,85–0,97) | [docs/capturas/fase05e2/](docs/capturas/fase05e2/) |
+
+## Pendiente (05E parte 2)
+1. **Arranque**: 0,86 s en frío en el iPhone; cumple < 1,5 s, pero no el objetivo de ≤ 0,7 s de §1b.7.
+2. **Datos de la dirección**: verbos irregulares, 70 palabras ambiguas con contexto, predicativo y complemento del nombre, 24 tarjetas de teoría.
+3. **Captura del icono en la pantalla de inicio del iPhone**: no se obtuvo (al pulsar Inicio, el iPhone volvió a otra app abierta y esa captura se descartó por privacidad).
+4. Decisiones para la dirección: ver el informe (misiones sin interfaz, estado «descanso» de los personajes sin pantalla, ojos y boca de Cuarto en papel).
 
 ## Fase 05E parte 1 — Resultado
 

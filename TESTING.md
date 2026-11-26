@@ -247,3 +247,7 @@ Herramientas sin Mac de Xcode: `scripts/cargar_mapa_a1.py`, `ambiguas_tilde.py`,
 | `RecorridoParte2UITests` | Recorrido con una captura por pantalla (simulador e iPhone) |
 
 Opciones de arranque nuevas (solo Debug): `-errorDemo` y `-modoOscuro`. El texto grande se pide con el argumento del sistema `-UIPreferredContentSizeCategoryName UICTContentSizeCategoryAccessibilityL`: fijar el tamaño desde la app hacía que la auditoría lo marcara como «no admitido».
+
+**Resultados (26/11/2026):** 662 tests unitarios en verde; tests de interfaz en verde tras adaptar 9 a la interfaz nueva (repetidos solo los afectados); cobertura de Core 96,0 %; auditoría de accesibilidad sin incidencias en claro, oscuro y texto grande. En el iPhone 16 del propietario: recorrido completo (`RecorridoParte2UITests`) y arranque en frío de 0,97 / 0,86 / 0,85 / 0,86 / 0,87 s (mediana 0,86 s).
+
+**Excepción de auditoría añadida (D-048):** con `bordesDelScroll`, el «texto potencialmente inaccesible» sin elemento asociado es texto del scroll visto a través de la barra de pestañas translúcida (comprobado: al final del scroll, donde el contenido acaba por encima de la barra, desaparece).
