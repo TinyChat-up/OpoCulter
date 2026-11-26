@@ -162,7 +162,7 @@ Formato del examen (tipo de tarea de `docs/examenes/MATRIZ.md`; las 139 pregunta
 | Tarjetas de teoría (todas / Release) | 26 / 24 | 26 / 24 (`ContenidoTests`: «15 + las 9 del ANEXO B») | 0 (AUDITORIA §1 dice 15 aprobadas: es anterior al ANEXO B, D-102) |
 | Errores típicos | 93 | 93 en 34 competencias (CONTENIDOS «05E parte 2», D-107) | 0 (34 competencias) |
 | Distractores estáticos en Release etiquetados / sin etiquetar | 44 / 13 | 44 / 13 (CONTENIDOS, D-113) | 0 (mismos 13 ids) |
-| Equivalencias: entrena sí / parcial / no | 56 / 40 / 43 | ESTADO y AUDITORIA §3: sí 33,1 % (46) y sí + parcial 63,3 % (88) | **+10 «sí» y +8 «sí + parcial»** (40,3 % y 69,1 %; antes, 46 / 42 / 51):el commit d082bb8 («05E parte 2 · ajustes 1b») regeneró `equivalencias.json` al aprobar MCD, CENTRAL, LAPLACE e INCOG.G02 y cambiar la sintaxis (D-098, D-100, D-101); la documentación conserva la cifra de la parte 1 |
+| Equivalencias: entrena sí / parcial / no | 56 / 40 / 43 | ESTADO y AUDITORIA §3: sí 33,1 % (46) y sí + parcial 63,3 % (88) | **+10 «sí» y +8 «sí + parcial»** (40,3 % y 69,1 %; antes, 46 / 42 / 51): el commit d082bb8 («05E parte 2 · ajustes 1b») regeneró `equivalencias.json` al aprobar MCD, CENTRAL, LAPLACE e INCOG.G02 y cambiar la sintaxis (D-098, D-100, D-101); la documentación conserva la cifra de la parte 1 |
 | Anclas (total / reproducidas en el nivel 4) | 67 / 45 | 67 / 39 (ESTADO, D-096) | **+6 reproducidas**: el mismo commit d082bb8 (4 de término desconocido, D-100, y 2 de sintaxis, D-098) |
 | Textos base de la app | 5 | 5 (`ContenidoTests`, D-085) | 0 |
 | Competencias del catálogo | 125 | 125 (`ContenidoTests`; MAPA_CURRICULAR_A1: 111 del mapa + INCOG + 13 antiguas) | 0 |
