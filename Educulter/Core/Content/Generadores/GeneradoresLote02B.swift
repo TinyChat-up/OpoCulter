@@ -144,9 +144,40 @@ struct GeneradorConversionUnidades: GeneradorItems {
             guard let c = caso(familia, p.dificultad, rng: &rng) else { continue }
             let sol = Self.resolver(c)
             guard Self.aceptable(c, sol, dificultad: p.dificultad) else { continue }
-            return construir(c, sol: sol, familia: familia)
+            return construir(c, sol: sol, familia: familia).conPasos(Self.pasos(c, sol: sol))
         }
         throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    /// Pasos del ejemplo resuelto (§5): la equivalencia de cada unidad con la de destino (calculada) y
+    /// la conversión de cada término; con varios términos, la suma.
+    static func pasos(_ c: Caso, sol: Racional) -> [PasoResuelto] {
+        let hasta = c.destino.simbolo
+        let u0 = c.terminos[0].1
+        let cambio = (u0.magnitud == "V") != (c.destino.magnitud == "V")
+        let porque: String = c.agua ? "porque 1 l de agua pesa 1 kg"
+            : cambio ? "porque 1 dm³ ocupa lo mismo que 1 l"
+            : u0.magnitud == "S" ? "porque en superficie cada unidad es 100 veces la siguiente"
+            : u0.magnitud == "V" ? "porque en volumen cada unidad es 1.000 veces la siguiente"
+            : "porque cada unidad es 10 veces la siguiente"
+        func factor(_ u: Unidad) -> Racional { A.potencia(10, u.e + (c.agua ? 3 : 0) - c.destino.e) }
+        func convertir(_ v: Racional, _ u: Unidad) -> String {
+            let f = factor(u)
+            return A.menor(f, rac(1)) ? "\(A.texto(v)) : \(A.texto((rac(1) / f)!))" : "\(A.texto(v)) × \(A.texto(f))"
+        }
+        var r: [PasoResuelto] = []
+        if c.terminos.count == 1 {
+            let (v, u) = c.terminos[0]
+            r.append(Pasos.op("Busca la equivalencia entre \(u.simbolo) y \(hasta)", "1 \(u.simbolo) en \(hasta)", factor(u), porque: porque))
+            r.append(Pasos.op(A.menor(factor(u), rac(1)) ? "Divide la cantidad" : "Multiplica la cantidad", convertir(v, u), sol))
+            return r
+        }
+        for (v, u) in c.terminos where factor(u) != rac(1) {
+            r.append(Pasos.op("Pasa \(A.texto(v)) \(u.simbolo) a \(hasta)", convertir(v, u), v * factor(u), porque: r.isEmpty ? porque : nil))
+        }
+        let sumandos = c.terminos.map { A.texto($0.0 * factor($0.1)) }.joined(separator: " + ")
+        r.append(Pasos.op("Suma, ya en la misma unidad", sumandos, sol, porque: "porque solo se suman cantidades de la misma unidad"))
+        return r
     }
 
     private func construir(_ c: Caso, sol: Racional, familia: String) -> Muestra {
@@ -320,9 +351,112 @@ struct GeneradorSexagesimal: GeneradorItems {
             let c = caso(p.dificultad, ruedas: ruedas, rng: &rng)
             let r = Self.resultado(c)
             guard r > 0, c.op != "resta" || c.t1 != c.t2 else { continue }
-            return construir(p, c, r: r, ruedas: ruedas, rng: &rng)
+            let m = construir(p, c, r: r, ruedas: ruedas, rng: &rng)
+            return m.conPasos(Self.pasos(c, r: r, payload: ruedas ? m.payload : nil))
         }
         throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    /// La operación del caso con los tiempos en segundos (o en minutos con `divisor` 60).
+    static func operacionEnSegundos(_ c: Caso, divisor: Int = 1) -> String {
+        let a = A.texto(rac(c.t1 / divisor)), b = A.texto(rac(c.t2 / divisor))
+        switch c.op {
+        case "suma": return "\(a) + \(b)"
+        case "resta": return "\(a) − \(b)"
+        case "dur": return "\(b) − \(a)"
+        case "medianoche": return "\(A.texto(rac(86_400 / divisor))) − \(a) + \(b)"
+        case "mul": return "\(a) × \(c.k)"
+        default: return a
+        }
+    }
+
+    /// Pasos del ejemplo resuelto (§5). En una unidad (numérico): cada tiempo pasado a esa unidad y la
+    /// operación. Con ruedas: las llevadas de 60 en 60 y, al final, las ruedas.
+    static func pasos(_ c: Caso, r: Int, payload: Payload?) -> [PasoResuelto] {
+        let porque60 = "porque el tiempo va de 60 en 60, no de 100 en 100"
+        if let payload {
+            var pasos: [PasoResuelto] = []
+            if c.op == "sumaN" {
+                let h = c.partes.map(\.0).reduce(0, +), m = c.partes.map(\.1).reduce(0, +), s = c.partes.map(\.2).reduce(0, +)
+                pasos.append(Pasos.dato("Suma horas con horas, minutos con minutos…", "\(h) h \(m) min \(s) s",
+                                        porque: "porque solo se suman cantidades de la misma unidad"))
+                let mins = m + s / 60
+                pasos.append(Pasos.dato("Cada 60 s forman 1 min", "\(s) s = \(s / 60) min \(s % 60) s → \(mins) min \(s % 60) s", porque: porque60))
+                pasos.append(Pasos.dato("Cada 60 min forman 1 h", "\(mins) min = \(mins / 60) h \(mins % 60) min → \(tiempo(r))"))
+            } else if c.unidad == "s" {
+                let mins = r / 60
+                if c.op != "conv" { pasos.append(Pasos.op("Pasa los tiempos a segundos y opera", operacionEnSegundos(c), rac(r))) }
+                pasos.append(Pasos.dato("Divide los segundos entre 60", "\(A.texto(rac(r))) s : 60 = \(mins) min y \(r % 60) s", porque: porque60))
+                pasos.append(Pasos.dato("Divide los minutos entre 60", "\(mins) min : 60 = \(mins / 60) h y \(mins % 60) min"))
+            } else {
+                let mins = r / 60
+                if c.op != "conv" { pasos.append(Pasos.op("Pasa los tiempos a minutos y opera", operacionEnSegundos(c, divisor: 60), rac(mins))) }
+                pasos.append(Pasos.dato("Divide los minutos entre 60", "\(mins) min : 60 = \(mins / 60) h y \(mins % 60) min", porque: "porque cada 60 minutos forman una hora"))
+            }
+            pasos.append(Pasos.solucion("Coloca las ruedas", payload: payload))
+            return pasos
+        }
+        let div = c.unidad == "min" ? 60 : 1, u = c.unidad
+        func en(_ s: Int) -> Racional { rac(s / div) }
+        /// Expresión que pasa (h, min, s) a la unidad de la respuesta.
+        func expresion(_ h: Int, _ m: Int, _ s: Int) -> String {
+            var t: [String] = []
+            if u == "min" {
+                if h > 0 { t.append("\(h) × 60") }
+                if m > 0 { t.append("\(m)") }
+                if s > 0 { t.append("\(s) : 60") }
+            } else {
+                if h > 0 { t.append("\(h) × 3.600") }
+                if m > 0 { t.append("\(m) × 60") }
+                if s > 0 { t.append("\(s)") }
+            }
+            return t.isEmpty ? "0" : t.joined(separator: " + ")
+        }
+        func partes(_ s: Int) -> (Int, Int, Int) { (s / 3600, s % 3600 / 60, s % 60) }
+        let porqueMisma = "porque solo se suman cantidades de la misma unidad"
+        switch c.op {
+        case "conv":
+            let (h, m, s) = partes(c.t1)
+            if h > 0 && m > 0 {
+                return [Pasos.op("Pasa las horas a \(u == "s" ? "segundos" : "minutos")", expresion(h, 0, 0), en(h * 3600), porque: porque60),
+                        Pasos.op("Suma los minutos ya convertidos", "\(A.texto(en(h * 3600))) + \(expresion(0, m, s))", rac(r / div))]
+            }
+            let unidad = h > 0 ? "h" : (m > 0 ? "min" : "s"), cantidad = h > 0 ? h : (m > 0 ? m : s)
+            let factor = rac((unidad == "h" ? 3600 : 60) / div)
+            return [Pasos.op("Busca cuántos \(u) tiene 1 \(unidad)", "1 \(unidad) en \(u)", factor, porque: porque60),
+                    Pasos.op("Multiplica por \(cantidad)", "\(cantidad) × \(A.texto(factor))", rac(r / div))]
+        case "suma":
+            let a = partes(c.t1), b = partes(c.t2)
+            return [Pasos.op("Pasa el primer tiempo a \(u)", expresion(a.0, a.1, a.2), en(c.t1), porque: porqueMisma),
+                    Pasos.op("Pasa el segundo tiempo a \(u)", expresion(b.0, b.1, b.2), en(c.t2)),
+                    Pasos.op("Suma", "\(A.texto(en(c.t1))) + \(A.texto(en(c.t2)))", rac(r / div))]
+        case "resta":
+            return [Pasos.op("Pasa el primer tiempo a \(u)", expresion(partes(c.t1).0, partes(c.t1).1, partes(c.t1).2), en(c.t1), porque: porqueMisma),
+                    Pasos.op("Pasa el segundo tiempo a \(u)", expresion(partes(c.t2).0, partes(c.t2).1, partes(c.t2).2), en(c.t2)),
+                    Pasos.op("Resta", "\(A.texto(en(c.t1))) − \(A.texto(en(c.t2)))", rac(r / div))]
+        case "dur":
+            return [Pasos.op("Pasa la salida a \(u) desde las 0:00", expresion(partes(c.t1).0, partes(c.t1).1, 0), en(c.t1),
+                             porque: "porque la duración es lo que va de una hora a otra"),
+                    Pasos.op("Pasa la llegada a \(u) desde las 0:00", expresion(partes(c.t2).0, partes(c.t2).1, 0), en(c.t2)),
+                    Pasos.op("Resta llegada menos salida", "\(A.texto(en(c.t2))) − \(A.texto(en(c.t1)))", rac(r / div))]
+        case "medianoche":
+            let hasta24 = 86_400 - c.t1
+            return [Pasos.op("Cuenta desde la salida hasta las 24:00", "\(A.texto(en(86_400))) − \(A.texto(en(c.t1)))", en(hasta24),
+                             porque: "porque a medianoche el reloj vuelve a las 0:00"),
+                    Pasos.op("Cuenta desde las 0:00 hasta la llegada", expresion(partes(c.t2).0, partes(c.t2).1, 0), en(c.t2)),
+                    Pasos.op("Suma los dos tramos", "\(A.texto(en(hasta24))) + \(A.texto(en(c.t2)))", rac(r / div))]
+        case "mul":
+            let (h, m, s) = partes(c.t1)
+            return [Pasos.op("Pasa el tiempo a \(u)", expresion(h, m, s), en(c.t1), porque: "porque así multiplicas una sola cantidad"),
+                    Pasos.op("Multiplica por \(c.k)", "\(A.texto(en(c.t1))) × \(c.k)", rac(r / div))]
+        default:
+            let valores = c.partes.map { $0.0 * 3600 + $0.1 * 60 + $0.2 }
+            var pasos = c.partes.enumerated().map { k, t in
+                Pasos.op("Pasa \(escrito(t)) a \(u)", expresion(t.0, t.1, t.2), en(valores[k]), porque: k == 0 ? porqueMisma : nil)
+            }
+            pasos.append(Pasos.op("Suma", valores.map { A.texto(en($0)) }.joined(separator: " + "), rac(r / div)))
+            return pasos
+        }
     }
 
     private func construir(_ p: Plantilla, _ c: Caso, r: Int, ruedas: Bool, rng: inout GeneradorConSemilla) -> Muestra {
@@ -460,9 +594,27 @@ struct GeneradorEscala: GeneradorItems {
             let r = Self.real(c)
             guard let dr = A.decimales(r), dr <= 3 else { continue }
             if p.dificultad == 4 && c.unidadPlano == "cm" && c.d.esEntero { continue }
-            return construir(c, real: r)
+            return construir(c, real: r).conPasos(Self.pasos(c, real: r))
         }
         throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    /// Pasos del ejemplo resuelto (§5).
+    static func pasos(_ c: Caso, real r: Racional) -> [PasoResuelto] {
+        let e = FormatoNumero.miles(c.e), ds = A.texto(c.d), enUd = c.d * rac(c.e)
+        switch c.modo {
+        case "mr", "mrPlano":
+            let ud = c.modo == "mrPlano" ? c.unidadPlano : "cm"
+            let divisor = c.unidad == "km" ? 100_000 : (ud == "mm" ? 1000 : 100)
+            return [Pasos.op("Multiplica la medida por la escala", "\(ds) × \(e)", enUd, porque: "porque cada \(ud) del plano son \(e) \(ud) reales"),
+                    Pasos.op("Pasa de \(ud) a \(c.unidad)", "\(A.texto(enUd)) : \(FormatoNumero.miles(divisor))", r)]
+        case "rm":
+            return [Pasos.op("Pasa los kilómetros a centímetros", "\(A.texto(r)) × 100.000", enUd, porque: "porque la escala compara centímetros con centímetros"),
+                    Pasos.op("Divide entre la escala", "\(A.texto(enUd)) : \(e)", c.d)]
+        default:
+            return [Pasos.op("Pasa los kilómetros a centímetros", "\(A.texto(r)) × 100.000", enUd, porque: "porque las dos distancias tienen que ir en centímetros"),
+                    Pasos.op("Divide la distancia real entre la del mapa", "\(A.texto(enUd)) : \(ds)", rac(c.e))]
+        }
     }
 
     private func construir(_ c: Caso, real r: Racional) -> Muestra {

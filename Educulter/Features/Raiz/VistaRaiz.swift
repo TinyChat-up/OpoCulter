@@ -3,21 +3,26 @@ import SwiftUI
 /// Raíz de la app: barra de pestañas Hoy, Camino, Tribunal y Progreso.
 struct VistaRaiz: View {
     @Environment(EntornoApp.self) private var entorno
+    @State private var pestana = Pestana.hoy
 
     var body: some View {
         if let servicio = entorno.servicio {
-            TabView {
-                PantallaHoy(modelo: HoyViewModel(servicio: servicio))
+            TabView(selection: $pestana) {
+                PantallaHoy(modelo: HoyViewModel(servicio: servicio), irA: { pestana = $0 })
                     .tabItem { Label("Hoy", systemImage: "sun.max.fill") }
+                    .tag(Pestana.hoy)
                 PantallaCamino(servicio: servicio)
                     .tabItem { Label("Camino", systemImage: "point.topleft.down.to.point.bottomright.curvepath") }
+                    .tag(Pestana.camino)
                 VistaLlegaPronto(titulo: "Tribunal", icono: "checkmark.seal",
-                                 texto: "Los exámenes oficiales y simulacros con el formato y el tiempo del examen. Llega en la 05E.")
+                                 texto: "Los exámenes oficiales y simulacros con el formato y el tiempo del examen.")
                     .tabItem { Label("Tribunal", systemImage: "checkmark.seal.fill") }
+                    .tag(Pestana.tribunal)
                 PantallaProgreso(servicio: servicio)
                     .tabItem { Label("Progreso", systemImage: "chart.bar.fill") }
+                    .tag(Pestana.progreso)
             }
-            .tint(Paleta.contorno)
+            .tint(Paleta.primario)
         } else {
             VistaLlegaPronto(titulo: "No se ha podido cargar el contenido", icono: "exclamationmark.triangle",
                              texto: entorno.errorCarga ?? "Error desconocido.")
@@ -33,7 +38,6 @@ struct VistaLlegaPronto: View {
 
     var body: some View {
         VStack(spacing: Espacio.l) {
-            VistaPersonaje(companero: .cuarto, estado: ReglasPersonaje.estado(para: .estadoVacio))
             Text(titulo)
                 .font(.exhibicion(.title2))
                 .foregroundStyle(Paleta.textoPrincipal)

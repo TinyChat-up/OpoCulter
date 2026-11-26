@@ -129,9 +129,11 @@ ANCLAS = [
                              ("OF.2026.A-M19", "MAT.ROM.LEER", "MAT.ROM.LEER.G02", "MDXLVIII, CMXCIV, MMCDLIII", "romano → arábigo"),
                              ("OF.2017.O-M15", "MAT.ROM.ESCR", "MAT.ROM.ESCR.G02", "334, 975, 2069", "arábigo → romano"),
                              ("OF.2019.O-M19", "MAT.ROM.ESCR", "MAT.ROM.ESCR.G02", "824, 1223, 793", "arábigo → romano")]],
-    # MAT.OPE.ECUAC (término desconocido)
-    *[a(q, "MAT.OPE.ECUAC", "MAT.OPE.ECUAC.G03", {"pasos": 1, "numeros": n, "formato": "a · x = N y N : x = M"}, None,
-        nota="No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.")
+    # MAT.OPE.INCOG (término desconocido, D-100)
+    *[a(q, "MAT.OPE.INCOG", "MAT.OPE.INCOG.G02", {"pasos": 1, "numeros": n, "formato": "a · x = N y N : x = a"}, 4,
+        {"generador": "terminoDesconocido", "numeros": [4, 5]},
+        nota="El examen pide dos igualdades sueltas; cada ítem, una (los niveles 5–6 las encadenan)." + (" El factor decimal (1,5) sale en el nivel 6." if q == "OF.2017.O-M10" else ""),
+        cambio="Generador nuevo (D-100): nivel 4 = una operación inversa con N de 4–5 cifras." if q == "OF.2026.A-M13" else "")
       for q, n in [("OF.2017.O-M10", "1,5 · a = 300; 8888 : b = 40"), ("OF.2019.A-M13", "23 · a = 9591; 24024 : b = 88"),
                    ("OF.2019.O-M13", "44 · a = 1012; 2425 : b = 485"), ("OF.2026.A-M13", "36 · a = 10.404; 28.560 : b = 84")]],
     # Generadores con plantillas en borrador
@@ -160,16 +162,20 @@ ANCLAS = [
         cambio="Nivel 4: todos los tiempos de indicativo (salvo el pretérito anterior) y de subjuntivo en -ra con sus compuestos; antes llegaba a los compuestos de indicativo." if q == "OF.2024.O-L5" else "")
       for q, n in [("OF.2024.O-L5", "habréis cantado, cantaría, hubiéramos hablado (+ irregulares)"), ("OF.2019.O-L6", "llamaras, espero, llamas"),
                    ("OF.2022.O-L4", "perdiste, hundiré (+ sonrío)"), ("OF.2017.O-L6", "ignoras, sucede, has venido…"), ("OF.2019.A-L6", "desgarrara (+ oí, era)")]],
+    # Sintaxis (D-098): el nivel 4 es S + V + CD + CC, la oración del examen.
+    *[a(q, "LEN.SIN.COMPL", "LEN.SIN.COMPL.G07", {"pasos": "análisis completo", "numeros": n, "formato": "analizar la oración"},
+        4, {"generador": "oracionSimple", "cd": True, "ci": False, "cc": 1},
+        cambio="Nivel 4: de la copulativa (que pasa al 3) a S + V + CD + CC (D-098)." if q == "OF.2026.O-L10" else "")
+      for q, n in [("OF.2026.O-L10", "S + V + CD + CCL («Los viajeros encontraron refugio en la venta»)"),
+                   ("OF.2026.A-L10", "S + V + CD de persona + CCL («La muerte miraba al jinete desde las torres»)")]],
     a("OF.2017.O-L9", "LEN.SIN.COMPL", "LEN.SIN.COMPL.G07", {"pasos": "análisis completo", "numeros": "S + V + CCM + CCL", "formato": "analizar la oración"},
-      5, nota="Nivel 4 de la tabla de §4.2 = copulativa: el examen corresponde al 5 (intransitivo + dos CC)."),
+      5, nota="Intransitivo con dos CC: nivel 5."),
     a("OF.2024.O-L10", "LEN.SIN.COMPL", "LEN.SIN.COMPL.G07", {"pasos": "análisis completo", "numeros": "S + V + CD + CI", "formato": "analizar la oración"},
-      5, nota="Nivel 5 (CD + CI)."),
+      5, nota="CD + CI: nivel 5, que además añade un CC."),
     *[a(q, "LEN.SIN.COMPL", "LEN.SIN.COMPL.G07", {"pasos": "análisis completo", "numeros": n, "formato": "analizar la oración"}, None, nota=nt)
-      for q, n, nt in [("OF.2026.O-L10", "S + V + CD + CCL", "Ningún nivel da CD + un CC en orden canónico (el 6 lo antepone)."),
-                       ("OF.2026.A-L10", "S + V + CD (a + persona) + CCL", "Igual que la anterior."),
-                       ("OF.2019.A-L10", "S + V + predicativo + CCL", "No reproducible: complemento predicativo."),
-                       ("OF.2019.O-L10", "S + V semicopulativo + predicativo + CCL", "No reproducible: verbo semicopulativo."),
-                       ("OF.2022.O-L10", "S + V + CD con CN + CCT + CCL", "No reproducible: complemento del nombre.")]],
+      for q, n, nt in [("OF.2019.A-L10", "S + V + predicativo + CCL", "Perfil pendiente: el complemento predicativo necesita datos nuevos (lote de la dirección)."),
+                       ("OF.2019.O-L10", "S + V semicopulativo + predicativo + CCL", "Perfil pendiente: verbo semicopulativo y predicativo (lote de la dirección)."),
+                       ("OF.2022.O-L10", "S + V + CD con CN + CCT + CCL", "Perfil pendiente: el complemento del nombre necesita datos nuevos (lote de la dirección).")]],
     *[a(q, "LEN.LIT.HIST", "LEN.LIT.HIST.G05", {"pasos": "ordenar", "numeros": n, "formato": "del más antiguo al más moderno"},
         4, {"generador": "literatura", "separacion": [30, 90], "ambito": "espanola"},
         nota="El examen ordena 5–6 autores; la plantilla, 4 (§5).")

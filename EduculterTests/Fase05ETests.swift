@@ -355,7 +355,7 @@ struct MapaCurricularTests {
                        "MAT.POR.FIN", "MAT.UNI.ANG", "MAT.UNI.ESTIM", "MAT.GEO.CLAS", "MAT.GEO.SEMEJ", "MAT.ALG.PATR", "MAT.ALG.ALGO", "MAT.EST.FREC",
                        "MAT.EST.POBL", "MAT.PRO.SUCESOS", "MAT.PRO.RECUENTO"]
         #expect(Set(delMapa).isSubset(of: ids), "\(Set(delMapa).subtracting(ids))")
-        #expect(ids.count == 124)
+        #expect(ids.count == 125, "124 + MAT.OPE.INCOG (D-100)")
         let equivalentes = Self.catalogo.todasLasCompetencias.filter { $0.equivaleA != nil }
         #expect(equivalentes.count == 13)
         #expect(equivalentes.allSatisfy { ids.contains($0.equivaleA!) && $0.equivaleA != $0.id })

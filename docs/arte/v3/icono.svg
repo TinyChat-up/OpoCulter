@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="1024" height="1024">
+  <rect width="1024" height="1024" fill="#16294D"/>
+  <g id="brote">
+    <path d="M512 500 C 508 430, 512 380, 522 330" fill="none" stroke="#FBBC2E" stroke-width="32" stroke-linecap="round"/>
+    <path d="M518 350 C 458 350, 368 326, 346 250 C 326 180, 390 132, 448 156 C 508 180, 526 264, 518 350 Z" fill="#FBBC2E"/>
+    <path d="M524 342 C 552 268, 610 194, 688 192 C 756 190, 786 258, 750 306 C 714 356, 620 362, 524 342 Z" fill="#FBBC2E"/>
+  </g>
+  <path id="paginaIzq" d="M512 500 C 412 420, 290 392, 168 404 Q 148 406 148 426 L 148 772 Q 148 792 168 790 C 290 780, 412 808, 512 884 Z" fill="#FFF6EC"/>
+  <path id="paginaDer" d="M512 500 C 612 420, 734 392, 856 404 Q 876 406 876 426 L 876 772 Q 876 792 856 790 C 734 780, 612 808, 512 884 Z" fill="#F0604A"/>
+  <g id="ojo">
+    <ellipse cx="320" cy="616" rx="50" ry="58" fill="#16294D"/>
+    <circle cx="304" cy="596" r="14" fill="#FFFFFF"/>
+  </g>
+  <path id="guino" d="M656 628 C 672 580, 732 578, 748 624" stroke="#FFF6EC" stroke-width="26" stroke-linecap="round" fill="none"/>
+  <path id="sonrisa" d="M452 722 C 480 760, 544 760, 572 722" stroke="#16294D" stroke-width="22" stroke-linecap="round" fill="none"/>
+</svg>

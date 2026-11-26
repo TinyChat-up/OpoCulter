@@ -134,7 +134,7 @@ struct MecanicaVerdaderoFalso: View {
                 .frame(maxWidth: .infinity, minHeight: 160)
                 .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
                 .overlay(RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous).strokeBorder(colorBorde, lineWidth: ctx.corregido ? 3 : Trazo.grueso))
-                .sombraDura(radio: Radio.tarjeta, activa: !ctx.corregido)
+                
                 .offset(x: desplazamiento)
                 .rotationEffect(.degrees(reducir ? 0 : Double(desplazamiento) / 25))
                 .gesture(
@@ -160,9 +160,9 @@ struct MecanicaVerdaderoFalso: View {
     }
 
     private var colorBorde: Color {
-        guard let elegida else { return Paleta.contorno }
+        guard let elegida else { return Paleta.borde }
         if ctx.corregido { return elegida == p.esVerdadera ? Paleta.exito : Paleta.fallo }
-        return Paleta.contorno
+        return Paleta.borde
     }
 
     private func boton(valor: Bool, titulo: String, icono: String) -> some View {
@@ -257,13 +257,13 @@ struct MecanicaNumerico: View {
         VStack(spacing: Espacio.l) {
             HStack(alignment: .firstTextBaseline, spacing: Espacio.s) {
                 Text(texto.wrappedValue.isEmpty ? "?" : texto.wrappedValue.replacingOccurrences(of: "-", with: "−"))
-                    .font(.redondeada(.largeTitle, peso: .semibold))
+                    .font(.numerica(.largeTitle, peso: .semibold))
                     .foregroundStyle(colorTexto)
                     .contentTransition(.numericText())
                     .lineLimit(1)
                     .minimumScaleFactor(0.5)
                 if let unidad = p.unidad, !unidad.isEmpty {
-                    Text(unidad).font(.redondeada(.title2)).foregroundStyle(Paleta.textoSecundario)
+                    Text(unidad).font(.numerica(.title2)).foregroundStyle(Paleta.textoSecundario)
                 }
             }
             .frame(maxWidth: .infinity, minHeight: 72)
@@ -283,7 +283,7 @@ struct MecanicaNumerico: View {
     }
 
     private var colorBorde: Color {
-        guard let r = ctx.resultado else { return Paleta.contorno }
+        guard let r = ctx.resultado else { return Paleta.borde }
         return r.correcto ? Paleta.exito : Paleta.fallo
     }
 
@@ -337,7 +337,7 @@ struct MecanicaRuedas: View {
             respuesta = .ruedas(v)
         }
         let error = ctx.esError(rueda.id)
-        let borde: Color = ctx.corregido ? (error ? Paleta.fallo : Paleta.exito) : Paleta.contorno
+        let borde: Color = ctx.corregido ? (error ? Paleta.fallo : Paleta.exito) : Paleta.borde
         let corto = rueda.opciones.count <= 3 && rueda.opciones.allSatisfy { $0.count <= 10 } && !tamano.isAccessibilitySize
         return VStack(alignment: .leading, spacing: Espacio.s) {
             HStack {

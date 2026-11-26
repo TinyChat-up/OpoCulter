@@ -111,24 +111,23 @@ struct PantallaCamino: View {
                             Circle().strokeBorder(Paleta.borde, style: StrokeStyle(lineWidth: Trazo.grueso, dash: [6, 4]))
                         } else {
                             Circle().fill(nodo.estado == .dominada ? acento : Paleta.superficie)
-                                .overlay(Circle().strokeBorder(Paleta.contorno, lineWidth: Trazo.grueso))
+                                .overlay(Circle().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                             if nodo.estado == .enCurso {
                                 AnilloDominio(fraccion: max(nodo.dominio, 0.06), acento: acento, grosor: 5).padding(7)
                             }
                         }
                         Image(systemName: icono(nodo))
                             .font(.headline)
-                            .foregroundStyle(sinContenido ? Paleta.textoSecundario : Paleta.textoPrincipal)
+                            .foregroundStyle(sinContenido ? Paleta.textoSecundario : (nodo.estado == .dominada ? Paleta.textoSobre(acento) : Paleta.textoPrincipal))
                     }
                     .frame(width: 56, height: 56)
-                    .background { if !sinContenido { Circle().fill(Paleta.contorno).offset(x: 3, y: 3) } }
                     if !ultimo {
                         Rectangle().fill(Paleta.borde).frame(width: 3, height: 22)
                     }
                 }
                 VStack(alignment: .leading, spacing: 2) {
                     Text(nodo.competencia.nombre).font(.body.weight(.semibold))
-                        .foregroundStyle(sinContenido ? Paleta.textoSecundario : Paleta.textoPrincipal)
+                        .foregroundStyle(sinContenido ? Paleta.textoSecundario : (nodo.estado == .dominada ? Paleta.textoSobre(acento) : Paleta.textoPrincipal))
                     Text(detalle(nodo)).font(.subheadline).foregroundStyle(Paleta.textoSecundario)
                 }
                 .padding(.top, Espacio.s)
@@ -157,7 +156,7 @@ struct PantallaCamino: View {
         switch n.estado {
         case .sinContenido: "En preparación"
         case .dominada: "Dominada"
-        case .enCurso: "Peldaño \(n.peldano) de 5\(n.esEnCurso ? " · en curso" : "")"
+        case .enCurso: "\(Peldano.nombre(n.peldano)) · peldaño \(n.peldano) de 5\(n.esEnCurso ? " · en curso" : "")"
         case .disponible: n.bloqueadoPorOrden ? "Más adelante · se puede abrir con una prueba de nivel" : "Disponible"
         }
     }
@@ -170,7 +169,6 @@ struct HojaNodo: View {
     let recomendada: String?
     let lanzar: (TipoRonda) -> Void
 
-    static let peldanos = ["Descubre", "Practica", "Sin ayudas", "Justifica", "Formato examen"]
 
     var body: some View {
         let estado = (try? servicio.estado(competencia: nodo.id)) ?? EstadoCompetencia(competenciaId: nodo.id)
@@ -181,9 +179,13 @@ struct HojaNodo: View {
                     Text(nodo.competencia.nombre).font(.exhibicion(.title2)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
                     TarjetaSuperficie {
                         VStack(alignment: .leading, spacing: Espacio.s) {
-                            fila("Peldaño", "\(estado.escalera.peldano) de 5 · \(Self.peldanos[min(max(estado.escalera.peldano, 1), 5) - 1])")
-                            fila("Caja de repaso", estado.leitner.map { "\($0.caja) de 5" } ?? "Aún sin repasos")
-                            fila("Próximo repaso", estado.leitner.map { $0.proximoRepaso.fecha(calendario: servicio.calendario).formatted(.dateTime.day().month(.wide)) } ?? "Sin repasos todavía")
+                            fila("Peldaño", "\(estado.escalera.peldano) de 5 · \(Peldano.nombre(estado.escalera.peldano))")
+                            if let l = estado.leitner {
+                                fila("Caja de repaso", "\(l.caja) de 5")
+                                fila("Próximo repaso", l.proximoRepaso.fecha(calendario: servicio.calendario).formatted(.dateTime.day().month(.wide)))
+                            } else {
+                                fila("Repaso", "Aún sin repasos")
+                            }
                         }
                     }
                     .accessibilityIdentifier("estadoNodo")
@@ -236,12 +238,8 @@ struct HojaNodo: View {
         .accessibilityIdentifier("botonPracticar")
     }
 
+    /// Etiqueta y valor: en una línea si caben; si no, el valor debajo (nunca se recortan ni se pisan).
     private func fila(_ t: String, _ v: String) -> some View {
-        HStack {
-            Text(t).foregroundStyle(Paleta.textoSecundario)
-            Spacer()
-            Text(v).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).multilineTextAlignment(.trailing)
-        }
-        .accessibilityElement(children: .combine)
+        FilaDato(etiqueta: t, valor: v)
     }
 }

@@ -55,7 +55,7 @@ struct ConstructorCamino: Sendable {
     var peldanoMaximoEnRonda = 4
 
     func tieneContenido(_ competencia: String) -> Bool {
-        banco.items(competencia: competencia).contains { $0.peldano <= peldanoMaximoEnRonda }
+        banco.tieneItems(competencia: competencia, peldanoMaximo: peldanoMaximoEnRonda)
     }
 
     /// Ítems del peldaño de la prueba de nivel (estáticos y variantes materializadas).

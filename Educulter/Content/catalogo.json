@@ -711,6 +711,11 @@
               "id": "MAT.OPE.MENTAL",
               "nombre": "Cálculo mental y estimación",
               "orden": 9
+            },
+            {
+              "id": "MAT.OPE.INCOG",
+              "nombre": "Término desconocido",
+              "orden": 10
             }
           ]
         },

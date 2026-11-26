@@ -1,10 +1,13 @@
 import Foundation
 
-/// Compañeros guía (originales del proyecto, D-054): «Tilde» acompaña a Lengua y «Cuarto»
-/// a Matemáticas.
+/// Personajes (05E parte 2, D-105), creados por el propietario y redibujados por la dirección, con la
+/// paleta editorial (D-109): «Tilde» (salvia, con lupa) es el de Lengua; «Cuarto» (bosque, que
+/// guiña), el de Matemáticas; «Mimo» (menta, con corazón), el de la bienvenida y el ánimo. Solo
+/// aparecen en la bienvenida, en el resumen y en el ánimo tras un error repetido.
 enum Companero: String, Sendable, CaseIterable {
     case tilde
     case cuarto
+    case mimo
 
     static func de(area: String) -> Companero { area == "MAT" ? .cuarto : .tilde }
 
@@ -12,45 +15,82 @@ enum Companero: String, Sendable, CaseIterable {
         switch self {
         case .tilde: "Tilde"
         case .cuarto: "Cuarto"
+        case .mimo: "Mimo"
         }
     }
 }
 
-/// Los 6 estados animables de cada compañero.
+/// Los 6 estados (cada uno con su evento real; animaciones ≤ 0,6 s y sin bucle salvo el parpadeo).
 enum EstadoPersonaje: String, Sendable, CaseIterable {
-    case neutral
+    /// Parpadeo cada 4–6 s.
+    case neutro
+    /// Rebote gomoso y chispas amarillas.
+    case alegre
+    /// Tilde acerca la lupa; Cuarto mira arriba; Mimo inclina la cabeza.
     case pensando
-    case celebra
-    /// Tras un fallo: anima, nunca se burla.
-    case anima
-    /// Récord (p. ej., de Supervivencia).
-    case sorprendido
-    /// Racha en riesgo.
-    case dormido
+    /// Mimo aprieta el corazón.
+    case animo
+    /// Cuarto guiña.
+    case guino
+    /// Ojos cerrados y brote caído.
+    case descanso
 }
 
-/// Situaciones reales que hacen aparecer a un compañero. Nunca aparece por aparecer.
+/// Situaciones reales que hacen aparecer a un personaje. Nunca aparece por aparecer ni mientras se
+/// resuelve un ítem: solo en el feedback, en Hoy, en el resumen y en la bienvenida.
 enum EventoPersonaje: Sendable, Equatable {
-    case feedback(correcto: Bool)
-    case resumenRonda(aciertos: Int, total: Int)
-    case estadoVacio
+    /// Hoy o la bienvenida, sin otro evento.
+    case visible(area: String?)
+    case acierto(area: String)
+    /// Fallo sin error repetido: no aparece nadie (el feedback ya informa).
+    case fallo
+    case finSesion(area: String?)
+    case subePeldano(area: String)
+    case pistaAbierta(area: String)
+    /// Error repetido activo (motor de errores, §4).
+    case errorRepetido
+    case record
+    case logro
+    case modoDescanso
     case bienvenida
-    case rachaEnRiesgo
-    case recordSupervivencia
+    case primerDia
+}
+
+/// Personaje y estado que tocan en un evento (o ninguno).
+struct AparicionPersonaje: Sendable, Equatable {
+    var companero: Companero
+    var estado: EstadoPersonaje
 }
 
 enum ReglasPersonaje {
-    /// Estado que corresponde a cada evento.
-    static func estado(para evento: EventoPersonaje) -> EstadoPersonaje {
+    /// Personaje y estado de cada evento. Como mucho uno por pantalla (cada evento da uno o ninguno).
+    static func aparicion(para evento: EventoPersonaje) -> AparicionPersonaje? {
         switch evento {
-        case .feedback(let correcto): correcto ? .celebra : .anima
-        case .resumenRonda(let aciertos, let total): total > 0 && aciertos * 2 >= total ? .celebra : .anima
-        case .estadoVacio: .pensando
-        case .bienvenida: .neutral
-        case .rachaEnRiesgo: .dormido
-        case .recordSupervivencia: .sorprendido
+        case .visible(let area): AparicionPersonaje(companero: area.map(Companero.de(area:)) ?? .mimo, estado: .neutro)
+        case .acierto(let area): AparicionPersonaje(companero: .de(area: area), estado: .alegre)
+        case .fallo: nil
+        case .finSesion(let area): AparicionPersonaje(companero: area.map(Companero.de(area:)) ?? .cuarto, estado: .alegre)
+        case .subePeldano(let area): AparicionPersonaje(companero: .de(area: area), estado: .alegre)
+        case .pistaAbierta(let area): AparicionPersonaje(companero: .de(area: area), estado: .pensando)
+        case .errorRepetido: AparicionPersonaje(companero: .mimo, estado: .animo)
+        case .record, .logro: AparicionPersonaje(companero: .cuarto, estado: .guino)
+        case .modoDescanso: AparicionPersonaje(companero: .mimo, estado: .descanso)
+        case .bienvenida, .primerDia: AparicionPersonaje(companero: .mimo, estado: .neutro)
         }
     }
+
+    /// Etiqueta de VoiceOver: solo cuando el personaje transmite un estado; si no, es decorativo.
+    static func etiqueta(_ a: AparicionPersonaje) -> String? {
+        switch a.estado {
+        case .animo: "\(a.companero.nombre) te anima"
+        case .descanso: "\(a.companero.nombre) descansa: modo descanso activo"
+        case .guino: "\(a.companero.nombre) te guiña un ojo"
+        default: nil
+        }
+    }
+
+    /// Segundos hasta el siguiente parpadeo (4–6 s), aleatorio con semilla.
+    static func intervaloParpadeo(_ rng: inout GeneradorConSemilla) -> Double { Double.random(in: 4...6, using: &rng) }
 
     /// Horas antes de medianoche a partir de las que se avisa (D-054).
     static let horasAvisoRacha = 4
@@ -71,25 +111,22 @@ enum ReglasPersonaje {
     }
 }
 
-/// Avatar del usuario: las 6 ilustraciones del propietario (D-061), recortadas de
-/// `docs/arte/avatares_propietario.png` con `scripts/recortar_avatares.swift` y guardadas en
-/// `Assets.xcassets/Avatares/avatar_01…06`. Los ids 0–5 son los nuevos avatares.
+/// Avatar del usuario: las 6 ilustraciones del propietario (D-061), en `Assets.xcassets/Avatares`.
+/// La lista sale de `Content/avatares.json` (`AvatarCatalogo`), para cambiarlos por datos.
 struct Avatar: Sendable, Equatable, Identifiable {
     let id: Int
     /// Rasgo que lo distingue, para VoiceOver ("Avatar con …").
     let nombre: String
-
     /// Nombre del recurso en el Asset Catalog.
-    var recurso: String { String(format: "avatar_%02d", id + 1) }
+    var recurso: String
 
-    static let todos: [Avatar] = [
-        "gorra roja y blanca",
-        "pelo rizado y gafas redondas",
-        "cinta deportiva",
-        "pañuelo rojo y aros",
-        "boina y pelo naranja",
-        "gafas de aviador",
-    ].enumerated().map { Avatar(id: $0.offset, nombre: $0.element) }
+    init(id: Int, nombre: String, recurso: String? = nil) {
+        self.id = id
+        self.nombre = nombre
+        self.recurso = recurso ?? String(format: "avatar_%02d", id + 1)
+    }
+
+    static var todos: [Avatar] { AvatarCatalogo.estandar.avatares }
 
     static func con(id: Int?) -> Avatar? { migrar(id).flatMap { i in todos.first { $0.id == i } } }
 
@@ -99,4 +136,29 @@ struct Avatar: Sendable, Equatable, Identifiable {
         guard let id, id >= 0, id < 12 else { return nil }
         return id % todos.count
     }
+}
+
+/// Catálogo de avatares (`Content/avatares.json`): preparado para sustituir los 6 actuales por los
+/// definitivos del propietario cambiando solo los datos (05E parte 2, D-105).
+struct AvatarCatalogo: Sendable, Equatable {
+    struct Entrada: Codable, Sendable, Equatable { var id: Int; var recurso: String; var nombre: String }
+    private struct Archivo: Codable { var avatares: [Entrada] }
+
+    let avatares: [Avatar]
+
+    static let respaldo: [Avatar] = [
+        "gorra roja y blanca", "pelo rizado y gafas redondas", "cinta deportiva",
+        "pañuelo rojo y aros", "boina y pelo naranja", "gafas de aviador",
+    ].enumerated().map { Avatar(id: $0.offset, nombre: $0.element) }
+
+    /// Lee el catálogo de una carpeta de contenido; sin archivo (o vacío), los avatares de respaldo.
+    static func cargar(_ raiz: URL?) -> AvatarCatalogo {
+        guard let raiz, let datos = try? Data(contentsOf: raiz.appendingPathComponent("avatares.json")),
+              let archivo = try? JSONDecoder().decode(Archivo.self, from: datos), !archivo.avatares.isEmpty else {
+            return AvatarCatalogo(avatares: respaldo)
+        }
+        return AvatarCatalogo(avatares: archivo.avatares.map { Avatar(id: $0.id, nombre: $0.nombre, recurso: $0.recurso) })
+    }
+
+    static let estandar = cargar(Bundle.main.url(forResource: CargadorContenido.carpetaEnBundle, withExtension: nil))
 }

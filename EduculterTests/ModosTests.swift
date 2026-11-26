@@ -359,33 +359,31 @@ final class SonidoEspia: ServicioSonido {
 
 @Suite("Recordatorio, sonido y persistencia de la 05D")
 struct RecordatorioSonidoTests {
-    @Test("Programa 7 días a la hora elegida; hoy no si ya hay ronda o la hora ha pasado; desactivado, nada")
+    @Test("Programa 7 días a la hora elegida; hoy no si ya hay sesión o la hora ha pasado; desactivado, nada")
     @MainActor
     func programacion() async {
         let centro = CentroSimulado()
         let p = ProgramadorRecordatorio(centro: centro, calendario: Fx.madrid)
         let hoy = Fx.dia(2026, 11, 23)
-        var ajustes = Ajustes(recordatorio: true, minutoRecordatorio: 20 * 60 + 30)
-        let racha = EstadoRacha(actual: 5, record: 5, protectores: 2, ultimoDiaActivo: hoy.sumando(dias: -1), ultimoDiaProcesado: hoy.sumando(dias: -1))
-        await p.reprogramar(ajustes: ajustes, racha: racha, ahora: Fx.fecha(2026, 11, 23, 10))
+        var ajustes = Ajustes(recordatorio: true, minutoRecordatorio: 20 * 60 + 30, duracion: .cinco)
+        await p.reprogramar(ajustes: ajustes, sesionHoy: false, ahora: Fx.fecha(2026, 11, 23, 10))
         #expect(centro.programadas.count == 7)
         let deHoy = centro.programadas[ProgramadorRecordatorio.id(hoy)]
         #expect(deHoy?.fecha.hour == 20 && deHoy?.fecha.minute == 30)
-        #expect(deHoy?.cuerpo == "Tu racha de 5 días te espera: una ronda de 3 minutos basta.")
-        // Ronda hecha hoy: se cancela solo la de hoy.
+        #expect(deHoy?.cuerpo == "Tienes 5 minutos para un repaso rápido.")
+        // Sesión hecha hoy: se cancela solo la de hoy.
         p.cancelarHoy(ahora: Fx.fecha(2026, 11, 23, 12))
         #expect(centro.programadas.count == 6 && centro.programadas[ProgramadorRecordatorio.id(hoy)] == nil)
-        // Al reprogramar con la ronda de hoy hecha, hoy no se programa.
-        let conRonda = EstadoRacha(actual: 6, record: 6, protectores: 2, ultimoDiaActivo: hoy, ultimoDiaProcesado: hoy)
-        await p.reprogramar(ajustes: ajustes, racha: conRonda, ahora: Fx.fecha(2026, 11, 23, 10))
+        // Al reprogramar con la sesión de hoy completada, hoy no se programa.
+        await p.reprogramar(ajustes: ajustes, sesionHoy: true, ahora: Fx.fecha(2026, 11, 23, 10))
         #expect(centro.programadas.count == 6)
         // Hora pasada: tampoco hoy.
-        await p.reprogramar(ajustes: ajustes, racha: racha, ahora: Fx.fecha(2026, 11, 23, 21))
+        await p.reprogramar(ajustes: ajustes, sesionHoy: false, ahora: Fx.fecha(2026, 11, 23, 21))
         #expect(centro.programadas[ProgramadorRecordatorio.id(hoy)] == nil && centro.programadas.count == 6)
         ajustes.recordatorio = false
-        await p.reprogramar(ajustes: ajustes, racha: racha, ahora: Fx.fecha(2026, 11, 23, 10))
+        await p.reprogramar(ajustes: ajustes, sesionHoy: false, ahora: Fx.fecha(2026, 11, 23, 10))
         #expect(centro.programadas.isEmpty)
-        #expect(ProgramadorRecordatorio.texto(racha: 0).contains("racha nueva") && !ProgramadorRecordatorio.texto(racha: 1).contains("días"))
+        #expect(ProgramadorRecordatorio.texto(minutos: 10) == "Tienes 10 minutos para un repaso rápido.")
     }
 
     @Test("Con el sonido desactivado no se reproduce nada; activado, sí")
@@ -442,7 +440,7 @@ struct RecordatorioSonidoTests {
         let raiz = URL(filePath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
         let original = try String(contentsOf: raiz.appending(path: "CREDITOS.md"), encoding: .utf8)
         #expect(PantallaCreditos.texto == original)
-        #expect(original.contains("Fredoka") && original.contains("Avatares"))
+        #expect(!original.contains("Fredoka") && original.contains("Avatares") && original.contains("Mimo"))
     }
 
     @Test("Preguntas disponibles: solo el contenido aprobado")
@@ -452,6 +450,6 @@ struct RecordatorioSonidoTests {
         let r = s.preguntasDisponibles()
         #expect(r.estaticos == bancoDebug.itemsEstaticos.filter { $0.validacion.estado == .aprobado }.count)
         // Lotes 02 y 02b: cuentan las variantes de las 42 plantillas aprobadas; las de prueba (borrador), no.
-        #expect(r.plantillas.count == 79 && r.generados > 10_000)
+        #expect(r.plantillas.count == 83 && r.generados > 10_000)
     }
 }

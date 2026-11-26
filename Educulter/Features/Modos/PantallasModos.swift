@@ -32,21 +32,21 @@ struct CabeceraSupervivencia<Salir: View>: View {
             if !tamano.isAccessibilitySize { Spacer(minLength: 0) }
             HStack(spacing: Espacio.s) {
                 Text("Nivel \(estado.dificultad)\(estado.dificultad == 6 ? " · Experto" : "")")
-                    .font(.redondeada(.subheadline))
+                    .font(.numerica(.subheadline))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .padding(.horizontal, Espacio.m)
                     .frame(minHeight: Medidas.tactilMinimo)
                     .background(Paleta.superficie, in: Capsule())
-                    .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                    .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                     .accessibilityIdentifier("nivelSupervivencia")
                 Text("\(estado.puntos)")
-                    .font(.redondeada(.headline))
+                    .font(.numerica(.headline))
                     .foregroundStyle(Paleta.textoSobreRecompensa)
                     .contentTransition(.numericText(value: Double(estado.puntos)))
                     .padding(.horizontal, Espacio.m)
                     .frame(minHeight: Medidas.tactilMinimo)
                     .background(Paleta.recompensa, in: Capsule())
-                    .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+                    .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
                     .animacionApp(estado.puntos)
                     .accessibilityLabel("Puntos")
                     .accessibilityValue("\(estado.puntos)")
@@ -70,11 +70,8 @@ struct PantallaInicioSupervivencia: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
-                    HStack(spacing: Espacio.m) {
-                        VistaPersonaje(companero: .cuarto, estado: .neutral)
-                        Text("Supervivencia").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal)
-                            .accessibilityAddTraits(.isHeader)
-                    }
+                    Text("Supervivencia").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal)
+                        .accessibilityAddTraits(.isHeader)
                     TarjetaSuperficie {
                         VStack(alignment: .leading, spacing: Espacio.s) {
                             regla("heart.fill", "Tienes 3 vidas: cada fallo quita una.")
@@ -122,7 +119,7 @@ struct PantallaInicioSupervivencia: View {
             Text(titulo).foregroundStyle(Paleta.textoPrincipal)
             Spacer()
             Text(p.map { "\($0.puntos) puntos · nivel \($0.nivelMaximo)" } ?? "Sin partidas todavía")
-                .font(.redondeada(.subheadline))
+                .font(.numerica(.subheadline))
                 .foregroundStyle(Paleta.textoSecundario)
         }
         .frame(minHeight: Medidas.tactilMinimo)
@@ -140,13 +137,13 @@ struct PantallaFinPartida: View {
     var body: some View {
         let p = resultado.partida
         let records = (try? servicio.recordsSupervivencia()) ?? RecordsSupervivencia(partidas: [])
-        let estadoPersonaje: EstadoPersonaje = resultado.esRecord
-            ? ReglasPersonaje.estado(para: .recordSupervivencia)
-            : ReglasPersonaje.estado(para: .resumenRonda(aciertos: p.aciertos, total: max(p.aciertos + p.fallos, 1)))
+        // Récord: Cuarto guiña; si no, el personaje del área, alegre (D-105).
+        let aparicion = ReglasPersonaje.aparicion(para: resultado.esRecord ? .record : .finSesion(area: p.area == "MIX" ? nil : p.area))!
+        let estadoPersonaje = aparicion.estado
         VStack(spacing: 0) {
             ScrollView {
                 VStack(spacing: Espacio.l) {
-                    VistaPersonaje(companero: p.area == "LEN" ? .tilde : .cuarto, estado: estadoPersonaje, tamano: 80)
+                    VistaPersonaje(companero: aparicion.companero, estado: estadoPersonaje, tamano: 80)
                         .accessibilityIdentifier("personajeFinPartida_\(estadoPersonaje.rawValue)")
                     Text(resultado.esRecord ? "¡Nuevo récord!" : "Fin de la partida")
                         .font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
@@ -195,7 +192,7 @@ struct PantallaFinPartida: View {
 
     private func dato(_ valor: String, _ titulo: String) -> some View {
         VStack(spacing: Espacio.xs) {
-            Text(valor).font(.redondeada(.title2)).foregroundStyle(Paleta.textoPrincipal).lineLimit(1).minimumScaleFactor(0.6)
+            Text(valor).font(.numerica(.title2)).foregroundStyle(Paleta.textoPrincipal).lineLimit(1).minimumScaleFactor(0.6)
             Text(titulo).font(.caption).foregroundStyle(Paleta.textoSecundario).multilineTextAlignment(.center)
         }
         .frame(maxWidth: .infinity)
@@ -215,7 +212,7 @@ struct PantallaPlan: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
                     HStack(spacing: Espacio.m) {
-                        VistaPersonaje(companero: .tilde, estado: .celebra)
+                        VistaPersonaje(companero: .mimo, estado: .alegre)
                         Text("Tu plan").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
                     }
                     if !plan.bloques.isEmpty {
@@ -269,11 +266,14 @@ struct PantallaPlan: View {
 
 // MARK: - Rescate
 
-/// Rescate de errores: lista por competencia, "Rescatar todo" o una competencia, y ver de nuevo cada ítem.
+/// Rescate (05E parte 2 §4): primero los errores activos («Confundes la parte con el total · 3
+/// veces»), cada uno con su remedio; después los ítems fallados por competencia, "Rescatar todo" o
+/// una competencia, y ver de nuevo cada ítem.
 struct PantallaRescate: View {
     let servicio: ServicioSesion
     let lanzar: (TipoRonda) -> Void
     @State private var grupos: [GrupoRescate] = []
+    @State private var errores: [ServicioSesion.ErrorSeguido] = []
     @State private var itemVisto: Item?
     @Environment(\.dismiss) private var cerrar
 
@@ -292,9 +292,8 @@ struct PantallaRescate: View {
             .padding(.horizontal, Espacio.l)
             .padding(.top, Espacio.l)
             Group {
-                if grupos.isEmpty {
+                if grupos.isEmpty && errores.isEmpty {
                     VStack(spacing: Espacio.l) {
-                        VistaPersonaje(companero: .tilde, estado: .celebra)
                         Text("Sin errores pendientes").font(.exhibicion(.title2)).foregroundStyle(Paleta.textoPrincipal)
                             .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                         Text("Cuando falles un ítem aparecerá aquí para que lo rescates con otra variante.")
@@ -308,11 +307,21 @@ struct PantallaRescate: View {
                 } else {
                     ScrollView {
                         VStack(alignment: .leading, spacing: Espacio.l) {
-                            BotonPrincipal(titulo: "Rescatar todo (\(grupos.map(\.cantidad).reduce(0, +)))", icono: "lifepreserver", acento: Paleta.recompensa) {
-                                lanzar(.rescate); cerrar()
+                            if !errores.isEmpty {
+                                Text("Errores que se repiten").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
+                                    .accessibilityAddTraits(.isHeader)
+                                ForEach(errores) { e in grupoError(e) }
                             }
-                            .accessibilityIdentifier("botonRescatarTodo")
-                            ForEach(grupos) { g in grupo(g) }
+                            if !grupos.isEmpty {
+                                Text("Por competencia").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
+                                    .accessibilityAddTraits(.isHeader)
+                                    .padding(.top, errores.isEmpty ? 0 : Espacio.s)
+                                BotonPrincipal(titulo: "Rescatar todo (\(grupos.map(\.cantidad).reduce(0, +)))", icono: "lifepreserver", acento: Paleta.primario) {
+                                    lanzar(.rescate); cerrar()
+                                }
+                                .accessibilityIdentifier("botonRescatarTodo")
+                                ForEach(grupos) { g in grupo(g) }
+                            }
                         }
                         .padding(Espacio.l)
                     }
@@ -324,7 +333,10 @@ struct PantallaRescate: View {
             let texto = servicio.banco.texto(de: item)
             VistaItemRepaso(item: item, nombre: nombre(item.competencia), texto: texto, anio: texto.flatMap { servicio.banco.anio(de: $0) })
         }
-        .onAppear { grupos = (try? servicio.gruposRescate()) ?? [] }
+        .onAppear {
+            grupos = (try? servicio.gruposRescate()) ?? []
+            errores = (try? servicio.erroresSeguidos().activos) ?? []
+        }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaRescate")
     }
@@ -333,13 +345,35 @@ struct PantallaRescate: View {
         servicio.banco.catalogo.todasLasCompetencias.first { $0.id == id }?.nombre ?? id
     }
 
+    /// Un error activo: descripción, veces y su remedio (3 ítems de la plantilla que lo trabaja).
+    private func grupoError(_ e: ServicioSesion.ErrorSeguido) -> some View {
+        TarjetaSuperficie {
+            VStack(alignment: .leading, spacing: Espacio.s) {
+                Text(nombre(e.error.competencia).uppercased())
+                    .font(.caption.weight(.semibold)).foregroundStyle(Paleta.tinta(competencia: e.error.competencia))
+                Text("\(e.error.descripcion) · \(e.apariciones == 1 ? "1 vez" : "\(e.apariciones) veces")")
+                    .font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                    .fixedSize(horizontal: false, vertical: true)
+                if e.aciertosSeguidos > 0 {
+                    Text("\(e.aciertosSeguidos) de 3 aciertos seguidos para corregirlo")
+                        .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                }
+                Button("Practicar el remedio") { lanzar(.rescateError(e.id)); cerrar() }
+                    .buttonStyle(EstiloBotonSecundario())
+                    .accessibilityIdentifier("remedio_\(e.id)")
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("grupoError_\(e.id)")
+    }
+
     private func grupo(_ g: GrupoRescate) -> some View {
         TarjetaSuperficie {
             VStack(alignment: .leading, spacing: Espacio.s) {
                 // El área va en su propia línea, encima del nombre: en la misma fila, con nombres
                 // largos, se partía sílaba a sílaba (visto en el iPhone).
                 Text(g.area == "LEN" ? "Lengua" : "Matemáticas")
-                    .font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSobreAcento)
+                    .font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSobre(Paleta.acento(area: g.area)))
                     .padding(.horizontal, Espacio.s).padding(.vertical, 2)
                     .background(Paleta.acento(area: g.area), in: Capsule())
                 Label(g.competencia.nombre, systemImage: SimboloBloque.de(competencia: g.id))

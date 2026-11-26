@@ -79,6 +79,12 @@ struct CompatibilidadGramatica: Codable, Sendable, Equatable {
     var tiemposCopulativos: [String: [String]] = [:]
     /// Tipos de CC que pueden ir delante del sujeto (CCT y CCL).
     var ccDelante: [String] = ["CCT", "CCL"]
+    /// Verbos que necesitan un CCL de destino («subir a la montaña»): sin uno, no se generan (D-099).
+    var requiereDestino: [String] = []
+    /// CCL de destino («a la montaña»). Vacío hasta que la dirección los dé: entonces «subir» no sale.
+    var cclDestino: [String] = []
+    /// CD concretos que no casan con un verbo aunque la etiqueta encaje («regalar un coche»).
+    var objetoExcluye: [String: [String]] = [:]
 
     var vacia: Bool { verbos.isEmpty || sustantivos.isEmpty }
 
@@ -154,10 +160,10 @@ extension GeneradorOracionSimple {
     /// |---|---|
     /// | 1 | S + V intransitivo |
     /// | 2 | S + V + CD |
-    /// | 3 | S + V + CC |
-    /// | 4 | Copulativa: S + V copulativo + atributo |
-    /// | 5 | S + V + CD + CI, o S + V + dos CC |
-    /// | 6 | Orden alterado: CC delante con coma (y sujeto pospuesto con verbo intransitivo) |
+    /// | 3 | Copulativa (S + V copulativo + atributo), o S + V + CC |
+    /// | 4 | S + V + CD + CC (perfil del examen, D-098) |
+    /// | 5 | S + V + CD + CI + CC, o S + V + dos CC |
+    /// | 6 | Orden alterado: CC delante con coma, con sujeto pospuesto (intransitivo) o con CI |
     struct Estructura: Equatable, Sendable {
         var regimen: String
         var conCI = false
@@ -168,16 +174,17 @@ extension GeneradorOracionSimple {
             switch n {
             case 1: return Estructura(regimen: "intransitivo")
             case 2: return Estructura(regimen: "transitivo")
-            case 3: return Estructura(regimen: "intransitivo", numeroCC: 1)
-            case 4: return Estructura(regimen: "copulativo")
-            case 5: return rng.probabilidad(0.5) ? Estructura(regimen: "transitivo", conCI: true)
+            case 3: return rng.probabilidad(0.5) ? Estructura(regimen: "copulativo") : Estructura(regimen: "intransitivo", numeroCC: 1)
+            // Perfil del examen (D-098): S + V + CD + CC («Los viajeros encontraron refugio en la venta»).
+            case 4: return Estructura(regimen: "transitivo", numeroCC: 1)
+            case 5: return rng.probabilidad(0.5) ? Estructura(regimen: "transitivo", conCI: true, numeroCC: 1)
                                                  : Estructura(regimen: "intransitivo", numeroCC: 2)
             default:
                 // `segmentar` necesita el predicado seguido: allí el nivel 6 es la estructura más
-                // larga en orden canónico (S + V + CD + CI + CC).
-                guard permitirDesorden else { return Estructura(regimen: "transitivo", conCI: true, numeroCC: 1) }
+                // larga en orden canónico (S + V + CD + CI + dos CC).
+                guard permitirDesorden else { return Estructura(regimen: "transitivo", conCI: true, numeroCC: 2) }
                 return rng.probabilidad(0.5) ? Estructura(regimen: "intransitivo", numeroCC: rng.entero(1...2), orden: .sujetoPospuesto)
-                                             : Estructura(regimen: "transitivo", conCI: rng.probabilidad(0.5), numeroCC: 1, orden: .ccDelante)
+                                             : Estructura(regimen: "transitivo", conCI: true, numeroCC: 1, orden: .ccDelante)
             }
         }
     }
@@ -205,6 +212,9 @@ extension GeneradorOracionSimple {
         var orden: OrdenOracion = .canonico
     }
 
+    /// Tokens con un posesivo (su, sus).
+    static func llevaPosesivo(_ palabras: [String]) -> Bool { palabras.contains { $0 == "su" || $0 == "sus" } }
+
     /// Construye una oración con `compatibilidad.json` (D-086, D-090):
     /// - sujeto y CD de etiquetas compatibles con el verbo (`sujeto`, `objeto`); incontables en singular;
     /// - CD y CI de persona o animal con «a» + artículo definido («a la vecina», «al médico») o
@@ -219,6 +229,7 @@ extension GeneradorOracionSimple {
         let e = Estructura.nivel(nivel, permitirDesorden: permitirDesorden, rng: &rng)
         let posibles = c.verbos.filter { v in
             v.regimen == e.regimen
+                && (!c.requiereDestino.contains(v.infinitivo) || !c.cclDestino.isEmpty)
                 && (!e.conCI || v.admiteCI)
                 && (e.regimen == "copulativo" || c.sustantivos.contains { c.comparten($0.etiquetas, v.sujeto) })
                 && (v.regimen != "transitivo" || c.sustantivos.contains { c.comparten($0.etiquetas, v.objeto) })
@@ -257,7 +268,8 @@ extension GeneradorOracionSimple {
         /// Persona o animal como CD o CI: «a» + artículo («al médico», «a las vecinas») o posesivo
         /// («a su abuela», «a sus vecinos»); niño y niña, solo con artículo (D-090).
         func animado(_ s: CompatibilidadGramatica.Sustantivo, numero n: String) -> (tokens: [(String, String)], determinante: String) {
-            let posesivo = !c.sinPosesivo.contains(s.lema) && rng.probabilidad(0.4)
+            // Posesivo solo en singular: «a su abuela», nunca «a sus médicos» (D-099).
+            let posesivo = n == "s" && !c.sinPosesivo.contains(s.lema) && rng.probabilidad(0.4)
             if posesivo { return ([("a", "prep"), (n == "p" ? "sus" : "su", "det"), (s.forma(n), "sust")], "pos") }
             let art = CompatibilidadGramatica.articulo(genero: s.genero, numero: n)
             if art == "el" { return ([("al", "contr"), (s.forma(n), "sust")], "art") }
@@ -268,7 +280,8 @@ extension GeneradorOracionSimple {
         var funciones: [(String, [(String, String)])] = []
         var cd: CompatibilidadGramatica.Sustantivo?
         if v.regimen == "transitivo" {
-            let candidatos = c.sustantivos.filter { c.comparten($0.etiquetas, v.objeto) && $0.lema != sujeto.lema }
+            let excluidos = Set(c.objetoExcluye[v.infinitivo] ?? [])
+            let candidatos = c.sustantivos.filter { c.comparten($0.etiquetas, v.objeto) && $0.lema != sujeto.lema && !excluidos.contains($0.lema) }
             guard !candidatos.isEmpty else { return nil }
             let o = rng.elemento(candidatos)
             cd = o
@@ -308,11 +321,20 @@ extension GeneradorOracionSimple {
         // Con el orden alterado, el CC que va delante (el primero) es de tiempo o de lugar.
         var tipos = rng.barajar(["CCL", "CCT", "CCM", "CCC"])
         if e.orden != .canonico, let i = tipos.firstIndex(where: c.ccDelante.contains) { tipos.insert(tipos.remove(at: i), at: 0) }
+        // Un verbo que pide destino («subir») lleva siempre un CCL de `cclDestino` (D-099).
+        let pideDestino = c.requiereDestino.contains(v.infinitivo)
+        if pideDestino {
+            guard e.numeroCC >= 1, !c.cclDestino.isEmpty else { return nil }
+            if let i = tipos.firstIndex(of: "CCL") { tipos.insert(tipos.remove(at: i), at: e.orden == .canonico ? 0 : min(1, tipos.count - 1)) }
+        }
         for t in tipos where circunstanciales.count < e.numeroCC {
-            let opciones = (c.complementosCircunstanciales[t] ?? []).filter { texto in
+            let lista = t == "CCL" && pideDestino ? c.cclDestino : (c.complementosCircunstanciales[t] ?? [])
+            let opciones = lista.filter { texto in
                 !CompatibilidadGramatica.complementosExcluidos.contains(texto)
                     && !(c.ccExcluye[texto] ?? []).contains(v.infinitivo)
                     && !(c.ccSoloPersona.contains(texto) && !sujeto.etiquetas.contains("persona"))
+                    // Sin dos «su» en la oración («a su profesora con su hermana»).
+                    && !(Self.llevaPosesivo(texto.split(separator: " ").map(String.init)) && funciones.contains { Self.llevaPosesivo($0.1.map(\.0)) })
                     && !(CompatibilidadGramatica.preposicionInicial(texto).map(preposicionesUsadas.contains) ?? false)
                     && !(t == "CCT" && c.aspectoCCT[texto] == "habitual" && c.sinHabitual.contains(v.infinitivo))
                     && !(t == "CCT" && Set(tiempos).isDisjoint(with: c.tiempos(paraCCT: texto)))
@@ -335,6 +357,10 @@ extension GeneradorOracionSimple {
         }
 
         // Montaje según el orden.
+        let sujetoTokens = nominal(sujeto, numero: numero, conAdjetivo: v.regimen != "copulativo" && nivel >= 5 && rng.probabilidad(0.3))
+        // Sin redundancias del tipo «las alumnas tranquilas… tranquilamente».
+        let adverbios = circunstanciales.flatMap { $0.1.split(separator: " ") }.filter { $0.hasSuffix("mente") }.map { String($0.dropLast(5)).dropLast() }
+        if adjetivos.contains(where: { a in adverbios.contains { a.hasPrefix($0) } }) { return nil }
         var tokens: [(String, String)] = []
         var constituyentes: [(String, Int, Int)] = []
         var comaTras: Int?
@@ -343,7 +369,6 @@ extension GeneradorOracionSimple {
             tokens += t
             constituyentes.append((f, desde, tokens.count - 1))
         }
-        let sujetoTokens = nominal(sujeto, numero: numero, conAdjetivo: v.regimen != "copulativo" && nivel >= 5 && rng.probabilidad(0.3))
         var restoCC = circunstanciales
         if e.orden != .canonico, !restoCC.isEmpty {
             let primero = restoCC.removeFirst()

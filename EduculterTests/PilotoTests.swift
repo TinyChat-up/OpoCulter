@@ -182,18 +182,10 @@ struct SilabeoTests {
 
 @Suite("Personajes")
 struct PersonajesTests {
-    @Test("Estado que dispara cada evento")
+    @Test("Seis estados y tres personajes (las reglas de la v3 están en PersonajesV3Tests)")
     func estados() {
-        #expect(ReglasPersonaje.estado(para: .feedback(correcto: true)) == .celebra)
-        #expect(ReglasPersonaje.estado(para: .feedback(correcto: false)) == .anima)
-        #expect(ReglasPersonaje.estado(para: .resumenRonda(aciertos: 4, total: 8)) == .celebra)
-        #expect(ReglasPersonaje.estado(para: .resumenRonda(aciertos: 3, total: 8)) == .anima)
-        #expect(ReglasPersonaje.estado(para: .resumenRonda(aciertos: 0, total: 0)) == .anima)
-        #expect(ReglasPersonaje.estado(para: .estadoVacio) == .pensando)
-        #expect(ReglasPersonaje.estado(para: .bienvenida) == .neutral)
-        #expect(ReglasPersonaje.estado(para: .rachaEnRiesgo) == .dormido)
-        #expect(ReglasPersonaje.estado(para: .recordSupervivencia) == .sorprendido)
-        #expect(Set(EstadoPersonaje.allCases).count == 6)
+        #expect(Set(EstadoPersonaje.allCases.map(\.rawValue)) == ["neutro", "alegre", "pensando", "animo", "guino", "descanso"])
+        #expect(Companero.allCases.map(\.nombre) == ["Tilde", "Cuarto", "Mimo"])
     }
 
     @Test("Compañero por área")
@@ -259,18 +251,18 @@ struct PilotoTests {
     }
 
     /// Primera competencia de Matemáticas con contenido aprobado, por prioridad de bloque y orden
-    /// del catálogo. Desde el lote 02 es MAT.UNI.LMC (en la 05B, MAT.NUM.FRAREP era la única).
-    static let primeraMAT = "MAT.UNI.LMC"
+    /// del catálogo hasta la 05E; desde la 05E parte 2, la primera del plan (D-103): MAT.NUM.ORDEN.
+    static let primeraMAT = "MAT.NUM.ORDEN"
 
     @Test("Hoy con el contenido de Release: propuestas de Lengua y Matemáticas con su mecánica")
     func propuestas() throws {
         let e = try servicio().estadoHoy()
         #expect(e.propuestas.map(\.area) == ["LEN", "MAT"])
-        // Desde la 05E, LEN.SIN (primer bloque de Lengua) tiene contenido aprobado.
-        #expect(e.propuestas.first?.competencia.id == "LEN.SIN.SUJPRED")
+        // Plan de D-103: la competencia de Lengua con más preguntas oficiales (Historia de la literatura).
+        #expect(e.propuestas.first?.competencia.id == "LEN.LIT.HIST")
         #expect(e.propuestas.last?.competencia.id == Self.primeraMAT)
         // La mecánica propuesta es la más frecuente entre los candidatos de la competencia.
-        #expect(e.propuestas.last?.mecanica == .numerico)
+        #expect(e.propuestas.last?.mecanica == .ordenar)
         #expect(!e.rachaEnRiesgo && e.horasHastaMedianoche == 14)
     }
 
@@ -283,7 +275,7 @@ struct PilotoTests {
         #expect(items.count == ronda.items.count && !items.isEmpty)
         // El motor puede intercalar repasos de otras competencias, pero la mayoría son de la competencia en curso.
         #expect(items.filter { $0.competencia == Self.primeraMAT }.count * 2 > items.count)
-        #expect(try s.competenciaEnCurso(area: "LEN") == "LEN.SIN.SUJPRED")
+        #expect(try s.competenciaEnCurso(area: "LEN") == "LEN.LIT.HIST")
     }
 
     @Test("Practicar MAT.NUM.FRAREP (Camino) con el contenido de Release: ronda con fraccionBarras")

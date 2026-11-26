@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "nota": "Avatares del usuario (D-061). Provisionales hasta que el propietario entregue los 6 personajes definitivos: se cambian aquí (recurso del Asset Catalog y rasgo para VoiceOver), sin tocar código (05E parte 2, D-105).",
+  "avatares": [
+    {
+      "id": 0,
+      "recurso": "avatar_01",
+      "nombre": "gorra roja y blanca"
+    },
+    {
+      "id": 1,
+      "recurso": "avatar_02",
+      "nombre": "pelo rizado y gafas redondas"
+    },
+    {
+      "id": 2,
+      "recurso": "avatar_03",
+      "nombre": "cinta deportiva"
+    },
+    {
+      "id": 3,
+      "recurso": "avatar_04",
+      "nombre": "pañuelo rojo y aros"
+    },
+    {
+      "id": 4,
+      "recurso": "avatar_05",
+      "nombre": "boina y pelo naranja"
+    },
+    {
+      "id": 5,
+      "recurso": "avatar_06",
+      "nombre": "gafas de aviador"
+    }
+  ]
+}

@@ -217,7 +217,8 @@
     "erroresHabituales": [
       {
         "respuesta": "verdadero",
-        "feedback": "Es llana, sí, pero las llanas terminadas en -n no llevan tilde. Cuidado con confundirla con «exámenes»."
+        "feedback": "Es llana, sí, pero las llanas terminadas en -n no llevan tilde. Cuidado con confundirla con «exámenes».",
+        "error": "ERR.LEN.ORT.AGU.5"
       }
     ],
     "referencia": {
@@ -276,7 +277,8 @@
       },
       {
         "respuesta": "o2",
-        "feedback": "Las llanas que no terminan en vocal, -n o -s llevan tilde."
+        "feedback": "Las llanas que no terminan en vocal, -n o -s llevan tilde.",
+        "error": "ERR.LEN.ORT.AGU.4"
       }
     ],
     "referencia": {
@@ -406,7 +408,8 @@
       },
       {
         "respuesta": "o3",
-        "feedback": "Tiene dos sílabas: ro-bots."
+        "feedback": "Tiene dos sílabas: ro-bots.",
+        "error": "ERR.LEN.ORT.AGU.1"
       }
     ],
     "referencia": {
@@ -479,7 +482,8 @@
       },
       {
         "respuesta": "h2",
-        "feedback": "Termina en -z, no en vocal."
+        "feedback": "Termina en -z, no en vocal.",
+        "error": "ERR.LEN.ORT.AGU.4"
       }
     ],
     "referencia": {
@@ -2435,7 +2439,8 @@
     "erroresHabituales": [
       {
         "respuesta": "conTilde",
-        "feedback": "Las llanas en -n no llevan tilde. Su plural, «exámenes», sí."
+        "feedback": "Las llanas en -n no llevan tilde. Su plural, «exámenes», sí.",
+        "error": "ERR.LEN.ORT.AGU.5"
       }
     ],
     "referencia": {
@@ -2553,7 +2558,8 @@
     "erroresHabituales": [
       {
         "respuesta": "conTilde",
-        "feedback": "Las agudas solo llevan tilde si acaban en vocal, -n o -s."
+        "feedback": "Las agudas solo llevan tilde si acaban en vocal, -n o -s.",
+        "error": "ERR.LEN.ORT.AGU.5"
       }
     ],
     "referencia": {
@@ -2669,7 +2675,8 @@
     "erroresHabituales": [
       {
         "respuesta": "conTilde",
-        "feedback": "Excepción: agudas en -s tras otra consonante (-ts) no llevan tilde."
+        "feedback": "Excepción: agudas en -s tras otra consonante (-ts) no llevan tilde.",
+        "error": "ERR.LEN.ORT.AGU.5"
       }
     ],
     "referencia": {

@@ -1,0 +1,70 @@
+[
+  {
+    "id": "LEN.VER.ANALISIS.T01",
+    "competencia": "LEN.VER.ANALISIS",
+    "titulo": "Análisis de una forma verbal",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Analizar una forma verbal es indicar persona, número, tiempo, modo, aspecto, conjugación e infinitivo."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Persona: 1.ª, 2.ª o 3.ª\nNúmero: singular o plural\nModo: indicativo, subjuntivo o imperativo\nAspecto: perfecto o imperfecto\nConjugación: 1.ª (-ar), 2.ª (-er) o 3.ª (-ir)"
+      },
+      {
+        "tipo": "texto",
+        "contenido": "«habíamos cantado»: 1.ª persona del plural del pretérito pluscuamperfecto de indicativo, aspecto perfecto, 1.ª conjugación, verbo cantar."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Los tiempos compuestos (haber + participio) son siempre perfectos. De los simples, solo el pretérito perfecto simple («canté») es perfecto."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
+  },
+  {
+    "id": "LEN.VER.NOPERS.T01",
+    "competencia": "LEN.VER.NOPERS",
+    "titulo": "Formas no personales",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Las formas no personales no indican persona ni número: infinitivo, gerundio y participio."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Infinitivo: cantar, haber cantado; funciona como un sustantivo\nGerundio: cantando, habiendo cantado; funciona como un adverbio\nParticipio: cantado; funciona como un adjetivo"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Participios irregulares frecuentes: hecho, dicho, escrito, visto, puesto, roto, vuelto, abierto, muerto, cubierto."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
+  }
+]

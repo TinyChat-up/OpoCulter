@@ -102,19 +102,24 @@ struct ServicioSesionTests {
         // 50 ítems reales de LEN.ORT + las variantes de las plantillas de prueba de LEN.ORT (Debug, 05C).
         let generadosOrt = banco.items.dropFirst(banco.numeroEstaticos).filter { $0.competencia.hasPrefix("LEN.ORT.") && $0.peldano <= 4 }.count
         #expect(e.hayContenido && e.itemsOrtografia == 50 + generadosOrt, "Lote 01 y piloto 05B de LEN.ORT")
-        #expect(e.competenciaEnCurso?.id == "LEN.SIN.SUJPRED", "Primer bloque ★★★ del catálogo")
+        // Plan de D-103 (sin diagnóstico): la competencia con contenido de más preguntas oficiales.
+        let primera = PlanEstudio(banco: banco).ordenadas().first { banco.tieneItems(competencia: $0, peldanoMaximo: 4) }
+        #expect(primera == "LEN.LIT.HIST")
+        #expect(e.competenciaEnCurso?.id == primera, "Primera del plan")
         #expect(e.nivel == 1 && e.xpTotal == 0 && e.racha.actual == 0)
         // Las misiones no cambian el mismo día.
         #expect(try s.estadoHoy().misiones == e.misiones)
-        #expect(try repo.perfil().competenciaEnCurso == "LEN.SIN.SUJPRED")
+        #expect(try repo.perfil().competenciaEnCurso == primera)
     }
 
     @Test("Si la competencia en curso se domina, pasa a la siguiente")
     func siguienteCompetencia() throws {
         let s = servicio()
         _ = try s.competenciaEnCurso()
-        try repo.guardar(EstadoCompetencia(competenciaId: "LEN.SIN.SUJPRED", escalera: .init(peldano: 5)))
-        #expect(try s.competenciaEnCurso() == "LEN.SIN.COMPL")
+        let plan = PlanEstudio(banco: banco).ordenadas().filter { banco.tieneItems(competencia: $0, peldanoMaximo: 4) }
+        #expect(try s.competenciaEnCurso() == plan[0])
+        try repo.guardar(EstadoCompetencia(competenciaId: plan[0], escalera: .init(peldano: 5)))
+        #expect(try s.competenciaEnCurso() == plan[1])
     }
 
     @Test("Registrar respuestas: XP, escalera, Rescate, métricas, misiones e intentos")
@@ -160,7 +165,7 @@ struct ServicioSesionTests {
         let s = servicio()
         let ronda = try s.prepararRonda(.recomendada)
         #expect((6...8).contains(ronda.items.count))
-        #expect(ronda.competenciaEnCurso == "LEN.SIN.SUJPRED")
+        #expect(ronda.competenciaEnCurso == "LEN.LIT.HIST", "Primera del plan (D-103)")
         let e = try s.completarRonda(ronda)
         #expect(e.racha.actual == 1 && e.cambiosRacha.incrementada)
         #expect(e.logrosNuevos.map(\.id) == ["primera-ronda"])

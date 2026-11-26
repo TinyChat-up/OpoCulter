@@ -76,7 +76,7 @@ struct TecladoNumerico: View {
                     Text(tecla.etiqueta)
                 }
             }
-            .font(.redondeada(.title2))
+            .font(.numerica(.title2))
             .foregroundStyle(Paleta.textoPrincipal)
             .frame(maxWidth: .infinity, minHeight: 52)
             // Teclas de acción con el relleno del área y texto en tinta (D-059).

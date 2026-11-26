@@ -18,7 +18,7 @@ extension ServicioSesion {
     // MARK: Contenido
 
     func tieneContenido(_ competencia: String) -> Bool {
-        banco.items(competencia: competencia).contains { $0.peldano <= configRonda.peldanoMaximoEnRonda }
+        banco.tieneItems(competencia: competencia, peldanoMaximo: configRonda.peldanoMaximoEnRonda)
     }
 
     // MARK: Camino
@@ -40,9 +40,11 @@ extension ServicioSesion {
         let candidatos = ConstructorRondas(banco: banco, config: configRonda).candidatos(competencia: id, peldano: peldano).shuffled(using: &rng)
         let ordenados = candidatos.filter { !esReciente($0.id) } + candidatos.filter { esReciente($0.id) }
         // Sin preguntas repetidas en la ronda aunque cambie el id (D-087).
-        let items = ordenados.sinPreguntasRepetidas().prefix(configRonda.objetivo).map { ItemRonda(itemId: $0.id, motivo: .practica) }
+        var items = Array(ordenados.sinPreguntasRepetidas().prefix(configRonda.objetivo).map { ItemRonda(itemId: $0.id, motivo: .practica) })
+        // Peldaño 1 (Descubrir): ejemplo resuelto y gemelo (§5).
+        if peldano == Peldano.descubre.rawValue { items = EjemplosResueltos.aplicar(items, competencia: id, banco: banco, rng: &rng) }
         let teoria = peldano == 1 ? banco.teoria(competencia: id).map(\.id) : []
-        return RondaPreparada(tipo: .competencia(id), items: Array(items), competenciaEnCurso: id, teoriaPrevia: teoria)
+        return RondaPreparada(tipo: .competencia(id), items: items, competenciaEnCurso: id, teoriaPrevia: teoria)
     }
 
     /// Efectos propios de la prueba de nivel y del Reto de bloque al completar la ronda.

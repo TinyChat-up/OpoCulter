@@ -17,6 +17,8 @@ struct Muestra: Sendable, Equatable {
     var complejidad: Double
     /// Datos del caso para el oráculo independiente de los tests (no se muestran).
     var datos: [String: String] = [:]
+    /// Ejemplo resuelto (05E parte 2 §5): pasos con sus resultados intermedios calculados.
+    var pasos: [PasoResuelto] = []
 }
 
 /// Recursos de los generadores de Lengua (léxico, piezas de gramática, bancos de frases).
@@ -38,12 +40,15 @@ struct RecursosGeneradores: Sendable, Equatable {
     let palabras: [PalabraNivelada]
     /// Base literaria del lote 05a (generador `literatura`, Fase 05E).
     var literatura: BaseLiteraria?
+    /// Catálogo de errores típicos (05E parte 2 §4): etiqueta los distractores de cada muestra.
+    var errores: CatalogoErrores
 
     init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
          verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases(),
          compatibilidad: CompatibilidadGramatica = CompatibilidadGramatica(), ambiguas: PalabrasAmbiguas = PalabrasAmbiguas(),
-         literatura: BaseLiteraria? = nil) {
+         literatura: BaseLiteraria? = nil, errores: CatalogoErrores = CatalogoErrores()) {
         self.literatura = literatura
+        self.errores = errores
         self.lexico = lexico
         self.formasVerbales = formasVerbales
         self.gramatica = gramatica
@@ -101,6 +106,8 @@ enum MotorGeneradores {
             GeneradorOracionSimple(), GeneradorAnalisisVerbal(), GeneradorFraseHueco(),
             // Fase 05E.
             GeneradorFormasNoPersonales(), GeneradorLiteratura(),
+            // Fase 05E parte 2 (D-100).
+            GeneradorTerminoDesconocido(),
         ]
         return Dictionary(uniqueKeysWithValues: todos.map { ($0.tipo, $0) })
     }()
@@ -122,7 +129,9 @@ enum MotorGeneradores {
         guard let g = generadores[p.tipo] else { throw ErrorGenerador.tipoDesconocido(p.tipo) }
         guard g.mecanicas.contains(p.mecanica) else { throw ErrorGenerador.mecanicaNoAdmitida(tipo: p.tipo, mecanica: p.mecanica) }
         var r = rng(p, semilla: semilla)
-        return try g.muestra(p, recursos: recursos, rng: &r)
+        var m = try g.muestra(p, recursos: recursos, rng: &r)
+        m.erroresHabituales = recursos.errores.etiquetar(m.erroresHabituales, competencia: p.competencia, generador: p.tipo)
+        return m
     }
 
     /// Genera el ítem `<plantilla.id>#<semilla>`.
@@ -144,7 +153,7 @@ enum MotorGeneradores {
                     enunciado: Marcadores.rellenar(redaccion, con: valores), payload: m.payload, pistas: pistas,
                     explicacion: m.explicacion, erroresHabituales: m.erroresHabituales,
                     procedencia: p.procedencia, validacion: p.validacion, version: p.version,
-                    claveGenerada: "\(p.tipo)|\(m.clave)")
+                    claveGenerada: "\(p.tipo)|\(m.clave)", pasos: m.pasos)
     }
 
     /// Copia de una plantilla con otra dificultad (y, opcionalmente, otro peldaño) para Supervivencia

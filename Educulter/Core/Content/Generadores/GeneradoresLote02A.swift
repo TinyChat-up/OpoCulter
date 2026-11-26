@@ -91,9 +91,48 @@ struct GeneradorPorcentaje: GeneradorItems {
             let base = rng.elemento(n.bases)
             guard let c = Self.resolver(variante: variante, sub: sub, p: pc, p2: p2, base: base, nivel: n) else { continue }
             if p.mecanica == .construir, let p2, (rac(1) - pc * rac(1, 100)) == (rac(1) - p2 * rac(1, 100)) { continue }
-            return construir(p, c, rng: &rng)
+            let m = construir(p, c, rng: &rng)
+            return m.conPasos(Self.pasos(c, payload: p.mecanica == .construir ? m.payload : nil))
         }
         throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    /// Pasos del ejemplo resuelto (§5). Con `payload` (mecánica construir), el último paso es construir
+    /// la operación.
+    static func pasos(_ c: Caso, payload: Payload?) -> [PasoResuelto] {
+        typealias P = Pasos
+        let ps = A.texto(c.p), b = rac(c.base), bs = A.texto(b), pd = c.p * rac(1, 100)
+        let porqueP = "porque el \(ps) % significa \(ps) de cada 100"
+        var r: [PasoResuelto]
+        switch c.sub {
+        case "calc":
+            r = [P.op("Pasa el porcentaje a número decimal", "\(ps) : 100", pd, porque: porqueP),
+                 P.op("Multiplica la cantidad por ese número", "\(bs) × \(A.texto(pd))", c.sol)]
+        case "total":
+            let uno = c.parte / c.p
+            r = [P.op("Divide la parte entre el porcentaje", "\(A.texto(c.parte)) : \(ps)", uno!, porque: "porque así sabes cuánto vale el 1 %"),
+                 P.op("Multiplica por 100 para tener el total", "\(A.texto(uno!)) × 100", c.sol, porque: "porque el total es el 100 %")]
+        case "inv":
+            let q = rac(100) - c.p, uno = (c.final / q)!
+            r = [P.op("Calcula qué porcentaje del precio pagas", "100 − \(ps)", q, porque: "porque la rebaja se quita del precio original"),
+                 P.op("Divide el precio rebajado entre ese %", "\(A.euros(c.final)) : \(A.texto(q))", uno),
+                 P.op("Multiplica por 100: es el precio original", "\(A.texto(uno)) × 100", c.sol, euros: true)]
+        case "desc", "aum":
+            let desc = c.sub == "desc"
+            r = [P.op(desc ? "Calcula la rebaja" : "Calcula el aumento", "\(bs) × \(ps) : 100", c.parte, porque: porqueP, euros: true),
+                 P.op(desc ? "Réstala del precio" : "Súmalo al precio", "\(bs) \(desc ? "−" : "+") \(A.euros(c.parte))", c.sol,
+                      porque: desc ? "porque se paga el precio menos la rebaja" : "porque el precio nuevo es el de antes más la subida", euros: true)]
+        default:
+            let p2 = c.p2!, sube = c.sub == "ad"
+            let tras1 = sube ? b + c.parte : b - c.parte
+            let parte2 = tras1 * p2 * rac(1, 100)
+            r = [P.op(sube ? "Aplica la subida" : "Aplica la primera rebaja", "\(bs) \(sube ? "+" : "−") \(A.euros(c.parte))", tras1, euros: true),
+                 P.op("Calcula la segunda rebaja sobre ese precio", "\(A.euros(tras1)) × \(A.texto(p2)) : 100", parte2,
+                      porque: "porque se aplica sobre lo que queda, no sobre el total", euros: true),
+                 P.op("Réstala", "\(A.euros(tras1)) − \(A.euros(parte2))", c.sol, euros: true)]
+        }
+        if let payload { r.append(P.solucion("Construye la operación con esos números", payload: payload)) }
+        return r
     }
 
     private func construir(_ p: Plantilla, _ c: Caso, rng: inout GeneradorConSemilla) -> Muestra {
@@ -291,9 +330,24 @@ struct GeneradorReglaDeTres: GeneradorItems {
             let c = caso(p.dificultad, rng: &rng)
             guard c.a1 != c.a2, let sol = Self.valido(c) else { continue }
             if p.dificultad >= 3 && p.dificultad <= 4 && c.a2 % c.a1 == 0 { continue }
-            return construir(c, sol: sol, dificultad: p.dificultad, rng: &rng)
+            return construir(c, sol: sol, dificultad: p.dificultad, rng: &rng).conPasos(Self.pasos(c, sol: sol))
         }
         throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    /// Pasos del ejemplo resuelto (§5): reducción a la unidad.
+    static func pasos(_ c: Caso, sol: Racional) -> [PasoResuelto] {
+        let u = c.b1 * rac(1, c.a1)
+        let porque = "porque si una cantidad se multiplica, la otra también"
+        if c.modo == "cadena" {
+            let litros = u * rac(c.a2)
+            return [Pasos.op("Calcula los litros por kilómetro", "\(AyudaMat.texto(c.b1)) : 100", u, porque: porque),
+                    Pasos.op("Multiplica por los kilómetros del viaje", "\(AyudaMat.texto(u)) × \(c.a2)", litros),
+                    Pasos.op("Multiplica por el precio del litro", "\(AyudaMat.texto(litros)) × \(AyudaMat.euros(c.extra!))", sol,
+                             porque: "porque cada litro cuesta lo mismo", euros: true)]
+        }
+        return [Pasos.op("Reduce a la unidad: divide entre \(c.a1)", "\(AyudaMat.texto(c.b1)) : \(c.a1)", u, porque: porque, euros: c.modo == "precio"),
+                Pasos.op("Multiplica por \(c.a2)", "\(AyudaMat.texto(u)) × \(c.a2)", sol, euros: c.modo == "precio")]
     }
 
     private func construir(_ c: Caso, sol: Racional, dificultad d: Int, rng: inout GeneradorConSemilla) -> Muestra {

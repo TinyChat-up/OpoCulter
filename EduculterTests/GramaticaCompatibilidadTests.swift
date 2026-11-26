@@ -202,6 +202,12 @@ enum OraculoOracion {
             if ["niño", "niña", "cocinero"].contains(c.lema) && d["ciDet"] == "pos" { f.append("\(c.lema) con posesivo") }
         }
         if v.infinitivo == "preparar" && v.admiteCI { f.append("preparar admite CI") }
+        // D-099: posesivo solo en singular; «subir» solo con destino (no hay ninguno en los datos).
+        if d["ciDet"] == "pos" && d["ciNumero"] == "p" { f.append("CI con posesivo en plural") }
+        if d["cdDet"] == "pos" && d["cdNumero"] == "p" { f.append("CD con posesivo en plural") }
+        if v.infinitivo == "subir" { f.append("«subir» sin CCL de destino") }
+        if ["regalar", "vender"].contains(v.infinitivo), let o = compat.sustantivos.first(where: { $0.lema == d["cdLema"] }), !o.etiquetas.contains("comprable") { f.append("\(v.infinitivo) + \(o.lema)") }
+        if v.infinitivo == "pintar", let o = compat.sustantivos.first(where: { $0.lema == d["cdLema"] }), !o.etiquetas.contains("pintable") { f.append("pintar + \(o.lema)") }
         // CC: tipos distintos, sin repetir preposición inicial, compatibles con el verbo y el sujeto.
         let ccs = (d["textosCC"] ?? "").split(separator: ";").map { $0.split(separator: "=").map(String.init) }
         if Set(ccs.map(\.[0])).count != ccs.count { f.append("CC repetidos") }
@@ -241,13 +247,14 @@ enum OraculoOracion {
         // Estructura del nivel.
         let nivel = Int(d["nivel"]!)!
         let tieneCD = !(d["cdLema"] ?? "").isEmpty, tieneCI = !(d["ciLema"] ?? "").isEmpty
+        // Tabla de D-098 (nivel 4 = oración del examen).
         let ok: Bool = switch nivel {
         case 1: v.regimen == "intransitivo" && ccs.isEmpty
         case 2: v.regimen == "transitivo" && tieneCD && !tieneCI && ccs.isEmpty
-        case 3: v.regimen == "intransitivo" && ccs.count == 1
-        case 4: v.regimen == "copulativo"
-        case 5: (v.regimen == "transitivo" && tieneCD && tieneCI && ccs.isEmpty) || (v.regimen == "intransitivo" && ccs.count == 2)
-        default: d["orden"] != "canonico" || (tieneCD && tieneCI && ccs.count == 1)
+        case 3: v.regimen == "copulativo" || (v.regimen == "intransitivo" && ccs.count == 1)
+        case 4: v.regimen == "transitivo" && tieneCD && !tieneCI && ccs.count == 1 && d["orden"] == "canonico"
+        case 5: (v.regimen == "transitivo" && tieneCD && tieneCI && ccs.count == 1) || (v.regimen == "intransitivo" && ccs.count == 2)
+        default: d["orden"] == "sujetoPospuesto" || (d["orden"] == "ccDelante" && tieneCI) || (tieneCD && tieneCI && ccs.count == 2)
         }
         if !ok { f.append("estructura del nivel \(nivel): \(d["oracion"]!)") }
         if d["orden"] == "sujetoPospuesto" && v.regimen != "intransitivo" { f.append("sujeto pospuesto con verbo no intransitivo") }
@@ -262,6 +269,10 @@ struct GramaticaCompatibilidadTests {
     @Test("La compatibilidad se carga y pasa el validador; datos de D-090")
     func carga() {
         #expect(!compat.vacia && compat.sustantivos.count == 39 && compat.adjetivos.count == 27 && compat.verbos.count == 30)
+        #expect(Set(compat.sustantivos.filter { $0.etiquetas.contains("pintable") }.map(\.lema)) == ["mesa", "ventana", "caja", "coche", "bicicleta", "puerta"])
+        #expect(compat.verbos.first { $0.infinitivo == "pintar" }?.objeto == ["pintable"])
+        #expect(compat.verbos.filter { ["regalar", "vender"].contains($0.infinitivo) }.allSatisfy { $0.objeto == ["comprable"] })
+        #expect(compat.requiereDestino == ["subir"])
         #expect(ValidadorContenido(anioActual: 2026).validar(compatibilidad: compat).isEmpty)
         #expect(Set(compat.sustantivos.filter(\.incontable).map(\.lema)) == ["leche", "café", "sopa", "zumo"])
         #expect(compat.verbos.first { $0.infinitivo == "preparar" }?.admiteCI == false)
@@ -293,7 +304,8 @@ struct GramaticaCompatibilidadTests {
         // Las reglas se ejercitan de verdad en los niveles que las piden.
         let modo = Oraculo05E.modo(p)
         if ["sujeto", "completo", "sujetoPredicado", "funciones", "clases"].contains(modo) {
-            if dificultad == 4 { #expect(copulativas == 1000) }
+            if dificultad == 3 { #expect(copulativas > 0 && copulativas < 1000) }
+            if dificultad == 4 { #expect(copulativas == 0 && conCI == 0) }
             if dificultad == 5 { #expect(conCI > 0) }
             if dificultad == 6 && p.mecanica != .segmentar { #expect(antepuestos == 1000 && pospuestos > 0) }
         }

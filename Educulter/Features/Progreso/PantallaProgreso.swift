@@ -11,6 +11,8 @@ struct PantallaProgreso: View {
     @State private var logros: [(logro: Logro, obtenido: Date?)] = []
     @State private var preguntas: RecuentoCatalogo?
     @State private var estados: [String: EstadoCompetencia] = [:]
+    @State private var errores: (activos: [ServicioSesion.ErrorSeguido], corregidos: [ServicioSesion.ErrorSeguido]) = ([], [])
+    @State private var nivelesExamen: [NivelExamen] = []
     @State private var serie = "Aciertos"
     @State private var confirmarBorrado = false
     @State private var confirmarBorradoFinal = false
@@ -20,6 +22,8 @@ struct PantallaProgreso: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.xl) {
                     Text("Progreso").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
+                    seccionErrores
+                    seccionNivelExamen
                     seccionDominio
                     if let e = estadisticas {
                         seccionEvolucion(e)
@@ -74,6 +78,8 @@ struct PantallaProgreso: View {
         estadisticas = try? servicio.estadisticas()
         logros = (try? servicio.catalogoLogros()) ?? []
         estados = (try? servicio.repositorio.estadosCompetencia()) ?? [:]
+        errores = (try? servicio.erroresSeguidos()) ?? ([], [])
+        nivelesExamen = (try? servicio.nivelesExamen()) ?? []
         if preguntas == nil { preguntas = servicio.preguntasDisponibles() }
     }
 
@@ -90,7 +96,7 @@ struct PantallaProgreso: View {
                     // línea y con prioridad de diseño, para que el número nunca se parta (§4.3 de la 05E).
                     // ViewThatFits daba en la auditoría «Dynamic Type font sizes are partially unsupported»
                     // sobre el nombre del área y el porcentaje (textos de la variante no mostrada), D-097.
-                    let porcentaje = Text("\(Int((d * 100).rounded())) %").font(.redondeada(.subheadline))
+                    let porcentaje = Text("\(Int((d * 100).rounded())) %").font(.numerica(.subheadline))
                         .foregroundStyle(Paleta.textoSecundario)
                     let nombre = Text(area.nombre).font(.headline).foregroundStyle(Paleta.textoPrincipal)
                         .fixedSize(horizontal: false, vertical: true)
@@ -113,7 +119,7 @@ struct PantallaProgreso: View {
                                 Text(b.nombre).foregroundStyle(Paleta.textoPrincipal)
                                     .fixedSize(horizontal: false, vertical: true).layoutPriority(1)
                                 Spacer()
-                                Text("\(Int((db * 100).rounded())) %").font(.redondeada(.footnote)).foregroundStyle(Paleta.textoSecundario)
+                                Text("\(Int((db * 100).rounded())) %").font(.numerica(.footnote)).foregroundStyle(Paleta.textoSecundario)
                             } else {
                                 Circle().strokeBorder(Paleta.borde, style: StrokeStyle(lineWidth: 2, dash: [4, 3])).frame(width: 28, height: 28)
                                 Text(b.nombre).foregroundStyle(Paleta.textoSecundario)
@@ -132,6 +138,90 @@ struct PantallaProgreso: View {
             }
         }
         .accessibilityIdentifier("seccionDominio")
+    }
+
+    /// Errores que estás corrigiendo (§4): los activos con sus apariciones, el último fallo y el
+    /// estado; y los corregidos en el último mes, con una marca.
+    private var seccionErrores: some View {
+        VStack(alignment: .leading, spacing: Espacio.m) {
+            titulo("Errores que estás corrigiendo")
+            if errores.activos.isEmpty && errores.corregidos.isEmpty {
+                Text("Cuando un mismo error se repita dos veces en una semana, aparecerá aquí con su remedio.")
+                    .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            ForEach(errores.activos) { e in filaError(e) }
+            ForEach(errores.corregidos) { e in filaError(e) }
+        }
+        .padding(Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("seccionErrores")
+    }
+
+    /// Nivel examen (§5): cada competencia con ítems de dificultad 4 o más respondidos; «Nivel examen
+    /// alcanzado» con 8 aciertos de los últimos 10.
+    private var seccionNivelExamen: some View {
+        VStack(alignment: .leading, spacing: Espacio.m) {
+            titulo("Nivel examen")
+            if nivelesExamen.isEmpty {
+                Text("Cuando aciertes 8 de tus últimos 10 ítems de nivel examen en una competencia, aparecerá aquí como alcanzada.")
+                    .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            ForEach(nivelesExamen) { n in
+                HStack(alignment: .top, spacing: Espacio.m) {
+                    Image(systemName: n.alcanzado ? "checkmark.seal.fill" : "checkmark.seal")
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(n.alcanzado ? Paleta.exito : Paleta.textoSecundario)
+                        .frame(width: 24)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(nombreCompetencia(n.competencia)).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text(n.alcanzado ? "Nivel examen alcanzado · \(n.aciertos) de \(n.respondidos)"
+                             : "\(n.aciertos) aciertos en \(n.respondidos) de \(NivelExamen.ventana) ítems de nivel examen")
+                            .font(.footnote).foregroundStyle(n.alcanzado ? Paleta.exito : Paleta.textoSecundario)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("nivelExamen_\(n.competencia)")
+            }
+        }
+        .padding(Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("seccionNivelExamen")
+    }
+
+    private func nombreCompetencia(_ id: String) -> String {
+        servicio.banco.catalogo.todasLasCompetencias.first { $0.id == id }?.nombre ?? id
+    }
+
+    private func filaError(_ e: ServicioSesion.ErrorSeguido) -> some View {
+        let fecha = e.ultimoFallo.map { $0.formatted(.dateTime.day().month(.wide).locale(Locale(identifier: "es_ES"))) }
+        let estado = e.activo ? (e.aciertosSeguidos > 0 ? "corrigiéndose: \(e.aciertosSeguidos) de 3 aciertos" : "activo") : "corregido"
+        let detalle = [e.activo ? (e.apariciones == 1 ? "1 vez" : "\(e.apariciones) veces") : nil, fecha.map { "último fallo el \($0)" }, estado]
+            .compactMap { $0 }.joined(separator: " · ")
+        return HStack(alignment: .top, spacing: Espacio.m) {
+            Image(systemName: e.activo ? "scope" : "checkmark.circle.fill")
+                .font(.body.weight(.semibold))
+                .foregroundStyle(e.activo ? Paleta.textoPrincipal : Paleta.exito)
+                .frame(width: 24)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(e.error.descripcion).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(detalle).font(.footnote).foregroundStyle(Paleta.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("error_\(e.id)")
     }
 
     private func seccionEvolucion(_ e: EstadisticasProgreso) -> some View {
@@ -182,7 +272,7 @@ struct PantallaProgreso: View {
         VStack(alignment: .leading, spacing: Espacio.xs) {
             titulo("Preguntas disponibles")
             Text(preguntas.map { "\($0.exacto ? "" : "Al menos ")\($0.total.formatted()) preguntas distintas" } ?? "Contando…")
-                .font(.redondeada(.title3)).foregroundStyle(Paleta.textoPrincipal)
+                .font(.numerica(.title3)).foregroundStyle(Paleta.textoPrincipal)
             Text("Solo cuenta el contenido revisado y aprobado. Crece con cada lote.")
                 .font(.footnote).foregroundStyle(Paleta.textoSecundario)
         }
@@ -193,7 +283,8 @@ struct PantallaProgreso: View {
     private var seccionLogros: some View {
         VStack(alignment: .leading, spacing: Espacio.m) {
             titulo("Logros · \(logros.filter { $0.obtenido != nil }.count) de \(logros.count)")
-            LazyVStack(spacing: Espacio.s) {
+            // Pila normal (no `LazyVStack`): la perezosa no reajusta el texto al cambiar su tamaño (D-097).
+            VStack(spacing: Espacio.s) {
                 ForEach(logros, id: \.logro.id) { l in
                     HStack(spacing: Espacio.m) {
                         Image(systemName: l.obtenido == nil ? "trophy" : "trophy.fill")
@@ -224,7 +315,7 @@ struct PantallaProgreso: View {
         HStack {
             Text(t).foregroundStyle(Paleta.textoPrincipal)
             Spacer()
-            Text(v).font(.redondeada(.body)).foregroundStyle(Paleta.textoSecundario)
+            Text(v).font(.numerica(.body)).foregroundStyle(Paleta.textoSecundario)
         }
         .frame(minHeight: Medidas.tactilMinimo)
         .accessibilityElement(children: .combine)
@@ -257,6 +348,13 @@ struct PantallaAjustes: View {
     @Environment(EntornoApp.self) private var entorno
     @State private var ronda: RondaViewModel?
     @State private var mostrarPerfil = false
+    @State private var descanso = false
+    @State private var diasDescanso = 0
+
+    private func cargarDescanso() {
+        descanso = (try? servicio.descansoActivo()) ?? false
+        diasDescanso = (try? servicio.diasDescansoDisponibles()) ?? 0
+    }
 
     var body: some View {
         let ajustes = Binding(get: { entorno.ajustes }, set: { entorno.guardar($0) })
@@ -268,6 +366,25 @@ struct PantallaAjustes: View {
                 grupo("Sonido y vibración") {
                     Toggle("Sonido", isOn: ajustes.sonido).accessibilityIdentifier("ajusteSonido")
                     Toggle("Vibración", isOn: ajustes.vibracion).accessibilityIdentifier("ajusteVibracion")
+                }
+                grupo("Tu semana") {
+                    Stepper(value: Binding(get: { entorno.ajustes.metaSemanal }, set: { var a = entorno.ajustes; a.metaSemanal = $0; entorno.guardar(a) }),
+                            in: MetaSemanal.rango) {
+                        Text("Meta semanal: \(entorno.ajustes.metaSemanal) días")
+                    }
+                    .accessibilityIdentifier("ajusteMetaSemanal")
+                    Text("Días con al menos una sesión, de lunes a domingo.")
+                        .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                    Toggle("Modo descanso", isOn: Binding(get: { descanso }, set: { activar in
+                        _ = try? servicio.cambiarDescanso(activar)
+                        cargarDescanso()
+                    }))
+                    .disabled(!descanso && diasDescanso == 0)
+                    .accessibilityIdentifier("ajusteDescanso")
+                    Text(descanso ? "Tu racha y tu meta están en pausa. Te quedan \(diasDescanso) de 7 días este mes."
+                         : (diasDescanso == 0 ? "Ya has usado los 7 días de descanso de este mes." : "Congela la racha y la meta hasta 7 días al mes. Te quedan \(diasDescanso)."))
+                        .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("textoDescanso")
                 }
                 grupo("Recordatorio") {
                     Toggle("Recordatorio diario", isOn: Binding(get: { entorno.ajustes.recordatorio }, set: { activar in
@@ -285,7 +402,7 @@ struct PantallaAjustes: View {
                         }), displayedComponents: .hourAndMinute)
                         .accessibilityIdentifier("ajusteHora")
                     }
-                    Text("Un aviso local al día, sin servidor. Si ese día ya has hecho una ronda, no suena.")
+                    Text("Un aviso local al día, sin servidor. Si ese día ya has completado una sesión, no suena.")
                         .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
                 }
                 grupo("Tu cuenta") {
@@ -311,6 +428,7 @@ struct PantallaAjustes: View {
         .sheet(isPresented: $mostrarPerfil) {
             PantallaPerfil(avatar: try? servicio.repositorio.perfil().avatar) { id in try? servicio.elegirAvatar(id) }
         }
+        .onAppear(perform: cargarDescanso)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaAjustes")
     }

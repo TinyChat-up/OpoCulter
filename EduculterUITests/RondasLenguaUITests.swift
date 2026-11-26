@@ -28,7 +28,8 @@ final class RondasLenguaUITests: CasoUI {
         captura(app, "\(prefijo)_00_nodo")
         app.buttons["botonPracticar"].tap()
         if app.buttons["botonEmpezarTrasTeoria"].waitForExistence(timeout: 4) { app.buttons["botonEmpezarTrasTeoria"].tap() }
-        XCTAssertTrue(app.buttons["botonComprobar"].waitForExistence(timeout: 15))
+        // En el peldaño 1, la práctica empieza con un ejemplo resuelto («Siguiente paso»; §5).
+        XCTAssertTrue(app.buttons["botonRellenarDebug"].waitForExistence(timeout: 15))
         // Se audita con la pantalla ya quieta: durante la transición de entrada el texto está a media
         // opacidad y la auditoría de contraste da falsos positivos.
         Thread.sleep(forTimeInterval: 2)

@@ -672,63 +672,87 @@
     },
     {
       "pregunta": "OF.2017.O-M10",
-      "competencia": "MAT.OPE.ECUAC",
-      "plantilla": "MAT.OPE.ECUAC.G03",
+      "competencia": "MAT.OPE.INCOG",
+      "plantilla": "MAT.OPE.INCOG.G02",
       "perfil": {
         "pasos": 1,
         "numeros": "1,5 · a = 300; 8888 : b = 40",
-        "formato": "a · x = N y N : x = M"
+        "formato": "a · x = N y N : x = a"
       },
-      "nivelQueLaReproduce": null,
-      "reproducible": false,
-      "comprobacion": null,
-      "nota": "No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.",
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "terminoDesconocido",
+        "numeros": [
+          4,
+          5
+        ]
+      },
+      "nota": "El examen pide dos igualdades sueltas; cada ítem, una (los niveles 5–6 las encadenan). El factor decimal (1,5) sale en el nivel 6.",
       "cambioEnLaTabla": ""
     },
     {
       "pregunta": "OF.2019.A-M13",
-      "competencia": "MAT.OPE.ECUAC",
-      "plantilla": "MAT.OPE.ECUAC.G03",
+      "competencia": "MAT.OPE.INCOG",
+      "plantilla": "MAT.OPE.INCOG.G02",
       "perfil": {
         "pasos": 1,
         "numeros": "23 · a = 9591; 24024 : b = 88",
-        "formato": "a · x = N y N : x = M"
+        "formato": "a · x = N y N : x = a"
       },
-      "nivelQueLaReproduce": null,
-      "reproducible": false,
-      "comprobacion": null,
-      "nota": "No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.",
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "terminoDesconocido",
+        "numeros": [
+          4,
+          5
+        ]
+      },
+      "nota": "El examen pide dos igualdades sueltas; cada ítem, una (los niveles 5–6 las encadenan).",
       "cambioEnLaTabla": ""
     },
     {
       "pregunta": "OF.2019.O-M13",
-      "competencia": "MAT.OPE.ECUAC",
-      "plantilla": "MAT.OPE.ECUAC.G03",
+      "competencia": "MAT.OPE.INCOG",
+      "plantilla": "MAT.OPE.INCOG.G02",
       "perfil": {
         "pasos": 1,
         "numeros": "44 · a = 1012; 2425 : b = 485",
-        "formato": "a · x = N y N : x = M"
+        "formato": "a · x = N y N : x = a"
       },
-      "nivelQueLaReproduce": null,
-      "reproducible": false,
-      "comprobacion": null,
-      "nota": "No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.",
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "terminoDesconocido",
+        "numeros": [
+          4,
+          5
+        ]
+      },
+      "nota": "El examen pide dos igualdades sueltas; cada ítem, una (los niveles 5–6 las encadenan).",
       "cambioEnLaTabla": ""
     },
     {
       "pregunta": "OF.2026.A-M13",
-      "competencia": "MAT.OPE.ECUAC",
-      "plantilla": "MAT.OPE.ECUAC.G03",
+      "competencia": "MAT.OPE.INCOG",
+      "plantilla": "MAT.OPE.INCOG.G02",
       "perfil": {
         "pasos": 1,
         "numeros": "36 · a = 10.404; 28.560 : b = 84",
-        "formato": "a · x = N y N : x = M"
+        "formato": "a · x = N y N : x = a"
       },
-      "nivelQueLaReproduce": null,
-      "reproducible": false,
-      "comprobacion": null,
-      "nota": "No reproducible en el nivel 4 (incógnita en los dos miembros). Es la estructura del nivel 2 (ax = b) con números de 4–5 cifras, decimales y la incógnita como divisor, que el generador no hace.",
-      "cambioEnLaTabla": ""
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "terminoDesconocido",
+        "numeros": [
+          4,
+          5
+        ]
+      },
+      "nota": "El examen pide dos igualdades sueltas; cada ítem, una (los niveles 5–6 las encadenan).",
+      "cambioEnLaTabla": "Generador nuevo (D-100): nivel 4 = una operación inversa con N de 4–5 cifras."
     },
     {
       "pregunta": "OF.2022.O-M11",
@@ -1030,6 +1054,46 @@
       "cambioEnLaTabla": ""
     },
     {
+      "pregunta": "OF.2026.O-L10",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V + CD + CCL («Los viajeros encontraron refugio en la venta»)",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "oracionSimple",
+        "cd": true,
+        "ci": false,
+        "cc": 1
+      },
+      "nota": "",
+      "cambioEnLaTabla": "Nivel 4: de la copulativa (que pasa al 3) a S + V + CD + CC (D-098)."
+    },
+    {
+      "pregunta": "OF.2026.A-L10",
+      "competencia": "LEN.SIN.COMPL",
+      "plantilla": "LEN.SIN.COMPL.G07",
+      "perfil": {
+        "pasos": "análisis completo",
+        "numeros": "S + V + CD de persona + CCL («La muerte miraba al jinete desde las torres»)",
+        "formato": "analizar la oración"
+      },
+      "nivelQueLaReproduce": 4,
+      "reproducible": true,
+      "comprobacion": {
+        "generador": "oracionSimple",
+        "cd": true,
+        "ci": false,
+        "cc": 1
+      },
+      "nota": "",
+      "cambioEnLaTabla": ""
+    },
+    {
       "pregunta": "OF.2017.O-L9",
       "competencia": "LEN.SIN.COMPL",
       "plantilla": "LEN.SIN.COMPL.G07",
@@ -1041,7 +1105,7 @@
       "nivelQueLaReproduce": 5,
       "reproducible": false,
       "comprobacion": null,
-      "nota": "Nivel 4 de la tabla de §4.2 = copulativa: el examen corresponde al 5 (intransitivo + dos CC).",
+      "nota": "Intransitivo con dos CC: nivel 5.",
       "cambioEnLaTabla": ""
     },
     {
@@ -1056,37 +1120,7 @@
       "nivelQueLaReproduce": 5,
       "reproducible": false,
       "comprobacion": null,
-      "nota": "Nivel 5 (CD + CI).",
-      "cambioEnLaTabla": ""
-    },
-    {
-      "pregunta": "OF.2026.O-L10",
-      "competencia": "LEN.SIN.COMPL",
-      "plantilla": "LEN.SIN.COMPL.G07",
-      "perfil": {
-        "pasos": "análisis completo",
-        "numeros": "S + V + CD + CCL",
-        "formato": "analizar la oración"
-      },
-      "nivelQueLaReproduce": null,
-      "reproducible": false,
-      "comprobacion": null,
-      "nota": "Ningún nivel da CD + un CC en orden canónico (el 6 lo antepone).",
-      "cambioEnLaTabla": ""
-    },
-    {
-      "pregunta": "OF.2026.A-L10",
-      "competencia": "LEN.SIN.COMPL",
-      "plantilla": "LEN.SIN.COMPL.G07",
-      "perfil": {
-        "pasos": "análisis completo",
-        "numeros": "S + V + CD (a + persona) + CCL",
-        "formato": "analizar la oración"
-      },
-      "nivelQueLaReproduce": null,
-      "reproducible": false,
-      "comprobacion": null,
-      "nota": "Igual que la anterior.",
+      "nota": "CD + CI: nivel 5, que además añade un CC.",
       "cambioEnLaTabla": ""
     },
     {
@@ -1101,7 +1135,7 @@
       "nivelQueLaReproduce": null,
       "reproducible": false,
       "comprobacion": null,
-      "nota": "No reproducible: complemento predicativo.",
+      "nota": "Perfil pendiente: el complemento predicativo necesita datos nuevos (lote de la dirección).",
       "cambioEnLaTabla": ""
     },
     {
@@ -1116,7 +1150,7 @@
       "nivelQueLaReproduce": null,
       "reproducible": false,
       "comprobacion": null,
-      "nota": "No reproducible: verbo semicopulativo.",
+      "nota": "Perfil pendiente: verbo semicopulativo y predicativo (lote de la dirección).",
       "cambioEnLaTabla": ""
     },
     {
@@ -1131,7 +1165,7 @@
       "nivelQueLaReproduce": null,
       "reproducible": false,
       "comprobacion": null,
-      "nota": "No reproducible: complemento del nombre.",
+      "nota": "Perfil pendiente: el complemento del nombre necesita datos nuevos (lote de la dirección).",
       "cambioEnLaTabla": ""
     },
     {

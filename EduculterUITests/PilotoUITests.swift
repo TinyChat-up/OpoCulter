@@ -27,14 +27,15 @@ final class PilotoUITests: CasoUI {
         XCTAssertTrue(app.buttons["botonSaltarDiagnostico"].waitForExistence(timeout: 10))
         app.buttons["botonSaltarDiagnostico"].tap()
         XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 10))
-        try auditar(app, "Hoy v2", bordesDelScroll: true)
+        try auditar(app, "Hoy", bordesDelScroll: true)
 
-        // Una ronda completa con la ayuda de pruebas.
+        // Una sesión de 5 minutos con la ayuda de pruebas (el diagnóstico saltado se respeta, D-110).
+        elegirDuracion(app, 5)
         jugarRonda(app)
         let antes = estadoVisible(app)
-        XCTAssertTrue(antes.racha.hasPrefix("1 día"), "Racha tras la ronda: \(antes.racha)")
-        // Desde la 05E, la ronda recomendada de Lengua es «Sujeto y predicado» (LEN.SIN tiene contenido).
-        XCTAssertTrue(antes.diagnostico.contains("LEN.SIN.SUJPRED:p"), "Peldaño y Leitner guardados: \(antes.diagnostico)")
+        XCTAssertTrue(antes.racha.hasPrefix("1 día"), "Racha tras la sesión: \(antes.racha)")
+        XCTAssertTrue(antes.semana.contains("1 de 4 días"), "La sesión cuenta para la meta: \(antes.semana)")
+        XCTAssertTrue(antes.diagnostico.contains(":p"), "Peldaño y Leitner guardados: \(antes.diagnostico)")
         XCTAssertTrue(antes.diagnostico.contains("avatar:5"))
 
         // Cerrar y reabrir la app sobre el mismo almacén.
@@ -46,9 +47,9 @@ final class PilotoUITests: CasoUI {
         XCTAssertFalse(app.descendants(matching: .any)["pantallaBienvenida"].exists)
         let despues = estadoVisible(app)
         XCTAssertEqual(despues.racha, antes.racha)
-        XCTAssertEqual(despues.nivel, antes.nivel)
-        XCTAssertEqual(despues.misiones, antes.misiones)
+        XCTAssertEqual(despues.semana, antes.semana)
         XCTAssertEqual(despues.avatar, antes.avatar)
+        XCTAssertTrue(app.segmentedControls["selectorDuracion"].buttons["5 min"].isSelected, "La duración se recuerda")
         XCTAssertEqual(despues.diagnostico, antes.diagnostico, "Peldaño, Leitner, Rescate, XP y avatar")
 
         // Perfil: cambiar el avatar.
@@ -63,8 +64,7 @@ final class PilotoUITests: CasoUI {
 
     private struct EstadoVisible: Equatable {
         var racha: String
-        var nivel: String
-        var misiones: [String]
+        var semana: String
         var avatar: String
         var diagnostico: String
     }
@@ -72,30 +72,19 @@ final class PilotoUITests: CasoUI {
     @MainActor
     private func estadoVisible(_ app: XCUIApplication) -> EstadoVisible {
         XCTAssertTrue(app.descendants(matching: .any)["diagnosticoProgreso"].waitForExistence(timeout: 10))
-        let misiones = app.descendants(matching: .any).matching(NSPredicate(format: "identifier BEGINSWITH 'mision_'"))
-            .allElementsBoundByIndex.map { "\($0.label): \($0.value as? String ?? "")" }
         return EstadoVisible(
             racha: app.descendants(matching: .any)["chipRacha"].firstMatch.value as? String ?? "",
-            nivel: app.descendants(matching: .any)["tarjetaNivel"].firstMatch.value as? String ?? "",
-            misiones: misiones,
+            semana: app.staticTexts["metaSemanalTexto"].firstMatch.label,
             avatar: app.buttons["botonPerfil"].value as? String ?? "",
             diagnostico: app.descendants(matching: .any)["diagnosticoProgreso"].firstMatch.label)
     }
 
-    /// Juega la ronda que abre "Empezar ronda" con el botón de pruebas y vuelve a Hoy.
+    /// Juega la sesión que abre «Empezar» con el botón de pruebas y vuelve a Hoy.
     @MainActor
     private func jugarRonda(_ app: XCUIApplication) {
+        app.scrollViews.firstMatch.swipeDown()
         app.buttons["botonEmpezarRonda"].tap()
-        if app.buttons["botonEmpezarTrasTeoria"].waitForExistence(timeout: 5) { app.buttons["botonEmpezarTrasTeoria"].tap() }
-        var vueltas = 0
-        while !app.descendants(matching: .any)["resumenRonda"].exists && vueltas < 10 {
-            XCTAssertTrue(app.buttons["botonRellenarDebug"].waitForExistence(timeout: 10))
-            app.buttons["botonRellenarDebug"].tap()
-            app.buttons["botonComprobar"].tap()
-            XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 5))
-            app.buttons["botonContinuar"].tap()
-            vueltas += 1
-        }
+        XCTAssertEqual(jugarHastaElFinal(app), 8)
         let terminar = app.buttons["botonTerminar"]
         XCTAssertTrue(terminar.waitForExistence(timeout: 5))
         while !terminar.isHittable { app.scrollViews.firstMatch.swipeUp() }
@@ -107,12 +96,11 @@ final class PilotoUITests: CasoUI {
     @MainActor
     func testRondaDeMatematicasConFraccionBarras() throws {
         let app = lanzar(["-politicaRelease"])
-        // Hoy → Matemáticas: la competencia en curso del área con el contenido de Release (lote 02:
-        // MAT.UNI.LMC, la primera por prioridad de bloque y orden del catálogo).
-        let mates = app.buttons["Matemáticas"].firstMatch
+        // Hoy → foco Matemáticas (se recuerda).
+        let mates = app.segmentedControls["selectorArea"].buttons["Matemáticas"]
         XCTAssertTrue(mates.waitForExistence(timeout: 5))
         mates.tap()
-        XCTAssertTrue(app.staticTexts["Longitud, masa y capacidad"].waitForExistence(timeout: 5))
+        XCTAssertTrue(mates.isSelected)
         try auditar(app, "Hoy · Matemáticas", bordesDelScroll: true)
         // fraccionBarras con toques reales: Camino → Matemáticas → «Representar fracciones» → Practicar.
         app.tabBars.buttons["Camino"].firstMatch.tap()
@@ -128,10 +116,6 @@ final class PilotoUITests: CasoUI {
         app.buttons["botonPracticar"].tap()
         let respondidas = try jugarConToquesReales(app, mecanica: "fraccionBarras", empezar: false, volverA: "nodo_MAT.NUM.FRAREP")
         XCTAssertGreaterThanOrEqual(respondidas, 2, "Practicar «Representar fracciones» debe incluir fraccionBarras")
-        // La misión de Matemáticas (si es la de área de hoy) queda cumplida.
-        app.tabBars.buttons["Hoy"].firstMatch.tap()
-        let mision = app.descendants(matching: .any)["mision_rondaMatematicas"]
-        if mision.waitForExistence(timeout: 5) { XCTAssertEqual(mision.value as? String, "completada") }
     }
 
     @MainActor
@@ -140,9 +124,7 @@ final class PilotoUITests: CasoUI {
         // colocarTilde generadas salen del léxico de 818: se juegan 4 ítems aprobados concretos.
         let ids = "LEN.ORT.AGU.0010,LEN.ORT.AGU.0012,LEN.ORT.AGU.0016,LEN.ORT.AGU.0020"
         let app = lanzar(["-politicaRelease", "-rondaItems", ids], base: ["-enMemoria", "-semilla", "10", "-ayudasDePrueba", "-avatar", "0"])
-        // La propuesta de Lengua de Hoy es la primera competencia con contenido (desde la 05E, LEN.SIN.SUJPRED);
-        // la ronda con los 4 ítems de -rondaItems empieza desde ahí.
-        XCTAssertTrue(app.staticTexts["Sujeto y predicado"].waitForExistence(timeout: 5))
+        // «Empezar» lanza la ronda con los 4 ítems de -rondaItems.
         let respondidas = try jugarConToquesReales(app, mecanica: "colocarTilde")
         XCTAssertEqual(respondidas, 4, "Los 4 ítems de colocarTilde se responden tocando la vocal o «Sin tilde»")
     }

@@ -1,13 +1,13 @@
 import SwiftUI
 
-/// Movimiento "gomoso" (Rubber Hose, D-059): muelles con rebote (≤ 0,35 s). Con "Reducir
-/// movimiento" se sustituyen por fundidos.
+/// Movimiento sobrio (identidad editorial, D-109): curvas suaves sin rebote (≤ 0,35 s). Con
+/// "Reducir movimiento" se sustituyen por fundidos.
 enum Movimiento {
     /// Duración máxima de cualquier animación de confirmación.
     static let duracionMaxima: Double = 0.35
 
     static func animacion(reducir: Bool) -> Animation {
-        reducir ? .easeInOut(duration: 0.2) : .spring(duration: 0.3, bounce: 0.4)
+        reducir ? .easeInOut(duration: 0.2) : .smooth(duration: 0.3)
     }
 
     static func transicion(reducir: Bool, borde: Edge = .bottom) -> AnyTransition {
@@ -16,8 +16,8 @@ enum Movimiento {
 }
 
 extension View {
-    /// *Squash & stretch* sutil al cambiar `disparador` (encajar, acertar, desbloquear): se aplasta
-    /// (1,08 × 0,92) y vuelve con rebote, en 0,3 s. Con "Reducir movimiento", un fundido breve.
+    /// Confirmación discreta al cambiar `disparador` (encajar, acertar, desbloquear): un leve
+    /// atenuado y vuelta, en 0,25 s, sin rebote ni deformación.
     func estiramiento<V: Equatable>(_ disparador: V) -> some View {
         modifier(Estiramiento(disparador: disparador))
     }
@@ -39,22 +39,14 @@ private struct AnimacionApp<V: Equatable>: ViewModifier {
 
 private struct Estiramiento<V: Equatable>: ViewModifier {
     let disparador: V
-    @Environment(\.accessibilityReduceMotion) private var reducir
-    @State private var aplastado = false
     @State private var opacidad = 1.0
 
     func body(content: Content) -> some View {
         content
-            .scaleEffect(x: aplastado ? 1.08 : 1, y: aplastado ? 0.92 : 1, anchor: .bottom)
             .opacity(opacidad)
             .onChange(of: disparador) { _, _ in
-                if reducir {
-                    withAnimation(.easeOut(duration: 0.1)) { opacidad = 0.6 }
-                    withAnimation(.easeIn(duration: 0.15).delay(0.1)) { opacidad = 1 }
-                } else {
-                    withAnimation(.spring(response: 0.1, dampingFraction: 0.6)) { aplastado = true }
-                    withAnimation(.spring(response: 0.2, dampingFraction: 0.45).delay(0.1)) { aplastado = false }
-                }
+                withAnimation(.easeOut(duration: 0.1)) { opacidad = 0.6 }
+                withAnimation(.easeIn(duration: 0.15).delay(0.1)) { opacidad = 1 }
             }
     }
 }

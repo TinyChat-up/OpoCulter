@@ -1,5 +1,7 @@
 import Foundation
 
+private typealias A = AyudaMat
+
 // Generadores de la Fase 05E (parte 1): formas no personales del verbo (LEN.VER.NOPERS) y
 // literatura sobre la base literaria del lote 05a (LEN.LIT.HIST, UNIV, INF y GEN).
 
@@ -352,6 +354,165 @@ struct GeneradorLiteratura: GeneradorItems {
                            pistas: ["El teatro se escribe para representarse; la narrativa cuenta una historia; la lírica expresa sentimientos."],
                            complejidad: Double(n) + Double(presentes.count),
                            datos: ["obras": elegidas.map { "\($0.0.id)|\($0.1.titulo)|\($0.1.genero)" }.joined(separator: ";")])
+        }
+        throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
+        enumerarPorSemillas(self, p, recursos: recursos, limite: limite)
+    }
+}
+
+// MARK: - terminoDesconocido (MAT.OPE.INCOG, Fase 05E parte 2, D-100)
+
+/// Término desconocido de una igualdad con una sola operación inversa: «a × x = N», «N : x = a»,
+/// «x + a = N» y «x − a = N». Perfil de las 4 preguntas oficiales «Calcule a y b» (2017 M10, 2019 A
+/// M13, 2019 O M13, 2026 A M13).
+///
+/// | Dif. | Caso |
+/// |---|---|
+/// | 1 | x + a = N y a × x = N con números de 1–2 cifras (tablas) |
+/// | 2 | x − a = N y a × x = N con N de 2–3 cifras |
+/// | 3 | las cuatro formas con N de 3–4 cifras |
+/// | 4 (examen) | las cuatro formas con N de 4–5 cifras |
+/// | 5 | dos igualdades encadenadas: se halla x y con ella y |
+/// | 6 | dos igualdades encadenadas con un factor decimal («1,5 × x = 300») |
+struct GeneradorTerminoDesconocido: GeneradorItems {
+    let tipo = "terminoDesconocido"
+    let mecanicas: Set<Mecanica> = [.numerico]
+    let marcadores: Set<String> = ["pregunta", "contexto"]
+
+    /// Igualdad con incógnita: `forma` es `mul` (a × x = n), `div` (n : x = a), `suma` (x + a = n) o
+    /// `resta` (x − a = n). `x` es la solución.
+    struct Igualdad: Equatable {
+        let forma: String; let a: Racional; let n: Racional; let x: Racional; let letra: String
+        func texto(_ incognita: String? = nil) -> String {
+            let l = incognita ?? letra
+            let at = A.texto(a), nt = A.texto(n)
+            switch forma {
+            case "mul": return "\(at) × \(l) = \(nt)"
+            case "div": return "\(nt) : \(l) = \(at)"
+            case "suma": return "\(l) + \(at) = \(nt)"
+            default: return "\(l) − \(at) = \(nt)"
+            }
+        }
+        /// Operación inversa con la que se despeja.
+        var inversa: String {
+            switch forma {
+            case "mul": "\(A.texto(n)) : \(A.texto(a)) = \(A.texto(x))"
+            case "div": "\(A.texto(n)) : \(A.texto(a)) = \(A.texto(x))"
+            case "suma": "\(A.texto(n)) − \(A.texto(a)) = \(A.texto(x))"
+            default: "\(A.texto(n)) + \(A.texto(a)) = \(A.texto(x))"
+            }
+        }
+        /// Operación inversa sin el resultado («n : a»).
+        var operacionInversa: String {
+            switch forma {
+            case "mul", "div": "\(A.texto(n)) : \(A.texto(a))"
+            case "suma": "\(A.texto(n)) − \(A.texto(a))"
+            default: "\(A.texto(n)) + \(A.texto(a))"
+            }
+        }
+        var porque: String {
+            switch forma {
+            case "mul": "porque la división deshace la multiplicación"
+            case "div": "porque el divisor es el dividendo entre el cociente"
+            case "suma": "porque la resta deshace la suma"
+            default: "porque la suma deshace la resta"
+            }
+        }
+    }
+
+    static func igualdad(_ forma: String, x: Int, a: Int, letra: String) -> Igualdad? {
+        let xr = rac(x), ar = rac(a)
+        switch forma {
+        case "mul": return Igualdad(forma: forma, a: ar, n: ar * xr, x: xr, letra: letra)
+        case "div": return Igualdad(forma: forma, a: ar, n: ar * xr, x: xr, letra: letra)   // n : x = a ⇒ x = n : a
+        case "suma": return Igualdad(forma: forma, a: ar, n: xr + ar, x: xr, letra: letra)
+        default: return x > a ? Igualdad(forma: forma, a: ar, n: xr - ar, x: xr, letra: letra) : nil
+        }
+    }
+
+    /// Cifras de un entero positivo.
+    static func cifras(_ r: Racional) -> Int { String(abs(r.numerador / r.denominador)).count }
+
+    func simple(_ d: Int, rng: inout GeneradorConSemilla) -> Igualdad? {
+        let formas: [String] = d == 1 ? ["suma", "mul"] : (d == 2 ? ["resta", "mul"] : ["mul", "div", "suma", "resta"])
+        let forma = rng.elemento(formas)
+        let (minN, maxN): (Int, Int) = switch d { case 1: (2, 99); case 2: (10, 999); case 3: (100, 9999); default: (1000, 99_999) }
+        for _ in 0..<200 {
+            let x: Int, a: Int
+            switch forma {
+            case "mul", "div":
+                a = d == 1 ? rng.entero(2...10) : (d == 2 ? rng.entero(3...12) : rng.entero(11...99))
+                x = d == 1 ? rng.entero(2...10) : rng.entero(max(2, minN / a)...max(3, maxN / a))
+            default:
+                a = rng.entero(max(1, minN / 3)...max(2, maxN / 2)); x = rng.entero(max(1, minN / 2)...maxN)
+            }
+            guard let i = Self.igualdad(forma, x: x, a: a, letra: "a"), i.n.esEntero, (minN...maxN).contains(i.n.numerador) else { continue }
+            if d >= 4 && Self.cifras(i.n) < 4 { continue }
+            return i
+        }
+        return nil
+    }
+
+    func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
+        let d = min(max(p.dificultad, 1), 6)
+        if d <= 4 {
+            guard let i = simple(d, rng: &rng) else { throw ErrorGenerador.sinCaso(tipo) }
+            let erronea: Racional = switch i.forma {
+            case "mul", "div": i.n * i.a
+            case "suma": i.n + i.a
+            default: i.n - i.a
+            }
+            let reglas: [(Racional?, String)] = [(erronea, "Para despejar se hace la operación contraria: \(i.porque.replacingOccurrences(of: "porque ", with: "")).")]
+            return Muestra(clave: "1|\(i.texto())", valores: ["pregunta": "Calcula el valor de a: \(i.texto())"],
+                           payload: A.numerico(i.x, unidad: nil),
+                           explicacion: "\(i.texto()) → a = \(i.inversa), \(i.porque).", erroresHabituales: A.errores(i.x, reglas),
+                           pistas: ["¿Qué operación deshace la que ves? Úsala con los dos números conocidos."],
+                           complejidad: Double(d) + Double(Self.cifras(i.n)) * 0.5,
+                           datos: ["igualdades": "\(i.forma):\(A.texto(i.a)):\(A.texto(i.n))", "respuesta": A.texto(i.x), "pasos": "1"])
+                .conPasos([Pasos.dato("Usa la operación contraria", "a = \(i.operacionInversa)", porque: i.porque),
+                           Pasos.op("Calcula", i.operacionInversa, i.x)])
+        }
+        // Dos igualdades encadenadas: la primera da a; la segunda usa a para dar b.
+        for _ in 0..<300 {
+            let decimal = d == 6
+            let x1 = rng.entero(20...400)
+            let f1: Igualdad
+            if decimal {
+                let factor = rac(rng.elemento([15, 25, 12, 35]), 10)
+                f1 = Igualdad(forma: "mul", a: factor, n: factor * rac(x1), x: rac(x1), letra: "a")
+                guard f1.n.esEntero else { continue }
+            } else {
+                guard let i = Self.igualdad(rng.elemento(["mul", "div"]), x: x1, a: rng.entero(11...60), letra: "a") else { continue }
+                f1 = i
+            }
+            let forma2 = rng.elemento(["div", "suma", "resta"])
+            let a2 = forma2 == "div" ? rng.entero(2...12) : rng.entero(10...300)
+            // Segunda igualdad con el valor de a en el lugar del dato: «a : b = k», «b + k = a», «b − k = a».
+            let b: Racional, texto2: String
+            switch forma2 {
+            case "div":
+                guard x1 % a2 == 0 else { continue }
+                b = rac(x1 / a2); texto2 = "a : b = \(a2)"
+            case "suma":
+                guard x1 > a2 else { continue }
+                b = rac(x1 - a2); texto2 = "b + \(a2) = a"
+            default:
+                b = rac(x1 + a2); texto2 = "b − \(a2) = a"
+            }
+            let reglas: [(Racional?, String)] = [(rac(x1), "Ese es el valor de a: falta usarlo en la segunda igualdad para hallar b."),
+                                                 (f1.n * f1.a, "Para despejar se hace la operación contraria.")]
+            return Muestra(clave: "2|\(f1.texto())|\(texto2)", valores: ["pregunta": "Calcula b: \(f1.texto()) y \(texto2)"],
+                           payload: A.numerico(b, unidad: nil),
+                           explicacion: "a = \(f1.inversa), \(f1.porque). Con a = \(x1): b = \(A.texto(b)).",
+                           erroresHabituales: A.errores(b, reglas), pistas: ["Halla primero a con la primera igualdad."],
+                           complejidad: Double(d) + 2 + (decimal ? 1 : 0),
+                           datos: ["igualdades": "\(f1.forma):\(A.texto(f1.a)):\(A.texto(f1.n))|\(forma2):\(a2)", "a": "\(x1)", "respuesta": A.texto(b), "pasos": "2"])
+                .conPasos([Pasos.op("Halla a con la primera igualdad", f1.operacionInversa, rac(x1), porque: f1.porque),
+                           Pasos.dato("Sustituye a en la segunda", texto2.replacingOccurrences(of: "a", with: A.texto(rac(x1)))),
+                           Pasos.op("Despeja b", forma2 == "div" ? "\(A.texto(rac(x1))) : \(a2)" : (forma2 == "suma" ? "\(A.texto(rac(x1))) − \(a2)" : "\(A.texto(rac(x1))) + \(a2)"), b)])
         }
         throw ErrorGenerador.sinCaso(tipo)
     }

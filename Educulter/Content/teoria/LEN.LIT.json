@@ -1,0 +1,122 @@
+[
+  {
+    "id": "LEN.LIT.GEN.T01",
+    "competencia": "LEN.LIT.GEN",
+    "titulo": "Géneros literarios",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Hay tres géneros literarios clásicos: lírico (expresa sentimientos, normalmente en verso), narrativo (cuenta hechos mediante un narrador) y dramático (diálogo pensado para representarse)."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Lírica: oda, elegía, égloga, sátira, canción\nNarrativa: epopeya, cantar de gesta, cuento, fábula, novela\nDramática: tragedia, comedia, drama, entremés, auto sacramental"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "¿Hay narrador? Narrativo. ¿Hay personajes que dialogan sin narrador? Dramático. ¿Habla un «yo» de lo que siente? Lírico."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
+  },
+  {
+    "id": "LEN.LIT.HIST.T01",
+    "competencia": "LEN.LIT.HIST",
+    "titulo": "Periodos de la literatura española",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Edad Media (s. XII–XV): Cantar de mio Cid, Berceo, Juan Ruiz, Jorge Manrique, La Celestina\nRenacimiento (s. XVI): Garcilaso, Lazarillo, fray Luis de León, san Juan de la Cruz\nBarroco (s. XVII): Cervantes, Lope de Vega, Góngora, Quevedo, Calderón\nIlustración (s. XVIII): Feijoo, Moratín\nRomanticismo (s. XIX): Espronceda, Zorrilla; después, Bécquer y Rosalía de Castro\nRealismo (s. XIX): Galdós, Clarín, Pardo Bazán\nModernismo y Generación del 98: Rubén Darío, Unamuno, Machado, Baroja, Valle-Inclán\nNovecentismo y Generación del 27: Juan Ramón Jiménez, Lorca, Alberti, Cernuda, Aleixandre"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Ancla tres fechas: 1499, La Celestina; 1605, primera parte del Quijote; 1898, fin del imperio colonial."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
+  },
+  {
+    "id": "LEN.LIT.UNIV.T01",
+    "competencia": "LEN.LIT.UNIV",
+    "titulo": "Literatura universal",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Antigüedad: Homero (Ilíada y Odisea), Esopo (fábulas), Virgilio (Eneida)\nEdad Media: Dante (Divina comedia), Petrarca, Boccaccio (Decamerón)\nRenacimiento y Barroco: Shakespeare, Molière\nSiglo XIX: Goethe, Victor Hugo, Dickens, Flaubert, Tolstói, Dostoievski\nSiglo XX: Kafka, Proust, Joyce"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Dante, Petrarca y Boccaccio son italianos del siglo XIV. Shakespeare y Cervantes murieron en 1616."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
+  },
+  {
+    "id": "LEN.LIT.INF.T01",
+    "competencia": "LEN.LIT.INF",
+    "titulo": "Literatura infantil y juvenil",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Son las obras escritas para niños y jóvenes o adoptadas por ellos: cuento, fábula, poesía, teatro, cómic y álbum ilustrado."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Recopiladores de cuentos populares: Perrault (s. XVII), hermanos Grimm (s. XIX)\nCuentos de autor: Andersen (s. XIX)\nClásicos del XIX: Carroll (Alicia en el país de las maravillas, 1865), Collodi (Pinocho, 1883), Stevenson (La isla del tesoro, 1883)\nEn España: Gloria Fuertes, Ana María Matute, Elvira Lindo"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Perrault y los Grimm recogieron cuentos de la tradición oral; Andersen inventó los suyos."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (ANEXO B de la Fase 05E, parte 2)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-25"
+    }
+  }
+]

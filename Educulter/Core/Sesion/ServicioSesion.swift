@@ -24,6 +24,10 @@ enum TipoRonda: Sendable, Equatable {
     case supervivencia(area: String?)
     /// Diagnóstico inicial (adaptativo, ítem a ítem).
     case diagnostico
+    /// Sesión diaria mixta (05E parte 2 §3).
+    case sesion(duracion: DuracionSesion, foco: FocoSesion)
+    /// Rescate de un error típico activo: 3 ítems de su remedio (05E parte 2 §4).
+    case rescateError(String)
 }
 
 /// Propuesta de ronda por área para el panel protagonista de Hoy.
@@ -50,6 +54,10 @@ struct EfectoRespuesta: Sendable, Equatable {
     var rescatado = false
     var misionesCompletadas: [Mision] = []
     var logrosNuevos: [Logro] = []
+    /// El fallo activa (o repite) un error típico activo (motor de errores, §4 de la 05E parte 2).
+    var errorRepetido: ErrorTipico?
+    /// Errores típicos que delata este fallo (activos o no), para el resumen de la sesión.
+    var erroresDetectados: [ErrorTipico] = []
 }
 
 /// Consecuencias de terminar una ronda.
@@ -117,8 +125,6 @@ final class ServicioSesion {
 
     var hoy: DiaCivil { DiaCivil(reloj.ahora, calendario: calendario) }
 
-    /// Ítems utilizables en rondas (peldaños 1–4).
-    private var itemsDeRonda: [Item] { banco.items.filter { $0.peldano <= configRonda.peldanoMaximoEnRonda } }
 
     // MARK: - Hoy
 
@@ -135,7 +141,7 @@ final class ServicioSesion {
             misiones: perfil.misiones,
             rescatesPendientes: try repositorio.colaRescate().cantidad,
             competenciaEnCurso: enCurso.flatMap { id in banco.catalogo.todasLasCompetencias.first { $0.id == id } },
-            hayContenido: itemsDeRonda.count >= configRonda.minimo,
+            hayContenido: banco.cuentaSinGenerar(peldanoMaximo: configRonda.peldanoMaximoEnRonda) >= configRonda.minimo,
             itemsOrtografia: itemsOrtografia.count,
             propuestas: try propuestas(enCurso: enCurso),
             avatar: perfil.avatar,
@@ -185,14 +191,14 @@ final class ServicioSesion {
         }
     }
 
-    private func competenciasOrdenadas() -> [String] {
-        let bloques = banco.catalogo.todosLosBloques.enumerated().sorted { ($1.element.prioridad, $0.offset) < ($0.element.prioridad, $1.offset) }
-        return bloques.flatMap { $0.element.competencias.sorted { $0.orden < $1.orden } }.map(\.id)
+    /// Orden de lo nuevo (D-103): prioridad × debilidad del diagnóstico × preguntas oficiales.
+    func competenciasOrdenadas() -> [String] {
+        PlanEstudio(banco: banco, diagnostico: try? repositorio.diagnostico()).ordenadas()
     }
 
-    private func valida(_ id: String, _ estados: [String: EstadoCompetencia]) -> Bool {
+    func valida(_ id: String, _ estados: [String: EstadoCompetencia]) -> Bool {
         !(estados[id]?.escalera.dominada(configAprendizaje.escalera) ?? false)
-            && banco.items(competencia: id).contains { $0.peldano <= configRonda.peldanoMaximoEnRonda }
+            && banco.tieneItems(competencia: id, peldanoMaximo: configRonda.peldanoMaximoEnRonda)
     }
 
     /// Competencia en curso: se mantiene la guardada mientras no esté dominada y tenga
@@ -228,10 +234,16 @@ final class ServicioSesion {
             // Rescate e intercalado) lo compone el motor igual que en la recomendada.
             let enCurso: String?
             if case .area(let area) = tipo { enCurso = try competenciaEnCurso(area: area) } else { enCurso = try competenciaEnCurso() }
+            let estados = try repositorio.estadosCompetencia()
             let ronda = ConstructorRondas(banco: banco, config: configRonda).construir(
-                estados: try repositorio.estadosCompetencia(), rescate: try repositorio.colaRescate(), enCurso: enCurso,
+                estados: estados, rescate: try repositorio.colaRescate(), enCurso: enCurso,
                 vistos: vistos, ahora: ahora, calendario: calendario, rng: &rng)
-            return RondaPreparada(tipo: tipo, items: ronda.items, competenciaEnCurso: enCurso, teoriaPrevia: ronda.teoriaPrevia)
+            var items = ronda.items
+            // Peldaño 1 (Descubrir): ejemplo resuelto y gemelo (§5).
+            if let enCurso, (estados[enCurso]?.escalera.peldano ?? 1) == Peldano.descubre.rawValue {
+                items = EjemplosResueltos.aplicar(items, competencia: enCurso, banco: banco, rng: &rng)
+            }
+            return RondaPreparada(tipo: tipo, items: items, competenciaEnCurso: enCurso, teoriaPrevia: ronda.teoriaPrevia)
         case .rescate:
             let cola = try repositorio.colaRescate()
             var usados = Set<String>()
@@ -276,6 +288,10 @@ final class ServicioSesion {
             let primero = try siguienteSupervivencia(dificultad: ReglasSupervivencia.estandar.dificultadInicial, area: area, usados: [])
             return RondaPreparada(tipo: tipo, items: primero.map { [ItemRonda(itemId: $0.id, motivo: .supervivencia)] } ?? [],
                                   competenciaEnCurso: nil, teoriaPrevia: [])
+        case .sesion(let duracion, let foco):
+            return try prepararSesion(duracion: duracion, foco: foco)
+        case .rescateError(let id):
+            return try prepararRescateError(id) ?? RondaPreparada(tipo: tipo, items: [], competenciaEnCurso: nil, teoriaPrevia: [])
         case .diagnostico:
             let sesion = nuevaSesionDiagnostico()
             return RondaPreparada(tipo: tipo, items: sesion.siguienteItem.map { [ItemRonda(itemId: $0.id, motivo: .diagnostico)] } ?? [],
@@ -288,9 +304,10 @@ final class ServicioSesion {
     /// Registra una respuesta y actualiza todo el progreso. `combo` incluye esta respuesta.
     @discardableResult
     func registrar(item: Item, resultado: Resultado, usoPista: Bool, combo: Int,
-                   motivo: ItemRonda.Motivo?, confianza: Int? = nil) throws -> EfectoRespuesta {
+                   motivo: ItemRonda.Motivo?, confianza: Int? = nil, errorRemedio: String? = nil) throws -> EfectoRespuesta {
         let ahora = reloj.ahora
         var efecto = EfectoRespuesta()
+        try registrarErrores(item: item, resultado: resultado, errorRemedio: errorRemedio, fecha: ahora, efecto: &efecto)
         var perfil = try repositorio.perfil()
         try asegurarMisiones(&perfil)
 
@@ -338,6 +355,30 @@ final class ServicioSesion {
         return efecto
     }
 
+    /// Motor de errores (05E parte 2 §4, D-107): guarda los fallos que delatan un error típico y las
+    /// respuestas a su remedio. `errorRepetido` es el error activo que esta respuesta repite.
+    private func registrarErrores(item: Item, resultado: Resultado, errorRemedio: String?, fecha: Date,
+                                  efecto: inout EfectoRespuesta) throws {
+        var eventos: [EventoError] = []
+        if let errorRemedio {
+            eventos.append(EventoError(fecha: fecha, errorId: errorRemedio, tipo: resultado.correcto ? .remedioAcierto : .remedioFallo, itemId: item.id))
+        }
+        for id in EstadoErrores.errores(de: resultado, item: item) where id != errorRemedio {
+            eventos.append(EventoError(fecha: fecha, errorId: id, tipo: .fallo, itemId: item.id))
+        }
+        guard !eventos.isEmpty else { return }
+        var estado = EstadoErrores(eventos: try repositorio.eventosError())
+        for e in eventos {
+            try repositorio.registrar(e)
+            let s = estado.aplicar(e)
+            if e.tipo == .fallo, let error = banco.recursos.errores[e.errorId] { efecto.erroresDetectados.append(error) }
+            if e.tipo == .fallo, s.activo, efecto.errorRepetido == nil { efecto.errorRepetido = banco.recursos.errores[e.errorId] }
+        }
+    }
+
+    /// Estado del motor de errores del usuario.
+    func estadoErrores() throws -> EstadoErrores { EstadoErrores(eventos: try repositorio.eventosError()) }
+
     /// Cierra una ronda terminada: racha, métricas, misiones y logros. `aciertos` decide la prueba
     /// de nivel y el Reto de bloque.
     func completarRonda(_ ronda: RondaPreparada, aciertos: Int? = nil) throws -> EfectoRonda {
@@ -346,6 +387,7 @@ final class ServicioSesion {
         var efecto = EfectoRonda()
         try aplicarModo(ronda, aciertos: aciertos, perfil: &perfil, efecto: &efecto)
         efecto.cambiosRacha = perfil.racha.registrarRonda(hoy: hoy)
+        if case .sesion = ronda.tipo { perfil.registrarSesion(hoy) }
         efecto.racha = perfil.racha
         perfil.metricas[.rondasCompletadas, default: 0] += 1
         perfil.metricas[.rachaRecord] = max(perfil.metricas[.rachaRecord] ?? 0, perfil.racha.record)

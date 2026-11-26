@@ -8,6 +8,9 @@ struct EduculterApp: App {
     var body: some Scene {
         WindowGroup {
             raiz
+                #if DEBUG
+                .preferredColorScheme(entorno.opciones.modoOscuro ? .dark : nil)
+                #endif
                 .environment(entorno)
                 .environment(\.sonido, entorno.sonido)
                 .environment(\.vibracionActiva, entorno.ajustes.vibracion)

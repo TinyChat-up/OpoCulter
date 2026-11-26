@@ -17,6 +17,35 @@ class CasoUI: XCTestCase {
         return app
     }
 
+    /// Juega la ronda en pantalla hasta el resumen (o el plan del diagnóstico) con el botón de
+    /// pruebas, que también deja vistos los pasos de un ejemplo resuelto. Devuelve los ítems jugados.
+    @MainActor
+    @discardableResult
+    func jugarHastaElFinal(_ app: XCUIApplication, maximo: Int = 40, fallos: Set<Int> = []) -> Int {
+        if app.buttons["botonEmpezarTrasTeoria"].waitForExistence(timeout: 5) { app.buttons["botonEmpezarTrasTeoria"].tap() }
+        var vueltas = 0
+        while !app.descendants(matching: .any)["resumenRonda"].exists && !app.descendants(matching: .any)["pantallaPlan"].exists && vueltas < maximo {
+            XCTAssertTrue(app.buttons["botonRellenarDebug"].waitForExistence(timeout: 10), app.debugDescription)
+            app.buttons[fallos.contains(vueltas) ? "botonRellenarErrorDebug" : "botonRellenarDebug"].tap()
+            app.buttons["botonComprobar"].tap()
+            XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 5))
+            app.buttons["botonContinuar"].tap()
+            vueltas += 1
+        }
+        return vueltas
+    }
+
+    /// Elige la duración de la sesión en Hoy (5, 10 o 15 min).
+    @MainActor
+    func elegirDuracion(_ app: XCUIApplication, _ minutos: Int) {
+        let boton = app.segmentedControls["selectorDuracion"].buttons["\(minutos) min"]
+        XCTAssertTrue(boton.waitForExistence(timeout: 5))
+        var n = 0
+        while !boton.isHittable && n < 8 { app.scrollViews.firstMatch.swipeUp(velocity: .slow); n += 1 }
+        boton.tap()
+        XCTAssertTrue(boton.isSelected)
+    }
+
     /// Incidencias de accesibilidad acumuladas en el test (se informa de todas al final).
     var incidencias: [String] = []
 
@@ -57,6 +86,13 @@ class CasoUI: XCTestCase {
                 print("AUDITORIA-EXCEPCION [\(pantalla)] oculto o recortado por el borde del scroll: \(e.label)")
                 return true
             }
+            // Texto del scroll visto a través de la barra de pestañas translúcida: la auditoría lo
+            // detecta en la imagen sin elemento asociado (comprobado al final del scroll, donde el
+            // contenido acaba por encima de la barra y la incidencia desaparece).
+            if bordesDelScroll, incidencia.element == nil, incidencia.compactDescription.contains("inaccessible text") {
+                print("AUDITORIA-EXCEPCION [\(pantalla)] texto del scroll bajo la barra de pestañas")
+                return true
+            }
             if bordesDelScroll, incidencia.auditType == .contrast, let e = incidencia.element,
                e.frame.maxY > alto - 90 || e.frame.minY < 130 {
                 print("AUDITORIA-EXCEPCION [\(pantalla)] contraste bajo una barra del sistema: \(e.label)")
@@ -67,6 +103,7 @@ class CasoUI: XCTestCase {
                 return true
             }
             let texto = "[\(pantalla)] \(incidencia.compactDescription) · \(incidencia.element?.debugDescription.prefix(160) ?? "-")"
+            print("AUDITORIA-DETALLE [\(pantalla)] \(incidencia.detailedDescription)")
             self.incidencias.append(texto)
             print("AUDITORIA \(texto)")
             return true
@@ -111,7 +148,7 @@ class CasoUI: XCTestCase {
 
 /// Tests de interfaz de las Fases 05A y 05B (ronda recomendada y todas las mecánicas).
 final class RondaUITests: CasoUI {
-    /// Ronda recomendada de principio a fin (Hoy → ronda → feedback → resumen → Hoy).
+    /// Sesión diaria de principio a fin (Hoy → 5 minutos → feedback → resumen → Hoy).
     @MainActor
     func testRondaRecomendadaCompleta() throws {
         let app = lanzar()
@@ -131,22 +168,18 @@ final class RondaUITests: CasoUI {
         if fuera.exists { fuera.tap() } else { app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.9)).tap() }
         XCTAssertTrue(globo.waitForNonExistence(timeout: 5), "El globo debería cerrarse al tocar fuera")
         XCTAssertTrue(app.buttons["botonEmpezarRonda"].waitForExistence(timeout: 5))
+        // Sesión de 5 minutos (8 preguntas): la duración elegida se ve debajo de «Empezar».
+        elegirDuracion(app, 5)
+        XCTAssertTrue(app.staticTexts["duracionSesion"].label.contains("8 preguntas"), app.staticTexts["duracionSesion"].label)
         app.buttons["botonEmpezarRonda"].tap()
         if app.buttons["botonEmpezarTrasTeoria"].waitForExistence(timeout: 5) {
             try auditar(app, "Teoría previa")
             app.buttons["botonEmpezarTrasTeoria"].tap()
         }
-        var vueltas = 0
-        while !app.descendants(matching: .any)["resumenRonda"].exists && vueltas < 10 {
-            XCTAssertTrue(app.buttons["botonRellenarDebug"].waitForExistence(timeout: 10), app.debugDescription)
-            app.buttons["botonRellenarDebug"].tap()
-            app.buttons["botonComprobar"].tap()
-            XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 5))
-            app.buttons["botonContinuar"].tap()
-            vueltas += 1
-        }
+        let vueltas = jugarHastaElFinal(app)
         XCTAssertTrue(app.descendants(matching: .any)["resumenRonda"].waitForExistence(timeout: 5))
-        XCTAssertTrue((6...8).contains(vueltas), "La ronda debe tener 6–8 ítems (tiene \(vueltas))")
+        XCTAssertEqual(vueltas, 8, "La sesión de 5 minutos tiene 8 preguntas")
+        XCTAssertTrue(app.buttons["botonOtraRonda"].label.contains("5 minutos más"))
         try auditar(app, "Resumen")
         let terminar = app.buttons["botonTerminar"]
         while !terminar.isHittable { app.scrollViews.firstMatch.swipeUp() }

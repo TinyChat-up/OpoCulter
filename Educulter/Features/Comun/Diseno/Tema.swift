@@ -1,48 +1,56 @@
 import SwiftUI
 import CoreText
 
-/// Colores del estilo "Rubber Hose moderno" (D-059), evolución del sistema v2 (D-053): papel
-/// crema, tinta gruesa y rellenos retro saturados. Definidos en el Asset Catalog
-/// (`Resources/Assets.xcassets/Colores`) con variante clara y oscura y contraste AA comprobado
-/// (UX_UI.md §4.1). Regla: **el texto sobre un relleno de color va siempre en tinta**.
+/// Colores de la identidad editorial (05E parte 2, D-109), derivados del logo v5: tinta verde
+/// noche, papel menta, salvia (Lengua), bosque (Matemáticas y botones primarios) y ámbar
+/// (recompensa). Definidos en el Asset Catalog (`Resources/Assets.xcassets/Colores`) con variante
+/// clara y oscura; un test comprueba el contraste WCAG de cada par texto/fondo usado (≥ 4,5:1).
+/// Superficies planas: sin degradados, sin brillos y sin sombras.
+/// Regla: **el texto sobre un relleno de color va en `textoSobre(relleno)`**.
 enum Paleta {
-    /// Papel: `#FBF3E8` en claro, `#17130F` en oscuro.
+    /// Papel: `#F4F8F0` en claro, `#142019` en oscuro.
     static let fondo = Color("Fondo")
-    /// Tinta de contornos y sombras duras (`#1A1714`; clara en modo oscuro).
+    /// Tinta (`#16241F`; `#E7F0E0` en oscuro): marca, iconos y la línea de foco.
     static let contorno = Color("Tinta")
-    /// Superficie neutra: baldosas, filas y fichas fuera del panel protagonista.
+    /// Superficie (papel2: `#E7F0E0` / `#1E302A`): baldosas, filas y fichas.
     static let superficie = Color("Superficie")
     static let textoPrincipal = Color("TextoPrincipal")
     static let textoSecundario = Color("TextoSecundario")
+    /// Línea fina de separación y borde de las superficies.
     static let borde = Color("Borde")
-    /// Relleno de Lengua (coral `#F2674B`), siempre con texto en tinta encima.
+    /// Relleno de Lengua (salvia `#A9BD9F` / `#8FA685`), con `textoSobreAcento` encima.
     static let lengua = Color("Lengua")
-    /// Relleno de Matemáticas (azul cielo `#4AA3E8`).
+    /// Relleno de Matemáticas y de los botones primarios (bosque `#2F4A40` / `#A9BD9F`), con
+    /// `textoSobreBosque` encima.
     static let matematicas = Color("Matematicas")
-    /// Acentos secundarios (rellenos, con texto en tinta): turquesa, violeta y oliva.
-    static let turquesa = Color("Turquesa")
-    static let violeta = Color("Violeta")
-    static let oliva = Color("Oliva")
+    static let primario = matematicas
     /// Tinte del panel protagonista de cada área (uno por pantalla).
     static let lenguaTinte = Color("LenguaTinte")
     static let matematicasTinte = Color("MatematicasTinte")
-    /// Tinta de cada área: texto con color de área (títulos de competencia, etiquetas).
+    /// Tinta de cada área (salvia oscurecida `#536948`, bosque `#2F4A40`): texto con color de área, AA.
     static let lenguaTinta = Color("LenguaTinta")
     static let matematicasTinta = Color("MatematicasTinta")
-    /// Éxito como texto o icono (AA sobre papel y tintes).
+    /// Acierto como texto o icono (AA sobre papel y tintes).
     static let exito = Color("Exito")
-    /// Éxito como relleno, con texto en tinta (botón "Continuar" tras acertar).
+    /// Acierto como relleno, con `textoSobreBosque` encima.
     static let exitoRelleno = Color("ExitoRelleno")
     static let fallo = Color("Fallo")
-    /// Relleno de recompensa (siempre con `textoSobreRecompensa` encima).
+    /// Relleno de recompensa (ámbar; siempre con `textoSobreRecompensa` encima).
     static let recompensa = Color("Recompensa")
     /// Ámbar legible como texto sobre fondo, superficie o tintes.
     static let recompensaTexto = Color("RecompensaTexto")
-    /// Texto sobre cualquier relleno de color: tinta oscura en los dos modos.
+    /// Texto sobre salvia y ámbar: tinta oscura en los dos modos.
     static let textoSobreAcento = Color("TextoSobreAcento")
     static let textoSobreRecompensa = Color("TextoSobreRecompensa")
+    /// Texto sobre bosque y sobre el relleno de acierto: papel en claro, tinta en oscuro.
+    static let textoSobreBosque = Color("TextoSobreBosque")
 
-    /// Primario de un área (`LEN` → coral, `MAT` → índigo).
+    /// Color del texto sobre un relleno de la paleta.
+    static func textoSobre(_ relleno: Color) -> Color {
+        relleno == matematicas || relleno == exitoRelleno ? textoSobreBosque : textoSobreAcento
+    }
+
+    /// Primario de un área (`LEN` → salvia, `MAT` → bosque).
     static func acento(area: String) -> Color { area == "MAT" ? matematicas : lengua }
     static func tinte(area: String) -> Color { area == "MAT" ? matematicasTinte : lenguaTinte }
     static func tinta(area: String) -> Color { area == "MAT" ? matematicasTinta : lenguaTinta }
@@ -65,41 +73,25 @@ enum Espacio {
     static let xxl: CGFloat = 32
 }
 
-/// Radios generosos (Rubber Hose): paneles 20, fichas y piezas 14, celdas manipulables 6.
+/// Radios (identidad editorial): paneles y botones 24, fichas 20, celdas manipulables 8.
 enum Radio {
-    static let tarjeta: CGFloat = 20
-    static let ficha: CGFloat = 14
-    static let celda: CGFloat = 6
+    static let tarjeta: CGFloat = 24
+    static let ficha: CGFloat = 20
+    static let celda: CGFloat = 8
 }
 
-/// Grosor del contorno de tinta: 2,5 pt en fichas, paneles, botones y celdas; 1,5 pt en
-/// elementos pequeños (chips, cápsulas, celdas de menos de 32 pt).
+/// Líneas finas: 1 pt en superficies y celdas; 2 pt solo para marcar un estado (seleccionado,
+/// correcto o incorrecto).
 enum Trazo {
-    static let grueso: CGFloat = 2.5
-    static let fino: CGFloat = 1.5
-}
-
-/// "Sombra dura" plana: desplazamiento en tinta, sin desenfoque. Es la única sombra de la app
-/// y es funcional: marca lo que se puede pulsar. Al pulsar, el elemento "se hunde" (0 pt).
-enum SombraDura {
-    static let desplazamiento: CGFloat = 3
+    static let grueso: CGFloat = 1
+    static let fino: CGFloat = 1
+    static let estado: CGFloat = 2
 }
 
 extension View {
-    /// Contorno de tinta alrededor de una forma redondeada.
-    func contornoTinta(radio: CGFloat, grosor: CGFloat = Trazo.grueso, color: Color = Paleta.contorno) -> some View {
+    /// Borde fino alrededor de una forma redondeada (por defecto, la línea suave de la paleta).
+    func contornoTinta(radio: CGFloat, grosor: CGFloat = Trazo.fino, color: Color = Paleta.borde) -> some View {
         overlay(RoundedRectangle(cornerRadius: radio, style: .continuous).strokeBorder(color, lineWidth: grosor))
-    }
-
-    /// Sombra dura detrás de la vista (sin desenfoque). `activa: false` la quita (elementos no pulsables).
-    func sombraDura(radio: CGFloat, activa: Bool = true) -> some View {
-        background {
-            if activa {
-                RoundedRectangle(cornerRadius: radio, style: .continuous)
-                    .fill(Paleta.contorno)
-                    .offset(x: SombraDura.desplazamiento, y: SombraDura.desplazamiento)
-            }
-        }
     }
 }
 
@@ -128,12 +120,12 @@ extension EnvironmentValues {
 }
 
 extension View {
-    /// Superficie pulsable Rubber Hose: relleno, contorno de tinta y sombra dura de 3 pt. Al pulsar,
-    /// se desplaza 3 pt sobre la sombra ("se hunde"). `sombra: false` para lo que ya no se puede
-    /// tocar (corregido o desactivado), que queda plano.
-    func superficiePulsable(_ relleno: Color, radio: CGFloat, borde: Color = Paleta.contorno,
-                            grosor: CGFloat = Trazo.grueso, discontinuo: Bool = false, sombra: Bool = true) -> some View {
-        modifier(SuperficiePulsable(relleno: relleno, radio: radio, borde: borde, grosor: grosor, discontinuo: discontinuo, sombra: sombra))
+    /// Superficie pulsable plana: relleno y borde fino, sin sombra. Al pulsar se atenúa un poco
+    /// (sin rebote). `sombra` se conserva por compatibilidad y ya no dibuja nada: lo que no se puede
+    /// tocar queda igual de plano.
+    func superficiePulsable(_ relleno: Color, radio: CGFloat, borde: Color = Paleta.borde,
+                            grosor: CGFloat = Trazo.fino, discontinuo: Bool = false, sombra: Bool = true) -> some View {
+        modifier(SuperficiePulsable(relleno: relleno, radio: radio, borde: borde, grosor: grosor, discontinuo: discontinuo, pulsable: sombra))
     }
 }
 
@@ -143,26 +135,18 @@ private struct SuperficiePulsable: ViewModifier {
     let borde: Color
     let grosor: CGFloat
     let discontinuo: Bool
-    let sombra: Bool
+    let pulsable: Bool
     @Environment(\.pulsado) private var pulsado
     @Environment(\.isEnabled) private var activo
-    @Environment(\.accessibilityReduceMotion) private var reducir
 
     func body(content: Content) -> some View {
         let forma = RoundedRectangle(cornerRadius: radio, style: .continuous)
-        let conSombra = sombra && activo
-        let hundido = pulsado && conSombra
         content
             .background(relleno, in: forma)
             .overlay(forma.strokeBorder(borde, style: StrokeStyle(lineWidth: grosor, dash: discontinuo ? [6, 4] : [])))
             .contentShape(forma)
-            .offset(x: hundido ? SombraDura.desplazamiento : 0, y: hundido ? SombraDura.desplazamiento : 0)
-            .background {
-                if conSombra {
-                    forma.fill(Paleta.contorno).offset(x: SombraDura.desplazamiento, y: SombraDura.desplazamiento)
-                }
-            }
-            .animation(reducir ? nil : .spring(response: 0.16, dampingFraction: 0.55), value: hundido)
+            .opacity(pulsado && pulsable && activo ? 0.72 : 1)
+            .animation(.easeOut(duration: 0.12), value: pulsado)
     }
 }
 
@@ -179,8 +163,8 @@ extension EnvironmentValues {
     }
 }
 
-/// Panel protagonista: el único elemento tintado de la pantalla (la actividad principal), con
-/// contorno de tinta. No lleva sombra dura porque no se pulsa: lo pulsable está dentro.
+/// Panel protagonista: el único elemento tintado de la pantalla (la actividad principal), plano y
+/// sin borde. Lo pulsable está dentro.
 struct PanelProtagonista<Contenido: View>: View {
     let tinte: Color
     var relleno: CGFloat = Espacio.l
@@ -191,7 +175,6 @@ struct PanelProtagonista<Contenido: View>: View {
             .padding(relleno)
             .frame(maxWidth: .infinity, alignment: .leading)
             .background(tinte, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-            .contornoTinta(radio: Radio.tarjeta)
             .environment(\.enPanelTintado, true)
     }
 }
@@ -239,55 +222,43 @@ enum SimboloBloque {
 }
 
 extension Font {
-    /// SF Pro Rounded con estilo de Dynamic Type: números, XP y recompensas.
-    static func redondeada(_ estilo: Font.TextStyle, peso: Font.Weight = .semibold) -> Font {
-        .system(estilo, design: .rounded).weight(peso)
+    /// Números y datos con la fuente del sistema (SF Pro) y cifras tabulares, con Dynamic Type.
+    static func numerica(_ estilo: Font.TextStyle, peso: Font.Weight = .semibold) -> Font {
+        .system(estilo).weight(peso).monospacedDigit()
     }
 
-    /// Títulos con la fuente de exhibición (Fredoka SemiBold, SIL OFL; D-060). Escala con Dynamic
-    /// Type: `Font.custom(_:size:relativeTo:)` aplica `UIFontMetrics` del estilo indicado.
+    /// Títulos: la serif del sistema (New York) en los estilos de título; SF Pro seminegrita en los
+    /// demás. Escala con Dynamic Type.
     static func exhibicion(_ estilo: Font.TextStyle) -> Font {
-        FuenteExhibicion.registrar()
-        return .custom(FuenteExhibicion.nombre, size: FuenteExhibicion.tamanoBase(estilo), relativeTo: estilo)
-    }
-}
-
-/// Fuente de exhibición empaquetada (`Resources/Fuentes/Fredoka.ttf` + `OFL.txt`). Se registra
-/// en tiempo de ejecución con CoreText (sin tocar el Info.plist).
-enum FuenteExhibicion {
-    static let nombre = "Fredoka-SemiBold"
-
-    /// Tamaños base (en el tamaño de texto por defecto, "Grande") de cada estilo.
-    static func tamanoBase(_ estilo: Font.TextStyle) -> CGFloat {
         switch estilo {
-        case .largeTitle: 34
-        case .title: 28
-        case .title2: 22
-        case .title3: 20
-        case .headline: 17
-        case .subheadline: 15
-        case .callout: 16
-        case .footnote: 13
-        case .caption: 12
-        case .caption2: 11
-        default: 17
+        case .largeTitle, .title, .title2, .title3: return .system(estilo, design: .serif).weight(.semibold)
+        default: return .system(estilo).weight(.semibold)
         }
     }
 
-    /// Registra la fuente una sola vez. Devuelve `true` si está disponible.
-    @discardableResult
-    static func registrar() -> Bool { registrada }
+    /// Números de resultado (resumen, XP, récords): serif del sistema con cifras tabulares.
+    static func resultado(_ estilo: Font.TextStyle = .largeTitle) -> Font {
+        .system(estilo, design: .serif).weight(.semibold).monospacedDigit()
+    }
+}
 
-    private static let registrada: Bool = {
-        guard let url = Bundle.main.url(forResource: "Fredoka", withExtension: "ttf") else { return false }
-        CTFontManagerRegisterFontsForURL(url as CFURL, .process, nil)
-        return UIFont(name: nombre, size: 17) != nil
-    }()
+/// Banda de rayas verticales salvia y bosque: solo como textura, en la pantalla de lanzamiento y en
+/// la bienvenida (D-109). Decorativa para VoiceOver.
+struct BandaRayas: View {
+    var alto: CGFloat = 14
+    var anchoRaya: CGFloat = 10
 
-    /// Versión UIKit escalada con `UIFontMetrics` (la usan los tests de Dynamic Type).
-    static func uiFont(_ estilo: UIFont.TextStyle, base: CGFloat, compatibleCon rasgos: UITraitCollection? = nil) -> UIFont {
-        registrar()
-        let fuente = UIFont(name: nombre, size: base) ?? .systemFont(ofSize: base, weight: .semibold)
-        return UIFontMetrics(forTextStyle: estilo).scaledFont(for: fuente, compatibleWith: rasgos)
+    var body: some View {
+        Canvas { ctx, tam in
+            var x: CGFloat = 0
+            var i = 0
+            while x < tam.width {
+                ctx.fill(Path(CGRect(x: x, y: 0, width: anchoRaya, height: tam.height)), with: .color(i % 2 == 0 ? Paleta.lengua : Paleta.matematicas))
+                x += anchoRaya
+                i += 1
+            }
+        }
+        .frame(height: alto)
+        .accessibilityHidden(true)
     }
 }

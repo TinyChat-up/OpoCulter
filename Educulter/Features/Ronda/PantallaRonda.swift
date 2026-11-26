@@ -131,6 +131,7 @@ struct PantallaRonda: View {
                         .font(.caption.weight(.semibold))
                         .foregroundStyle(Paleta.tinta(competencia: item.competencia))
                         .accessibilityIdentifier("cabeceraCompetencia")
+                        if let distintivo = DistintivoNivel(dificultad: item.dificultad) { distintivo }
                         Text(item.enunciado)
                             .font(.title3.weight(.semibold))
                             .foregroundStyle(Paleta.textoPrincipal)
@@ -146,15 +147,23 @@ struct PantallaRonda: View {
                                 .background(Paleta.recompensa.opacity(0.15), in: RoundedRectangle(cornerRadius: Radio.ficha))
                                 .accessibilityIdentifier("pista")
                         }
+                        if modelo.esEjemplo {
+                            VistaEjemploResuelto(pasos: modelo.pasosEjemplo, visibles: modelo.pasosVisibles,
+                                                 ultimo: item.pasos.last, listo: modelo.ejemploListo)
+                        }
                         // La mecánica se reparte en el espacio libre (no se amontona arriba).
                         Spacer(minLength: 0)
-                        // Panel protagonista: el único elemento tintado de la pantalla (v2).
-                        PanelProtagonista(tinte: Paleta.tinte(competencia: item.competencia)) {
-                            VistaMecanica(contexto: ContextoMecanica(item: item, acento: acento, resultado: modelo.resultado),
-                                          respuesta: $modelo.respuesta)
+                        // Panel protagonista: el único elemento tintado de la pantalla (v2). En un
+                        // ejemplo resuelto aparece cuando ya se han visto los pasos.
+                        if modelo.ejemploListo {
+                            PanelProtagonista(tinte: Paleta.tinte(competencia: item.competencia)) {
+                                VistaMecanica(contexto: ContextoMecanica(item: item, acento: acento, resultado: modelo.resultado),
+                                              respuesta: $modelo.respuesta)
+                            }
+                            .modifier(PulsoAcierto(disparo: modelo.resultado?.correcto == true ? modelo.respondidos : 0))
+                            .id(item.id)
+                            .transition(.opacity)
                         }
-                        .modifier(PulsoAcierto(disparo: modelo.resultado?.correcto == true ? modelo.respondidos : 0))
-                        .id(item.id)
                         Spacer(minLength: 0)
                     }
                     .padding(Espacio.l)
@@ -198,7 +207,7 @@ struct PantallaRonda: View {
             vuelo = datos
             Task { @MainActor in
                 try? await Task.sleep(for: .milliseconds(370))
-                withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) { xpMostrado = nuevo }
+                withAnimation(.smooth(duration: 0.3)) { xpMostrado = nuevo }
                 if vuelo?.id == datos.id { vuelo = nil }
             }
         }
@@ -220,7 +229,7 @@ struct PantallaRonda: View {
                 botonSalir
                 BarraProgresoRonda(actual: modelo.respondidos, total: max(modelo.totalDiagnostico, 1), acento: acento)
                 Text("\(min(modelo.indice + 1, modelo.totalDiagnostico)) de \(modelo.totalDiagnostico)")
-                    .font(.redondeada(.subheadline))
+                    .font(.numerica(.subheadline))
                     .foregroundStyle(Paleta.textoPrincipal)
                     .fixedSize()
                     .accessibilityIdentifier("progresoDiagnostico")
@@ -275,7 +284,8 @@ struct PantallaRonda: View {
             HojaFeedback(
                 correcto: resultado.correcto, explicacion: item.explicacion,
                 feedbackEspecifico: modelo.feedbackEspecifico, solucion: modelo.solucion,
-                xp: modelo.efecto?.xp ?? 0, acento: acento, companero: Companero.de(area: Catalogo.area(de: item.competencia)),
+                xp: modelo.efecto?.xp ?? 0, acento: acento, aparicion: modelo.aparicionFeedback,
+                pasos: modelo.pasosTrasFallo,
                 tinta: Paleta.tinta(competencia: item.competencia),
                 subioPeldano: modelo.efecto?.subioPeldano ?? false,
                 puedeVerRegla: modelo.teoriaDelItem != nil,
@@ -319,9 +329,17 @@ struct PantallaRonda: View {
                         .accessibilityHint("Con pista, este ítem no da XP")
                         .accessibilityIdentifier("botonPista")
                     }
-                    BotonPrincipal(titulo: "Comprobar", acento: acento) { modelo.comprobar() }
-                        .disabled(!modelo.puedeComprobar)
-                        .accessibilityIdentifier("botonComprobar")
+                    if modelo.ejemploListo {
+                        BotonPrincipal(titulo: "Comprobar", acento: Paleta.primario) { modelo.comprobar() }
+                            .disabled(!modelo.puedeComprobar)
+                            .accessibilityIdentifier("botonComprobar")
+                    } else {
+                        BotonPrincipal(titulo: "Siguiente paso", icono: "arrow.down", acento: Paleta.primario) {
+                            withAnimation(reducir ? nil : .smooth(duration: 0.3)) { modelo.siguientePaso() }
+                        }
+                        .accessibilityHint("Muestra el paso \(modelo.pasosVisibles + 1) de \(modelo.pasosEjemplo.count)")
+                        .accessibilityIdentifier("botonSiguientePaso")
+                    }
                 }
             }
         }
@@ -348,7 +366,6 @@ struct PantallaRonda: View {
 
     private var estadoVacio: some View {
         VStack(spacing: Espacio.l) {
-            VistaPersonaje(companero: .tilde, estado: ReglasPersonaje.estado(para: .estadoVacio))
             Text("No hay ítems para esta ronda").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
             Text("Vuelve más tarde o prueba otra ronda.").font(.body).foregroundStyle(Paleta.textoSecundario)
             Button("Volver", action: cerrar).buttonStyle(EstiloBotonSecundario())
@@ -368,110 +385,135 @@ struct PantallaResumen: View {
     let otraRonda: () -> Void
     let terminar: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reducir
-    @Environment(\.dynamicTypeSize) private var tamano
-    @State private var aparecer = false
     @State private var xpMostrado = 0
 
+    /// Resumen en una sola pantalla (05E parte 2 §3.4): la XP ganada, el dominio (competencias que
+    /// suben de peldaño), el error detectado y dos botones. El personaje aparece alegre.
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(spacing: Espacio.xl) {
-                    VStack(spacing: Espacio.s) {
-                        VistaPersonaje(companero: Companero.de(area: resumen.areaPredominante),
-                                       estado: ReglasPersonaje.estado(para: .resumenRonda(aciertos: resumen.aciertos, total: resumen.total)),
-                                       tamano: 80)
-                        Text("¡Ronda completada!")
+        ScrollView {
+            VStack(alignment: .leading, spacing: Espacio.xl) {
+                HStack(alignment: .bottom) {
+                    VStack(alignment: .leading, spacing: Espacio.xs) {
+                        Text(resumen.esSesion ? "Sesión completada" : "¡Ronda completada!")
                             .font(.exhibicion(.largeTitle))
                             .foregroundStyle(Paleta.textoPrincipal)
-                            .multilineTextAlignment(.center)
-                            .accessibilityAddTraits(.isHeader)
-                    }
-                    .padding(.top, Espacio.xl)
-
-                    if let resultadoModo {
-                        Text(resultadoModo)
-                            .font(.headline)
-                            .foregroundStyle(Paleta.textoPrincipal)
-                            .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(Espacio.m)
-                            .frame(maxWidth: .infinity)
-                            .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-                            .contornoTinta(radio: Radio.ficha)
-                            .accessibilityIdentifier("resultadoModo")
+                            .accessibilityAddTraits(.isHeader)
+                        Text("\(resumen.aciertos) de \(resumen.total) aciertos")
+                            .font(.numerica(.subheadline, peso: .regular))
+                            .foregroundStyle(Paleta.textoSecundario)
+                            .accessibilityIdentifier("resumenAciertos")
                     }
-
-                    let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(spacing: Espacio.m)) : AnyLayout(HStackLayout(spacing: Espacio.m))
-                    disposicion {
-                        dato("\(resumen.aciertos)/\(resumen.total)", "Aciertos", icono: "checkmark.circle.fill", color: Paleta.exito)
-                        dato("+\(xpMostrado)", "XP", icono: "sparkles", color: Paleta.recompensaTexto, valorAccesible: "+\(resumen.xp)")
-                            .accessibilityIdentifier("resumenXP")
-                        dato("×\(resumen.comboMaximo)", "Combo máx.", icono: "bolt.fill", color: Paleta.recompensaTexto)
-                    }
-                    // Los tres datos comparten una sola baldosa neutra (sin tarjetas repetidas).
-                    .padding(Espacio.m)
-                    .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-                    .contornoTinta(radio: Radio.tarjeta)
-
-                    VStack(spacing: Espacio.s) {
-                        ChipRacha(dias: resumen.racha.actual, protectores: resumen.racha.protectores, record: resumen.racha.record)
-                        if let texto = textoRacha {
-                            Text(texto).font(.subheadline.weight(.medium)).foregroundStyle(Paleta.textoSecundario)
-                                .multilineTextAlignment(.center)
-                        }
-                    }
-
-                    if !resumen.subidas.isEmpty {
-                        seccion("Subes de peldaño", icono: "arrow.up.circle.fill") {
-                            ForEach(resumen.subidas, id: \.self) { Text(nombreCompetencia($0)) }
-                        }
-                    }
-                    if !resumen.misionesCompletadas.isEmpty {
-                        seccion("Misiones completadas", icono: "checkmark.seal.fill") {
-                            ForEach(resumen.misionesCompletadas) { Text($0.titulo) }
-                        }
-                    }
-                    if !resumen.logros.isEmpty {
-                        seccion("Logros", icono: "trophy.fill") {
-                            ForEach(resumen.logros) { logro in
-                                VStack(alignment: .leading) {
-                                    Text(logro.titulo).fontWeight(.semibold)
-                                    Text(logro.descripcion).font(.footnote).foregroundStyle(Paleta.textoSecundario)
-                                }
-                            }
-                        }
-                    }
-                    // Los botones van al final del contenido (no fijos), para que nada quede
-                    // cortado bajo ellos.
-                    VStack(spacing: Espacio.m) {
-                        BotonPrincipal(titulo: "Otra ronda", icono: "arrow.clockwise",
-                                       acento: Paleta.acento(area: resumen.areaPredominante), accion: otraRonda)
-                            .accessibilityIdentifier("botonOtraRonda")
-                        Button("Terminar", action: terminar)
-                            .buttonStyle(EstiloBotonSecundario(acento: Paleta.tinta(area: resumen.areaPredominante)))
-                            .accessibilityIdentifier("botonTerminar")
-                    }
-                    .padding(.top, Espacio.s)
+                    Spacer(minLength: Espacio.m)
+                    // Fin de sesión: el personaje del área predominante, alegre (D-105).
+                    VistaPersonaje(companero: Companero.de(area: resumen.areaPredominante), estado: .alegre, tamano: 64)
                 }
-                .padding(Espacio.l)
+                .padding(.top, Espacio.xl)
+
+                if let resultadoModo {
+                    Text(resultadoModo)
+                        .font(.headline)
+                        .foregroundStyle(Paleta.textoPrincipal)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(Espacio.l)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+                        .accessibilityIdentifier("resultadoModo")
+                }
+
+                xp
+                if !resumen.subidas.isEmpty { dominio }
+                if !resumen.errores.isEmpty { errores }
+                if let texto = textoRacha {
+                    Label(texto, systemImage: "flame")
+                        .font(.subheadline)
+                        .foregroundStyle(Paleta.textoSecundario)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("textoRacha")
+                }
+
+                // Los botones van al final del contenido (no fijos), para que nada quede cortado.
+                VStack(spacing: Espacio.m) {
+                    BotonPrincipal(titulo: resumen.esSesion ? "5 minutos más" : "Otra ronda", icono: resumen.esSesion ? "plus" : "arrow.clockwise",
+                                   acento: Paleta.primario, accion: otraRonda)
+                        .accessibilityIdentifier("botonOtraRonda")
+                    Button("Terminar", action: terminar)
+                        .buttonStyle(EstiloBotonSecundario())
+                        .accessibilityIdentifier("botonTerminar")
+                }
+                .padding(.top, Espacio.s)
             }
+            .padding(Espacio.l)
         }
-        .onAppear {
-            aparecer = true
-            contarXP()
-        }
+        .onAppear(perform: contarXP)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("resumenRonda")
     }
 
+    /// XP ganada, en ámbar y con la serif de los resultados.
+    private var xp: some View {
+        HStack(alignment: .firstTextBaseline, spacing: Espacio.s) {
+            Text("+\(xpMostrado)")
+                .font(.resultado())
+                .foregroundStyle(Paleta.recompensaTexto)
+                .contentTransition(.numericText())
+            Text("XP").font(.headline).foregroundStyle(Paleta.recompensaTexto)
+        }
+        .padding(Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("XP ganada")
+        .accessibilityValue("+\(resumen.xp)")
+        .accessibilityIdentifier("resumenXP")
+    }
+
+    /// Dominio, aparte de la XP: las competencias que suben de peldaño, con el nombre del peldaño.
+    private var dominio: some View {
+        seccion("Dominio", icono: "arrow.up.right") {
+            ForEach(resumen.subidas, id: \.self) { c in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(nombreCompetencia(c)).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    Text(resumen.peldanosNuevos[c].map { "Sube a \(Peldano.nombre($0)) (peldaño \($0) de 5)" } ?? "Sube de peldaño")
+                        .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                }
+                .accessibilityElement(children: .combine)
+            }
+        }
+        .accessibilityIdentifier("resumenDominio")
+    }
+
+    /// Error detectado: su descripción y cuándo vuelve.
+    private var errores: some View {
+        seccion(resumen.errores.count == 1 ? "Error detectado" : "Errores detectados", icono: "scope") {
+            ForEach(resumen.errores) { e in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(e.error.descripcion).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text(vuelta(e)).font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .combine)
+            }
+        }
+        .accessibilityIdentifier("resumenErrores")
+    }
+
+    private func vuelta(_ e: ErrorDetectado) -> String {
+        guard let dia = e.vuelve else { return "Lo vigilamos: si se repite esta semana, lo trabajarás en tu sesión." }
+        let fecha = dia.fecha(calendario: .current).formatted(.dateTime.weekday(.wide).day().locale(Locale(identifier: "es_ES")))
+        return "Volverá el \(fecha)"
+    }
+
+    /// Racha sin culpa (§3.3): sin números rojos ni tono de pérdida.
     private var textoRacha: String? {
         let c = resumen.cambiosRacha
-        if let perdida = c.rachaPerdida { return "Tu racha de \(perdida) días se rompió. ¡Empiezas una nueva!" }
-        if c.protectoresUsados > 0 { return c.protectoresUsados == 1 ? "Has usado 1 protector." : "Has usado \(c.protectoresUsados) protectores." }
-        if c.protectorGanado { return "¡Semana completa! Ganas un protector." }
-        if c.incrementada && resumen.racha.actual == 1 { return "¡Empiezas tu racha! Vuelve mañana para mantenerla." }
-        if c.nuevoRecord { return "¡Nuevo récord de racha!" }
-        if c.incrementada { return "Racha mantenida hoy." }
+        if c.rachaPerdida != nil { return "Empiezas una racha nueva." }
+        if c.protectoresUsados > 0 { return c.protectoresUsados == 1 ? "Un protector ha cuidado tu racha." : "\(c.protectoresUsados) protectores han cuidado tu racha." }
+        if c.protectorGanado { return "Semana completa: ganas un protector." }
+        if c.incrementada && resumen.racha.actual == 1 { return "Empiezas tu racha." }
+        if c.nuevoRecord { return "Nuevo récord de racha: \(resumen.racha.actual) días." }
+        if c.incrementada { return "Racha: \(resumen.racha.actual) días." }
         return nil
     }
 
@@ -487,32 +529,17 @@ struct PantallaResumen: View {
             let pasos = min(final, 12)
             for paso in 1...pasos {
                 try? await Task.sleep(for: .milliseconds(28))
-                withAnimation(.snappy(duration: 0.1)) { xpMostrado = final * paso / pasos }
+                withAnimation(.smooth(duration: 0.1)) { xpMostrado = final * paso / pasos }
             }
         }
     }
 
-    private func dato(_ valor: String, _ titulo: String, icono: String, color: Color, valorAccesible: String? = nil) -> some View {
-        VStack(spacing: Espacio.xs) {
-            Image(systemName: icono).foregroundStyle(color).accessibilityHidden(true)
-            Text(valor).font(.redondeada(.title2, peso: .semibold)).foregroundStyle(Paleta.textoPrincipal)
-                .contentTransition(.numericText())
-                .lineLimit(1).minimumScaleFactor(0.6)
-            Text(titulo).font(.caption).foregroundStyle(Paleta.textoSecundario)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, Espacio.s)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(titulo)
-        .accessibilityValue(valorAccesible ?? valor)
-    }
-
     private func seccion<C: View>(_ titulo: String, icono: String, @ViewBuilder contenido: () -> C) -> some View {
-        // Secciones como grupos con título (no tarjetas repetidas, v2).
         let cuerpo = contenido()
-        return VStack(alignment: .leading, spacing: Espacio.s) {
-            Label(titulo, systemImage: icono).font(.headline).foregroundStyle(Paleta.recompensaTexto)
-            cuerpo.font(.body).foregroundStyle(Paleta.textoPrincipal)
+        return VStack(alignment: .leading, spacing: Espacio.m) {
+            Label(titulo, systemImage: icono).font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                .accessibilityAddTraits(.isHeader)
+            cuerpo
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
@@ -528,14 +555,14 @@ struct ContadorXP: View {
         HStack(spacing: Espacio.xs) {
             Image(systemName: "sparkles").foregroundStyle(Paleta.recompensaTexto).accessibilityHidden(true)
             Text("\(xp)")
-                .font(.redondeada(.subheadline, peso: .semibold))
+                .font(.numerica(.subheadline, peso: .semibold))
                 .foregroundStyle(Paleta.textoPrincipal)
                 .contentTransition(.numericText(value: Double(xp)))
         }
         .padding(.horizontal, Espacio.m)
         .frame(minHeight: Medidas.tactilMinimo)
         .background(Paleta.superficie, in: Capsule())
-        .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+        .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
         .anchorPreference(key: AnclasVueloXP.self, value: .bounds) { ["destino": $0] }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("XP de la ronda")
@@ -558,12 +585,12 @@ struct VueloXP: View {
 
     var body: some View {
         Text("+\(datos.xp) XP")
-            .font(.redondeada(.subheadline, peso: .semibold))
+            .font(.numerica(.subheadline, peso: .semibold))
             .foregroundStyle(Paleta.textoSobreRecompensa)
             .padding(.horizontal, Espacio.s)
             .padding(.vertical, Espacio.xs)
             .background(Paleta.recompensa, in: Capsule())
-            .overlay(Capsule().strokeBorder(Paleta.contorno, lineWidth: Trazo.fino))
+            .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
             .scaleEffect(llegado ? 0.6 : 1.1)
             .opacity(llegado ? 0 : 1)
             .position(llegado ? fin : inicio)
@@ -592,9 +619,124 @@ struct PulsoAcierto: ViewModifier {
                     withAnimation(.easeOut(duration: 0.15)) { brillo = 1 }
                     withAnimation(.easeIn(duration: 0.2).delay(0.15)) { brillo = 0 }
                 } else {
-                    withAnimation(.spring(response: 0.15, dampingFraction: 0.5)) { escala = 1.03 }
-                    withAnimation(.spring(response: 0.2, dampingFraction: 0.8).delay(0.15)) { escala = 1 }
+                    withAnimation(.smooth(duration: 0.15)) { escala = 1.03 }
+                    withAnimation(.smooth(duration: 0.2).delay(0.15)) { escala = 1 }
                 }
             }
+    }
+}
+
+// MARK: - Ejemplo resuelto (05E parte 2 §5)
+
+/// Pasos de un ejemplo resuelto, uno a uno: frase, resultado intermedio resaltado y, si lo hay, el
+/// porqué. El último paso no se enseña: lo completa el usuario con la mecánica del ítem. Cada paso
+/// es un elemento de VoiceOver, que anuncia el nuevo al aparecer.
+struct VistaEjemploResuelto: View {
+    let pasos: [PasoResuelto]
+    let visibles: Int
+    let ultimo: PasoResuelto?
+    let listo: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Espacio.m) {
+            Label("Ejemplo resuelto", systemImage: "list.number")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Paleta.textoSecundario)
+                .textCase(.uppercase)
+                .accessibilityAddTraits(.isHeader)
+            ForEach(Array(pasos.prefix(visibles).enumerated()), id: \.offset) { i, p in
+                FilaPaso(numero: i + 1, paso: p)
+                    .transition(.opacity)
+            }
+            if listo, let ultimo {
+                HStack(alignment: .top, spacing: Espacio.m) {
+                    Text("\(pasos.count + 1)")
+                        .font(.numerica(.subheadline))
+                        .foregroundStyle(Paleta.textoSobreBosque)
+                        .frame(width: 28, height: 28)
+                        .background(Paleta.matematicas, in: Circle())
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(ultimo.frase).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                        Text("Este paso lo completas tú.").font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Último paso: \(ultimo.frase). Complétalo tú.")
+                .accessibilityIdentifier("pasoFinal")
+            }
+        }
+        .padding(Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        .onChange(of: visibles) { _, n in
+            guard n >= 1, n <= pasos.count else { return }
+            AccessibilityNotification.Announcement(FilaPaso.lectura(n, pasos[n - 1])).post()
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("ejemploResuelto")
+    }
+}
+
+/// Un paso: número, frase, resultado intermedio resaltado y el porqué.
+struct FilaPaso: View {
+    let numero: Int
+    let paso: PasoResuelto
+
+    static func lectura(_ n: Int, _ p: PasoResuelto) -> String {
+        "Paso \(n): \(p.frase). \(p.resultado)." + (p.porque.map { " \($0.prefix(1).uppercased() + $0.dropFirst())." } ?? "")
+    }
+
+    var body: some View {
+        HStack(alignment: .top, spacing: Espacio.m) {
+            Text("\(numero)")
+                .font(.numerica(.subheadline))
+                .foregroundStyle(Paleta.textoPrincipal)
+                .frame(width: 28, height: 28)
+                .overlay(Circle().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
+            VStack(alignment: .leading, spacing: Espacio.xs) {
+                Text(paso.frase).font(.body).foregroundStyle(Paleta.textoPrincipal)
+                Text(paso.resultado)
+                    .font(.numerica(.body))
+                    .foregroundStyle(Paleta.textoPrincipal)
+                    .padding(.horizontal, Espacio.s)
+                    .padding(.vertical, Espacio.xs)
+                    .background(Paleta.lenguaTinte, in: RoundedRectangle(cornerRadius: Radio.celda, style: .continuous))
+                if let porque = paso.porque {
+                    Text(porque.prefix(1).uppercased() + porque.dropFirst())
+                        .font(.footnote).italic()
+                        .foregroundStyle(Paleta.textoSecundario)
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Self.lectura(numero, paso))
+        .accessibilityIdentifier("paso_\(numero)")
+    }
+}
+
+/// Distintivo discreto de la dificultad: «Nivel examen» (4) y «Por encima del examen» (5–6).
+struct DistintivoNivel: View {
+    let texto: String
+
+    init?(dificultad: Int) {
+        switch dificultad {
+        case 4: texto = "Nivel examen"
+        case 5...: texto = "Por encima del examen"
+        default: return nil
+        }
+    }
+
+    var body: some View {
+        Label(texto, systemImage: "checkmark.seal")
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(Paleta.matematicasTinta)
+            .padding(.horizontal, Espacio.s)
+            .padding(.vertical, 2)
+            .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("distintivoNivel")
     }
 }

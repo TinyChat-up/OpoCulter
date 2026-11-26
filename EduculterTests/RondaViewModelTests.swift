@@ -132,16 +132,24 @@ struct RondaViewModelTests {
         #expect(vacia.fase == .vacia)
     }
 
-    @Test("Hoy: carga, empezar y cerrar ronda")
+    @Test("Hoy: carga la semana y las duraciones, empieza la sesión diaria y su resumen ofrece «5 minutos más»")
     func hoy() throws {
-        let hoy = HoyViewModel(servicio: servicio())
+        let s = servicio()
+        try s.repositorio.guardar(EstadoCompetencia(competenciaId: "LEN.ORT.AGU"))
+        let hoy = HoyViewModel(servicio: s)
         hoy.cargar()
-        #expect(hoy.estado?.misiones.count == 3 && hoy.mensajeError == nil)
-        hoy.empezar(.ortografiaExpres)
+        #expect(hoy.mensajeError == nil && hoy.meta?.dias.count == 7 && hoy.meta?.hechos == 0 && !hoy.descanso)
+        #expect(hoy.itemsPorDuracion == [.cinco: 8, .diez: 15, .quince: 22])
+        hoy.empezar(.sesion(duracion: .cinco, foco: .mixto))
         let ronda = try #require(hoy.rondaActiva)
+        #expect(ronda.esSesion && ronda.total == 8)
         jugar(ronda)
+        let resumen = try #require(ronda.resumen)
+        #expect(resumen.esSesion && resumen.total == 8)
+        ronda.otraRonda()
+        #expect(ronda.esSesion && ronda.total == 8 && ronda.fase != .resumen, "«5 minutos más»: otra sesión de 5 minutos")
         hoy.cerrarRonda()
-        #expect(hoy.rondaActiva == nil && hoy.estado?.racha.actual == 1)
+        #expect(hoy.rondaActiva == nil && hoy.estado?.racha.actual == 1 && hoy.meta?.hechos == 1)
     }
 
     @Test("Opciones de arranque y entorno")
@@ -153,7 +161,7 @@ struct RondaViewModelTests {
         let entorno = EntornoApp.crear(argumentos: ["app", "-enMemoria", "-rondaDemostracion"])
         #expect(entorno.servicio != nil && entorno.errorCarga == nil)
         if case .items(let ids) = entorno.tipoRondaPrincipal { #expect(ids.count == 12) } else { Issue.record("Debería ser la ronda de demostración") }
-        #expect(EntornoApp.crear(argumentos: ["app", "-enMemoria"]).tipoRondaPrincipal == .recomendada)
+        #expect(EntornoApp.crear(argumentos: ["app", "-enMemoria"]).tipoRondaPrincipal == .sesion(duracion: .diez, foco: .mixto))
         #expect(entorno.servicioDeRevision() != nil)
     }
 
@@ -178,6 +186,54 @@ struct RondaViewModelTests {
         let bloques = banco.catalogo.areas.flatMap(\.bloques).map(\.id)
         #expect(bloques.allSatisfy { SimboloBloque.porBloque[$0] != nil })
         #expect(Set(bloques.compactMap { SimboloBloque.porBloque[$0] }).count == bloques.count)
+    }
+}
+#endif
+
+#if DEBUG
+@MainActor
+@Suite("Ejemplo resuelto en la ronda (05E parte 2 §5)")
+struct EjemploEnRondaTests {
+    let banco = PasosResueltosTests.banco
+
+    func servicio() -> ServicioSesion {
+        ServicioSesion(banco: banco, repositorio: RepositorioEnMemoria(), reloj: RelojFijo(ahora: Fx.fecha(2026, 11, 26, 10)),
+                       calendario: Fx.madrid, rng: GeneradorConSemilla(semilla: 5))
+    }
+
+    @Test("Paso a paso: «Comprobar» solo cuando se han visto todos los pasos menos el último; después, el gemelo sin pasos")
+    func pasoAPaso() throws {
+        let c = try #require(banco.catalogo.todasLasCompetencias.map(\.id).first { c in
+            ConstructorRondas(banco: banco).candidatos(competencia: c, peldano: 1).contains { $0.pasos.count >= 3 }
+        })
+        let m = RondaViewModel(servicio: servicio(), tipo: .competencia(c))
+        if m.fase == .teoria { m.empezarTrasTeoria() }
+        #expect(m.esEjemplo, "\(c): la práctica del peldaño 1 empieza con un ejemplo")
+        let item = try #require(m.itemActual)
+        #expect(m.pasosEjemplo == Array(item.pasos.dropLast()) && m.pasosVisibles == 1 && !m.puedePedirPista)
+        m.respuesta = RespuestaEjemplo.correcta(item.payload)
+        #expect(!m.puedeComprobar, "Antes de ver los pasos no se comprueba")
+        while !m.ejemploListo { m.siguientePaso() }
+        #expect(m.pasosVisibles == item.pasos.count - 1 && m.puedeComprobar)
+        m.comprobar()
+        #expect(m.resultado?.correcto == true && m.pasosTrasFallo.isEmpty)
+        m.continuar()
+        let gemelo = try #require(m.itemActual)
+        #expect(!m.esEjemplo && EjemplosResueltos.plantilla(de: gemelo.id) == EjemplosResueltos.plantilla(de: item.id) && gemelo.id != item.id)
+        // Tras un fallo se ven los pasos (desde el peldaño 3, el único sitio donde aparecen).
+        m.rellenarParaPruebas(correcta: false)
+        m.comprobar()
+        #expect(m.resultado?.correcto == false && m.pasosTrasFallo == gemelo.pasos)
+    }
+
+    @Test("Retirada de ayudas: en el peldaño 2 la pista es el primer paso; desde el 3, sin pistas")
+    func retirada() throws {
+        let m = RondaViewModel(servicio: servicio(), tipo: .items([]))
+        let p = try #require(banco.plantillas.first { $0.competencia.hasPrefix("MAT.POR") })
+        let p2 = try MotorGeneradores.generar(MotorGeneradores.ajustada(p, dificultad: p.dificultad, peldano: 2), semilla: 1, recursos: banco.recursos)
+        let p3 = try MotorGeneradores.generar(MotorGeneradores.ajustada(p, dificultad: p.dificultad, peldano: 3), semilla: 1, recursos: banco.recursos)
+        #expect(m.pistas(de: p2) == ["Primer paso: \(p2.pasos[0].frase) → \(p2.pasos[0].resultado)"])
+        #expect(m.pistas(de: p3).isEmpty)
     }
 }
 #endif

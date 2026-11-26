@@ -27,6 +27,21 @@ enum Peldano: Int, Codable, Sendable, CaseIterable, Comparable {
     case formatoExamen = 5
 
     static func < (a: Peldano, b: Peldano) -> Bool { a.rawValue < b.rawValue }
+
+    /// Nombre visible del peldaño (05E parte 2 §3.5). Solo cambian las etiquetas; la lógica de la
+    /// escalera es la misma.
+    var nombre: String {
+        switch self {
+        case .descubre: "Descubrir"
+        case .practica: "Practicar"
+        case .sinAyudas: "Resolver"
+        case .justifica: "Transferir"
+        case .formatoExamen: "Dominar"
+        }
+    }
+
+    /// Nombre del peldaño `n` (1…5; fuera de rango, el más cercano).
+    static func nombre(_ n: Int) -> String { (Peldano(rawValue: min(max(n, 1), 5)) ?? .descubre).nombre }
 }
 
 /// Ejercicio del banco de contenido (`Content/items/<bloque>.json`).
@@ -52,6 +67,9 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
     /// `tipo|clave` del caso para los ítems generados (D-087): dos ítems con la misma clave son la
     /// misma pregunta aunque cambie la semilla o la plantilla. `nil` en los estáticos.
     var claveGenerada: String?
+    /// Ejemplo resuelto (05E parte 2 §5): de 2 a 5 pasos calculados por el generador. Vacío en los
+    /// estáticos y en los generadores sin pasos.
+    var pasos: [PasoResuelto] = []
 
     var mecanica: Mecanica { payload.mecanica }
 
@@ -60,7 +78,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         enunciado: String, payload: Payload, pistas: [String] = [], explicacion: String,
         erroresHabituales: [ErrorHabitual] = [], referencia: Referencia? = nil,
         procedencia: Procedencia, validacion: Validacion, version: Int = 1, textoRef: String? = nil,
-        claveGenerada: String? = nil
+        claveGenerada: String? = nil, pasos: [PasoResuelto] = []
     ) {
         self.id = id
         self.competencia = competencia
@@ -78,11 +96,12 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         self.version = version
         self.textoRef = textoRef
         self.claveGenerada = claveGenerada
+        self.pasos = pasos
     }
 
     private enum CodingKeys: String, CodingKey {
         case id, competencia, peldano, dificultad, objetivo, mecanica, enunciado, payload,
-             pistas, explicacion, erroresHabituales, referencia, procedencia, validacion, version, textoRef, claveGenerada
+             pistas, explicacion, erroresHabituales, referencia, procedencia, validacion, version, textoRef, claveGenerada, pasos
     }
 
     init(from decoder: Decoder) throws {
@@ -104,6 +123,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         version = try c.decode(Int.self, forKey: .version)
         textoRef = try c.decodeIfPresent(String.self, forKey: .textoRef)
         claveGenerada = try c.decodeIfPresent(String.self, forKey: .claveGenerada)
+        pasos = try c.decodeIfPresent([PasoResuelto].self, forKey: .pasos) ?? []
     }
 
     func encode(to encoder: Encoder) throws {
@@ -125,6 +145,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         try c.encode(version, forKey: .version)
         try c.encodeIfPresent(textoRef, forKey: .textoRef)
         try c.encodeIfPresent(claveGenerada, forKey: .claveGenerada)
+        if !pasos.isEmpty { try c.encode(pasos, forKey: .pasos) }
     }
 }
 

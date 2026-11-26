@@ -443,6 +443,19 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         if case .ruedas(let rr) = item.payload, let esperado = Oraculo.formas[d["forma"]!] {
             #expect(Array(rr.ruedas.map(\.correcta).prefix(4)) == [esperado.0, esperado.1, esperado.2, esperado.3], "\(d["forma"]!)")
         }
+    case "terminoDesconocido":
+        // Se resuelve aquí cada igualdad con su operación inversa.
+        let partes = d["igualdades"]!.split(separator: "|").map { $0.split(separator: ":").map(String.init) }
+        let f1 = partes[0], a1 = Oraculo.racional(f1[1])!, n1 = Oraculo.racional(f1[2])!
+        let x: Double = switch f1[0] { case "mul", "div": n1 / a1; case "suma": n1 - a1; default: n1 + a1 }
+        var esperado = x
+        if partes.count == 2 {
+            let k = Double(partes[1][1])!
+            esperado = switch partes[1][0] { case "div": x / k; case "suma": x - k; default: x + k }
+            #expect(abs(Double(d["a"]!)! - x) < 1e-9, "\(item.id): a")
+        }
+        #expect(abs(Oraculo.racional(sol!)! - esperado) < 1e-9, "\(item.id): \(item.enunciado) → \(sol!) ≠ \(esperado)")
+        #expect(esperado == esperado.rounded() && esperado > 0, "\(item.id): solución natural")
     case "formasNoPersonales":
         let f = Oraculo05E.comprobarNoPersonales(m, item)
         #expect(f.isEmpty, "\(item.id): \(f)")
@@ -473,12 +486,15 @@ struct GeneradoresPropiedadesTests {
         let lote02 = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Lote 02") == true }
         let lote02b = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Plantilla del lote 02b") == true }
         let fase05E = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05E") == true }
-        #expect(lote02.count == 38 && lote02b.count == 4 && fase05E.count == 37)
+        #expect(lote02.count == 38 && lote02b.count == 4 && fase05E.count == 38)
         #expect(lote02.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-24") })
         #expect(lote02b.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
         // Las de la 05E: aprobadas solo si superan estos tests (ver PlantillasNuevas05ETests); el resto (05C), en borrador.
         #expect(fase05E.allSatisfy { $0.validacion.estado == .borrador || $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
-        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) }.allSatisfy { $0.validacion.estado == .borrador })
+        // Aprobadas en la 05E parte 2 (D-101): MCD, CENTRAL y LAPLACE (plantillas de la 05C que superan propiedades y anclas).
+        let aprobadas05C: Set<String> = ["MAT.DIV.MCD.G01", "MAT.EST.CENTRAL.G01", "MAT.PRO.LAPLACE.G01"]
+        #expect(Self.plantillas.filter { aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -557,7 +573,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 79)
+        #expect(banco.plantillas.count == 83)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }
@@ -745,23 +761,38 @@ struct CatalogoPreguntasTests {
         #expect(r.plantillas[1].variantes == 0 && r.generados == r.plantillas[0].variantes)
     }
 
-    @Test("Generar una ronda de 8 ítems con plantillas tarda menos de 50 ms")
-    func rendimientoRonda() {
-        let constructor = ConstructorRondas(banco: bancoGeneradores)
+    /// Tiempo de CPU del hilo (no el de reloj): los tests de 1000 semillas corren en paralelo y,
+    /// con el reloj, la espera por la CPU contaba como trabajo de la ronda.
+    static func cpuHilo() -> Double {
+        var t = timespec()
+        clock_gettime(CLOCK_THREAD_CPUTIME_ID, &t)
+        return Double(t.tv_sec) + Double(t.tv_nsec) / 1e9
+    }
+
+    /// La primera ronda de una competencia genera su catálogo (perezoso, D-102); las siguientes lo
+    /// reutilizan. Se mide en tiempo de CPU del hilo con un banco propio (en frío de verdad).
+    @Test("Ronda de 8 ítems con plantillas: < 50 ms de CPU en caliente y < 200 ms en frío")
+    func rendimientoRonda() throws {
+        let banco = try CargadorContenido.desdeBundle().cargar(politica: .todos, semillaBase: 11)
+        let constructor = ConstructorRondas(banco: banco)
         var rng = GeneradorConSemilla(semilla: 3)
         let ahora = Fx.fecha(2026, 11, 23, 10)
-        var peor = 0.0
+        var peorFrio = 0.0, peorCaliente = 0.0
         for competencia in ["MAT.ROM.LEER", "MAT.OPE.JER", "LEN.SIN.COMPL", "MAT.EST.CENTRAL"] {
-            let inicio = Date()
-            let ronda = constructor.construir(estados: [:], rescate: ColaRescate(), enCurso: competencia, vistos: [:], ahora: ahora,
-                                              calendario: Fx.madrid, rng: &rng)
-            // Regenerar cada ítem desde su id (lo que hace la sesión al mostrarlo).
-            let items = ronda.items.compactMap { bancoGeneradores.item(id: $0.itemId) }
-            peor = max(peor, Date().timeIntervalSince(inicio))
-            #expect(items.count == ronda.items.count && items.count >= 6)
-            #expect(items.contains { $0.id.contains("#") }, "\(competencia): la ronda usa ítems generados")
+            for vuelta in 0..<2 {
+                let inicio = Self.cpuHilo()
+                let ronda = constructor.construir(estados: [:], rescate: ColaRescate(), enCurso: competencia, vistos: [:], ahora: ahora,
+                                                  calendario: Fx.madrid, rng: &rng)
+                // Regenerar cada ítem desde su id (lo que hace la sesión al mostrarlo).
+                let items = ronda.items.compactMap { banco.item(id: $0.itemId) }
+                let t = Self.cpuHilo() - inicio
+                if vuelta == 0 { peorFrio = max(peorFrio, t) } else { peorCaliente = max(peorCaliente, t) }
+                #expect(items.count == ronda.items.count && items.count >= 6)
+                #expect(items.contains { $0.id.contains("#") }, "\(competencia): la ronda usa ítems generados")
+            }
         }
-        #expect(peor < 0.05, "Ronda en \(peor * 1000) ms")
+        #expect(peorCaliente < 0.05, "Ronda en caliente en \(peorCaliente * 1000) ms")
+        #expect(peorFrio < 0.2, "Ronda en frío en \(peorFrio * 1000) ms")
     }
 
     @Test("Rescate reproduce el ítem exacto por id y busca variantes con otras semillas")
@@ -808,14 +839,16 @@ struct AvataresFuenteTests {
         #expect(try reabierto.mainContext.fetch(FetchDescriptor<PerfilRegistro>()).first?.avatar == 3, "La migración queda guardada")
     }
 
-    @Test("Fredoka se registra y escala con Dynamic Type")
+    @Test("Sin fuentes empaquetadas: la interfaz usa las del sistema y escala con Dynamic Type")
     func fuente() {
-        #expect(FuenteExhibicion.registrar())
-        let normal = FuenteExhibicion.uiFont(.title1, base: 28, compatibleCon: UITraitCollection(preferredContentSizeCategory: .large))
-        let grande = FuenteExhibicion.uiFont(.title1, base: 28, compatibleCon: UITraitCollection(preferredContentSizeCategory: .accessibilityExtraExtraExtraLarge))
-        #expect(normal.fontName == "Fredoka-SemiBold")
+        #expect(Bundle.main.url(forResource: "Fredoka", withExtension: "ttf") == nil)
+        #expect(Bundle.main.url(forResource: "OFL", withExtension: "txt") == nil)
+        let rasgos = { (c: UIContentSizeCategory) in UITraitCollection(preferredContentSizeCategory: c) }
+        let normal = UIFont.preferredFont(forTextStyle: .title1, compatibleWith: rasgos(.large))
+        let grande = UIFont.preferredFont(forTextStyle: .title1, compatibleWith: rasgos(.accessibilityExtraExtraExtraLarge))
         #expect(grande.pointSize > normal.pointSize * 1.5)
-        #expect(Bundle.main.url(forResource: "OFL", withExtension: "txt") != nil, "La licencia va en el bundle")
+        // La serif del sistema (New York) existe para los títulos.
+        #expect(normal.fontDescriptor.withDesign(.serif) != nil)
     }
 }
 
