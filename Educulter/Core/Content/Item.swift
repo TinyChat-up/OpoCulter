@@ -27,6 +27,21 @@ enum Peldano: Int, Codable, Sendable, CaseIterable, Comparable {
     case formatoExamen = 5
 
     static func < (a: Peldano, b: Peldano) -> Bool { a.rawValue < b.rawValue }
+
+    /// Nombre visible del peldaño (05E parte 2 §3.5). Solo cambian las etiquetas; la lógica de la
+    /// escalera es la misma.
+    var nombre: String {
+        switch self {
+        case .descubre: "Descubrir"
+        case .practica: "Practicar"
+        case .sinAyudas: "Resolver"
+        case .justifica: "Transferir"
+        case .formatoExamen: "Dominar"
+        }
+    }
+
+    /// Nombre del peldaño `n` (1…5; fuera de rango, el más cercano).
+    static func nombre(_ n: Int) -> String { (Peldano(rawValue: min(max(n, 1), 5)) ?? .descubre).nombre }
 }
 
 /// Ejercicio del banco de contenido (`Content/items/<bloque>.json`).

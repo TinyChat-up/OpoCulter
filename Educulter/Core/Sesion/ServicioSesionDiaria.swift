@@ -124,4 +124,24 @@ extension ServicioSesion {
 
     /// Día en que vuelve a trabajarse un error detectado en la sesión: mañana (la siguiente sesión).
     func diaVuelta(_ error: ErrorTipico) -> DiaCivil { hoy.sumando(dias: 1) }
+
+    /// Errores detectados en una sesión, sin repetir, con si ya están activos (su remedio entra en la
+    /// próxima sesión) y el día en que vuelven.
+    func erroresDetectados(_ errores: [ErrorTipico]) throws -> [ErrorDetectado] {
+        let activos = Set(try estadoErrores().activos.map(\.errorId))
+        var vistos = Set<String>()
+        return errores.filter { vistos.insert($0.id).inserted }.map {
+            ErrorDetectado(error: $0, activo: activos.contains($0.id), vuelve: activos.contains($0.id) ? diaVuelta($0) : nil)
+        }
+    }
+}
+
+/// Error detectado en una sesión (resumen, §3.4).
+struct ErrorDetectado: Sendable, Equatable, Identifiable {
+    var error: ErrorTipico
+    /// Activo (2 apariciones en 7 días): su remedio entra en la próxima sesión.
+    var activo: Bool
+    /// Día en que vuelve (solo si está activo).
+    var vuelve: DiaCivil?
+    var id: String { error.id }
 }

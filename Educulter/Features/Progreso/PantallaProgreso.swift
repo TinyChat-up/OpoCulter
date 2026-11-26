@@ -11,6 +11,7 @@ struct PantallaProgreso: View {
     @State private var logros: [(logro: Logro, obtenido: Date?)] = []
     @State private var preguntas: RecuentoCatalogo?
     @State private var estados: [String: EstadoCompetencia] = [:]
+    @State private var errores: (activos: [ServicioSesion.ErrorSeguido], corregidos: [ServicioSesion.ErrorSeguido]) = ([], [])
     @State private var serie = "Aciertos"
     @State private var confirmarBorrado = false
     @State private var confirmarBorradoFinal = false
@@ -20,6 +21,7 @@ struct PantallaProgreso: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.xl) {
                     Text("Progreso").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
+                    seccionErrores
                     seccionDominio
                     if let e = estadisticas {
                         seccionEvolucion(e)
@@ -74,6 +76,7 @@ struct PantallaProgreso: View {
         estadisticas = try? servicio.estadisticas()
         logros = (try? servicio.catalogoLogros()) ?? []
         estados = (try? servicio.repositorio.estadosCompetencia()) ?? [:]
+        errores = (try? servicio.erroresSeguidos()) ?? ([], [])
         if preguntas == nil { preguntas = servicio.preguntasDisponibles() }
     }
 
@@ -132,6 +135,49 @@ struct PantallaProgreso: View {
             }
         }
         .accessibilityIdentifier("seccionDominio")
+    }
+
+    /// Errores que estás corrigiendo (§4): los activos con sus apariciones, el último fallo y el
+    /// estado; y los corregidos en el último mes, con una marca.
+    private var seccionErrores: some View {
+        VStack(alignment: .leading, spacing: Espacio.m) {
+            titulo("Errores que estás corrigiendo")
+            if errores.activos.isEmpty && errores.corregidos.isEmpty {
+                Text("Cuando un mismo error se repita dos veces en una semana, aparecerá aquí con su remedio.")
+                    .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            ForEach(errores.activos) { e in filaError(e) }
+            ForEach(errores.corregidos) { e in filaError(e) }
+        }
+        .padding(Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("seccionErrores")
+    }
+
+    private func filaError(_ e: ServicioSesion.ErrorSeguido) -> some View {
+        let fecha = e.ultimoFallo.map { $0.formatted(.dateTime.day().month(.wide).locale(Locale(identifier: "es_ES"))) }
+        let estado = e.activo ? (e.aciertosSeguidos > 0 ? "corrigiéndose: \(e.aciertosSeguidos) de 3 aciertos" : "activo") : "corregido"
+        let detalle = [e.activo ? (e.apariciones == 1 ? "1 vez" : "\(e.apariciones) veces") : nil, fecha.map { "último fallo el \($0)" }, estado]
+            .compactMap { $0 }.joined(separator: " · ")
+        return HStack(alignment: .top, spacing: Espacio.m) {
+            Image(systemName: e.activo ? "scope" : "checkmark.circle.fill")
+                .font(.body.weight(.semibold))
+                .foregroundStyle(e.activo ? Paleta.textoPrincipal : Paleta.exito)
+                .frame(width: 24)
+                .accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(e.error.descripcion).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    .fixedSize(horizontal: false, vertical: true)
+                Text(detalle).font(.footnote).foregroundStyle(Paleta.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+        }
+        .accessibilityElement(children: .combine)
+        .accessibilityIdentifier("error_\(e.id)")
     }
 
     private func seccionEvolucion(_ e: EstadisticasProgreso) -> some View {
@@ -257,6 +303,13 @@ struct PantallaAjustes: View {
     @Environment(EntornoApp.self) private var entorno
     @State private var ronda: RondaViewModel?
     @State private var mostrarPerfil = false
+    @State private var descanso = false
+    @State private var diasDescanso = 0
+
+    private func cargarDescanso() {
+        descanso = (try? servicio.descansoActivo()) ?? false
+        diasDescanso = (try? servicio.diasDescansoDisponibles()) ?? 0
+    }
 
     var body: some View {
         let ajustes = Binding(get: { entorno.ajustes }, set: { entorno.guardar($0) })
@@ -268,6 +321,25 @@ struct PantallaAjustes: View {
                 grupo("Sonido y vibración") {
                     Toggle("Sonido", isOn: ajustes.sonido).accessibilityIdentifier("ajusteSonido")
                     Toggle("Vibración", isOn: ajustes.vibracion).accessibilityIdentifier("ajusteVibracion")
+                }
+                grupo("Tu semana") {
+                    Stepper(value: Binding(get: { entorno.ajustes.metaSemanal }, set: { var a = entorno.ajustes; a.metaSemanal = $0; entorno.guardar(a) }),
+                            in: MetaSemanal.rango) {
+                        Text("Meta semanal: \(entorno.ajustes.metaSemanal) días")
+                    }
+                    .accessibilityIdentifier("ajusteMetaSemanal")
+                    Text("Días con al menos una sesión, de lunes a domingo.")
+                        .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                    Toggle("Modo descanso", isOn: Binding(get: { descanso }, set: { activar in
+                        _ = try? servicio.cambiarDescanso(activar)
+                        cargarDescanso()
+                    }))
+                    .disabled(!descanso && diasDescanso == 0)
+                    .accessibilityIdentifier("ajusteDescanso")
+                    Text(descanso ? "Tu racha y tu meta están en pausa. Te quedan \(diasDescanso) de 7 días este mes."
+                         : (diasDescanso == 0 ? "Ya has usado los 7 días de descanso de este mes." : "Congela la racha y la meta hasta 7 días al mes. Te quedan \(diasDescanso)."))
+                        .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("textoDescanso")
                 }
                 grupo("Recordatorio") {
                     Toggle("Recordatorio diario", isOn: Binding(get: { entorno.ajustes.recordatorio }, set: { activar in
@@ -285,7 +357,7 @@ struct PantallaAjustes: View {
                         }), displayedComponents: .hourAndMinute)
                         .accessibilityIdentifier("ajusteHora")
                     }
-                    Text("Un aviso local al día, sin servidor. Si ese día ya has hecho una ronda, no suena.")
+                    Text("Un aviso local al día, sin servidor. Si ese día ya has completado una sesión, no suena.")
                         .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
                 }
                 grupo("Tu cuenta") {
@@ -311,6 +383,7 @@ struct PantallaAjustes: View {
         .sheet(isPresented: $mostrarPerfil) {
             PantallaPerfil(avatar: try? servicio.repositorio.perfil().avatar) { id in try? servicio.elegirAvatar(id) }
         }
+        .onAppear(perform: cargarDescanso)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaAjustes")
     }

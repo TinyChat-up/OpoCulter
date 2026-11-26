@@ -29,6 +29,12 @@ final class RondaViewModel: Identifiable {
         var logros: [Logro]
         /// Área con más ítems en la ronda (`LEN` o `MAT`): da color a "Otra ronda".
         var areaPredominante: String = "LEN"
+        /// Peldaño al que sube cada competencia de `subidas`.
+        var peldanosNuevos: [String: Int] = [:]
+        /// Errores típicos detectados en la ronda (§3.4).
+        var errores: [ErrorDetectado] = []
+        /// Sesión diaria: el resumen ofrece «5 minutos más».
+        var esSesion = false
     }
 
     let id = UUID()
@@ -53,6 +59,8 @@ final class RondaViewModel: Identifiable {
     private(set) var respondidos = 0
     private(set) var xpRonda = 0
     private(set) var subidas: [String] = []
+    private(set) var peldanosNuevos: [String: Int] = [:]
+    private(set) var erroresDetectados: [ErrorTipico] = []
     private(set) var misionesCompletadas: [Mision] = []
     private(set) var logros: [Logro] = []
     private(set) var resumen: Resumen?
@@ -200,6 +208,8 @@ final class RondaViewModel: Identifiable {
             efecto = e
             xpRonda += e.xp
             if e.subioPeldano, !subidas.contains(item.competencia) { subidas.append(item.competencia) }
+            if e.subioPeldano, let p = e.peldanoNuevo { peldanosNuevos[item.competencia] = p }
+            erroresDetectados += e.erroresDetectados
             misionesCompletadas += e.misionesCompletadas
             logros += e.logrosNuevos
         } catch {
@@ -235,13 +245,17 @@ final class RondaViewModel: Identifiable {
         teoriaAbierta = teoriaDelItem
     }
 
-    /// Nueva ronda del mismo tipo (las rondas de ítems fijos pasan a ser recomendadas).
+    /// Nueva ronda del mismo tipo (las rondas de ítems fijos pasan a ser recomendadas). Tras una
+    /// sesión diaria, «5 minutos más»: otra sesión corta con el mismo foco.
     func otraRonda() {
         switch ronda.tipo {
         case .items, .diagnostico: preparar(.recomendada)
+        case .sesion(_, let foco): preparar(.sesion(duracion: .cinco, foco: foco))
         default: preparar(ronda.tipo)
         }
     }
+
+    var esSesion: Bool { if case .sesion = ronda.tipo { true } else { false } }
 
     /// Salir a mitad: en Supervivencia, la partida se guarda como abandonada (con lo jugado) y no
     /// cuenta para el récord. Las respuestas ya están guardadas en todos los modos.
@@ -299,6 +313,8 @@ final class RondaViewModel: Identifiable {
         respondidos = 0
         xpRonda = 0
         subidas = []
+        peldanosNuevos = [:]
+        erroresDetectados = []
         misionesCompletadas = []
         logros = []
         resumen = nil
@@ -347,7 +363,9 @@ final class RondaViewModel: Identifiable {
         logros += efectoRonda.logrosNuevos
         resumen = Resumen(aciertos: aciertos, total: items.count, xp: xpRonda, comboMaximo: combo.maximo,
                           subidas: subidas, racha: efectoRonda.racha, cambiosRacha: efectoRonda.cambiosRacha,
-                          misionesCompletadas: misionesCompletadas, logros: logros, areaPredominante: areaPredominante)
+                          misionesCompletadas: misionesCompletadas, logros: logros, areaPredominante: areaPredominante,
+                          peldanosNuevos: peldanosNuevos, errores: (try? servicio.erroresDetectados(erroresDetectados)) ?? [],
+                          esSesion: esSesion)
         fase = .resumen
     }
 

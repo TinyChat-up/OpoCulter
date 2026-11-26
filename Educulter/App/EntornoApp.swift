@@ -30,6 +30,9 @@ struct OpcionesArranque: Equatable {
     var progresoDemo = false
     /// Tests de UI: da por respondida la pregunta del recordatorio (no aparece la alerta).
     var sinAvisoRecordatorio = false
+    /// Historial de prueba (solo Debug): dos fallos del mismo error de porcentajes, que queda activo
+    /// y trae su remedio a la siguiente sesión.
+    var errorDemo = false
 
     static func desde(_ argumentos: [String]) -> OpcionesArranque {
         #if DEBUG
@@ -48,6 +51,7 @@ struct OpcionesArranque: Equatable {
         o.politicaRelease = argumentos.contains("-politicaRelease")
         o.forzarBienvenida = argumentos.contains("-forzarBienvenida")
         o.progresoDemo = argumentos.contains("-progresoDemo")
+        o.errorDemo = argumentos.contains("-errorDemo")
         o.sinAvisoRecordatorio = argumentos.contains("-sinAvisoRecordatorio") || o.captura != nil
         return o
         #else
@@ -142,6 +146,9 @@ final class EntornoApp {
             let rng = opciones.semilla.map(GeneradorConSemilla.init(semilla:)) ?? .aleatorio()
             let servicio = ServicioSesion(banco: banco, repositorio: repositorio, rng: rng)
             if let avatar = opciones.avatar { try servicio.elegirAvatar(avatar) }
+            #if DEBUG
+            if opciones.errorDemo { try ProgresoDemo.forzarError(servicio) }
+            #endif
             if opciones.sinAvisoRecordatorio {
                 var a = try servicio.ajustes()
                 a.recordatorioPreguntado = true
@@ -153,14 +160,16 @@ final class EntornoApp {
         }
     }
 
-    /// Ronda que lanza el botón principal de Hoy.
+    /// Ronda que lanza el botón principal de Hoy: la sesión diaria con la duración y el foco elegidos
+    /// (los tests de interfaz pueden fijar ítems con `-rondaItems` o `-rondaDemostracion`).
     var tipoRondaPrincipal: TipoRonda {
-        guard let banco else { return .recomendada }
+        let sesion = TipoRonda.sesion(duracion: ajustes.duracion, foco: ajustes.foco)
+        guard let banco else { return sesion }
         if let ids = opciones.rondaItems {
             let existentes = ids.filter { banco.item(id: $0) != nil }
             if !existentes.isEmpty { return .items(existentes) }
         }
-        guard opciones.rondaDemostracion else { return .recomendada }
+        guard opciones.rondaDemostracion else { return sesion }
         return .items(Self.itemsDemostracion(banco))
     }
 

@@ -132,16 +132,24 @@ struct RondaViewModelTests {
         #expect(vacia.fase == .vacia)
     }
 
-    @Test("Hoy: carga, empezar y cerrar ronda")
+    @Test("Hoy: carga la semana y las duraciones, empieza la sesión diaria y su resumen ofrece «5 minutos más»")
     func hoy() throws {
-        let hoy = HoyViewModel(servicio: servicio())
+        let s = servicio()
+        try s.repositorio.guardar(EstadoCompetencia(competenciaId: "LEN.ORT.AGU"))
+        let hoy = HoyViewModel(servicio: s)
         hoy.cargar()
-        #expect(hoy.estado?.misiones.count == 3 && hoy.mensajeError == nil)
-        hoy.empezar(.ortografiaExpres)
+        #expect(hoy.mensajeError == nil && hoy.meta?.dias.count == 7 && hoy.meta?.hechos == 0 && !hoy.descanso)
+        #expect(hoy.itemsPorDuracion == [.cinco: 8, .diez: 15, .quince: 22])
+        hoy.empezar(.sesion(duracion: .cinco, foco: .mixto))
         let ronda = try #require(hoy.rondaActiva)
+        #expect(ronda.esSesion && ronda.total == 8)
         jugar(ronda)
+        let resumen = try #require(ronda.resumen)
+        #expect(resumen.esSesion && resumen.total == 8)
+        ronda.otraRonda()
+        #expect(ronda.esSesion && ronda.total == 8 && ronda.fase != .resumen, "«5 minutos más»: otra sesión de 5 minutos")
         hoy.cerrarRonda()
-        #expect(hoy.rondaActiva == nil && hoy.estado?.racha.actual == 1)
+        #expect(hoy.rondaActiva == nil && hoy.estado?.racha.actual == 1 && hoy.meta?.hechos == 1)
     }
 
     @Test("Opciones de arranque y entorno")
@@ -153,7 +161,7 @@ struct RondaViewModelTests {
         let entorno = EntornoApp.crear(argumentos: ["app", "-enMemoria", "-rondaDemostracion"])
         #expect(entorno.servicio != nil && entorno.errorCarga == nil)
         if case .items(let ids) = entorno.tipoRondaPrincipal { #expect(ids.count == 12) } else { Issue.record("Debería ser la ronda de demostración") }
-        #expect(EntornoApp.crear(argumentos: ["app", "-enMemoria"]).tipoRondaPrincipal == .recomendada)
+        #expect(EntornoApp.crear(argumentos: ["app", "-enMemoria"]).tipoRondaPrincipal == .sesion(duracion: .diez, foco: .mixto))
         #expect(entorno.servicioDeRevision() != nil)
     }
 

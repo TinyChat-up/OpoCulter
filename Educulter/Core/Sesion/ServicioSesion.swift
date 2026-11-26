@@ -56,6 +56,8 @@ struct EfectoRespuesta: Sendable, Equatable {
     var logrosNuevos: [Logro] = []
     /// El fallo activa (o repite) un error típico activo (motor de errores, §4 de la 05E parte 2).
     var errorRepetido: ErrorTipico?
+    /// Errores típicos que delata este fallo (activos o no), para el resumen de la sesión.
+    var erroresDetectados: [ErrorTipico] = []
 }
 
 /// Consecuencias de terminar una ronda.
@@ -363,6 +365,7 @@ final class ServicioSesion {
         for e in eventos {
             try repositorio.registrar(e)
             let s = estado.aplicar(e)
+            if e.tipo == .fallo, let error = banco.recursos.errores[e.errorId] { efecto.erroresDetectados.append(error) }
             if e.tipo == .fallo, s.activo, efecto.errorRepetido == nil { efecto.errorRepetido = banco.recursos.errores[e.errorId] }
         }
     }

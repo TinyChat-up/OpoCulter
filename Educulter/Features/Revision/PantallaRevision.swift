@@ -229,6 +229,26 @@ enum ProgresoDemo {
     }
 }
 
+extension ProgresoDemo {
+    static let errorDemo = "ERR.MAT.POR.TOTAL.4"
+
+    /// Historial de prueba (`-errorDemo`): falla dos ítems de porcentajes con la respuesta que delata
+    /// el mismo error típico, con las mismas llamadas que la interfaz. El error queda activo.
+    @MainActor
+    static func forzarError(_ servicio: ServicioSesion) throws {
+        guard try !servicio.estadoErrores().activo(errorDemo),
+              let p = servicio.banco.plantilla(id: "MAT.POR.TOTAL.G01") else { return }
+        var fallados = 0
+        for item in servicio.banco.variantes(de: p) where fallados < 2 {
+            guard let h = item.erroresHabituales.first(where: { $0.error == errorDemo }) else { continue }
+            let r = Evaluador.evaluar(.numerico(h.respuesta), para: item)
+            guard !r.correcto else { continue }
+            _ = try servicio.registrar(item: item, resultado: r, usoPista: false, combo: 0, motivo: .repaso, errorRemedio: nil)
+            fallados += 1
+        }
+    }
+}
+
 /// Escenas fijas para generar capturas (`-captura <escena>`).
 struct VistaCaptura: View {
     @Environment(EntornoApp.self) private var entorno
@@ -248,7 +268,7 @@ struct VistaCaptura: View {
         Group {
             let partes = escena.split(separator: ":").map(String.init)
             switch partes.first {
-            case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba":
+            case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba", "sesion", "sesionInicio":
                 if let ronda { PantallaRonda(modelo: ronda) {} } else { Paleta.fondo }
             case "camino":
                 if let servicio = entorno.servicio { PantallaCamino(servicio: servicio) }
@@ -324,6 +344,22 @@ struct VistaCaptura: View {
             return
         case "diagnostico":
             ronda = RondaViewModel(servicio: servicio, tipo: .diagnostico)
+            return
+        case "sesionInicio":
+            ronda = RondaViewModel(servicio: servicio, tipo: .sesion(duracion: .cinco, foco: .mixto))
+            return
+        case "sesion":
+            // Sesión de 5 minutos con dos fallos (el resumen muestra el error detectado).
+            let modelo = RondaViewModel(servicio: servicio, tipo: .sesion(duracion: .cinco, foco: .mixto))
+            var i = 0
+            while modelo.fase == .respondiendo || modelo.fase == .teoria, i < 40 {
+                if modelo.fase == .teoria { modelo.empezarTrasTeoria(); continue }
+                modelo.rellenarParaPruebas(correcta: i != 1 && i != 4)
+                modelo.comprobar()
+                modelo.continuar()
+                i += 1
+            }
+            ronda = modelo
             return
         case "plan":
             let modelo = RondaViewModel(servicio: servicio, tipo: .diagnostico)

@@ -266,11 +266,14 @@ struct PantallaPlan: View {
 
 // MARK: - Rescate
 
-/// Rescate de errores: lista por competencia, "Rescatar todo" o una competencia, y ver de nuevo cada ítem.
+/// Rescate (05E parte 2 §4): primero los errores activos («Confundes la parte con el total · 3
+/// veces»), cada uno con su remedio; después los ítems fallados por competencia, "Rescatar todo" o
+/// una competencia, y ver de nuevo cada ítem.
 struct PantallaRescate: View {
     let servicio: ServicioSesion
     let lanzar: (TipoRonda) -> Void
     @State private var grupos: [GrupoRescate] = []
+    @State private var errores: [ServicioSesion.ErrorSeguido] = []
     @State private var itemVisto: Item?
     @Environment(\.dismiss) private var cerrar
 
@@ -289,7 +292,7 @@ struct PantallaRescate: View {
             .padding(.horizontal, Espacio.l)
             .padding(.top, Espacio.l)
             Group {
-                if grupos.isEmpty {
+                if grupos.isEmpty && errores.isEmpty {
                     VStack(spacing: Espacio.l) {
                         Text("Sin errores pendientes").font(.exhibicion(.title2)).foregroundStyle(Paleta.textoPrincipal)
                             .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
@@ -304,11 +307,21 @@ struct PantallaRescate: View {
                 } else {
                     ScrollView {
                         VStack(alignment: .leading, spacing: Espacio.l) {
-                            BotonPrincipal(titulo: "Rescatar todo (\(grupos.map(\.cantidad).reduce(0, +)))", icono: "lifepreserver", acento: Paleta.recompensa) {
-                                lanzar(.rescate); cerrar()
+                            if !errores.isEmpty {
+                                Text("Errores que se repiten").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
+                                    .accessibilityAddTraits(.isHeader)
+                                ForEach(errores) { e in grupoError(e) }
                             }
-                            .accessibilityIdentifier("botonRescatarTodo")
-                            ForEach(grupos) { g in grupo(g) }
+                            if !grupos.isEmpty {
+                                Text("Por competencia").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
+                                    .accessibilityAddTraits(.isHeader)
+                                    .padding(.top, errores.isEmpty ? 0 : Espacio.s)
+                                BotonPrincipal(titulo: "Rescatar todo (\(grupos.map(\.cantidad).reduce(0, +)))", icono: "lifepreserver", acento: Paleta.primario) {
+                                    lanzar(.rescate); cerrar()
+                                }
+                                .accessibilityIdentifier("botonRescatarTodo")
+                                ForEach(grupos) { g in grupo(g) }
+                            }
                         }
                         .padding(Espacio.l)
                     }
@@ -320,13 +333,38 @@ struct PantallaRescate: View {
             let texto = servicio.banco.texto(de: item)
             VistaItemRepaso(item: item, nombre: nombre(item.competencia), texto: texto, anio: texto.flatMap { servicio.banco.anio(de: $0) })
         }
-        .onAppear { grupos = (try? servicio.gruposRescate()) ?? [] }
+        .onAppear {
+            grupos = (try? servicio.gruposRescate()) ?? []
+            errores = (try? servicio.erroresSeguidos().activos) ?? []
+        }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaRescate")
     }
 
     private func nombre(_ id: String) -> String {
         servicio.banco.catalogo.todasLasCompetencias.first { $0.id == id }?.nombre ?? id
+    }
+
+    /// Un error activo: descripción, veces y su remedio (3 ítems de la plantilla que lo trabaja).
+    private func grupoError(_ e: ServicioSesion.ErrorSeguido) -> some View {
+        TarjetaSuperficie {
+            VStack(alignment: .leading, spacing: Espacio.s) {
+                Text(nombre(e.error.competencia).uppercased())
+                    .font(.caption.weight(.semibold)).foregroundStyle(Paleta.tinta(competencia: e.error.competencia))
+                Text("\(e.error.descripcion) · \(e.apariciones == 1 ? "1 vez" : "\(e.apariciones) veces")")
+                    .font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                    .fixedSize(horizontal: false, vertical: true)
+                if e.aciertosSeguidos > 0 {
+                    Text("\(e.aciertosSeguidos) de 3 aciertos seguidos para corregirlo")
+                        .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                }
+                Button("Practicar el remedio") { lanzar(.rescateError(e.id)); cerrar() }
+                    .buttonStyle(EstiloBotonSecundario())
+                    .accessibilityIdentifier("remedio_\(e.id)")
+            }
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("grupoError_\(e.id)")
     }
 
     private func grupo(_ g: GrupoRescate) -> some View {

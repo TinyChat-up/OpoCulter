@@ -367,109 +367,135 @@ struct PantallaResumen: View {
     let otraRonda: () -> Void
     let terminar: () -> Void
     @Environment(\.accessibilityReduceMotion) private var reducir
-    @Environment(\.dynamicTypeSize) private var tamano
-    @State private var aparecer = false
     @State private var xpMostrado = 0
 
+    /// Resumen en una sola pantalla (05E parte 2 §3.4): la XP ganada, el dominio (competencias que
+    /// suben de peldaño), el error detectado y dos botones. El personaje aparece alegre.
     var body: some View {
-        VStack(spacing: 0) {
-            ScrollView {
-                VStack(spacing: Espacio.xl) {
-                    VStack(spacing: Espacio.s) {
-                        // Fin de sesión: el personaje del área predominante, alegre (D-105).
-                        VistaPersonaje(companero: Companero.de(area: resumen.areaPredominante), estado: .alegre, tamano: 80)
-                        Text("¡Ronda completada!")
+        ScrollView {
+            VStack(alignment: .leading, spacing: Espacio.xl) {
+                HStack(alignment: .bottom) {
+                    VStack(alignment: .leading, spacing: Espacio.xs) {
+                        Text(resumen.esSesion ? "Sesión completada" : "¡Ronda completada!")
                             .font(.exhibicion(.largeTitle))
                             .foregroundStyle(Paleta.textoPrincipal)
-                            .multilineTextAlignment(.center)
-                            .accessibilityAddTraits(.isHeader)
-                    }
-                    .padding(.top, Espacio.xl)
-
-                    if let resultadoModo {
-                        Text(resultadoModo)
-                            .font(.headline)
-                            .foregroundStyle(Paleta.textoPrincipal)
-                            .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
-                            .padding(Espacio.m)
-                            .frame(maxWidth: .infinity)
-                            .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
-                            .contornoTinta(radio: Radio.ficha)
-                            .accessibilityIdentifier("resultadoModo")
+                            .accessibilityAddTraits(.isHeader)
+                        Text("\(resumen.aciertos) de \(resumen.total) aciertos")
+                            .font(.numerica(.subheadline, peso: .regular))
+                            .foregroundStyle(Paleta.textoSecundario)
+                            .accessibilityIdentifier("resumenAciertos")
                     }
-
-                    let disposicion = tamano.isAccessibilitySize ? AnyLayout(VStackLayout(spacing: Espacio.m)) : AnyLayout(HStackLayout(spacing: Espacio.m))
-                    disposicion {
-                        dato("\(resumen.aciertos)/\(resumen.total)", "Aciertos", icono: "checkmark.circle.fill", color: Paleta.exito)
-                        dato("+\(xpMostrado)", "XP", icono: "sparkles", color: Paleta.recompensaTexto, valorAccesible: "+\(resumen.xp)")
-                            .accessibilityIdentifier("resumenXP")
-                        dato("×\(resumen.comboMaximo)", "Combo máx.", icono: "bolt.fill", color: Paleta.recompensaTexto)
-                    }
-                    // Los tres datos comparten una sola baldosa neutra (sin tarjetas repetidas).
-                    .padding(Espacio.m)
-                    .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-                    .contornoTinta(radio: Radio.tarjeta)
-
-                    VStack(spacing: Espacio.s) {
-                        ChipRacha(dias: resumen.racha.actual, protectores: resumen.racha.protectores, record: resumen.racha.record)
-                        if let texto = textoRacha {
-                            Text(texto).font(.subheadline.weight(.medium)).foregroundStyle(Paleta.textoSecundario)
-                                .multilineTextAlignment(.center)
-                        }
-                    }
-
-                    if !resumen.subidas.isEmpty {
-                        seccion("Subes de peldaño", icono: "arrow.up.circle.fill") {
-                            ForEach(resumen.subidas, id: \.self) { Text(nombreCompetencia($0)) }
-                        }
-                    }
-                    if !resumen.misionesCompletadas.isEmpty {
-                        seccion("Misiones completadas", icono: "checkmark.seal.fill") {
-                            ForEach(resumen.misionesCompletadas) { Text($0.titulo) }
-                        }
-                    }
-                    if !resumen.logros.isEmpty {
-                        seccion("Logros", icono: "trophy.fill") {
-                            ForEach(resumen.logros) { logro in
-                                VStack(alignment: .leading) {
-                                    Text(logro.titulo).fontWeight(.semibold)
-                                    Text(logro.descripcion).font(.footnote).foregroundStyle(Paleta.textoSecundario)
-                                }
-                            }
-                        }
-                    }
-                    // Los botones van al final del contenido (no fijos), para que nada quede
-                    // cortado bajo ellos.
-                    VStack(spacing: Espacio.m) {
-                        BotonPrincipal(titulo: "Otra ronda", icono: "arrow.clockwise",
-                                       acento: Paleta.acento(area: resumen.areaPredominante), accion: otraRonda)
-                            .accessibilityIdentifier("botonOtraRonda")
-                        Button("Terminar", action: terminar)
-                            .buttonStyle(EstiloBotonSecundario(acento: Paleta.tinta(area: resumen.areaPredominante)))
-                            .accessibilityIdentifier("botonTerminar")
-                    }
-                    .padding(.top, Espacio.s)
+                    Spacer(minLength: Espacio.m)
+                    // Fin de sesión: el personaje del área predominante, alegre (D-105).
+                    VistaPersonaje(companero: Companero.de(area: resumen.areaPredominante), estado: .alegre, tamano: 64)
                 }
-                .padding(Espacio.l)
+                .padding(.top, Espacio.xl)
+
+                if let resultadoModo {
+                    Text(resultadoModo)
+                        .font(.headline)
+                        .foregroundStyle(Paleta.textoPrincipal)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .padding(Espacio.l)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+                        .accessibilityIdentifier("resultadoModo")
+                }
+
+                xp
+                if !resumen.subidas.isEmpty { dominio }
+                if !resumen.errores.isEmpty { errores }
+                if let texto = textoRacha {
+                    Label(texto, systemImage: "flame")
+                        .font(.subheadline)
+                        .foregroundStyle(Paleta.textoSecundario)
+                        .fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("textoRacha")
+                }
+
+                // Los botones van al final del contenido (no fijos), para que nada quede cortado.
+                VStack(spacing: Espacio.m) {
+                    BotonPrincipal(titulo: resumen.esSesion ? "5 minutos más" : "Otra ronda", icono: resumen.esSesion ? "plus" : "arrow.clockwise",
+                                   acento: Paleta.primario, accion: otraRonda)
+                        .accessibilityIdentifier("botonOtraRonda")
+                    Button("Terminar", action: terminar)
+                        .buttonStyle(EstiloBotonSecundario())
+                        .accessibilityIdentifier("botonTerminar")
+                }
+                .padding(.top, Espacio.s)
             }
+            .padding(Espacio.l)
         }
-        .onAppear {
-            aparecer = true
-            contarXP()
-        }
+        .onAppear(perform: contarXP)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("resumenRonda")
     }
 
+    /// XP ganada, en ámbar y con la serif de los resultados.
+    private var xp: some View {
+        HStack(alignment: .firstTextBaseline, spacing: Espacio.s) {
+            Text("+\(xpMostrado)")
+                .font(.resultado())
+                .foregroundStyle(Paleta.recompensaTexto)
+                .contentTransition(.numericText())
+            Text("XP").font(.headline).foregroundStyle(Paleta.recompensaTexto)
+        }
+        .padding(Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel("XP ganada")
+        .accessibilityValue("+\(resumen.xp)")
+        .accessibilityIdentifier("resumenXP")
+    }
+
+    /// Dominio, aparte de la XP: las competencias que suben de peldaño, con el nombre del peldaño.
+    private var dominio: some View {
+        seccion("Dominio", icono: "arrow.up.right") {
+            ForEach(resumen.subidas, id: \.self) { c in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(nombreCompetencia(c)).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    Text(resumen.peldanosNuevos[c].map { "Sube a \(Peldano.nombre($0)) (peldaño \($0) de 5)" } ?? "Sube de peldaño")
+                        .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                }
+                .accessibilityElement(children: .combine)
+            }
+        }
+        .accessibilityIdentifier("resumenDominio")
+    }
+
+    /// Error detectado: su descripción y cuándo vuelve.
+    private var errores: some View {
+        seccion(resumen.errores.count == 1 ? "Error detectado" : "Errores detectados", icono: "scope") {
+            ForEach(resumen.errores) { e in
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(e.error.descripcion).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                        .fixedSize(horizontal: false, vertical: true)
+                    Text(vuelta(e)).font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .combine)
+            }
+        }
+        .accessibilityIdentifier("resumenErrores")
+    }
+
+    private func vuelta(_ e: ErrorDetectado) -> String {
+        guard let dia = e.vuelve else { return "Lo vigilamos: si se repite esta semana, lo trabajarás en tu sesión." }
+        let fecha = dia.fecha(calendario: .current).formatted(.dateTime.weekday(.wide).day().locale(Locale(identifier: "es_ES")))
+        return "Volverá el \(fecha)"
+    }
+
+    /// Racha sin culpa (§3.3): sin números rojos ni tono de pérdida.
     private var textoRacha: String? {
         let c = resumen.cambiosRacha
-        if let perdida = c.rachaPerdida { return "Tu racha de \(perdida) días se rompió. ¡Empiezas una nueva!" }
-        if c.protectoresUsados > 0 { return c.protectoresUsados == 1 ? "Has usado 1 protector." : "Has usado \(c.protectoresUsados) protectores." }
-        if c.protectorGanado { return "¡Semana completa! Ganas un protector." }
-        if c.incrementada && resumen.racha.actual == 1 { return "¡Empiezas tu racha! Vuelve mañana para mantenerla." }
-        if c.nuevoRecord { return "¡Nuevo récord de racha!" }
-        if c.incrementada { return "Racha mantenida hoy." }
+        if c.rachaPerdida != nil { return "Empiezas una racha nueva." }
+        if c.protectoresUsados > 0 { return c.protectoresUsados == 1 ? "Un protector ha cuidado tu racha." : "\(c.protectoresUsados) protectores han cuidado tu racha." }
+        if c.protectorGanado { return "Semana completa: ganas un protector." }
+        if c.incrementada && resumen.racha.actual == 1 { return "Empiezas tu racha." }
+        if c.nuevoRecord { return "Nuevo récord de racha: \(resumen.racha.actual) días." }
+        if c.incrementada { return "Racha: \(resumen.racha.actual) días." }
         return nil
     }
 
@@ -485,32 +511,17 @@ struct PantallaResumen: View {
             let pasos = min(final, 12)
             for paso in 1...pasos {
                 try? await Task.sleep(for: .milliseconds(28))
-                withAnimation(.snappy(duration: 0.1)) { xpMostrado = final * paso / pasos }
+                withAnimation(.smooth(duration: 0.1)) { xpMostrado = final * paso / pasos }
             }
         }
     }
 
-    private func dato(_ valor: String, _ titulo: String, icono: String, color: Color, valorAccesible: String? = nil) -> some View {
-        VStack(spacing: Espacio.xs) {
-            Image(systemName: icono).foregroundStyle(color).accessibilityHidden(true)
-            Text(valor).font(.numerica(.title2, peso: .semibold)).foregroundStyle(Paleta.textoPrincipal)
-                .contentTransition(.numericText())
-                .lineLimit(1).minimumScaleFactor(0.6)
-            Text(titulo).font(.caption).foregroundStyle(Paleta.textoSecundario)
-        }
-        .frame(maxWidth: .infinity)
-        .padding(.vertical, Espacio.s)
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(titulo)
-        .accessibilityValue(valorAccesible ?? valor)
-    }
-
     private func seccion<C: View>(_ titulo: String, icono: String, @ViewBuilder contenido: () -> C) -> some View {
-        // Secciones como grupos con título (no tarjetas repetidas, v2).
         let cuerpo = contenido()
-        return VStack(alignment: .leading, spacing: Espacio.s) {
-            Label(titulo, systemImage: icono).font(.headline).foregroundStyle(Paleta.recompensaTexto)
-            cuerpo.font(.body).foregroundStyle(Paleta.textoPrincipal)
+        return VStack(alignment: .leading, spacing: Espacio.m) {
+            Label(titulo, systemImage: icono).font(.headline).foregroundStyle(Paleta.textoPrincipal)
+                .accessibilityAddTraits(.isHeader)
+            cuerpo
         }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
