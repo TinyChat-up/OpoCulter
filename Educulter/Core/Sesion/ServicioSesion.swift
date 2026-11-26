@@ -50,6 +50,8 @@ struct EfectoRespuesta: Sendable, Equatable {
     var rescatado = false
     var misionesCompletadas: [Mision] = []
     var logrosNuevos: [Logro] = []
+    /// El fallo activa (o repite) un error típico activo (motor de errores, §4 de la 05E parte 2).
+    var errorRepetido: ErrorTipico?
 }
 
 /// Consecuencias de terminar una ronda.

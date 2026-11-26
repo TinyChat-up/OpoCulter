@@ -74,16 +74,17 @@ struct PantallaBienvenida: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.xl) {
-                    HStack(spacing: Espacio.m) {
-                        VistaPersonaje(companero: .tilde, estado: ReglasPersonaje.estado(para: .bienvenida))
-                        VistaPersonaje(companero: .cuarto, estado: ReglasPersonaje.estado(para: .bienvenida))
+                    // Marca (parpadea una vez y el brote se mece) y Mimo, el personaje de la bienvenida (D-105).
+                    HStack(alignment: .bottom, spacing: Espacio.m) {
+                        MarcaView(tamano: 88, animar: true)
+                        VistaPersonaje(companero: .mimo, estado: .neutro)
                     }
                     VStack(alignment: .leading, spacing: Espacio.s) {
                         Text("Te damos la bienvenida")
                             .font(.exhibicion(.largeTitle))
                             .foregroundStyle(Paleta.textoPrincipal)
                             .accessibilityAddTraits(.isHeader)
-                        Text("Rondas cortas de Lengua y Matemáticas para la prueba A1. Tilde te acompaña en Lengua y Cuarto en Matemáticas.")
+                        Text("Rondas cortas de Lengua y Matemáticas para la prueba A1. Tilde te acompaña en Lengua, Cuarto en Matemáticas y Mimo en los repasos.")
                             .font(.body)
                             .foregroundStyle(Paleta.textoSecundario)
                             .fixedSize(horizontal: false, vertical: true)
@@ -112,7 +113,7 @@ struct PantallaBienvenida: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
-                    VistaPersonaje(companero: .cuarto, estado: .pensando)
+                    VistaPersonaje(companero: .mimo, estado: .neutro)
                     Text("¿Vemos desde dónde partes?").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal)
                         .accessibilityAddTraits(.isHeader)
                     Text("Un diagnóstico corto (unos minutos) con los bloques que ya tienen contenido. Con el resultado te proponemos por dónde empezar. Puedes repetirlo cuando quieras desde Progreso.")

@@ -275,7 +275,7 @@ struct PantallaRonda: View {
             HojaFeedback(
                 correcto: resultado.correcto, explicacion: item.explicacion,
                 feedbackEspecifico: modelo.feedbackEspecifico, solucion: modelo.solucion,
-                xp: modelo.efecto?.xp ?? 0, acento: acento, companero: Companero.de(area: Catalogo.area(de: item.competencia)),
+                xp: modelo.efecto?.xp ?? 0, acento: acento, aparicion: modelo.aparicionFeedback,
                 tinta: Paleta.tinta(competencia: item.competencia),
                 subioPeldano: modelo.efecto?.subioPeldano ?? false,
                 puedeVerRegla: modelo.teoriaDelItem != nil,
@@ -348,7 +348,6 @@ struct PantallaRonda: View {
 
     private var estadoVacio: some View {
         VStack(spacing: Espacio.l) {
-            VistaPersonaje(companero: .tilde, estado: ReglasPersonaje.estado(para: .estadoVacio))
             Text("No hay ítems para esta ronda").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
             Text("Vuelve más tarde o prueba otra ronda.").font(.body).foregroundStyle(Paleta.textoSecundario)
             Button("Volver", action: cerrar).buttonStyle(EstiloBotonSecundario())
@@ -377,9 +376,8 @@ struct PantallaResumen: View {
             ScrollView {
                 VStack(spacing: Espacio.xl) {
                     VStack(spacing: Espacio.s) {
-                        VistaPersonaje(companero: Companero.de(area: resumen.areaPredominante),
-                                       estado: ReglasPersonaje.estado(para: .resumenRonda(aciertos: resumen.aciertos, total: resumen.total)),
-                                       tamano: 80)
+                        // Fin de sesión: el personaje del área predominante, alegre (D-105).
+                        VistaPersonaje(companero: Companero.de(area: resumen.areaPredominante), estado: .alegre, tamano: 80)
                         Text("¡Ronda completada!")
                             .font(.exhibicion(.largeTitle))
                             .foregroundStyle(Paleta.textoPrincipal)

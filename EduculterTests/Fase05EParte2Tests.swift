@@ -1,5 +1,6 @@
 import Foundation
 import Testing
+import UIKit
 @testable import Educulter
 
 // Fase 05E, parte 2: ajustes 1b (plan, catálogo perezoso, tarjetas del ANEXO B) y lo que sigue.
@@ -68,5 +69,64 @@ struct Ajustes1bTests {
             let items = banco.items(competencia: c) + banco.plantillas.filter { $0.competencia == c }.map { MotorGeneradores.ajustada($0, dificultad: $0.dificultad) }.compactMap { try? MotorGeneradores.generar($0, semilla: 0, recursos: banco.recursos) }
             #expect(Set(items.map(\.peldano)) == [1, 2, 3, 4, 5] && Set(items.map(\.dificultad)).count >= 3 && !banco.teoria(competencia: c).isEmpty, "\(c)")
         }
+    }
+}
+
+@Suite("Fase 05E parte 2 · Paleta v3 y contraste WCAG")
+struct PaletaTests {
+    /// Luminancia relativa WCAG de un color del catálogo en el modo indicado.
+    static func luminancia(_ nombre: String, oscuro: Bool) -> Double {
+        let rasgos = UITraitCollection(userInterfaceStyle: oscuro ? .dark : .light)
+        let c = UIColor(named: nombre, in: .main, compatibleWith: rasgos)!.resolvedColor(with: rasgos)
+        var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+        c.getRed(&r, green: &g, blue: &b, alpha: &a)
+        func f(_ x: CGFloat) -> Double { let v = Double(x); return v <= 0.04045 ? v / 12.92 : pow((v + 0.055) / 1.055, 2.4) }
+        return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b)
+    }
+
+    static func contraste(_ a: String, _ b: String, oscuro: Bool) -> Double {
+        let la = luminancia(a, oscuro: oscuro), lb = luminancia(b, oscuro: oscuro)
+        return (max(la, lb) + 0.05) / (min(la, lb) + 0.05)
+    }
+
+    /// Pares texto/fondo que usa la app (texto normal: 4,5:1).
+    static let pares: [(String, [String])] = [
+        ("TextoPrincipal", ["Fondo", "Superficie", "LenguaTinte", "MatematicasTinte"]),
+        ("TextoSecundario", ["Fondo", "Superficie", "LenguaTinte", "MatematicasTinte"]),
+        ("LenguaTinta", ["Fondo", "Superficie", "LenguaTinte"]),
+        ("MatematicasTinta", ["Fondo", "Superficie", "MatematicasTinte"]),
+        ("RecompensaTexto", ["Fondo", "Superficie"]),
+        ("Exito", ["Fondo", "Superficie", "LenguaTinte", "MatematicasTinte"]),
+        ("Fallo", ["Fondo", "Superficie", "LenguaTinte", "MatematicasTinte"]),
+        ("TextoSobreAcento", ["Lengua", "Matematicas", "ExitoRelleno", "Turquesa", "Violeta", "Oliva"]),
+        ("TextoSobreRecompensa", ["Recompensa"]),
+    ]
+
+    @Test("Todos los pares texto/fondo usados tienen contraste ≥ 4,5:1 en claro y en oscuro", arguments: [false, true])
+    func contraste(_ oscuro: Bool) {
+        for (texto, fondos) in Self.pares {
+            for fondo in fondos {
+                let c = Self.contraste(texto, fondo, oscuro: oscuro)
+                #expect(c >= 4.5, "\(texto) sobre \(fondo) (\(oscuro ? "oscuro" : "claro")): \(String(format: "%.2f", c))")
+            }
+        }
+        // Contornos y sombra dura (componente gráfico): ≥ 3:1 sobre el papel.
+        #expect(Self.contraste("Tinta", "Fondo", oscuro: oscuro) >= 3)
+    }
+
+    @Test("Tokens de la identidad v3 (papel, tinta, coral, amarillo y azul)")
+    func tokens() {
+        func hex(_ n: String, _ oscuro: Bool) -> String {
+            let rasgos = UITraitCollection(userInterfaceStyle: oscuro ? .dark : .light)
+            var r: CGFloat = 0, g: CGFloat = 0, b: CGFloat = 0, a: CGFloat = 0
+            UIColor(named: n, in: .main, compatibleWith: rasgos)!.resolvedColor(with: rasgos).getRed(&r, green: &g, blue: &b, alpha: &a)
+            return String(format: "#%02X%02X%02X", Int((r * 255).rounded()), Int((g * 255).rounded()), Int((b * 255).rounded()))
+        }
+        #expect(hex("Tinta", false) == "#16294D" && hex("Tinta", true) == "#FFF6EC")
+        #expect(hex("Fondo", false) == "#FFF6EC" && hex("Fondo", true) == "#0E1B33")
+        #expect(hex("Superficie", false) == "#FFF1DE" && hex("Superficie", true) == "#16294D")
+        #expect(hex("Lengua", false) == "#F0604A" && hex("Lengua", true) == "#F47A66")
+        #expect(hex("Recompensa", false) == "#FBBC2E" && hex("Recompensa", true) == "#FBC94F")
+        #expect(hex("Matematicas", false) == "#4A90E2" && hex("Matematicas", true) == "#6AA6EA")
     }
 }

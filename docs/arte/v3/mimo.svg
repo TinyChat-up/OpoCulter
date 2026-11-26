@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 420" width="400" height="420">
+  <path id="cuerpo" d="M200 104 C 280 104, 318 190, 322 280 C 324 336, 320 370, 306 382 L 96 382 C 82 370, 78 336, 80 280 C 84 190, 120 104, 200 104 Z" fill="#FFF1DE" stroke="#F3D9C4" stroke-width="3"/>
+  <g id="brote">
+    <path d="M204 106 C 204 94, 206 86, 210 78" stroke="#4A90E2" stroke-width="9" stroke-linecap="round" fill="none"/>
+    <path d="M207 82 C 184 82, 154 72, 150 48 C 146 24, 168 12, 186 20 C 204 28, 210 54, 207 82 Z" fill="#4A90E2"/>
+    <path d="M210 80 C 218 58, 234 38, 258 38 C 278 38, 286 60, 274 74 C 262 88, 234 88, 210 80 Z" fill="#4A90E2"/>
+  </g>
+  <g id="ojoIzq">
+    <ellipse cx="160" cy="196" rx="22" ry="27" fill="#16294D"/>
+    <circle cx="154" cy="186" r="6" fill="#FFFFFF"/>
+  </g>
+  <g id="ojoDer">
+    <ellipse cx="242" cy="196" rx="22" ry="27" fill="#16294D"/>
+    <circle cx="236" cy="186" r="6" fill="#FFFFFF"/>
+  </g>
+  <g id="mejillas" fill="#F7A68E">
+    <ellipse cx="126" cy="232" rx="17" ry="11"/>
+    <ellipse cx="276" cy="232" rx="17" ry="11"/>
+  </g>
+  <path id="boca" d="M184 226 C 194 234, 210 234, 220 226 C 218 246, 210 254, 202 254 C 192 254, 186 246, 184 226 Z" fill="#16294D"/>
+  <path id="lengua" d="M190 244 C 196 238, 208 238, 214 244 C 210 252, 194 252, 190 244 Z" fill="#F0604A"/>
+  <path id="corazon" d="M200 352 C 160 320, 132 296, 134 270 C 136 248, 168 240, 200 266 C 232 240, 264 248, 266 270 C 268 296, 240 320, 200 352 Z" fill="#F0604A"/>
+  <g id="manos" fill="#FFF1DE" stroke="#F3D9C4" stroke-width="3">
+    <ellipse cx="142" cy="300" rx="22" ry="15"/>
+    <ellipse cx="258" cy="300" rx="22" ry="15"/>
+  </g>
+  <g id="pies" fill="#FBBC2E">
+    <ellipse cx="132" cy="376" rx="40" ry="34"/>
+    <ellipse cx="268" cy="376" rx="40" ry="34"/>
+  </g>
+  <g id="chispas" fill="#FBBC2E">
+    <path d="M300 92 l14 22 -6 4 -14 -22 z"/>
+    <path d="M318 128 l26 4 -1 7 -26 -4 z"/>
+  </g>
+</svg>

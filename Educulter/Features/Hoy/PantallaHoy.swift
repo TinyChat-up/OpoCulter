@@ -230,7 +230,6 @@ struct PantallaHoy: View {
 
     private func avisoRacha(_ estado: EstadoHoy) -> some View {
         HStack(spacing: Espacio.m) {
-            VistaPersonaje(companero: .tilde, estado: ReglasPersonaje.estado(para: .rachaEnRiesgo), tamano: 44)
             Text("Tu racha de \(estado.racha.actual) \(estado.racha.actual == 1 ? "día" : "días") está en riesgo: quedan menos de \(max(estado.horasHastaMedianoche, 1)) h para medianoche.")
                 .font(.subheadline.weight(.semibold))
                 .foregroundStyle(Paleta.textoPrincipal)
@@ -366,7 +365,6 @@ struct PantallaHoy: View {
 
     private var vacio: some View {
         VStack(spacing: Espacio.l) {
-            VistaPersonaje(companero: .tilde, estado: ReglasPersonaje.estado(para: .estadoVacio))
             Text("Aún no hay contenido").font(.exhibicion(.title3)).foregroundStyle(Paleta.textoPrincipal)
             Text("Cuando el banco de ejercicios esté listo, aquí aparecerá tu ronda del día.")
                 .font(.body).foregroundStyle(Paleta.textoSecundario)

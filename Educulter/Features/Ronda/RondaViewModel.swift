@@ -119,6 +119,16 @@ final class RondaViewModel: Identifiable {
         Array(itemActual?.pistas.prefix(pistasVisibles) ?? [])
     }
 
+    /// Personaje del feedback (D-105): alegre al acertar, Mimo ante un error repetido, nadie si no.
+    var aparicionFeedback: AparicionPersonaje? {
+        guard let resultado, let item = itemActual else { return nil }
+        let area = Catalogo.area(de: item.competencia)
+        if resultado.correcto {
+            return ReglasPersonaje.aparicion(para: efecto?.subioPeldano == true ? .subePeldano(area: area) : .acierto(area: area))
+        }
+        return ReglasPersonaje.aparicion(para: efecto?.errorRepetido != nil ? .errorRepetido : .fallo)
+    }
+
     var feedbackEspecifico: [String] {
         guard let resultado, let item = itemActual else { return [] }
         return Evaluador.feedback(para: resultado, item: item)

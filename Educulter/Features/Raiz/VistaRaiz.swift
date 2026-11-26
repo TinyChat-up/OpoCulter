@@ -33,7 +33,6 @@ struct VistaLlegaPronto: View {
 
     var body: some View {
         VStack(spacing: Espacio.l) {
-            VistaPersonaje(companero: .cuarto, estado: ReglasPersonaje.estado(para: .estadoVacio))
             Text(titulo)
                 .font(.exhibicion(.title2))
                 .foregroundStyle(Paleta.textoPrincipal)

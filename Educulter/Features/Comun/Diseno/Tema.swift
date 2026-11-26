@@ -1,23 +1,25 @@
 import SwiftUI
 import CoreText
 
-/// Colores del estilo "Rubber Hose moderno" (D-059), evolución del sistema v2 (D-053): papel
-/// crema, tinta gruesa y rellenos retro saturados. Definidos en el Asset Catalog
-/// (`Resources/Assets.xcassets/Colores`) con variante clara y oscura y contraste AA comprobado
-/// (UX_UI.md §4.1). Regla: **el texto sobre un relleno de color va siempre en tinta**.
+/// Colores de la identidad v3 (05E parte 2, D-104), sobre el estilo "Rubber Hose moderno" (D-059):
+/// papel crema y tinta marina (contornos y sombra dura en `tinta`, ya no en negro), coral (Lengua),
+/// azul (Matemáticas) y amarillo (recompensa). Definidos en el Asset Catalog
+/// (`Resources/Assets.xcassets/Colores`) con variante clara y oscura; un test comprueba el contraste
+/// WCAG de cada par texto/fondo usado (≥ 4,5:1). Sin degradados ni brillos en la interfaz.
+/// Regla: **el texto sobre un relleno de color va siempre en `textoSobreAcento`** (#0E1B33).
 enum Paleta {
-    /// Papel: `#FBF3E8` en claro, `#17130F` en oscuro.
+    /// Papel: `#FFF6EC` en claro, `#0E1B33` en oscuro.
     static let fondo = Color("Fondo")
-    /// Tinta de contornos y sombras duras (`#1A1714`; clara en modo oscuro).
+    /// Tinta de contornos y sombras duras (`#16294D`; `#FFF6EC` en modo oscuro).
     static let contorno = Color("Tinta")
-    /// Superficie neutra: baldosas, filas y fichas fuera del panel protagonista.
+    /// Superficie neutra (papel2: `#FFF1DE` / `#16294D`): baldosas, filas y fichas.
     static let superficie = Color("Superficie")
     static let textoPrincipal = Color("TextoPrincipal")
     static let textoSecundario = Color("TextoSecundario")
     static let borde = Color("Borde")
-    /// Relleno de Lengua (coral `#F2674B`), siempre con texto en tinta encima.
+    /// Relleno de Lengua (coral `#F0604A` / `#F47A66`), con `textoSobreAcento` encima.
     static let lengua = Color("Lengua")
-    /// Relleno de Matemáticas (azul cielo `#4AA3E8`).
+    /// Relleno de Matemáticas (azul `#4A90E2` / `#6AA6EA`).
     static let matematicas = Color("Matematicas")
     /// Acentos secundarios (rellenos, con texto en tinta): turquesa, violeta y oliva.
     static let turquesa = Color("Turquesa")
@@ -26,7 +28,7 @@ enum Paleta {
     /// Tinte del panel protagonista de cada área (uno por pantalla).
     static let lenguaTinte = Color("LenguaTinte")
     static let matematicasTinte = Color("MatematicasTinte")
-    /// Tinta de cada área: texto con color de área (títulos de competencia, etiquetas).
+    /// Tinta de cada área (coralTexto `#AA4435`, azulTexto `#3568A3`): texto con color de área, AA.
     static let lenguaTinta = Color("LenguaTinta")
     static let matematicasTinta = Color("MatematicasTinta")
     /// Éxito como texto o icono (AA sobre papel y tintes).

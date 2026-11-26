@@ -387,8 +387,9 @@ struct HojaFeedback: View {
     var xp: Int = 0
     /// Color del área: "Continuar" y "Ver regla" lo usan también tras un fallo (fallar no castiga).
     var acento: Color = Paleta.matematicas
-    /// Compañero del área del ítem: celebra al acertar y anima tras un fallo (D-054).
-    var companero: Companero?
+    /// Personaje del feedback (D-105): el del área, alegre, al acertar; Mimo, con ánimo, ante un error
+    /// repetido; nadie tras un fallo normal (el feedback ya informa).
+    var aparicion: AparicionPersonaje?
     /// Tinta del área para el texto de "Ver regla" (AA sobre superficie).
     var tinta: Color = Paleta.textoPrincipal
     var subioPeldano = false
@@ -425,9 +426,8 @@ struct HojaFeedback: View {
     private var contenido: some View {
         VStack(alignment: .leading, spacing: Espacio.m) {
             HStack(spacing: Espacio.s) {
-                if let companero {
-                    VistaPersonaje(companero: companero, estado: ReglasPersonaje.estado(para: .feedback(correcto: correcto)), tamano: 44)
-                        .accessibilityIdentifier("personajeFeedback")
+                if let aparicion {
+                    VistaPersonaje(companero: aparicion.companero, estado: aparicion.estado, tamano: 44)
                 }
                 Image(systemName: correcto ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(.title2)

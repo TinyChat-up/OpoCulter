@@ -182,18 +182,10 @@ struct SilabeoTests {
 
 @Suite("Personajes")
 struct PersonajesTests {
-    @Test("Estado que dispara cada evento")
+    @Test("Seis estados y tres personajes (las reglas de la v3 están en PersonajesV3Tests)")
     func estados() {
-        #expect(ReglasPersonaje.estado(para: .feedback(correcto: true)) == .celebra)
-        #expect(ReglasPersonaje.estado(para: .feedback(correcto: false)) == .anima)
-        #expect(ReglasPersonaje.estado(para: .resumenRonda(aciertos: 4, total: 8)) == .celebra)
-        #expect(ReglasPersonaje.estado(para: .resumenRonda(aciertos: 3, total: 8)) == .anima)
-        #expect(ReglasPersonaje.estado(para: .resumenRonda(aciertos: 0, total: 0)) == .anima)
-        #expect(ReglasPersonaje.estado(para: .estadoVacio) == .pensando)
-        #expect(ReglasPersonaje.estado(para: .bienvenida) == .neutral)
-        #expect(ReglasPersonaje.estado(para: .rachaEnRiesgo) == .dormido)
-        #expect(ReglasPersonaje.estado(para: .recordSupervivencia) == .sorprendido)
-        #expect(Set(EstadoPersonaje.allCases).count == 6)
+        #expect(Set(EstadoPersonaje.allCases.map(\.rawValue)) == ["neutro", "alegre", "pensando", "animo", "guino", "descanso"])
+        #expect(Companero.allCases.map(\.nombre) == ["Tilde", "Cuarto", "Mimo"])
     }
 
     @Test("Compañero por área")

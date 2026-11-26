@@ -70,11 +70,8 @@ struct PantallaInicioSupervivencia: View {
         VStack(spacing: 0) {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
-                    HStack(spacing: Espacio.m) {
-                        VistaPersonaje(companero: .cuarto, estado: .neutral)
-                        Text("Supervivencia").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal)
-                            .accessibilityAddTraits(.isHeader)
-                    }
+                    Text("Supervivencia").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal)
+                        .accessibilityAddTraits(.isHeader)
                     TarjetaSuperficie {
                         VStack(alignment: .leading, spacing: Espacio.s) {
                             regla("heart.fill", "Tienes 3 vidas: cada fallo quita una.")
@@ -140,13 +137,13 @@ struct PantallaFinPartida: View {
     var body: some View {
         let p = resultado.partida
         let records = (try? servicio.recordsSupervivencia()) ?? RecordsSupervivencia(partidas: [])
-        let estadoPersonaje: EstadoPersonaje = resultado.esRecord
-            ? ReglasPersonaje.estado(para: .recordSupervivencia)
-            : ReglasPersonaje.estado(para: .resumenRonda(aciertos: p.aciertos, total: max(p.aciertos + p.fallos, 1)))
+        // Récord: Cuarto guiña; si no, el personaje del área, alegre (D-105).
+        let aparicion = ReglasPersonaje.aparicion(para: resultado.esRecord ? .record : .finSesion(area: p.area == "MIX" ? nil : p.area))!
+        let estadoPersonaje = aparicion.estado
         VStack(spacing: 0) {
             ScrollView {
                 VStack(spacing: Espacio.l) {
-                    VistaPersonaje(companero: p.area == "LEN" ? .tilde : .cuarto, estado: estadoPersonaje, tamano: 80)
+                    VistaPersonaje(companero: aparicion.companero, estado: estadoPersonaje, tamano: 80)
                         .accessibilityIdentifier("personajeFinPartida_\(estadoPersonaje.rawValue)")
                     Text(resultado.esRecord ? "¡Nuevo récord!" : "Fin de la partida")
                         .font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
@@ -215,7 +212,7 @@ struct PantallaPlan: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
                     HStack(spacing: Espacio.m) {
-                        VistaPersonaje(companero: .tilde, estado: .celebra)
+                        VistaPersonaje(companero: .mimo, estado: .alegre)
                         Text("Tu plan").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
                     }
                     if !plan.bloques.isEmpty {
@@ -294,7 +291,7 @@ struct PantallaRescate: View {
             Group {
                 if grupos.isEmpty {
                     VStack(spacing: Espacio.l) {
-                        VistaPersonaje(companero: .tilde, estado: .celebra)
+                        VistaPersonaje(companero: .mimo, estado: .alegre)
                         Text("Sin errores pendientes").font(.exhibicion(.title2)).foregroundStyle(Paleta.textoPrincipal)
                             .multilineTextAlignment(.center).fixedSize(horizontal: false, vertical: true)
                         Text("Cuando falles un ítem aparecerá aquí para que lo rescates con otra variante.")
