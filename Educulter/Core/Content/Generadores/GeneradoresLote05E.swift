@@ -405,6 +405,14 @@ struct GeneradorTerminoDesconocido: GeneradorItems {
             default: "\(A.texto(n)) + \(A.texto(a)) = \(A.texto(x))"
             }
         }
+        /// Operación inversa sin el resultado («n : a»).
+        var operacionInversa: String {
+            switch forma {
+            case "mul", "div": "\(A.texto(n)) : \(A.texto(a))"
+            case "suma": "\(A.texto(n)) − \(A.texto(a))"
+            default: "\(A.texto(n)) + \(A.texto(a))"
+            }
+        }
         var porque: String {
             switch forma {
             case "mul": "porque la división deshace la multiplicación"
@@ -464,6 +472,8 @@ struct GeneradorTerminoDesconocido: GeneradorItems {
                            pistas: ["¿Qué operación deshace la que ves? Úsala con los dos números conocidos."],
                            complejidad: Double(d) + Double(Self.cifras(i.n)) * 0.5,
                            datos: ["igualdades": "\(i.forma):\(A.texto(i.a)):\(A.texto(i.n))", "respuesta": A.texto(i.x), "pasos": "1"])
+                .conPasos([Pasos.dato("Usa la operación contraria", "a = \(i.operacionInversa)", porque: i.porque),
+                           Pasos.op("Calcula", i.operacionInversa, i.x)])
         }
         // Dos igualdades encadenadas: la primera da a; la segunda usa a para dar b.
         for _ in 0..<300 {
@@ -500,6 +510,9 @@ struct GeneradorTerminoDesconocido: GeneradorItems {
                            erroresHabituales: A.errores(b, reglas), pistas: ["Halla primero a con la primera igualdad."],
                            complejidad: Double(d) + 2 + (decimal ? 1 : 0),
                            datos: ["igualdades": "\(f1.forma):\(A.texto(f1.a)):\(A.texto(f1.n))|\(forma2):\(a2)", "a": "\(x1)", "respuesta": A.texto(b), "pasos": "2"])
+                .conPasos([Pasos.op("Halla a con la primera igualdad", f1.operacionInversa, rac(x1), porque: f1.porque),
+                           Pasos.dato("Sustituye a en la segunda", texto2.replacingOccurrences(of: "a", with: A.texto(rac(x1)))),
+                           Pasos.op("Despeja b", forma2 == "div" ? "\(A.texto(rac(x1))) : \(a2)" : (forma2 == "suma" ? "\(A.texto(rac(x1))) − \(a2)" : "\(A.texto(rac(x1))) + \(a2)"), b)])
         }
         throw ErrorGenerador.sinCaso(tipo)
     }

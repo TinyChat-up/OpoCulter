@@ -320,6 +320,39 @@ struct GeneradorOracionSimple: GeneradorItems {
     }
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
+        let m = try muestraBase(p, recursos: recursos, rng: &rng)
+        return Self.modo(p) == "clases" ? m : m.conPasos(Self.pasos(m), porqueEnExplicacion: false)
+    }
+
+    /// Pasos del ejemplo resuelto (§5), deducidos de la estructura de la oración (`datos`): el verbo;
+    /// el sujeto, que cambia con él; el resto, el predicado; «¿qué?» y «¿a quién?» para el CD y el CI
+    /// (o el atributo en las copulativas); y, al final, la respuesta en la mecánica de la plantilla.
+    static func pasos(_ m: Muestra) -> [PasoResuelto] {
+        let palabras = (m.datos["tokens"] ?? "").split(separator: " ").map { String($0.split(separator: "/").first ?? "") }
+        let funciones = (m.datos["funciones"] ?? "").split(separator: ";").compactMap { f -> (String, Int, Int)? in
+            let partes = f.split(separator: ":"), r = partes.last?.split(separator: "-").compactMap { Int($0) } ?? []
+            guard partes.count == 2, r.count == 2, r[0] <= r[1], r[1] < palabras.count else { return nil }
+            return (String(partes[0]), r[0], r[1])
+        }
+        func texto(_ f: String) -> String? { funciones.first { $0.0 == f }.map { "«" + palabras[$0.1...$0.2].joined(separator: " ") + "»" } }
+        guard let verbo = texto("NV"), let sujeto = texto("SUJ") else { return [] }
+        let copulativa = m.datos["regimen"] == "copulativo"
+        var r = [Pasos.dato("Busca el verbo", verbo, porque: "porque el verbo es el núcleo del predicado"),
+                 Pasos.dato("Cambia el número del verbo: lo que cambia es el sujeto", "Sujeto: \(sujeto)",
+                            porque: "porque el sujeto concuerda con el verbo en número y persona")]
+        if let pred = texto("PRED") { r.append(Pasos.dato("Todo lo demás es el predicado", "Predicado \(copulativa ? "nominal" : "verbal"): \(pred)")) }
+        if copulativa, let atr = texto("ATR") {
+            r.append(Pasos.dato("Busca lo que se dice del sujeto", "Atributo: \(atr)"))
+        } else {
+            let preguntas = [("CD", "¿qué?"), ("CI", "¿a quién?"), ("CCL", "¿dónde?"), ("CCT", "¿cuándo?"), ("CCM", "¿cómo?"), ("CCC", "¿con quién?")]
+            let objetos = preguntas.compactMap { f, q in texto(f).map { "\(f) (\(q)): \($0)" } }
+            if !objetos.isEmpty { r.append(Pasos.dato("Pregunta al verbo: ¿qué?, ¿a quién?, ¿dónde?…", objetos.joined(separator: "; "))) }
+        }
+        r.append(Pasos.solucion("Responde", payload: m.payload))
+        return r
+    }
+
+    private func muestraBase(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
         let modo = Self.modo(p)
         for _ in 0..<200 {
             let o: Oracion

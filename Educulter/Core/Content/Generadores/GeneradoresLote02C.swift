@@ -261,6 +261,47 @@ struct GeneradorRomanos: GeneradorItems {
     }
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
+        let m = try muestraSinPasos(p, rng: &rng)
+        if let n = m.datos["numero"].flatMap(Int.init) {
+            return m.conPasos(p.mecanica == .construir ? Self.pasosEscribir(n, payload: m.payload) : Self.pasosLeer(n))
+        }
+        let malo = m.datos["malEscrito"] ?? ""
+        return m.conPasos([Pasos.dato("Busca el que rompe una regla", "\(malo) = \(Self.lecturaAditiva(malo)) si se sumara todo, pero está mal",
+                                      porque: "porque V, L y D no se repiten y solo se restan I, X y C"),
+                           Pasos.solucion("Elige ese número", payload: m.payload)])
+    }
+
+    /// Valor de cada grupo de símbolos, de los millares a las unidades.
+    static func gruposDe(_ n: Int) -> [(romano: String, valor: Int)] {
+        cifras(n).enumerated().reversed().filter { $0.element > 0 }.map { (grupos[$0.offset][$0.element], $0.element * Int(pow(10, Double($0.offset)))) }
+    }
+
+    /// Pasos de lectura (§5): cada grupo con su valor y la suma (último valor = el número).
+    static func pasosLeer(_ n: Int) -> [PasoResuelto] {
+        let g = gruposDe(n)
+        var conPorque = false
+        var r = g.prefix(4).map { x -> PasoResuelto in
+            let resta = x.romano.count == 2 && lecturaCorrecta(x.romano) < lecturaAditiva(x.romano)
+            defer { if resta { conPorque = true } }
+            return Pasos.op("Lee \(x.romano)", x.romano, rac(x.valor), porque: resta && !conPorque ? "porque un símbolo menor delante de uno mayor se resta" : nil)
+        }
+        r.append(Pasos.op("Suma los valores", g.map { A.texto(rac($0.valor)) }.joined(separator: " + "), rac(n),
+                          porque: conPorque ? nil : "porque los símbolos ordenados de mayor a menor se suman"))
+        return Array(r.suffix(5))
+    }
+
+    /// Pasos de escritura (§5): cada cifra en romano y, al final, construir el número con las piezas.
+    static func pasosEscribir(_ n: Int, payload: Payload) -> [PasoResuelto] {
+        let nombres = [1000: "los millares", 100: "las centenas", 10: "las decenas", 1: "las unidades"]
+        var r = gruposDe(n).map { x in
+            Pasos.dato("Escribe \(nombres[x.valor >= 1000 ? 1000 : (x.valor >= 100 ? 100 : (x.valor >= 10 ? 10 : 1))]!): \(x.valor)", "\(x.valor) = \(x.romano)", valor: x.romano)
+        }
+        r[0].porque = "porque cada cifra se escribe por separado, de mayor a menor"
+        r.append(Pasos.solucion("Une los grupos en orden", payload: payload))
+        return Array(r.suffix(5))
+    }
+
+    private func muestraSinPasos(_ p: Plantilla, rng: inout GeneradorConSemilla) throws -> Muestra {
         if p.mecanica == .eleccion && p.dificultad >= 6 { return malEscrito(rng: &rng) }
         let n = rng.elemento(Self.rango(p.dificultad))
         // Siglos al escribir (dificultad 5): el siglo del año.
@@ -401,6 +442,34 @@ struct GeneradorOperacionesCombinadas: GeneradorItems {
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
         guard let (e, v, pasos) = caso(p, rng: &rng) else { throw ErrorGenerador.sinCaso(tipo) }
+        let m = muestraSinPasos(p, e: e, v: v, pasos: pasos, rng: &rng)
+        return m.conPasos(Self.pasosResueltos(pasos, agrupaciones: e.profundidad > 0, payload: p.mecanica == .ordenar ? m.payload : nil))
+    }
+
+    /// Pasos del ejemplo resuelto (§5): las operaciones en el orden de la jerarquía (las del
+    /// resolutor), agrupadas para que no pasen de 5. Con `ordenar`, el último paso es ordenar.
+    static func pasosResueltos(_ operaciones: [String], agrupaciones: Bool, payload: Payload?) -> [PasoResuelto] {
+        let maximo = payload == nil ? 5 : 4
+        let tam = Int((Double(operaciones.count) / Double(maximo)).rounded(.up))
+        let verbos = ["Sumar": "suma", "Restar": "resta", "Multiplicar": "multiplica", "Dividir": "divide", "Potencia": "calcula la potencia"]
+        var r: [PasoResuelto] = stride(from: 0, to: operaciones.count, by: max(tam, 1)).enumerated().map { k, i in
+            let grupo = operaciones[i..<min(i + tam, operaciones.count)]
+            let nombres = grupo.map { String($0.prefix { $0 != ":" }) }
+            let cuentas = grupo.map(ExprArit.sinNombre)
+            let valor = cuentas.last!.components(separatedBy: " = ").last!
+            var verbosGrupo: [String] = []
+            for n in nombres where !verbosGrupo.contains(verbos[n] ?? n.lowercased()) { verbosGrupo.append(verbos[n] ?? n.lowercased()) }
+            let frase = verbosGrupo.count == 1 ? verbosGrupo[0].prefix(1).uppercased() + verbosGrupo[0].dropFirst()
+                : (k == 0 ? "Empieza: " : "Después, ") + verbosGrupo.joined(separator: " y ")
+            return PasoResuelto(frase: String(frase), resultado: cuentas.joined(separator: "; "), valor: valor)
+        }
+        if r.count == 1 { r.insert(Pasos.dato("Mira qué operación va primero", operaciones.first.map(ExprArit.sinNombre) ?? ""), at: 0) }
+        r[0].porque = agrupaciones ? "porque lo que está entre paréntesis se calcula antes" : "porque × y : se hacen antes que + y −"
+        if let payload { r.append(Pasos.solucion("Ordena los pasos así", payload: payload)) }
+        return r
+    }
+
+    private func muestraSinPasos(_ p: Plantilla, e: ExprArit, v: Racional, pasos: [String], rng: inout GeneradorConSemilla) -> Muestra {
         let fracciones = p.dificultad >= 6
         let reglas = ExprArit.Reglas(fracciones: true, maximo: 100_000)
         let complejidad = Double(e.operaciones - e.potencias) * (fracciones ? 3.5 : 1) + Double(e.potencias) * 1.5 + Double(e.profundidad) + 0.3 * A.log(v)
@@ -459,7 +528,17 @@ struct GeneradorEcuacionLineal: GeneradorItems {
     static func coef(_ a: Int) -> String { a == 1 ? "x" : "\(a)x" }
     static let veces = [2: "doble", 3: "triple", 4: "cuádruple", 5: "quíntuple"]
 
-    struct Caso { let ecuacion: String; let x: Int; let pasos: Double; let reglas: [(Int?, String)]; let enunciado: String? }
+    struct Caso {
+        let ecuacion: String; let x: Int; let pasos: Double; let reglas: [(Int?, String)]; let enunciado: String?
+        /// Ejemplo resuelto (§5).
+        var resueltos: [PasoResuelto] = []
+        func con(_ p: [PasoResuelto]) -> Caso { var c = self; c.resueltos = p; return c }
+    }
+
+    static let porqueTransponer = "porque lo que suma en un miembro pasa restando al otro"
+    static func dividir(_ c: Int, _ a: Int, _ x: Int) -> PasoResuelto {
+        Pasos.op("Divide entre \(a) para dejar la x sola", "\(c) : \(a < 0 ? "(\(a))" : "\(a)")", rac(x))
+    }
 
     func caso(_ d: Int, rng: inout GeneradorConSemilla) -> Caso {
         let transponer = "Al pasar un término al otro miembro, cambia de signo: lo que suma pasa restando y lo que resta pasa sumando."
@@ -468,14 +547,21 @@ struct GeneradorEcuacionLineal: GeneradorItems {
         case 1:
             let x = rng.entero(1...20), a = rng.entero(1...20)
             return Caso(ecuacion: "x + \(a) = \(x + a)", x: x, pasos: 1, reglas: [(x + 2 * a, transponer)], enunciado: nil)
+                .con([Pasos.dato("Pasa el \(a) al otro miembro restando", "x = \(x + a) − \(a)", porque: Self.porqueTransponer),
+                      Pasos.op("Resta", "\(x + a) − \(a)", rac(x))])
         case 2:
             let a = rng.entero(2...10), x = rng.entero(1...12)
             return Caso(ecuacion: "\(a)x = \(a * x)", x: x, pasos: 1.5, reglas: [(a * x - a, dividir), (a * a * x, "Lo que multiplica pasa dividiendo, no multiplicando.")], enunciado: nil)
+                .con([Pasos.dato("El \(a) multiplica a la x: pasa dividiendo", "x = \(a * x) : \(a)", porque: "porque dividir deshace la multiplicación"),
+                      Self.dividir(a * x, a, x)])
         case 3:
             let a = rng.entero(2...9), x = rng.entero(1...15), b = rng.entero(1...30) * (rng.probabilidad(0.5) ? 1 : -1)
             let c = a * x + b
             let error = (c + b) % a == 0 ? (c + b) / a : nil
             return Caso(ecuacion: "\(Self.coef(a)) \(Self.signo(b)) = \(c)", x: x, pasos: 2.5, reglas: [(error, transponer), (c - b - a, dividir)], enunciado: nil)
+                .con([Pasos.dato("Pasa el \(abs(b)) al otro miembro", "\(Self.coef(a)) = \(c) \(b > 0 ? "−" : "+") \(abs(b)) = \(a * x)", valor: "\(a * x)",
+                                 porque: Self.porqueTransponer),
+                      Self.dividir(a * x, a, x)])
         case 4:
             let a = rng.entero(2...9), c = rng.entero(1...8), x = rng.entero(-10...15), b = rng.entero(-20...20)
             guard a != c else { return caso(d, rng: &rng) }
@@ -483,6 +569,10 @@ struct GeneradorEcuacionLineal: GeneradorItems {
             let e1 = (a + c) != 0 && (dd - b) % (a + c) == 0 ? (dd - b) / (a + c) : nil
             let e2 = (dd + b) % (a - c) == 0 ? (dd + b) / (a - c) : nil
             return Caso(ecuacion: "\(Self.coef(a)) \(Self.signo(b)) = \(Self.coef(c)) \(Self.signo(dd))", x: x, pasos: 3.5 + (x < 0 ? 0.5 : 0), reglas: [(e2, transponer), (e1, "Al pasar \(Self.coef(c)) al primer miembro, cambia de signo: resta.")], enunciado: nil)
+                .con([Pasos.dato("Pasa las x a un miembro y los números al otro", "\(Self.coef(a)) − \(Self.coef(c)) = \(dd) \(b > 0 ? "−" : "+") \(abs(b))",
+                                 porque: "porque al cambiar de miembro, cada término cambia de signo"),
+                      Pasos.dato("Opera en cada miembro", "\((a - c) == 1 ? "x" : "\(a - c)x") = \(dd - b)", valor: "\(dd - b)"),
+                      Self.dividir(dd - b, a - c, x)])
         case 5:
             let a = rng.entero(2...6), b = rng.entero(-9...9), x = rng.entero(-10...15)
             guard b != 0 else { return caso(d, rng: &rng) }
@@ -490,6 +580,10 @@ struct GeneradorEcuacionLineal: GeneradorItems {
             let sinDistribuir = (c - b) % a == 0 ? (c - b) / a : nil
             return Caso(ecuacion: "\(a)(x \(Self.signo(b))) = \(c)", x: x, pasos: 4.5 + (x < 0 ? 0.5 : 0),
                         reglas: [(sinDistribuir, "Multiplica \(a) por todos los términos del paréntesis."), (c / a + b, transponer)], enunciado: nil)
+                .con([Pasos.dato("Quita el paréntesis: multiplica \(a) por todo", "\(a)x \(Self.signo(a * b)) = \(c)",
+                                 porque: "porque el \(a) multiplica a todo lo que hay dentro"),
+                      Pasos.dato("Pasa el \(abs(a * b)) al otro miembro", "\(a)x = \(c - a * b)", valor: "\(c - a * b)"),
+                      Self.dividir(c - a * b, a, x)])
         default:
             let k = rng.entero(2...5), x = rng.entero(2...20)
             switch rng.entero(0...2) {
@@ -499,15 +593,25 @@ struct GeneradorEcuacionLineal: GeneradorItems {
                 let texto = "El \(Self.veces[k]!) de un número \(resta ? "menos" : "más") \(b) es \(c). ¿Cuál es el número?"
                 let e = (resta ? (c - b) : (c + b)) % k == 0 ? (resta ? (c - b) : (c + b)) / k : nil
                 return Caso(ecuacion: "\(k)x \(resta ? "− \(b)" : "+ \(b)") = \(c)", x: x, pasos: 4.5, reglas: [(e, transponer)], enunciado: texto)
+                    .con([Pasos.dato("Escribe la ecuación", "\(k)x \(resta ? "− \(b)" : "+ \(b)") = \(c)",
+                                     porque: "porque «el \(Self.veces[k]!) de un número» se escribe \(k)x"),
+                          Pasos.dato("Pasa el \(b) al otro miembro", "\(k)x = \(resta ? c + b : c - b)", valor: "\(k * x)"),
+                          Self.dividir(k * x, k, x)])
             case 1:
                 let c = (k + 1) * x
                 return Caso(ecuacion: "x + \(k)x = \(c)", x: x, pasos: 4.5, reglas: [(c / k, "El número también cuenta: x + \(k)x = \(k + 1)x.")],
                             enunciado: "La suma de un número y su \(Self.veces[k]!) es \(c). ¿Cuál es el número?")
+                    .con([Pasos.dato("Escribe la ecuación", "x + \(k)x = \(c)", porque: "porque el número es x y su \(Self.veces[k]!), \(k)x"),
+                          Pasos.dato("Junta las x", "\(k + 1)x = \(c)", valor: "\(c)"),
+                          Self.dividir(c, k + 1, x)])
             default:
                 let b = rng.entero(1...9), c = k * (x - b)
                 guard c > 0 else { return caso(d, rng: &rng) }
                 return Caso(ecuacion: "\(k)(x − \(b)) = \(c)", x: x, pasos: 5.5, reglas: [(c / k - b, transponer), ((c + b) % k == 0 ? (c + b) / k : nil, "Multiplica \(k) por todo el paréntesis.")],
                             enunciado: "Si a un número le restas \(b) y multiplicas el resultado por \(k), obtienes \(c). ¿Cuál es el número?")
+                    .con([Pasos.dato("Escribe la ecuación", "\(k)(x − \(b)) = \(c)", porque: "porque primero se resta y después se multiplica"),
+                          Pasos.op("Divide los dos miembros entre \(k)", "x − \(b) = \(c) : \(k)", rac(c / k)),
+                          Pasos.op("Suma \(b) a los dos miembros", "\(c / k) + \(b)", rac(x))])
             }
         }
     }
@@ -529,6 +633,7 @@ struct GeneradorEcuacionLineal: GeneradorItems {
                        erroresHabituales: unicos, pistas: ["Deja la x sola en un miembro: lo que suma pasa restando y lo que multiplica pasa dividiendo."],
                        complejidad: c.pasos + 0.2 * A.cifras(abs(c.x)) + (c.enunciado == nil ? 0 : 1),
                        datos: ["ecuacion": c.ecuacion.replacingOccurrences(of: "−", with: "-"), "x": "\(c.x)"])
+            .conPasos(c.resueltos)
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
@@ -619,6 +724,7 @@ struct GeneradorOrdenarNumeros: GeneradorItems {
                        erroresHabituales: [ErrorHabitual(respuesta: "orden", feedback: "Iguala las cifras decimales antes de comparar (0,5 = 0,50 > 0,45) y pasa las fracciones a decimal o a común denominador.")],
                        pistas: ["Compara primero la parte entera y después las décimas, las centésimas…"],
                        complejidad: Double(ns.count) + tipoPeso, datos: ["orden": "asc"])
+            .conPasosOrdenar(ns)
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
@@ -626,6 +732,28 @@ struct GeneradorOrdenarNumeros: GeneradorItems {
         var vistos = Set<String>()
         for _ in 0..<min(limite, 5000) { if let ns = caso(p.dificultad, rng: &rng) { vistos.insert(ns.map(\.1).sorted().joined(separator: ";")) } }
         return Array(vistos)
+    }
+}
+
+extension Muestra {
+    /// Pasos de ordenar números (§5): las fracciones a decimal, las cifras decimales igualadas y, al
+    /// final, el orden.
+    fileprivate func conPasosOrdenar(_ ns: [(Racional, String)]) -> Muestra {
+        func fijo(_ v: Racional, _ cifras: Int) -> String {
+            String(format: "%.\(cifras)f", v.valorDouble).replacingOccurrences(of: ".", with: ",")
+        }
+        let cifras = min(3, ns.map { AyudaMat.decimales($0.0) ?? 3 }.max() ?? 1)
+        var pasos: [PasoResuelto] = []
+        let fracciones = ns.filter { $0.1.contains("/") }
+        if !fracciones.isEmpty {
+            let lista = fracciones.map { f in AyudaMat.decimales(f.0).map { _ in "\(f.1) = \(FormatoNumero.decimal(f.0)!)" } ?? "\(f.1) ≈ \(fijo(f.0, 3))" }
+            pasos.append(Pasos.dato("Pasa cada fracción a número decimal", lista.joined(separator: "; "),
+                                    porque: "porque así todos los números se comparan de la misma forma"))
+        }
+        pasos.append(Pasos.dato("Iguala las cifras decimales y compara", ns.map { fijo($0.0, fracciones.isEmpty ? cifras : 3) }.joined(separator: " · "),
+                                porque: fracciones.isEmpty ? "porque 0,5 es lo mismo que 0,50: los ceros del final no cambian nada" : nil))
+        pasos.append(Pasos.solucion("Ordénalos de menor a mayor", payload: payload))
+        return conPasos(pasos)
     }
 }
 
@@ -710,6 +838,41 @@ struct GeneradorFraccionesOperar: GeneradorItems {
                        erroresHabituales: A.errores(v, reglas, comoFraccion: true),
                        pistas: ["Para sumar o restar, busca un denominador común; al final, simplifica."],
                        complejidad: complejidad, datos: ["expresion": e.texto, "respuesta": A.fraccion(v)])
+            .conPasos(Self.pasos(pasos, e: e))
+    }
+
+    /// Pasos del ejemplo resuelto (§5): las operaciones del resolutor en orden, con el porqué de la
+    /// primera (denominador común, producto o inversa).
+    static func pasos(_ operaciones: [String], e: ExprArit) -> [PasoResuelto] {
+        // Una sola operación: se enseña el procedimiento (denominador común, producto o inversa).
+        if case .suma(let ts, let ops) = e, ts.count == 2, case .n(let a) = ts[0], case .n(let b) = ts[1], let v = (ops[0] == "+" ? a + b : a - b) as Racional? {
+            let m = a.denominador / Racional.mcd(a.denominador, b.denominador) * b.denominador
+            let s = ops[0] == "+" ? "+" : "−"
+            return [Pasos.dato("Busca un denominador común", "m.c.m.(\(a.denominador), \(b.denominador)) = \(m)", valor: "\(m)",
+                               porque: "porque solo se suman fracciones con el mismo denominador"),
+                    Pasos.dato("Pasa las dos fracciones a ese denominador", "\(a.numerador * (m / a.denominador))/\(m) \(s) \(b.numerador * (m / b.denominador))/\(m)"),
+                    PasoResuelto(frase: "Opera los numeradores y simplifica", resultado: "\(A.fraccion(v))", valor: A.fraccion(v))]
+        }
+        if case .prod(let fs, let ops) = e, fs.count == 2, case .n(let a) = fs[0], case .n(let b) = fs[1] {
+            let divide = ops[0] == ":"
+            let c = divide ? rac(b.denominador, b.numerador) : b
+            let sinSimplificar = "\(a.numerador * c.numerador)/\(a.denominador * c.denominador)"
+            var r: [PasoResuelto] = []
+            if divide { r.append(Pasos.dato("Da la vuelta a la segunda fracción", "\(A.fraccion(b)) → \(b.denominador)/\(b.numerador)",
+                                            porque: "porque dividir es multiplicar por la fracción inversa")) }
+            r.append(Pasos.dato("Multiplica numeradores y denominadores", "\(a.numerador) × \(c.numerador) / \(a.denominador) × \(c.denominador) = \(sinSimplificar)",
+                                valor: sinSimplificar, porque: divide ? nil : "porque multiplicar fracciones es tomar una parte de otra parte"))
+            let v = a * c
+            r.append(PasoResuelto(frase: "Simplifica", resultado: "\(sinSimplificar) = \(A.fraccion(v))", valor: A.fraccion(v)))
+            return r
+        }
+        var r = GeneradorOperacionesCombinadas.pasosResueltos(operaciones, agrupaciones: e.profundidad > 0, payload: nil)
+        let primera = operaciones.first ?? ""
+        r[0].porque = primera.hasPrefix("Multiplicar") ? "porque se multiplican numeradores entre sí y denominadores entre sí"
+            : primera.hasPrefix("Dividir") ? "porque dividir es multiplicar por la fracción inversa"
+            : e.profundidad > 0 ? "porque lo que está entre paréntesis se calcula antes"
+            : "porque solo se suman fracciones con el mismo denominador"
+        return r
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
@@ -774,9 +937,36 @@ struct GeneradorProblemaFraccion: GeneradorItems {
         for _ in 0..<3000 {
             let c = caso(p.dificultad, rng: &rng)
             guard Self.valido(c) else { continue }
-            return construir(c, rng: &rng)
+            return construir(c, rng: &rng).conPasos(Self.pasos(c))
         }
         throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    /// Pasos del ejemplo resuelto (§5): cada gasto y lo que queda.
+    static func pasos(_ c: Caso) -> [PasoResuelto] {
+        let t = rac(c.total)
+        if !c.resto && c.fracciones.count > 1 {
+            let suma = c.fracciones.reduce(rac(0)) { $0 + $1 }, gasto = t * suma
+            return [Pasos.op("Suma las fracciones que gasta", c.fracciones.map(A.fraccion).joined(separator: " + "), suma,
+                             porque: "porque todas las partes son del mismo total"),
+                    Pasos.op("Calcula cuánto es esa parte de \(c.total) €", "\(c.total) × \(A.fraccion(suma))", gasto),
+                    Pasos.op("Resta lo gastado", "\(c.total) − \(A.texto(gasto))", queda(c))]
+        }
+        if c.fracciones.count == 1 {
+            let f = c.fracciones[0], g = t * f
+            return [Pasos.op("Calcula \(A.fraccion(f)) de \(c.total) €", "\(c.total) : \(f.denominador) × \(f.numerador)", g,
+                             porque: "porque \(A.fraccion(f)) es repartir en \(f.denominador) partes y tomar \(f.numerador)"),
+                    Pasos.op("Resta lo gastado", "\(c.total) − \(A.texto(g))", queda(c))]
+        }
+        var r = t
+        return c.fracciones.enumerated().map { k, f in
+            let g = r * f, antes = r
+            r = r - g
+            return PasoResuelto(frase: k == 0 ? "Gasta \(A.fraccion(f)) del total" : "Gasta \(A.fraccion(f)) de lo que queda",
+                                resultado: "\(A.texto(antes)) × \(A.fraccion(f)) = \(A.texto(g)); quedan \(A.texto(antes)) − \(A.texto(g)) = \(A.texto(r))",
+                                valor: FormatoNumero.numero(r),
+                                porque: k == 1 ? "porque cada gasto es de lo que queda, no del total" : nil)
+        }
     }
 
     private func construir(_ c: Caso, rng: inout GeneradorConSemilla) -> Muestra {

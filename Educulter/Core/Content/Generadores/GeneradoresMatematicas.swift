@@ -188,8 +188,44 @@ struct GeneradorMcmMcd: GeneradorItems {
                            pistas: ["Descompón cada número en factores primos."],
                            complejidad: Double(nv.k) + digitos(sol) + (cota == nil ? 0 : 2) + (p.contextos == nil ? 0 : 0.5),
                            datos: ["op": op, "numeros": nums.map(String.init).joined(separator: ","), "cota": cota.map(String.init) ?? "", "respuesta": "\(sol)"])
+                .conPasos(Self.pasos(nums, op: op, sol: sol, cota: cota))
         }
         throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    /// Factores primos de `n` con su exponente, de menor a mayor.
+    static func factores(_ n: Int) -> [(primo: Int, exp: Int)] {
+        var r: [(Int, Int)] = [], m = n, p = 2
+        while m > 1 {
+            var e = 0
+            while m % p == 0 { m /= p; e += 1 }
+            if e > 0 { r.append((p, e)) }
+            p += 1
+        }
+        return r
+    }
+
+    static func texto(_ f: [(primo: Int, exp: Int)]) -> String {
+        let sup: [Character] = ["⁰", "¹", "²", "³", "⁴", "⁵", "⁶", "⁷", "⁸", "⁹"]
+        return f.map { $0.exp == 1 ? "\($0.primo)" : "\($0.primo)" + String(String($0.exp).map { sup[Int(String($0))!] }) }.joined(separator: " · ")
+    }
+
+    /// Pasos del ejemplo resuelto (§5): descomposición de cada número y regla de los exponentes.
+    static func pasos(_ nums: [Int], op: String, sol: Int, cota: Int?) -> [PasoResuelto] {
+        var r = nums.map { n in Pasos.dato("Descompón \(n) en factores primos", "\(n) = \(texto(factores(n)))") }
+        let todos = Dictionary(nums.flatMap(factores).map { ($0.primo, [$0.exp]) }, uniquingKeysWith: +)
+        let m = nums.dropFirst().reduce(nums[0], mcm)
+        if op == "mcd" && cota == nil {
+            let comunes = todos.filter { $0.value.count == nums.count }.map { (primo: $0.key, exp: $0.value.min()!) }.sorted { $0.primo < $1.primo }
+            r.append(Pasos.op("Toma los factores comunes con el menor exponente", texto(comunes), rac(sol),
+                              porque: "porque el m.c.d. solo puede tener factores que estén en todos"))
+        } else {
+            let fs = todos.map { (primo: $0.key, exp: $0.value.max()!) }.sorted { $0.primo < $1.primo }
+            r.append(Pasos.op("Toma todos los factores con el mayor exponente", texto(fs), rac(m),
+                              porque: "porque el m.c.m. debe contener todos los factores de cada número"))
+            if let cota { r.append(Pasos.op("Busca el múltiplo de \(m) entre \(cota) y \(cota + m - 1)", "\(m) × \(sol / m)", rac(sol))) }
+        }
+        return r
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
@@ -294,8 +330,35 @@ struct GeneradorEstadistica: GeneradorItems {
                            payload: numerico(sol), explicacion: explicacion, erroresHabituales: erroresNumericos(sol, reglas),
                            complejidad: Double(nv.n) * 0.5 + digitos(o.last!.numerador / o.last!.denominador) + Double(t.split(separator: ",").dropFirst().first?.count ?? 0) + (m == "media" || m == "mediana" ? 1 : 0),
                            datos: ["medida": m, "datos": textos.joined(separator: ";"), "respuesta": t])
+                .conPasos(Self.pasos(m, datos: datos, sol: sol))
         }
         throw ErrorGenerador.sinCaso(tipo)
+    }
+
+    /// Pasos del ejemplo resuelto (§5).
+    static func pasos(_ m: String, datos: [Racional], sol: Racional) -> [PasoResuelto] {
+        let o = datos.sorted { $0.valorDouble < $1.valorDouble }, f = FormatoNumero.numero
+        switch m {
+        case "media":
+            let suma = datos.reduce(r(0), +)
+            return [Pasos.op("Suma todos los datos", datos.map(f).joined(separator: " + "), suma, porque: "porque la media reparte el total a partes iguales"),
+                    Pasos.op("Divide entre el número de datos", "\(f(suma)) : \(datos.count)", sol)]
+        case "mediana":
+            let ordenar = Pasos.dato("Ordena los datos de menor a mayor", o.map(f).joined(separator: ", "),
+                                     porque: "porque el valor central solo se ve con los datos ordenados")
+            if o.count % 2 == 1 { return [ordenar, Pasos.op("Toma el dato del centro (el \(o.count / 2 + 1).º)", "Centro", sol)] }
+            let a = o[o.count / 2 - 1], b = o[o.count / 2]
+            return [ordenar, Pasos.op("Haz la media de los dos centrales", "(\(f(a)) + \(f(b))) : 2", sol)]
+        case "rango":
+            return [Pasos.dato("Busca el dato mayor y el menor", "mayor: \(f(o.last!)); menor: \(f(o.first!))"),
+                    Pasos.op("Resta el menor al mayor", "\(f(o.last!)) − \(f(o.first!))", sol, porque: "porque el rango mide lo separados que están los datos")]
+        default:
+            var veces: [Racional: Int] = [:]
+            for v in datos { veces[v, default: 0] += 1 }
+            let cuenta = veces.sorted { $0.key.valorDouble < $1.key.valorDouble }.map { "\(f($0.key)): \($0.value == 1 ? "1 vez" : "\($0.value) veces")" }
+            return [Pasos.dato("Cuenta cuántas veces sale cada valor", cuenta.joined(separator: "; "), porque: "porque la moda es el valor que más se repite, no el mayor"),
+                    Pasos.op("Elige el que más veces sale", "Moda", sol)]
+        }
     }
 
     /// Espacio enorme (valores^n): cota inferior por semillas consecutivas.
@@ -395,6 +458,12 @@ struct GeneradorProbabilidad: GeneradorItems {
                        erroresHabituales: errores, pistas: ["Probabilidad = casos favorables / casos posibles."],
                        complejidad: Self.complejidadEscenario(c.clave) + digitos(c.posibles) * 0.3 + (irreducible ? 0.5 : 0),
                        datos: ["clave": c.clave, "respuesta": respuesta])
+            .conPasos([
+                Pasos.dato("Cuenta los casos posibles", "\(c.posibles)", porque: "porque todos los resultados tienen la misma probabilidad"),
+                Pasos.dato("Cuenta los casos en los que \(c.suceso)".count <= PasoResuelto.maxFrase ? "Cuenta los casos en los que \(c.suceso)" : "Cuenta los casos favorables", "\(c.favorables)"),
+                PasoResuelto(frase: "Divide favorables entre posibles",
+                             resultado: "\(c.favorables)/\(c.posibles)" + (sol.denominador != c.posibles ? " = \(respuesta)" : ""), valor: respuesta),
+            ])
     }
 
     /// Complejidad del experimento: un dado < bolsa de 2 colores < bolsa de 3 (y contrario) <

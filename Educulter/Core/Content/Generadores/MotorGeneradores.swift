@@ -17,6 +17,8 @@ struct Muestra: Sendable, Equatable {
     var complejidad: Double
     /// Datos del caso para el oráculo independiente de los tests (no se muestran).
     var datos: [String: String] = [:]
+    /// Ejemplo resuelto (05E parte 2 §5): pasos con sus resultados intermedios calculados.
+    var pasos: [PasoResuelto] = []
 }
 
 /// Recursos de los generadores de Lengua (léxico, piezas de gramática, bancos de frases).
@@ -151,7 +153,7 @@ enum MotorGeneradores {
                     enunciado: Marcadores.rellenar(redaccion, con: valores), payload: m.payload, pistas: pistas,
                     explicacion: m.explicacion, erroresHabituales: m.erroresHabituales,
                     procedencia: p.procedencia, validacion: p.validacion, version: p.version,
-                    claveGenerada: "\(p.tipo)|\(m.clave)")
+                    claveGenerada: "\(p.tipo)|\(m.clave)", pasos: m.pasos)
     }
 
     /// Copia de una plantilla con otra dificultad (y, opcionalmente, otro peldaño) para Supervivencia
