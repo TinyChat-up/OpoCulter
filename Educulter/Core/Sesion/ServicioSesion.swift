@@ -234,10 +234,16 @@ final class ServicioSesion {
             // Rescate e intercalado) lo compone el motor igual que en la recomendada.
             let enCurso: String?
             if case .area(let area) = tipo { enCurso = try competenciaEnCurso(area: area) } else { enCurso = try competenciaEnCurso() }
+            let estados = try repositorio.estadosCompetencia()
             let ronda = ConstructorRondas(banco: banco, config: configRonda).construir(
-                estados: try repositorio.estadosCompetencia(), rescate: try repositorio.colaRescate(), enCurso: enCurso,
+                estados: estados, rescate: try repositorio.colaRescate(), enCurso: enCurso,
                 vistos: vistos, ahora: ahora, calendario: calendario, rng: &rng)
-            return RondaPreparada(tipo: tipo, items: ronda.items, competenciaEnCurso: enCurso, teoriaPrevia: ronda.teoriaPrevia)
+            var items = ronda.items
+            // Peldaño 1 (Descubrir): ejemplo resuelto y gemelo (§5).
+            if let enCurso, (estados[enCurso]?.escalera.peldano ?? 1) == Peldano.descubre.rawValue {
+                items = EjemplosResueltos.aplicar(items, competencia: enCurso, banco: banco, rng: &rng)
+            }
+            return RondaPreparada(tipo: tipo, items: items, competenciaEnCurso: enCurso, teoriaPrevia: ronda.teoriaPrevia)
         case .rescate:
             let cola = try repositorio.colaRescate()
             var usados = Set<String>()

@@ -53,7 +53,7 @@ struct SesionDiaria: Sendable, Equatable {
     var requiereDiagnostico: Bool { items.isEmpty }
 }
 
-/// Composición de la sesión diaria (05E parte 2 §3.2, D-104). Determinista: el mismo estado y la
+/// Composición de la sesión diaria (05E parte 2 §3.2, D-106 y D-108). Determinista: el mismo estado y la
 /// misma semilla dan la misma sesión.
 ///
 /// Cupos sobre `n` ítems, por prioridad:
@@ -185,8 +185,13 @@ struct ConstructorSesion: Sendable {
                 guard !items.isEmpty else { continue }
                 if vuelta + 1 < 3 { colaNuevo.append((c, vuelta + 1)) }
                 enCurso = enCurso ?? c
-                return Unidad(items.sorted { ($0.dificultad, $0.id) < ($1.dificultad, $1.id) }
-                                .map { ItemRonda(itemId: $0.id, motivo: .nuevo) }, competencia: c, tipo: .nuevo)
+                var bloque = items.sorted { ($0.dificultad, $0.id) < ($1.dificultad, $1.id) }.map { ItemRonda(itemId: $0.id, motivo: .nuevo) }
+                // Peldaño 1 (Descubrir): el bloque empieza con un ejemplo resuelto y su gemelo (§5).
+                if peldano == Peldano.descubre.rawValue, bloque.count >= 2 {
+                    bloque = EjemplosResueltos.aplicar(bloque, competencia: c, banco: banco, excluir: usados, rng: &rng)
+                    for i in bloque { usados.insert(i.itemId); if let x = banco.item(id: i.itemId) { huellas.insert(banco.huella(x)) } }
+                }
+                return Unidad(bloque, competencia: c, tipo: .nuevo)
             }
             return nil
         }

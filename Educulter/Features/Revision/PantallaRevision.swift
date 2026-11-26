@@ -268,7 +268,7 @@ struct VistaCaptura: View {
         Group {
             let partes = escena.split(separator: ":").map(String.init)
             switch partes.first {
-            case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba", "sesion", "sesionInicio":
+            case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba", "sesion", "sesionInicio", "ejemplo", "fallo":
                 if let ronda { PantallaRonda(modelo: ronda) {} } else { Paleta.fondo }
             case "camino":
                 if let servicio = entorno.servicio { PantallaCamino(servicio: servicio) }
@@ -344,6 +344,26 @@ struct VistaCaptura: View {
             return
         case "diagnostico":
             ronda = RondaViewModel(servicio: servicio, tipo: .diagnostico)
+            return
+        case "ejemplo":
+            // Ejemplo resuelto de Matemáticas en el peldaño 1, con dos pasos a la vista (o los que diga la escena).
+            let c = partes.dropFirst().first ?? banco.catalogo.todasLasCompetencias.map(\.id).first { c in
+                Catalogo.area(de: c) == "MAT" && ConstructorRondas(banco: banco).candidatos(competencia: c, peldano: 1).contains { $0.pasos.count >= 3 }
+            } ?? "MAT.POR.CALC"
+            let modelo = RondaViewModel(servicio: servicio, tipo: .competencia(c))
+            if modelo.fase == .teoria { modelo.empezarTrasTeoria() }
+            let visibles = partes.count >= 3 ? Int(partes[2]) ?? 2 : 2
+            while modelo.pasosVisibles < visibles && !modelo.ejemploListo { modelo.siguientePaso() }
+            ronda = modelo
+            return
+        case "fallo":
+            // Ítem de nivel examen fallado: distintivo y «Cómo se resuelve».
+            guard let p = banco.plantillas.first(where: { $0.id.hasPrefix(partes.dropFirst().first ?? "MAT.POR.VAR") && $0.mecanica == .numerico }),
+                  let item = try? MotorGeneradores.generar(MotorGeneradores.ajustada(p, dificultad: 4, peldano: 3), semilla: 7, recursos: banco.recursos) else { return }
+            let modelo = RondaViewModel(servicio: servicio, tipo: .items([item.id]))
+            modelo.rellenarParaPruebas(correcta: false)
+            modelo.comprobar()
+            ronda = modelo
             return
         case "sesionInicio":
             ronda = RondaViewModel(servicio: servicio, tipo: .sesion(duracion: .cinco, foco: .mixto))

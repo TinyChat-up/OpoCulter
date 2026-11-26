@@ -31,6 +31,43 @@ struct ItemRonda: Sendable, Equatable {
     var motivo: Motivo
     /// Error típico que trabaja un ítem de remedio.
     var errorId: String? = nil
+    /// Ejemplo resuelto (05E parte 2 §5): los pasos aparecen uno a uno y el usuario completa el
+    /// último. El ítem siguiente es su gemelo (misma plantilla, otra semilla, sin pasos).
+    var ejemplo = false
+}
+
+/// Ejemplos resueltos (05E parte 2 §5): en el peldaño 1 (Descubrir), lo nuevo empieza con un
+/// ejemplo resuelto seguido de su gemelo.
+enum EjemplosResueltos {
+    /// Base de la plantilla de un ítem generado (`MAT.POR.CALC.G01@d3#12` → `MAT.POR.CALC.G01@d3`).
+    static func plantilla(de id: String) -> String? { MotorGeneradores.partes(de: id)?.plantilla }
+
+    /// Reorganiza los ítems de `competencia`: el primero con pasos pasa a ser el ejemplo (en el
+    /// lugar del primer ítem de la competencia) y justo detrás va un gemelo de su plantilla, en el
+    /// lugar del segundo ítem de la competencia (o añadido si no lo hay). Sin ítems con pasos o sin
+    /// gemelo posible, no cambia nada.
+    static func aplicar(_ items: [ItemRonda], competencia: String, banco: BancoContenido, excluir: Set<String> = [],
+                        rng: inout GeneradorConSemilla) -> [ItemRonda] {
+        let deLaCompetencia = items.indices.filter { banco.item(id: items[$0].itemId)?.competencia == competencia }
+        guard let primero = deLaCompetencia.first,
+              let k = deLaCompetencia.first(where: { !(banco.item(id: items[$0].itemId)?.pasos.isEmpty ?? true) }),
+              let base = plantilla(de: items[k].itemId), let p = banco.plantilla(id: base) else { return items }
+        let usados = Set(items.map(\.itemId)).union(excluir)
+        let huellas = Set(items.compactMap { banco.item(id: $0.itemId).map(banco.huella) })
+        guard let gemelo = banco.variantes(de: p).shuffled(using: &rng)
+            .first(where: { !usados.contains($0.id) && !huellas.contains(banco.huella($0)) }) else { return items }
+        var r = items
+        var ejemplo = r[k]
+        ejemplo.ejemplo = true
+        let otro = ItemRonda(itemId: gemelo.id, motivo: ejemplo.motivo)
+        r.remove(at: k)
+        r.insert(ejemplo, at: primero)
+        // El segundo de la competencia (tras mover el ejemplo) deja su sitio al gemelo.
+        let restantes = r.indices.filter { $0 > primero && banco.item(id: r[$0].itemId)?.competencia == competencia }
+        if let segundo = restantes.first { r.remove(at: segundo) }
+        r.insert(otro, at: primero + 1)
+        return r
+    }
 }
 
 struct Ronda: Sendable, Equatable {

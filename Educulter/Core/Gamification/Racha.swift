@@ -106,7 +106,7 @@ struct EstadoRacha: Codable, Sendable, Equatable {
     }
 }
 
-// MARK: - Modo descanso y meta semanal (05E parte 2 §3.3, D-105)
+// MARK: - Modo descanso y meta semanal (05E parte 2 §3.3, D-106)
 
 /// Periodo del modo descanso: desde `inicio` hasta `fin` (incluido) o, si sigue abierto, hasta hoy.
 struct PeriodoDescanso: Codable, Sendable, Equatable {

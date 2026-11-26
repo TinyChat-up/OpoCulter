@@ -84,3 +84,67 @@ struct PasosResueltosTests {
         #expect(conPorque == 18)
     }
 }
+
+@Suite("Fase 05E parte 2 · Ejemplo resuelto, gemelo y retirada de ayudas")
+struct EjemploResueltoTests {
+    static var banco: BancoContenido { PasosResueltosTests.banco }
+
+    @Test("Sesión: lo nuevo de una competencia en el peldaño 1 empieza con un ejemplo resuelto y su gemelo")
+    func sesionConEjemplo() {
+        let banco = Self.banco
+        let constructor = ConstructorSesion(banco: banco)
+        // Competencias cuyo peldaño 1 tiene ítems con pasos.
+        let competencias = banco.catalogo.todasLasCompetencias.map(\.id).filter { c in
+            ConstructorRondas(banco: banco).candidatos(competencia: c, peldano: 1).contains { !$0.pasos.isEmpty }
+        }
+        #expect(competencias.count >= 10, "\(competencias)")
+        for (k, c) in competencias.enumerated() {
+            let foco: FocoSesion = Catalogo.area(de: c) == "MAT" ? .matematicas : .lengua
+            let s = constructor.construir(n: 8, foco: foco, estados: [:], remedios: [], plan: [c], vistos: [:],
+                                          ahora: Fx.fecha(2026, 11, 26, 10), calendario: Fx.madrid, semilla: UInt64(k))
+            guard let i = s.items.firstIndex(where: { $0.motivo == .nuevo }) else { Issue.record("\(c): sin nuevo"); continue }
+            let ejemplo = s.items[i], gemelo = s.items[i + 1]
+            #expect(ejemplo.ejemplo && !gemelo.ejemplo, "\(c)")
+            #expect(!(banco.item(id: ejemplo.itemId)?.pasos.isEmpty ?? true), "\(c): el ejemplo tiene pasos")
+            #expect(EjemplosResueltos.plantilla(de: ejemplo.itemId) == EjemplosResueltos.plantilla(de: gemelo.itemId) && ejemplo.itemId != gemelo.itemId,
+                    "\(c): el gemelo es de la misma plantilla con otra semilla")
+            let huellas = s.items.compactMap { banco.item(id: $0.itemId).map(banco.huella) }
+            #expect(Set(huellas).count == huellas.count, "\(c): sin preguntas repetidas")
+            #expect(s.items.filter(\.ejemplo).count <= 3)
+        }
+        // En el peldaño 2 no hay ejemplo resuelto.
+        let c = competencias[0]
+        let estados = [c: EstadoCompetencia(competenciaId: c, escalera: EstadoEscalera(peldano: 2))]
+        let s = constructor.construir(n: 8, foco: .mixto, estados: estados, remedios: [], plan: [c], vistos: [:],
+                                      ahora: Fx.fecha(2026, 11, 26, 10), calendario: Fx.madrid, semilla: 3)
+        #expect(s.items.allSatisfy { !$0.ejemplo })
+    }
+
+    @Test("Nivel examen alcanzado: 8 aciertos de los últimos 10 ítems de dificultad ≥ 4")
+    func nivelExamen() {
+        func intento(_ k: Int, _ c: String, _ id: String, _ ok: Bool) -> Intento {
+            Intento(fecha: Fx.fecha(2026, 11, 20).addingTimeInterval(Double(k) * 60), itemId: id, competenciaId: c, peldano: 4, correcto: ok, fraccionCorrecta: ok ? 1 : 0)
+        }
+        let dif = ["fácil": 2, "examen": 4, "difícil": 6]
+        var intentos: [Intento] = []
+        // A: 12 de nivel examen; los 2 primeros fallados y después 8 de 10 → alcanzado.
+        for k in 0..<12 { intentos.append(intento(k, "A", k % 2 == 0 ? "examen" : "difícil", k >= 2 && k != 5 && k != 9 || k == 5)) }
+        // B: 9 de nivel examen, todos acertados → aún no (faltan ítems).
+        for k in 0..<9 { intentos.append(intento(k, "B", "examen", true)) }
+        // C: 10 de nivel examen con 7 aciertos → no; los fáciles no cuentan.
+        for k in 0..<10 { intentos.append(intento(k, "C", "examen", k < 7)) }
+        for k in 0..<20 { intentos.append(intento(100 + k, "C", "fácil", true)) }
+        let r = Dictionary(uniqueKeysWithValues: NivelExamen.calcular(intentos) { dif[$0] }.map { ($0.competencia, $0) })
+        #expect(r["A"]?.alcanzado == true && r["A"]?.respondidos == 10 && r["A"]?.aciertos == 9)
+        #expect(r["B"]?.alcanzado == false && r["B"]?.respondidos == 9)
+        #expect(r["C"]?.alcanzado == false && r["C"]?.aciertos == 7)
+    }
+
+    @Test("VoiceOver lee cada paso: frase, resultado y porqué")
+    @MainActor func lecturaPasos() {
+        let p = PasoResuelto(frase: "Pasa el porcentaje a número decimal", resultado: "15 : 100 = 0,15", valor: "0,15", porque: "porque el 15 % significa 15 de cada 100")
+        #expect(FilaPaso.lectura(1, p) == "Paso 1: Pasa el porcentaje a número decimal. 15 : 100 = 0,15. Porque el 15 % significa 15 de cada 100.")
+        #expect(DistintivoNivel(dificultad: 3) == nil)
+        #expect(DistintivoNivel(dificultad: 4)?.texto == "Nivel examen" && DistintivoNivel(dificultad: 6)?.texto == "Por encima del examen")
+    }
+}

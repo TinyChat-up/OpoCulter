@@ -131,6 +131,7 @@ struct PantallaRonda: View {
                         .font(.caption.weight(.semibold))
                         .foregroundStyle(Paleta.tinta(competencia: item.competencia))
                         .accessibilityIdentifier("cabeceraCompetencia")
+                        if let distintivo = DistintivoNivel(dificultad: item.dificultad) { distintivo }
                         Text(item.enunciado)
                             .font(.title3.weight(.semibold))
                             .foregroundStyle(Paleta.textoPrincipal)
@@ -146,15 +147,23 @@ struct PantallaRonda: View {
                                 .background(Paleta.recompensa.opacity(0.15), in: RoundedRectangle(cornerRadius: Radio.ficha))
                                 .accessibilityIdentifier("pista")
                         }
+                        if modelo.esEjemplo {
+                            VistaEjemploResuelto(pasos: modelo.pasosEjemplo, visibles: modelo.pasosVisibles,
+                                                 ultimo: item.pasos.last, listo: modelo.ejemploListo)
+                        }
                         // La mecánica se reparte en el espacio libre (no se amontona arriba).
                         Spacer(minLength: 0)
-                        // Panel protagonista: el único elemento tintado de la pantalla (v2).
-                        PanelProtagonista(tinte: Paleta.tinte(competencia: item.competencia)) {
-                            VistaMecanica(contexto: ContextoMecanica(item: item, acento: acento, resultado: modelo.resultado),
-                                          respuesta: $modelo.respuesta)
+                        // Panel protagonista: el único elemento tintado de la pantalla (v2). En un
+                        // ejemplo resuelto aparece cuando ya se han visto los pasos.
+                        if modelo.ejemploListo {
+                            PanelProtagonista(tinte: Paleta.tinte(competencia: item.competencia)) {
+                                VistaMecanica(contexto: ContextoMecanica(item: item, acento: acento, resultado: modelo.resultado),
+                                              respuesta: $modelo.respuesta)
+                            }
+                            .modifier(PulsoAcierto(disparo: modelo.resultado?.correcto == true ? modelo.respondidos : 0))
+                            .id(item.id)
+                            .transition(.opacity)
                         }
-                        .modifier(PulsoAcierto(disparo: modelo.resultado?.correcto == true ? modelo.respondidos : 0))
-                        .id(item.id)
                         Spacer(minLength: 0)
                     }
                     .padding(Espacio.l)
@@ -276,6 +285,7 @@ struct PantallaRonda: View {
                 correcto: resultado.correcto, explicacion: item.explicacion,
                 feedbackEspecifico: modelo.feedbackEspecifico, solucion: modelo.solucion,
                 xp: modelo.efecto?.xp ?? 0, acento: acento, aparicion: modelo.aparicionFeedback,
+                pasos: modelo.pasosTrasFallo,
                 tinta: Paleta.tinta(competencia: item.competencia),
                 subioPeldano: modelo.efecto?.subioPeldano ?? false,
                 puedeVerRegla: modelo.teoriaDelItem != nil,
@@ -319,9 +329,17 @@ struct PantallaRonda: View {
                         .accessibilityHint("Con pista, este ítem no da XP")
                         .accessibilityIdentifier("botonPista")
                     }
-                    BotonPrincipal(titulo: "Comprobar", acento: acento) { modelo.comprobar() }
-                        .disabled(!modelo.puedeComprobar)
-                        .accessibilityIdentifier("botonComprobar")
+                    if modelo.ejemploListo {
+                        BotonPrincipal(titulo: "Comprobar", acento: Paleta.primario) { modelo.comprobar() }
+                            .disabled(!modelo.puedeComprobar)
+                            .accessibilityIdentifier("botonComprobar")
+                    } else {
+                        BotonPrincipal(titulo: "Siguiente paso", icono: "arrow.down", acento: Paleta.primario) {
+                            withAnimation(reducir ? nil : .smooth(duration: 0.3)) { modelo.siguientePaso() }
+                        }
+                        .accessibilityHint("Muestra el paso \(modelo.pasosVisibles + 1) de \(modelo.pasosEjemplo.count)")
+                        .accessibilityIdentifier("botonSiguientePaso")
+                    }
                 }
             }
         }
@@ -605,5 +623,120 @@ struct PulsoAcierto: ViewModifier {
                     withAnimation(.smooth(duration: 0.2).delay(0.15)) { escala = 1 }
                 }
             }
+    }
+}
+
+// MARK: - Ejemplo resuelto (05E parte 2 §5)
+
+/// Pasos de un ejemplo resuelto, uno a uno: frase, resultado intermedio resaltado y, si lo hay, el
+/// porqué. El último paso no se enseña: lo completa el usuario con la mecánica del ítem. Cada paso
+/// es un elemento de VoiceOver, que anuncia el nuevo al aparecer.
+struct VistaEjemploResuelto: View {
+    let pasos: [PasoResuelto]
+    let visibles: Int
+    let ultimo: PasoResuelto?
+    let listo: Bool
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: Espacio.m) {
+            Label("Ejemplo resuelto", systemImage: "list.number")
+                .font(.caption.weight(.semibold))
+                .foregroundStyle(Paleta.textoSecundario)
+                .textCase(.uppercase)
+                .accessibilityAddTraits(.isHeader)
+            ForEach(Array(pasos.prefix(visibles).enumerated()), id: \.offset) { i, p in
+                FilaPaso(numero: i + 1, paso: p)
+                    .transition(.opacity)
+            }
+            if listo, let ultimo {
+                HStack(alignment: .top, spacing: Espacio.m) {
+                    Text("\(pasos.count + 1)")
+                        .font(.numerica(.subheadline))
+                        .foregroundStyle(Paleta.textoSobreBosque)
+                        .frame(width: 28, height: 28)
+                        .background(Paleta.matematicas, in: Circle())
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(ultimo.frase).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                        Text("Este paso lo completas tú.").font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                    }
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityLabel("Último paso: \(ultimo.frase). Complétalo tú.")
+                .accessibilityIdentifier("pasoFinal")
+            }
+        }
+        .padding(Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        .onChange(of: visibles) { _, n in
+            guard n >= 1, n <= pasos.count else { return }
+            AccessibilityNotification.Announcement(FilaPaso.lectura(n, pasos[n - 1])).post()
+        }
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("ejemploResuelto")
+    }
+}
+
+/// Un paso: número, frase, resultado intermedio resaltado y el porqué.
+struct FilaPaso: View {
+    let numero: Int
+    let paso: PasoResuelto
+
+    static func lectura(_ n: Int, _ p: PasoResuelto) -> String {
+        "Paso \(n): \(p.frase). \(p.resultado)." + (p.porque.map { " \($0.prefix(1).uppercased() + $0.dropFirst())." } ?? "")
+    }
+
+    var body: some View {
+        HStack(alignment: .top, spacing: Espacio.m) {
+            Text("\(numero)")
+                .font(.numerica(.subheadline))
+                .foregroundStyle(Paleta.textoPrincipal)
+                .frame(width: 28, height: 28)
+                .overlay(Circle().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
+            VStack(alignment: .leading, spacing: Espacio.xs) {
+                Text(paso.frase).font(.body).foregroundStyle(Paleta.textoPrincipal)
+                Text(paso.resultado)
+                    .font(.numerica(.body))
+                    .foregroundStyle(Paleta.textoPrincipal)
+                    .padding(.horizontal, Espacio.s)
+                    .padding(.vertical, Espacio.xs)
+                    .background(Paleta.lenguaTinte, in: RoundedRectangle(cornerRadius: Radio.celda, style: .continuous))
+                if let porque = paso.porque {
+                    Text(porque.prefix(1).uppercased() + porque.dropFirst())
+                        .font(.footnote).italic()
+                        .foregroundStyle(Paleta.textoSecundario)
+                }
+            }
+            .fixedSize(horizontal: false, vertical: true)
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(Self.lectura(numero, paso))
+        .accessibilityIdentifier("paso_\(numero)")
+    }
+}
+
+/// Distintivo discreto de la dificultad: «Nivel examen» (4) y «Por encima del examen» (5–6).
+struct DistintivoNivel: View {
+    let texto: String
+
+    init?(dificultad: Int) {
+        switch dificultad {
+        case 4: texto = "Nivel examen"
+        case 5...: texto = "Por encima del examen"
+        default: return nil
+        }
+    }
+
+    var body: some View {
+        Label(texto, systemImage: "checkmark.seal")
+            .font(.caption.weight(.semibold))
+            .foregroundStyle(Paleta.matematicasTinta)
+            .padding(.horizontal, Espacio.s)
+            .padding(.vertical, 2)
+            .overlay(Capsule().strokeBorder(Paleta.borde, lineWidth: Trazo.fino))
+            .accessibilityElement(children: .combine)
+            .accessibilityIdentifier("distintivoNivel")
     }
 }

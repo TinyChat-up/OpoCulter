@@ -189,3 +189,51 @@ struct RondaViewModelTests {
     }
 }
 #endif
+
+#if DEBUG
+@MainActor
+@Suite("Ejemplo resuelto en la ronda (05E parte 2 §5)")
+struct EjemploEnRondaTests {
+    let banco = PasosResueltosTests.banco
+
+    func servicio() -> ServicioSesion {
+        ServicioSesion(banco: banco, repositorio: RepositorioEnMemoria(), reloj: RelojFijo(ahora: Fx.fecha(2026, 11, 26, 10)),
+                       calendario: Fx.madrid, rng: GeneradorConSemilla(semilla: 5))
+    }
+
+    @Test("Paso a paso: «Comprobar» solo cuando se han visto todos los pasos menos el último; después, el gemelo sin pasos")
+    func pasoAPaso() throws {
+        let c = try #require(banco.catalogo.todasLasCompetencias.map(\.id).first { c in
+            ConstructorRondas(banco: banco).candidatos(competencia: c, peldano: 1).contains { $0.pasos.count >= 3 }
+        })
+        let m = RondaViewModel(servicio: servicio(), tipo: .competencia(c))
+        if m.fase == .teoria { m.empezarTrasTeoria() }
+        #expect(m.esEjemplo, "\(c): la práctica del peldaño 1 empieza con un ejemplo")
+        let item = try #require(m.itemActual)
+        #expect(m.pasosEjemplo == Array(item.pasos.dropLast()) && m.pasosVisibles == 1 && !m.puedePedirPista)
+        m.respuesta = RespuestaEjemplo.correcta(item.payload)
+        #expect(!m.puedeComprobar, "Antes de ver los pasos no se comprueba")
+        while !m.ejemploListo { m.siguientePaso() }
+        #expect(m.pasosVisibles == item.pasos.count - 1 && m.puedeComprobar)
+        m.comprobar()
+        #expect(m.resultado?.correcto == true && m.pasosTrasFallo.isEmpty)
+        m.continuar()
+        let gemelo = try #require(m.itemActual)
+        #expect(!m.esEjemplo && EjemplosResueltos.plantilla(de: gemelo.id) == EjemplosResueltos.plantilla(de: item.id) && gemelo.id != item.id)
+        // Tras un fallo se ven los pasos (desde el peldaño 3, el único sitio donde aparecen).
+        m.rellenarParaPruebas(correcta: false)
+        m.comprobar()
+        #expect(m.resultado?.correcto == false && m.pasosTrasFallo == gemelo.pasos)
+    }
+
+    @Test("Retirada de ayudas: en el peldaño 2 la pista es el primer paso; desde el 3, sin pistas")
+    func retirada() throws {
+        let m = RondaViewModel(servicio: servicio(), tipo: .items([]))
+        let p = try #require(banco.plantillas.first { $0.competencia.hasPrefix("MAT.POR") })
+        let p2 = try MotorGeneradores.generar(MotorGeneradores.ajustada(p, dificultad: p.dificultad, peldano: 2), semilla: 1, recursos: banco.recursos)
+        let p3 = try MotorGeneradores.generar(MotorGeneradores.ajustada(p, dificultad: p.dificultad, peldano: 3), semilla: 1, recursos: banco.recursos)
+        #expect(m.pistas(de: p2) == ["Primer paso: \(p2.pasos[0].frase) → \(p2.pasos[0].resultado)"])
+        #expect(m.pistas(de: p3).isEmpty)
+    }
+}
+#endif

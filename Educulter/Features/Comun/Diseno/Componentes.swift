@@ -390,6 +390,9 @@ struct HojaFeedback: View {
     /// Personaje del feedback (D-105): el del área, alegre, al acertar; Mimo, con ánimo, ante un error
     /// repetido; nadie tras un fallo normal (el feedback ya informa).
     var aparicion: AparicionPersonaje?
+    /// Pasos del ejemplo resuelto: tras un fallo, «Cómo se resuelve» (§5; desde el peldaño 3 es el
+    /// único sitio donde se ven).
+    var pasos: [PasoResuelto] = []
     /// Tinta del área para el texto de "Ver regla" (AA sobre superficie).
     var tinta: Color = Paleta.textoPrincipal
     var subioPeldano = false
@@ -461,6 +464,21 @@ struct HojaFeedback: View {
                     .foregroundStyle(Paleta.textoPrincipal)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityIdentifier("textoSolucion")
+            }
+            if !correcto && !pasos.isEmpty {
+                VStack(alignment: .leading, spacing: Espacio.xs) {
+                    Text("Cómo se resuelve").font(.subheadline.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                        .accessibilityAddTraits(.isHeader)
+                    ForEach(Array(pasos.enumerated()), id: \.offset) { i, p in
+                        Text("\(i + 1). \(p.frase): \(p.resultado)")
+                            .font(.subheadline)
+                            .foregroundStyle(Paleta.textoPrincipal)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .accessibilityLabel(FilaPaso.lectura(i + 1, p))
+                    }
+                }
+                .accessibilityElement(children: .contain)
+                .accessibilityIdentifier("pasosFeedback")
             }
             ForEach(feedbackEspecifico, id: \.self) { texto in
                 Label { Text(texto) } icon: { Image(systemName: "lightbulb.fill").foregroundStyle(Paleta.recompensaTexto) }

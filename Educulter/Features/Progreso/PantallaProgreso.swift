@@ -12,6 +12,7 @@ struct PantallaProgreso: View {
     @State private var preguntas: RecuentoCatalogo?
     @State private var estados: [String: EstadoCompetencia] = [:]
     @State private var errores: (activos: [ServicioSesion.ErrorSeguido], corregidos: [ServicioSesion.ErrorSeguido]) = ([], [])
+    @State private var nivelesExamen: [NivelExamen] = []
     @State private var serie = "Aciertos"
     @State private var confirmarBorrado = false
     @State private var confirmarBorradoFinal = false
@@ -22,6 +23,7 @@ struct PantallaProgreso: View {
                 VStack(alignment: .leading, spacing: Espacio.xl) {
                     Text("Progreso").font(.exhibicion(.largeTitle)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
                     seccionErrores
+                    seccionNivelExamen
                     seccionDominio
                     if let e = estadisticas {
                         seccionEvolucion(e)
@@ -77,6 +79,7 @@ struct PantallaProgreso: View {
         logros = (try? servicio.catalogoLogros()) ?? []
         estados = (try? servicio.repositorio.estadosCompetencia()) ?? [:]
         errores = (try? servicio.erroresSeguidos()) ?? ([], [])
+        nivelesExamen = (try? servicio.nivelesExamen()) ?? []
         if preguntas == nil { preguntas = servicio.preguntasDisponibles() }
     }
 
@@ -155,6 +158,47 @@ struct PantallaProgreso: View {
         .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("seccionErrores")
+    }
+
+    /// Nivel examen (§5): cada competencia con ítems de dificultad 4 o más respondidos; «Nivel examen
+    /// alcanzado» con 8 aciertos de los últimos 10.
+    private var seccionNivelExamen: some View {
+        VStack(alignment: .leading, spacing: Espacio.m) {
+            titulo("Nivel examen")
+            if nivelesExamen.isEmpty {
+                Text("Cuando aciertes 8 de tus últimos 10 ítems de nivel examen en una competencia, aparecerá aquí como alcanzada.")
+                    .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            ForEach(nivelesExamen) { n in
+                HStack(alignment: .top, spacing: Espacio.m) {
+                    Image(systemName: n.alcanzado ? "checkmark.seal.fill" : "checkmark.seal")
+                        .font(.body.weight(.semibold))
+                        .foregroundStyle(n.alcanzado ? Paleta.exito : Paleta.textoSecundario)
+                        .frame(width: 24)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(nombreCompetencia(n.competencia)).font(.body.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                            .fixedSize(horizontal: false, vertical: true)
+                        Text(n.alcanzado ? "Nivel examen alcanzado · \(n.aciertos) de \(n.respondidos)"
+                             : "\(n.aciertos) aciertos en \(n.respondidos) de \(NivelExamen.ventana) ítems de nivel examen")
+                            .font(.footnote).foregroundStyle(n.alcanzado ? Paleta.exito : Paleta.textoSecundario)
+                    }
+                    Spacer(minLength: 0)
+                }
+                .accessibilityElement(children: .combine)
+                .accessibilityIdentifier("nivelExamen_\(n.competencia)")
+            }
+        }
+        .padding(Espacio.l)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
+        .accessibilityElement(children: .contain)
+        .accessibilityIdentifier("seccionNivelExamen")
+    }
+
+    private func nombreCompetencia(_ id: String) -> String {
+        servicio.banco.catalogo.todasLasCompetencias.first { $0.id == id }?.nombre ?? id
     }
 
     private func filaError(_ e: ServicioSesion.ErrorSeguido) -> some View {

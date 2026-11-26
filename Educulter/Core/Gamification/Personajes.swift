@@ -1,9 +1,9 @@
 import Foundation
 
-/// Personajes de la identidad v3 (05E parte 2, D-105), creados por el propietario y redibujados por
-/// la dirección: «Tilde» (coral con lupa) acompaña a Lengua y las pistas; «Cuarto» (marino que guiña),
-/// a Matemáticas, Supervivencia y las celebraciones; «Mimo» (crema con corazón), la bienvenida, la
-/// racha, el ánimo tras un error repetido y Rescate.
+/// Personajes (05E parte 2, D-105), creados por el propietario y redibujados por la dirección, con la
+/// paleta editorial (D-109): «Tilde» (salvia, con lupa) es el de Lengua; «Cuarto» (bosque, que
+/// guiña), el de Matemáticas; «Mimo» (menta, con corazón), el de la bienvenida y el ánimo. Solo
+/// aparecen en la bienvenida, en el resumen y en el ánimo tras un error repetido.
 enum Companero: String, Sendable, CaseIterable {
     case tilde
     case cuarto

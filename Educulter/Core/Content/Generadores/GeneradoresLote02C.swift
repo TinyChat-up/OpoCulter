@@ -965,7 +965,7 @@ struct GeneradorProblemaFraccion: GeneradorItems {
             return PasoResuelto(frase: k == 0 ? "Gasta \(A.fraccion(f)) del total" : "Gasta \(A.fraccion(f)) de lo que queda",
                                 resultado: "\(A.texto(antes)) × \(A.fraccion(f)) = \(A.texto(g)); quedan \(A.texto(antes)) − \(A.texto(g)) = \(A.texto(r))",
                                 valor: FormatoNumero.numero(r),
-                                porque: k == 1 ? "porque cada gasto es de lo que queda, no del total" : nil)
+                                porque: k == 0 ? "porque cada gasto se calcula sobre lo que queda en ese momento" : nil)
         }
     }
 

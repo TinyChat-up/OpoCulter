@@ -50,6 +50,8 @@ final class RondaViewModel: Identifiable {
     private(set) var efecto: EfectoRespuesta?
     private(set) var usoPista = false
     private(set) var pistasVisibles = 0
+    /// Ejemplo resuelto (§5): pasos ya mostrados (el último lo completa el usuario).
+    private(set) var pasosVisibles = 0
 
     private(set) var combo = ContadorCombo()
     /// Aumenta en cada hito de combo (×3, ×5, ×10 y cada 10 más): dispara la animación y la
@@ -113,18 +115,53 @@ final class RondaViewModel: Identifiable {
     }
 
     var puedeComprobar: Bool {
-        guard fase == .respondiendo, let item = itemActual, let respuesta else { return false }
+        guard fase == .respondiendo, ejemploListo, let item = itemActual, let respuesta else { return false }
         return respuesta.esCompleta(para: item.payload)
+    }
+
+    // MARK: Ejemplo resuelto y retirada de ayudas (§5)
+
+    /// El ítem en curso es un ejemplo resuelto (peldaño 1): los pasos aparecen uno a uno.
+    var esEjemplo: Bool {
+        guard let item = itemActual, ronda.items.indices.contains(indice) else { return false }
+        return ronda.items[indice].ejemplo && item.pasos.count >= 2
+    }
+
+    /// Pasos que se enseñan en el ejemplo: todos menos el último, que completa el usuario.
+    var pasosEjemplo: [PasoResuelto] { esEjemplo ? Array(itemActual!.pasos.dropLast()) : [] }
+
+    /// Ya se han visto todos los pasos del ejemplo: toca completar el último.
+    var ejemploListo: Bool { !esEjemplo || pasosVisibles >= pasosEjemplo.count }
+
+    func siguientePaso() {
+        guard esEjemplo, pasosVisibles < pasosEjemplo.count else { return }
+        pasosVisibles += 1
+    }
+
+    /// Pistas del ítem: en el peldaño 2 (Practicar), si tiene pasos, solo el primero; en el 1, las de
+    /// siempre (D-033); desde el 3, ninguna.
+    func pistas(de item: Item) -> [String] {
+        guard item.peldano <= Peldano.practica.rawValue else { return [] }
+        if item.peldano == Peldano.practica.rawValue, let p = item.pasos.first {
+            return ["Primer paso: \(p.frase) → \(p.resultado)"]
+        }
+        return item.pistas
+    }
+
+    /// Pasos que se ven en la explicación tras un fallo (desde el peldaño 3 es el único sitio donde se ven).
+    var pasosTrasFallo: [PasoResuelto] {
+        guard let resultado, !resultado.correcto, let item = itemActual else { return [] }
+        return item.pasos
     }
 
     /// Las pistas solo existen en los peldaños 1 y 2 (D-033).
     var puedePedirPista: Bool {
-        guard fase == .respondiendo, let item = itemActual else { return false }
-        return item.peldano <= Peldano.practica.rawValue && pistasVisibles < item.pistas.count
+        guard fase == .respondiendo, let item = itemActual, !esEjemplo else { return false }
+        return pistasVisibles < pistas(de: item).count
     }
 
     var pistasMostradas: [String] {
-        Array(itemActual?.pistas.prefix(pistasVisibles) ?? [])
+        itemActual.map { Array(pistas(de: $0).prefix(pistasVisibles)) } ?? []
     }
 
     /// Personaje del feedback (D-109): solo Mimo, con ánimo, ante un error repetido. Los personajes
@@ -332,6 +369,7 @@ final class RondaViewModel: Identifiable {
         efecto = nil
         usoPista = false
         pistasVisibles = 0
+        pasosVisibles = esEjemplo ? 1 : 0
     }
 
     private func finalizar() {
@@ -373,6 +411,7 @@ final class RondaViewModel: Identifiable {
     /// Solo para pruebas y capturas: rellena la respuesta correcta o una con un error.
     func rellenarParaPruebas(correcta: Bool = true) {
         guard let item = itemActual, fase == .respondiendo else { return }
+        pasosVisibles = max(pasosVisibles, pasosEjemplo.count)
         respuesta = correcta ? RespuestaEjemplo.correcta(item.payload)
             : RespuestaEjemplo.conUnError(item.payload, erroresHabituales: item.erroresHabituales)
     }
