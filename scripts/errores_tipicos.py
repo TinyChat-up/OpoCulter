@@ -330,5 +330,39 @@ error("MAT.UNI.ESC", "Multiplicas o divides por la escala al revés.", "MAT.UNI.
       "Del mapa a la realidad se multiplica por la escala; de la realidad al mapa, se divide.",
       ("escala", r"^(En el mapa|En el plano|Para pasar de la realidad)"))
 
+# ---------------------------------------------------------------- JUEGOS (Fase 05G, D-121)
+
+# J46 «De evidencia a resumen» (LEN.COM.TEMA): las pistas del generador y los distractores estáticos.
+error("LEN.COM.TEMA", "Confundes un dato concreto con la idea central.", "LEN.COM.TEMA.G01",
+      "Un dato apoya la idea central; la idea central explica de qué trata el texto o por qué importa.",
+      ("evidenciaResumen", r"^(Ese dato apoya|Busca la frase)"),
+      ("estatico", r"(?i)es un detalle|contraargumento|símbolos"))
+error("LEN.COM.TEMA", "Eliges un tema demasiado concreto.", "LEN.COM.TEMA.G02",
+      "El tema cubre todo el texto: si solo nombra una parte, es demasiado concreto.",
+      ("evidenciaResumen", r"^Ese tema es demasiado concreto"))
+error("LEN.COM.TEMA", "Eliges un tema demasiado general.", "LEN.COM.TEMA.G02",
+      "Si el tema serviría para muchos textos distintos, es demasiado amplio.",
+      ("evidenciaResumen", r"^Ese tema es demasiado amplio"))
+
+# J63 «Corta y compensa» (MAT.GEO.AREA).
+error("MAT.GEO.AREA", "Sumas el hueco en vez de restarlo.", "MAT.GEO.AREA.G02",
+      "El hueco no forma parte de la región pintada: su área se resta.",
+      ("areaCompuesta", r"^¿Esa parte pertenece a la región pintada"), ("estatico", r"^¿Esa parte pertenece a la región pintada"))
+error("MAT.GEO.AREA", "Calculas el perímetro en vez del área.", "MAT.GEO.AREA.G01",
+      "El perímetro suma los lados; el área mide la superficie: base por altura en cada rectángulo.",
+      ("areaCompuesta", r"^Has sumado los lados"), ("estatico", r"^Has sumado los lados"))
+error("MAT.GEO.AREA", "Olvidas dividir entre 2 en triángulos y semicírculos.", "MAT.GEO.AREA.G03",
+      "Triángulo: base × altura : 2. Semicírculo: la mitad de π × radio × radio.",
+      ("areaCompuesta", r"^(El área del triángulo es|Es medio círculo)"), ("estatico", r"^(El área del triángulo es|Es medio círculo)"))
+error("MAT.GEO.AREA", "Das el área en unidades lineales.", "MAT.GEO.AREA.G01",
+      "Metros por metros dan metros cuadrados: el área va en m² o cm².",
+      ("areaCompuesta", r"^Multiplicas metros por metros"), ("estatico", r"^Multiplicas metros por metros"))
+error("MAT.GEO.AREA", "No conviertes las medidas mixtas a la misma unidad.", "MAT.GEO.AREA.G06",
+      "Antes de multiplicar, pasa todas las medidas a metros (o todas a centímetros).",
+      ("areaCompuesta", r"^Pasa todas las medidas a la misma unidad"), ("estatico", r"^Pasa todas las medidas a la misma unidad"))
+error("MAT.GEO.AREA", "Calculas mal el área de alguna parte.", "MAT.GEO.AREA.G01",
+      "En cada parte, toma la base y la altura de esa parte, no las de la figura entera.",
+      ("areaCompuesta", r"^Revisa (qué dos medidas|la suma)"), ("estatico", r"^Revisa (qué dos medidas|la suma)"))
+
 SALIDA.write_text(json.dumps({"version": 1, "errores": ERRORES}, ensure_ascii=False, indent=1) + "\n")
 print(f"{len(ERRORES)} errores en {len({e['competencia'] for e in ERRORES})} competencias → {SALIDA.relative_to(RAIZ)}")

@@ -226,12 +226,27 @@ final class EventoErrorRegistro {
     }
 }
 
+/// Intento de un juego (contrato de intento, 05G §2): el valor codificado en JSON. Sin relaciones y
+/// con valores por defecto (compatible con CloudKit); solo se añaden, nunca se modifican.
+@Model
+final class IntentoActividadRegistro {
+    var uuid: UUID = UUID()
+    var fecha: Date = Date.distantPast
+    var datos: Data?
+
+    init(uuid: UUID, fecha: Date, datos: Data?) {
+        self.uuid = uuid
+        self.fecha = fecha
+        self.datos = datos
+    }
+}
+
 /// Esquema y contenedor del progreso.
 enum EsquemaProgreso {
     static var modelos: [any PersistentModel.Type] {
         [IntentoRegistro.self, EstadoCompetenciaRegistro.self, RescateRegistro.self,
          PerfilRegistro.self, LogroRegistro.self, DiagnosticoRegistro.self, PartidaRegistro.self, AjustesRegistro.self,
-         EventoErrorRegistro.self]
+         EventoErrorRegistro.self, IntentoActividadRegistro.self]
     }
 
     /// Contenedor local (sin CloudKit). `enMemoria` para tests.

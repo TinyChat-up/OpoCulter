@@ -1254,5 +1254,74 @@
       "fecha": "2026-11-24"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.COM.INFER.0004",
+    "competencia": "LEN.COM.INFER",
+    "peldano": 3,
+    "dificultad": 3,
+    "objetivo": "Localizar en el texto la evidencia de una consecuencia.",
+    "mecanica": "evidencia",
+    "enunciado": "Toca la oración del texto que expresa la consecuencia de la desaparición de las abejas.",
+    "payload": {
+      "titulo": "Las abejas",
+      "fragmentos": [
+        {
+          "id": "f1",
+          "texto": "Las abejas son insectos sociales que viven en colmenas organizadas."
+        },
+        {
+          "id": "f2",
+          "texto": "En cada colmena hay una reina, que pone los huevos; miles de obreras, que recogen néctar, fabrican la cera y cuidan de las crías; y los zánganos, cuya función es fecundar a la reina."
+        },
+        {
+          "id": "f3",
+          "texto": "Además de producir miel, las abejas cumplen una tarea esencial: al pasar de flor en flor transportan el polen y permiten que muchas plantas den frutos."
+        },
+        {
+          "id": "f4",
+          "texto": "Por eso, su desaparición pondría en peligro buena parte de los alimentos que consumimos."
+        }
+      ],
+      "aceptados": [
+        "f4"
+      ],
+      "detalles": [
+        "f3"
+      ],
+      "pistaDetalle": "Esa oración explica la causa. ¿Cuál dice qué pasaría si desaparecieran?",
+      "pistaOtro": "Esa oración describe a las abejas; la consigna pregunta por una consecuencia."
+    },
+    "pistas": [],
+    "explicacion": "«Por eso» introduce la consecuencia: sin abejas, muchas plantas no darían frutos y faltarían alimentos.",
+    "erroresHabituales": [
+      {
+        "respuesta": "detalle",
+        "feedback": "Esa oración explica la causa. ¿Cuál dice qué pasaría si desaparecieran?"
+      },
+      {
+        "respuesta": "otro",
+        "feedback": "Esa oración describe a las abejas; la consigna pregunta por una consecuencia."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "LEN-COMPRENSION",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Lengua, bloque B: comunicación y comprensión)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "05G §6: misma pregunta, texto y respuesta que LEN.COM.INFER.0003; cambia solo el patrón (evidencia)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
   }
 ]

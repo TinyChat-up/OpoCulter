@@ -48,10 +48,20 @@ extension ServicioSesion {
         let sesion = ConstructorSesion(banco: banco, config: configRonda).construir(
             n: n, foco: foco, estados: try repositorio.estadosCompetencia(), remedios: try remediosPendientes(),
             plan: try planSesion(foco: foco), vistos: try repositorio.vistos(desde: ahora.addingTimeInterval(-configRonda.segundosSinRepetir)),
-            ahora: ahora, calendario: calendario, semilla: try semillaSesion())
+            ahora: ahora, calendario: calendario, semilla: try semillaSesion(), variantes: try variantesSinAyudas())
         if sesion.requiereDiagnostico { return try prepararRonda(.diagnostico) }
         return RondaPreparada(tipo: .sesion(duracion: duracion, foco: foco), items: sesion.items,
                               competenciaEnCurso: sesion.competenciaEnCurso, teoriaPrevia: sesion.teoriaPrevia)
+    }
+
+    /// Variantes sin ayudas vencidas (05G §2): las competencias de juego con su primera actividad
+    /// hace al menos 2 días y sin variante hecha después.
+    func variantesSinAyudas() throws -> [(competencia: String, items: [ItemRonda])] {
+        let intentos = try repositorio.intentosActividad()
+        var r = GeneradorConSemilla(semilla: try semillaSesion() &+ 0x05C0)
+        return RetencionJuegos.variantesPendientes(intentos, hoy: hoy, calendario: calendario).map {
+            ($0, ActividadesJuego.variante(competencia: $0, intentos: intentos, banco: banco, rng: &r))
+        }
     }
 
     /// Ítems aproximados de una sesión de esa duración (para el texto «≈ 10 min · 15 preguntas»).

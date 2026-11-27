@@ -1,0 +1,80 @@
+[
+  {
+    "id": "LEN.COM.TEMA.G01",
+    "competencia": "LEN.COM.TEMA",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "evidencia",
+    "tipo": "evidenciaResumen",
+    "enunciados": [
+      "Toca la frase que expresa la idea central de «{{titulo}}»."
+    ],
+    "objetivo": "J46 · De evidencia a resumen: paso 1, la evidencia",
+    "parametros": {
+      "paso": "evidencia"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G: especificación de la dirección (26/11/2026), ANEXO A (D-118)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.COM.TEMA.G02",
+    "competencia": "LEN.COM.TEMA",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "evidenciaResumen",
+    "enunciados": [
+      "¿Cuál es el tema de «{{titulo}}»?"
+    ],
+    "objetivo": "J46 · De evidencia a resumen: paso 2, el tema",
+    "parametros": {
+      "paso": "tema"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G: especificación de la dirección (26/11/2026), ANEXO A (D-118)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.COM.TEMA.G03",
+    "competencia": "LEN.COM.TEMA",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "recuerdo",
+    "tipo": "evidenciaResumen",
+    "enunciados": [
+      "Resume «{{titulo}}» en una o dos frases con tus palabras."
+    ],
+    "objetivo": "J46 · De evidencia a resumen: paso 3, el resumen",
+    "parametros": {
+      "paso": "resumen"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G: especificación de la dirección (26/11/2026), ANEXO A (D-118)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  }
+]

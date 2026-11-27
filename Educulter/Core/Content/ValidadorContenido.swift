@@ -292,7 +292,51 @@ struct ValidadorContenido: Sendable {
         case .numerico(let p): validarNumerico(p)
         case .colocarTilde(let p): validarColocarTilde(p)
         case .fraccionBarras(let p): validarFraccionBarras(p)
+        case .evidencia(let p): validarEvidencia(p)
+        case .recuerdo(let p): validarRecuerdo(p)
+        case .figuraArea(let p): validarFigura(p)
         }
+    }
+
+    // MARK: Patrones de la 05G
+
+    private func validarEvidencia(_ p: Payload.Evidencia) -> [String] {
+        var m = Self.idsUnicos(p.fragmentos.map(\.id), "fragmentos")
+        let ids = Set(p.fragmentos.map(\.id))
+        if p.aceptados.isEmpty { m.append("evidencia sin fragmentos aceptados") }
+        if !Set(p.aceptados).isSubset(of: ids) || !Set(p.detalles).isSubset(of: ids) { m.append("evidencia con fragmentos inexistentes") }
+        if !Set(p.aceptados).isDisjoint(with: p.detalles) { m.append("un fragmento no puede ser aceptado y detalle a la vez") }
+        if p.pistaDetalle.isEmpty || p.pistaOtro.isEmpty { m.append("evidencia sin pistas") }
+        return m
+    }
+
+    private func validarRecuerdo(_ p: Payload.Recuerdo) -> [String] {
+        var m: [String] = []
+        if p.modelo.isEmpty { m.append("recuerdo sin modelo") }
+        if p.criterios.count < 2 { m.append("recuerdo con menos de 2 criterios") }
+        if p.maximo < 40 { m.append("recuerdo con un máximo demasiado corto") }
+        return m
+    }
+
+    /// La figura es coherente: cada descomposición suma (con su signo) el total, sus cortes existen,
+    /// ninguna parte mide 0 y la unidad correcta es una de las opciones.
+    private func validarFigura(_ p: Payload.FiguraArea) -> [String] {
+        var m: [String] = []
+        guard let total = Racional.interpretar(p.total)?.valor, total.numerador > 0 else { return ["figura con un total que no es un número positivo"] }
+        if p.descomposiciones.isEmpty { m.append("figura sin descomposiciones") }
+        let cortes = Set(p.cortes.map(\.id))
+        for d in p.descomposiciones {
+            if !Set(d.cortes).isSubset(of: cortes) { m.append("descomposición \(d.id) con cortes inexistentes") }
+            var suma = rac(0)
+            for parte in d.partes {
+                guard let a = Racional.interpretar(parte.area)?.valor, a.numerador > 0 else { m.append("parte \(parte.id) sin área positiva"); continue }
+                suma = parte.signo >= 0 ? suma + a : suma - a
+            }
+            if suma != total { m.append("las partes de \(d.id) no suman el total") }
+        }
+        if !p.unidadesOpciones.contains(p.unidad) { m.append("la unidad correcta no está entre las opciones") }
+        if p.descripcion.isEmpty { m.append("figura sin descripción para VoiceOver") }
+        return m
     }
 
     private func validarEleccion(_ p: Payload.Eleccion) -> [String] {

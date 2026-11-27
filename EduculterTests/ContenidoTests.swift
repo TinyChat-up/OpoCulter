@@ -15,12 +15,14 @@ struct ContenidoEmpaquetadoTests {
         let banco = try cargador.cargar(politica: .todos)
         // 25 borradores de prueba + LEN.ORT (50 ítems y 5 tarjetas) + MAT.NUM (9 ítems y 2 tarjetas)
         // + lote 03a: LEN.LEX (30 ítems y 4 tarjetas) y LEN.COM (19 ítems y 4 tarjetas).
-        #expect(banco.numeroEstaticos == 133)
+        // + 05G: LEN.COM.INFER.0004 (evidencia) y MAT.GEO.AREA.0001 (figura, borrador).
+        #expect(banco.numeroEstaticos == 135)
         // Fase 05C: 8 plantillas de prueba (borrador) que siguen + 38 del lote 02 + 4 del lote 02b.
-        #expect(banco.plantillas.count == 88)
+        // + 05G: 3 pasos de J46 y 6 niveles de J63.
+        #expect(banco.plantillas.count == 97)
         #expect(banco.items.count > 133)
         #expect(banco.teoria.count == 26, "17 + las 9 del ANEXO B (05E parte 2)")
-        #expect(banco.textos.count == 5 && banco.literatura?.autores.count == 142)
+        #expect(banco.textos.count == 7 && banco.literatura?.autores.count == 142)
         #expect(banco.simulacros.count == 1)
         #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber ítems de todas las mecánicas")
         for m in Mecanica.allCases { #expect(banco.items.filter { $0.mecanica == m }.count >= 3, "Al menos 3 ítems de \(m)") }
@@ -46,23 +48,23 @@ struct ContenidoEmpaquetadoTests {
         #expect(!todos.items.isEmpty, "El bundle debe tener borradores para que el test tenga sentido")
         let release = try cargador.cargar(politica: .soloAprobados)
         #expect(release.items.allSatisfy { $0.validacion.estado == .aprobado })
-        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 83)
+        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 92)
         #expect(release.teoria.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.simulacros.allSatisfy { $0.validacion.estado == .aprobado })
         // Aprobado: LEN.ORT (50 ítems y 5 tarjetas), MAT.NUM (9 y 2), LEN.LEX (30 y 4) y LEN.COM (19 y 4,
-        // lote 03a); ningún borrador. Lote 02: además, variantes de las plantillas aprobadas.
-        #expect(release.itemsEstaticos.count == 108)
+        // lote 03a; + LEN.COM.INFER.0004 en la 05G); ningún borrador. Lote 02: además, variantes de las plantillas aprobadas.
+        #expect(release.itemsEstaticos.count == 109)
         #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 50)
         #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 9)
         #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.LEX.") }.count == 30)
-        #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 19)
+        #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 20)
         #expect(release.items.count > 108)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 5)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 2)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.LEX.") }.count == 4)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 4)
         #expect(release.teoria.count == 24, "15 + las 9 del ANEXO B (05E parte 2)")
-        #expect(release.textos.count == 5)
+        #expect(release.textos.count == 7)
         #expect(release.items.allSatisfy { $0.validacion.revisor == "direccion" })
         #expect(release.simulacros.isEmpty)
         #expect(todos.items.contains { $0.validacion.estado == .borrador })

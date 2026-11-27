@@ -7,6 +7,13 @@ struct ContextoMecanica {
     let acento: Color
     /// Resultado tras comprobar (nil mientras se responde).
     let resultado: Resultado?
+    /// Semilla de la ronda para el orden de las opciones (05G §1.1).
+    var semillaOrden: UInt64 = 0
+    /// Reintento de un juego (05G §2): errores del primer intento, que se marcan en la propia pieza
+    /// mientras se edita la misma respuesta.
+    var marcasReintento: [String] = []
+    /// Variante sin ayudas: sin cortes discontinuos ni colores de ayuda.
+    var sinAyudas = false
 
     /// Tinte del panel protagonista y tinta (texto con color de área), v2.
     var tinte: Color { Paleta.tinte(competencia: item.competencia) }
@@ -51,6 +58,9 @@ struct VistaMecanica: View {
             case .numerico(let p): MecanicaNumerico(p: p, ctx: contexto, respuesta: respuesta)
             case .colocarTilde(let p): MecanicaColocarTilde(p: p, ctx: contexto, respuesta: respuesta)
             case .fraccionBarras(let p): MecanicaFraccionBarras(p: p, ctx: contexto, respuesta: respuesta)
+            case .evidencia(let p): MecanicaEvidencia(p: p, ctx: contexto, respuesta: respuesta)
+            case .recuerdo(let p): MecanicaRecuerdo(p: p, ctx: contexto, respuesta: respuesta)
+            case .figuraArea(let p): MecanicaFiguraArea(p: p, ctx: contexto, respuesta: respuesta)
             }
         }
     }
@@ -83,7 +93,7 @@ struct MecanicaEleccion: View {
 
     var body: some View {
         VStack(spacing: Espacio.m) {
-            ForEach(p.opciones, id: \.id) { opcion in
+            ForEach(OrdenOpciones.barajar(p.opciones, sesion: ctx.semillaOrden, item: ctx.item.id), id: \.id) { opcion in
                 let estado = estado(de: opcion.id)
                 Button {
                     respuesta = .eleccion(opcion.id)

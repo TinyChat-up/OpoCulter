@@ -83,6 +83,10 @@ protocol RepositorioProgreso: AnyObject {
     func eventosError() throws -> [EventoError]
     func registrar(_ evento: EventoError) throws
 
+    /// Intentos de los juegos (contrato de intento, 05G §2), en orden de fecha.
+    func intentosActividad() throws -> [IntentoActividad]
+    func registrar(_ intento: IntentoActividad) throws
+
     func ajustes() throws -> Ajustes
     func guardar(_ ajustes: Ajustes) throws
 
@@ -146,6 +150,10 @@ final class RepositorioEnMemoria: RepositorioProgreso {
     func eventosError() throws -> [EventoError] { eventosGuardados.sorted { $0.fecha < $1.fecha } }
     func registrar(_ evento: EventoError) throws { eventosGuardados.append(evento) }
 
+    private var intentosActividadGuardados: [IntentoActividad] = []
+    func intentosActividad() throws -> [IntentoActividad] { intentosActividadGuardados.sorted { $0.fecha < $1.fecha } }
+    func registrar(_ intento: IntentoActividad) throws { intentosActividadGuardados.append(intento) }
+
     func ajustes() throws -> Ajustes { ajustesGuardados }
     func guardar(_ ajustes: Ajustes) throws { ajustesGuardados = ajustes }
 
@@ -158,5 +166,6 @@ final class RepositorioEnMemoria: RepositorioProgreso {
         diagnosticosGuardados = []
         partidasGuardadas = []
         eventosGuardados = []
+        intentosActividadGuardados = []
     }
 }

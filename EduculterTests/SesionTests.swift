@@ -33,7 +33,8 @@ struct SolucionesTests {
             #expect(correcta.esCompleta(para: item.payload), "\(item.id)")
             #expect(Evaluador.evaluar(correcta, para: item).correcto, "\(item.id)")
             let error = RespuestaEjemplo.conUnError(item.payload, erroresHabituales: item.erroresHabituales)
-            #expect(!Evaluador.evaluar(error, para: item).correcto, "\(item.id)")
+            // El recuerdo es autoevaluación: no tiene respuesta errónea (05G).
+            if mecanica != .recuerdo { #expect(!Evaluador.evaluar(error, para: item).correcto, "\(item.id)") }
             #expect(!DescripcionSolucion.texto(item.payload).isEmpty)
         }
     }

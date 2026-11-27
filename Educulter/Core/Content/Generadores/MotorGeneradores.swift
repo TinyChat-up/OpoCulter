@@ -19,6 +19,10 @@ struct Muestra: Sendable, Equatable {
     var datos: [String: String] = [:]
     /// Ejemplo resuelto (05E parte 2 §5): pasos con sus resultados intermedios calculados.
     var pasos: [PasoResuelto] = []
+    /// Actividad de juego (05G): «J46», «J63».
+    var juego: String?
+    /// Texto base que se puede abrir desde el ítem (05G, J46).
+    var textoRef: String?
 }
 
 /// Recursos de los generadores de Lengua (léxico, piezas de gramática, bancos de frases).
@@ -42,11 +46,17 @@ struct RecursosGeneradores: Sendable, Equatable {
     var literatura: BaseLiteraria?
     /// Catálogo de errores típicos (05E parte 2 §4): etiqueta los distractores de cada muestra.
     var errores: CatalogoErrores
+    /// J46 «De evidencia a resumen» (05G): datos de `resumen.json` y textos base por id.
+    var resumen: BancoResumen?
+    var textosBase: [String: TextoBase] = [:]
 
     init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
          verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases(),
          compatibilidad: CompatibilidadGramatica = CompatibilidadGramatica(), ambiguas: PalabrasAmbiguas = PalabrasAmbiguas(),
-         literatura: BaseLiteraria? = nil, errores: CatalogoErrores = CatalogoErrores()) {
+         literatura: BaseLiteraria? = nil, errores: CatalogoErrores = CatalogoErrores(),
+         resumen: BancoResumen? = nil, textosBase: [TextoBase] = []) {
+        self.resumen = resumen
+        self.textosBase = Dictionary(textosBase.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         self.literatura = literatura
         self.errores = errores
         self.lexico = lexico
@@ -75,6 +85,15 @@ protocol GeneradorItems: Sendable {
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra
     /// Claves canónicas únicas del espacio finito de parámetros de la plantilla (hasta `limite`).
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String]
+    /// Variante que recibe además la semilla del ítem (J46: los pasos de una misma semilla comparten
+    /// el texto aunque sean plantillas distintas). Por defecto, la de arriba.
+    func muestra(_ p: Plantilla, semilla: UInt64, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra
+}
+
+extension GeneradorItems {
+    func muestra(_ p: Plantilla, semilla: UInt64, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
+        try muestra(p, recursos: recursos, rng: &rng)
+    }
 }
 
 enum ErrorGenerador: Error, Equatable, CustomStringConvertible {
@@ -108,6 +127,8 @@ enum MotorGeneradores {
             GeneradorFormasNoPersonales(), GeneradorLiteratura(),
             // Fase 05E parte 2 (D-100).
             GeneradorTerminoDesconocido(),
+            // Fase 05G: juegos J46 y J63.
+            GeneradorEvidenciaResumen(), GeneradorAreaCompuesta(),
         ]
         return Dictionary(uniqueKeysWithValues: todos.map { ($0.tipo, $0) })
     }()
@@ -129,7 +150,7 @@ enum MotorGeneradores {
         guard let g = generadores[p.tipo] else { throw ErrorGenerador.tipoDesconocido(p.tipo) }
         guard g.mecanicas.contains(p.mecanica) else { throw ErrorGenerador.mecanicaNoAdmitida(tipo: p.tipo, mecanica: p.mecanica) }
         var r = rng(p, semilla: semilla)
-        var m = try g.muestra(p, recursos: recursos, rng: &r)
+        var m = try g.muestra(p, semilla: semilla, recursos: recursos, rng: &r)
         m.erroresHabituales = recursos.errores.etiquetar(m.erroresHabituales, competencia: p.competencia, generador: p.tipo)
         return m
     }
@@ -152,8 +173,8 @@ enum MotorGeneradores {
                     dificultad: p.dificultad, objetivo: p.objetivo ?? "Practicar \(p.tipo)",
                     enunciado: Marcadores.rellenar(redaccion, con: valores), payload: m.payload, pistas: pistas,
                     explicacion: m.explicacion, erroresHabituales: m.erroresHabituales,
-                    procedencia: p.procedencia, validacion: p.validacion, version: p.version,
-                    claveGenerada: "\(p.tipo)|\(m.clave)", pasos: m.pasos)
+                    procedencia: p.procedencia, validacion: p.validacion, version: p.version, textoRef: m.textoRef,
+                    claveGenerada: "\(p.tipo)|\(m.clave)", pasos: m.pasos, juego: m.juego)
     }
 
     /// Copia de una plantilla con otra dificultad (y, opcionalmente, otro peldaño) para Supervivencia

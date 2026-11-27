@@ -39,13 +39,27 @@ final class RondaViewModel: Identifiable {
 
     let id = UUID()
     let servicio: ServicioSesion
+    /// Semilla de la ronda para el orden de presentación de las opciones (05G §1.1).
+    let semillaOrden: UInt64
     private(set) var ronda: RondaPreparada
     private(set) var items: [Item] = []
     private(set) var indice = 0
     private(set) var fase: Fase = .vacia
 
     /// Borrador de la respuesta que va construyendo la mecánica.
-    var respuesta: Respuesta?
+    var respuesta: Respuesta? {
+        didSet {
+            // Al elegir otra opción o fragmento en el reintento, la marca del error anterior se quita.
+            if oldValue != respuesta, let m = itemActual?.mecanica, m == .evidencia || m == .eleccion { marcasReintento = [] }
+        }
+    }
+    /// Contrato de intento de los juegos (05G §2): primer intento, pista y reintento.
+    private(set) var flujo: FlujoIntento?
+    /// Errores del primer intento, marcados en la pieza durante el reintento.
+    private(set) var marcasReintento: [String] = []
+    private var primerResultado: Resultado?
+    private var primeraRespuesta = ""
+    private var inicioItem = Date()
     private(set) var resultado: Resultado?
     private(set) var efecto: EfectoRespuesta?
     private(set) var usoPista = false
@@ -100,6 +114,7 @@ final class RondaViewModel: Identifiable {
 
     init(servicio: ServicioSesion, tipo: TipoRonda) {
         self.servicio = servicio
+        self.semillaOrden = servicio.rng.next()
         self.ronda = RondaPreparada(tipo: tipo, items: [], competenciaEnCurso: nil, teoriaPrevia: [])
         preparar(tipo)
     }
@@ -141,7 +156,7 @@ final class RondaViewModel: Identifiable {
     /// Pistas del ítem: en el peldaño 2 (Practicar), si tiene pasos, solo el primero; en el 1, las de
     /// siempre (D-033); desde el 3, ninguna.
     func pistas(de item: Item) -> [String] {
-        guard item.peldano <= Peldano.practica.rawValue else { return [] }
+        guard item.peldano <= Peldano.practica.rawValue, !sinAyudas else { return [] }
         if item.peldano == Peldano.practica.rawValue, let p = item.pasos.first {
             return ["Primer paso: \(p.frase) → \(p.resultado)"]
         }
@@ -158,6 +173,21 @@ final class RondaViewModel: Identifiable {
     var puedePedirPista: Bool {
         guard fase == .respondiendo, let item = itemActual, !esEjemplo else { return false }
         return pistasVisibles < pistas(de: item).count
+    }
+
+    /// Variante sin ayudas (05G §2): sin pistas ni cortes candidatos.
+    var sinAyudas: Bool { ronda.items.indices.contains(indice) && ronda.items[indice].sinAyudas }
+
+    /// Pista de razonamiento del reintento (no da la solución).
+    var pistaReintento: String? { if case .reintento(let p) = flujo?.fase { p } else { nil } }
+
+    /// Título de la hoja de feedback en los juegos (05G §2).
+    var tituloFeedback: String? {
+        switch flujo?.resultado {
+        case .enProgreso: "Correcto con ayuda"
+        case .autoevaluacion: "Autoevaluación hecha"
+        default: nil
+        }
     }
 
     var pistasMostradas: [String] {
@@ -213,11 +243,31 @@ final class RondaViewModel: Identifiable {
         guard puedePedirPista else { return }
         pistasVisibles += 1
         usoPista = true
+        flujo?.ayudas.insert(.pista)
     }
 
     func comprobar() {
         guard puedeComprobar, let item = itemActual, let respuesta else { return }
-        let r = Evaluador.evaluar(respuesta, para: item)
+        var r = Evaluador.evaluar(respuesta, para: item)
+        // Juegos (05G §2): si falla el primer intento, pista y reintento editando la misma respuesta.
+        if var f = flujo {
+            let primero = f.fase == .primerIntento
+            let pista = Evaluador.feedback(para: r, item: item).first ?? item.pistas.first ?? "Revisa tu respuesta paso a paso."
+            f.comprobar(correcto: r.correcto, pista: pista)
+            flujo = f
+            if primero {
+                primerResultado = r
+                primeraRespuesta = respuesta.registro
+            }
+            if !f.terminado {
+                marcasReintento = r.errores
+                sonido?.fallo()
+                return
+            }
+            if f.resultado == .enProgreso { usoPista = true }
+            if f.resultado == .fallo, let p = primerResultado { r.errores = Array(Set(r.errores).union(p.errores)).sorted() }
+        }
+        marcasReintento = []
         let comboActual = combo.registrar(correcto: r.correcto)
         resultado = r
         respondidos += 1
@@ -241,7 +291,8 @@ final class RondaViewModel: Identifiable {
         sesionDiagnostico?.registrar(itemId: item.id, correcto: r.correcto)
         do {
             let e = try servicio.registrar(item: item, resultado: r, usoPista: usoPista, combo: comboActual,
-                                           motivo: ronda.items[indice].motivo, errorRemedio: ronda.items[indice].errorId)
+                                           motivo: ronda.items[indice].motivo, errorRemedio: ronda.items[indice].errorId,
+                                           actividad: intentoActividad(item, respuesta: respuesta, final: r), primerIntento: primerResultado)
             efecto = e
             xpRonda += e.xp
             if e.subioPeldano, !subidas.contains(item.competencia) { subidas.append(item.competencia) }
@@ -363,7 +414,29 @@ final class RondaViewModel: Identifiable {
         }
     }
 
+    /// Registro del contrato de intento (solo en los ítems con reintento).
+    private func intentoActividad(_ item: Item, respuesta: Respuesta, final r: Resultado) -> IntentoActividad? {
+        guard let f = flujo, let resultado = f.resultado else { return nil }
+        let reintento = f.reintentoCorrecto != nil ? respuesta.registro : nil
+        return IntentoActividad(fecha: servicio.reloj.ahora, fuente: item.id, version: item.version, competencia: item.competencia,
+                                destreza: item.destreza, patron: item.mecanica.patron, primeraRespuesta: primeraRespuesta,
+                                primerCorrecto: f.primerCorrecto ?? r.correcto, ayudas: f.ayudas, reintento: reintento,
+                                reintentoCorrecto: f.reintentoCorrecto, errorId: EstadoErrores.errores(de: primerResultado ?? r, item: item).first,
+                                sinAyudas: sinAyudas, resultado: resultado, duracion: servicio.reloj.ahora.timeIntervalSince(inicioItem))
+    }
+
     private func reiniciarItem() {
+        marcasReintento = []
+        primerResultado = nil
+        primeraRespuesta = ""
+        inicioItem = servicio.reloj.ahora
+        if let item = itemActual, item.conReintento {
+            var ayudas: Set<IntentoActividad.Ayuda> = []
+            if esEjemplo { ayudas.insert(.ejemplo) }
+            flujo = FlujoIntento(autoevaluacion: item.mecanica == .recuerdo, ayudasIniciales: ayudas)
+        } else {
+            flujo = nil
+        }
         respuesta = nil
         resultado = nil
         efecto = nil

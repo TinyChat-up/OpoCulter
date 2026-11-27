@@ -1,8 +1,31 @@
 # Estado del proyecto
 
-**Fase actual:** 05E parte 2 (identidad editorial, sesión diaria, motor de errores y ejemplos resueltos) · **Terminada y fusionada en `main`**.
-**Siguiente:** lo que decida la dirección tras el informe de la parte 2 (lotes de datos pendientes y Fase 05F/06).
-**Última actualización:** 2026-11-26
+**Fase actual:** 05G (juegos: patrones, contrato de intento, J46 y J63) · **Terminada y fusionada en `main`**.
+**Siguiente:** lo que decida la dirección tras el informe de la 05G.
+**Última actualización:** 2026-11-27
+
+## Fase 05G — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| §0 Fase 05F | No existe rama ni prompt de la 05F: no hay Rayos X, Editor, Fábrica, Detective ni Glosario | `git branch -a` |
+| §1.1 Orden de opciones | ✅ Barajadas por ronda e ítem; en 200 sesiones la correcta cae en cada posición entre el 15 % y el 35 % | D-122, `JuegosTests` |
+| §1.2 y §1.3 | 6 ítems de comprensión con la correcta más larga (listados, sin cambiar datos); OF.2017.O-6 y OF.2022.O-4 a «parcial» | CONTENIDOS, `equivalencias.json` |
+| §2 Contrato de intento | ✅ Pista, reintento y solución; dominio solo a la primera y sin ayudas; «en progreso» no mueve Leitner; variante a los 2 días | D-116, D-117, `JuegosTests` |
+| §3 Patrones | ✅ 9 patrones; las mecánicas actuales asignadas | D-115 |
+| §4 J46 | ✅ 3 pasos sobre el mismo texto, 5 textos (2 nuevos) | D-118 |
+| §5 J63 | ✅ 6 niveles; 200 semillas por nivel con oráculo de polígono, todas las descomposiciones suman el total | D-119, `JuegosTests` |
+| §6 Integración | ✅ Sesión (actividad completa y variante), Camino, Rescate; ítems por datos (INFER.0004 y AREA.0001 en borrador) | D-120 |
+| Tests unitarios | ✅ 688 casos: 660 en verde a la primera; 28 fallos por recuentos de contenido y oráculos de los generadores nuevos, corregidos y repetidas esas suites (0 fallos) | `xcodebuild test` |
+| Tests de interfaz | ✅ Solo los afectados (sesión diaria y recorrido): 5 de 5 en verde | `SesionDiariaUITests`, `RecorridoParte2UITests` |
+| Avisos del compilador | ✅ 0 (Debug, tests y archive Release) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada y abierta (proceso en marcha) | `devicectl` |
+| Capturas | 6: J46 paso 1 con pista, J46 resumen con criterios, J63 estrategia, J63 cortes, J63 con error explicado, variante sin ayudas | [docs/capturas/fase05g/](docs/capturas/fase05g/) |
+
+## Pendiente (05G)
+1. Accesibilidad implementada (descripción de la figura para VoiceOver, alternativas por toque), **sin auditar** (Fase 07).
+2. Decisiones para la dirección: ver el informe.
 
 ## Fase 05E parte 2 — Resultado
 

@@ -10,9 +10,9 @@ private let validadorTextos = ValidadorContenido(anioActual: 2026)
 
 @Suite("Textos base de comprensión")
 struct TextosBaseTests {
-    @Test("Se cargan los 5 textos base con su procedencia, también en Release")
+    @Test("Se cargan los 7 textos base con su procedencia, también en Release")
     func carga() throws {
-        #expect(bancoTextos.textos.map(\.id).sorted() == ["TXT.BEC.R21", "TXT.MAC.CAM", "TXT.ORI.ABEJAS", "TXT.ORI.DEBERES", "TXT.ORI.FARO"])
+        #expect(bancoTextos.textos.map(\.id).sorted() == ["TXT.BEC.R21", "TXT.MAC.CAM", "TXT.ORI.ABEJAS", "TXT.ORI.BICI", "TXT.ORI.DEBERES", "TXT.ORI.FARO", "TXT.ORI.SUENO"])
         for t in bancoTextos.textos {
             #expect(!t.titulo.isEmpty && !t.texto.isEmpty, "\(t.id)")
             #expect(validadorTextos.validar(texto: t).isEmpty, "\(validadorTextos.validar(texto: t))")
@@ -26,18 +26,19 @@ struct TextosBaseTests {
             }
         }
         let release = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(release.textos.count == 5, "Los 5 textos están aprobados")
+        #expect(release.textos.count == 7, "Los 7 textos están aprobados (SUENO y BICI, de la 05G)")
     }
 
     @Test("Cada ítem de comprensión con textoRef lo resuelve, también con la política de Release")
     func referencias() throws {
         let comprension = bancoTextos.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.COM.") }
-        #expect(comprension.count == 19)
+        #expect(comprension.count == 20)
         let conTexto = comprension.filter { $0.textoRef != nil }
-        #expect(conTexto.count == 13, "Los 6 restantes son conceptuales (emparejar definiciones, géneros…)")
+        #expect(conTexto.count == 13, "Los 7 restantes son conceptuales o llevan el texto en fragmentos (evidencia)")
         for item in conTexto { #expect(bancoTextos.texto(de: item) != nil, "\(item.id) → \(item.textoRef ?? "")") }
-        // Todos los textos los usa algún ítem.
-        #expect(Set(conTexto.compactMap(\.textoRef)) == Set(bancoTextos.textos.map(\.id)))
+        // Todos los textos los usa algún ítem o la actividad J46 (05G).
+        let deJ46 = Set(bancoTextos.recursos.resumen?.textos.map(\.texto) ?? [])
+        #expect(Set(conTexto.compactMap(\.textoRef)).union(deJ46) == Set(bancoTextos.textos.map(\.id)))
         let release = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
         for item in release.itemsEstaticos where item.textoRef != nil { #expect(release.texto(de: item) != nil, "\(item.id)") }
         // Ida y vuelta del campo en JSON.

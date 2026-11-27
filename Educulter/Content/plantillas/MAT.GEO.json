@@ -1,0 +1,146 @@
+[
+  {
+    "id": "MAT.GEO.AREA.G01",
+    "competencia": "MAT.GEO.AREA",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "figuraArea",
+    "tipo": "areaCompuesta",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "J63 · Corta y compensa: Forma de L con enteros (cm)",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G §5: especificación de la dirección (26/11/2026); figuras y redacciones en el generador (D-119)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.AREA.G02",
+    "competencia": "MAT.GEO.AREA",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "figuraArea",
+    "tipo": "areaCompuesta",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "J63 · Corta y compensa: Rectángulo con hueco",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G §5: especificación de la dirección (26/11/2026); figuras y redacciones en el generador (D-119)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.AREA.G03",
+    "competencia": "MAT.GEO.AREA",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "figuraArea",
+    "tipo": "areaCompuesta",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "J63 · Corta y compensa: Rectángulo y triángulo",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G §5: especificación de la dirección (26/11/2026); figuras y redacciones en el generador (D-119)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.AREA.G04",
+    "competencia": "MAT.GEO.AREA",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "figuraArea",
+    "tipo": "areaCompuesta",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "J63 · Corta y compensa: Perfil del examen: tres partes con decimales (m)",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G §5: especificación de la dirección (26/11/2026); figuras y redacciones en el generador (D-119)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.AREA.G05",
+    "competencia": "MAT.GEO.AREA",
+    "peldano": 5,
+    "dificultad": 5,
+    "mecanica": "figuraArea",
+    "tipo": "areaCompuesta",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "J63 · Corta y compensa: Rectángulo y semicírculo (π = 3,14)",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G §5: especificación de la dirección (26/11/2026); figuras y redacciones en el generador (D-119)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.AREA.G06",
+    "competencia": "MAT.GEO.AREA",
+    "peldano": 5,
+    "dificultad": 6,
+    "mecanica": "figuraArea",
+    "tipo": "areaCompuesta",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "J63 · Corta y compensa: Medidas mixtas en m y cm",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05G §5: especificación de la dirección (26/11/2026); figuras y redacciones en el generador (D-119)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "version": 1
+  }
+]

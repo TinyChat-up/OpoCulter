@@ -103,7 +103,7 @@ struct ProgresoTests {
     func compatibilidadCloudKit() throws {
         let contenedor = try EsquemaProgreso.contenedor(enMemoria: true)
         #expect(contenedor.configurations.allSatisfy { $0.cloudKitContainerIdentifier == nil })
-        #expect(EsquemaProgreso.modelos.count == 9)  // + EventoErrorRegistro (05E parte 2 §4)
+        #expect(EsquemaProgreso.modelos.count == 10)  // + EventoErrorRegistro (05E parte 2 §4) e IntentoActividadRegistro (05G)
         // Registros con duplicados (como los que podría crear una sincronización): se toma el más avanzado.
         let repo = RepositorioSwiftData(contenedor: contenedor)
         let a = EstadoCompetenciaRegistro(competenciaId: "C"); a.peldano = 2

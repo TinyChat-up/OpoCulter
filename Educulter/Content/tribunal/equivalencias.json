@@ -65,8 +65,8 @@
         "LEN.VER.ANALISIS"
       ],
       "competencia": "LEN.VER.ANALISIS",
-      "entrena": "si",
-      "nota": "Formas regulares."
+      "entrena": "parcial",
+      "nota": "Pondré (poner) y has venido (venir) son irregulares; ignoras, regular (05G)."
     },
     {
       "examen": "OF.2017.O",
@@ -495,7 +495,7 @@
       ],
       "competencia": "LEN.VER.ANALISIS",
       "entrena": "si",
-      "nota": "Formas regulares."
+      "nota": "Formas regulares (llamaras, espero, llamas; revisado en la 05G)."
     },
     {
       "examen": "OF.2019.O",
@@ -692,8 +692,8 @@
         "LEN.VER.ANALISIS"
       ],
       "competencia": "LEN.VER.ANALISIS",
-      "entrena": "si",
-      "nota": "Sonrío es irregular; perdiste y hundiré, regulares."
+      "entrena": "parcial",
+      "nota": "Sonrío (sonreír) es irregular y el generador regular no la cubre; perdiste y hundiré, regulares (05G)."
     },
     {
       "examen": "OF.2022.O",

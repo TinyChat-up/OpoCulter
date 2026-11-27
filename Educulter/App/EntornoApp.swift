@@ -189,7 +189,8 @@ final class EntornoApp {
     /// Un ítem por mecánica, en el orden del catálogo de mecánicas: el preferido si existe y, si no,
     /// el primero de esa mecánica.
     static func itemsDemostracion(_ banco: BancoContenido) -> [String] {
-        Mecanica.allCases.compactMap { m in
+        // Las mecánicas de los juegos (05G) no entran en la demostración: tienen su propio flujo.
+        Mecanica.allCases.filter { ![.evidencia, .recuerdo, .figuraArea].contains($0) }.compactMap { m in
             if let id = demostracionPreferida[m], banco.item(id: id)?.mecanica == m { return id }
             return banco.items.first { $0.mecanica == m && $0.peldano <= 4 }?.id
         }

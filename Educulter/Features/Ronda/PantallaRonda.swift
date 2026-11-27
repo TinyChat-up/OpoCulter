@@ -147,6 +147,17 @@ struct PantallaRonda: View {
                                 .background(Paleta.recompensa.opacity(0.15), in: RoundedRectangle(cornerRadius: Radio.ficha))
                                 .accessibilityIdentifier("pista")
                         }
+                        // Reintento de un juego (05G §2): la pista explica el razonamiento, no la solución.
+                        if let pista = modelo.pistaReintento {
+                            Label { Text(pista) } icon: { Image(systemName: "arrow.uturn.backward.circle.fill").foregroundStyle(Paleta.recompensaTexto) }
+                                .font(.subheadline)
+                                .foregroundStyle(Paleta.textoPrincipal)
+                                .padding(Espacio.m)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .background(Paleta.recompensa.opacity(0.15), in: RoundedRectangle(cornerRadius: Radio.ficha))
+                                .accessibilityLabel("Pista para el reintento: \(pista)")
+                                .accessibilityIdentifier("pistaReintento")
+                        }
                         if modelo.esEjemplo {
                             VistaEjemploResuelto(pasos: modelo.pasosEjemplo, visibles: modelo.pasosVisibles,
                                                  ultimo: item.pasos.last, listo: modelo.ejemploListo)
@@ -157,7 +168,8 @@ struct PantallaRonda: View {
                         // ejemplo resuelto aparece cuando ya se han visto los pasos.
                         if modelo.ejemploListo {
                             PanelProtagonista(tinte: Paleta.tinte(competencia: item.competencia)) {
-                                VistaMecanica(contexto: ContextoMecanica(item: item, acento: acento, resultado: modelo.resultado),
+                                VistaMecanica(contexto: ContextoMecanica(item: item, acento: acento, resultado: modelo.resultado, semillaOrden: modelo.semillaOrden,
+                                                                       marcasReintento: modelo.marcasReintento, sinAyudas: modelo.sinAyudas),
                                               respuesta: $modelo.respuesta)
                             }
                             .modifier(PulsoAcierto(disparo: modelo.resultado?.correcto == true ? modelo.respondidos : 0))
@@ -290,6 +302,7 @@ struct PantallaRonda: View {
                 subioPeldano: modelo.efecto?.subioPeldano ?? false,
                 puedeVerRegla: modelo.teoriaDelItem != nil,
                 verRegla: { modelo.verRegla() },
+                titulo: modelo.tituloFeedback,
                 continuar: { modelo.continuar() })
             .transition(Movimiento.transicion(reducir: reducir))
         } else {
@@ -330,7 +343,7 @@ struct PantallaRonda: View {
                         .accessibilityIdentifier("botonPista")
                     }
                     if modelo.ejemploListo {
-                        BotonPrincipal(titulo: "Comprobar", acento: Paleta.primario) { modelo.comprobar() }
+                        BotonPrincipal(titulo: modelo.pistaReintento == nil ? "Comprobar" : "Volver a comprobar", acento: Paleta.primario) { modelo.comprobar() }
                             .disabled(!modelo.puedeComprobar)
                             .accessibilityIdentifier("botonComprobar")
                     } else {
