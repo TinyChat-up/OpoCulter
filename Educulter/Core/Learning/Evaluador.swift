@@ -1,7 +1,7 @@
 import Foundation
 
 /// Respuesta del usuario a un ítem, con la forma que corresponde a cada mecánica.
-enum Respuesta: Sendable, Equatable {
+enum Respuesta: Codable, Sendable, Equatable {
     /// Id de la opción elegida.
     case eleccion(String)
     case verdaderoFalso(Bool)
@@ -32,13 +32,13 @@ enum Respuesta: Sendable, Equatable {
     case rayosX(RespuestaRayosX)
     case editor(RespuestaEditor)
 
-    struct ParRespuesta: Sendable, Equatable, Hashable {
+    struct ParRespuesta: Codable, Sendable, Equatable, Hashable {
         var izquierda: String
         var derecha: String
     }
 
     /// Segmento marcado por el usuario. `padre` es el id de otro segmento de la misma respuesta.
-    struct SegmentoRespuesta: Sendable, Equatable {
+    struct SegmentoRespuesta: Codable, Sendable, Equatable {
         var id: String
         var desde: String
         var hasta: String

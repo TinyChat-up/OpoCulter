@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Valida los datos del Modo Tribunal (Educulter/Content/pendiente/tribunal/) y que todo JSON de Content/ es válido.
+"""Valida los datos del Modo Tribunal (Educulter/Content/tribunal/) y que todo JSON de Content/ es válido.
 
 Solo biblioteca estándar. Uso:
     python3 scripts/validar_tribunal.py [--anio AAAA] [ruta/a/Content]
@@ -132,7 +132,7 @@ def main(argv):
 
     print(f"Contenido: {raiz} · año de referencia {anio}")
     print(f"  JSON de Content/ comprobados: {total}")
-    dir_trib = raiz / "pendiente" / "tribunal"
+    dir_trib = raiz / "tribunal"
     n_preg = 0
     ruta_reglas = dir_trib / "reglas.json"
     if ruta_reglas.exists():
@@ -150,7 +150,7 @@ def main(argv):
         except json.JSONDecodeError:
             pass
     for ruta in sorted(dir_trib.glob("*.json")):
-        if ruta.name == "reglas.json":
+        if ruta.name in ("reglas.json", "equivalencias.json", "plano.json"):
             continue
         try:
             d = json.loads(ruta.read_text(encoding="utf-8"))

@@ -5,7 +5,7 @@ Uso (desde la raíz del repositorio):
     python3 scripts/tribunal/construir.py
 
 Escribe:
-  - Educulter/Content/pendiente/tribunal/<año>_<convocatoria>.json  (7 exámenes)
+  - Educulter/Content/tribunal/<año>_<convocatoria>.json  (7 exámenes)
   - docs/examenes/SOLUCIONES_REVISION_<n>.md  (hoja de revisión, partes de < 40.000 caracteres)
 
 Fuentes: docs/examenes/texto/*.txt (capa de texto y OCR), cotejados con los PDF de
@@ -859,7 +859,7 @@ def hoja(docs, limite=40_000):
                 f"{resumen}\nSolución: {p['solucionModelo']}\nRúbrica ({fuente}): B {r['bien']} / R {r['regular']} / M {r['mal']}{nr}\n```\n")
     cabecera = ("# Soluciones del Modo Tribunal · hoja de revisión (parte {n} de {t})\n\n"
                 "Aprobado por la dirección el 24/11/2026. Generado por `scripts/tribunal/construir.py` a partir de los datos de "
-                "`Educulter/Content/pendiente/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. "
+                "`Educulter/Content/tribunal/`. Las soluciones de Matemáticas se calculan en `scripts/tribunal/matematicas.py`. "
                 "Rúbricas: las de 2026 son las plantillas oficiales literales; las demás son de redacción propia, según su modelo. "
                 "Las soluciones son siempre de redacción propia. Las «Notas de la app» explican cómo se resuelven las erratas y "
                 "ambigüedades de los enunciados oficiales, que no se alteran.\n")

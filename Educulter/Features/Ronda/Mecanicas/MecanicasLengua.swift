@@ -69,12 +69,12 @@ struct MecanicaRayosX: View {
             if !terminado && !ctx.corregido { controlesCapa }
             if ctx.corregido { erroresFinales }
             if verResultado {
-                Text("Esquema").font(.subheadline.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
+                Text("Esquema del análisis").font(.subheadline.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal).accessibilityAddTraits(.isHeader)
                 MecanicaSegmentar(p: p.esquema, ctx: ContextoMecanica(item: ctx.item, acento: ctx.acento,
                                                                       resultado: Resultado(correcto: true, fraccionCorrecta: 1, errores: [])),
                                   respuesta: .constant(.segmentar(p.esquema.segmentos.map {
                                       .init(id: $0.id, desde: $0.desde, hasta: $0.hasta, etiqueta: $0.etiqueta, padre: $0.padre)
-                                  })))
+                                  })), tituloLista: "Esquema del análisis")
                     .allowsHitTesting(false)
                     .accessibilityIdentifier("esquemaRayosX")
             }

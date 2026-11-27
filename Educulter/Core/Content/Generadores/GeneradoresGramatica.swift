@@ -58,6 +58,9 @@ struct FraseHueco: Codable, Sendable, Equatable {
     var texto: String
     var correcta: String
     var dificultad: Int
+    /// La forma del hueco (u otra de su familia que encajaría) es una de las 70 palabras ambiguas
+    /// sin contexto (05I): no se usa en el hueco ni en el Editor hasta que decida la dirección.
+    var ambigua: Bool? = nil
 }
 
 /// Familia de formas que se confunden (tú/tu, porque/por qué…) con el uso de cada una.
@@ -804,7 +807,7 @@ struct GeneradorFraseHueco: GeneradorItems {
 
     func frases(_ p: Plantilla, _ banco: BancoFrases) -> [FraseHueco] {
         let familias = Set(p.textos("familias", porDefecto: banco.familias.map(\.id)))
-        let validas = banco.frases.filter { f in familias.contains(f.familia) && banco.familias.contains { $0.id == f.familia } }
+        let validas = banco.frases.filter { f in familias.contains(f.familia) && banco.familias.contains { $0.id == f.familia } && f.ambigua != true }
         for d in stride(from: p.dificultad, through: 1, by: -1) {
             let de = validas.filter { $0.dificultad == d }
             if !de.isEmpty { return de }

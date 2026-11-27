@@ -527,7 +527,10 @@ struct GeneradoresPropiedadesTests {
         // Fase 05H: Editor, Fábrica, recursos y glosario, aprobadas por la dirección (D-125–D-127).
         let fase05H = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05H") == true }
         #expect(fase05H.count == 24 && fase05H.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-27") })
-        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !fase05H.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
+        // Fase 05I: redactar en el simulacro (recuerdo) con datos ya aprobados.
+        let fase05I = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05I") == true }
+        #expect(fase05I.count == 3 && fase05I.allSatisfy { $0.mecanica == .recuerdo && $0.validacion.estado == .aprobado })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !fase05H.contains($0) && !fase05I.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -608,7 +611,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 116)
+        #expect(banco.plantillas.count == 119)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }

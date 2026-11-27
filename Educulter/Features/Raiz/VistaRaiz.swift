@@ -14,8 +14,7 @@ struct VistaRaiz: View {
                 PantallaCamino(servicio: servicio)
                     .tabItem { Label("Camino", systemImage: "point.topleft.down.to.point.bottomright.curvepath") }
                     .tag(Pestana.camino)
-                VistaLlegaPronto(titulo: "Tribunal", icono: "checkmark.seal",
-                                 texto: "Los exámenes oficiales y simulacros con el formato y el tiempo del examen.")
+                PantallaTribunal(servicio: servicio)
                     .tabItem { Label("Tribunal", systemImage: "checkmark.seal.fill") }
                     .tag(Pestana.tribunal)
                 PantallaProgreso(servicio: servicio)

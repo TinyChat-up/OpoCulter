@@ -258,7 +258,7 @@ Archivo `Content/literatura/literatura.json` (en el repositorio, `Educulter/Cont
 - **`pendiente/LEN.COM.json`**: ítems con el esquema de §2.3 y un campo nuevo, `textoRef` (opcional): el id del texto base que se muestra junto al enunciado. Se moverán a `items/` cuando el motor admita textos base (pendiente con Mac).
 - **`pendiente/teoria_<bloque>.json`**: tarjetas de teoría (§2.6) de un bloque cuyos ítems siguen en `pendiente/`. Pasan a `teoria/<bloque>.json` junto con sus ítems, para que no haya teoría sin práctica en Release.
 - **Validación sin Swift**: `python3 scripts/validar_items.py` reproduce las reglas principales de `ValidadorContenido` sobre todo `Content/`: catálogo, ítems (incluidos los de `pendiente/`), teoría, textos base y simulacros. Comprueba ids, competencias, payload por mecánica, explicación de 280 caracteres o menos, pistas solo en los peldaños 1–2, bloques de teoría de 40 palabras o menos, procedencia y validación, y que cada `textoRef` exista. No valida `plantillas/` (necesita los generadores de Swift). El test de Swift sigue siendo la referencia.
-### 2.15 Exámenes oficiales del Modo Tribunal (datos, D-083)
+### 2.15 Exámenes oficiales del Modo Tribunal (datos, D-083; en uso desde la 05I en `Content/tribunal/`)
 `pendiente/tribunal/<año>_<convocatoria>.json`, un examen por archivo. La app no los lee: el motor del Tribunal llega en la Fase 05E.
 
 ```json
@@ -431,3 +431,9 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 - **Rayos X**: las 6 plantillas de marcar y segmentar de SUJPRED y COMPL pasan a `rayosX` (mismos ids); LEN.SIN.SUJPRED.0001–0002 y LEN.SIN.COMPL.0001 (borradores de prueba) migrados.
 - **Comprensión** (§0.5): opciones nuevas de la dirección en LEN.COM.TEMA.0001–0004 e INFER.0002–0003; `LEN.COM.INFER.0004` lleva `origen: LEN.COM.INFER.0003`.
 - **Errores típicos**: 103 → 112. **Distractores estáticos sin etiquetar**: 8. **Inventario** para el lote 06: [docs/lotes/LOTE06_INVENTARIO.md](docs/lotes/LOTE06_INVENTARIO.md).
+
+### Fase 05I · Tribunal (27/11/2026)
+- **Exámenes oficiales en uso**: los 7 de `pendiente/tribunal/` (139 preguntas, aprobados el 24/11/2026) pasan a `Content/tribunal/` con `reglas.json`; `pendiente/` solo guarda `tildeContexto.json`. Textos protegidos (2019 A y O) remitidos al cuadernillo; figuras de 2022 M5 y M10, 2024 M7 y 2026 O M7 con su descripción y enlace (sin página en los datos); 2022 L7 anulada.
+- **Plano del examen** calculado de las 139 preguntas (D-133) y **simulacros originales** con contenido aprobado de dificultad 4–5.
+- **Plantillas nuevas (3, aprobadas)** para redactar en el simulacro con el patrón `recuerdo`, sobre datos ya aprobados: LEN.COM.RESU.G01 (resumen, ANEXO A de la 05G), LEN.REC.DEF.G02 (definir un recurso, ANEXO B) y LEN.CLA.JUST.G03 (definir una clase de palabra, ANEXO B); criterios propios de la app.
+- **`frases.json`**: campo `ambigua`; marcadas FR.0088 y FR.0089 (sabia/savia), fuera del hueco y del Editor hasta que decida la dirección.

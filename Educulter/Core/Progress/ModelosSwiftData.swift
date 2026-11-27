@@ -235,12 +235,26 @@ final class IntentoActividadRegistro {
     }
 }
 
+/// Examen del Tribunal (05I): la sesión entera en JSON (compatible con CloudKit).
+@Model
+final class ExamenTribunalRegistro {
+    var uuid: UUID = UUID()
+    var inicio: Date = Date.distantPast
+    var datos: Data?
+
+    init(uuid: UUID, inicio: Date, datos: Data?) {
+        self.uuid = uuid
+        self.inicio = inicio
+        self.datos = datos
+    }
+}
+
 /// Esquema y contenedor del progreso.
 enum EsquemaProgreso {
     static var modelos: [any PersistentModel.Type] {
         [IntentoRegistro.self, EstadoCompetenciaRegistro.self, RescateRegistro.self,
          PerfilRegistro.self, LogroRegistro.self, DiagnosticoRegistro.self, PartidaRegistro.self, AjustesRegistro.self,
-         EventoErrorRegistro.self, IntentoActividadRegistro.self]
+         EventoErrorRegistro.self, IntentoActividadRegistro.self, ExamenTribunalRegistro.self]
     }
 
     /// Contenedor local (sin CloudKit). `enMemoria` para tests.

@@ -179,7 +179,7 @@ def main():
     legado = {c["id"] for a in catalogo["areas"] for b in a["bloques"] for c in b["competencias"] if "equivaleA" in c}
     con = competencias_con_contenido()
     preguntas = []
-    for ruta in sorted((CONTENT / "pendiente/tribunal").glob("*_*.json")):
+    for ruta in sorted((CONTENT / "tribunal").glob("*_*.json")):
         examen = json.loads(ruta.read_text(encoding="utf-8"))
         for p in examen["preguntas"]:
             comp, entrena, nota = EQ[(examen["id"], p["numero"])]

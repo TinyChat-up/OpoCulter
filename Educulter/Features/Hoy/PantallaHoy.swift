@@ -292,8 +292,7 @@ struct PantallaHoy: View {
 
     // MARK: Modos
 
-    /// Baldosas de los modos: Camino, Supervivencia, Rescate (con su número) y Tribunal (próximamente,
-    /// desactivada con su motivo).
+    /// Baldosas de los modos: Camino, Supervivencia, Rescate (con su número) y Tribunal (05I).
     private func baldosas(_ estado: EstadoHoy) -> some View {
         // Pilas normales (no `LazyVGrid`, que no reajusta el texto al cambiar su tamaño): dos
         // columnas y, con texto de accesibilidad, una.
@@ -323,7 +322,7 @@ struct PantallaHoy: View {
                     activa: estado.supervivenciaDisponible, id: "baldosaSupervivencia") { modelo.mostrarSupervivencia = true },
             Baldosa(titulo: "Rescate", icono: "lifepreserver", detalle: rescate, numero: estado.rescatesPendientes + modelo.erroresActivos,
                     activa: true, id: "botonRescate") { modelo.mostrarRescate = true },
-            Baldosa(titulo: "Tribunal", icono: "checkmark.seal", detalle: "Próximamente", activa: false, id: "baldosaTribunal") {},
+            Baldosa(titulo: "Tribunal", icono: "checkmark.seal", detalle: "Exámenes oficiales y simulacros", activa: true, id: "baldosaTribunal") { irA(.tribunal) },
         ]
     }
 

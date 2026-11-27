@@ -66,7 +66,7 @@ extension Payload {
 }
 
 extension Respuesta {
-    struct RespuestaRayosX: Sendable, Equatable {
+    struct RespuestaRayosX: Codable, Sendable, Equatable {
         var verbo: Set<String> = []
         var sujeto: Set<String> = []
         var omitido: String?
@@ -77,7 +77,7 @@ extension Respuesta {
         var fallos: Set<Int> = []
     }
 
-    struct RespuestaEditor: Sendable, Equatable {
+    struct RespuestaEditor: Codable, Sendable, Equatable {
         var marcadas: Set<String> = []
         var cambios: [String: String] = [:]
     }

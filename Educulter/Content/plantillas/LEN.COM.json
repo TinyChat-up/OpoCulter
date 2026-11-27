@@ -76,5 +76,31 @@
       "fecha": "2026-11-26"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.COM.RESU.G01",
+    "competencia": "LEN.COM.RESU",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "recuerdo",
+    "tipo": "evidenciaResumen",
+    "enunciados": [
+      "Resume «{{titulo}}» en una o dos frases con tus palabras."
+    ],
+    "objetivo": "Resumir un texto",
+    "parametros": {
+      "paso": "resumen"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05I: redactar en el simulacro con el patrón recuerdo, con datos ya aprobados (ANEXO A de la 05G o ANEXO B de la 05H); criterios propios de la app."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
   }
 ]
