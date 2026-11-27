@@ -690,3 +690,12 @@ Paleta v3 (tinta marina, coral, amarillo y azul) con variantes de texto AA y tes
 
 ### D-136 · 2026-11-27 · Lote 06 (sin Mac) · Vigente (numerada D-130 en la rama `contenido/lote-06`)
 **Lote 06 de la dirección convertido sin tocar Swift.** Las 36 tarjetas entran en `teoria/` (aprobadas): un esquema separado por «·» pasa a una línea por «Etiqueta: valor», conservando el «·» de multiplicar dentro de un valor. Las 118 frases de tilde en contexto se añaden en `pendiente/tildeContexto.json`, con `frase`, `correcta` y `opciones`. Lo que no cabe en los esquemas actuales queda en `pendiente/lote06/`, fuera de la carga: la plantilla `LEN.ORT.CTX.G01` (borrador; falta el generador `tildeContexto` y la competencia `LEN.ORT.CTX`) y los 8 errores con `remedio.tipo = "remedioEstatico"` (el decodificador y el validador exigen hoy una plantilla de remedio). El detalle y lo que debe hacer el Mac está en `docs/lotes/LOTE06_PENDIENTE.md`.
+
+### D-137 · 2026-11-27 · Fase 05J · Vigente
+**Premium en la beta.** Hasta que llegue StoreKit, la beta concede el Premium. La lógica de bloqueo existe y se prueba con el Premium desactivado (`AccesoTribunal`: la muestra SIM.DEMO.01 es gratis en los dos formatos; sin derecho, un simulacro de pago no se hace, ni se imprime ni se comparte).
+
+### D-138 · 2026-11-27 · Fase 05J · Vigente
+**Contenido pendiente fuera de `Content/`.** El contenido pendiente ya no vive en `Content/`, porque esa carpeta se empaqueta entera en la app (el archive de la 05I llevaba `pendiente/`). Al cerrar el lote 06, `pendiente/` desaparece de `Content/`: `tildeContexto.json` pasa a `Content/`, la plantilla a `plantillas/` y los 8 errores a `errores.json`.
+
+### D-139 · 2026-11-27 · Fase 05J · Vigente
+**«Por bloques».** La práctica «Por bloques» del Tribunal funciona con las rondas normales de ítems de juego (los simulacros generados de la 05I). Las pistas solo aparecen en los ítems de los peldaños 1–2. Su puntuación no se compara con la del examen.

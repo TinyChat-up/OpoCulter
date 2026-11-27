@@ -85,7 +85,7 @@ struct CatalogoErroresTests {
         let sin = bancoAprobado.itemsEstaticos.flatMap { i in i.erroresHabituales.filter { $0.error == nil }.map { (i.id, $0.respuesta) } }
         #expect(sin.isEmpty, "\(sin)")
         let estaticos = bancoAprobado.recursos.errores.errores.filter(\.remedio.esEstatico)
-        #expect(bancoAprobado.recursos.errores.errores.count == 120 && estaticos.count == 8)
+        #expect(bancoAprobado.recursos.errores.errores.count == 121 && estaticos.count == 8)
         #expect(estaticos.allSatisfy { e in bancoAprobado.itemsEstaticos.contains { i in i.erroresHabituales.contains { $0.error == e.id } } })
     }
 

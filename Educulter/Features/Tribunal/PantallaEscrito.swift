@@ -48,6 +48,14 @@ struct PantallaEscrito: View {
             pie
         }
         .background(Paleta.fondo.ignoresSafeArea())
+        .task {
+            // Un temporizador de 1 s mientras la sala está a la vista (05J: un TimelineView con
+            // `from: .now` se recreaba en cada render y disparaba sin parar).
+            while !Task.isCancelled {
+                modelo.tic(.now)
+                try? await Task.sleep(for: .seconds(1))
+            }
+        }
         .sheet(isPresented: $verMapa) { mapa }
         .sheet(isPresented: $verBorrador) {
             HojaBorrador(enunciado: modelo.pregunta?.enunciado ?? "", dibujo: $modelo.borrador)
@@ -68,18 +76,22 @@ struct PantallaEscrito: View {
     private var cabecera: some View {
         VStack(alignment: .leading, spacing: Espacio.xs) {
             HStack {
-                Button { modelo.segundoPlano(); cerrar() } label: { Image(systemName: "xmark").font(.headline) }
-                    .frame(minWidth: Medidas.tactilMinimo, minHeight: Medidas.tactilMinimo)
+                Button { modelo.segundoPlano(); cerrar() } label: {
+                    Image(systemName: "xmark").font(.headline)
+                        .frame(minWidth: Medidas.tactilMinimo, minHeight: Medidas.tactilMinimo)
+                        .contentShape(Rectangle())
+                }
                     .accessibilityLabel("Salir (se guarda y el tiempo sigue corriendo)")
                     .accessibilityIdentifier("botonSalirEscrito")
                 Spacer()
-                TimelineView(.periodic(from: .now, by: 1)) { contexto in
-                    reloj.onChange(of: contexto.date) { _, ahora in modelo.tic(ahora) }
-                }
+                reloj
                 Spacer()
                 if !modelo.enPapel {
-                    Button { verMapa = true } label: { Label("Mapa", systemImage: "square.grid.3x3") }
-                        .frame(minHeight: Medidas.tactilMinimo)
+                    Button { verMapa = true } label: {
+                        Label("Mapa", systemImage: "square.grid.3x3")
+                            .frame(minWidth: Medidas.tactilMinimo, minHeight: Medidas.tactilMinimo)
+                            .contentShape(Rectangle())
+                    }
                         .accessibilityIdentifier("botonMapa")
                 }
             }

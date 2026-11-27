@@ -75,6 +75,7 @@ struct PantallaTribunal: View {
         .sheet(item: $pdf) { s in
             HojaPDF(simulacro: s, empezarEnPapel: { pdf = nil; empezar(s, .papel) }, corregirEnPapel: { pdf = nil; corregirPapel(s) })
         }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaTribunal")
     }
 
@@ -149,6 +150,7 @@ struct PantallaTribunal: View {
                     }
                 }
             }
+            .accessibilityElement(children: .contain)
             .accessibilityIdentifier("tarjetaPrincipal")
         }
     }

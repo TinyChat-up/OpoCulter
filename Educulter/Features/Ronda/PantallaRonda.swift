@@ -141,9 +141,12 @@ struct PantallaRonda: View {
                             .accessibilityIdentifier("cabeceraCompetencia")
                             Spacer(minLength: Espacio.s)
                             if Catalogo.area(de: item.competencia) == "MAT" && modelo.fase == .respondiendo {
-                                Button { verBorrador = true } label: { Image(systemName: "pencil.and.scribble").font(.subheadline) }
+                                Button { verBorrador = true } label: {
+                                    Image(systemName: "pencil.and.scribble").font(.subheadline)
+                                        .frame(minWidth: Medidas.tactilMinimo, minHeight: Medidas.tactilMinimo)
+                                        .contentShape(Rectangle())
+                                }
                                     .foregroundStyle(Paleta.textoSecundario)
-                                    .frame(minWidth: Medidas.tactilMinimo, minHeight: Medidas.tactilMinimo)
                                     .accessibilityLabel("Borrador")
                                     .accessibilityIdentifier("botonBorradorRonda")
                             }

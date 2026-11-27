@@ -580,9 +580,10 @@ struct GeneradoresPropiedadesTests {
         }
         // Los generadores de Lengua dependen del tamaño del léxico y del banco de prueba: con
         // recursos pequeños varios niveles comparten palabras (no decrece y el 6 supera al 1).
+        // tildeContexto (05J) es, como fraseHueco, un banco fijo de frases con 3 niveles (2, 3 y 4).
         // J46 (05G): el paso fija la consigna y el texto lo elige la semilla; no hay niveles.
         if base.tipo == "evidenciaResumen" { return }
-        let recursosPequenos = ["colocarTilde", "clasificarAcentuacion", "silabaTonica", "fraseHueco", "analisisVerbal", "oracionSimple"].contains(base.tipo)
+        let recursosPequenos = ["colocarTilde", "clasificarAcentuacion", "silabaTonica", "fraseHueco", "tildeContexto", "analisisVerbal", "oracionSimple"].contains(base.tipo)
         for d in 1..<6 {
             if recursosPequenos { #expect(medias[d] >= medias[d - 1] - 1e-9, "\(clave): \(medias)") }
             else { #expect(medias[d] > medias[d - 1], "\(clave): \(medias)") }

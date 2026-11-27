@@ -424,5 +424,10 @@ estatico("ERR.MAT.NUM.FRAEQ.1", "MAT.NUM.FRAEQ", "Sumas en lugar de multiplicar 
          "Para obtener una fracción equivalente, multiplica o divide numerador y denominador por el mismo número; sumar no vale.", "MAT.NUM.FRAEQ.T01",
          [f"MAT.NUM.FRAEQ.000{i}" for i in range(1, 6)])
 
+# Fase 05J: distractores del generador «tildeContexto» (LEN.ORT.CTX.G01, lote 06): la otra forma de la palabra.
+error("LEN.ORT.CTX", "Eliges la forma sin fijarte en su significado en la frase.", "LEN.ORT.CTX.G01",
+      "La tilde cambia la palabra: decide qué significa en la frase (qué clase de palabra, qué tiempo) y elige esa forma.",
+      ("tildeContexto", r"."), dificultad=2)
+
 SALIDA.write_text(json.dumps({"version": 1, "errores": ERRORES}, ensure_ascii=False, indent=1) + "\n")
 print(f"{len(ERRORES)} errores en {len({e['competencia'] for e in ERRORES})} competencias → {SALIDA.relative_to(RAIZ)}")

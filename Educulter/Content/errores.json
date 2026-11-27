@@ -2107,6 +2107,22 @@
      "MAT.NUM.FRAEQ.0005"
     ]
    }
+  },
+  {
+   "id": "ERR.LEN.ORT.CTX.1",
+   "competencia": "LEN.ORT.CTX",
+   "descripcion": "Eliges la forma sin fijarte en su significado en la frase.",
+   "remedio": {
+    "plantilla": "LEN.ORT.CTX.G01",
+    "dificultad": 2,
+    "explicacion": "La tilde cambia la palabra: decide qué significa en la frase (qué clase de palabra, qué tiempo) y elige esa forma."
+   },
+   "detecta": [
+    {
+     "generador": "tildeContexto",
+     "patron": "."
+    }
+   ]
   }
  ]
 }
