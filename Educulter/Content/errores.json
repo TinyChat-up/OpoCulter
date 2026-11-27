@@ -1968,6 +1968,145 @@
      "patron": "."
     }
    ]
+  },
+  {
+   "id": "ERR.LEN.COM.INFER.1",
+   "competencia": "LEN.COM.INFER",
+   "descripcion": "Respondes sin buscar en el texto la pista que lo apoya",
+   "remedio": {
+    "tipo": "remedioEstatico",
+    "explicacion": "Busca en el texto la frase que apoya tu respuesta: una inferencia siempre se puede justificar con el texto.",
+    "tarjeta": "LEN.COM.INFER.T01",
+    "items": [
+     "LEN.COM.INFER.0001",
+     "LEN.COM.INFER.0002",
+     "LEN.COM.INFER.0003",
+     "LEN.COM.INFER.0004"
+    ]
+   }
+  },
+  {
+   "id": "ERR.LEN.COM.INFER.2",
+   "competencia": "LEN.COM.INFER",
+   "descripcion": "Confundes la causa con la consecuencia",
+   "remedio": {
+    "tipo": "remedioEstatico",
+    "explicacion": "La causa explica por qué pasa algo; la consecuencia, lo que ocurre después. Fíjate en conectores como «por eso».",
+    "tarjeta": "LEN.COM.INFER.T01",
+    "items": [
+     "LEN.COM.INFER.0001",
+     "LEN.COM.INFER.0002",
+     "LEN.COM.INFER.0003",
+     "LEN.COM.INFER.0004"
+    ]
+   }
+  },
+  {
+   "id": "ERR.LEN.COM.INFER.3",
+   "competencia": "LEN.COM.INFER",
+   "descripcion": "Eliges una oración que no responde a lo que se pregunta",
+   "remedio": {
+    "tipo": "remedioEstatico",
+    "explicacion": "Relee la consigna: la oración elegida debe responder exactamente a lo que se pregunta.",
+    "tarjeta": "LEN.COM.INFER.T01",
+    "items": [
+     "LEN.COM.INFER.0001",
+     "LEN.COM.INFER.0002",
+     "LEN.COM.INFER.0003",
+     "LEN.COM.INFER.0004"
+    ]
+   }
+  },
+  {
+   "id": "ERR.LEN.LEX.SIN.1",
+   "competencia": "LEN.LEX.SIN",
+   "descripcion": "Eliges un sinónimo de otra acepción de la palabra",
+   "remedio": {
+    "tipo": "remedioEstatico",
+    "explicacion": "Un sinónimo solo vale si encaja en el sentido de la frase: «agua clara» es «agua transparente».",
+    "tarjeta": "LEN.LEX.SIN.T01",
+    "items": [
+     "LEN.LEX.SIN.0001",
+     "LEN.LEX.SIN.0002",
+     "LEN.LEX.SIN.0003",
+     "LEN.LEX.SIN.0004",
+     "LEN.LEX.SIN.0005",
+     "LEN.LEX.SIN.0006",
+     "LEN.LEX.SIN.0007"
+    ]
+   }
+  },
+  {
+   "id": "ERR.LEN.LEX.SIN.2",
+   "competencia": "LEN.LEX.SIN",
+   "descripcion": "Confundes la palabra con su contraria",
+   "remedio": {
+    "tipo": "remedioEstatico",
+    "explicacion": "«Prolijo» significa largo en exceso; lo breve y claro es «conciso».",
+    "tarjeta": "LEN.LEX.SIN.T01",
+    "items": [
+     "LEN.LEX.SIN.0001",
+     "LEN.LEX.SIN.0002",
+     "LEN.LEX.SIN.0003",
+     "LEN.LEX.SIN.0004",
+     "LEN.LEX.SIN.0005",
+     "LEN.LEX.SIN.0006",
+     "LEN.LEX.SIN.0007"
+    ]
+   }
+  },
+  {
+   "id": "ERR.LEN.LEX.SIN.3",
+   "competencia": "LEN.LEX.SIN",
+   "descripcion": "Confundes sinonimia con familia léxica",
+   "remedio": {
+    "tipo": "remedioEstatico",
+    "explicacion": "Los sinónimos comparten significado; las palabras de una familia léxica comparten lexema.",
+    "tarjeta": "LEN.LEX.SIN.T01",
+    "items": [
+     "LEN.LEX.SIN.0001",
+     "LEN.LEX.SIN.0002",
+     "LEN.LEX.SIN.0003",
+     "LEN.LEX.SIN.0004",
+     "LEN.LEX.SIN.0005",
+     "LEN.LEX.SIN.0006",
+     "LEN.LEX.SIN.0007"
+    ]
+   }
+  },
+  {
+   "id": "ERR.LEN.LEX.DICC.1",
+   "competencia": "LEN.LEX.DICC",
+   "descripcion": "No buscas el verbo por su infinitivo",
+   "remedio": {
+    "tipo": "remedioEstatico",
+    "explicacion": "Los verbos se buscan en el diccionario por su infinitivo: «cantábamos» está en «cantar».",
+    "tarjeta": "LEN.LEX.DICC.T01",
+    "items": [
+     "LEN.LEX.DICC.0001",
+     "LEN.LEX.DICC.0002",
+     "LEN.LEX.DICC.0003",
+     "LEN.LEX.DICC.0004",
+     "LEN.LEX.DICC.0005"
+    ]
+   }
+  },
+  {
+   "id": "ERR.MAT.NUM.FRAEQ.1",
+   "competencia": "MAT.NUM.FRAEQ",
+   "descripcion": "Sumas en lugar de multiplicar numerador y denominador",
+   "remedio": {
+    "tipo": "remedioEstatico",
+    "explicacion": "Para obtener una fracción equivalente, multiplica o divide numerador y denominador por el mismo número; sumar no vale.",
+    "tarjeta": "MAT.NUM.FRAEQ.T01",
+    "items": [
+     "MAT.NUM.FRAEQ.0001",
+     "MAT.NUM.FRAEQ.0002",
+     "MAT.NUM.FRAEQ.0003",
+     "MAT.NUM.FRAEQ.0004",
+     "MAT.NUM.FRAEQ.0005"
+    ]
+   }
   }
  ]
 }

@@ -20,10 +20,10 @@ struct ContenidoEmpaquetadoTests {
         // Fase 05C: 8 plantillas de prueba (borrador) que siguen + 38 del lote 02 + 4 del lote 02b.
         // + 05G: 3 pasos de J46 y 6 niveles de J63.
         // + 05H: 24 de Editor, Fábrica, recursos y glosario.
-        // + 05I: 3 de redactar con el patrón recuerdo (simulacros).
-        #expect(banco.plantillas.count == 124)
+        // + 05I: 3 de redactar con el patrón recuerdo (simulacros). + 05J: LEN.ORT.CTX.G01 (lote 06).
+        #expect(banco.plantillas.count == 125)
         #expect(banco.items.count > 133)
-        #expect(banco.teoria.count == 26, "17 + las 9 del ANEXO B (05E parte 2)")
+        #expect(banco.teoria.count == 62, "17 + las 9 del ANEXO B (05E parte 2) + las 36 del lote 06")
         #expect(banco.textos.count == 7 && banco.literatura?.autores.count == 142)
         #expect(banco.simulacros.count == 1)
         #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber ítems de todas las mecánicas")
@@ -50,7 +50,7 @@ struct ContenidoEmpaquetadoTests {
         #expect(!todos.items.isEmpty, "El bundle debe tener borradores para que el test tenga sentido")
         let release = try cargador.cargar(politica: .soloAprobados)
         #expect(release.items.allSatisfy { $0.validacion.estado == .aprobado })
-        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 119)
+        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 120)
         #expect(release.teoria.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.simulacros.allSatisfy { $0.validacion.estado == .aprobado })
         // Aprobado: LEN.ORT (50 ítems y 5 tarjetas), MAT.NUM (9 y 2), LEN.LEX (30 y 4) y LEN.COM (19 y 4,
@@ -62,10 +62,10 @@ struct ContenidoEmpaquetadoTests {
         #expect(release.itemsEstaticos.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 20)
         #expect(release.items.count > 108)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.ORT.") }.count == 5)
-        #expect(release.teoria.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 2)
-        #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.LEX.") }.count == 4)
-        #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 4)
-        #expect(release.teoria.count == 24, "15 + las 9 del ANEXO B (05E parte 2)")
+        #expect(release.teoria.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 5)
+        #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.LEX.") }.count == 8)
+        #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 7)
+        #expect(release.teoria.count == 60, "15 + las 9 del ANEXO B (05E parte 2) + las 36 del lote 06")
         #expect(release.textos.count == 7)
         #expect(release.items.allSatisfy { $0.validacion.revisor == "direccion" })
         #expect(release.simulacros.isEmpty)
@@ -110,7 +110,7 @@ struct ContenidoEmpaquetadoTests {
         #expect(banco.catalogo.bloque(deCompetencia: "MAT.GEO.TRIANG")?.id == "MAT.GEO")
         #expect(Catalogo.area(de: "MAT.GEO.TRIANG") == "MAT")
         // 24 + MAT.OPE.ECUAC, MAT.EST.CENTRAL y MAT.PRO.LAPLACE (Fase 05C) + 16 del lote 02 + 15 del lote 03a.
-        #expect(banco.catalogo.todasLasCompetencias.count == 125, "58 anteriores + las del mapa de la A1 + MAT.OPE.INCOG (Fase 05E)")
+        #expect(banco.catalogo.todasLasCompetencias.count == 126, "58 anteriores + las del mapa de la A1 + MAT.OPE.INCOG (Fase 05E) + LEN.ORT.CTX (05J)")
     }
 }
 

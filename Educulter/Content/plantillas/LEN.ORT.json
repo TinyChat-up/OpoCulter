@@ -563,5 +563,28 @@
       "fecha": "2026-11-27"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.ORT.CTX.G01",
+    "competencia": "LEN.ORT.CTX",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "eleccion",
+    "tipo": "tildeContexto",
+    "enunciados": [
+      "Elige la forma correcta: {{frase}}"
+    ],
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05J: plantilla del lote 06 sobre las frases de tilde en contexto de la dirección (tildeContexto.json). Aprobada al pasar los tests de propiedades: una sola opción válida por frase y distractores de la misma palabra."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
   }
 ]

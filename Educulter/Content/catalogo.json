@@ -88,6 +88,11 @@
               "id": "LEN.ORT.MAY",
               "nombre": "Mayúsculas",
               "orden": 8
+            },
+            {
+              "id": "LEN.ORT.CTX",
+              "nombre": "Tilde que cambia el significado",
+              "orden": 9
             }
           ]
         },

@@ -279,7 +279,8 @@
     "erroresHabituales": [
       {
         "respuesta": "o2",
-        "feedback": "«Evidente» es sinónimo de «clara» en otro sentido: «una prueba clara». Aquí se habla del agua."
+        "feedback": "«Evidente» es sinónimo de «clara» en otro sentido: «una prueba clara». Aquí se habla del agua.",
+        "error": "ERR.LEN.LEX.SIN.1"
       }
     ],
     "referencia": {
@@ -407,7 +408,8 @@
     "erroresHabituales": [
       {
         "respuesta": "o2",
-        "feedback": "Es justo lo contrario: lo breve y claro es «conciso»."
+        "feedback": "Es justo lo contrario: lo breve y claro es «conciso».",
+        "error": "ERR.LEN.LEX.SIN.2"
       }
     ],
     "referencia": {
@@ -526,7 +528,8 @@
     "erroresHabituales": [
       {
         "respuesta": "h2",
-        "feedback": "Compartir la raíz es propio de la familia léxica, no de la sinonimia."
+        "feedback": "Compartir la raíz es propio de la familia léxica, no de la sinonimia.",
+        "error": "ERR.LEN.LEX.SIN.3"
       }
     ],
     "referencia": {
@@ -1450,7 +1453,8 @@
     "erroresHabituales": [
       {
         "respuesta": "o3",
-        "feedback": "«Canto» es otra palabra (sustantivo) o una forma del verbo; la entrada del verbo es el infinitivo."
+        "feedback": "«Canto» es otra palabra (sustantivo) o una forma del verbo; la entrada del verbo es el infinitivo.",
+        "error": "ERR.LEN.LEX.DICC.1"
       }
     ],
     "referencia": {

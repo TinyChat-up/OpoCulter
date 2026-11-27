@@ -29,8 +29,15 @@ struct CatalogoErroresTests {
             #expect(c.errores.count >= 80)
             #expect(ValidadorContenido(anioActual: 2026).validar(errores: c, banco: banco).isEmpty)
             for e in c.errores {
-                let p = try #require(banco.plantilla(id: e.remedio.plantilla), "\(e.id)")
-                let ajustada = MotorGeneradores.ajustada(p, dificultad: max(1, e.remedio.dificultad - 1))
+                if e.remedio.esEstatico {
+                    // Remedio estático (lote 06, 05J): tarjeta e ítems aprobados de la competencia.
+                    var rng = GeneradorConSemilla(semilla: 1)
+                    #expect(!ConstructorSesion.itemsRemedioEstatico(e, banco: banco, rng: &rng).isEmpty, "\(e.id)")
+                    #expect(e.remedio.tarjeta.flatMap { t in banco.teoria.first { $0.id == t } } != nil, "\(e.id)")
+                    continue
+                }
+                let p = try #require(banco.plantilla(id: e.remedio.plantilla ?? ""), "\(e.id)")
+                let ajustada = MotorGeneradores.ajustada(p, dificultad: max(1, (e.remedio.dificultad ?? 2) - 1))
                 #expect((try? MotorGeneradores.generar(ajustada, semilla: 1, recursos: banco.recursos)) != nil, "\(e.id)")
             }
         }
@@ -72,13 +79,14 @@ struct CatalogoErroresTests {
         let etiquetados = bancoTodo.itemsEstaticos.flatMap(\.erroresHabituales).filter { $0.error != nil }
         #expect(etiquetados.count >= 40)
         #expect(etiquetados.allSatisfy { bancoTodo.recursos.errores[$0.error!] != nil })
-        // Punto 4 de la continuación: un distractor estático solo queda sin etiquetar si su competencia
-        // no tiene errores en el catálogo (no tiene plantilla con la que generar el remedio). Hoy son 8
-        // (LEN.COM.TEMA desde la 05G y LEN.LEX.POLI y LEN.LEX.CAMPO desde la 05H ya tienen errores), de LEN.COM.INFER, LEN.LEX.SIN, LEN.LEX.DICC y MAT.NUM.FRAEQ.
-        let conErrores = Set(bancoAprobado.recursos.errores.errores.map(\.competencia))
-        let sin = bancoAprobado.itemsEstaticos.flatMap { i in i.erroresHabituales.filter { $0.error == nil }.map { (i.competencia, $0) } }
-        #expect(sin.allSatisfy { !conErrores.contains($0.0) }, "\(sin.filter { conErrores.contains($0.0) }.map(\.0))")
-        #expect(sin.count == 8 && Set(sin.map(\.0)) == ["LEN.COM.INFER", "LEN.LEX.SIN", "LEN.LEX.DICC", "MAT.NUM.FRAEQ"])
+        // D-113: los 8 distractores estáticos aprobados que quedaban sin etiquetar (LEN.COM.INFER,
+        // LEN.LEX.SIN, LEN.LEX.DICC y MAT.NUM.FRAEQ) tienen ya su error con remedio estático (lote 06, 05J):
+        // ninguno queda sin etiquetar.
+        let sin = bancoAprobado.itemsEstaticos.flatMap { i in i.erroresHabituales.filter { $0.error == nil }.map { (i.id, $0.respuesta) } }
+        #expect(sin.isEmpty, "\(sin)")
+        let estaticos = bancoAprobado.recursos.errores.errores.filter(\.remedio.esEstatico)
+        #expect(bancoAprobado.recursos.errores.errores.count == 120 && estaticos.count == 8)
+        #expect(estaticos.allSatisfy { e in bancoAprobado.itemsEstaticos.contains { i in i.erroresHabituales.contains { $0.error == e.id } } })
     }
 
     @Test("Detección por distractor y por valor numérico")
@@ -204,7 +212,10 @@ struct ConstructorSesionTests {
             for r in remedios {
                 let pos = items.indices.filter { items[$0].errorId == r.error.id }
                 if let f = pos.first, pos != Array(f..<(f + pos.count)) || pos.count > 3 { fallos.append("\(semilla): remedio partido") }
-                if pos.contains(where: { !items[$0].itemId.hasPrefix(r.error.remedio.plantilla + "@d") }) { fallos.append("\(semilla): remedio de otra plantilla") }
+                let delRemedio: (String) -> Bool = { id in
+                    r.error.remedio.esEstatico ? (r.error.remedio.items ?? []).contains(id) : id.hasPrefix((r.error.remedio.plantilla ?? "") + "@d")
+                }
+                if pos.contains(where: { !delRemedio(items[$0].itemId) }) { fallos.append("\(semilla): remedio de otra plantilla") }
             }
             // Lo nuevo, en bloques de la misma competencia (el primero, de 3 si hay ítems).
             let incumple = ConstructorSesion.incumplimientos(items, competencia: comp, mixto: foco == .mixto)
@@ -335,7 +346,7 @@ struct ErroresExtremoTests {
         let remedio = sesion.items.filter { $0.errorId == id }
         let error = try #require(bancoTodo.recursos.errores[id])
         #expect(remedio.count == 3 && remedio.allSatisfy { $0.motivo == .remedio })
-        #expect(remedio.allSatisfy { $0.itemId.hasPrefix("\(error.remedio.plantilla)@d\(max(1, dificultadFallo - 1))#") })
+        #expect(remedio.allSatisfy { $0.itemId.hasPrefix("\(error.remedio.plantilla ?? "")@d\(max(1, dificultadFallo - 1))#") })
         // Rescate y Progreso.
         let seguidos = try s.erroresSeguidos()
         #expect(seguidos.activos.map(\.id) == [id] && seguidos.activos.first?.apariciones == 2)

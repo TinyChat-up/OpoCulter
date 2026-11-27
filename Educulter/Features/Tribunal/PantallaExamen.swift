@@ -66,7 +66,7 @@ struct PantallaExamen: View {
             HStack {
                 Button { modelo.pausar(); cerrar() } label: { Image(systemName: "xmark").font(.headline) }
                     .frame(minWidth: Medidas.tactilMinimo, minHeight: Medidas.tactilMinimo)
-                    .accessibilityLabel("Salir (el examen se guarda)")
+                    .accessibilityLabel("Salir (se guarda y el tiempo sigue corriendo)")
                     .accessibilityIdentifier("botonSalirExamen")
                 Spacer()
                 TimelineView(.periodic(from: .now, by: 1)) { contexto in
@@ -118,6 +118,7 @@ struct PantallaExamen: View {
                 .foregroundStyle(Paleta.textoPrincipal)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("enunciadoExamen")
+            if let t = o.tabla { VistaTabla(tabla: t) }
             if o.esAnulada {
                 Label("Pregunta anulada por el tribunal: se muestra, pero no puntúa.", systemImage: "nosign")
                     .font(.footnote).foregroundStyle(Paleta.textoSecundario)

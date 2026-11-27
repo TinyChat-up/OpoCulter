@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "nota": "Palabras del léxico que no se pueden preguntar sin contexto (Fase 05E, §4.1). Pendiente: la dirección redactará frases con contexto para cada una. Generado por scripts/ambiguas_tilde.py. Lote 06 (27/11/2026): frases con contexto de la dirección en «frases» (frase con ___, forma correcta y opciones = la correcta y las demás variantes de la palabra).",
+  "nota": "Palabras del léxico que no se pueden preguntar sin contexto (Fase 05E, §4.1). Generado por scripts/ambiguas_tilde.py. Lote 06 (27/11/2026): frases con contexto de la dirección en «frases» (frase con ___, forma correcta y opciones = la correcta y las demás variantes de la palabra). Fase 05J: datos del generador «tildeContexto» (LEN.ORT.CTX).",
   "palabras": [
     {
       "palabra": "mamá",
@@ -1690,7 +1690,7 @@
           ]
         },
         {
-          "frase": "La ___ dirigió la investigación.",
+          "frase": "La ___ Martínez dirigió la investigación.",
           "correcta": "comisaria",
           "opciones": [
             "comisaria",

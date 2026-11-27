@@ -88,6 +88,10 @@ protocol RepositorioProgreso: AnyObject {
     func examenesTribunal() throws -> [SesionExamen]
     /// Guarda (o actualiza, por id) un examen.
     func guardar(_ examen: SesionExamen) throws
+    /// Intentos de los simulacros escritos (05J), del más antiguo al más reciente.
+    func intentosEscritos() throws -> [IntentoEscrito]
+    /// Guarda (o actualiza, por id) un intento escrito.
+    func guardar(_ intento: IntentoEscrito) throws
 
     func ajustes() throws -> Ajustes
     func guardar(_ ajustes: Ajustes) throws
@@ -163,10 +167,17 @@ final class RepositorioEnMemoria: RepositorioProgreso {
         examenesGuardados.append(examen)
     }
 
+    private var escritosGuardados: [IntentoEscrito] = []
+    func intentosEscritos() throws -> [IntentoEscrito] { escritosGuardados }
+    func guardar(_ intento: IntentoEscrito) throws {
+        if let i = escritosGuardados.firstIndex(where: { $0.id == intento.id }) { escritosGuardados[i] = intento } else { escritosGuardados.append(intento) }
+    }
+
     func ajustes() throws -> Ajustes { ajustesGuardados }
     func guardar(_ ajustes: Ajustes) throws { ajustesGuardados = ajustes }
 
     func borrarProgreso() throws {
+        escritosGuardados = []
         intentosGuardados = []
         estados = [:]
         cola = ColaRescate()

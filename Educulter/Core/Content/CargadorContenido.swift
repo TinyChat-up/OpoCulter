@@ -54,7 +54,9 @@ enum ErrorCarga: Error, Equatable, CustomStringConvertible {
 /// ambiguas.json              (formas que solo se distinguen por la tilde, 05E §4.1)
 /// errores.json               (errores típicos y su detección en los distractores, 05E parte 2 §4)
 /// ```
-/// `pendiente/` (contenido aprobado que el motor aún no muestra, p. ej. el Tribunal) no se lee.
+/// tildeContexto.json         (frases de tilde en contexto del lote 06, generador `tildeContexto`, 05J)
+/// tribunal/originales/        (simulacros escritos originales: catálogo, datos y mapa de repaso, 05J)
+/// El contenido pendiente de aprobar no va en `Content/` (se empaqueta entero en la app, 05J).
 struct CargadorContenido: Sendable {
     /// Nombre de la carpeta de contenido dentro del bundle de la app.
     static let carpetaEnBundle = "Content"
@@ -99,6 +101,17 @@ struct CargadorContenido: Sendable {
             .map { try decodificar($0) as ExamenOficial }.filter { politica.admite($0.validacion) }
         let reglasURL = raiz.appendingPathComponent("tribunal/reglas.json")
         if FileManager.default.fileExists(atPath: reglasURL.path) { tribunal.reglas = try decodificar(reglasURL) }
+        // Simulacros originales escritos (05J): catálogo, datos literales y mapa de repaso.
+        let originales = raiz.appendingPathComponent("tribunal/originales")
+        let catalogoURL = originales.appendingPathComponent("Catalogo-tribunal.json")
+        if FileManager.default.fileExists(atPath: catalogoURL.path) {
+            let cat: CatalogoTribunal = try decodificar(catalogoURL)
+            tribunal.originales = try cat.simulacros.map { e in
+                SimulacroOriginal(entrada: e, datos: try decodificar(originales.appendingPathComponent(e.datos)))
+            }
+            let mapaURL = originales.appendingPathComponent("Mapa-de-repaso.csv")
+            if let csv = try? String(contentsOf: mapaURL, encoding: .utf8) { tribunal.mapaRepaso = MapaRepaso.leer(csv) }
+        }
 
         let recursos = try recursos()
         // Los distractores de los ítems estáticos también se etiquetan con su error típico (generador «estatico»).
@@ -129,7 +142,7 @@ struct CargadorContenido: Sendable {
             guard FileManager.default.fileExists(atPath: url.path) else { return nil }
             return try decodificar(url) as T
         }
-        return RecursosGeneradores(
+        var recursos = RecursosGeneradores(
             lexico: try opcional("lexico/palabras.json") ?? [],
             formasVerbales: try opcional("lexico/formas_verbales.json") ?? [],
             gramatica: try opcional("gramatica/piezas.json") ?? PiezasGramatica(),
@@ -145,6 +158,8 @@ struct CargadorContenido: Sendable {
             recursosLiterarios: try opcional("recursos.json"),
             glosario: try opcional("glosario.json")
         )
+        recursos.tildeContexto = try opcional("tildeContexto.json")
+        return recursos
     }
 
     /// Archivos `.json` de una subcarpeta, ordenados por nombre. Si no existe, lista vacía.

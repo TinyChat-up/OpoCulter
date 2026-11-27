@@ -397,5 +397,32 @@ error("LEN.ORT.HIA", "Confundes los términos de sílabas y acentuación.", "LEN
       "Diptongo: dos vocales en una sílaba; hiato: en dos. Aguda, llana y esdrújula: acento en la última, la penúltima o la antepenúltima.",
       ("glosario", r"."))
 
+# Lote 06 (05J): errores con remedio estático (tarjeta e ítems estáticos, sin plantilla ni patrones;
+# se asignan a mano en los distractores). Explicaciones del ANEXO D de la dirección.
+def estatico(id_, competencia, descripcion, explicacion, tarjeta, items):
+    ERRORES.append({"id": id_, "competencia": competencia, "descripcion": descripcion,
+                    "remedio": {"tipo": "remedioEstatico", "explicacion": explicacion, "tarjeta": tarjeta, "items": items}})
+
+INFER = [f"LEN.COM.INFER.000{i}" for i in range(1, 5)]
+SIN = [f"LEN.LEX.SIN.000{i}" for i in range(1, 8)]
+estatico("ERR.LEN.COM.INFER.1", "LEN.COM.INFER", "Respondes sin buscar en el texto la pista que lo apoya",
+         "Busca en el texto la frase que apoya tu respuesta: una inferencia siempre se puede justificar con el texto.", "LEN.COM.INFER.T01", INFER)
+estatico("ERR.LEN.COM.INFER.2", "LEN.COM.INFER", "Confundes la causa con la consecuencia",
+         "La causa explica por qué pasa algo; la consecuencia, lo que ocurre después. Fíjate en conectores como «por eso».", "LEN.COM.INFER.T01", INFER)
+estatico("ERR.LEN.COM.INFER.3", "LEN.COM.INFER", "Eliges una oración que no responde a lo que se pregunta",
+         "Relee la consigna: la oración elegida debe responder exactamente a lo que se pregunta.", "LEN.COM.INFER.T01", INFER)
+estatico("ERR.LEN.LEX.SIN.1", "LEN.LEX.SIN", "Eliges un sinónimo de otra acepción de la palabra",
+         "Un sinónimo solo vale si encaja en el sentido de la frase: «agua clara» es «agua transparente».", "LEN.LEX.SIN.T01", SIN)
+estatico("ERR.LEN.LEX.SIN.2", "LEN.LEX.SIN", "Confundes la palabra con su contraria",
+         "«Prolijo» significa largo en exceso; lo breve y claro es «conciso».", "LEN.LEX.SIN.T01", SIN)
+estatico("ERR.LEN.LEX.SIN.3", "LEN.LEX.SIN", "Confundes sinonimia con familia léxica",
+         "Los sinónimos comparten significado; las palabras de una familia léxica comparten lexema.", "LEN.LEX.SIN.T01", SIN)
+estatico("ERR.LEN.LEX.DICC.1", "LEN.LEX.DICC", "No buscas el verbo por su infinitivo",
+         "Los verbos se buscan en el diccionario por su infinitivo: «cantábamos» está en «cantar».", "LEN.LEX.DICC.T01",
+         [f"LEN.LEX.DICC.000{i}" for i in range(1, 6)])
+estatico("ERR.MAT.NUM.FRAEQ.1", "MAT.NUM.FRAEQ", "Sumas en lugar de multiplicar numerador y denominador",
+         "Para obtener una fracción equivalente, multiplica o divide numerador y denominador por el mismo número; sumar no vale.", "MAT.NUM.FRAEQ.T01",
+         [f"MAT.NUM.FRAEQ.000{i}" for i in range(1, 6)])
+
 SALIDA.write_text(json.dumps({"version": 1, "errores": ERRORES}, ensure_ascii=False, indent=1) + "\n")
 print(f"{len(ERRORES)} errores en {len({e['competencia'] for e in ERRORES})} competencias → {SALIDA.relative_to(RAIZ)}")

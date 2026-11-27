@@ -9,7 +9,7 @@ del español: término/termino/terminó, pasó/paso, está/esta…
 - Detección determinista (la misma que hace `Acentuacion.ambigua` en Swift): se generan las
   variantes de tilde de cada palabra (sin tilde y con tilde en cada vocal) y se buscan en el
   léxico y en las formas de `ambiguas.json`.
-- `Content/pendiente/tildeContexto.json`: palabra, variantes válidas y categoría de cada una, para
+- `Content/tildeContexto.json` (antes en `pendiente/`; conserva las `frases` de la dirección, lote 06): palabra, variantes válidas y categoría de cada una, para
   que la dirección redacte frases con contexto.
 
 No se consideran las formas del voseo (cantá, comé): la app es de español de España.
@@ -156,13 +156,22 @@ def main() -> None:
     sin_cat = [d["palabra"] for d in detectadas if d["categoria"].startswith("(")] + \
               [v["forma"] for d in detectadas for v in d["variantes"] if v["categoria"].startswith("(")]
     assert not sin_cat, f"Faltan categorías: {sin_cat}"
-    pendiente = {
+    ruta = CONTENT / "tildeContexto.json"
+    # Conserva las frases con contexto de la dirección (lote 06) y la nota del archivo existente.
+    anterior = json.loads(ruta.read_text(encoding="utf-8")) if ruta.exists() else {}
+    frases = {p["palabra"]: p["frases"] for p in anterior.get("palabras", []) if p.get("frases")}
+    for d in detectadas:
+        if d["palabra"] in frases:
+            d["frases"] = frases[d["palabra"]]
+    perdidas = sorted(set(frases) - {d["palabra"] for d in detectadas})
+    assert not perdidas, f"Se perderían las frases de: {perdidas}"
+    salida = {
         "version": 1,
-        "nota": "Palabras del léxico que no se pueden preguntar sin contexto (Fase 05E, §4.1). Pendiente: la dirección "
-                "redactará frases con contexto para cada una. Generado por scripts/ambiguas_tilde.py.",
+        "nota": anterior.get("nota") or "Palabras del léxico que no se pueden preguntar sin contexto (Fase 05E, §4.1). "
+                "Generado por scripts/ambiguas_tilde.py.",
         "palabras": detectadas,
     }
-    (CONTENT / "pendiente/tildeContexto.json").write_text(json.dumps(pendiente, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    ruta.write_text(json.dumps(salida, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     print(f"{len(REVISADAS)} revisadas a mano; {len(detectadas)} palabras del léxico ambiguas de {len(lexico)}")
 
 

@@ -12,7 +12,7 @@ extension ServicioSesion {
         return estado.activos.compactMap { s -> RemedioPendiente? in
             guard let error = banco.recursos.errores[s.errorId] else { return nil }
             let ultimo = eventos.last { $0.errorId == s.errorId && $0.tipo == .fallo }
-            let dificultad = ultimo.flatMap { banco.item(id: $0.itemId)?.dificultad } ?? error.remedio.dificultad
+            let dificultad = ultimo.flatMap { banco.item(id: $0.itemId)?.dificultad } ?? error.remedio.dificultad ?? 2
             return RemedioPendiente(error: error, dificultad: max(1, dificultad - 1))
         }
     }
@@ -124,7 +124,15 @@ extension ServicioSesion {
 
     /// Ronda de Rescate de un error activo: 3 ítems de su remedio.
     func prepararRescateError(_ errorId: String) throws -> RondaPreparada? {
-        guard let r = try remediosPendientes().first(where: { $0.error.id == errorId }), let p = banco.plantilla(id: r.error.remedio.plantilla) else { return nil }
+        guard let r = try remediosPendientes().first(where: { $0.error.id == errorId }) else { return nil }
+        if r.error.remedio.esEstatico {
+            // Remedio estático (05J): su tarjeta de teoría y hasta 3 de sus ítems aprobados.
+            let items = ConstructorSesion.itemsRemedioEstatico(r.error, banco: banco, rng: &rng)
+                .map { ItemRonda(itemId: $0.id, motivo: .remedio, errorId: errorId) }
+            return items.isEmpty ? nil : RondaPreparada(tipo: .rescateError(errorId), items: items, competenciaEnCurso: nil,
+                                                       teoriaPrevia: r.error.remedio.tarjeta.map { [$0] } ?? [])
+        }
+        guard let p = banco.plantilla(id: r.error.remedio.plantilla ?? "") else { return nil }
         let variantes = banco.variantes(de: MotorGeneradores.ajustada(p, dificultad: r.dificultad)).shuffled(using: &rng).sinPreguntasRepetidas()
         let items = variantes.prefix(ConstructorSesion.tamanoBloque).map { ItemRonda(itemId: $0.id, motivo: .remedio, errorId: errorId) }
         return items.isEmpty ? nil : RondaPreparada(tipo: .rescateError(errorId), items: Array(items), competenciaEnCurso: nil, teoriaPrevia: [])

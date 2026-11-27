@@ -355,7 +355,7 @@ struct MapaCurricularTests {
                        "MAT.POR.FIN", "MAT.UNI.ANG", "MAT.UNI.ESTIM", "MAT.GEO.CLAS", "MAT.GEO.SEMEJ", "MAT.ALG.PATR", "MAT.ALG.ALGO", "MAT.EST.FREC",
                        "MAT.EST.POBL", "MAT.PRO.SUCESOS", "MAT.PRO.RECUENTO"]
         #expect(Set(delMapa).isSubset(of: ids), "\(Set(delMapa).subtracting(ids))")
-        #expect(ids.count == 125, "124 + MAT.OPE.INCOG (D-100)")
+        #expect(ids.count == 126, "124 + MAT.OPE.INCOG (D-100) + LEN.ORT.CTX (05J)")
         let equivalentes = Self.catalogo.todasLasCompetencias.filter { $0.equivaleA != nil }
         #expect(equivalentes.count == 13)
         #expect(equivalentes.allSatisfy { ids.contains($0.equivaleA!) && $0.equivaleA != $0.id })
@@ -417,8 +417,8 @@ struct AmbiguasTests {
         #expect(!Self.recursos.palabrasAmbiguas.contains("canción") && !Self.recursos.palabrasAmbiguas.contains("árbol"))
         let usadas = Set(Self.recursos.palabras.map(\.analisis.palabra))
         #expect(usadas.isDisjoint(with: Self.recursos.palabrasAmbiguas))
-        // `pendiente/tildeContexto.json` lista exactamente las detectadas.
-        let url = try #require(Bundle.main.url(forResource: "Content", withExtension: nil)?.appendingPathComponent("pendiente/tildeContexto.json"))
+        // `tildeContexto.json` (antes en `pendiente/`) lista exactamente las detectadas.
+        let url = try #require(Bundle.main.url(forResource: "Content", withExtension: nil)?.appendingPathComponent("tildeContexto.json"))
         struct Pendiente: Decodable { struct P: Decodable { var palabra: String; var variantes: [PalabrasAmbiguas.Variante] }; var palabras: [P] }
         let pendiente = try JSONDecoder().decode(Pendiente.self, from: Data(contentsOf: url))
         #expect(Set(pendiente.palabras.map(\.palabra)) == Self.recursos.palabrasAmbiguas)

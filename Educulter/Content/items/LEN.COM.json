@@ -522,7 +522,8 @@
     "erroresHabituales": [
       {
         "respuesta": "falso",
-        "feedback": "Fíjate en el detalle de la linterna temblando."
+        "feedback": "Fíjate en el detalle de la linterna temblando.",
+        "error": "ERR.LEN.COM.INFER.1"
       }
     ],
     "referencia": {
@@ -1317,11 +1318,13 @@
     "erroresHabituales": [
       {
         "respuesta": "detalle",
-        "feedback": "Esa oración explica la causa. ¿Cuál dice qué pasaría si desaparecieran?"
+        "feedback": "Esa oración explica la causa. ¿Cuál dice qué pasaría si desaparecieran?",
+        "error": "ERR.LEN.COM.INFER.2"
       },
       {
         "respuesta": "otro",
-        "feedback": "Esa oración describe a las abejas; la consigna pregunta por una consecuencia."
+        "feedback": "Esa oración describe a las abejas; la consigna pregunta por una consecuencia.",
+        "error": "ERR.LEN.COM.INFER.3"
       }
     ],
     "referencia": {

@@ -34,6 +34,8 @@ struct ExamenOficial: Codable, Sendable, Equatable, Identifiable {
         var anulada: Bool?
         /// Página de la figura en el cuadernillo oficial, si consta (hoy no consta en ninguna).
         var paginaFigura: Int?
+        /// Tabla del enunciado como tabla real (05J): mismos valores que el texto plano «(A | B: …)».
+        var tabla: Tabla?
 
         var id: Int { numero }
         var codigo: String { "\(area == "LEN" ? "L" : "M")\(numeroEnArea)" }
@@ -45,11 +47,16 @@ struct ExamenOficial: Codable, Sendable, Equatable, Identifiable {
             return enunciado[r.upperBound..<fin].trimmingCharacters(in: .whitespaces)
         }
 
-        /// Enunciado sin la descripción de la figura (que se muestra aparte).
+        /// Enunciado sin la descripción de la figura ni la tabla en texto plano (se muestran aparte).
         var enunciadoVisible: String {
-            guard let r = enunciado.range(of: "[Figura:"), let fin = enunciado[r.upperBound...].firstIndex(of: "]") else { return enunciado }
-            return (enunciado[..<r.lowerBound] + enunciado[enunciado.index(after: fin)...]).trimmingCharacters(in: .whitespacesAndNewlines)
+            var e = enunciado
+            if tabla != nil, let r = e.range(of: "\n("), e.hasSuffix(")") { e = String(e[..<r.lowerBound]) }
+            guard let r = e.range(of: "[Figura:"), let fin = e[r.upperBound...].firstIndex(of: "]") else { return e }
+            return (e[..<r.lowerBound] + e[e.index(after: fin)...]).trimmingCharacters(in: .whitespacesAndNewlines)
         }
+
+        /// Tabla escrita en texto plano («A | B») que aún no tiene su tabla real.
+        var tablaSinEstructura: Bool { tabla == nil && enunciado.contains(" | ") }
 
         /// Cita un pasaje del texto base protegido (se consulta en el PDF oficial).
         var citaProtegida: Bool { enunciado.contains("[Cita del texto base protegido") }
@@ -87,6 +94,28 @@ struct ExamenOficial: Codable, Sendable, Equatable, Identifiable {
     /// La penalización ortográfica de las bases de 2026 se aplica en 2026 y en los simulacros; en el
     /// resto es orientativa (D-131).
     var penalizacionAplicable: Bool { anio >= 2026 }
+
+    /// Se puede hacer en modo examen (05J §1): texto base reproducido, sin figuras ni citas
+    /// protegidas que remitan al cuadernillo y con las tablas estructuradas. Si no, solo repaso.
+    var completo: Bool {
+        textoBase.texto != nil && !textoBase.protegido
+            && preguntas.allSatisfy { $0.figura == nil && !$0.citaProtegida && !$0.tablaSinEstructura }
+    }
+
+    /// Por qué una convocatoria queda solo para repaso.
+    var motivoSoloRepaso: String? {
+        if textoBase.texto == nil || textoBase.protegido { return "El texto base está protegido y se consulta en el cuadernillo oficial." }
+        if let q = preguntas.first(where: { $0.figura != nil }) { return "La pregunta \(q.codigo) necesita una figura del cuadernillo oficial." }
+        if let q = preguntas.first(where: { $0.citaProtegida }) { return "La pregunta \(q.codigo) cita un texto protegido." }
+        if let q = preguntas.first(where: { $0.tablaSinEstructura }) { return "La tabla de la pregunta \(q.codigo) está pendiente de estructurar." }
+        return nil
+    }
+}
+
+/// Tabla de un enunciado oficial (cabecera y filas, con los mismos valores del cuadernillo).
+struct Tabla: Codable, Sendable, Equatable {
+    var cabecera: [String]
+    var filas: [[String]]
 }
 
 enum FormatoPregunta: String, Codable, Sendable {
@@ -121,8 +150,12 @@ struct DatosTribunal: Sendable, Equatable {
     var examenes: [ExamenOficial] = []
     var reglas: ReglasOrtografia = .bases2026
     var equivalencias: [EquivalenciaOficial] = []
+    /// Simulacros originales escritos (05J), en el orden del catálogo, y su mapa de repaso.
+    var originales: [SimulacroOriginal] = []
+    var mapaRepaso: [String: String] = [:]
 
     func examen(_ id: String) -> ExamenOficial? { examenes.first { $0.id == id } }
+    func original(_ id: String) -> SimulacroOriginal? { originales.first { $0.id == id } }
 
     func competencia(examen: String, numero: Int) -> String? {
         equivalencias.first { $0.examen == examen && $0.numero == numero }?.competencia
@@ -152,9 +185,3 @@ enum Penalizacion {
     }
 }
 
-/// Punto único de decisión del acceso al Tribunal (05I §6). La fase 06 lo sustituirá: Premium, con
-/// un examen oficial de muestra gratis (2017). Hoy, todo permitido.
-enum AccesoTribunal {
-    enum Acceso: Sendable, Equatable { case permitido, soloPremium }
-    static func acceso(_ modo: SesionExamen.Modo) -> Acceso { .permitido }
-}
