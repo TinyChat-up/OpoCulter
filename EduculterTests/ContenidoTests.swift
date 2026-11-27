@@ -20,7 +20,8 @@ struct ContenidoEmpaquetadoTests {
         // Fase 05C: 8 plantillas de prueba (borrador) que siguen + 38 del lote 02 + 4 del lote 02b.
         // + 05G: 3 pasos de J46 y 6 niveles de J63.
         // + 05H: 24 de Editor, Fábrica, recursos y glosario.
-        #expect(banco.plantillas.count == 121)
+        // + 05I: 3 de redactar con el patrón recuerdo (simulacros).
+        #expect(banco.plantillas.count == 124)
         #expect(banco.items.count > 133)
         #expect(banco.teoria.count == 26, "17 + las 9 del ANEXO B (05E parte 2)")
         #expect(banco.textos.count == 7 && banco.literatura?.autores.count == 142)
@@ -49,7 +50,7 @@ struct ContenidoEmpaquetadoTests {
         #expect(!todos.items.isEmpty, "El bundle debe tener borradores para que el test tenga sentido")
         let release = try cargador.cargar(politica: .soloAprobados)
         #expect(release.items.allSatisfy { $0.validacion.estado == .aprobado })
-        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 116)
+        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 119)
         #expect(release.teoria.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.simulacros.allSatisfy { $0.validacion.estado == .aprobado })
         // Aprobado: LEN.ORT (50 ítems y 5 tarjetas), MAT.NUM (9 y 2), LEN.LEX (30 y 4) y LEN.COM (19 y 4,

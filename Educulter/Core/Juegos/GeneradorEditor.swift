@@ -42,14 +42,16 @@ struct GeneradorEditor: GeneradorItems {
         let tope = min(max(p.dificultad, 1), 3)
         let familia: (String) -> FamiliaFormas? = { id in banco.familias.first { $0.id == id } }
         let (nFrases, nFaltas) = Self.forma(p.dificultad)
-        let conFalta = rng.barajar(banco.frases.filter { propias.contains($0.familia) && $0.dificultad <= tope })
+        // Las frases ambiguas (05I) no se usan.
+        let utiles = banco.frases.filter { $0.ambigua != true }
+        let conFalta = rng.barajar(utiles.filter { propias.contains($0.familia) && $0.dificultad <= tope })
         guard conFalta.count >= nFaltas else { throw ErrorGenerador.sinRecursos(tipo) }
         // Faltas de familias distintas cuando la plantilla tiene varias.
         var elegidas: [FraseHueco] = []
         for f in conFalta where elegidas.count < nFaltas && (propias.count == 1 || !elegidas.contains { $0.familia == f.familia }) { elegidas.append(f) }
         guard elegidas.count == nFaltas else { throw ErrorGenerador.sinRecursos(tipo) }
         var sinFalta: [FraseHueco] = []
-        for f in rng.barajar(banco.frases.filter { $0.dificultad <= tope }) where sinFalta.count < nFrases - nFaltas {
+        for f in rng.barajar(utiles.filter { $0.dificultad <= tope }) where sinFalta.count < nFrases - nFaltas {
             guard !(elegidas + sinFalta).contains(where: { $0.familia == f.familia || $0.id == f.id }) else { continue }
             sinFalta.append(f)
         }

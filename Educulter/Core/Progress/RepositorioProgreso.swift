@@ -84,6 +84,10 @@ protocol RepositorioProgreso: AnyObject {
     /// Intentos de los juegos (contrato de intento, 05G §2), en orden de fecha.
     func intentosActividad() throws -> [IntentoActividad]
     func registrar(_ intento: IntentoActividad) throws
+    /// Exámenes del Tribunal (05I): en curso y entregados, del más antiguo al más reciente.
+    func examenesTribunal() throws -> [SesionExamen]
+    /// Guarda (o actualiza, por id) un examen.
+    func guardar(_ examen: SesionExamen) throws
 
     func ajustes() throws -> Ajustes
     func guardar(_ ajustes: Ajustes) throws
@@ -152,6 +156,13 @@ final class RepositorioEnMemoria: RepositorioProgreso {
     func intentosActividad() throws -> [IntentoActividad] { intentosActividadGuardados.sorted { $0.fecha < $1.fecha } }
     func registrar(_ intento: IntentoActividad) throws { intentosActividadGuardados.append(intento) }
 
+    private var examenesGuardados: [SesionExamen] = []
+    func examenesTribunal() throws -> [SesionExamen] { examenesGuardados.sorted { $0.inicio < $1.inicio } }
+    func guardar(_ examen: SesionExamen) throws {
+        examenesGuardados.removeAll { $0.id == examen.id }
+        examenesGuardados.append(examen)
+    }
+
     func ajustes() throws -> Ajustes { ajustesGuardados }
     func guardar(_ ajustes: Ajustes) throws { ajustesGuardados = ajustes }
 
@@ -165,5 +176,6 @@ final class RepositorioEnMemoria: RepositorioProgreso {
         partidasGuardadas = []
         eventosGuardados = []
         intentosActividadGuardados = []
+        examenesGuardados = []
     }
 }

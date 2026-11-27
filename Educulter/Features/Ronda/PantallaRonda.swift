@@ -7,6 +7,9 @@ struct PantallaRonda: View {
     let cerrar: () -> Void
 
     @State private var confirmarSalida = false
+    /// Borrador táctil (05I §4): solo en Matemáticas; se borra al pasar de ítem. No cuenta como pista.
+    @State private var verBorrador = false
+    @State private var borrador = Data()
     /// XP que muestra el contador de la cabecera (se actualiza cuando aterriza el vuelo).
     @State private var xpMostrado = 0
     @State private var vuelo: VueloXP.Datos?
@@ -52,6 +55,10 @@ struct PantallaRonda: View {
                     .onChange(of: g.size.height) { _, nuevo in altoPantalla = nuevo }
             }
         }
+        .sheet(isPresented: $verBorrador) {
+            HojaBorrador(enunciado: modelo.itemActual?.enunciado ?? "", dibujo: $borrador)
+        }
+        .onChange(of: modelo.itemActual?.id) { _, _ in borrador = Data() }
         .sheet(item: $modelo.teoriaAbierta) { tarjeta in
             NavigationStack {
                 ScrollView {
@@ -123,14 +130,24 @@ struct PantallaRonda: View {
             ScrollView {
                 if let item {
                     VStack(alignment: .leading, spacing: Espacio.l) {
-                        Label {
-                            Text(modelo.nombreCompetencia(item.competencia).uppercased())
-                        } icon: {
-                            Image(systemName: SimboloBloque.de(competencia: item.competencia)).accessibilityHidden(true)
+                        HStack {
+                            Label {
+                                Text(modelo.nombreCompetencia(item.competencia).uppercased())
+                            } icon: {
+                                Image(systemName: SimboloBloque.de(competencia: item.competencia)).accessibilityHidden(true)
+                            }
+                            .font(.caption.weight(.semibold))
+                            .foregroundStyle(Paleta.tinta(competencia: item.competencia))
+                            .accessibilityIdentifier("cabeceraCompetencia")
+                            Spacer(minLength: Espacio.s)
+                            if Catalogo.area(de: item.competencia) == "MAT" && modelo.fase == .respondiendo {
+                                Button { verBorrador = true } label: { Image(systemName: "pencil.and.scribble").font(.subheadline) }
+                                    .foregroundStyle(Paleta.textoSecundario)
+                                    .frame(minWidth: Medidas.tactilMinimo, minHeight: Medidas.tactilMinimo)
+                                    .accessibilityLabel("Borrador")
+                                    .accessibilityIdentifier("botonBorradorRonda")
+                            }
                         }
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(Paleta.tinta(competencia: item.competencia))
-                        .accessibilityIdentifier("cabeceraCompetencia")
                         if let distintivo = DistintivoNivel(dificultad: item.dificultad) { distintivo }
                         Text(item.enunciado)
                             .font(.title3.weight(.semibold))

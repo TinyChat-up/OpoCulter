@@ -1,8 +1,28 @@
 # Estado del proyecto
 
-**Fase actual:** 05H (Lengua manipulativa sobre los patrones) · **Terminada y fusionada en `main`**.
-**Siguiente:** lotes de la dirección con el inventario de [docs/lotes/LOTE06_INVENTARIO.md](docs/lotes/LOTE06_INVENTARIO.md).
+**Fase actual:** 05I (Modo Tribunal y borrador táctil) · **Terminada y fusionada en `main`**.
+**Siguiente:** lote 06 de la dirección (tarjetas de teoría) y fase 06 (monetización, con `AccesoTribunal`).
 **Última actualización:** 2026-11-27
+
+## Fase 05I — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| §0 Decisiones de la 05H | ✅ `ambigua` en `frases.json` (2 frases), respetado en el hueco y el Editor; «Esquema del análisis» | D-135 |
+| §1 Datos del Tribunal | ✅ 7 exámenes y 139 preguntas en uso; anulada, textos protegidos y 4 figuras remitidas al cuadernillo; reparto igual sin pesos documentados | D-130, D-131 |
+| §2 Plano y simulacro | ✅ Plano de 10 + 10; simulacro de 20 preguntas aprobadas de dificultad 4–5 (200 semillas: fiel al plano ±1, reproducible) | D-133, `TribunalTests` |
+| §3–§5 Sala, borrador, corrección e informe | ✅ Cuenta atrás con avisos y entrega automática, mapa, marcar, entregar; reanudación; PencilKit; autoevaluación con rúbrica; nota orientativa, «Apto», evolución e informe con «Repasar ahora» | D-132, D-134 |
+| §6 Monetización | ✅ `AccesoTribunal` (hoy, «permitido»); sin SDK | D-134 |
+| Tests unitarios | ✅ 748 en verde (la primera pasada se cayó por un fallo de un test nuevo, corregido; se repitió la batería completa) | `xcodebuild test` |
+| Tests de interfaz | No se rompió ninguno (los cambios de interfaz no tocan identificadores usados) | — |
+| Avisos del compilador | ✅ 0 (Debug, tests y archive Release) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada por conexión inalámbrica y abierta | `devicectl` |
+| Capturas | 6: entrada, sala con mapa y cuenta atrás, borrador, autoevaluación, resultado con sello e informe | [docs/capturas/fase05i/](docs/capturas/fase05i/) |
+
+## Pendiente (05I)
+1. Accesibilidad del Tribunal y del borrador implementada, **sin auditar** (Fase 07).
+2. Decisiones para la dirección: ver el informe (claves estructuradas para corregir solas las preguntas oficiales, páginas de las figuras, frases ambiguas).
 
 ## Fase 05H — Resultado
 

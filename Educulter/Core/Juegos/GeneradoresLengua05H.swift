@@ -271,13 +271,25 @@ struct GeneradorFormacion: GeneradorItems {
 /// recursos que también están en un ejemplo nunca salen como distractores.
 struct GeneradorRecursos: GeneradorItems {
     let tipo = "recursos"
-    let mecanicas: Set<Mecanica> = [.emparejar, .eleccion, .marcarTexto]
+    let mecanicas: Set<Mecanica> = [.emparejar, .eleccion, .marcarTexto, .recuerdo]
     let marcadores: Set<String> = ["ejemplo", "recurso", "contexto"]
+
+    /// Criterios de autoevaluación de una definición (propios de la app, 05I).
+    static let criteriosDefinicion = ["Dice qué es: su tipo o su clase", "Explica su rasgo propio (qué hace o cómo es)",
+                                      "Se entiende sin repetir el nombre del término"]
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
         guard let b = recursos.recursosLiterarios, b.recursos.count >= 4 else { throw ErrorGenerador.sinRecursos(tipo) }
         let modo = p.textos("modo", porDefecto: ["eleccion"]).first ?? "eleccion"
         switch modo {
+        case "definir":
+            // Simulacro (05I): definir con palabras propias y autoevaluarse con la definición del anexo.
+            let r = rng.elemento(b.recursos)
+            return Muestra(clave: "definir|\(r.recurso)", valores: ["recurso": r.recurso],
+                           payload: .recuerdo(Payload.Recuerdo(modelo: "\(r.recurso.prefix(1).uppercased() + r.recurso.dropFirst()): \(r.definicion). Ejemplo: «\(r.ejemplos[0].texto)»",
+                                                              criterios: Self.criteriosDefinicion, maximo: 300)),
+                           explicacion: "\(r.recurso.prefix(1).uppercased() + r.recurso.dropFirst()): \(abreviar(r.definicion, 200)).",
+                           complejidad: 3 + Double(p.dificultad), datos: ["recurso": r.recurso], juego: "Recursos")
         case "emparejar":
             let elegidos = Array(rng.barajar(b.recursos).prefix(4))
             let izq = elegidos.enumerated().map { ElementoTexto(id: "i\($0.offset + 1)", texto: $0.element.recurso) }
@@ -351,14 +363,23 @@ struct GeneradorRecursos: GeneradorItems {
 /// distractores son siempre del mismo grupo.
 struct GeneradorGlosario: GeneradorItems {
     let tipo = "glosario"
-    let mecanicas: Set<Mecanica> = [.emparejar, .eleccion]
-    let marcadores: Set<String> = ["definicion", "contexto"]
+    let mecanicas: Set<Mecanica> = [.emparejar, .eleccion, .recuerdo]
+    let marcadores: Set<String> = ["definicion", "termino", "contexto"]
 
     func muestra(_ p: Plantilla, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) throws -> Muestra {
         guard let b = recursos.glosario else { throw ErrorGenerador.sinRecursos(tipo) }
         let grupo = p.textos("grupo", porDefecto: ["clases de palabras"]).first ?? ""
         let terminos = b.terminos.filter { $0.grupo == grupo }
         guard terminos.count >= 3 else { throw ErrorGenerador.sinRecursos(tipo) }
+        if p.mecanica == .recuerdo {
+            // Simulacro (05I): definir el término y autoevaluarse con la definición del anexo.
+            let t = rng.elemento(terminos)
+            return Muestra(clave: "definir|\(t.termino)", valores: ["termino": t.termino],
+                           payload: .recuerdo(Payload.Recuerdo(modelo: "\(t.termino.prefix(1).uppercased() + t.termino.dropFirst()): \(t.definicion).",
+                                                              criterios: GeneradorRecursos.criteriosDefinicion, maximo: 300)),
+                           explicacion: "\(t.termino.prefix(1).uppercased() + t.termino.dropFirst()): \(t.definicion).",
+                           complejidad: 3 + Double(p.dificultad), datos: ["termino": t.termino, "grupo": grupo], juego: "Glosario")
+        }
         if p.mecanica == .emparejar {
             let elegidos = Array(rng.barajar(terminos).prefix(4))
             let izq = elegidos.enumerated().map { ElementoTexto(id: "i\($0.offset + 1)", texto: $0.element.termino) }

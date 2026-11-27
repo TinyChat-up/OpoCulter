@@ -22,6 +22,8 @@ struct MecanicaSegmentar: View {
     @State private var previa: Int?
     @State private var arbolPlegado = false
     @ScaledMetric(relativeTo: .caption2) private var altoBarra: CGFloat = 6
+    /// Título de la lista de tramos («Esquema del análisis» en el final de Rayos X, 05I).
+    var tituloLista = "Tu análisis"
 
     private var segmentos: [Respuesta.SegmentoRespuesta] {
         if case .segmentar(let s) = respuesta { return s }
@@ -183,7 +185,7 @@ struct MecanicaSegmentar: View {
                 withAnimation(.easeInOut(duration: 0.2)) { arbolPlegado.toggle() }
             } label: {
                 HStack {
-                    Text("Tu análisis (\(segmentos.count))").font(.footnote.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+                    Text("\(tituloLista) (\(segmentos.count))").font(.footnote.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
                     Spacer()
                     Image(systemName: "chevron.down")
                         .font(.footnote.weight(.semibold))
@@ -195,7 +197,7 @@ struct MecanicaSegmentar: View {
                 .contentShape(Rectangle())
             }
             .buttonStyle(.pulsable)
-            .accessibilityLabel("Tu análisis, \(segmentos.count) tramos")
+            .accessibilityLabel("\(tituloLista), \(segmentos.count) tramos")
             .accessibilityValue(arbolPlegado ? "plegado" : "desplegado")
             .accessibilityHint(arbolPlegado ? "Despliega el árbol" : "Pliega el árbol")
             .accessibilityIdentifier("plegarArbol")

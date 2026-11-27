@@ -254,6 +254,7 @@ struct VistaCaptura: View {
     @Environment(EntornoApp.self) private var entorno
     let escena: String
     @State private var ronda: RondaViewModel?
+    @State private var examen: ModeloExamen?
     @State private var listo = false
 
     var body: some View {
@@ -268,6 +269,12 @@ struct VistaCaptura: View {
         Group {
             let partes = escena.split(separator: ":").map(String.init)
             switch partes.first {
+            case "tribunal":
+                if let servicio = entorno.servicio { PantallaTribunal(servicio: servicio) }
+            case "sala", "borrador", "autoevaluacion":
+                if let examen { PantallaExamen(modelo: examen, cerrar: {}, hojaInicial: partes.first == "sala" ? "mapa" : (partes.first == "borrador" ? "borrador" : nil)) } else { Paleta.fondo }
+            case "resultadoExamen", "informeExamen":
+                if let examen { PantallaCorreccionExamen(modelo: examen, cerrar: {}, alInforme: partes.first == "informeExamen") } else { Paleta.fondo }
             case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba", "sesion", "sesionInicio", "ejemplo", "fallo", "variante":
                 if let ronda { PantallaRonda(modelo: ronda) {} } else { Paleta.fondo }
             case "camino":
@@ -332,6 +339,27 @@ struct VistaCaptura: View {
             }
         }
         switch partes.first {
+        case "sala", "borrador", "autoevaluacion", "resultadoExamen", "informeExamen":
+            // Tribunal (05I): 2026 ordinaria con algunas respuestas; corregido según la escena.
+            let area = partes.first == "autoevaluacion" ? "LEN" : nil
+            guard var s = try? servicio.empezarExamen(area.map { .medio("OF.2026.O", area: $0) } ?? .oficial("OF.2026.O")) else { return }
+            s.restante = 52 * 60 + 17
+            for i in 0..<(partes.first == "resultadoExamen" ? s.preguntas.count : min(7, s.preguntas.count)) {
+                s.respuestas[i] = CorrectorExamen.area(s.preguntas[i], datos: banco.tribunal) == "MAT" ? .init(valor: "12,5", unidad: "m²") : .init(texto: "El narrador cuenta el encuentro de don Quijote con unos labradores que llevan imágenes de santos.")
+            }
+            s.marcadas = [2, 5]
+            s.actual = partes.first == "borrador" ? 16 : (area == nil ? 12 : 0)
+            if partes.first != "sala" && partes.first != "borrador" {
+                s.entregar(ahora: servicio.reloj.ahora)
+                let pendientes = CorrectorExamen.pendientesDeAutoevaluar(s, banco: banco)
+                if partes.first != "autoevaluacion" {
+                    for (k, i) in pendientes.enumerated() { s.autoevaluaciones[i] = .init(nivel: k % 4 == 3 ? .mal : .bien, palabras: k == 0 ? 1 : 0, tildes: 0) }
+                }
+            }
+            let modelo = ModeloExamen(servicio: servicio, sesion: s)
+            if partes.first == "resultadoExamen" || partes.first == "informeExamen" { modelo.corregir() }
+            examen = modelo
+            return
         case "partida":
             let modelo = RondaViewModel(servicio: servicio, tipo: .supervivencia(area: nil))
             for _ in 0..<5 { modelo.rellenarParaPruebas(correcta: true); modelo.comprobar(); modelo.continuar() }

@@ -145,6 +145,23 @@ final class RepositorioSwiftData: RepositorioProgreso {
         try contexto.save()
     }
 
+    func examenesTribunal() throws -> [SesionExamen] {
+        try contexto.fetch(FetchDescriptor<ExamenTribunalRegistro>(sortBy: [SortDescriptor(\.inicio)])).compactMap { r in
+            r.datos.flatMap { try? JSONDecoder().decode(SesionExamen.self, from: $0) }
+        }
+    }
+
+    func guardar(_ examen: SesionExamen) throws {
+        let id = examen.id
+        let datos = try JSONEncoder().encode(examen)
+        if let r = try contexto.fetch(FetchDescriptor<ExamenTribunalRegistro>(predicate: #Predicate { $0.uuid == id })).first {
+            r.datos = datos
+        } else {
+            contexto.insert(ExamenTribunalRegistro(uuid: examen.id, inicio: examen.inicio, datos: datos))
+        }
+        try contexto.save()
+    }
+
     func ajustes() throws -> Ajustes {
         guard let datos = try contexto.fetch(FetchDescriptor<AjustesRegistro>()).first?.datos else { return Ajustes() }
         return try JSONDecoder().decode(Ajustes.self, from: datos)
@@ -167,6 +184,7 @@ final class RepositorioSwiftData: RepositorioProgreso {
         try contexto.delete(model: PartidaRegistro.self)
         try contexto.delete(model: EventoErrorRegistro.self)
         try contexto.delete(model: IntentoActividadRegistro.self)
+        try contexto.delete(model: ExamenTribunalRegistro.self)
         try contexto.save()
     }
 }

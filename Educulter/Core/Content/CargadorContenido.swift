@@ -86,12 +86,19 @@ struct CargadorContenido: Sendable {
         var literatura: BaseLiteraria?
         if FileManager.default.fileExists(atPath: literaturaURL.path) { literatura = try decodificar(literaturaURL) as BaseLiteraria }
         // Preguntas oficiales por competencia (equivalencias del Tribunal, D-097): ordenan el plan (D-103).
-        struct Equivalencias: Decodable { struct P: Decodable { var competencia: String }; var preguntas: [P] }
+        struct Equivalencias: Decodable { var preguntas: [EquivalenciaOficial] }
         let equivalenciasURL = raiz.appendingPathComponent("tribunal/equivalencias.json")
         var preguntasOficiales: [String: Int] = [:]
+        var tribunal = DatosTribunal()
         if FileManager.default.fileExists(atPath: equivalenciasURL.path) {
-            for p in (try decodificar(equivalenciasURL) as Equivalencias).preguntas { preguntasOficiales[p.competencia, default: 0] += 1 }
+            tribunal.equivalencias = (try decodificar(equivalenciasURL) as Equivalencias).preguntas
+            for p in tribunal.equivalencias { preguntasOficiales[p.competencia, default: 0] += 1 }
         }
+        // Exámenes oficiales del Tribunal (05I): `tribunal/<año>_<convocatoria>.json` y las reglas.
+        tribunal.examenes = try archivosJSON(en: "tribunal").filter { $0.lastPathComponent.first?.isNumber == true }
+            .map { try decodificar($0) as ExamenOficial }.filter { politica.admite($0.validacion) }
+        let reglasURL = raiz.appendingPathComponent("tribunal/reglas.json")
+        if FileManager.default.fileExists(atPath: reglasURL.path) { tribunal.reglas = try decodificar(reglasURL) }
 
         let recursos = try recursos()
         // Los distractores de los ítems estáticos también se etiquetan con su error típico (generador «estatico»).
@@ -110,6 +117,7 @@ struct CargadorContenido: Sendable {
             textos: textos.filter { politica.admite($0.validacion) },
             literatura: literatura,
             preguntasOficiales: preguntasOficiales,
+            tribunal: tribunal,
             semillaBase: semillaBase
         )
     }

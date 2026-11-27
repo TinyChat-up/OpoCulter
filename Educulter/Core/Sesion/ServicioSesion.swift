@@ -367,7 +367,7 @@ final class ServicioSesion {
 
     /// Motor de errores (05E parte 2 §4, D-107): guarda los fallos que delatan un error típico y las
     /// respuestas a su remedio. `errorRepetido` es el error activo que esta respuesta repite.
-    private func registrarErrores(item: Item, resultado: Resultado, errorRemedio: String?, fecha: Date,
+    func registrarErrores(item: Item, resultado: Resultado, errorRemedio: String?, fecha: Date,
                                   efecto: inout EfectoRespuesta) throws {
         var eventos: [EventoError] = []
         if let errorRemedio {

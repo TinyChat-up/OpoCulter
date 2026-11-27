@@ -101,7 +101,7 @@ extension Payload {
 
 extension Respuesta {
     /// Respuesta del modelo con figura: estrategia, cortes elegidos, área de cada parte, total y unidad.
-    struct RespuestaFigura: Sendable, Equatable {
+    struct RespuestaFigura: Codable, Sendable, Equatable {
         var estrategia: Payload.FiguraArea.Estrategia?
         var cortes: Set<String> = []
         var areas: [String: String] = [:]
@@ -111,7 +111,7 @@ extension Respuesta {
 
     /// Respuesta del recuerdo: lo escrito (o «en papel»), si ya se ha visto el modelo y los criterios
     /// que el usuario marca como cumplidos.
-    struct RespuestaRecuerdo: Sendable, Equatable {
+    struct RespuestaRecuerdo: Codable, Sendable, Equatable {
         var texto: String = ""
         var enPapel = false
         var modeloVisto = false

@@ -152,6 +152,9 @@ struct JuegosLenguaTests {
                         let izq = e.izquierda.first { $0.id == par[0] }!.texto, der = e.derecha.first { $0.id == par[1] }!.texto
                         #expect(datos.recursos.contains { $0.recurso == izq && $0.definicion == der } || glosario.terminos.contains { $0.termino == izq && $0.definicion == der })
                     }
+                case (_, .recuerdo(let r)):
+                    // Definir (05I): el modelo es la definición del anexo.
+                    #expect(datos.recursos.contains { r.modelo.contains($0.definicion) } || glosario.terminos.contains { r.modelo.contains($0.definicion) }, "\(item.id)")
                 case ("glosario", .eleccion(let e)):
                     let grupo = p.textos("grupo", porDefecto: []).first
                     let terminos = Set(glosario.terminos.filter { $0.grupo == grupo }.map(\.termino))

@@ -18,6 +18,7 @@
 | 05F | Motor literario | Adelantado en parte en la 05E (generador `literatura`, D-094) | Preguntas de literatura a partir de la base literaria; queda lo que la dirección decida (fragmentos, rasgos de los movimientos…) |
 | 05G | Juegos: patrones y contrato de intento | Terminada (fusionada en `main`, 27/11/2026) | Orden de opciones barajado por sesión; 9 patrones configurados con datos; contrato de intento (pista, reintento, solución; dominio solo a la primera y sin ayudas) y variante sin ayudas a los 2 días; J46 «De evidencia a resumen» y J63 «Corta y compensa» en la sesión, Camino y Rescate |
 | 05H | Lengua manipulativa sobre los patrones | Terminada (fusionada en `main`, 27/11/2026) | Rayos X (sintaxis por capas), Editor (detecta y corrige), Fábrica de palabras, recursos literarios con Detective y glosario; misiones retiradas; descanso en Hoy; «Hacer el diagnóstico»; inventario del lote 06 |
+| 05I | Modo Tribunal y borrador táctil | Terminada (fusionada en `main`, 27/11/2026) | Exámenes oficiales completos, medio examen, simulacros según el plano y repaso; sala con cuenta atrás, mapa y borrador PencilKit; autoevaluación con rúbrica, nota orientativa, sello «Apto», informe y «Repasar ahora»; `AccesoTribunal` para la fase 06 |
 | Post-MVP | Editor de personalización del avatar | Pendiente | Hoy hay 12 avatares cerrados; el editor completo queda para después del MVP (D-054) |
 | 06 | Monetización | Pendiente | Suscripción con StoreKit 2 y muro de pago |
 | 07 | Calidad | Pendiente | Tests, accesibilidad, rendimiento, iOS 17 |

@@ -388,7 +388,8 @@
       "texto": "___ hermana viene mañana.",
       "correcta": "Tu",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0002",
@@ -396,7 +397,8 @@
       "texto": "¿Vienes ___ al cine?",
       "correcta": "tú",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0003",
@@ -404,7 +406,8 @@
       "texto": "He visto ___ coche en la calle.",
       "correcta": "tu",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0004",
@@ -412,7 +415,8 @@
       "texto": "___ eres el primero de la lista.",
       "correcta": "Tú",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0005",
@@ -420,7 +424,8 @@
       "texto": "___ libro está en la mesa.",
       "correcta": "El",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0006",
@@ -428,7 +433,8 @@
       "texto": "Se lo di a ___.",
       "correcta": "él",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0007",
@@ -436,7 +442,8 @@
       "texto": "___ siempre llega puntual.",
       "correcta": "Él",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0008",
@@ -444,7 +451,8 @@
       "texto": "Compré ___ pan esta mañana.",
       "correcta": "el",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0009",
@@ -452,7 +460,8 @@
       "texto": "Iremos con ___ al parque.",
       "correcta": "él",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0010",
@@ -460,7 +469,8 @@
       "texto": "___ casa tiene un jardín.",
       "correcta": "Mi",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0011",
@@ -468,7 +478,8 @@
       "texto": "Ese regalo es para ___.",
       "correcta": "mí",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0012",
@@ -476,7 +487,8 @@
       "texto": "A ___ me encanta leer.",
       "correcta": "mí",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0013",
@@ -484,7 +496,8 @@
       "texto": "___ perro se llama Toby.",
       "correcta": "Mi",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0014",
@@ -492,7 +505,8 @@
       "texto": "¿Te acuerdas de ___?",
       "correcta": "mí",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0015",
@@ -500,7 +514,8 @@
       "texto": "___ llueve, no saldremos.",
       "correcta": "Si",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0016",
@@ -508,7 +523,8 @@
       "texto": "Le pregunté y dijo que ___.",
       "correcta": "sí",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0017",
@@ -516,7 +532,8 @@
       "texto": "No sé ___ vendrá.",
       "correcta": "si",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0018",
@@ -524,7 +541,8 @@
       "texto": "Ella solo piensa en ___ misma.",
       "correcta": "sí",
       "dificultad": 4,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0019",
@@ -532,7 +550,8 @@
       "texto": "___, quiero ir contigo.",
       "correcta": "Sí",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0020",
@@ -540,7 +559,8 @@
       "texto": "¿Quieres un ___ con leche?",
       "correcta": "té",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0021",
@@ -548,7 +568,8 @@
       "texto": "___ llamo luego.",
       "correcta": "Te",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0022",
@@ -556,7 +577,8 @@
       "texto": "El ___ verde es muy sano.",
       "correcta": "té",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0023",
@@ -564,7 +586,8 @@
       "texto": "¿___ apetece un helado?",
       "correcta": "Te",
       "dificultad": 1,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0024",
@@ -572,7 +595,8 @@
       "texto": "Es la casa ___ mi abuela.",
       "correcta": "de",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0025",
@@ -580,7 +604,8 @@
       "texto": "Dile que te ___ el libro.",
       "correcta": "dé",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0026",
@@ -588,7 +613,8 @@
       "texto": "Espero que me ___ una respuesta.",
       "correcta": "dé",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0027",
@@ -596,7 +622,8 @@
       "texto": "Vengo ___ la playa.",
       "correcta": "de",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0028",
@@ -604,7 +631,8 @@
       "texto": "Ya ___ la respuesta.",
       "correcta": "sé",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0029",
@@ -612,7 +640,8 @@
       "texto": "___ fue sin decir nada.",
       "correcta": "Se",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0030",
@@ -620,7 +649,8 @@
       "texto": "No ___ dónde está mi móvil.",
       "correcta": "sé",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0031",
@@ -628,7 +658,8 @@
       "texto": "Marta ___ peina cada mañana.",
       "correcta": "se",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0032",
@@ -636,7 +667,8 @@
       "texto": "___ bueno y estudia.",
       "correcta": "Sé",
       "dificultad": 5,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0033",
@@ -644,7 +676,8 @@
       "texto": "Quiero ___ agua, por favor.",
       "correcta": "más",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0034",
@@ -652,7 +685,8 @@
       "texto": "Lo intentó, ___ no lo consiguió.",
       "correcta": "mas",
       "dificultad": 6,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0035",
@@ -660,7 +694,8 @@
       "texto": "Este libro es ___ largo que aquel.",
       "correcta": "más",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0036",
@@ -668,7 +703,8 @@
       "texto": "___ no ha llegado el autobús.",
       "correcta": "Aún",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0037",
@@ -676,7 +712,8 @@
       "texto": "Ni ___ así lo entendió.",
       "correcta": "aun",
       "dificultad": 4,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0038",
@@ -684,7 +721,8 @@
       "texto": "¿___ estás despierto?",
       "correcta": "Aún",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0039",
@@ -692,7 +730,8 @@
       "texto": "Aprobaron todos, ___ los que no estudiaron.",
       "correcta": "aun",
       "dificultad": 5,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0040",
@@ -700,7 +739,8 @@
       "texto": "¿___ quieres cenar?",
       "correcta": "Qué",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0041",
@@ -708,7 +748,8 @@
       "texto": "Dice ___ vendrá tarde.",
       "correcta": "que",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0042",
@@ -716,7 +757,8 @@
       "texto": "No sé ___ hacer.",
       "correcta": "qué",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0043",
@@ -724,7 +766,8 @@
       "texto": "¡___ bonito día!",
       "correcta": "Qué",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0044",
@@ -732,7 +775,8 @@
       "texto": "El libro ___ me prestaste es genial.",
       "correcta": "que",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0045",
@@ -740,7 +784,8 @@
       "texto": "¿___ te llamas?",
       "correcta": "Cómo",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0046",
@@ -748,7 +793,8 @@
       "texto": "Hazlo ___ te dije.",
       "correcta": "como",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0047",
@@ -756,7 +802,8 @@
       "texto": "No sé ___ llegar a tu casa.",
       "correcta": "cómo",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0048",
@@ -764,7 +811,8 @@
       "texto": "Es tan alto ___ su padre.",
       "correcta": "como",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0049",
@@ -772,7 +820,8 @@
       "texto": "¿___ empiezan las vacaciones?",
       "correcta": "Cuándo",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0050",
@@ -780,7 +829,8 @@
       "texto": "Te llamaré ___ llegue.",
       "correcta": "cuando",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0051",
@@ -788,7 +838,8 @@
       "texto": "No sé ___ volverá.",
       "correcta": "cuándo",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0052",
@@ -796,7 +847,8 @@
       "texto": "¿___ has dejado las llaves?",
       "correcta": "Dónde",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0053",
@@ -804,7 +856,8 @@
       "texto": "Esta es la casa ___ nací.",
       "correcta": "donde",
       "dificultad": 2,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0054",
@@ -812,7 +865,8 @@
       "texto": "Dime ___ quedamos.",
       "correcta": "dónde",
       "dificultad": 3,
-      "competencia": "LEN.ORT.DIA"
+      "competencia": "LEN.ORT.DIA",
+      "ambigua": false
     },
     {
       "id": "FR.0055",
@@ -820,7 +874,8 @@
       "texto": "¿___ no viniste a clase?",
       "correcta": "Por qué",
       "dificultad": 2,
-      "competencia": "LEN.ORT.PQ"
+      "competencia": "LEN.ORT.PQ",
+      "ambigua": false
     },
     {
       "id": "FR.0056",
@@ -828,7 +883,8 @@
       "texto": "No vine ___ estaba enfermo.",
       "correcta": "porque",
       "dificultad": 2,
-      "competencia": "LEN.ORT.PQ"
+      "competencia": "LEN.ORT.PQ",
+      "ambigua": false
     },
     {
       "id": "FR.0057",
@@ -836,7 +892,8 @@
       "texto": "No entiendo el ___ de su enfado.",
       "correcta": "porqué",
       "dificultad": 2,
-      "competencia": "LEN.ORT.PQ"
+      "competencia": "LEN.ORT.PQ",
+      "ambigua": false
     },
     {
       "id": "FR.0058",
@@ -844,7 +901,8 @@
       "texto": "Esa es la razón ___ me fui.",
       "correcta": "por que",
       "dificultad": 5,
-      "competencia": "LEN.ORT.PQ"
+      "competencia": "LEN.ORT.PQ",
+      "ambigua": false
     },
     {
       "id": "FR.0059",
@@ -852,7 +910,8 @@
       "texto": "Dime ___ lloras.",
       "correcta": "por qué",
       "dificultad": 3,
-      "competencia": "LEN.ORT.PQ"
+      "competencia": "LEN.ORT.PQ",
+      "ambigua": false
     },
     {
       "id": "FR.0060",
@@ -860,7 +919,8 @@
       "texto": "Llegó tarde ___ perdió el tren.",
       "correcta": "porque",
       "dificultad": 2,
-      "competencia": "LEN.ORT.PQ"
+      "competencia": "LEN.ORT.PQ",
+      "ambigua": false
     },
     {
       "id": "FR.0061",
@@ -868,7 +928,8 @@
       "texto": "Nadie conoce el ___ de la decisión.",
       "correcta": "porqué",
       "dificultad": 4,
-      "competencia": "LEN.ORT.PQ"
+      "competencia": "LEN.ORT.PQ",
+      "ambigua": false
     },
     {
       "id": "FR.0062",
@@ -876,7 +937,8 @@
       "texto": "___ muchas nubes en el cielo.",
       "correcta": "Hay",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0063",
@@ -884,7 +946,8 @@
       "texto": "Deja la mochila ___, junto a la puerta.",
       "correcta": "ahí",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0064",
@@ -892,7 +955,8 @@
       "texto": "¡___, qué daño me he hecho!",
       "correcta": "Ay",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0065",
@@ -900,7 +964,8 @@
       "texto": "¿___ alguien en casa?",
       "correcta": "Hay",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0066",
@@ -908,7 +973,8 @@
       "texto": "___ está el problema.",
       "correcta": "Ahí",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0067",
@@ -916,7 +982,8 @@
       "texto": "Vamos ___ qué pasa.",
       "correcta": "a ver",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0068",
@@ -924,7 +991,8 @@
       "texto": "Debe ___ un error en la cuenta.",
       "correcta": "haber",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0069",
@@ -932,7 +1000,8 @@
       "texto": "___ si mañana hace sol.",
       "correcta": "A ver",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0070",
@@ -940,7 +1009,8 @@
       "texto": "Podría ___ más gente.",
       "correcta": "haber",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0071",
@@ -948,7 +1018,8 @@
       "texto": "Hoy he ___ los deberes.",
       "correcta": "hecho",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0072",
@@ -956,7 +1027,8 @@
       "texto": "Siempre ___ sal a la ensalada.",
       "correcta": "echo",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0073",
@@ -964,7 +1036,8 @@
       "texto": "Es un ___ histórico.",
       "correcta": "hecho",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0074",
@@ -972,7 +1045,8 @@
       "texto": "Te ___ de menos.",
       "correcta": "echo",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0075",
@@ -980,7 +1054,8 @@
       "texto": "Saltó la ___ del jardín.",
       "correcta": "valla",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0076",
@@ -988,7 +1063,8 @@
       "texto": "¡___ sorpresa!",
       "correcta": "Vaya",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0077",
@@ -996,7 +1072,8 @@
       "texto": "El acebo da una ___ roja.",
       "correcta": "baya",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0078",
@@ -1004,7 +1081,8 @@
       "texto": "Espero que te ___ bien.",
       "correcta": "vaya",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0079",
@@ -1012,7 +1090,8 @@
       "texto": "Ayer ___ fiebre.",
       "correcta": "tuvo",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0080",
@@ -1020,7 +1099,8 @@
       "texto": "Se ha roto el ___ del agua.",
       "correcta": "tubo",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0081",
@@ -1028,7 +1108,8 @@
       "texto": "___ que esperar una hora.",
       "correcta": "Tuvo",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0082",
@@ -1036,7 +1117,8 @@
       "texto": "Una ___ enorme mojó la toalla.",
       "correcta": "ola",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0083",
@@ -1044,7 +1126,8 @@
       "texto": "___, ¿qué tal estás?",
       "correcta": "Hola",
       "dificultad": 1,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0084",
@@ -1052,7 +1135,8 @@
       "texto": "Los ciudadanos van a ___ el domingo.",
       "correcta": "votar",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0085",
@@ -1060,7 +1144,8 @@
       "texto": "El balón no deja de ___.",
       "correcta": "botar",
       "dificultad": 2,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0086",
@@ -1068,7 +1153,8 @@
       "texto": "Vamos a ___ un vídeo.",
       "correcta": "grabar",
       "dificultad": 4,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0087",
@@ -1076,7 +1162,8 @@
       "texto": "El Gobierno quiere ___ con un impuesto el tabaco.",
       "correcta": "gravar",
       "dificultad": 5,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0088",
@@ -1084,7 +1171,8 @@
       "texto": "La ___ circula por el tallo de la planta.",
       "correcta": "savia",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": true
     },
     {
       "id": "FR.0089",
@@ -1092,7 +1180,8 @@
       "texto": "Mi abuela es una mujer muy ___.",
       "correcta": "sabia",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": true
     },
     {
       "id": "FR.0090",
@@ -1100,7 +1189,8 @@
       "texto": "No quiso ___ el secreto.",
       "correcta": "revelar",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0091",
@@ -1108,7 +1198,8 @@
       "texto": "Los soldados quisieron ___se contra su capitán.",
       "correcta": "rebelar",
       "dificultad": 4,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0092",
@@ -1116,7 +1207,8 @@
       "texto": "Caminamos ___ el río.",
       "correcta": "hasta",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0093",
@@ -1124,7 +1216,8 @@
       "texto": "La bandera ondea en lo alto del ___.",
       "correcta": "asta",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0094",
@@ -1132,7 +1225,8 @@
       "texto": "Espero que no ___ problemas.",
       "correcta": "haya",
       "dificultad": 4,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0095",
@@ -1140,7 +1234,8 @@
       "texto": "El tesoro se ___ bajo el árbol.",
       "correcta": "halla",
       "dificultad": 4,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0096",
@@ -1148,7 +1243,8 @@
       "texto": "Un ___ es un árbol de hoja caduca.",
       "correcta": "haya",
       "dificultad": 5,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0097",
@@ -1156,7 +1252,8 @@
       "texto": "Las vacas comen ___.",
       "correcta": "hierba",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0098",
@@ -1164,7 +1261,8 @@
       "texto": "Espera a que el agua ___.",
       "correcta": "hierva",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0099",
@@ -1172,7 +1270,8 @@
       "texto": "Es un paisaje muy ___.",
       "correcta": "bello",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     },
     {
       "id": "FR.0100",
@@ -1180,7 +1279,8 @@
       "texto": "El ___ de los brazos protege la piel.",
       "correcta": "vello",
       "dificultad": 3,
-      "competencia": "LEN.ORT.HOM"
+      "competencia": "LEN.ORT.HOM",
+      "ambigua": false
     }
   ]
 }

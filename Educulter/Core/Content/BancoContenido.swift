@@ -25,6 +25,8 @@ struct BancoContenido: Sendable, Equatable {
     let numeroEstaticos: Int
     /// Preguntas oficiales por competencia del mapa (`tribunal/equivalencias.json`, D-097, D-103).
     let preguntasOficiales: [String: Int]
+    /// Exámenes oficiales, reglas ortográficas y equivalencias del Tribunal (05I).
+    let tribunal: DatosTribunal
 
     private let indicePorId: [String: Int]
     private let indicePorCompetencia: [String: [Int]]
@@ -48,9 +50,10 @@ struct BancoContenido: Sendable, Equatable {
 
     init(catalogo: Catalogo, items: [Item], teoria: [TarjetaTeoria] = [], simulacros: [Simulacro] = [],
          plantillas: [Plantilla] = [], recursos: RecursosGeneradores = .vacios, textos: [TextoBase] = [],
-         literatura: BaseLiteraria? = nil, preguntasOficiales: [String: Int] = [:],
+         literatura: BaseLiteraria? = nil, preguntasOficiales: [String: Int] = [:], tribunal: DatosTribunal = DatosTribunal(),
          variantesPorPlantilla: Int = BancoContenido.variantesPorPlantilla, semillaBase: UInt64 = 1) {
         self.preguntasOficiales = preguntasOficiales
+        self.tribunal = tribunal
         self.catalogo = catalogo
         self.numeroEstaticos = items.count
         self.estaticos = items
@@ -161,6 +164,6 @@ struct BancoContenido: Sendable, Equatable {
     static func == (a: BancoContenido, b: BancoContenido) -> Bool {
         a.catalogo == b.catalogo && a.estaticos == b.estaticos && a.semillaBase == b.semillaBase
             && a.variantesPorPlantilla == b.variantesPorPlantilla && a.teoria == b.teoria && a.simulacros == b.simulacros
-            && a.plantillas == b.plantillas && a.recursos == b.recursos && a.textos == b.textos && a.literatura == b.literatura
+            && a.plantillas == b.plantillas && a.recursos == b.recursos && a.textos == b.textos && a.literatura == b.literatura && a.tribunal == b.tribunal
     }
 }
