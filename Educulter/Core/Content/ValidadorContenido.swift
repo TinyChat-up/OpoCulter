@@ -295,6 +295,8 @@ struct ValidadorContenido: Sendable {
         case .evidencia(let p): validarEvidencia(p)
         case .recuerdo(let p): validarRecuerdo(p)
         case .figuraArea(let p): validarFigura(p)
+        case .rayosX(let p): validarRayosX(p)
+        case .editor(let p): validarEditor(p)
         }
     }
 
@@ -320,6 +322,32 @@ struct ValidadorContenido: Sendable {
 
     /// La figura es coherente: cada descomposición suma (con su signo) el total, sus cortes existen,
     /// ninguna parte mide 0 y la unidad correcta es una de las opciones.
+    private func validarRayosX(_ p: Payload.RayosX) -> [String] {
+        var m: [String] = []
+        let ids = Set(p.tokens.map(\.id))
+        if p.verbo.count != 1 || !ids.contains(p.verbo[0]) { m.append("rayosX: el núcleo del predicado debe ser un token") }
+        if p.sujeto.isEmpty == (p.omitido == nil) { m.append("rayosX: sujeto expreso u omitido, uno de los dos") }
+        if let o = p.omitido, !p.personas.contains(o) { m.append("rayosX: persona omitida fuera de las opciones") }
+        let usados = p.sujeto + p.verbo + p.grupos.flatMap(\.tokens)
+        if Set(usados).count != usados.count || Set(usados) != ids { m.append("rayosX: cada token pertenece a una sola capa") }
+        if !(3...4).contains(p.capas) { m.append("rayosX: 3 o 4 capas") }
+        if p.capas == 4, !Set(p.grupos.map(\.funcion)).isSubset(of: Set(p.funciones.map(\.id))) { m.append("rayosX: función sin bandeja") }
+        return m
+    }
+
+    private func validarEditor(_ p: Payload.Editor) -> [String] {
+        var m: [String] = []
+        let ids = Set(p.tokens.map(\.id))
+        if p.faltas.isEmpty { m.append("editor sin faltas") }
+        for f in p.faltas {
+            if !ids.contains(f.token) { m.append("editor: falta en un token inexistente") }
+            guard let formas = p.formas[f.token], formas.contains(f.correcta) else { m.append("editor: la forma correcta no está entre las de la familia"); continue }
+            if p.tokens.first(where: { $0.id == f.token })?.texto == f.correcta { m.append("editor: la falta ya está bien escrita") }
+            if f.uso.isEmpty { m.append("editor: falta sin uso") }
+        }
+        return m
+    }
+
     private func validarFigura(_ p: Payload.FiguraArea) -> [String] {
         var m: [String] = []
         guard let total = Racional.interpretar(p.total)?.valor, total.numerador > 0 else { return ["figura con un total que no es un número positivo"] }

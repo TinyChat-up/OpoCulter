@@ -4,21 +4,24 @@
     "competencia": "LEN.SIN.COMPL",
     "peldano": 2,
     "dificultad": 3,
-    "mecanica": "segmentar",
+    "mecanica": "rayosX",
     "tipo": "oracionSimple",
     "enunciados": [
-      "Analiza la oración: sujeto, predicado y complementos."
+      "Analiza la oración capa a capa: verbo, sujeto, predicado y funciones."
     ],
     "objetivo": "Reconocer sujeto, predicado y complementos",
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02."
+      "notas": "Plantilla de prueba de la Fase 05C; el contenido real llega en el lote 02. Rayos X desde la 05H (D-124)."
     },
     "validacion": {
       "estado": "borrador"
     },
-    "version": 1
+    "version": 2,
+    "parametros": {
+      "modo": "completo"
+    }
   },
   {
     "id": "LEN.SIN.COMPL.G02",
@@ -46,86 +49,78 @@
     "competencia": "LEN.SIN.SUJPRED",
     "peldano": 1,
     "dificultad": 1,
-    "mecanica": "marcarTexto",
+    "mecanica": "rayosX",
     "tipo": "oracionSimple",
     "enunciados": [
-      "Toca las palabras que forman el sujeto."
+      "Analiza la oración capa a capa: verbo, sujeto y predicado."
     ],
     "objetivo": "Reconocer el sujeto por la concordancia",
     "parametros": {
-      "modo": "sujeto"
+      "modo": "sujetoPredicado"
     },
-    "pistas": [
-      "El sujeto concuerda con el verbo: cambia el número del verbo y mira qué cambia.",
-      "Pregunta al verbo «¿quién?»."
-    ],
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades. Rayos X desde la 05H (D-124)."
     },
     "validacion": {
       "estado": "aprobado",
       "revisor": "direccion",
       "fecha": "2026-11-25"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.SIN.SUJPRED.G02",
     "competencia": "LEN.SIN.SUJPRED",
     "peldano": 2,
     "dificultad": 2,
-    "mecanica": "segmentar",
+    "mecanica": "rayosX",
     "tipo": "oracionSimple",
     "enunciados": [
-      "Separa el sujeto y el predicado."
+      "Analiza la oración capa a capa: verbo, sujeto y predicado."
     ],
     "objetivo": "Separar sujeto y predicado",
     "parametros": {
       "modo": "sujetoPredicado"
     },
-    "pistas": [
-      "El sujeto concuerda con el verbo: cambia el número del verbo y mira qué cambia.",
-      "Todo lo que no es sujeto forma el predicado."
-    ],
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades. Rayos X desde la 05H (D-124)."
     },
     "validacion": {
       "estado": "aprobado",
       "revisor": "direccion",
       "fecha": "2026-11-25"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.SIN.SUJPRED.G03",
     "competencia": "LEN.SIN.SUJPRED",
     "peldano": 3,
     "dificultad": 5,
-    "mecanica": "marcarTexto",
+    "mecanica": "rayosX",
     "tipo": "oracionSimple",
     "enunciados": [
-      "Toca las palabras que forman el sujeto."
+      "Analiza la oración capa a capa: verbo, sujeto y predicado."
     ],
     "objetivo": "Reconocer el sujeto en oraciones más largas",
     "parametros": {
-      "modo": "sujeto"
+      "modo": "sujetoPredicado"
     },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades. Rayos X desde la 05H (D-124)."
     },
     "validacion": {
       "estado": "aprobado",
       "revisor": "direccion",
       "fecha": "2026-11-25"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.SIN.SUJPRED.G04",
@@ -158,26 +153,26 @@
     "competencia": "LEN.SIN.SUJPRED",
     "peldano": 5,
     "dificultad": 6,
-    "mecanica": "marcarTexto",
+    "mecanica": "rayosX",
     "tipo": "oracionSimple",
     "enunciados": [
-      "Toca las palabras que forman el sujeto."
+      "Analiza la oración capa a capa: verbo, sujeto y predicado."
     ],
     "objetivo": "Reconocer el sujeto con el orden alterado",
     "parametros": {
-      "modo": "sujeto"
+      "modo": "sujetoPredicado"
     },
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades. Rayos X desde la 05H (D-124)."
     },
     "validacion": {
       "estado": "aprobado",
       "revisor": "direccion",
       "fecha": "2026-11-25"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.SIN.COMPL.G03",
@@ -288,10 +283,10 @@
     "competencia": "LEN.SIN.COMPL",
     "peldano": 5,
     "dificultad": 4,
-    "mecanica": "segmentar",
+    "mecanica": "rayosX",
     "tipo": "oracionSimple",
     "enunciados": [
-      "Analiza la oración: sujeto, predicado y complementos."
+      "Analiza la oración capa a capa: verbo, sujeto, predicado y funciones."
     ],
     "objetivo": "Analizar sintácticamente una oración simple",
     "parametros": {
@@ -300,14 +295,14 @@
     "procedencia": {
       "tipo": "original",
       "licencia": "propia",
-      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades."
+      "notas": "Fase 05E (parte 1): plantilla nueva; se aprueba si supera los tests de propiedades. Rayos X desde la 05H (D-124)."
     },
     "validacion": {
       "estado": "aprobado",
       "revisor": "direccion",
       "fecha": "2026-11-25"
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.SIN.CLASE.G01",

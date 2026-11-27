@@ -40,7 +40,7 @@ extension ServicioSesion {
         let candidatos = ConstructorRondas(banco: banco, config: configRonda).candidatos(competencia: id, peldano: peldano).shuffled(using: &rng)
         let ordenados = candidatos.filter { !esReciente($0.id) } + candidatos.filter { esReciente($0.id) }
         // Sin preguntas repetidas en la ronda aunque cambie el id (D-087).
-        var items = Array(ordenados.sinPreguntasRepetidas().prefix(configRonda.objetivo).map { ItemRonda(itemId: $0.id, motivo: .practica) })
+        var items = Array(ordenados.sinPreguntasRepetidas(excluyendo: try huellasBloqueadas()).prefix(configRonda.objetivo).map { ItemRonda(itemId: $0.id, motivo: .practica) })
         // Peldaño 1 (Descubrir): ejemplo resuelto y gemelo (§5).
         if peldano == Peldano.descubre.rawValue { items = EjemplosResueltos.aplicar(items, competencia: id, banco: banco, rng: &rng) }
         let teoria = peldano == 1 ? banco.teoria(competencia: id).map(\.id) : []
@@ -94,7 +94,7 @@ extension ServicioSesion {
     }
 
     /// Cierra la partida: la guarda con su historial y, si no está abandonada, calcula récords,
-    /// cuenta como ronda (racha y misiones) y concede los logros. Las abandonadas no cuentan para
+    /// cuenta como ronda (racha) y concede los logros. Las abandonadas no cuentan para
     /// el récord.
     func cerrarPartida(_ partida: PartidaSupervivencia, abandonada: Bool, ronda: RondaPreparada) throws -> ResultadoPartida {
         var p = partida
@@ -132,6 +132,8 @@ extension ServicioSesion {
         try repositorio.guardar(resultado)
         var perfil = try repositorio.perfil()
         perfil.metricas[.diagnosticosCompletados, default: 0] += 1
+        // El plan se rehace con el diagnóstico nuevo (05H): la competencia en curso sale de él.
+        perfil.competenciaEnCurso = nil
         let logros = try comprobarLogros(perfil, fecha: reloj.ahora)
         try repositorio.guardar(perfil)
         return (resultado, logros)

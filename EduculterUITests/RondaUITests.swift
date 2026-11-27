@@ -2,6 +2,19 @@ import XCTest
 
 /// Base de los tests de interfaz: arranque, auditoría de accesibilidad con excepciones
 /// justificadas (D-048) y toques que desplazan el contenido si hace falta.
+extension XCTestCase {
+    /// Pulsa «Comprobar»; si el ítem es de un juego y se abre el reintento (contrato de intento, 05G),
+    /// repite la misma respuesta y vuelve a comprobar.
+    @MainActor
+    func comprobar(_ app: XCUIApplication, rellenar boton: String) {
+        app.buttons["botonComprobar"].tap()
+        if !app.buttons["botonContinuar"].waitForExistence(timeout: 3), app.descendants(matching: .any)["pistaReintento"].exists {
+            app.buttons[boton].tap()
+            app.buttons["botonComprobar"].tap()
+        }
+    }
+}
+
 class CasoUI: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -26,8 +39,9 @@ class CasoUI: XCTestCase {
         var vueltas = 0
         while !app.descendants(matching: .any)["resumenRonda"].exists && !app.descendants(matching: .any)["pantallaPlan"].exists && vueltas < maximo {
             XCTAssertTrue(app.buttons["botonRellenarDebug"].waitForExistence(timeout: 10), app.debugDescription)
-            app.buttons[fallos.contains(vueltas) ? "botonRellenarErrorDebug" : "botonRellenarDebug"].tap()
-            app.buttons["botonComprobar"].tap()
+            let boton = fallos.contains(vueltas) ? "botonRellenarErrorDebug" : "botonRellenarDebug"
+            app.buttons[boton].tap()
+            comprobar(app, rellenar: boton)
             XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 5))
             app.buttons["botonContinuar"].tap()
             vueltas += 1
@@ -203,10 +217,6 @@ final class RondaUITests: CasoUI {
             "clasificar": ["ficha_f1", "caja_SUS", "ficha_f2", "caja_SUS", "ficha_f3", "caja_ADJ", "ficha_f4", "caja_ADJ"],
             "emparejar": ["izq_i1", "der_d2", "izq_i2", "der_d3", "izq_i3", "der_d1"],
             "marcarTexto": ["token_t2", "token_t5"],
-            "segmentar": ["seg_token_t1", "seg_token_t6", "etiqueta_PRED",
-                          "seg_token_t1", "seg_token_t1", "etiqueta_NV",
-                          "seg_token_t2", "seg_token_t6", "etiqueta_CCL",
-                          "seg_token_t5", "seg_token_t6", "etiqueta_CN"],
             "construir": ["pieza_p1", "pieza_p3"],
             "numerico": ["tecla3", "teclaFraccion", "tecla4"],
             "colocarTilde": ["letra_5"],
@@ -219,12 +229,13 @@ final class RondaUITests: CasoUI {
                                          "No se reconoce la mecánica en pantalla")
             vistas.append(mecanica)
             try auditar(app, mecanica)
+            // Desde la 05H, el ítem de segmentar es generado (morfemas): se responde con el botón de pruebas.
             if let ids = toques[mecanica] {
                 tocar(app, ids)
             } else {
                 app.buttons["botonRellenarDebug"].tap()
             }
-            app.buttons["botonComprobar"].tap()
+            comprobar(app, rellenar: "botonRellenarDebug")
             XCTAssertTrue(app.staticTexts["¡Correcto!"].waitForExistence(timeout: 5), "La respuesta de \(mecanica) debería ser correcta")
             try auditar(app, "\(mecanica) corregido")
             app.buttons["botonContinuar"].tap()

@@ -23,6 +23,9 @@ struct Muestra: Sendable, Equatable {
     var juego: String?
     /// Texto base que se puede abrir desde el ítem (05G, J46).
     var textoRef: String?
+    /// Pregunta de origen (05H): la frase del banco en el hueco y en el Editor. Los ítems con el mismo
+    /// origen comparten huella y no salen en la misma ronda.
+    var origen: String?
 }
 
 /// Recursos de los generadores de Lengua (léxico, piezas de gramática, bancos de frases).
@@ -49,12 +52,20 @@ struct RecursosGeneradores: Sendable, Equatable {
     /// J46 «De evidencia a resumen» (05G): datos de `resumen.json` y textos base por id.
     var resumen: BancoResumen?
     var textosBase: [String: TextoBase] = [:]
+    /// Fase 05H: formación de palabras, recursos literarios y glosario (ANEXOS A y B).
+    var formacion: BancoFormacion?
+    var recursosLiterarios: BancoRecursos?
+    var glosario: BancoGlosario?
 
     init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
          verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases(),
          compatibilidad: CompatibilidadGramatica = CompatibilidadGramatica(), ambiguas: PalabrasAmbiguas = PalabrasAmbiguas(),
          literatura: BaseLiteraria? = nil, errores: CatalogoErrores = CatalogoErrores(),
-         resumen: BancoResumen? = nil, textosBase: [TextoBase] = []) {
+         resumen: BancoResumen? = nil, textosBase: [TextoBase] = [],
+         formacion: BancoFormacion? = nil, recursosLiterarios: BancoRecursos? = nil, glosario: BancoGlosario? = nil) {
+        self.formacion = formacion
+        self.recursosLiterarios = recursosLiterarios
+        self.glosario = glosario
         self.resumen = resumen
         self.textosBase = Dictionary(textosBase.map { ($0.id, $0) }, uniquingKeysWith: { a, _ in a })
         self.literatura = literatura
@@ -129,6 +140,8 @@ enum MotorGeneradores {
             GeneradorTerminoDesconocido(),
             // Fase 05G: juegos J46 y J63.
             GeneradorEvidenciaResumen(), GeneradorAreaCompuesta(),
+            // Fase 05H: Editor, Fábrica de palabras, recursos literarios y glosario.
+            GeneradorEditor(), GeneradorFormacion(), GeneradorRecursos(), GeneradorGlosario(),
         ]
         return Dictionary(uniqueKeysWithValues: todos.map { ($0.tipo, $0) })
     }()
@@ -174,7 +187,7 @@ enum MotorGeneradores {
                     enunciado: Marcadores.rellenar(redaccion, con: valores), payload: m.payload, pistas: pistas,
                     explicacion: m.explicacion, erroresHabituales: m.erroresHabituales,
                     procedencia: p.procedencia, validacion: p.validacion, version: p.version, textoRef: m.textoRef,
-                    claveGenerada: "\(p.tipo)|\(m.clave)", pasos: m.pasos, juego: m.juego)
+                    claveGenerada: "\(p.tipo)|\(m.clave)", pasos: m.pasos, juego: m.juego, origen: m.origen)
     }
 
     /// Copia de una plantilla con otra dificultad (y, opcionalmente, otro peldaño) para Supervivencia

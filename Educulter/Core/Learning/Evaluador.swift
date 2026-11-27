@@ -28,6 +28,9 @@ enum Respuesta: Sendable, Equatable {
     case evidencia(String)
     case recuerdo(RespuestaRecuerdo)
     case figura(RespuestaFigura)
+    /// 05H: capas de Rayos X y correcciones del Editor.
+    case rayosX(RespuestaRayosX)
+    case editor(RespuestaEditor)
 
     struct ParRespuesta: Sendable, Equatable, Hashable {
         var izquierda: String
@@ -123,6 +126,20 @@ enum Evaluador {
             return Resultado(correcto: true, fraccionCorrecta: proporcion(r.cumplidos.count, max(p.criterios.count, 1)), errores: [])
         case (.figuraArea(let p), .figura(let r)):
             return evaluarFigura(p, r)
+        case (.rayosX(let p), .rayosX(let r)):
+            let errores = (1...p.capas).flatMap { p.errores(capa: $0, r) }
+            let total = 2 + (p.capas >= 4 ? p.grupos.count : 0)
+            let bien = total - min(total, errores.count)
+            return errores.isEmpty ? .acierto : Resultado(correcto: false, fraccionCorrecta: proporcion(bien, total), errores: errores)
+        case (.editor(let p), .editor(let r)):
+            let faltas = Set(p.faltas.map(\.token))
+            var errores = r.marcadas.subtracting(faltas).sorted().map { "sobra_\($0)" }
+            for f in p.faltas {
+                if !r.marcadas.contains(f.token) { errores.append("falta_\(f.token)") }
+                else if r.cambios[f.token] != f.correcta { errores.append("forma_\(f.token)") }
+            }
+            return errores.isEmpty ? .acierto
+                : Resultado(correcto: false, fraccionCorrecta: proporcion(p.faltas.count - errores.filter { !$0.hasPrefix("sobra_") }.count, max(p.faltas.count, 1)), errores: errores)
         default:
             return .fallo([Resultado.respuestaIncompatible])
         }
@@ -141,6 +158,10 @@ enum Evaluador {
     /// errores dicen qué falla: cada parte mal calculada (`parte_<id>`), el total, la unidad y los
     /// errores típicos cuyo valor coincide con el total tecleado.
     private static func evaluarFigura(_ p: Payload.FiguraArea, _ r: Respuesta.RespuestaFigura) -> Resultado {
+        // «Restar el hueco» se ofrece siempre; en una figura sin hueco es un error de estrategia (05H).
+        if let e = r.estrategia, !p.estrategiasValidas.contains(e) {
+            return Resultado(correcto: false, fraccionCorrecta: 0, errores: e == .restar ? ["sinHueco"] : ["estrategia"])
+        }
         func valor(_ t: String) -> Racional? { Racional.interpretar(t)?.valor }
         let totalBien = valor(r.total) != nil && valor(r.total) == valor(p.total)
         let unidadBien = r.unidad == p.unidad

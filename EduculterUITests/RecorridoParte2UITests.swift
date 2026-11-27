@@ -77,8 +77,9 @@ final class RecorridoParte2UITests: CasoUI {
                 captura(app, "08_ejemplo_ultimo_paso")
             }
             // El segundo ítem se falla para ver la corrección con los pasos.
-            app.buttons[vueltas == 1 ? "botonRellenarErrorDebug" : "botonRellenarDebug"].tap()
-            app.buttons["botonComprobar"].tap()
+            let id = vueltas == 1 ? "botonRellenarErrorDebug" : "botonRellenarDebug"
+            app.buttons[id].tap()
+            comprobar(app, rellenar: id)
             XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 10))
             if vueltas == 1 { captura(app, "09_fallo") }
             app.buttons["botonContinuar"].tap()

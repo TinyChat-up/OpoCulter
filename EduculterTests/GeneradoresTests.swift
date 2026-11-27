@@ -468,6 +468,14 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         // Oráculo independiente de los cortes: fórmula del área del polígono (JuegosTests, 05G).
         guard case .figuraArea(let f) = item.payload, let total = Racional.interpretar(f.total)?.valor else { Issue.record("payload"); return }
         #expect(abs(JuegosTests.oraculo(f) - total.valorDouble) < 1e-6, "\(item.id)")
+    case "editor":
+        // Oráculo: la frase original. Corregidas las faltas, el texto es el original (JuegosLenguaTests, 05H).
+        guard case .editor(let e) = item.payload else { Issue.record("payload"); return }
+        let corregido = e.tokens.map { t in e.faltas.first { $0.token == t.id }?.correcta ?? t.texto }.joined(separator: " ")
+        #expect(corregido == d["originales"], "\(item.id)")
+    case "formacion", "recursos", "glosario":
+        // Oráculo: los datos de la dirección (ANEXOS A y B), comprobados en JuegosLenguaTests (05H).
+        #expect(Evaluador.evaluar(RespuestaEjemplo.correcta(item.payload), para: item).correcto, "\(item.id)")
     case "evidenciaResumen":
         // Los datos son del ANEXO A: la respuesta correcta es la que marca la dirección.
         let e = bancoGeneradores.recursos.resumen?.textos.first { $0.texto == d["texto"] }
@@ -493,7 +501,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
 struct GeneradoresPropiedadesTests {
     static let plantillas = bancoGeneradores.plantillas
 
-    @Test("Hay plantillas para los 25 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
+    @Test("Hay plantillas para los 29 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
     func cobertura() {
         let tipos = Set(Self.plantillas.map(\.tipo))
         #expect(tipos == Set(MotorGeneradores.generadores.keys))
@@ -516,7 +524,10 @@ struct GeneradoresPropiedadesTests {
         // Juegos de la 05G (J46 y J63): aprobadas por la dirección (D-118, D-119).
         let fase05G = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05G") == true }
         #expect(fase05G.count == 9 && fase05G.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-26") })
-        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
+        // Fase 05H: Editor, Fábrica, recursos y glosario, aprobadas por la dirección (D-125–D-127).
+        let fase05H = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05H") == true }
+        #expect(fase05H.count == 24 && fase05H.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-27") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !fase05H.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -597,7 +608,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 92)
+        #expect(banco.plantillas.count == 116)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }

@@ -88,7 +88,11 @@ struct EvaluadorTests {
     @Test("Segmentar, incluido el anidamiento y los ids distintos")
     func segmentar() throws {
         typealias S = Respuesta.SegmentoRespuesta
-        let i = try item("LEN.SIN.SUJPRED.0001")
+        // El antiguo LEN.SIN.SUJPRED.0001 (migrado a Rayos X en la 05H) como ítem de segmentar.
+        let i = Fx.item("LEN.SIN.SEG.0001", payload: .segmentar(.init(
+            tokens: [.init(id: "t1", texto: "El"), .init(id: "t2", texto: "gato"), .init(id: "t3", texto: "duerme")],
+            etiquetas: [.init(id: "SUJ", nombre: "Sujeto"), .init(id: "PRED", nombre: "Predicado")],
+            segmentos: [.init(id: "s1", desde: "t1", hasta: "t2", etiqueta: "SUJ", padre: nil), .init(id: "s2", desde: "t3", hasta: "t3", etiqueta: "PRED", padre: nil)])))
         let bien = [S(id: "x", desde: "t1", hasta: "t2", etiqueta: "SUJ"), S(id: "y", desde: "t3", hasta: "t3", etiqueta: "PRED")]
         #expect(Evaluador.evaluar(.segmentar(bien), para: i).correcto)
         let mal = [S(id: "x", desde: "t1", hasta: "t1", etiqueta: "SUJ"), S(id: "y", desde: "t3", hasta: "t3", etiqueta: "PRED")]

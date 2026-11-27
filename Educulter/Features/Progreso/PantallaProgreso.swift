@@ -342,7 +342,7 @@ struct DescriptorEvolucion: AXChartDescriptorRepresentable {
     }
 }
 
-/// Ajustes: sonido, vibración, recordatorio (con hora), repetir diagnóstico, avatar y créditos.
+/// Ajustes: sonido, vibración, recordatorio (con hora), hacer el diagnóstico (rehace el plan), avatar y créditos.
 struct PantallaAjustes: View {
     let servicio: ServicioSesion
     @Environment(EntornoApp.self) private var entorno
@@ -406,7 +406,8 @@ struct PantallaAjustes: View {
                         .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
                 }
                 grupo("Tu cuenta") {
-                    Button("Repetir diagnóstico") { ronda = RondaViewModel(servicio: servicio, tipo: .diagnostico) }
+                    Button("Hacer el diagnóstico") { ronda = RondaViewModel(servicio: servicio, tipo: .diagnostico) }
+                        .accessibilityHint("Rehace tu plan de estudio con el resultado")
                         .buttonStyle(EstiloBotonSecundario())
                         .accessibilityIdentifier("botonRepetirDiagnostico")
                     Button("Cambiar avatar") { mostrarPerfil = true }

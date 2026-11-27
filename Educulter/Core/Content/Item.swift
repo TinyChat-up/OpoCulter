@@ -20,6 +20,9 @@ enum Mecanica: String, Codable, Sendable, CaseIterable {
     case evidencia
     case recuerdo
     case figuraArea
+    /// Fase 05H: sintaxis por capas y detectar y corregir faltas.
+    case rayosX
+    case editor
 }
 
 /// Peldaños de la escalera de dominio.
@@ -77,6 +80,9 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
     /// Actividad de juego a la que pertenece (05G: «J46», «J63»). Los ítems de juego siguen el
     /// contrato de intento (pista de razonamiento y reintento).
     var juego: String?
+    /// Pregunta de origen de una variante de mecánica (05H): `LEN.COM.INFER.0004` es la 0003 con
+    /// `evidencia`. Comparten huella, así que nunca salen juntas ni en días seguidos.
+    var origen: String?
 
     var mecanica: Mecanica { payload.mecanica }
 
@@ -85,7 +91,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         enunciado: String, payload: Payload, pistas: [String] = [], explicacion: String,
         erroresHabituales: [ErrorHabitual] = [], referencia: Referencia? = nil,
         procedencia: Procedencia, validacion: Validacion, version: Int = 1, textoRef: String? = nil,
-        claveGenerada: String? = nil, pasos: [PasoResuelto] = [], juego: String? = nil
+        claveGenerada: String? = nil, pasos: [PasoResuelto] = [], juego: String? = nil, origen: String? = nil
     ) {
         self.id = id
         self.competencia = competencia
@@ -105,11 +111,12 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         self.claveGenerada = claveGenerada
         self.pasos = pasos
         self.juego = juego
+        self.origen = origen
     }
 
     private enum CodingKeys: String, CodingKey {
         case id, competencia, peldano, dificultad, objetivo, mecanica, enunciado, payload,
-             pistas, explicacion, erroresHabituales, referencia, procedencia, validacion, version, textoRef, claveGenerada, pasos, juego
+             pistas, explicacion, erroresHabituales, referencia, procedencia, validacion, version, textoRef, claveGenerada, pasos, juego, origen
     }
 
     init(from decoder: Decoder) throws {
@@ -133,6 +140,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         claveGenerada = try c.decodeIfPresent(String.self, forKey: .claveGenerada)
         pasos = try c.decodeIfPresent([PasoResuelto].self, forKey: .pasos) ?? []
         juego = try c.decodeIfPresent(String.self, forKey: .juego)
+        origen = try c.decodeIfPresent(String.self, forKey: .origen)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -156,6 +164,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         try c.encodeIfPresent(claveGenerada, forKey: .claveGenerada)
         if !pasos.isEmpty { try c.encode(pasos, forKey: .pasos) }
         try c.encodeIfPresent(juego, forKey: .juego)
+        try c.encodeIfPresent(origen, forKey: .origen)
     }
 }
 
@@ -190,6 +199,8 @@ enum Payload: Sendable, Equatable {
     case evidencia(Evidencia)
     case recuerdo(Recuerdo)
     case figuraArea(FiguraArea)
+    case rayosX(RayosX)
+    case editor(Editor)
 
     var mecanica: Mecanica {
         switch self {
@@ -208,6 +219,8 @@ enum Payload: Sendable, Equatable {
         case .evidencia: .evidencia
         case .recuerdo: .recuerdo
         case .figuraArea: .figuraArea
+        case .rayosX: .rayosX
+        case .editor: .editor
         }
     }
 
@@ -392,6 +405,8 @@ enum Payload: Sendable, Equatable {
         case .evidencia: .evidencia(try Evidencia(from: decoder))
         case .recuerdo: .recuerdo(try Recuerdo(from: decoder))
         case .figuraArea: .figuraArea(try FiguraArea(from: decoder))
+        case .rayosX: .rayosX(try RayosX(from: decoder))
+        case .editor: .editor(try Editor(from: decoder))
         }
     }
 
@@ -412,6 +427,8 @@ enum Payload: Sendable, Equatable {
         case .evidencia(let p): try p.encode(to: encoder)
         case .recuerdo(let p): try p.encode(to: encoder)
         case .figuraArea(let p): try p.encode(to: encoder)
+        case .rayosX(let p): try p.encode(to: encoder)
+        case .editor(let p): try p.encode(to: encoder)
         }
     }
 }

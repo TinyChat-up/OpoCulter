@@ -40,6 +40,8 @@ struct BancoContenido: Sendable, Equatable {
         var todos: [Item]?
     }
     private let plantillaPorId: [String: Plantilla]
+    /// Huellas de las preguntas que tienen variante de mecánica (05H): no salen en días seguidos.
+    let huellasConVariantes: Set<String>
     private let textoPorId: [String: TextoBase]
 
     static let variantesPorPlantilla = 12
@@ -52,6 +54,7 @@ struct BancoContenido: Sendable, Equatable {
         self.catalogo = catalogo
         self.numeroEstaticos = items.count
         self.estaticos = items
+        self.huellasConVariantes = Set(items.compactMap { $0.origen.map { "id|" + $0 } })
         self.variantesPorPlantilla = variantesPorPlantilla
         self.semillaBase = semillaBase
         self.plantillasPorCompetencia = Dictionary(grouping: plantillas, by: \.competencia)

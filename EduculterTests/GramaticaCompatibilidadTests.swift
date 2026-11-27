@@ -158,6 +158,16 @@ enum OraculoOracion {
                 let sintagma = item.enunciado.components(separatedBy: "«").dropFirst().first?.components(separatedBy: "»").first ?? ""
                 if correcta != nombres[funcionDe[sintagma.lowercased()] ?? ""] { fallos.append("función de «\(sintagma)»: \(correcta)") }
             }
+        case .rayosX(let x):
+            // Rayos X (05H): el verbo, el sujeto (si no está omitido) y la función de cada grupo.
+            let limpio = { (s: String) in s.trimmingCharacters(in: CharacterSet(charactersIn: ".")) }
+            if x.omitido == nil {
+                if !iguales(x.texto(x.sujeto), e.sujeto) { fallos.append("rayosX: sujeto «\(x.texto(x.sujeto))»") }
+                if !iguales(limpio(x.texto(x.verbo)), e.verbo) { fallos.append("rayosX: verbo «\(x.texto(x.verbo))»") }
+            }
+            for g in x.grupos where funcionDe[limpio(x.texto(g.tokens)).lowercased()] != g.funcion {
+                fallos.append("rayosX: grupo \(g.funcion) «\(x.texto(g.tokens))»")
+            }
         default: fallos.append("mecánica inesperada")
         }
         return fallos + reglas(d, e)
@@ -307,15 +317,15 @@ struct GramaticaCompatibilidadTests {
             if dificultad == 3 { #expect(copulativas > 0 && copulativas < 1000) }
             if dificultad == 4 { #expect(copulativas == 0 && conCI == 0) }
             if dificultad == 5 { #expect(conCI > 0) }
-            if dificultad == 6 && p.mecanica != .segmentar { #expect(antepuestos == 1000 && pospuestos > 0) }
+            if dificultad == 6 && p.mecanica != .segmentar && p.mecanica != .rayosX { #expect(antepuestos == 1000 && pospuestos > 0) }
         }
-        if p.mecanica == .segmentar { #expect(antepuestos == 0, "En segmentar no hay orden alterado") }
+        if p.mecanica == .segmentar || p.mecanica == .rayosX { #expect(antepuestos == 0, "En segmentar y Rayos X no hay orden alterado") }
     }
 
     @Test("50 oraciones distintas por nivel, para revisar (se imprimen 3)", arguments: 1...6)
     func cincuentaPorNivel(_ nivel: Int) throws {
-        let p = Plantilla(id: "LEN.SIN.SUJPRED.GX", competencia: "LEN.SIN.SUJPRED", peldano: 3, dificultad: nivel, mecanica: .marcarTexto,
-                          tipo: "oracionSimple", parametros: ["modo": .texto("sujeto")], enunciados: ["{{oracion}}"])
+        let p = Plantilla(id: "LEN.SIN.SUJPRED.GX", competencia: "LEN.SIN.SUJPRED", peldano: 3, dificultad: nivel, mecanica: .rayosX,
+                          tipo: "oracionSimple", parametros: ["modo": .texto("sujetoPredicado")], enunciados: ["{{oracion}}"])
         var vistas: [String] = []
         for semilla in UInt64(0)..<2000 where vistas.count < 50 {
             let o = try MotorGeneradores.muestra(p, semilla: semilla, recursos: bancoGramatica.recursos).datos["oracion"]!

@@ -1,0 +1,80 @@
+[
+  {
+    "id": "LEN.REC.DEF.G01",
+    "competencia": "LEN.REC.DEF",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "emparejar",
+    "tipo": "recursos",
+    "enunciados": [
+      "Une cada recurso literario con su definición."
+    ],
+    "objetivo": "Recursos: definir",
+    "parametros": {
+      "modo": "emparejar"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.REC.FIG.G01",
+    "competencia": "LEN.REC.FIG",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "recursos",
+    "enunciados": [
+      "¿Qué recurso literario hay en «{{ejemplo}}»?"
+    ],
+    "objetivo": "Recursos: identificar",
+    "parametros": {
+      "modo": "eleccion"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.REC.FIG.G02",
+    "competencia": "LEN.REC.FIG",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "marcarTexto",
+    "tipo": "recursos",
+    "enunciados": [
+      "Detective: toca las palabras donde está este recurso: {{recurso}}."
+    ],
+    "objetivo": "Detective: localizar el recurso",
+    "parametros": {
+      "modo": "detective"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  }
+]

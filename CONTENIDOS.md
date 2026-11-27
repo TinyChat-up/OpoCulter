@@ -106,6 +106,8 @@ Modelos Swift: [Core/Content](Educulter/Core/Content). El validador ([ValidadorC
 | `evidencia` (05G) | `{ "titulo", "fragmentos":[{"id","texto"}], "aceptados":["id"], "detalles":["id"], "pistaDetalle", "pistaOtro" }` | ≥ 1 aceptado; ids existentes; aceptados y detalles sin solaparse; pistas no vacías |
 | `recuerdo` (05G) | `{ "modelo", "criterios":["…"], "maximo":400 }` | modelo y ≥ 1 criterio; autoevaluación, no cuenta para el dominio |
 | `figuraArea` (05G) | `{ "region":[parte], "ancho", "alto", "paso", "rotulos":[{"a","b","texto"}], "cortes":[{"id","a","b"}], "descomposiciones":[{"id","estrategia":"sumar\|restar","cortes":["id"],"partes":[parte]}], "mostrarCortes", "total", "unidad", "unidadesOpciones", "descripcion", "erroneos":{"codigo":"valor"} }`; `parte` = `{ "id", "forma":{"poligono":{"_0":[{"x","y"}]}} \| {"semicirculo":{"a","b"}}, "signo":±1, "area", "calculo" }` | cada descomposición suma (con signo) el total; cortes existentes; partes con área positiva; la unidad está entre las opciones; descripción para VoiceOver no vacía |
+| `rayosX` (05H) | `{ "tokens", "verbo":["id"], "sujeto":["id"], "omitido": persona \| null, "personas", "grupos":[{"id","tokens","funcion"}], "funciones":[{"id","nombre"}], "capas":3\|4, "colores", "preguntas", "porCapas", "predicado", "guias", "explicaciones", "esquema": segmentar }` | un verbo; sujeto expreso u omitido; cada token en una sola capa; con 4 capas, cada función tiene bandeja |
+| `editor` (05H) | `{ "tokens", "formas": {"id": ["forma"]}, "faltas":[{"token","correcta","uso","tilde"}], "penalizacion" }` | ≥ 1 falta; la correcta está entre las formas de su familia y no es la escrita; cada falta con su uso |
 
 #### 2.4.1 Segmentar: rangos y anidamiento
 
@@ -422,3 +424,10 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 - **Errores típicos** (D-121): 93 → **102** (LEN.COM.TEMA 3, MAT.GEO.AREA 6). Distractores estáticos sin etiquetar: 13 → **12** (los de LEN.COM.TEMA ya se etiquetan; la 0004 de INFER añade 2).
 - **Revisión de datos sin cambios** (§1.2): ítems de comprensión de elección cuya correcta es la opción más larga: LEN.COM.TEMA.0001, .0002, .0003 y .0004, LEN.COM.INFER.0002 y .0003 (el orden ya se baraja, D-122; la longitud queda para la dirección).
 - **Tribunal** (§1.3): OF.2017.O-6 y OF.2022.O-4 pasan a «parcial» (formas irregulares).
+
+### Fase 05H · Lengua manipulativa (27/11/2026)
+- **Datos de la dirección** (`scripts/lote_05h.py`): `formacion.json` (ANEXO A: 51 palabras, 7 familias léxicas y 8 distractores formales), `recursos.json` (ANEXO B: 20 recursos con 2 ejemplos originales cada uno y sus «también presentes») y `glosario.json` (24 términos en 4 grupos). Procedencia original de la dirección, aprobados.
+- **Plantillas nuevas (24, aprobadas con los tests de propiedades de 200 semillas)**: Fábrica (LEN.FOR.CLAS.G01–G02, LEN.FOR.DER.G01, LEN.FOR.COMP.G01, LEN.FOR.ESTR.G01, LEN.LEX.CAMPO.G01), recursos (LEN.REC.DEF.G01, LEN.REC.FIG.G01–G02), glosario (LEN.CLA.JUST.G01–G02, LEN.LEX.POLI.G01–G02, LEN.FOR.ESTR.G02–G03, LEN.ORT.HIA.G01–G02) y Editor (LEN.ORT.DIA.G02–G04, LEN.ORT.HOM.G03–G05, LEN.ORT.PQ.G02).
+- **Rayos X**: las 6 plantillas de marcar y segmentar de SUJPRED y COMPL pasan a `rayosX` (mismos ids); LEN.SIN.SUJPRED.0001–0002 y LEN.SIN.COMPL.0001 (borradores de prueba) migrados.
+- **Comprensión** (§0.5): opciones nuevas de la dirección en LEN.COM.TEMA.0001–0004 e INFER.0002–0003; `LEN.COM.INFER.0004` lleva `origen: LEN.COM.INFER.0003`.
+- **Errores típicos**: 103 → 112. **Distractores estáticos sin etiquetar**: 8. **Inventario** para el lote 06: [docs/lotes/LOTE06_INVENTARIO.md](docs/lotes/LOTE06_INVENTARIO.md).

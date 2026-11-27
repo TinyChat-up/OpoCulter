@@ -61,6 +61,8 @@ struct VistaMecanica: View {
             case .evidencia(let p): MecanicaEvidencia(p: p, ctx: contexto, respuesta: respuesta)
             case .recuerdo(let p): MecanicaRecuerdo(p: p, ctx: contexto, respuesta: respuesta)
             case .figuraArea(let p): MecanicaFiguraArea(p: p, ctx: contexto, respuesta: respuesta)
+            case .rayosX(let p): MecanicaRayosX(p: p, ctx: contexto, respuesta: respuesta)
+            case .editor(let p): MecanicaEditor(p: p, ctx: contexto, respuesta: respuesta)
             }
         }
     }

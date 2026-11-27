@@ -7,10 +7,11 @@ final class ModosUITests: CasoUI {
     /// Responde el ítem en curso con el botón de pruebas (correcto o con error) y continúa.
     @MainActor
     private func responder(_ app: XCUIApplication, correcto: Bool) {
-        let boton = app.buttons[correcto ? "botonRellenarDebug" : "botonRellenarErrorDebug"]
+        let id = correcto ? "botonRellenarDebug" : "botonRellenarErrorDebug"
+        let boton = app.buttons[id]
         XCTAssertTrue(boton.waitForExistence(timeout: 10))
         boton.tap()
-        app.buttons["botonComprobar"].tap()
+        comprobar(app, rellenar: id)
         XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 5))
         app.buttons["botonContinuar"].tap()
     }

@@ -20,6 +20,8 @@ enum RespuestaEjemplo {
         case .evidencia(let p): .evidencia(p.aceptados.first ?? "")
         case .recuerdo(let p): .recuerdo(.init(texto: "", enPapel: true, modeloVisto: true, cumplidos: Set(p.criterios.indices)))
         case .figuraArea(let p): .figura(p.respuestaCorrecta)
+        case .rayosX(let p): .rayosX(p.respuestaCorrecta)
+        case .editor(let p): .editor(p.respuestaCorrecta)
         }
     }
 
@@ -79,6 +81,15 @@ enum RespuestaEjemplo {
             var r = p.respuestaCorrecta
             r.total = p.erroneos.sorted { $0.key < $1.key }.first { $0.value != p.total }?.value ?? "0"
             return .figura(r)
+        case .rayosX(let p):
+            // El sujeto (o el verbo) desplazado: falla la capa 2.
+            var r = p.respuestaCorrecta
+            if p.omitido != nil { r.omitido = p.personas.first { $0 != p.omitido } } else { r.sujeto = Set(p.verbo) }
+            return .rayosX(r)
+        case .editor(let p):
+            var r = p.respuestaCorrecta
+            if let f = p.faltas.first { r.cambios[f.token] = p.formas[f.token]?.first { $0 != f.correcta } ?? "" }
+            return .editor(r)
         }
     }
 }
@@ -137,6 +148,17 @@ enum DescripcionSolucion {
             return p.modelo
         case .figuraArea(let p):
             return "\(p.total) \(p.unidad)"
+        case .rayosX(let p):
+            let limpio = { (ids: [String]) in p.texto(ids).trimmingCharacters(in: CharacterSet(charactersIn: ".")) }
+            let sujeto = p.omitido.map { "sujeto omitido (\($0))" } ?? "sujeto «\(limpio(p.sujeto))»"
+            var t = "Verbo «\(limpio(p.verbo))»; \(sujeto)"
+            if p.capas >= 4 {
+                let nombres = Dictionary(p.funciones.map { ($0.id, $0.nombre) }, uniquingKeysWith: { a, _ in a })
+                t += "; " + p.grupos.map { "\(nombres[$0.funcion] ?? $0.funcion): «\(limpio($0.tokens))»" }.joined(separator: "; ")
+            }
+            return t
+        case .editor(let p):
+            return p.faltas.map { "«\($0.correcta.trimmingCharacters(in: .punctuationCharacters))»: \($0.uso)" }.joined(separator: "; ")
         }
     }
 }
@@ -161,6 +183,8 @@ extension Respuesta {
         case (.evidencia(let p), .evidencia(let id)): p.fragmentos.contains { $0.id == id }
         case (.recuerdo, .recuerdo(let r)): r.modeloVisto && (r.enPapel || !r.texto.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
         case (.figuraArea, .figura(let r)): r.unidad != nil && Racional.interpretar(r.total) != nil
+        case (.rayosX(let p), .rayosX(let r)): r.capa > p.capas
+        case (.editor, .editor(let r)): !r.marcadas.isEmpty && r.marcadas.allSatisfy { r.cambios[$0] != nil }
         default: false
         }
     }
@@ -181,7 +205,10 @@ extension Item {
     /// Huella de la pregunta (D-087): la clave canónica del caso en los ítems generados (dos
     /// semillas, o dos plantillas del mismo tipo, pueden dar la misma pregunta) y el id en los
     /// estáticos. Ninguna ronda repite una huella.
-    var huella: String { claveGenerada.map { "gen|" + $0 } ?? "id|" + id }
+    var huella: String {
+        if let origen { return "id|" + origen }
+        return claveGenerada.map { "gen|" + $0 } ?? "id|" + id
+    }
 }
 
 extension Array where Element == Item {

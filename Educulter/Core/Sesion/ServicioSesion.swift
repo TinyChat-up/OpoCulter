@@ -52,7 +52,6 @@ struct EfectoRespuesta: Sendable, Equatable {
     var peldanoNuevo: Int?
     var acabaDeDominarse = false
     var rescatado = false
-    var misionesCompletadas: [Mision] = []
     var logrosNuevos: [Logro] = []
     /// El fallo activa (o repite) un error típico activo (motor de errores, §4 de la 05E parte 2).
     var errorRepetido: ErrorTipico?
@@ -64,7 +63,6 @@ struct EfectoRespuesta: Sendable, Equatable {
 struct EfectoRonda: Sendable, Equatable {
     var cambiosRacha = EstadoRacha.Cambios()
     var racha = EstadoRacha()
-    var misionesCompletadas: [Mision] = []
     var logrosNuevos: [Logro] = []
     /// Prueba de nivel: `true` si se han superado los peldaños 1–2.
     var pruebaNivelSuperada: Bool?
@@ -80,7 +78,6 @@ struct EstadoHoy: Sendable, Equatable {
     var xpEnNivel: Int
     var xpParaSiguiente: Int
     var fraccionNivel: Double
-    var misiones: [Mision]
     var rescatesPendientes: Int
     var competenciaEnCurso: Catalogo.Competencia?
     var hayContenido: Bool
@@ -97,7 +94,7 @@ struct EstadoHoy: Sendable, Equatable {
 }
 
 /// Orquesta el núcleo para una sesión de juego: compone rondas, registra respuestas y
-/// actualiza escalera, Leitner, Rescate, XP, racha, misiones y logros en el repositorio.
+/// actualiza escalera, Leitner, Rescate, XP, racha y logros en el repositorio.
 @MainActor
 final class ServicioSesion {
     static let bloqueOrtografia = "LEN.ORT"
@@ -130,7 +127,6 @@ final class ServicioSesion {
 
     func estadoHoy() throws -> EstadoHoy {
         var perfil = try repositorio.perfil()
-        try asegurarMisiones(&perfil)
         let enCurso = try competenciaEnCurso(perfil: &perfil)
         try repositorio.guardar(perfil)
         let progreso = curva.progreso(xp: perfil.xpTotal)
@@ -138,7 +134,6 @@ final class ServicioSesion {
             racha: perfil.racha.vigente(hoy: hoy),
             xpTotal: perfil.xpTotal, nivel: progreso.nivel, xpEnNivel: progreso.xpEnNivel,
             xpParaSiguiente: progreso.xpParaSiguiente, fraccionNivel: progreso.fraccion,
-            misiones: perfil.misiones,
             rescatesPendientes: try repositorio.colaRescate().cantidad,
             competenciaEnCurso: enCurso.flatMap { id in banco.catalogo.todasLasCompetencias.first { $0.id == id } },
             hayContenido: banco.cuentaSinGenerar(peldanoMaximo: configRonda.peldanoMaximoEnRonda) >= configRonda.minimo,
@@ -224,6 +219,17 @@ final class ServicioSesion {
 
     // MARK: - Rondas
 
+    /// Huellas de las preguntas con variante de mecánica vistas hoy o ayer (05H): ni la pregunta ni
+    /// su variante vuelven hasta pasado un día.
+    func huellasBloqueadas() throws -> Set<String> {
+        guard !banco.huellasConVariantes.isEmpty else { return [] }
+        let vistos = try repositorio.vistos(desde: hoy.sumando(dias: -1).fecha(calendario: calendario))
+        return Set(vistos.keys.compactMap { id -> String? in
+            let candidata = id.contains(MotorGeneradores.separadorSemilla) ? nil : banco.item(id: id)?.huella
+            return candidata.flatMap { banco.huellasConVariantes.contains($0) ? $0 : nil }
+        })
+    }
+
     func prepararRonda(_ tipo: TipoRonda) throws -> RondaPreparada {
         let ahora = reloj.ahora
         let vistos = try repositorio.vistos(desde: ahora.addingTimeInterval(-configRonda.segundosSinRepetir))
@@ -237,7 +243,7 @@ final class ServicioSesion {
             let estados = try repositorio.estadosCompetencia()
             let ronda = ConstructorRondas(banco: banco, config: configRonda).construir(
                 estados: estados, rescate: try repositorio.colaRescate(), enCurso: enCurso,
-                vistos: vistos, ahora: ahora, calendario: calendario, rng: &rng)
+                vistos: vistos, ahora: ahora, calendario: calendario, huellasExcluidas: try huellasBloqueadas(), rng: &rng)
             var items = ronda.items
             // Peldaño 1 (Descubrir): ejemplo resuelto y gemelo (§5).
             if let enCurso, (estados[enCurso]?.escalera.peldano ?? 1) == Peldano.descubre.rawValue {
@@ -316,7 +322,6 @@ final class ServicioSesion {
         try registrarErrores(item: item, resultado: primerIntento ?? resultado, errorRemedio: errorRemedio, fecha: ahora, efecto: &efecto)
         if let actividad { try repositorio.registrar(actividad) }
         var perfil = try repositorio.perfil()
-        try asegurarMisiones(&perfil)
 
         // Escalera y Leitner.
         var estado = try repositorio.estadosCompetencia()[item.competencia] ?? EstadoCompetencia(competenciaId: item.competencia)
@@ -347,16 +352,9 @@ final class ServicioSesion {
         if resultado.correcto { perfil.metricas[.aciertosTotales, default: 0] += 1 }
         if efecto.rescatado { perfil.metricas[.rescates, default: 0] += 1 }
         if cambios.acabaDeDominarse { perfil.metricas[.competenciasDominadas, default: 0] += 1 }
-        if item.mecanica == .segmentar, resultado.correcto, resultado.fraccionCorrecta == 1, !usoPista {
+        if item.mecanica == .segmentar || item.mecanica == .rayosX, resultado.correcto, resultado.fraccionCorrecta == 1, !usoPista {
             perfil.metricas[.sintaxisPerfectas, default: 0] += 1
         }
-
-        // Misiones.
-        var eventos: [EventoMision] = [.xp(efecto.xp), .combo(combo)]
-        if resultado.correcto, !usoPista { eventos.append(.aciertoSinPista) }
-        if efecto.rescatado { eventos.append(.rescate) }
-        if cambios.repasoAplicado { eventos.append(.repaso) }
-        for evento in eventos { efecto.misionesCompletadas += GeneradorMisiones.registrar(evento, en: &perfil.misiones) }
 
         efecto.logrosNuevos = try comprobarLogros(perfil, fecha: ahora)
         try repositorio.guardar(perfil)
@@ -391,11 +389,10 @@ final class ServicioSesion {
     /// Estado del motor de errores del usuario.
     func estadoErrores() throws -> EstadoErrores { EstadoErrores(eventos: try repositorio.eventosError()) }
 
-    /// Cierra una ronda terminada: racha, métricas, misiones y logros. `aciertos` decide la prueba
+    /// Cierra una ronda terminada: racha, métricas y logros. `aciertos` decide la prueba
     /// de nivel y el Reto de bloque.
     func completarRonda(_ ronda: RondaPreparada, aciertos: Int? = nil) throws -> EfectoRonda {
         var perfil = try repositorio.perfil()
-        try asegurarMisiones(&perfil)
         var efecto = EfectoRonda()
         try aplicarModo(ronda, aciertos: aciertos, perfil: &perfil, efecto: &efecto)
         efecto.cambiosRacha = perfil.racha.registrarRonda(hoy: hoy)
@@ -404,42 +401,12 @@ final class ServicioSesion {
         perfil.metricas[.rondasCompletadas, default: 0] += 1
         perfil.metricas[.rachaRecord] = max(perfil.metricas[.rachaRecord] ?? 0, perfil.racha.record)
 
-        let area: String?
-        switch ronda.tipo {
-        case .ortografiaExpres:
-            area = "LEN"
-            efecto.misionesCompletadas += GeneradorMisiones.registrar(.ortografiaExpres, en: &perfil.misiones)
-        default:
-            let competencias = ronda.items.compactMap { banco.item(id: $0.itemId)?.competencia }
-            area = (ronda.competenciaEnCurso ?? competencias.first).map(Catalogo.area(de:))
-        }
-        efecto.misionesCompletadas += GeneradorMisiones.registrar(.rondaCompletada(area: area), en: &perfil.misiones)
         efecto.logrosNuevos += try comprobarLogros(perfil, fecha: reloj.ahora)
         try repositorio.guardar(perfil)
         return efecto
     }
 
     // MARK: - Auxiliares
-
-    func asegurarMisiones(_ perfil: inout PerfilJugador) throws {
-        guard perfil.diaMisiones != hoy else { return }
-        let estados = try repositorio.estadosCompetencia()
-        perfil.misiones = GeneradorMisiones.generar(dia: hoy, contexto: ContextoMisiones(
-            rescatesPendientes: try repositorio.colaRescate().cantidad,
-            repasosVencidos: estados.values.filter { $0.vencida(hoy: hoy) }.count,
-            dominioLengua: dominio(area: "LEN", estados: estados),
-            dominioMatematicas: dominio(area: "MAT", estados: estados)), rng: &rng)
-        perfil.diaMisiones = hoy
-    }
-
-    /// Proporción de competencias con contenido que están dominadas en un área.
-    func dominio(area: String, estados: [String: EstadoCompetencia]) -> Double {
-        let ids = banco.catalogo.todasLasCompetencias.map(\.id)
-            .filter { Catalogo.area(de: $0) == area && !banco.items(competencia: $0).isEmpty }
-        guard !ids.isEmpty else { return 0 }
-        let dominadas = ids.filter { estados[$0]?.escalera.dominada(configAprendizaje.escalera) ?? false }.count
-        return Double(dominadas) / Double(ids.count)
-    }
 
     func comprobarLogros(_ perfil: PerfilJugador, fecha: Date) throws -> [Logro] {
         let obtenidos = Set(try repositorio.logros().map(\.logroId))

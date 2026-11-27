@@ -96,12 +96,14 @@ struct ConstructorSesion: Sendable {
     /// `plan`: competencias para lo nuevo, en orden (la en curso primero; en Mixto, áreas alternadas).
     func construir(n: Int, foco: FocoSesion, estados: [String: EstadoCompetencia], remedios: [RemedioPendiente],
                    plan: [String], vistos: [String: Date], ahora: Date, calendario: Calendar, semilla: UInt64,
-                   variantes: [(competencia: String, items: [ItemRonda])] = []) -> SesionDiaria {
+                   variantes: [(competencia: String, items: [ItemRonda])] = [],
+                   huellasExcluidas: Set<String> = []) -> SesionDiaria {
         var rng = GeneradorConSemilla(semilla: semilla)
         let hoy = DiaCivil(ahora, calendario: calendario)
         let enFoco: (String) -> Bool = { c in foco.area.map { Catalogo.area(de: c) == $0 } ?? true }
         let esReciente: (String) -> Bool = { id in vistos[id].map { ahora.timeIntervalSince($0) < config.segundosSinRepetir } ?? false }
-        var usados = Set<String>(), huellas = Set<String>()
+        // Preguntas con variante de mecánica vistas hoy o ayer (05H): fuera.
+        var usados = Set<String>(), huellas = huellasExcluidas
         func tomar(_ candidatos: [Item], _ cuantos: Int) -> [Item] {
             var r: [Item] = []
             let ordenados = candidatos.sorted { $0.id < $1.id }.shuffled(using: &rng)

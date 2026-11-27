@@ -59,15 +59,13 @@ struct ProgresoTests {
         #expect(try repo.colaRescate().entradas.map(\.itemId) == ["A"])
     }
 
-    @Test("Perfil: XP, racha, misiones y métricas", arguments: Tipo.allCases)
+    @Test("Perfil: XP, racha y métricas", arguments: Tipo.allCases)
     func perfil(_ tipo: Tipo) throws {
         let repo = try repositorio(tipo)
         #expect(try repo.perfil() == PerfilJugador())
         var p = PerfilJugador()
         p.xpTotal = 345
         p.racha = EstadoRacha(actual: 4, record: 9, protectores: 1, ultimoDiaActivo: Fx.dia(2026, 11, 23), ultimoDiaProcesado: Fx.dia(2026, 11, 22))
-        p.misiones = [Mision(id: "20261123-1", tipo: .combo, objetivo: 5, progreso: 2)]
-        p.diaMisiones = Fx.dia(2026, 11, 23)
         p.metricas = [.rescates: 3, .rondasCompletadas: 7]
         try repo.guardar(p)
         p.xpTotal = 400

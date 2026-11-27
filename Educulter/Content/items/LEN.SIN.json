@@ -5,8 +5,8 @@
     "peldano": 3,
     "dificultad": 3,
     "objetivo": "Analizar complementos anidados.",
-    "mecanica": "segmentar",
-    "enunciado": "Analiza el predicado: núcleo, complemento circunstancial y complemento del nombre.",
+    "mecanica": "rayosX",
+    "enunciado": "Analiza la oración capa a capa: verbo, sujeto (¿está omitido?), predicado y funciones.",
     "payload": {
       "tokens": [
         {
@@ -31,75 +31,186 @@
         },
         {
           "id": "t6",
-          "texto": "Ana"
+          "texto": "Ana."
         }
       ],
-      "etiquetas": [
+      "verbo": [
+        "t1"
+      ],
+      "sujeto": [],
+      "omitido": "él / ella",
+      "personas": [
+        "yo",
+        "tú",
+        "él / ella",
+        "nosotros / nosotras",
+        "vosotros / vosotras",
+        "ellos / ellas"
+      ],
+      "grupos": [
         {
-          "id": "PRED",
-          "nombre": "Predicado"
-        },
+          "id": "g1",
+          "tokens": [
+            "t2",
+            "t3",
+            "t4",
+            "t5",
+            "t6"
+          ],
+          "funcion": "CCL"
+        }
+      ],
+      "funciones": [
         {
-          "id": "NV",
-          "nombre": "Núcleo verbal"
+          "id": "CD",
+          "nombre": "Complemento directo"
         },
         {
           "id": "CCL",
           "nombre": "CC de lugar"
         },
         {
-          "id": "CN",
-          "nombre": "Compl. del nombre"
+          "id": "CCT",
+          "nombre": "CC de tiempo"
         }
       ],
-      "segmentos": [
-        {
-          "id": "s1",
-          "desde": "t1",
-          "hasta": "t6",
-          "etiqueta": "PRED",
-          "padre": null
-        },
-        {
-          "id": "s2",
-          "desde": "t1",
-          "hasta": "t1",
-          "etiqueta": "NV",
-          "padre": "s1"
-        },
-        {
-          "id": "s3",
-          "desde": "t2",
-          "hasta": "t6",
-          "etiqueta": "CCL",
-          "padre": "s1"
-        },
-        {
-          "id": "s4",
-          "desde": "t5",
-          "hasta": "t6",
-          "etiqueta": "CN",
-          "padre": "s3"
-        }
-      ]
+      "capas": 4,
+      "colores": true,
+      "preguntas": false,
+      "porCapas": true,
+      "predicado": "Predicado verbal",
+      "guias": {
+        "capa1": "¿Qué palabra cambia si cuentas lo mismo ayer o mañana?",
+        "capa2": "¿Qué palabras cambian si pongo el verbo en plural (o en singular)?",
+        "capa4": "Pregunta al verbo: ¿qué?, ¿a quién?, ¿dónde?, ¿cuándo?, ¿cómo?, ¿con quién?"
+      },
+      "explicaciones": {
+        "verbo": "El verbo es la palabra que cambia si cuentas lo mismo ayer o mañana: expresa la acción o el estado.",
+        "sujeto": "El sujeto concuerda con el verbo: si el verbo pasa a plural (o a singular), el sujeto cambia con él.",
+        "noOmitido": "El sujeto concuerda con el verbo y aquí hay palabras que lo hacen: el sujeto no está omitido.",
+        "sujetoOmitido": "El sujeto concuerda con el verbo, pero aquí ninguna palabra lo hace: el sujeto está omitido.",
+        "omitido": "El sujeto concuerda con el verbo: su terminación indica la persona del sujeto omitido.",
+        "CCL": "El complemento circunstancial de lugar responde a «¿dónde?»."
+      },
+      "esquema": {
+        "tokens": [
+          {
+            "id": "t1",
+            "texto": "Vive"
+          },
+          {
+            "id": "t2",
+            "texto": "en"
+          },
+          {
+            "id": "t3",
+            "texto": "la"
+          },
+          {
+            "id": "t4",
+            "texto": "casa"
+          },
+          {
+            "id": "t5",
+            "texto": "de"
+          },
+          {
+            "id": "t6",
+            "texto": "Ana."
+          }
+        ],
+        "etiquetas": [
+          {
+            "id": "PRED",
+            "nombre": "Predicado"
+          },
+          {
+            "id": "NV",
+            "nombre": "Núcleo verbal"
+          },
+          {
+            "id": "CCL",
+            "nombre": "CC de lugar"
+          },
+          {
+            "id": "CN",
+            "nombre": "Compl. del nombre"
+          }
+        ],
+        "segmentos": [
+          {
+            "id": "s1",
+            "desde": "t1",
+            "hasta": "t6",
+            "etiqueta": "PRED",
+            "padre": null
+          },
+          {
+            "id": "s2",
+            "desde": "t1",
+            "hasta": "t1",
+            "etiqueta": "NV",
+            "padre": "s1"
+          },
+          {
+            "id": "s3",
+            "desde": "t2",
+            "hasta": "t6",
+            "etiqueta": "CCL",
+            "padre": "s1"
+          },
+          {
+            "id": "s4",
+            "desde": "t5",
+            "hasta": "t6",
+            "etiqueta": "CN",
+            "padre": "s3"
+          }
+        ]
+      }
     },
     "pistas": [],
-    "explicacion": "«Vive» es el núcleo; «en la casa de Ana» indica dónde (CC de lugar); dentro, «de Ana» complementa a «casa» (CN).",
-    "erroresHabituales": [],
+    "explicacion": "Sujeto omitido (él / ella): lo indica la terminación de «Vive». «En la casa de Ana» indica dónde (CC de lugar); dentro, «de Ana» complementa a «casa» (CN).",
+    "erroresHabituales": [
+      {
+        "respuesta": "verbo",
+        "feedback": "El verbo es la palabra que cambia si cuentas lo mismo ayer o mañana: expresa la acción o el estado."
+      },
+      {
+        "respuesta": "sujeto",
+        "feedback": "El sujeto concuerda con el verbo: si el verbo pasa a plural (o a singular), el sujeto cambia con él."
+      },
+      {
+        "respuesta": "noOmitido",
+        "feedback": "El sujeto concuerda con el verbo y aquí hay palabras que lo hacen: el sujeto no está omitido."
+      },
+      {
+        "respuesta": "sujetoOmitido",
+        "feedback": "El sujeto concuerda con el verbo, pero aquí ninguna palabra lo hace: el sujeto está omitido."
+      },
+      {
+        "respuesta": "omitido",
+        "feedback": "El sujeto concuerda con el verbo: su terminación indica la persona del sujeto omitido."
+      },
+      {
+        "respuesta": "grupo_g1",
+        "feedback": "El complemento circunstancial de lugar responde a «¿dónde?»."
+      }
+    ],
     "procedencia": {
       "tipo": "original",
       "autorTexto": null,
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 05A."
+      "notas": "Contenido de prueba de la Fase 05A. Migrado a Rayos X en la 05H."
     },
     "validacion": {
       "estado": "borrador",
       "revisor": "",
       "fecha": ""
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.SIN.SUJPRED.0001",
@@ -107,8 +218,8 @@
     "peldano": 2,
     "dificultad": 1,
     "objetivo": "Separar el sujeto y el predicado de una oración simple.",
-    "mecanica": "segmentar",
-    "enunciado": "Agrupa y etiqueta el sujeto y el predicado.",
+    "mecanica": "rayosX",
+    "enunciado": "Analiza la oración capa a capa: verbo, sujeto y predicado.",
     "payload": {
       "tokens": [
         {
@@ -121,41 +232,123 @@
         },
         {
           "id": "t3",
-          "texto": "duerme"
+          "texto": "duerme."
         }
       ],
-      "etiquetas": [
-        {
-          "id": "SUJ",
-          "nombre": "Sujeto"
-        },
-        {
-          "id": "PRED",
-          "nombre": "Predicado"
-        }
+      "verbo": [
+        "t3"
       ],
-      "segmentos": [
-        {
-          "id": "s1",
-          "desde": "t1",
-          "hasta": "t2",
-          "etiqueta": "SUJ",
-          "padre": null
-        },
-        {
-          "id": "s2",
-          "desde": "t3",
-          "hasta": "t3",
-          "etiqueta": "PRED",
-          "padre": null
-        }
-      ]
+      "sujeto": [
+        "t1",
+        "t2"
+      ],
+      "omitido": null,
+      "personas": [
+        "yo",
+        "tú",
+        "él / ella",
+        "nosotros / nosotras",
+        "vosotros / vosotras",
+        "ellos / ellas"
+      ],
+      "grupos": [],
+      "funciones": [],
+      "capas": 3,
+      "colores": true,
+      "preguntas": true,
+      "porCapas": true,
+      "predicado": "Predicado verbal",
+      "guias": {
+        "capa1": "¿Qué palabra cambia si cuentas lo mismo ayer o mañana?",
+        "capa2": "¿Qué palabras cambian si pongo el verbo en plural (o en singular)?",
+        "capa4": "Pregunta al verbo: ¿qué?, ¿a quién?, ¿dónde?, ¿cuándo?, ¿cómo?, ¿con quién?"
+      },
+      "explicaciones": {
+        "verbo": "El verbo es la palabra que cambia si cuentas lo mismo ayer o mañana: expresa la acción o el estado.",
+        "sujeto": "El sujeto concuerda con el verbo: si el verbo pasa a plural (o a singular), el sujeto cambia con él.",
+        "noOmitido": "El sujeto concuerda con el verbo y aquí hay palabras que lo hacen: el sujeto no está omitido.",
+        "sujetoOmitido": "El sujeto concuerda con el verbo, pero aquí ninguna palabra lo hace: el sujeto está omitido.",
+        "omitido": "El sujeto concuerda con el verbo: su terminación indica la persona del sujeto omitido.",
+        "CCL": "El complemento circunstancial de lugar responde a «¿dónde?»."
+      },
+      "esquema": {
+        "tokens": [
+          {
+            "id": "t1",
+            "texto": "El"
+          },
+          {
+            "id": "t2",
+            "texto": "gato"
+          },
+          {
+            "id": "t3",
+            "texto": "duerme."
+          }
+        ],
+        "etiquetas": [
+          {
+            "id": "SUJ",
+            "nombre": "Sujeto"
+          },
+          {
+            "id": "PRED",
+            "nombre": "Predicado verbal"
+          },
+          {
+            "id": "NV",
+            "nombre": "Núcleo verbal"
+          }
+        ],
+        "segmentos": [
+          {
+            "id": "s1",
+            "desde": "t1",
+            "hasta": "t2",
+            "etiqueta": "SUJ",
+            "padre": null
+          },
+          {
+            "id": "s2",
+            "desde": "t3",
+            "hasta": "t3",
+            "etiqueta": "PRED",
+            "padre": null
+          },
+          {
+            "id": "s3",
+            "desde": "t3",
+            "hasta": "t3",
+            "etiqueta": "NV",
+            "padre": "s2"
+          }
+        ]
+      }
     },
-    "pistas": [
-      "Pregunta al verbo: ¿quién duerme?"
-    ],
+    "pistas": [],
     "explicacion": "El sujeto («El gato») concuerda en número y persona con el verbo; el predicado («duerme») dice lo que se afirma del sujeto.",
-    "erroresHabituales": [],
+    "erroresHabituales": [
+      {
+        "respuesta": "verbo",
+        "feedback": "El verbo es la palabra que cambia si cuentas lo mismo ayer o mañana: expresa la acción o el estado."
+      },
+      {
+        "respuesta": "sujeto",
+        "feedback": "El sujeto concuerda con el verbo: si el verbo pasa a plural (o a singular), el sujeto cambia con él."
+      },
+      {
+        "respuesta": "noOmitido",
+        "feedback": "El sujeto concuerda con el verbo y aquí hay palabras que lo hacen: el sujeto no está omitido."
+      },
+      {
+        "respuesta": "sujetoOmitido",
+        "feedback": "El sujeto concuerda con el verbo, pero aquí ninguna palabra lo hace: el sujeto está omitido."
+      },
+      {
+        "respuesta": "omitido",
+        "feedback": "El sujeto concuerda con el verbo: su terminación indica la persona del sujeto omitido."
+      }
+    ],
     "referencia": {
       "tipoPregunta": "Análisis sintáctico",
       "examenes": [],
@@ -167,14 +360,14 @@
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 04."
+      "notas": "Contenido de prueba de la Fase 04. Migrado a Rayos X en la 05H."
     },
     "validacion": {
       "estado": "borrador",
       "revisor": "",
       "fecha": ""
     },
-    "version": 1
+    "version": 2
   },
   {
     "id": "LEN.SIN.SUJPRED.0002",
@@ -182,8 +375,8 @@
     "peldano": 2,
     "dificultad": 1,
     "objetivo": "Separar sujeto y predicado.",
-    "mecanica": "segmentar",
-    "enunciado": "Agrupa y etiqueta el sujeto y el predicado.",
+    "mecanica": "rayosX",
+    "enunciado": "Analiza la oración capa a capa: verbo, sujeto y predicado.",
     "payload": {
       "tokens": [
         {
@@ -200,54 +393,148 @@
         },
         {
           "id": "t4",
-          "texto": "cuentos"
+          "texto": "cuentos."
         }
       ],
-      "etiquetas": [
+      "verbo": [
+        "t3"
+      ],
+      "sujeto": [
+        "t1",
+        "t2"
+      ],
+      "omitido": null,
+      "personas": [
+        "yo",
+        "tú",
+        "él / ella",
+        "nosotros / nosotras",
+        "vosotros / vosotras",
+        "ellos / ellas"
+      ],
+      "grupos": [
         {
-          "id": "SUJ",
-          "nombre": "Sujeto"
-        },
-        {
-          "id": "PRED",
-          "nombre": "Predicado"
+          "id": "g1",
+          "tokens": [
+            "t4"
+          ],
+          "funcion": "CD"
         }
       ],
-      "segmentos": [
-        {
-          "id": "s1",
-          "desde": "t1",
-          "hasta": "t2",
-          "etiqueta": "SUJ",
-          "padre": null
-        },
-        {
-          "id": "s2",
-          "desde": "t3",
-          "hasta": "t4",
-          "etiqueta": "PRED",
-          "padre": null
-        }
-      ]
+      "funciones": [],
+      "capas": 3,
+      "colores": true,
+      "preguntas": true,
+      "porCapas": true,
+      "predicado": "Predicado verbal",
+      "guias": {
+        "capa1": "¿Qué palabra cambia si cuentas lo mismo ayer o mañana?",
+        "capa2": "¿Qué palabras cambian si pongo el verbo en plural (o en singular)?",
+        "capa4": "Pregunta al verbo: ¿qué?, ¿a quién?, ¿dónde?, ¿cuándo?, ¿cómo?, ¿con quién?"
+      },
+      "explicaciones": {
+        "verbo": "El verbo es la palabra que cambia si cuentas lo mismo ayer o mañana: expresa la acción o el estado.",
+        "sujeto": "El sujeto concuerda con el verbo: si el verbo pasa a plural (o a singular), el sujeto cambia con él.",
+        "noOmitido": "El sujeto concuerda con el verbo y aquí hay palabras que lo hacen: el sujeto no está omitido.",
+        "sujetoOmitido": "El sujeto concuerda con el verbo, pero aquí ninguna palabra lo hace: el sujeto está omitido.",
+        "omitido": "El sujeto concuerda con el verbo: su terminación indica la persona del sujeto omitido.",
+        "CCL": "El complemento circunstancial de lugar responde a «¿dónde?»."
+      },
+      "esquema": {
+        "tokens": [
+          {
+            "id": "t1",
+            "texto": "Los"
+          },
+          {
+            "id": "t2",
+            "texto": "niños"
+          },
+          {
+            "id": "t3",
+            "texto": "leen"
+          },
+          {
+            "id": "t4",
+            "texto": "cuentos."
+          }
+        ],
+        "etiquetas": [
+          {
+            "id": "SUJ",
+            "nombre": "Sujeto"
+          },
+          {
+            "id": "PRED",
+            "nombre": "Predicado verbal"
+          },
+          {
+            "id": "NV",
+            "nombre": "Núcleo verbal"
+          }
+        ],
+        "segmentos": [
+          {
+            "id": "s1",
+            "desde": "t1",
+            "hasta": "t2",
+            "etiqueta": "SUJ",
+            "padre": null
+          },
+          {
+            "id": "s2",
+            "desde": "t3",
+            "hasta": "t4",
+            "etiqueta": "PRED",
+            "padre": null
+          },
+          {
+            "id": "s3",
+            "desde": "t3",
+            "hasta": "t3",
+            "etiqueta": "NV",
+            "padre": "s2"
+          }
+        ]
+      }
     },
-    "pistas": [
-      "Pregunta al verbo: ¿quiénes leen?"
-    ],
+    "pistas": [],
     "explicacion": "El sujeto «Los niños» concuerda con el verbo «leen» (tercera persona del plural); el resto es el predicado.",
-    "erroresHabituales": [],
+    "erroresHabituales": [
+      {
+        "respuesta": "verbo",
+        "feedback": "El verbo es la palabra que cambia si cuentas lo mismo ayer o mañana: expresa la acción o el estado."
+      },
+      {
+        "respuesta": "sujeto",
+        "feedback": "El sujeto concuerda con el verbo: si el verbo pasa a plural (o a singular), el sujeto cambia con él."
+      },
+      {
+        "respuesta": "noOmitido",
+        "feedback": "El sujeto concuerda con el verbo y aquí hay palabras que lo hacen: el sujeto no está omitido."
+      },
+      {
+        "respuesta": "sujetoOmitido",
+        "feedback": "El sujeto concuerda con el verbo, pero aquí ninguna palabra lo hace: el sujeto está omitido."
+      },
+      {
+        "respuesta": "omitido",
+        "feedback": "El sujeto concuerda con el verbo: su terminación indica la persona del sujeto omitido."
+      }
+    ],
     "procedencia": {
       "tipo": "original",
       "autorTexto": null,
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Contenido de prueba de la Fase 05A."
+      "notas": "Contenido de prueba de la Fase 05A. Migrado a Rayos X en la 05H."
     },
     "validacion": {
       "estado": "borrador",
       "revisor": "",
       "fecha": ""
     },
-    "version": 1
+    "version": 2
   }
 ]

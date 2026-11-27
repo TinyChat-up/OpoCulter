@@ -63,7 +63,7 @@ struct SolucionesTests {
         #expect(try texto("MAT.OPE.JERARQ.0001").hasPrefix("Resolver el paréntesis"))
         #expect(try texto("LEN.LIT.AUTOBRA.0001").contains("Miguel de Cervantes — Don Quijote de la Mancha"))
         #expect(try texto("LEN.ORT.AGU.0006") == "arbol, jardin, fragiles")
-        #expect(try texto("LEN.SIN.COMPL.0001") == "[Vive en la casa de Ana] Predicado · [Vive] Núcleo verbal · [en la casa de Ana] CC de lugar · [de Ana] Compl. del nombre")
+        #expect(try texto("LEN.SIN.COMPL.0001") == "Verbo «Vive»; sujeto omitido (él / ella); CC de lugar: «en la casa de Ana»", "Rayos X (05H)")
         #expect(try texto("LEN.VER.ANALISIS.0001").hasPrefix("Persona: primera"))
         #expect(try texto("LEN.ORT.AGU.0009") == "«Canción» lleva tilde porque es aguda y termina en -n.")
         #expect(try texto("MAT.POR.PORCENT.0002") == "17 €")
@@ -95,11 +95,10 @@ struct ServicioSesionTests {
                        rng: GeneradorConSemilla(semilla: 5))
     }
 
-    @Test("Estado de Hoy: misiones del día, competencia en curso por prioridad y contenido")
+    @Test("Estado de Hoy: competencia en curso por prioridad y contenido")
     func estadoHoy() throws {
         let s = servicio()
         let e = try s.estadoHoy()
-        #expect(e.misiones.count == 3)
         // 50 ítems reales de LEN.ORT + las variantes de las plantillas de prueba de LEN.ORT (Debug, 05C).
         let generadosOrt = banco.items.dropFirst(banco.numeroEstaticos).filter { $0.competencia.hasPrefix("LEN.ORT.") && $0.peldano <= 4 }.count
         #expect(e.hayContenido && e.itemsOrtografia == 50 + generadosOrt, "Lote 01 y piloto 05B de LEN.ORT")
@@ -108,8 +107,6 @@ struct ServicioSesionTests {
         #expect(primera == "LEN.LIT.HIST")
         #expect(e.competenciaEnCurso?.id == primera, "Primera del plan")
         #expect(e.nivel == 1 && e.xpTotal == 0 && e.racha.actual == 0)
-        // Las misiones no cambian el mismo día.
-        #expect(try s.estadoHoy().misiones == e.misiones)
         #expect(try repo.perfil().competenciaEnCurso == primera)
     }
 
@@ -123,7 +120,7 @@ struct ServicioSesionTests {
         #expect(try s.competenciaEnCurso() == plan[1])
     }
 
-    @Test("Registrar respuestas: XP, escalera, Rescate, métricas, misiones e intentos")
+    @Test("Registrar respuestas: XP, escalera, Rescate, métricas e intentos")
     func registrar() throws {
         let s = servicio()
         let item = try #require(banco.item(id: "LEN.SIN.SUJPRED.0001"))
@@ -161,7 +158,7 @@ struct ServicioSesionTests {
         #expect(try repo.perfil().metricas[.competenciasDominadas] == 1)
     }
 
-    @Test("Completar ronda: racha, misiones de área y logro de primera ronda")
+    @Test("Completar ronda: racha y logro de primera ronda")
     func completar() throws {
         let s = servicio()
         let ronda = try s.prepararRonda(.recomendada)
@@ -196,6 +193,5 @@ struct ServicioSesionTests {
         let fija = try s.prepararRonda(.items(["MAT.ROM.LECTURA.0001", "NO.EXISTE"]))
         #expect(fija.items.map(\.itemId) == ["MAT.ROM.LECTURA.0001"])
         #expect(try s.completarRonda(rescate).racha.actual == 1)
-        #expect(s.dominio(area: "XXX", estados: [:]) == 0)
     }
 }

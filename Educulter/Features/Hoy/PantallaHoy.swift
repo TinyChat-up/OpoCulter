@@ -215,11 +215,19 @@ struct PantallaHoy: View {
                 ChipRacha(dias: estado.racha.actual, protectores: estado.racha.protectores, record: estado.racha.record,
                           abrirAyudaAlAparecer: entorno.opciones.captura == "hoy:globo")
                 if modelo.descanso {
-                    Label("Modo descanso: tu racha y tu meta están en pausa.", systemImage: "moon.zzz")
-                        .font(.footnote)
-                        .foregroundStyle(Paleta.textoSecundario)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .accessibilityIdentifier("avisoDescanso")
+                    // Modo descanso (05H): el personaje del área descansa junto al aviso de días congelados.
+                    let area = entorno.ajustes.foco.area ?? estado.competenciaEnCurso.map { Catalogo.area(de: $0.id) }
+                    HStack(alignment: .center, spacing: Espacio.s) {
+                        if let a = ReglasPersonaje.aparicion(para: .modoDescanso(area: area)) {
+                            VistaPersonaje(companero: a.companero, estado: a.estado, tamano: 44)
+                        }
+                        Text("Modo descanso: tu racha y tu meta están congeladas. Te \(modelo.diasDescanso == 1 ? "queda 1 día" : "quedan \(modelo.diasDescanso) días") este mes.")
+                            .font(.footnote)
+                            .foregroundStyle(Paleta.textoSecundario)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    .accessibilityElement(children: .combine)
+                    .accessibilityIdentifier("avisoDescanso")
                 }
             }
         }

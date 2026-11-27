@@ -28,7 +28,7 @@ extension Mecanica {
     /// Patrón que implementa cada mecánica (asignación de la 05G; no se duplica interfaz).
     var patron: Patron {
         switch self {
-        case .marcarTexto, .segmentar, .colocarTilde, .eleccion: .marcar
+        case .marcarTexto, .segmentar, .colocarTilde, .eleccion, .rayosX, .editor: .marcar
         case .evidencia: .evidencia
         case .numerico, .fraccionBarras, .figuraArea: .modelo
         case .construir: .construir
@@ -41,5 +41,5 @@ extension Mecanica {
     }
 
     /// Las mecánicas de los juegos usan el flujo con pista y reintento del contrato de intento.
-    var conReintento: Bool { self == .evidencia || self == .figuraArea }
+    var conReintento: Bool { [.evidencia, .figuraArea, .rayosX, .editor].contains(self) }
 }
