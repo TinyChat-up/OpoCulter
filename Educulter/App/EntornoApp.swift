@@ -181,7 +181,7 @@ final class EntornoApp {
     static let demostracionPreferida: [Mecanica: String] = [
         .eleccion: "LEN.REC.FIGURAS.0001", .verdaderoFalso: "LEN.CLA.SUSTADJ.0002", .clasificar: "LEN.CLA.SUSTADJ.0001",
         .ordenar: "LEN.LIT.CRONO.0001", .emparejar: "LEN.LEX.SINON.0001", .marcarTexto: "LEN.CLA.VERBO.0001",
-        .segmentar: "LEN.SIN.COMPL.0001", .ruedas: "LEN.VER.ANALISIS.0001", .construir: "LEN.ORT.AGU.0008",
+.ruedas: "LEN.VER.ANALISIS.0001", .construir: "LEN.ORT.AGU.0008",
         .numerico: "MAT.OPE.FRACSUM.0001",
         .colocarTilde: "LEN.ORT.AGU.0010", .fraccionBarras: "MAT.NUM.FRAREP.0003",
     ]
@@ -189,8 +189,8 @@ final class EntornoApp {
     /// Un ítem por mecánica, en el orden del catálogo de mecánicas: el preferido si existe y, si no,
     /// el primero de esa mecánica.
     static func itemsDemostracion(_ banco: BancoContenido) -> [String] {
-        // Las mecánicas de los juegos (05G) no entran en la demostración: tienen su propio flujo.
-        Mecanica.allCases.filter { ![.evidencia, .recuerdo, .figuraArea].contains($0) }.compactMap { m in
+        // Las mecánicas de los juegos (05G y 05H) no entran en la demostración: tienen su propio flujo.
+        Mecanica.allCases.filter { ![.evidencia, .recuerdo, .figuraArea, .rayosX, .editor].contains($0) }.compactMap { m in
             if let id = demostracionPreferida[m], banco.item(id: id)?.mecanica == m { return id }
             return banco.items.first { $0.mecanica == m && $0.peldano <= 4 }?.id
         }

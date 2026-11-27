@@ -1,0 +1,975 @@
+{
+  "version": 1,
+  "validacion": {
+    "estado": "aprobado",
+    "revisor": "direccion",
+    "fecha": "2026-11-27"
+  },
+  "procedencia": {
+    "tipo": "original",
+    "licencia": "propia",
+    "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXOS A y B)."
+  },
+  "palabras": [
+    {
+      "palabra": "mar",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "mar"
+        }
+      ],
+      "base": "mar",
+      "definicion": "masa de agua salada",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "sol",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "sol"
+        }
+      ],
+      "base": "sol",
+      "definicion": "estrella que nos da luz",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "pan",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "pan"
+        }
+      ],
+      "base": "pan",
+      "definicion": "alimento de harina cocida",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "flor",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "flor"
+        }
+      ],
+      "base": "flor",
+      "definicion": "parte de la planta con pétalos",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "casa",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "cas"
+        },
+        {
+          "clase": "morfema",
+          "texto": "a"
+        }
+      ],
+      "base": "casa",
+      "definicion": "edificio para vivir",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "árbol",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "árbol"
+        }
+      ],
+      "base": "árbol",
+      "definicion": "planta de tronco leñoso",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "libro",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "libr"
+        },
+        {
+          "clase": "morfema",
+          "texto": "o"
+        }
+      ],
+      "base": "libro",
+      "definicion": "conjunto de hojas encuadernadas",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "luz",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "luz"
+        }
+      ],
+      "base": "luz",
+      "definicion": "lo que permite ver",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "tierra",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "tierr"
+        },
+        {
+          "clase": "morfema",
+          "texto": "a"
+        }
+      ],
+      "base": "tierra",
+      "definicion": "suelo, planeta",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "leche",
+      "tipo": "primitiva",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "lech"
+        },
+        {
+          "clase": "morfema",
+          "texto": "e"
+        }
+      ],
+      "base": "leche",
+      "definicion": "líquido blanco de las hembras de los mamíferos",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "zapatero",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "zapat"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ero"
+        }
+      ],
+      "base": "zapato",
+      "definicion": "persona que hace o arregla zapatos",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "florista",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "flor"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ista"
+        }
+      ],
+      "base": "flor",
+      "definicion": "persona que vende flores",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "librería",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "libr"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ería"
+        }
+      ],
+      "base": "libro",
+      "definicion": "tienda de libros",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "lechero",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "lech"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ero"
+        }
+      ],
+      "base": "leche",
+      "definicion": "persona que vende leche",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "arboleda",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "arbol"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "eda"
+        }
+      ],
+      "base": "árbol",
+      "definicion": "lugar con muchos árboles",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "casita",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "cas"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ita"
+        }
+      ],
+      "base": "casa",
+      "definicion": "casa pequeña",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "perrazo",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "perr"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "azo"
+        }
+      ],
+      "base": "perro",
+      "definicion": "perro grande",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "felizmente",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "feliz"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "mente"
+        }
+      ],
+      "base": "feliz",
+      "definicion": "de manera feliz",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "belleza",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "bell"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "eza"
+        }
+      ],
+      "base": "bello",
+      "definicion": "cualidad de bello",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "jardinero",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "jardin"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ero"
+        }
+      ],
+      "base": "jardín",
+      "definicion": "persona que cuida un jardín",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "cantante",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "cant"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ante"
+        }
+      ],
+      "base": "cantar",
+      "definicion": "persona que canta",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "dentista",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "dent"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ista"
+        }
+      ],
+      "base": "diente",
+      "definicion": "médico de los dientes",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "peligroso",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "peligr"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "oso"
+        }
+      ],
+      "base": "peligro",
+      "definicion": "que tiene peligro",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "amable",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "am"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "able"
+        }
+      ],
+      "base": "amar",
+      "definicion": "digno de ser amado; afectuoso",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "deshacer",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "des"
+        },
+        {
+          "clase": "lexema",
+          "texto": "hacer"
+        }
+      ],
+      "base": "hacer",
+      "definicion": "quitar lo que estaba hecho",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "imposible",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "im"
+        },
+        {
+          "clase": "lexema",
+          "texto": "posible"
+        }
+      ],
+      "base": "posible",
+      "definicion": "que no es posible",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "releer",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "re"
+        },
+        {
+          "clase": "lexema",
+          "texto": "leer"
+        }
+      ],
+      "base": "leer",
+      "definicion": "volver a leer",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "prehistoria",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "pre"
+        },
+        {
+          "clase": "lexema",
+          "texto": "historia"
+        }
+      ],
+      "base": "historia",
+      "definicion": "época anterior a la historia escrita",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "inútil",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "in"
+        },
+        {
+          "clase": "lexema",
+          "texto": "útil"
+        }
+      ],
+      "base": "útil",
+      "definicion": "que no sirve",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "antinatural",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "anti"
+        },
+        {
+          "clase": "lexema",
+          "texto": "natural"
+        }
+      ],
+      "base": "natural",
+      "definicion": "contrario a lo natural",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "contraataque",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "contra"
+        },
+        {
+          "clase": "lexema",
+          "texto": "ataque"
+        }
+      ],
+      "base": "ataque",
+      "definicion": "ataque que responde a otro",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "bicolor",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "bi"
+        },
+        {
+          "clase": "lexema",
+          "texto": "color"
+        }
+      ],
+      "base": "color",
+      "definicion": "de dos colores",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "deslealtad",
+      "tipo": "derivada",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "des"
+        },
+        {
+          "clase": "lexema",
+          "texto": "leal"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "tad"
+        }
+      ],
+      "base": "leal",
+      "definicion": "falta de lealtad",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "enrojecer",
+      "tipo": "parasintetica",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "en"
+        },
+        {
+          "clase": "lexema",
+          "texto": "roj"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ecer"
+        }
+      ],
+      "base": "rojo",
+      "definicion": "poner rojo",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "aterrizar",
+      "tipo": "parasintetica",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "a"
+        },
+        {
+          "clase": "lexema",
+          "texto": "terr"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "izar"
+        }
+      ],
+      "base": "tierra",
+      "definicion": "posarse en tierra",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "embarcar",
+      "tipo": "parasintetica",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "em"
+        },
+        {
+          "clase": "lexema",
+          "texto": "barc"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ar"
+        }
+      ],
+      "base": "barco",
+      "definicion": "subir a un barco",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "encarcelar",
+      "tipo": "parasintetica",
+      "piezas": [
+        {
+          "clase": "prefijo",
+          "texto": "en"
+        },
+        {
+          "clase": "lexema",
+          "texto": "carcel"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ar"
+        }
+      ],
+      "base": "cárcel",
+      "definicion": "meter en la cárcel",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "quinceañero",
+      "tipo": "parasintetica",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "quince"
+        },
+        {
+          "clase": "lexema",
+          "texto": "añ"
+        },
+        {
+          "clase": "sufijo",
+          "texto": "ero"
+        }
+      ],
+      "base": "quince años",
+      "definicion": "que tiene unos quince años",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "sacapuntas",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "saca"
+        },
+        {
+          "clase": "lexema",
+          "texto": "puntas"
+        }
+      ],
+      "base": "sacar + puntas",
+      "definicion": "utensilio para afilar lápices",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "girasol",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "gira"
+        },
+        {
+          "clase": "lexema",
+          "texto": "sol"
+        }
+      ],
+      "base": "girar + sol",
+      "definicion": "planta cuya flor se orienta al sol",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "abrelatas",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "abre"
+        },
+        {
+          "clase": "lexema",
+          "texto": "latas"
+        }
+      ],
+      "base": "abrir + latas",
+      "definicion": "utensilio para abrir latas",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "paraguas",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "para"
+        },
+        {
+          "clase": "lexema",
+          "texto": "aguas"
+        }
+      ],
+      "base": "parar + aguas",
+      "definicion": "utensilio contra la lluvia",
+      "soloClasificar": true
+    },
+    {
+      "palabra": "cumpleaños",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "cumple"
+        },
+        {
+          "clase": "lexema",
+          "texto": "años"
+        }
+      ],
+      "base": "cumplir + años",
+      "definicion": "aniversario del nacimiento",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "bocacalle",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "boca"
+        },
+        {
+          "clase": "lexema",
+          "texto": "calle"
+        }
+      ],
+      "base": "boca + calle",
+      "definicion": "entrada de una calle",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "pelirrojo",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "peli",
+          "base": "pelo"
+        },
+        {
+          "clase": "lexema",
+          "texto": "rojo"
+        }
+      ],
+      "base": "pelo + rojo",
+      "definicion": "de pelo rojo",
+      "soloClasificar": true
+    },
+    {
+      "palabra": "agridulce",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "agri",
+          "base": "agrio"
+        },
+        {
+          "clase": "lexema",
+          "texto": "dulce"
+        }
+      ],
+      "base": "agrio + dulce",
+      "definicion": "entre agrio y dulce",
+      "soloClasificar": true
+    },
+    {
+      "palabra": "mediodía",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "medio"
+        },
+        {
+          "clase": "lexema",
+          "texto": "día"
+        }
+      ],
+      "base": "medio + día",
+      "definicion": "mitad del día",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "rompecabezas",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "rompe"
+        },
+        {
+          "clase": "lexema",
+          "texto": "cabezas"
+        }
+      ],
+      "base": "romper + cabezas",
+      "definicion": "juego de piezas para encajar",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "guardabosques",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "guarda"
+        },
+        {
+          "clase": "lexema",
+          "texto": "bosques"
+        }
+      ],
+      "base": "guardar + bosques",
+      "definicion": "persona que vigila los bosques",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "salvavidas",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "salva"
+        },
+        {
+          "clase": "lexema",
+          "texto": "vidas"
+        }
+      ],
+      "base": "salvar + vidas",
+      "definicion": "objeto para no hundirse en el agua",
+      "soloClasificar": false
+    },
+    {
+      "palabra": "altavoz",
+      "tipo": "compuesta",
+      "piezas": [
+        {
+          "clase": "lexema",
+          "texto": "alta"
+        },
+        {
+          "clase": "lexema",
+          "texto": "voz"
+        }
+      ],
+      "base": "alto + voz",
+      "definicion": "aparato que amplifica el sonido",
+      "soloClasificar": false
+    }
+  ],
+  "familias": [
+    {
+      "primitiva": "pan",
+      "miembros": [
+        "panadero",
+        "panadería",
+        "panecillo",
+        "empanada"
+      ],
+      "falsas": [
+        "panel"
+      ]
+    },
+    {
+      "primitiva": "mar",
+      "miembros": [
+        "marino",
+        "marinero",
+        "submarino",
+        "marea"
+      ],
+      "falsas": [
+        "marrón"
+      ]
+    },
+    {
+      "primitiva": "tierra",
+      "miembros": [
+        "terreno",
+        "terrestre",
+        "enterrar",
+        "aterrizar",
+        "terremoto"
+      ],
+      "falsas": [
+        "terco"
+      ]
+    },
+    {
+      "primitiva": "flor",
+      "miembros": [
+        "florero",
+        "florista",
+        "floración",
+        "florecer"
+      ],
+      "falsas": [
+        "flotar"
+      ]
+    },
+    {
+      "primitiva": "libro",
+      "miembros": [
+        "librería",
+        "librero",
+        "libreta"
+      ],
+      "falsas": [
+        "librar"
+      ]
+    },
+    {
+      "primitiva": "leche",
+      "miembros": [
+        "lechero",
+        "lechería",
+        "lechoso"
+      ],
+      "falsas": [
+        "lecho"
+      ]
+    },
+    {
+      "primitiva": "luz",
+      "miembros": [
+        "lucero",
+        "lucecita",
+        "luminoso"
+      ],
+      "falsas": [
+        "lucha"
+      ]
+    },
+    {
+      "primitiva": "sol",
+      "miembros": [],
+      "falsas": [
+        "solapa"
+      ]
+    }
+  ]
+}

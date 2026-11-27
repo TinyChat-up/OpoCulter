@@ -21,10 +21,11 @@ final class RecorridoUITests: XCTestCase {
 
     @MainActor
     private func responder(_ app: XCUIApplication, correcto: Bool, capturaCorregido: String? = nil) {
-        let boton = app.buttons[correcto ? "botonRellenarDebug" : "botonRellenarErrorDebug"]
+        let id = correcto ? "botonRellenarDebug" : "botonRellenarErrorDebug"
+        let boton = app.buttons[id]
         XCTAssertTrue(boton.waitForExistence(timeout: 15))
         boton.tap()
-        app.buttons["botonComprobar"].tap()
+        comprobar(app, rellenar: id)
         XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 10))
         if let capturaCorregido { captura(app, capturaCorregido) }
         app.buttons["botonContinuar"].tap()

@@ -171,6 +171,9 @@ struct GeneradorAreaCompuesta: GeneradorItems {
                                          pt(w, h1 - h3), pt(w, h1), pt(rac(0), h1)])
         let v1 = seg("v1", pt(a, h1 - h2), pt(a, h1)), v2 = seg("v2", pt(a + b, h1 - h3), pt(a + b, h1))
         let k1 = seg("k1", pt(rac(0), h1 - h2), pt(a, h1 - h2)), k2 = seg("k2", pt(rac(0), h1 - h3), pt(a + b, h1 - h3))
+        // Restar (05H): el rectángulo que la envuelve menos los dos huecos de arriba a la derecha.
+        let q1 = seg("q1", pt(a, rac(0)), pt(w, rac(0))), q2 = seg("q2", pt(w, rac(0)), pt(w, h1 - h3))
+        let q3 = seg("q3", pt(a + b, h1 - h2), pt(w, h1 - h2))
         let descs = [
             F.Descomposicion(id: "vertical", estrategia: .sumar, cortes: ["v1", "v2"], partes: [
                 parte("A", rect(rac(0), rac(0), a, h1), 1, a * h1, "\(t(a)) × \(t(h1)) = \(t(a * h1))"),
@@ -180,13 +183,17 @@ struct GeneradorAreaCompuesta: GeneradorItems {
                 parte("A", rect(rac(0), rac(0), a, h1 - h2), 1, a * (h1 - h2), "\(t(a)) × \(t(h1 - h2)) = \(t(a * (h1 - h2)))"),
                 parte("B", rect(rac(0), h1 - h2, a + b, h2 - h3), 1, (a + b) * (h2 - h3), "\(t(a + b)) × \(t(h2 - h3)) = \(t((a + b) * (h2 - h3)))"),
                 parte("C", rect(rac(0), h1 - h3, w, h3), 1, w * h3, "\(t(w)) × \(t(h3)) = \(t(w * h3))")]),
+            F.Descomposicion(id: "restar", estrategia: .restar, cortes: ["q1", "q2", "q3"], partes: [
+                parte("A", rect(rac(0), rac(0), w, h1), 1, w * h1, "\(t(w)) × \(t(h1)) = \(t(w * h1))"),
+                parte("B", rect(a, rac(0), b + c, h1 - h2), -1, (b + c) * (h1 - h2), "\(t(b + c)) × \(t(h1 - h2)) = \(t((b + c) * (h1 - h2)))"),
+                parte("C", rect(a + b, h1 - h2, c, h2 - h3), -1, c * (h2 - h3), "\(t(c)) × \(t(h2 - h3)) = \(t(c * (h2 - h3)))")]),
         ]
         let rotulos = [rotulo(pt(rac(0), h1), pt(a, h1), "\(t(a)) m"), rotulo(pt(a, h1), pt(a + b, h1), "\(t(b)) m"),
                        rotulo(pt(a + b, h1), pt(w, h1), "\(t(c)) m"), rotulo(pt(rac(0), rac(0)), pt(rac(0), h1), "\(t(h1)) m"),
                        rotulo(pt(a, h1 - h2), pt(a, h1), "\(t(h2)) m"), rotulo(pt(w, h1 - h3), pt(w, h1), "\(t(h3)) m")]
         let perimetro = rac(2) * (w + h1)
         return Caso(region: [parte("E", contorno, 1, total, "")], ancho: w, alto: h1, paso: rac(1, 2), rotulos: rotulos,
-                    cortes: [v1, v2, k1, k2], descomposiciones: descs, total: total, unidad: "m²", perimetro: perimetro,
+                    cortes: [v1, v2, k1, k2, q1, q2, q3], descomposiciones: descs, total: total, unidad: "m²", perimetro: perimetro,
                     erroneos: ["perimetro": perimetro, "sumaHueco": w * h1],
                     descripcion: "Fachada escalonada de tres tramos, de izquierda a derecha: \(t(a)) m de ancho y \(t(h1)) m de alto; \(t(b)) m de ancho y \(t(h2)) m de alto; \(t(c)) m de ancho y \(t(h3)) m de alto.",
                     enunciado: "Hay que pintar esta fachada escalonada. Calcula su área.",
@@ -245,6 +252,10 @@ struct GeneradorAreaCompuesta: GeneradorItems {
             ErrorHabitual(respuesta: "circuloEntero", feedback: "Es medio círculo: su área es la mitad de la del círculo."),
             ErrorHabitual(respuesta: "sinConvertir", feedback: "Pasa todas las medidas a la misma unidad antes de operar."),
         ].filter { figura.erroneos[$0.respuesta] != nil }
+        // Elegir restar sin hueco (casa, semicírculo) es un primer intento fallido con pista (05H).
+        if !figura.estrategiasValidas.contains(.restar) {
+            errores.append(ErrorHabitual(respuesta: "sinHueco", feedback: "Aquí no hay hueco que quitar: la figura se forma sumando partes."))
+        }
         errores += ["A", "B", "C", "D"].map { ErrorHabitual(respuesta: "parte_\($0)", feedback: "Revisa qué dos medidas son la base y la altura de esa parte.") }
         errores += [ErrorHabitual(respuesta: "unidadLineal", feedback: "Multiplicas metros por metros: el área va en unidades cuadradas."),
                     ErrorHabitual(respuesta: "total", feedback: "Revisa la suma (o la resta) de las áreas de las partes.")]

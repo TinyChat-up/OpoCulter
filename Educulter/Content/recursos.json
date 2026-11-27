@@ -1,0 +1,415 @@
+{
+  "version": 1,
+  "validacion": {
+    "estado": "aprobado",
+    "revisor": "direccion",
+    "fecha": "2026-11-27"
+  },
+  "procedencia": {
+    "tipo": "original",
+    "licencia": "propia",
+    "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXOS A y B)."
+  },
+  "recursos": [
+    {
+      "recurso": "metáfora",
+      "definicion": "identifica un elemento real con otro imaginario por su semejanza, sin nexo comparativo",
+      "ejemplos": [
+        {
+          "texto": "Su risa era una cascada de cristales.",
+          "marcas": [
+            "una cascada de cristales"
+          ]
+        },
+        {
+          "texto": "El río, serpiente de plata, cruzaba el valle.",
+          "marcas": [
+            "serpiente de plata"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "comparación o símil",
+      "definicion": "relaciona dos elementos por su semejanza mediante un nexo (como, igual que, cual)",
+      "ejemplos": [
+        {
+          "texto": "Corría como el viento.",
+          "marcas": [
+            "como el viento"
+          ]
+        },
+        {
+          "texto": "Su voz sonaba igual que una campana.",
+          "marcas": [
+            "igual que una campana"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "personificación",
+      "definicion": "atribuye cualidades o acciones humanas a animales u objetos",
+      "ejemplos": [
+        {
+          "texto": "La ciudad dormía bajo la lluvia.",
+          "marcas": [
+            "dormía"
+          ]
+        },
+        {
+          "texto": "El viento susurraba secretos a las ventanas.",
+          "marcas": [
+            "susurraba secretos"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "hipérbole",
+      "definicion": "exagera de forma desmesurada",
+      "ejemplos": [
+        {
+          "texto": "Te lo he dicho un millón de veces.",
+          "marcas": [
+            "un millón de veces"
+          ]
+        },
+        {
+          "texto": "Tengo tanta hambre que me comería una montaña.",
+          "marcas": [
+            "me comería una montaña"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "anáfora",
+      "definicion": "repite una o varias palabras al comienzo de varios versos o frases",
+      "ejemplos": [
+        {
+          "texto": "Quiero el mar tranquilo, quiero la tarde lenta, quiero tu voz cercana.",
+          "marcas": [
+            "Quiero",
+            "quiero",
+            "quiero"
+          ]
+        },
+        {
+          "texto": "Sin prisa, sin miedo, sin mirar atrás.",
+          "marcas": [
+            "Sin",
+            "sin",
+            "sin"
+          ]
+        }
+      ],
+      "tambien": [
+        "paralelismo"
+      ]
+    },
+    {
+      "recurso": "aliteración",
+      "definicion": "repite un mismo sonido en palabras próximas",
+      "ejemplos": [
+        {
+          "texto": "Rueda el carro por la roca roja.",
+          "marcas": [
+            "Rueda el carro por la roca roja"
+          ]
+        },
+        {
+          "texto": "Silba el siseo suave de la seda.",
+          "marcas": [
+            "Silba el siseo suave de la seda"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "onomatopeya",
+      "definicion": "palabra que imita un sonido",
+      "ejemplos": [
+        {
+          "texto": "El tictac del reloj llenaba el salón.",
+          "marcas": [
+            "tictac"
+          ]
+        },
+        {
+          "texto": "Se oyó el crac de la rama.",
+          "marcas": [
+            "crac"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "epíteto",
+      "definicion": "adjetivo que expresa una cualidad propia del sustantivo",
+      "ejemplos": [
+        {
+          "texto": "Pisábamos la blanca nieve.",
+          "marcas": [
+            "blanca"
+          ]
+        },
+        {
+          "texto": "Bebió el dulce almíbar.",
+          "marcas": [
+            "dulce"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "antítesis",
+      "definicion": "contrapone dos ideas o palabras de significado opuesto",
+      "ejemplos": [
+        {
+          "texto": "Unos ríen y otros lloran.",
+          "marcas": [
+            "ríen",
+            "lloran"
+          ]
+        },
+        {
+          "texto": "Era joven en años y viejo en tristezas.",
+          "marcas": [
+            "joven",
+            "viejo"
+          ]
+        }
+      ],
+      "tambien": [
+        "paralelismo"
+      ]
+    },
+    {
+      "recurso": "hipérbaton",
+      "definicion": "altera el orden habitual de las palabras en la oración",
+      "ejemplos": [
+        {
+          "texto": "De la montaña en lo alto el sol brillaba.",
+          "marcas": [
+            "De la montaña en lo alto"
+          ]
+        },
+        {
+          "texto": "Verdes los campos estaban.",
+          "marcas": [
+            "Verdes los campos estaban"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "paralelismo",
+      "definicion": "repite una misma estructura sintáctica en frases o versos seguidos",
+      "ejemplos": [
+        {
+          "texto": "El niño corre por el patio; la niña salta junto al muro.",
+          "marcas": [
+            "El niño corre por el patio; la niña salta junto al muro"
+          ]
+        },
+        {
+          "texto": "Los perros ladraban en la calle; los gatos dormían en el tejado.",
+          "marcas": [
+            "Los perros ladraban en la calle; los gatos dormían en el tejado"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "enumeración",
+      "definicion": "acumula elementos de una misma serie",
+      "ejemplos": [
+        {
+          "texto": "Había libros, cuadernos, lápices, mapas y relojes.",
+          "marcas": [
+            "libros, cuadernos, lápices, mapas y relojes"
+          ]
+        },
+        {
+          "texto": "Compró pan, fruta, queso y flores.",
+          "marcas": [
+            "pan, fruta, queso y flores"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "metonimia",
+      "definicion": "nombra una cosa con el nombre de otra con la que guarda relación (autor por obra, continente por contenido…)",
+      "ejemplos": [
+        {
+          "texto": "Este verano leí un Galdós.",
+          "marcas": [
+            "un Galdós"
+          ]
+        },
+        {
+          "texto": "Después de cenar se tomaron unas copas.",
+          "marcas": [
+            "unas copas"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "interrogación retórica",
+      "definicion": "pregunta que no espera respuesta porque la respuesta es evidente",
+      "ejemplos": [
+        {
+          "texto": "¿Quién no ha soñado alguna vez con volar?",
+          "marcas": [
+            "¿Quién no ha soñado alguna vez con volar?"
+          ]
+        },
+        {
+          "texto": "¿Acaso no merece la pena intentarlo?",
+          "marcas": [
+            "¿Acaso no merece la pena intentarlo?"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "polisíndeton",
+      "definicion": "repite conjunciones más de lo necesario",
+      "ejemplos": [
+        {
+          "texto": "Y llegó, y miró, y se fue sin decir nada.",
+          "marcas": [
+            "Y",
+            "y",
+            "y"
+          ]
+        },
+        {
+          "texto": "Comimos y bebimos y reímos y cantamos.",
+          "marcas": [
+            "y",
+            "y",
+            "y"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "asíndeton",
+      "definicion": "suprime las conjunciones entre elementos",
+      "ejemplos": [
+        {
+          "texto": "Entró, saludó, se sentó, calló.",
+          "marcas": [
+            "Entró, saludó, se sentó, calló"
+          ]
+        },
+        {
+          "texto": "Corre, salta, grita, ríe.",
+          "marcas": [
+            "Corre, salta, grita, ríe"
+          ]
+        }
+      ],
+      "tambien": [
+        "enumeración"
+      ]
+    },
+    {
+      "recurso": "sinestesia",
+      "definicion": "une sensaciones de sentidos distintos",
+      "ejemplos": [
+        {
+          "texto": "Llevaba un verde chillón.",
+          "marcas": [
+            "verde chillón"
+          ]
+        },
+        {
+          "texto": "Le habló con una voz dulce.",
+          "marcas": [
+            "voz dulce"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "oxímoron",
+      "definicion": "une en un mismo grupo dos palabras de significado contrario",
+      "ejemplos": [
+        {
+          "texto": "Se hizo un silencio atronador.",
+          "marcas": [
+            "silencio atronador"
+          ]
+        },
+        {
+          "texto": "Sentía una dulce amargura.",
+          "marcas": [
+            "dulce amargura"
+          ]
+        }
+      ],
+      "tambien": []
+    },
+    {
+      "recurso": "apóstrofe",
+      "definicion": "se dirige con emoción a un ser presente o ausente, real o imaginario",
+      "ejemplos": [
+        {
+          "texto": "¡Oh, mar, guárdame tus secretos!",
+          "marcas": [
+            "¡Oh, mar, guárdame tus secretos!"
+          ]
+        },
+        {
+          "texto": "¡Luna, acompáñame esta noche!",
+          "marcas": [
+            "¡Luna, acompáñame esta noche!"
+          ]
+        }
+      ],
+      "tambien": [
+        "personificación"
+      ]
+    },
+    {
+      "recurso": "elipsis",
+      "definicion": "omite palabras que se sobreentienden",
+      "ejemplos": [
+        {
+          "texto": "Yo tomo café; ella, té.",
+          "marcas": [
+            "ella, té"
+          ]
+        },
+        {
+          "texto": "Él fue al cine; yo, al teatro.",
+          "marcas": [
+            "yo, al teatro"
+          ]
+        }
+      ],
+      "tambien": [
+        "paralelismo"
+      ]
+    }
+  ]
+}

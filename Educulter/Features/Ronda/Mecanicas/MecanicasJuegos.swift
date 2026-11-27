@@ -5,7 +5,7 @@ import SwiftUI
 // toques, y el error se marca en la propia pieza con texto, no solo con color.
 
 /// Marca de error en una pieza: icono y texto (no solo color).
-private struct MarcaError: View {
+struct MarcaError: View {
     let texto: String
     var body: some View {
         Label(texto, systemImage: "xmark.circle.fill")

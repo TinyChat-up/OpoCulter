@@ -102,6 +102,7 @@ struct ConstructorRondas: Sendable {
         vistos: [String: Date],
         ahora: Date,
         calendario: Calendar,
+        huellasExcluidas: Set<String> = [],
         rng: inout some RandomNumberGenerator
     ) -> Ronda {
         let hoy = DiaCivil(ahora, calendario: calendario)
@@ -111,7 +112,8 @@ struct ConstructorRondas: Sendable {
         }
         var elegidos: [ItemRonda] = []
         var usados = Set<String>()
-        var huellas = Set<String>()
+        // Preguntas con variante de mecánica vistas hoy o ayer (05H): fuera.
+        var huellas = huellasExcluidas
 
         func anadir(_ item: Item?, _ motivo: ItemRonda.Motivo) -> Bool {
             guard let item, !usados.contains(item.id), elegidos.count < config.maximo else { return false }

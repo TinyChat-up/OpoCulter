@@ -63,6 +63,12 @@ extension Item {
         switch juego {
         case "J46": "idea central y resumen"
         case "J63": "área de figuras compuestas"
+        case "RayosX": "análisis sintáctico por capas"
+        case "Editor": "detectar y corregir faltas"
+        case "Fabrica": "formación de palabras"
+        case "Detective": "localizar recursos literarios"
+        case "Recursos": "recursos literarios"
+        case "Glosario": "términos lingüísticos"
         default: objetivo
         }
     }

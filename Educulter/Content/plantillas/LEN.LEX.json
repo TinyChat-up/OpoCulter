@@ -1,0 +1,80 @@
+[
+  {
+    "id": "LEN.LEX.CAMPO.G01",
+    "competencia": "LEN.LEX.CAMPO",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "clasificar",
+    "tipo": "formacion",
+    "enunciados": [
+      "¿Qué palabras son de la familia léxica de «{{primitiva}}»?"
+    ],
+    "objetivo": "Fábrica: familia léxica",
+    "parametros": {
+      "modo": "familia"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos de la dirección (ANEXO A, aprobado); se aprueba con los tests de propiedades (D-126)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.POLI.G01",
+    "competencia": "LEN.LEX.POLI",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "emparejar",
+    "tipo": "glosario",
+    "enunciados": [
+      "Une cada término con su definición."
+    ],
+    "objetivo": "Glosario: relaciones de significado",
+    "parametros": {
+      "grupo": "relaciones de significado"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.POLI.G02",
+    "competencia": "LEN.LEX.POLI",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "glosario",
+    "enunciados": [
+      "¿A qué término corresponde esta definición? «{{definicion}}»"
+    ],
+    "objetivo": "Glosario: relaciones de significado",
+    "parametros": {
+      "grupo": "relaciones de significado"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  }
+]

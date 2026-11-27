@@ -19,5 +19,57 @@
       "estado": "borrador"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.CLA.JUST.G01",
+    "competencia": "LEN.CLA.JUST",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "emparejar",
+    "tipo": "glosario",
+    "enunciados": [
+      "Une cada clase de palabra con su definición."
+    ],
+    "objetivo": "Glosario: clases de palabras",
+    "parametros": {
+      "grupo": "clases de palabras"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.CLA.JUST.G02",
+    "competencia": "LEN.CLA.JUST",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "glosario",
+    "enunciados": [
+      "¿A qué clase de palabra corresponde esta definición? «{{definicion}}»"
+    ],
+    "objetivo": "Glosario: clases de palabras",
+    "parametros": {
+      "grupo": "clases de palabras"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
   }
 ]

@@ -413,6 +413,10 @@ struct VistaCaptura: View {
                 // J63: estrategia elegida (paso de los cortes).
                 let e = partes.count >= 4 ? Payload.FiguraArea.Estrategia(rawValue: partes[3]) : f.descomposiciones.first?.estrategia
                 modelo.respuesta = .figura(Respuesta.RespuestaFigura(estrategia: e))
+            } else if modo == "mitad", let item = modelo.itemActual, case .rayosX(let x) = item.payload {
+                // Rayos X a mitad (05H): verbo y sujeto confirmados, en la capa de las funciones.
+                modelo.respuesta = .rayosX(Respuesta.RespuestaRayosX(verbo: Set(x.verbo), sujeto: Set(x.sujeto), omitido: x.omitido,
+                                                                    funciones: x.grupos.first.map { [$0.id: $0.funcion] } ?? [:], capa: x.capas >= 4 ? 4 : 2))
             } else if modo == "relleno" {
                 // Respuesta correcta puesta pero sin comprobar.
                 modelo.rellenarParaPruebas(correcta: true)

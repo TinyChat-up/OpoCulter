@@ -159,54 +159,6 @@ struct RachaTests {
     }
 }
 
-@Suite("Misiones diarias")
-struct MisionesTests {
-    @Test("Se generan 3 misiones a partir del estado del usuario")
-    func generar() {
-        var rng = GeneradorConSemilla(semilla: 9)
-        let hoy = Fx.dia(2026, 11, 23)
-        let m = GeneradorMisiones.generar(dia: hoy, contexto: .init(rescatesPendientes: 5, dominioLengua: 0.6, dominioMatematicas: 0.2), rng: &rng)
-        #expect(m.count == 3 && Set(m.map(\.tipo)).count == 3)
-        #expect(m[0].tipo == .rescatarErrores && m[0].objetivo == 3 && m[0].titulo == "Rescata 3 errores")
-        #expect(m[1].tipo == .rondaMatematicas)
-        #expect(m.map(\.id) == ["20261123-1", "20261123-2", "20261123-3"])
-
-        let r = GeneradorMisiones.generar(dia: hoy, contexto: .init(repasosVencidos: 1, dominioLengua: 0.1, dominioMatematicas: 0.5), rng: &rng)
-        #expect(r[0].tipo == .repasarCompetencias && r[0].objetivo == 1 && r[1].tipo == .rondaLengua)
-
-        let libre = GeneradorMisiones.generar(dia: hoy, contexto: .init(), rng: &rng)
-        #expect(libre.count == 3 && [.rondaLengua, .rondaMatematicas].contains(libre[0].tipo))
-        for tipo in TipoMision.allCases {
-            #expect(!Mision(id: "x", tipo: tipo, objetivo: 2).titulo.isEmpty)
-        }
-        #expect(Mision(id: "x", tipo: .rescatarErrores, objetivo: 1).titulo == "Rescata 1 error")
-        #expect(Mision(id: "x", tipo: .repasarCompetencias, objetivo: 1).titulo == "Repasa 1 competencia")
-    }
-
-    @Test("Los eventos hacen avanzar y completar las misiones una sola vez")
-    func progreso() {
-        var m = [Mision(id: "1", tipo: .rescatarErrores, objetivo: 2), Mision(id: "2", tipo: .rondaMatematicas, objetivo: 1),
-                 Mision(id: "3", tipo: .ganarXP, objetivo: 100), Mision(id: "4", tipo: .combo, objetivo: 5),
-                 Mision(id: "5", tipo: .rondaLengua, objetivo: 1), Mision(id: "6", tipo: .ortografiaExpres, objetivo: 1),
-                 Mision(id: "7", tipo: .repasarCompetencias, objetivo: 1), Mision(id: "8", tipo: .aciertosSinPista, objetivo: 1)]
-        do { let r = GeneradorMisiones.registrar(.rescate, en: &m); #expect(r.isEmpty) }
-        do { let r = GeneradorMisiones.registrar(.rescate, en: &m); #expect(r.map(\.id) == ["1"]) }
-        do { let r = GeneradorMisiones.registrar(.rescate, en: &m); #expect(r.isEmpty, "Ya completada") }
-        do { let r = GeneradorMisiones.registrar(.rondaCompletada(area: "LEN"), en: &m); #expect(r.map(\.id) == ["5"]) }
-        do { let r = GeneradorMisiones.registrar(.rondaCompletada(area: "MAT"), en: &m); #expect(r.map(\.id) == ["2"]) }
-        GeneradorMisiones.registrar(.xp(60), en: &m)
-        do { let r = GeneradorMisiones.registrar(.xp(60), en: &m); #expect(r.map(\.id) == ["3"]) }
-        GeneradorMisiones.registrar(.combo(4), en: &m)
-        GeneradorMisiones.registrar(.combo(2), en: &m)
-        #expect(m[3].progreso == 4)
-        do { let r = GeneradorMisiones.registrar(.combo(5), en: &m); #expect(r.map(\.id) == ["4"]) }
-        do { let r = GeneradorMisiones.registrar(.ortografiaExpres, en: &m); #expect(r.map(\.id) == ["6"]) }
-        do { let r = GeneradorMisiones.registrar(.repaso, en: &m); #expect(r.map(\.id) == ["7"]) }
-        do { let r = GeneradorMisiones.registrar(.aciertoSinPista, en: &m); #expect(r.map(\.id) == ["8"]) }
-        #expect(m.allSatisfy { $0.completada })
-    }
-}
-
 @Suite("Logros")
 struct LogrosTests {
     @Test("Motor de reglas: 5 logros de ejemplo y 6 de la Fase 05D")

@@ -263,8 +263,8 @@
         "LEN.FOR.DERIV"
       ],
       "competencia": "LEN.FOR.DER",
-      "entrena": "no",
-      "nota": "Provisional LEN.FOR.DERIV."
+      "entrena": "parcial",
+      "nota": "Prefijación y sufijación: la Fábrica forma y separa derivadas (05H)."
     },
     {
       "examen": "OF.2019.A",
@@ -461,8 +461,8 @@
         "LEN.REC.FIGURAS"
       ],
       "competencia": "LEN.REC.FIG",
-      "entrena": "no",
-      "nota": "Antes LEN.REC.FIGURAS."
+      "entrena": "si",
+      "nota": "Elegir la figura entre opciones: «¿Qué recurso hay?» (05H)."
     },
     {
       "examen": "OF.2019.O",
@@ -472,8 +472,8 @@
         "LEN.REC.FIGURAS"
       ],
       "competencia": "LEN.REC.DEF",
-      "entrena": "no",
-      "nota": "Definir la metáfora."
+      "entrena": "parcial",
+      "nota": "Definir la metáfora: la app relaciona recurso y definición, no la redacta (05H)."
     },
     {
       "examen": "OF.2019.O",
@@ -736,8 +736,8 @@
         "LEN.REC.FIGURAS"
       ],
       "competencia": "LEN.REC.DEF",
-      "entrena": "no",
-      "nota": "Definir metáfora, homónimas, verso libre y comparación."
+      "entrena": "parcial",
+      "nota": "Metáfora, comparación y homonimia en recursos y glosario; verso libre, no (05H)."
     },
     {
       "examen": "OF.2022.O",
@@ -813,8 +813,8 @@
         "MAT.GEO.AREAS"
       ],
       "competencia": "MAT.GEO.AREA",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "parcial",
+      "nota": "Áreas compuestas con J63 (05G); parcial por decisión de la dirección (05H)."
     },
     {
       "examen": "OF.2022.O",
@@ -967,8 +967,8 @@
         "LEN.FOR.DERIV"
       ],
       "competencia": "LEN.FOR.DER",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "parcial",
+      "nota": "Escribir derivadas: la app las forma con piezas y trabaja familias léxicas (05H)."
     },
     {
       "examen": "OF.2024.O",
@@ -1132,8 +1132,8 @@
         "LEN.CLA.SUSTADJ"
       ],
       "competencia": "LEN.CLA.JUST",
-      "entrena": "no",
-      "nota": "Clase de palabra con justificación (antes LEN.CLA.SUSTADJ)."
+      "entrena": "parcial",
+      "nota": "Clase de palabra con justificación: el glosario trabaja las definiciones de cada clase (05H)."
     },
     {
       "examen": "OF.2026.A",
@@ -1155,8 +1155,8 @@
         "LEN.REC.FIGURAS"
       ],
       "competencia": "LEN.REC.FIG",
-      "entrena": "no",
-      "nota": "También métrica."
+      "entrena": "parcial",
+      "nota": "Localizar anáfora, personificación y epíteto: Detective (05H); la métrica, no."
     },
     {
       "examen": "OF.2026.A",
@@ -1177,8 +1177,8 @@
         "LEN.REC.FIGURAS"
       ],
       "competencia": "LEN.REC.DEF",
-      "entrena": "no",
-      "nota": "Relacionar término y definición."
+      "entrena": "si",
+      "nota": "Relacionar término y definición: recursos y glosario (05H)."
     },
     {
       "examen": "OF.2026.A",
@@ -1188,8 +1188,8 @@
         "LEN.FOR.DERIV"
       ],
       "competencia": "LEN.FOR.CLAS",
-      "entrena": "no",
-      "nota": "Primitivas, derivadas y compuestas."
+      "entrena": "parcial",
+      "nota": "Clasificar primitivas, derivadas y compuestas con la justificación tras corregir; no se redacta (05H)."
     },
     {
       "examen": "OF.2026.A",
@@ -1353,8 +1353,8 @@
         "LEN.FOR.DERIV"
       ],
       "competencia": "LEN.FOR.DER",
-      "entrena": "no",
-      "nota": "Prefijos y su significado."
+      "entrena": "parcial",
+      "nota": "Prefijos (deshacer, releer, antinatural) en la Fábrica; su significado, no (05H)."
     },
     {
       "examen": "OF.2026.O",
@@ -1397,8 +1397,8 @@
         "LEN.REC.FIGURAS"
       ],
       "competencia": "LEN.REC.DEF",
-      "entrena": "no",
-      "nota": "Narrador, novela, hipérbole y adjetivo."
+      "entrena": "parcial",
+      "nota": "Hipérbole y adjetivo en recursos y glosario; narrador y novela, no (05H)."
     },
     {
       "examen": "OF.2026.O",

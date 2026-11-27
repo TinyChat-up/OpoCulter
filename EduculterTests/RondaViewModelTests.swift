@@ -58,16 +58,14 @@ struct RondaViewModelTests {
         jugar(segunda)
         #expect(segunda.resumen?.racha.actual == 2)
         #expect(segunda.resumen?.racha.record == 2)
-        let misiones = try repo.perfil().misiones
-        if let orto = misiones.first(where: { $0.tipo == .ortografiaExpres }) { #expect(orto.completada) }
     }
 
     @Test("La pista se muestra, solo en peldaños 1–2, y deja el XP del ítem a 0")
     func pista() throws {
-        let m = RondaViewModel(servicio: servicio(), tipo: .items(["LEN.SIN.SUJPRED.0001", "MAT.OPE.FRACSUM.0001"]))
+        let m = RondaViewModel(servicio: servicio(), tipo: .items(["LEN.REC.FIGURAS.0001", "MAT.OPE.FRACSUM.0001"]))
         #expect(m.puedePedirPista)
         m.pedirPista()
-        #expect(m.pistasMostradas == ["Pregunta al verbo: ¿quién duerme?"])
+        #expect(m.pistasMostradas == ["Fíjate en si aparece la palabra «como»."])
         #expect(!m.puedePedirPista, "Solo tenía una pista")
         m.rellenarParaPruebas()
         m.comprobar()
@@ -223,6 +221,8 @@ struct EjemploEnRondaTests {
         // Tras un fallo se ven los pasos (desde el peldaño 3, el único sitio donde aparecen).
         m.rellenarParaPruebas(correcta: false)
         m.comprobar()
+        // Con contrato de intento (juegos, 05G), el reintento también falla y se ve la solución.
+        if m.pistaReintento != nil { m.rellenarParaPruebas(correcta: false); m.comprobar() }
         #expect(m.resultado?.correcto == false && m.pasosTrasFallo == gemelo.pasos)
     }
 

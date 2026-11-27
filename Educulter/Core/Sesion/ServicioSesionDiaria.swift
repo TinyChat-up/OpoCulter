@@ -48,7 +48,8 @@ extension ServicioSesion {
         let sesion = ConstructorSesion(banco: banco, config: configRonda).construir(
             n: n, foco: foco, estados: try repositorio.estadosCompetencia(), remedios: try remediosPendientes(),
             plan: try planSesion(foco: foco), vistos: try repositorio.vistos(desde: ahora.addingTimeInterval(-configRonda.segundosSinRepetir)),
-            ahora: ahora, calendario: calendario, semilla: try semillaSesion(), variantes: try variantesSinAyudas())
+            ahora: ahora, calendario: calendario, semilla: try semillaSesion(), variantes: try variantesSinAyudas(),
+            huellasExcluidas: try huellasBloqueadas())
         if sesion.requiereDiagnostico { return try prepararRonda(.diagnostico) }
         return RondaPreparada(tipo: .sesion(duracion: duracion, foco: foco), items: sesion.items,
                               competenciaEnCurso: sesion.competenciaEnCurso, teoriaPrevia: sesion.teoriaPrevia)

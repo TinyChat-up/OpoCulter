@@ -73,12 +73,12 @@ struct CatalogoErroresTests {
         #expect(etiquetados.count >= 40)
         #expect(etiquetados.allSatisfy { bancoTodo.recursos.errores[$0.error!] != nil })
         // Punto 4 de la continuación: un distractor estático solo queda sin etiquetar si su competencia
-        // no tiene errores en el catálogo (no tiene plantilla con la que generar el remedio). Hoy son 12
-        // (LEN.COM.TEMA ya tiene errores desde la 05G; LEN.COM.INFER.0004 añade 2), de LEN.COM.INFER, LEN.LEX.SIN, LEN.LEX.POLI, LEN.LEX.CAMPO, LEN.LEX.DICC y MAT.NUM.FRAEQ.
+        // no tiene errores en el catálogo (no tiene plantilla con la que generar el remedio). Hoy son 8
+        // (LEN.COM.TEMA desde la 05G y LEN.LEX.POLI y LEN.LEX.CAMPO desde la 05H ya tienen errores), de LEN.COM.INFER, LEN.LEX.SIN, LEN.LEX.DICC y MAT.NUM.FRAEQ.
         let conErrores = Set(bancoAprobado.recursos.errores.errores.map(\.competencia))
         let sin = bancoAprobado.itemsEstaticos.flatMap { i in i.erroresHabituales.filter { $0.error == nil }.map { (i.competencia, $0) } }
         #expect(sin.allSatisfy { !conErrores.contains($0.0) }, "\(sin.filter { conErrores.contains($0.0) }.map(\.0))")
-        #expect(sin.count == 12 && Set(sin.map(\.0)) == ["LEN.COM.INFER", "LEN.LEX.SIN", "LEN.LEX.POLI", "LEN.LEX.CAMPO", "LEN.LEX.DICC", "MAT.NUM.FRAEQ"])
+        #expect(sin.count == 8 && Set(sin.map(\.0)) == ["LEN.COM.INFER", "LEN.LEX.SIN", "LEN.LEX.DICC", "MAT.NUM.FRAEQ"])
     }
 
     @Test("Detección por distractor y por valor numérico")

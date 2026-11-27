@@ -240,5 +240,328 @@
       "fecha": "2026-11-25"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.ORT.HIA.G01",
+    "competencia": "LEN.ORT.HIA",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "emparejar",
+    "tipo": "glosario",
+    "enunciados": [
+      "Une cada término con su definición."
+    ],
+    "objetivo": "Glosario: sílabas y acentuación",
+    "parametros": {
+      "grupo": "sílabas y acentuación"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HIA.G02",
+    "competencia": "LEN.ORT.HIA",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "glosario",
+    "enunciados": [
+      "¿A qué término corresponde esta definición? «{{definicion}}»"
+    ],
+    "objetivo": "Glosario: sílabas y acentuación",
+    "parametros": {
+      "grupo": "sílabas y acentuación"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.G02",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "editor",
+    "tipo": "editor",
+    "enunciados": [
+      "Esta frase tiene una falta de ortografía. Encuéntrala y corrígela."
+    ],
+    "objetivo": "Editor: tilde diacrítica en una frase",
+    "parametros": {
+      "familias": [
+        "tu_tú",
+        "el_él",
+        "mi_mí",
+        "si_sí",
+        "te_té",
+        "de_dé",
+        "se_sé",
+        "mas_más",
+        "aun_aún",
+        "que_qué",
+        "como_cómo",
+        "cuando_cuándo",
+        "donde_dónde"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: frases del lote 02b (aprobadas); generador nuevo, se aprueba con los tests de propiedades (D-125)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.G03",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "editor",
+    "tipo": "editor",
+    "enunciados": [
+      "Este texto tiene faltas de ortografía. Encuéntralas y corrígelas."
+    ],
+    "objetivo": "Editor: tilde diacrítica en un párrafo",
+    "parametros": {
+      "familias": [
+        "tu_tú",
+        "el_él",
+        "mi_mí",
+        "si_sí",
+        "te_té",
+        "de_dé",
+        "se_sé",
+        "mas_más",
+        "aun_aún",
+        "que_qué",
+        "como_cómo",
+        "cuando_cuándo",
+        "donde_dónde"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: frases del lote 02b (aprobadas); generador nuevo, se aprueba con los tests de propiedades (D-125)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.DIA.G04",
+    "competencia": "LEN.ORT.DIA",
+    "peldano": 5,
+    "dificultad": 5,
+    "mecanica": "editor",
+    "tipo": "editor",
+    "enunciados": [
+      "Este texto tiene faltas de ortografía. Encuéntralas y corrígelas."
+    ],
+    "objetivo": "Editor: dos faltas con la penalización del examen",
+    "parametros": {
+      "familias": [
+        "tu_tú",
+        "el_él",
+        "mi_mí",
+        "si_sí",
+        "te_té",
+        "de_dé",
+        "se_sé",
+        "mas_más",
+        "aun_aún",
+        "que_qué",
+        "como_cómo",
+        "cuando_cuándo",
+        "donde_dónde"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: frases del lote 02b (aprobadas); generador nuevo, se aprueba con los tests de propiedades (D-125)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.PQ.G02",
+    "competencia": "LEN.ORT.PQ",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "editor",
+    "tipo": "editor",
+    "enunciados": [
+      "Esta frase tiene una falta de ortografía. Encuéntrala y corrígela."
+    ],
+    "objetivo": "Editor: por qué, porque, porqué y por que",
+    "parametros": {
+      "familias": [
+        "porque"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: frases del lote 02b (aprobadas); generador nuevo, se aprueba con los tests de propiedades (D-125)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.G03",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "editor",
+    "tipo": "editor",
+    "enunciados": [
+      "Esta frase tiene una falta de ortografía. Encuéntrala y corrígela."
+    ],
+    "objetivo": "Editor: homófonos en una frase",
+    "parametros": {
+      "familias": [
+        "hay_ahí_ay",
+        "haber_aver",
+        "echo_hecho",
+        "vaya_valla_baya",
+        "tuvo_tubo",
+        "hola_ola",
+        "botar_votar",
+        "grabar_gravar",
+        "sabia_savia",
+        "revelar_rebelar",
+        "hasta_asta",
+        "halla_haya",
+        "hierba_hierva",
+        "bello_vello"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: frases del lote 02b (aprobadas); generador nuevo, se aprueba con los tests de propiedades (D-125)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.G04",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "editor",
+    "tipo": "editor",
+    "enunciados": [
+      "Este texto tiene faltas de ortografía. Encuéntralas y corrígelas."
+    ],
+    "objetivo": "Editor: homófonos en un párrafo",
+    "parametros": {
+      "familias": [
+        "hay_ahí_ay",
+        "haber_aver",
+        "echo_hecho",
+        "vaya_valla_baya",
+        "tuvo_tubo",
+        "hola_ola",
+        "botar_votar",
+        "grabar_gravar",
+        "sabia_savia",
+        "revelar_rebelar",
+        "hasta_asta",
+        "halla_haya",
+        "hierba_hierva",
+        "bello_vello"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: frases del lote 02b (aprobadas); generador nuevo, se aprueba con los tests de propiedades (D-125)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.ORT.HOM.G05",
+    "competencia": "LEN.ORT.HOM",
+    "peldano": 5,
+    "dificultad": 5,
+    "mecanica": "editor",
+    "tipo": "editor",
+    "enunciados": [
+      "Este texto tiene faltas de ortografía. Encuéntralas y corrígelas."
+    ],
+    "objetivo": "Editor: dos faltas con la penalización del examen",
+    "parametros": {
+      "familias": [
+        "hay_ahí_ay",
+        "haber_aver",
+        "echo_hecho",
+        "vaya_valla_baya",
+        "tuvo_tubo",
+        "hola_ola",
+        "botar_votar",
+        "grabar_gravar",
+        "sabia_savia",
+        "revelar_rebelar",
+        "hasta_asta",
+        "halla_haya",
+        "hierba_hierva",
+        "bello_vello"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: frases del lote 02b (aprobadas); generador nuevo, se aprueba con los tests de propiedades (D-125)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
   }
 ]

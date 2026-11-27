@@ -1,8 +1,28 @@
 # Estado del proyecto
 
-**Fase actual:** 05G (juegos: patrones, contrato de intento, J46 y J63) · **Terminada y fusionada en `main`**.
-**Siguiente:** lo que decida la dirección tras el informe de la 05G.
+**Fase actual:** 05H (Lengua manipulativa sobre los patrones) · **Terminada y fusionada en `main`**.
+**Siguiente:** lotes de la dirección con el inventario de [docs/lotes/LOTE06_INVENTARIO.md](docs/lotes/LOTE06_INVENTARIO.md).
 **Última actualización:** 2026-11-27
+
+## Fase 05H — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| §0 Decisiones de la 05G | ✅ INFER.0003/0004 sin coincidir (misma sesión ni días seguidos); O-15 parcial; «Restar el hueco» siempre, con pista si no hay hueco; opciones nuevas en 6 ítems | D-123, `JuegosLenguaTests` |
+| §1 Pendientes de la 05E | ✅ Misiones retiradas; descanso en Hoy con el personaje del área; «Hacer el diagnóstico» rehace el plan | D-129 |
+| §2 Inventario | ✅ 70 palabras, 36 competencias sin tarjeta, formatos y 8 distractores sin etiquetar | [docs/lotes/LOTE06_INVENTARIO.md](docs/lotes/LOTE06_INVENTARIO.md) |
+| §3–§6 Juegos | ✅ Rayos X, Editor, Fábrica, recursos con Detective y glosario; 200 semillas por plantilla con oráculo | D-124–D-127, `JuegosLenguaTests` |
+| Tests unitarios | ✅ 735 en verde (una pasada completa tras corregir recuentos, fixtures migrados y oráculos); tras el arreglo del sujeto omitido, las 4 suites afectadas otra vez en verde | `xcodebuild test` |
+| Tests de interfaz | ✅ Solo los rotos: demostración de mecánicas y rondas de Lengua, 2 de 2 | `RondaUITests`, `RondasLenguaUITests` |
+| Avisos del compilador | ✅ 0 (Debug, tests y archive Release) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido** | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada y abierta (versión final) | `devicectl` |
+| Capturas | 5: Rayos X a mitad, esquema final, Editor, Fábrica y Detective | [docs/capturas/fase05h/](docs/capturas/fase05h/) |
+| Cobertura del examen | sí 38,8 % → **40,3 %** · sí + parcial 69,1 % → **77,7 %** (139 preguntas) | `equivalencias.json` |
+
+## Pendiente (05H)
+1. Accesibilidad de Rayos X y del Editor implementada (etiquetas, alternativa por toque al arrastre), **sin auditar** (Fase 07).
+2. Decisiones para la dirección: ver el informe.
 
 ## Fase 05G — Resultado
 

@@ -132,7 +132,10 @@ struct CargadorContenido: Sendable {
             literatura: try opcional("literatura/literatura.json"),
             errores: try opcional("errores.json") ?? CatalogoErrores(),
             resumen: try opcional("resumen.json"),
-            textosBase: try archivosJSON(en: "textos").flatMap { try decodificar($0) as [TextoBase] }
+            textosBase: try archivosJSON(en: "textos").flatMap { try decodificar($0) as [TextoBase] },
+            formacion: try opcional("formacion.json"),
+            recursosLiterarios: try opcional("recursos.json"),
+            glosario: try opcional("glosario.json")
         )
     }
 

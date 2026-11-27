@@ -68,24 +68,26 @@ error("LEN.ORT.HIA", "Confundes hiato y diptongo.", "LEN.ORT.AGU.G02",
 error("LEN.ORT.DIA", "Confundes interrogativos con tilde y relativos sin ella.", "LEN.ORT.DIA.G01",
       "Qué, cómo, cuándo y dónde llevan tilde cuando preguntan o exclaman, también en preguntas indirectas.",
       ("fraseHueco", r"es (interrogativo|relativo o conjunción|comparativo o de modo|adverbio relativo)"),
+      ("editor", r"interrogativo"),
       ("estatico", r"(?i)interrogativ|exclamativ|relativo"))
 error("LEN.ORT.DIA", "Confundes monosílabos con y sin tilde diacrítica.", "LEN.ORT.DIA.G01",
       "La tilde distingue funciones: tú pronombre / tu posesivo; él / el artículo; sí afirmación / si condición.",
-      ("fraseHueco", r"Aquí va «"), ("estatico", r"."))
+      ("fraseHueco", r"Aquí va «"), ("editor", r"^Piensa en el uso"), ("estatico", r"."))
 
 # Por qué, porque, porqué, por que (LEN.ORT.PQ).
 error("LEN.ORT.PQ", "Confundes porque, por qué, porqué y por que.", "LEN.ORT.PQ.G01",
       "Por qué pregunta; porque responde (causa); el porqué es un sustantivo; por que es preposición + que.",
-      ("fraseHueco", r"."), ("estatico", r"."))
+      ("fraseHueco", r"."), ("editor", r"."), ("estatico", r"."))
 
 # Homófonos (LEN.ORT.HOM).
 error("LEN.ORT.HOM", "Confundes homófonos con h y sin h.", "LEN.ORT.HOM.G01",
       "Hay es de haber, ahí es lugar, ay es queja; hecho es de hacer, echo de echar; a ver es mirar.",
       ("fraseHueco", r"es (verbo haber|adverbio de lugar|interjección|preposición \+ verbo ver|verbo echar|verbo hacer|verbo hallar|verbo haber o árbol|saludo|onda del mar|preposición de límite|palo de la bandera)"),
+      ("editor", r"«(hay|ahí|ay|haber|a ver|echo|hecho|halla|haya|hola|ola|hasta|asta)» es"),
       ("estatico", r"(?i)\bh|hay|ahí|ay\b|haber|hecho|echo"))
 error("LEN.ORT.HOM", "Confundes homófonos con b y con v.", "LEN.ORT.HOM.G01",
       "Mira el significado: tubo es pieza hueca y tuvo es de tener; votar es elegir y botar es saltar.",
-      ("fraseHueco", r"Aquí va «"), ("estatico", r"."))
+      ("fraseHueco", r"Aquí va «"), ("editor", r"^Piensa en el uso"), ("estatico", r"."))
 
 # Sintaxis (oracionSimple): las mismas confusiones en las cuatro competencias que lo usan.
 SINTAXIS = [
@@ -110,6 +112,10 @@ SINTAXIS = [
     ("Confundes oraciones transitivas e intransitivas.", "CLASE",
      "Si el verbo lleva CD, la oración es transitiva; si no lo lleva ni tiene atributo, intransitiva.",
      [r"predicado verbal (con|sin) CD"]),
+    # 05H (Rayos X): la capa del verbo.
+    ("No localizas el verbo, núcleo del predicado.", "NV",
+     "El verbo cambia con el tiempo (ayer, hoy, mañana) y concuerda con el sujeto.",
+     [r"^El verbo es la palabra que cambia"]),
 ]
 REMEDIO_SIN = {
     "LEN.SIN.SUJPRED": {"*": "LEN.SIN.SUJPRED.G01"},
@@ -118,8 +124,8 @@ REMEDIO_SIN = {
     "LEN.CLA.SUSTADJ": {"*": "LEN.CLA.SUSTADJ.G01"},
 }
 USADOS_SIN = {  # qué confusiones aparecen en cada competencia (comprobado con el arnés `etiquetas`)
-    "LEN.SIN.SUJPRED": ["SUJ"],
-    "LEN.SIN.COMPL": ["SUJ", "PRON", "CD", "CI", "CC", "ATR"],
+    "LEN.SIN.SUJPRED": ["SUJ", "NV"],
+    "LEN.SIN.COMPL": ["SUJ", "PRON", "CD", "CI", "CC", "ATR", "NV"],
     "LEN.SIN.CLASE": ["ATR", "CLASE"],
 }
 for comp, usados in USADOS_SIN.items():
@@ -363,6 +369,33 @@ error("MAT.GEO.AREA", "No conviertes las medidas mixtas a la misma unidad.", "MA
 error("MAT.GEO.AREA", "Calculas mal el área de alguna parte.", "MAT.GEO.AREA.G01",
       "En cada parte, toma la base y la altura de esa parte, no las de la figura entera.",
       ("areaCompuesta", r"^Revisa (qué dos medidas|la suma)"), ("estatico", r"^Revisa (qué dos medidas|la suma)"))
+error("MAT.GEO.AREA", "Restas un hueco que la figura no tiene.", "MAT.GEO.AREA.G03",
+      "Si la figura no tiene hueco, se divide en partes conocidas y se suman.",
+      ("areaCompuesta", r"^Aquí no hay hueco que quitar"), ("estatico", r"^Aquí no hay hueco que quitar"))
+
+# ---------------------------------------------------------------- LENGUA MANIPULATIVA (Fase 05H, D-128)
+
+error("LEN.FOR.CLAS", "Confundes primitivas, derivadas, compuestas y parasintéticas.", "LEN.FOR.CLAS.G01",
+      "Solo lexema: primitiva; con prefijo o sufijo: derivada; dos lexemas: compuesta; prefijo y sufijo a la vez: parasintética.",
+      ("formacion", r"^Busca el lexema"))
+error("LEN.LEX.CAMPO", "Metes en la familia palabras que solo se le parecen.", "LEN.LEX.CAMPO.G01",
+      "Una familia léxica comparte el lexema y el significado: marrón no es de la familia de mar.",
+      ("formacion", r"^Se parece por la forma"), ("estatico", r"."))
+error("LEN.REC.FIG", "Confundes unos recursos literarios con otros.", "LEN.REC.FIG.G01",
+      "Pregúntate qué hace el texto: comparar con nexo, identificar sin él, exagerar, repetir, dar vida a lo inanimado…",
+      ("recursos", r"."))
+error("LEN.CLA.JUST", "Confundes las clases de palabras.", "LEN.CLA.JUST.G02",
+      "Mira si la palabra varía (sustantivo, adjetivo, determinante, pronombre, verbo) o no (adverbio, preposición, conjunción, interjección).",
+      ("glosario", r"."))
+error("LEN.LEX.POLI", "Confundes las relaciones de significado.", "LEN.LEX.POLI.G02",
+      "Polisemia: una palabra con varios significados relacionados; homonimia: palabras distintas que coinciden en la forma.",
+      ("glosario", r"."), ("estatico", r"."))
+error("LEN.FOR.ESTR", "Confundes lexema, morfema y familia léxica.", "LEN.FOR.ESTR.G02",
+      "El lexema aporta el significado; los morfemas, la información gramatical; la familia comparte el lexema.",
+      ("glosario", r"."))
+error("LEN.ORT.HIA", "Confundes los términos de sílabas y acentuación.", "LEN.ORT.HIA.G02",
+      "Diptongo: dos vocales en una sílaba; hiato: en dos. Aguda, llana y esdrújula: acento en la última, la penúltima o la antepenúltima.",
+      ("glosario", r"."))
 
 SALIDA.write_text(json.dumps({"version": 1, "errores": ERRORES}, ensure_ascii=False, indent=1) + "\n")
 print(f"{len(ERRORES)} errores en {len({e['competencia'] for e in ERRORES})} competencias → {SALIDA.relative_to(RAIZ)}")

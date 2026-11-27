@@ -6,7 +6,7 @@ import SwiftData
 // - todas las propiedades tienen valor por defecto o son opcionales;
 // - no se usa `@Attribute(.unique)`;
 // - no hay relaciones (si se añaden, deberán ser opcionales).
-// Los valores compuestos (misiones, métricas, diagnóstico) se guardan como JSON en `Data`.
+// Los valores compuestos (métricas, diagnóstico) se guardan como JSON en `Data`.
 
 @Model
 final class IntentoRegistro {
@@ -108,8 +108,6 @@ final class PerfilRegistro {
     var protectores: Int = 2
     var ultimoDiaActivo: Int?
     var ultimoDiaProcesado: Int?
-    var diaMisiones: Int?
-    var misionesJSON: Data?
     var metricasJSON: Data?
     var competenciaEnCurso: String?
     var avatar: Int?
@@ -132,17 +130,14 @@ final class PerfilRegistro {
         protectores = p.racha.protectores
         ultimoDiaActivo = p.racha.ultimoDiaActivo?.clave
         ultimoDiaProcesado = p.racha.ultimoDiaProcesado?.clave
-        diaMisiones = p.diaMisiones?.clave
         competenciaEnCurso = p.competenciaEnCurso
         avatar = p.avatar
-        misionesJSON = try JSONEncoder().encode(p.misiones)
         desbloqueosJSON = try JSONEncoder().encode(p.desbloqueos)
         diasJSON = try JSONEncoder().encode(Dias(sesion: p.diasSesion, descanso: p.racha.descanso))
         metricasJSON = try JSONEncoder().encode(Dictionary(uniqueKeysWithValues: p.metricas.map { ($0.key.rawValue, $0.value) }))
     }
 
     func valor() throws -> PerfilJugador {
-        let misiones = try misionesJSON.map { try JSONDecoder().decode([Mision].self, from: $0) } ?? []
         let crudas = try metricasJSON.map { try JSONDecoder().decode([String: Int].self, from: $0) } ?? [:]
         let metricas = Dictionary(uniqueKeysWithValues: crudas.compactMap { k, v in Metrica(rawValue: k).map { ($0, v) } })
         let dias = try diasJSON.map { try JSONDecoder().decode(Dias.self, from: $0) }
@@ -150,8 +145,7 @@ final class PerfilRegistro {
                                 ultimoDiaActivo: ultimoDiaActivo.flatMap(DiaCivil.init(clave:)),
                                 ultimoDiaProcesado: ultimoDiaProcesado.flatMap(DiaCivil.init(clave:)))
         racha.descanso = dias?.descanso ?? []
-        return PerfilJugador(xpTotal: xpTotal, racha: racha, misiones: misiones,
-                             diaMisiones: diaMisiones.flatMap(DiaCivil.init(clave:)), metricas: metricas,
+        return PerfilJugador(xpTotal: xpTotal, racha: racha, metricas: metricas,
                              competenciaEnCurso: competenciaEnCurso, avatar: Avatar.migrar(avatar),
                              desbloqueos: try desbloqueosJSON.map { try JSONDecoder().decode([Desbloqueo].self, from: $0) } ?? [],
                              diasSesion: dias?.sesion ?? [])

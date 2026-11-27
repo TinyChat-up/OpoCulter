@@ -287,23 +287,6 @@ struct PilotoTests {
         #expect(!items.isEmpty && items.allSatisfy { $0.competencia == "MAT.NUM.FRAREP" }, "\(items.map(\.competencia))")
     }
 
-    @Test("La misión de área del día se puede cumplir con el contenido del piloto", arguments: 23...28)
-    func misionAlcanzable(dia: Int) throws {
-        let s = servicio(dia)
-        let misiones = try s.estadoHoy().misiones
-        let deArea = try #require(misiones.first { $0.tipo == .rondaLengua || $0.tipo == .rondaMatematicas })
-        let area = deArea.tipo == .rondaMatematicas ? "MAT" : "LEN"
-        let ronda = try s.prepararRonda(.area(area))
-        #expect(!ronda.items.isEmpty)
-        for r in ronda.items {
-            let item = try #require(banco.item(id: r.itemId))
-            try s.registrar(item: item, resultado: Evaluador.evaluar(RespuestaEjemplo.correcta(item.payload), para: item),
-                            usoPista: false, combo: 1, motivo: r.motivo)
-        }
-        let efecto = try s.completarRonda(ronda)
-        #expect(efecto.misionesCompletadas.contains { $0.id == deArea.id })
-    }
-
     @Test("Racha en riesgo en el estado de Hoy")
     func avisoRacha() throws {
         // Ronda el día 22 y, el 23 a las 21:00, sin ronda: en riesgo.

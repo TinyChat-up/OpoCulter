@@ -2,7 +2,7 @@ import Foundation
 
 /// Día del calendario civil del usuario (año, mes, día), sin hora.
 ///
-/// Todo lo que depende de "qué día es" (racha, repasos de Leitner, misiones) trabaja con
+/// Todo lo que depende de "qué día es" (racha, repasos de Leitner) trabaja con
 /// `DiaCivil` en lugar de con `Date`. Así los cambios de horario de verano y la medianoche
 /// no producen días de 23 o 25 horas, y la aritmética de días es exacta.
 /// El día se obtiene siempre con el calendario gregoriano y la zona horaria del usuario.

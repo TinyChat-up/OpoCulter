@@ -16,12 +16,10 @@ struct Intento: Codable, Sendable, Equatable, Identifiable {
     var motivo: ItemRonda.Motivo?
 }
 
-/// Datos globales del jugador: XP, racha, misiones del día y métricas de logros.
+/// Datos globales del jugador: XP, racha y métricas de logros.
 struct PerfilJugador: Codable, Sendable, Equatable {
     var xpTotal = 0
     var racha = EstadoRacha()
-    var misiones: [Mision] = []
-    var diaMisiones: DiaCivil?
     var metricas: [Metrica: Int] = [:]
     /// Competencia que se está trabajando en las rondas recomendadas.
     var competenciaEnCurso: String?

@@ -25,7 +25,6 @@ final class RondaViewModel: Identifiable {
         var subidas: [String]
         var racha: EstadoRacha
         var cambiosRacha: EstadoRacha.Cambios
-        var misionesCompletadas: [Mision]
         var logros: [Logro]
         /// Área con más ítems en la ronda (`LEN` o `MAT`): da color a "Otra ronda".
         var areaPredominante: String = "LEN"
@@ -77,7 +76,6 @@ final class RondaViewModel: Identifiable {
     private(set) var subidas: [String] = []
     private(set) var peldanosNuevos: [String: Int] = [:]
     private(set) var erroresDetectados: [ErrorTipico] = []
-    private(set) var misionesCompletadas: [Mision] = []
     private(set) var logros: [Logro] = []
     private(set) var resumen: Resumen?
     private(set) var mensajeError: String?
@@ -253,6 +251,8 @@ final class RondaViewModel: Identifiable {
         if var f = flujo {
             let primero = f.fase == .primerIntento
             let pista = Evaluador.feedback(para: r, item: item).first ?? item.pistas.first ?? "Revisa tu respuesta paso a paso."
+            // Rayos X (05H): una capa fallada y repetida cuenta como primer intento con pista.
+            if primero, case .rayosX(let rx) = respuesta, !rx.fallos.isEmpty { f.ayudas.insert(.pista) }
             f.comprobar(correcto: r.correcto, pista: pista)
             flujo = f
             if primero {
@@ -298,7 +298,6 @@ final class RondaViewModel: Identifiable {
             if e.subioPeldano, !subidas.contains(item.competencia) { subidas.append(item.competencia) }
             if e.subioPeldano, let p = e.peldanoNuevo { peldanosNuevos[item.competencia] = p }
             erroresDetectados += e.erroresDetectados
-            misionesCompletadas += e.misionesCompletadas
             logros += e.logrosNuevos
         } catch {
             mensajeError = "No se ha podido guardar la respuesta."
@@ -403,7 +402,6 @@ final class RondaViewModel: Identifiable {
         subidas = []
         peldanosNuevos = [:]
         erroresDetectados = []
-        misionesCompletadas = []
         logros = []
         resumen = nil
         reiniciarItem()
@@ -470,11 +468,10 @@ final class RondaViewModel: Identifiable {
         } catch {
             mensajeError = "No se ha podido guardar la ronda."
         }
-        misionesCompletadas += efectoRonda.misionesCompletadas
         logros += efectoRonda.logrosNuevos
         resumen = Resumen(aciertos: aciertos, total: items.count, xp: xpRonda, comboMaximo: combo.maximo,
                           subidas: subidas, racha: efectoRonda.racha, cambiosRacha: efectoRonda.cambiosRacha,
-                          misionesCompletadas: misionesCompletadas, logros: logros, areaPredominante: areaPredominante,
+                          logros: logros, areaPredominante: areaPredominante,
                           peldanosNuevos: peldanosNuevos, errores: (try? servicio.erroresDetectados(erroresDetectados)) ?? [],
                           esSesion: esSesion)
         fase = .resumen

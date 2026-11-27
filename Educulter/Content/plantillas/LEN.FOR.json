@@ -1,0 +1,191 @@
+[
+  {
+    "id": "LEN.FOR.CLAS.G01",
+    "competencia": "LEN.FOR.CLAS",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "clasificar",
+    "tipo": "formacion",
+    "enunciados": [
+      "Clasifica cada palabra según su formación."
+    ],
+    "objetivo": "Fábrica: primitivas, derivadas, compuestas y parasintéticas",
+    "parametros": {
+      "modo": "clasificar"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos de la dirección (ANEXO A, aprobado); se aprueba con los tests de propiedades (D-126)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.FOR.CLAS.G02",
+    "competencia": "LEN.FOR.CLAS",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "clasificar",
+    "tipo": "formacion",
+    "enunciados": [
+      "Clasifica cada palabra según su formación."
+    ],
+    "objetivo": "Fábrica: los cuatro tipos de palabras",
+    "parametros": {
+      "modo": "clasificar"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos de la dirección (ANEXO A, aprobado); se aprueba con los tests de propiedades (D-126)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.FOR.DER.G01",
+    "competencia": "LEN.FOR.DER",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "construir",
+    "tipo": "formacion",
+    "enunciados": [
+      "Forma con las piezas la palabra que significa «{{definicion}}»."
+    ],
+    "objetivo": "Fábrica: formar derivadas y parasintéticas",
+    "parametros": {
+      "modo": "construir",
+      "tipos": [
+        "derivada",
+        "parasintetica"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos de la dirección (ANEXO A, aprobado); se aprueba con los tests de propiedades (D-126)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.FOR.COMP.G01",
+    "competencia": "LEN.FOR.COMP",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "construir",
+    "tipo": "formacion",
+    "enunciados": [
+      "Forma con las piezas la palabra que significa «{{definicion}}»."
+    ],
+    "objetivo": "Fábrica: formar compuestas",
+    "parametros": {
+      "modo": "construir",
+      "tipos": [
+        "compuesta"
+      ]
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos de la dirección (ANEXO A, aprobado); se aprueba con los tests de propiedades (D-126)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.FOR.ESTR.G01",
+    "competencia": "LEN.FOR.ESTR",
+    "peldano": 3,
+    "dificultad": 4,
+    "mecanica": "segmentar",
+    "tipo": "formacion",
+    "enunciados": [
+      "Separa los morfemas: toca la primera y la última letra de cada parte y di qué es."
+    ],
+    "objetivo": "Fábrica: límites entre morfemas",
+    "parametros": {
+      "modo": "segmentar"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos de la dirección (ANEXO A, aprobado); se aprueba con los tests de propiedades (D-126)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.FOR.ESTR.G02",
+    "competencia": "LEN.FOR.ESTR",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "glosario",
+    "enunciados": [
+      "¿A qué término corresponde esta definición? «{{definicion}}»"
+    ],
+    "objetivo": "Glosario: formación de palabras",
+    "parametros": {
+      "grupo": "formación de palabras"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.FOR.ESTR.G03",
+    "competencia": "LEN.FOR.ESTR",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "emparejar",
+    "tipo": "glosario",
+    "enunciados": [
+      "Une cada término con su definición."
+    ],
+    "objetivo": "Glosario: formación de palabras",
+    "parametros": {
+      "grupo": "formación de palabras"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXO B, aprobado); se aprueba con los tests de propiedades (D-127)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  }
+]

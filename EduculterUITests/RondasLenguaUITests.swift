@@ -37,10 +37,11 @@ final class RondasLenguaUITests: CasoUI {
         var i = 0
         while !app.descendants(matching: .any)["resumenRonda"].exists && i < 12 {
             captura(app, String(format: "%@_%02d_pregunta", prefijo, i + 1))
-            let boton = app.buttons[i == 1 ? "botonRellenarErrorDebug" : "botonRellenarDebug"]
+            let id = i == 1 ? "botonRellenarErrorDebug" : "botonRellenarDebug"
+            let boton = app.buttons[id]
             XCTAssertTrue(boton.waitForExistence(timeout: 15))
             boton.tap()
-            app.buttons["botonComprobar"].tap()
+            comprobar(app, rellenar: id)
             XCTAssertTrue(app.buttons["botonContinuar"].waitForExistence(timeout: 10))
             captura(app, String(format: "%@_%02d_corregida", prefijo, i + 1))
             app.buttons["botonContinuar"].tap()

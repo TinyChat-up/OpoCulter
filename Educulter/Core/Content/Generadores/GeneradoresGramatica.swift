@@ -173,7 +173,7 @@ enum Conjugador {
 /// | 6 | S + V + CD (+ CI) + 2 CC |
 struct GeneradorOracionSimple: GeneradorItems {
     let tipo = "oracionSimple"
-    let mecanicas: Set<Mecanica> = [.segmentar, .clasificar, .eleccion, .marcarTexto]
+    let mecanicas: Set<Mecanica> = [.clasificar, .eleccion, .rayosX]
     let marcadores: Set<String> = ["oracion", "sintagma", "forma", "otraForma", "contexto"]
 
     static let nombres: [String: String] = [
@@ -266,13 +266,12 @@ struct GeneradorOracionSimple: GeneradorItems {
                        verbo: v.infinitivo, regimen: v.regimen, atributo: atributo)
     }
 
-    /// Modo de la plantilla (`parametros.modo`): `sujeto` (marcarTexto), `sujetoPredicado` o
-    /// `completo` (segmentar), `clases` o `funciones` (clasificar), `funcion`, `clase`,
-    /// `concordancia` o `pronombre` (eleccion).
+    /// Modo de la plantilla (`parametros.modo`): `sujetoPredicado` (Rayos X en 3 capas) o `completo`
+    /// (4 capas), `clases` o `funciones` (clasificar), `funcion`, `clase`, `concordancia` o
+    /// `pronombre` (eleccion).
     static func modo(_ p: Plantilla) -> String {
         let porDefecto: String = switch p.mecanica {
-        case .marcarTexto: "sujeto"
-        case .segmentar: "completo"
+        case .rayosX: "completo"
         case .clasificar: "clases"
         default: "funcion"
         }
@@ -328,18 +327,26 @@ struct GeneradorOracionSimple: GeneradorItems {
     /// el sujeto, que cambia con él; el resto, el predicado; «¿qué?» y «¿a quién?» para el CD y el CI
     /// (o el atributo en las copulativas); y, al final, la respuesta en la mecánica de la plantilla.
     static func pasos(_ m: Muestra) -> [PasoResuelto] {
-        let palabras = (m.datos["tokens"] ?? "").split(separator: " ").map { String($0.split(separator: "/").first ?? "") }
-        let funciones = (m.datos["funciones"] ?? "").split(separator: ";").compactMap { f -> (String, Int, Int)? in
+        // Rayos X con el sujeto omitido: la oración que se ve (sin el sujeto).
+        let palabras = (m.datos["tokensVistos"] ?? m.datos["tokens"] ?? "").split(separator: " ").map { String($0.split(separator: "/").first ?? "") }
+        let funciones = (m.datos["funcionesVistas"] ?? m.datos["funciones"] ?? "").split(separator: ";").compactMap { f -> (String, Int, Int)? in
             let partes = f.split(separator: ":"), r = partes.last?.split(separator: "-").compactMap { Int($0) } ?? []
             guard partes.count == 2, r.count == 2, r[0] <= r[1], r[1] < palabras.count else { return nil }
             return (String(partes[0]), r[0], r[1])
         }
         func texto(_ f: String) -> String? { funciones.first { $0.0 == f }.map { "«" + palabras[$0.1...$0.2].joined(separator: " ") + "»" } }
-        guard let verbo = texto("NV"), let sujeto = texto("SUJ") else { return [] }
+        guard let verbo = texto("NV") else { return [] }
         let copulativa = m.datos["regimen"] == "copulativo"
-        var r = [Pasos.dato("Busca el verbo", verbo, porque: "porque el verbo es el núcleo del predicado"),
-                 Pasos.dato("Cambia el número del verbo: lo que cambia es el sujeto", "Sujeto: \(sujeto)",
-                            porque: "porque el sujeto concuerda con el verbo en número y persona")]
+        var r = [Pasos.dato("Busca el verbo", verbo, porque: "porque el verbo es el núcleo del predicado")]
+        if let sujeto = texto("SUJ") {
+            r.append(Pasos.dato("Cambia el número del verbo: lo que cambia es el sujeto", "Sujeto: \(sujeto)",
+                                porque: "porque el sujeto concuerda con el verbo en número y persona"))
+        } else if let omitido = m.datos["omitido"], !omitido.isEmpty {
+            r.append(Pasos.dato("Ninguna palabra cambia con el verbo: sujeto omitido", "Sujeto omitido: \(omitido)",
+                                porque: "porque la terminación del verbo indica la persona"))
+        } else {
+            return []
+        }
         if let pred = texto("PRED") { r.append(Pasos.dato("Todo lo demás es el predicado", "Predicado \(copulativa ? "nominal" : "verbal"): \(pred)")) }
         if copulativa, let atr = texto("ATR") {
             r.append(Pasos.dato("Busca lo que se dice del sujeto", "Atributo: \(atr)"))
@@ -360,7 +367,7 @@ struct GeneradorOracionSimple: GeneradorItems {
             let nivel = Self.nivelEstructural(p.dificultad, modo: modo, rng: &rng)
             if !recursos.compatibilidad.vacia {
                 guard let (oracion, datos) = construirCompatible(nivel, recursos.compatibilidad, piezas: recursos.gramatica, verbos: recursos.verbos,
-                                                                 permitirDesorden: p.mecanica != .segmentar, rng: &rng) else { continue }
+                                                                 permitirDesorden: p.mecanica != .segmentar && p.mecanica != .rayosX, rng: &rng) else { continue }
                 o = oracion
                 concordancia = datos
             } else {
@@ -369,9 +376,6 @@ struct GeneradorOracionSimple: GeneradorItems {
             }
             let copulativa = o.regimen == "copulativo"
             let ids = o.tokens.indices.map { "t\($0 + 1)" }
-            /// Texto de un token tal como se ve (con la coma del CC antepuesto).
-            func visto(_ i: Int) -> String { i == o.comaTras ? o.tokens[i].0 + "," : o.tokens[i].0 }
-            let elementos = o.tokens.indices.map { ElementoTexto(id: ids[$0], texto: visto($0)) }
             func texto(_ c: (String, Int, Int)) -> String { o.tokens[c.1...c.2].map(\.0).joined(separator: " ") }
             let suj = o.constituyentes.first { $0.0 == "SUJ" }!
             let nv = o.constituyentes.first { $0.0 == "NV" }!
@@ -401,28 +405,11 @@ struct GeneradorOracionSimple: GeneradorItems {
             }
             let pistaConcordancia = "El sujeto concuerda con el verbo: cambia el número del verbo y mira qué cambia."
             switch p.mecanica {
-            case .marcarTexto:
-                let correctos = Array(ids[suj.1...suj.2])
-                return Muestra(clave: "marcar|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""],
-                               payload: .marcarTexto(Payload.MarcarTexto(unidad: .palabra, tokens: elementos, correctos: correctos)),
-                               explicacion: explicacion, pistas: [pistaConcordancia], complejidad: complejidad, datos: datos)
-            case .segmentar:
-                guard let pred = o.constituyentes.first(where: { $0.0 == "PRED" }) else { continue }
-                var segmentos: [Payload.Segmentar.Segmento] = []
-                segmentos.append(.init(id: "s1", desde: ids[suj.1], hasta: ids[suj.2], etiqueta: "SUJ", padre: nil))
-                segmentos.append(.init(id: "s2", desde: ids[pred.1], hasta: ids[pred.2], etiqueta: "PRED", padre: nil))
-                if modo != "sujetoPredicado" {
-                    for c in o.constituyentes where c.0 != "SUJ" && c.0 != "PRED" {
-                        segmentos.append(.init(id: "s\(segmentos.count + 1)", desde: ids[c.1], hasta: ids[c.2], etiqueta: c.0, padre: "s2"))
-                    }
-                }
-                let usadas = Set(segmentos.map(\.etiqueta))
-                let etiquetas = ["SUJ", "PRED", "NV", "CD", "CI", "ATR", "CCL", "CCT", "CCM", "CCC"].filter(usadas.contains)
-                    .map { ElementoNombre(id: $0, nombre: Self.nombre($0, copulativa: copulativa)) }
-                return Muestra(clave: "segmentar|\(modo)|\(o.texto)", valores: ["oracion": o.texto, "sintagma": ""],
-                               payload: .segmentar(Payload.Segmentar(tokens: elementos, etiquetas: etiquetas, segmentos: segmentos)),
-                               explicacion: explicacion, pistas: [pistaConcordancia, "Busca primero el verbo y pregúntale «¿quién?» para encontrar el sujeto."],
-                               complejidad: complejidad, datos: datos)
+            // Desde la 05H, marcar el sujeto y segmentar la oración son capas de Rayos X (D-124).
+            case .rayosX:
+                guard let m = Self.rayosX(o, p: p, modo: modo, concordancia: concordancia, explicacion: explicacion, datos: datos,
+                                          complejidad: complejidad, recursos: recursos, rng: &rng) else { continue }
+                return m
             case .clasificar where modo == "funciones":
                 // Fichas = grupos (y el verbo); categorías = sus funciones (2–4: si hay más, se eligen 4).
                 let conVerbo = grupos + [nv]
@@ -524,6 +511,109 @@ struct GeneradorOracionSimple: GeneradorItems {
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {
         enumerarPorSemillas(self, p, recursos: recursos, limite: limite)
+    }
+
+    // MARK: Rayos X (05H, D-124)
+
+    static let personas = ["yo", "tú", "él / ella", "nosotros / nosotras", "vosotros / vosotras", "ellos / ellas"]
+    static let guiasRayosX = [
+        "capa1": "¿Qué palabra cambia si cuentas lo mismo ayer o mañana?",
+        "capa2": "¿Qué palabras cambian si pongo el verbo en plural (o en singular)?",
+        "capa4": "Pregunta al verbo: ¿qué?, ¿a quién?, ¿dónde?, ¿cuándo?, ¿cómo?, ¿con quién?",
+    ]
+    static let explicacionesRayosX = [
+        "verbo": "El verbo es la palabra que cambia si cuentas lo mismo ayer o mañana: expresa la acción o el estado.",
+        "sujeto": "El sujeto concuerda con el verbo: si el verbo pasa a plural (o a singular), el sujeto cambia con él.",
+        "noOmitido": "El sujeto concuerda con el verbo y aquí hay palabras que lo hacen: el sujeto no está omitido.",
+        "sujetoOmitido": "El sujeto concuerda con el verbo, pero aquí ninguna palabra lo hace: el sujeto está omitido.",
+        "omitido": "El sujeto concuerda con el verbo: su terminación indica la persona del sujeto omitido.",
+    ]
+
+    /// Rayos X por capas a partir de la oración. Con dificultad ≥ 3, una de cada tres oraciones lleva el
+    /// sujeto omitido: se quita y el verbo pasa a 1.ª o 2.ª persona (yo, tú, nosotros, vosotros), solo
+    /// si esa forma no coincide con ninguna otra del tiempo (en el imperfecto, «parecía» es yo y él) y,
+    /// en las copulativas, con el mismo número que el sujeto (el atributo concuerda con él).
+    static func rayosX(_ o: Oracion, p: Plantilla, modo: String, concordancia: Concordancia?, explicacion: String, datos: [String: String],
+                       complejidad: Double, recursos: RecursosGeneradores, rng: inout GeneradorConSemilla) -> Muestra? {
+        let capas = modo == "sujetoPredicado" ? 3 : 4
+        let copulativa = o.regimen == "copulativo"
+        guard let suj = o.constituyentes.first(where: { $0.0 == "SUJ" }), let nv = o.constituyentes.first(where: { $0.0 == "NV" }),
+              nv.1 == nv.2, o.comaTras == nil else { return nil }
+        var textos = o.tokens.map(\.0)
+        var quitar = Set<Int>()
+        var omitido: String?
+        if p.dificultad >= 3, let c = concordancia, rng.probabilidad(1.0 / 3),
+           let formas = Conjugador.formas(o.verbo, tiempo: c.tiempo, modo: Conjugador.indicativo, irregulares: recursos.verbos.irregulares) {
+            let numero = copulativa ? (o.sujetoNumero == "p" ? [3, 4] : [0, 1]) : [0, 1, 3, 4]
+            let validas = numero.filter { p in formas.filter { $0 == formas[p] }.count == 1 }
+            guard !validas.isEmpty else { return nil }
+            let persona = rng.elemento(validas)
+            omitido = personas[persona]
+            quitar = Set(suj.1...suj.2)
+            textos[nv.1] = formas[persona]
+        }
+        let quedan = textos.indices.filter { !quitar.contains($0) }
+        guard let primero = quedan.first else { return nil }
+        // Mayúscula solo al principio: la primera palabra original (el sujeto) se quita al omitirlo.
+        if omitido != nil { textos[primero] = textos[primero].prefix(1).uppercased() + textos[primero].dropFirst() }
+        var idDe: [Int: String] = [:]
+        for (k, i) in quedan.enumerated() { idDe[i] = "t\(k + 1)" }
+        let tokens = quedan.map { ElementoTexto(id: idDe[$0]!, texto: textos[$0] + ($0 == quedan.last ? "." : "")) }
+        func ids(_ c: (String, Int, Int)) -> [String] { (c.1...c.2).compactMap { idDe[$0] } }
+        let gruposC = o.constituyentes.filter { !["SUJ", "NV", "PRED"].contains($0.0) }
+        let grupos = gruposC.enumerated().map { Payload.RayosX.Grupo(id: "g\($0.offset + 1)", tokens: ids($0.element), funcion: $0.element.0) }
+        // Bandejas: las funciones de la oración y hasta dos más.
+        let presentes = Set(grupos.map(\.funcion))
+        let extra = rng.barajar(["CD", "CI", "CCL", "CCT", "CCM", "ATR"].filter { !presentes.contains($0) }).prefix(2)
+        let orden = ["CD", "CI", "ATR", "CCL", "CCT", "CCM", "CCC"]
+        let funciones = orden.filter { presentes.contains($0) || extra.contains($0) }.map { ElementoNombre(id: $0, nombre: nombres[$0]!) }
+        // Esquema final (formato del examen): sujeto y predicado, núcleo y funciones.
+        var segmentos: [Payload.Segmentar.Segmento] = []
+        if omitido == nil, let a = ids(suj).first, let b = ids(suj).last {
+            segmentos.append(.init(id: "s1", desde: a, hasta: b, etiqueta: "SUJ", padre: nil))
+        }
+        let pred = (grupos.flatMap(\.tokens) + [idDe[nv.1]!]).sorted { Int($0.dropFirst())! < Int($1.dropFirst())! }
+        segmentos.append(.init(id: "s\(segmentos.count + 1)", desde: pred.first!, hasta: pred.last!, etiqueta: "PRED", padre: nil))
+        let padre = segmentos.last!.id
+        segmentos.append(.init(id: "s\(segmentos.count + 1)", desde: idDe[nv.1]!, hasta: idDe[nv.1]!, etiqueta: "NV", padre: padre))
+        if capas >= 4 {
+            for g in grupos { segmentos.append(.init(id: "s\(segmentos.count + 1)", desde: g.tokens.first!, hasta: g.tokens.last!, etiqueta: g.funcion, padre: padre)) }
+        }
+        let usadas = Set(segmentos.map(\.etiqueta))
+        let etiquetas = ["SUJ", "PRED", "NV", "CD", "CI", "ATR", "CCL", "CCT", "CCM", "CCC"].filter(usadas.contains)
+            .map { ElementoNombre(id: $0, nombre: nombre($0, copulativa: copulativa)) }
+        let peldano = p.peldano
+        let payload = Payload.RayosX(tokens: tokens, verbo: [idDe[nv.1]!], sujeto: omitido == nil ? ids(suj) : [], omitido: omitido,
+                                     personas: personas, grupos: grupos,
+                                     funciones: capas >= 4 ? funciones : [], capas: capas,
+                                     colores: peldano <= 3, preguntas: peldano <= 2, porCapas: peldano <= 3,
+                                     predicado: copulativa ? "Predicado nominal" : "Predicado verbal",
+                                     guias: guiasRayosX, explicaciones: explicacionesRayosX.merging(definiciones) { a, _ in a },
+                                     esquema: Payload.Segmentar(tokens: tokens, etiquetas: etiquetas, segmentos: segmentos))
+        let texto = tokens.map(\.texto).joined(separator: " ")
+        var expl = explicacion
+        if let omitido {
+            expl = "Sujeto omitido (\(omitido)): lo indica la terminación de «\(textos[nv.1])». " + (copulativa ? "Predicado nominal." : "Predicado verbal.")
+            let resto = gruposC.map { "\(nombres[$0.0]!): «\(($0.1...$0.2).map { textos[$0] }.joined(separator: " "))»" }
+            if capas >= 4, !resto.isEmpty { expl += " " + resto.joined(separator: "; ") + "." }
+        }
+        var errores = ["verbo", "sujeto", "noOmitido", "sujetoOmitido", "omitido"].map { ErrorHabitual(respuesta: $0, feedback: explicacionesRayosX[$0]!) }
+        if capas >= 4 { errores += grupos.map { ErrorHabitual(respuesta: "grupo_\($0.id)", feedback: definiciones[$0.funcion] ?? guiasRayosX["capa4"]!) } }
+        var d = datos
+        d["omitido"] = omitido ?? ""
+        d["texto"] = texto
+        if omitido != nil {
+            // Datos de los pasos con la oración que se ve (sin el sujeto).
+            let pos = Dictionary(uniqueKeysWithValues: quedan.enumerated().map { ($1, $0) })
+            d["tokensVistos"] = quedan.map { "\(textos[$0])/\(o.tokens[$0].1)" }.joined(separator: " ")
+            d["funcionesVistas"] = o.constituyentes.filter { $0.0 != "SUJ" }.compactMap { c -> String? in
+                guard let a = pos[c.1], let b = pos[c.2] else { return nil }
+                return "\(c.0):\(a)-\(b)"
+            }.joined(separator: ";")
+        }
+        return Muestra(clave: "rayosX|\(capas)|\(texto)", valores: ["oracion": texto, "sintagma": ""], payload: .rayosX(payload),
+                       explicacion: expl, erroresHabituales: errores, pistas: [],
+                       complejidad: complejidad + (omitido != nil ? 1.5 : 0) + Double(capas - 3), datos: d, juego: "RayosX")
     }
 }
 
@@ -748,14 +838,14 @@ struct GeneradorFraseHueco: GeneradorItems {
                                                                  huecos: [.init(id: "h1", correcta: idCorrecta)], piezas: piezas)),
                            explicacion: explicacion,
                            erroresHabituales: [ErrorHabitual(respuesta: "h1", feedback: formas.filter { $0.texto != f.correcta }.map { "«\($0.texto)»: \($0.uso)" }.joined(separator: " "))],
-                           complejidad: Double(f.dificultad) + Double(formas.count) * 0.2, datos: ["frase": f.id, "correcta": f.correcta])
+                           complejidad: Double(f.dificultad) + Double(formas.count) * 0.2, datos: ["frase": f.id, "correcta": f.correcta], origen: f.id)
         }
         let (e, errores) = Opciones.eleccion(correcta: f.correcta,
                                              distractores: formas.filter { $0.texto != f.correcta }.map { ($0.texto, "«\($0.texto)» es \($0.uso). Aquí va «\(f.correcta)».") },
                                              maximo: 4, rng: &rng)
         return Muestra(clave: "\(f.id)|eleccion", valores: ["frase": mostrada], payload: .eleccion(e), explicacion: explicacion,
                        erroresHabituales: errores, complejidad: Double(f.dificultad) + Double(formas.count) * 0.2,
-                       datos: ["frase": f.id, "correcta": f.correcta])
+                       datos: ["frase": f.id, "correcta": f.correcta], origen: f.id)
     }
 
     func enumerar(_ p: Plantilla, recursos: RecursosGeneradores, limite: Int) -> [String] {

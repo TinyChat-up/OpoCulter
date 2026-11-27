@@ -11,15 +11,19 @@
       "opciones": [
         {
           "id": "o1",
-          "texto": "La organización de las abejas y su importancia para la naturaleza"
+          "texto": "La importancia de las abejas para las plantas y los alimentos"
         },
         {
           "id": "o2",
-          "texto": "Cómo se fabrica la miel"
+          "texto": "La fabricación de la miel y de la cera dentro de la colmena"
         },
         {
           "id": "o3",
-          "texto": "Los peligros de las picaduras"
+          "texto": "Las tareas que realizan la reina y los zánganos en la colmena"
+        },
+        {
+          "id": "o4",
+          "texto": "Los peligros de las picaduras de abeja para las personas"
         }
       ],
       "correcta": "o1"
@@ -31,7 +35,7 @@
     "erroresHabituales": [
       {
         "respuesta": "o2",
-        "feedback": "La miel se menciona, pero es un detalle: el texto habla de la colmena y de la polinización."
+        "feedback": "La miel y la cera se mencionan, pero es un detalle: el texto habla de la colmena y de la polinización."
       }
     ],
     "referencia": {
@@ -54,7 +58,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1,
+    "version": 2,
     "textoRef": "TXT.ORI.ABEJAS"
   },
   {
@@ -73,11 +77,15 @@
         },
         {
           "id": "o2",
-          "texto": "La belleza de los ojos azules"
+          "texto": "La belleza de unos ojos azules que miran al poeta"
         },
         {
           "id": "o3",
-          "texto": "El oficio de escribir"
+          "texto": "Una discusión entre dos poetas sobre su oficio"
+        },
+        {
+          "id": "o4",
+          "texto": "El paso del tiempo en una relación amorosa"
         }
       ],
       "correcta": "o1"
@@ -107,7 +115,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1,
+    "version": 2,
     "textoRef": "TXT.BEC.R21"
   },
   {
@@ -122,15 +130,19 @@
       "opciones": [
         {
           "id": "o1",
-          "texto": "La vida como un camino que cada uno construye con sus actos"
+          "texto": "La vida como camino que se hace al vivir"
         },
         {
           "id": "o2",
-          "texto": "Un viaje por el mar"
+          "texto": "Un viaje en barco por el mar y sus estelas"
         },
         {
           "id": "o3",
-          "texto": "La nostalgia de la infancia"
+          "texto": "La nostalgia de los caminos de la infancia perdida"
+        },
+        {
+          "id": "o4",
+          "texto": "La dificultad de orientarse en un sendero"
         }
       ],
       "correcta": "o1"
@@ -163,7 +175,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1,
+    "version": 2,
     "textoRef": "TXT.MAC.CAM"
   },
   {
@@ -178,15 +190,19 @@
       "opciones": [
         {
           "id": "o1",
-          "texto": "Los alumnos de Primaria no deberían tener deberes en vacaciones"
+          "texto": "Los niños de Primaria no deberían tener deberes en vacaciones"
         },
         {
           "id": "o2",
-          "texto": "Los deberes ayudan a no olvidar"
+          "texto": "Los repasos durante las vacaciones ayudan a no olvidar lo aprendido"
         },
         {
           "id": "o3",
-          "texto": "Hay que leer por placer"
+          "texto": "En vacaciones conviene leer por placer y jugar al aire libre"
+        },
+        {
+          "id": "o4",
+          "texto": "Los deberes en vacaciones deben ser lecturas obligatorias"
         }
       ],
       "correcta": "o1"
@@ -217,7 +233,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 1,
+    "version": 2,
     "textoRef": "TXT.ORI.DEBERES"
   },
   {
@@ -546,11 +562,15 @@
         },
         {
           "id": "o2",
-          "texto": "en el mar no se puede navegar"
+          "texto": "el mar es un lugar peligroso para los caminantes que viajan"
         },
         {
           "id": "o3",
-          "texto": "hay que viajar en barco"
+          "texto": "solo quien navega conoce el verdadero camino de la vida"
+        },
+        {
+          "id": "o4",
+          "texto": "los caminos de tierra son mejores que las rutas del mar"
         }
       ],
       "correcta": "o1"
@@ -578,7 +598,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 2,
+    "version": 3,
     "textoRef": "TXT.MAC.CAM"
   },
   {
@@ -593,11 +613,11 @@
       "opciones": [
         {
           "id": "o1",
-          "texto": "«En cada colmena hay una reina, que pone los huevos.»"
+          "texto": "«En cada colmena hay una reina, que pone los huevos; miles de obreras, que recogen néctar, fabrican la cera y cuidan de las crías; y los zánganos, cuya función es fecundar a la reina.»"
         },
         {
           "id": "o2",
-          "texto": "«Además de producir miel, las abejas cumplen una tarea esencial.»"
+          "texto": "«Las abejas son insectos sociales que viven en colmenas organizadas.»"
         },
         {
           "id": "o3",
@@ -627,7 +647,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     },
-    "version": 2,
+    "version": 3,
     "textoRef": "TXT.ORI.ABEJAS"
   },
   {
@@ -1322,6 +1342,7 @@
       "revisor": "direccion",
       "fecha": "2026-11-26"
     },
-    "version": 1
+    "version": 1,
+    "origen": "LEN.COM.INFER.0003"
   }
 ]

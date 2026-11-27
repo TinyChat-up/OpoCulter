@@ -12,6 +12,8 @@ private var frases: BancoFrases { bancoFrases.recursos.frases }
 
 /// Texto de la frase de un ítem: en `eleccion` va en el enunciado; en `construir`, en la plantilla.
 private func fraseDe(_ item: Item) -> String {
+    // Desde la 05H, el hueco y el Editor declaran la frase del banco de la que salen.
+    if let origen = item.origen { return origen }
     if case .construir(let c) = item.payload { return c.plantilla }
     return item.enunciado
 }

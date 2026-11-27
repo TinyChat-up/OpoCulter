@@ -1,0 +1,135 @@
+{
+  "version": 1,
+  "validacion": {
+    "estado": "aprobado",
+    "revisor": "direccion",
+    "fecha": "2026-11-27"
+  },
+  "procedencia": {
+    "tipo": "original",
+    "licencia": "propia",
+    "notas": "Fase 05H: datos y ejemplos originales de la dirección (ANEXOS A y B)."
+  },
+  "terminos": [
+    {
+      "termino": "sustantivo",
+      "grupo": "clases de palabras",
+      "definicion": "palabra variable que nombra personas, animales, cosas, lugares o ideas"
+    },
+    {
+      "termino": "adjetivo",
+      "grupo": "clases de palabras",
+      "definicion": "palabra variable que expresa cualidades o estados del sustantivo y concuerda con él"
+    },
+    {
+      "termino": "determinante",
+      "grupo": "clases de palabras",
+      "definicion": "palabra que acompaña al sustantivo y concreta su significado (artículos, posesivos, demostrativos…)"
+    },
+    {
+      "termino": "pronombre",
+      "grupo": "clases de palabras",
+      "definicion": "palabra que sustituye al sustantivo o se refiere a personas o cosas sin nombrarlas"
+    },
+    {
+      "termino": "verbo",
+      "grupo": "clases de palabras",
+      "definicion": "palabra que expresa acciones, estados o procesos y varía en persona, número, tiempo y modo"
+    },
+    {
+      "termino": "adverbio",
+      "grupo": "clases de palabras",
+      "definicion": "palabra invariable que modifica al verbo, al adjetivo o a otro adverbio (lugar, tiempo, modo, cantidad…)"
+    },
+    {
+      "termino": "preposición",
+      "grupo": "clases de palabras",
+      "definicion": "palabra invariable que introduce un complemento y lo une a otra palabra (a, ante, bajo, con, de…)"
+    },
+    {
+      "termino": "conjunción",
+      "grupo": "clases de palabras",
+      "definicion": "palabra invariable que une palabras, grupos u oraciones (y, ni, o, pero, porque, que…)"
+    },
+    {
+      "termino": "interjección",
+      "grupo": "clases de palabras",
+      "definicion": "palabra invariable que expresa emociones o llama la atención (¡ay!, ¡oh!, ¡eh!)"
+    },
+    {
+      "termino": "sinónimos",
+      "grupo": "relaciones de significado",
+      "definicion": "palabras con significado igual o muy parecido"
+    },
+    {
+      "termino": "antónimos",
+      "grupo": "relaciones de significado",
+      "definicion": "palabras con significado opuesto"
+    },
+    {
+      "termino": "polisemia",
+      "grupo": "relaciones de significado",
+      "definicion": "propiedad de una palabra que tiene varios significados relacionados"
+    },
+    {
+      "termino": "homonimia",
+      "grupo": "relaciones de significado",
+      "definicion": "coincidencia en la forma de palabras de significados y orígenes distintos"
+    },
+    {
+      "termino": "hiperónimo",
+      "grupo": "relaciones de significado",
+      "definicion": "palabra de significado general que incluye a otras (flor respecto de rosa)"
+    },
+    {
+      "termino": "hipónimo",
+      "grupo": "relaciones de significado",
+      "definicion": "palabra de significado concreto incluida en otra más general (rosa respecto de flor)"
+    },
+    {
+      "termino": "campo semántico",
+      "grupo": "relaciones de significado",
+      "definicion": "conjunto de palabras de la misma categoría que comparten un rasgo de significado"
+    },
+    {
+      "termino": "familia léxica",
+      "grupo": "formación de palabras",
+      "definicion": "conjunto de palabras que comparten el mismo lexema"
+    },
+    {
+      "termino": "lexema",
+      "grupo": "formación de palabras",
+      "definicion": "parte de la palabra que aporta el significado principal"
+    },
+    {
+      "termino": "morfema",
+      "grupo": "formación de palabras",
+      "definicion": "parte de la palabra que aporta información gramatical o forma palabras nuevas"
+    },
+    {
+      "termino": "diptongo",
+      "grupo": "sílabas y acentuación",
+      "definicion": "dos vocales seguidas pronunciadas en la misma sílaba"
+    },
+    {
+      "termino": "hiato",
+      "grupo": "sílabas y acentuación",
+      "definicion": "dos vocales seguidas pronunciadas en sílabas distintas"
+    },
+    {
+      "termino": "palabra aguda",
+      "grupo": "sílabas y acentuación",
+      "definicion": "palabra con el acento en la última sílaba"
+    },
+    {
+      "termino": "palabra llana",
+      "grupo": "sílabas y acentuación",
+      "definicion": "palabra con el acento en la penúltima sílaba"
+    },
+    {
+      "termino": "palabra esdrújula",
+      "grupo": "sílabas y acentuación",
+      "definicion": "palabra con el acento en la antepenúltima sílaba"
+    }
+  ]
+}

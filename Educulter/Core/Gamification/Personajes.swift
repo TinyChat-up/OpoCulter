@@ -3,7 +3,8 @@ import Foundation
 /// Personajes (05E parte 2, D-105), creados por el propietario y redibujados por la dirección, con la
 /// paleta editorial (D-109): «Tilde» (salvia, con lupa) es el de Lengua; «Cuarto» (bosque, que
 /// guiña), el de Matemáticas; «Mimo» (menta, con corazón), el de la bienvenida y el ánimo. Solo
-/// aparecen en la bienvenida, en el resumen y en el ánimo tras un error repetido.
+/// aparecen en la bienvenida, en el resumen, en el ánimo tras un error repetido y en Hoy con el modo
+/// descanso activo (05H).
 enum Companero: String, Sendable, CaseIterable {
     case tilde
     case cuarto
@@ -51,7 +52,8 @@ enum EventoPersonaje: Sendable, Equatable {
     case errorRepetido
     case record
     case logro
-    case modoDescanso
+    /// Hoy con el modo descanso activo (05H): el personaje del área, descansando.
+    case modoDescanso(area: String?)
     case bienvenida
     case primerDia
 }
@@ -74,7 +76,7 @@ enum ReglasPersonaje {
         case .pistaAbierta(let area): AparicionPersonaje(companero: .de(area: area), estado: .pensando)
         case .errorRepetido: AparicionPersonaje(companero: .mimo, estado: .animo)
         case .record, .logro: AparicionPersonaje(companero: .cuarto, estado: .guino)
-        case .modoDescanso: AparicionPersonaje(companero: .mimo, estado: .descanso)
+        case .modoDescanso(let area): AparicionPersonaje(companero: area.map(Companero.de(area:)) ?? .mimo, estado: .descanso)
         case .bienvenida, .primerDia: AparicionPersonaje(companero: .mimo, estado: .neutro)
         }
     }
