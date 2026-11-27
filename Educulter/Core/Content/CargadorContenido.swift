@@ -130,7 +130,9 @@ struct CargadorContenido: Sendable {
             compatibilidad: try opcional("gramatica/compatibilidad.json") ?? CompatibilidadGramatica(),
             ambiguas: try opcional("ambiguas.json") ?? PalabrasAmbiguas(),
             literatura: try opcional("literatura/literatura.json"),
-            errores: try opcional("errores.json") ?? CatalogoErrores()
+            errores: try opcional("errores.json") ?? CatalogoErrores(),
+            resumen: try opcional("resumen.json"),
+            textosBase: try archivosJSON(en: "textos").flatMap { try decodificar($0) as [TextoBase] }
         )
     }
 

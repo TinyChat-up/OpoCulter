@@ -97,5 +97,436 @@
       "fecha": ""
     },
     "version": 1
+  },
+  {
+    "id": "MAT.GEO.AREA.0001",
+    "competencia": "MAT.GEO.AREA",
+    "peldano": 4,
+    "dificultad": 4,
+    "objetivo": "Calcular el área de una figura con un hueco (práctica de Tribunal).",
+    "mecanica": "figuraArea",
+    "enunciado": "Un marco de fotos tiene esta forma: la parte blanca es el hueco. Calcula el área del marco.",
+    "payload": {
+      "region": [
+        {
+          "id": "R",
+          "forma": {
+            "poligono": {
+              "_0": [
+                {
+                  "x": 0.0,
+                  "y": 0.0
+                },
+                {
+                  "x": 10.0,
+                  "y": 0.0
+                },
+                {
+                  "x": 10.0,
+                  "y": 6.0
+                },
+                {
+                  "x": 0.0,
+                  "y": 6.0
+                }
+              ]
+            }
+          },
+          "signo": 1,
+          "area": "60",
+          "calculo": ""
+        },
+        {
+          "id": "H",
+          "forma": {
+            "poligono": {
+              "_0": [
+                {
+                  "x": 3.0,
+                  "y": 2.0
+                },
+                {
+                  "x": 7.0,
+                  "y": 2.0
+                },
+                {
+                  "x": 7.0,
+                  "y": 4.0
+                },
+                {
+                  "x": 3.0,
+                  "y": 4.0
+                }
+              ]
+            }
+          },
+          "signo": -1,
+          "area": "8",
+          "calculo": ""
+        }
+      ],
+      "ancho": 10.0,
+      "alto": 6.0,
+      "paso": 1.0,
+      "rotulos": [
+        {
+          "a": {
+            "x": 0.0,
+            "y": 6.0
+          },
+          "b": {
+            "x": 10.0,
+            "y": 6.0
+          },
+          "texto": "10 cm"
+        },
+        {
+          "a": {
+            "x": 0.0,
+            "y": 0.0
+          },
+          "b": {
+            "x": 0.0,
+            "y": 6.0
+          },
+          "texto": "6 cm"
+        },
+        {
+          "a": {
+            "x": 3.0,
+            "y": 4.0
+          },
+          "b": {
+            "x": 7.0,
+            "y": 4.0
+          },
+          "texto": "4 cm"
+        },
+        {
+          "a": {
+            "x": 7.0,
+            "y": 2.0
+          },
+          "b": {
+            "x": 7.0,
+            "y": 4.0
+          },
+          "texto": "2 cm"
+        },
+        {
+          "a": {
+            "x": 0.0,
+            "y": 3.0
+          },
+          "b": {
+            "x": 3.0,
+            "y": 3.0
+          },
+          "texto": "3 cm"
+        },
+        {
+          "a": {
+            "x": 5.0,
+            "y": 0.0
+          },
+          "b": {
+            "x": 5.0,
+            "y": 2.0
+          },
+          "texto": "2 cm"
+        }
+      ],
+      "cortes": [
+        {
+          "id": "s1",
+          "a": {
+            "x": 0.0,
+            "y": 2.0
+          },
+          "b": {
+            "x": 3.0,
+            "y": 2.0
+          }
+        },
+        {
+          "id": "s2",
+          "a": {
+            "x": 7.0,
+            "y": 2.0
+          },
+          "b": {
+            "x": 10.0,
+            "y": 2.0
+          }
+        },
+        {
+          "id": "s3",
+          "a": {
+            "x": 0.0,
+            "y": 4.0
+          },
+          "b": {
+            "x": 3.0,
+            "y": 4.0
+          }
+        },
+        {
+          "id": "s4",
+          "a": {
+            "x": 7.0,
+            "y": 4.0
+          },
+          "b": {
+            "x": 10.0,
+            "y": 4.0
+          }
+        }
+      ],
+      "descomposiciones": [
+        {
+          "id": "restar",
+          "estrategia": "restar",
+          "cortes": [],
+          "partes": [
+            {
+              "id": "A",
+              "forma": {
+                "poligono": {
+                  "_0": [
+                    {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    {
+                      "x": 10.0,
+                      "y": 0.0
+                    },
+                    {
+                      "x": 10.0,
+                      "y": 6.0
+                    },
+                    {
+                      "x": 0.0,
+                      "y": 6.0
+                    }
+                  ]
+                }
+              },
+              "signo": 1,
+              "area": "60",
+              "calculo": "10 × 6 = 60"
+            },
+            {
+              "id": "B",
+              "forma": {
+                "poligono": {
+                  "_0": [
+                    {
+                      "x": 3.0,
+                      "y": 2.0
+                    },
+                    {
+                      "x": 7.0,
+                      "y": 2.0
+                    },
+                    {
+                      "x": 7.0,
+                      "y": 4.0
+                    },
+                    {
+                      "x": 3.0,
+                      "y": 4.0
+                    }
+                  ]
+                }
+              },
+              "signo": -1,
+              "area": "8",
+              "calculo": "4 × 2 = 8"
+            }
+          ]
+        },
+        {
+          "id": "sumar",
+          "estrategia": "sumar",
+          "cortes": [
+            "s1",
+            "s2",
+            "s3",
+            "s4"
+          ],
+          "partes": [
+            {
+              "id": "A",
+              "forma": {
+                "poligono": {
+                  "_0": [
+                    {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    {
+                      "x": 10.0,
+                      "y": 0.0
+                    },
+                    {
+                      "x": 10.0,
+                      "y": 2.0
+                    },
+                    {
+                      "x": 0.0,
+                      "y": 2.0
+                    }
+                  ]
+                }
+              },
+              "signo": 1,
+              "area": "20",
+              "calculo": "10 × 2 = 20"
+            },
+            {
+              "id": "B",
+              "forma": {
+                "poligono": {
+                  "_0": [
+                    {
+                      "x": 0.0,
+                      "y": 4.0
+                    },
+                    {
+                      "x": 10.0,
+                      "y": 4.0
+                    },
+                    {
+                      "x": 10.0,
+                      "y": 6.0
+                    },
+                    {
+                      "x": 0.0,
+                      "y": 6.0
+                    }
+                  ]
+                }
+              },
+              "signo": 1,
+              "area": "20",
+              "calculo": "10 × 2 = 20"
+            },
+            {
+              "id": "C",
+              "forma": {
+                "poligono": {
+                  "_0": [
+                    {
+                      "x": 0.0,
+                      "y": 2.0
+                    },
+                    {
+                      "x": 3.0,
+                      "y": 2.0
+                    },
+                    {
+                      "x": 3.0,
+                      "y": 4.0
+                    },
+                    {
+                      "x": 0.0,
+                      "y": 4.0
+                    }
+                  ]
+                }
+              },
+              "signo": 1,
+              "area": "6",
+              "calculo": "3 × 2 = 6"
+            },
+            {
+              "id": "D",
+              "forma": {
+                "poligono": {
+                  "_0": [
+                    {
+                      "x": 7.0,
+                      "y": 2.0
+                    },
+                    {
+                      "x": 10.0,
+                      "y": 2.0
+                    },
+                    {
+                      "x": 10.0,
+                      "y": 4.0
+                    },
+                    {
+                      "x": 7.0,
+                      "y": 4.0
+                    }
+                  ]
+                }
+              },
+              "signo": 1,
+              "area": "6",
+              "calculo": "3 × 2 = 6"
+            }
+          ]
+        }
+      ],
+      "mostrarCortes": false,
+      "total": "52",
+      "unidad": "cm²",
+      "unidadesOpciones": [
+        "cm",
+        "cm²",
+        "m²"
+      ],
+      "descripcion": "Rectángulo de 10 cm por 6 cm con un hueco rectangular de 4 cm por 2 cm, a 3 cm del borde izquierdo y a 2 cm del borde superior.",
+      "erroneos": {
+        "sumaHueco": "68",
+        "perimetro": "32"
+      }
+    },
+    "pistas": [],
+    "explicacion": "A: 10 × 6 = 60; B: 4 × 2 = 8. Total: 60 − 8 = 52 cm². Se resta el hueco porque no forma parte de la región pintada.",
+    "erroresHabituales": [
+      {
+        "respuesta": "sumaHueco",
+        "feedback": "¿Esa parte pertenece a la región pintada?"
+      },
+      {
+        "respuesta": "perimetro",
+        "feedback": "Has sumado los lados: eso es el perímetro, no el área."
+      },
+      {
+        "respuesta": "parte_A",
+        "feedback": "Revisa qué dos medidas son la base y la altura de esa parte."
+      },
+      {
+        "respuesta": "parte_B",
+        "feedback": "Revisa qué dos medidas son la base y la altura de esa parte."
+      },
+      {
+        "respuesta": "unidadLineal",
+        "feedback": "Multiplicas metros por metros: el área va en unidades cuadradas."
+      }
+    ],
+    "referencia": {
+      "tipoPregunta": "MAT-GEOMETRIA",
+      "examenes": [],
+      "normativa": "Decreto 61/2022 (Matemáticas, sentido de la medida)"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "05G §6: ítem fijo de práctica de Tribunal configurado con datos (patrón modelo). Borrador: no entra en Release."
+    },
+    "validacion": {
+      "estado": "borrador",
+      "revisor": null,
+      "fecha": null
+    },
+    "version": 1
   }
 ]

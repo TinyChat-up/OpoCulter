@@ -268,7 +268,7 @@ struct VistaCaptura: View {
         Group {
             let partes = escena.split(separator: ":").map(String.init)
             switch partes.first {
-            case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba", "sesion", "sesionInicio", "ejemplo", "fallo":
+            case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba", "sesion", "sesionInicio", "ejemplo", "fallo", "variante":
                 if let ronda { PantallaRonda(modelo: ronda) {} } else { Paleta.fondo }
             case "camino":
                 if let servicio = entorno.servicio { PantallaCamino(servicio: servicio) }
@@ -365,6 +365,18 @@ struct VistaCaptura: View {
             modelo.comprobar()
             ronda = modelo
             return
+        case "variante":
+            // Variante sin ayudas (05G): una actividad de J63 hecha hace 3 días deja pendiente su variante.
+            let fuente = partes.dropFirst().first ?? "MAT.GEO.AREA.G02#3"
+            let item = banco.item(id: fuente)
+            try? servicio.repositorio.registrar(IntentoActividad(
+                fecha: servicio.reloj.ahora.addingTimeInterval(-3 * 24 * 3600), fuente: fuente, version: 1,
+                competencia: item?.competencia ?? "MAT.GEO.AREA", destreza: item?.destreza ?? "", patron: .modelo,
+                primeraRespuesta: "", primerCorrecto: true, resultado: .dominio, duracion: 30))
+            let modelo = RondaViewModel(servicio: servicio, tipo: .sesion(duracion: .cinco, foco: .matematicas))
+            if modelo.fase == .teoria { modelo.empezarTrasTeoria() }
+            ronda = modelo
+            return
         case "sesionInicio":
             ronda = RondaViewModel(servicio: servicio, tipo: .sesion(duracion: .cinco, foco: .mixto))
             return
@@ -397,7 +409,11 @@ struct VistaCaptura: View {
         if partes.first == "item", partes.count >= 2 {
             let modelo = RondaViewModel(servicio: servicio, tipo: .items([partes[1]]))
             let modo = partes.count >= 3 ? partes[2] : "antes"
-            if modo == "relleno" {
+            if modo == "estrategia", let item = modelo.itemActual, case .figuraArea(let f) = item.payload {
+                // J63: estrategia elegida (paso de los cortes).
+                let e = partes.count >= 4 ? Payload.FiguraArea.Estrategia(rawValue: partes[3]) : f.descomposiciones.first?.estrategia
+                modelo.respuesta = .figura(Respuesta.RespuestaFigura(estrategia: e))
+            } else if modo == "relleno" {
                 // Respuesta correcta puesta pero sin comprobar.
                 modelo.rellenarParaPruebas(correcta: true)
             } else if modo != "antes" {

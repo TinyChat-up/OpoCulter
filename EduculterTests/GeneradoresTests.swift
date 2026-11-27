@@ -464,6 +464,25 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         #expect(f.isEmpty, "\(item.id): \(f)")
     case "fraseHueco":
         if let c = respuestaCorrecta(item) { #expect(c == d["correcta"]) }
+    case "areaCompuesta":
+        // Oráculo independiente de los cortes: fórmula del área del polígono (JuegosTests, 05G).
+        guard case .figuraArea(let f) = item.payload, let total = Racional.interpretar(f.total)?.valor else { Issue.record("payload"); return }
+        #expect(abs(JuegosTests.oraculo(f) - total.valorDouble) < 1e-6, "\(item.id)")
+    case "evidenciaResumen":
+        // Los datos son del ANEXO A: la respuesta correcta es la que marca la dirección.
+        let e = bancoGeneradores.recursos.resumen?.textos.first { $0.texto == d["texto"] }
+        switch item.payload {
+        case .evidencia(let ev):
+            let textos = Set(ev.fragmentos.filter { ev.aceptados.contains($0.id) }.map(\.texto))
+            // Cada oración aceptada contiene una idea central del ANEXO A (o forma parte de ella).
+            #expect(!textos.isEmpty && textos.allSatisfy { t in (e?.central ?? []).contains { c in
+                let n = c.trimmingCharacters(in: CharacterSet(charactersIn: ".;:,«»\" "))
+                return t.contains(n) || c.contains(t.trimmingCharacters(in: CharacterSet(charactersIn: ".;:,«»\" ")))
+            } }, "\(item.id)")
+        case .eleccion(let el): #expect(el.opciones.first { $0.id == el.correcta }?.texto == e?.tema.correcta, "\(item.id)")
+        case .recuerdo(let r): #expect(r.modelo == e?.modelo)
+        default: Issue.record("payload")
+        }
     default: Issue.record("Sin oráculo para \(p.tipo)")
     }
 }
@@ -474,7 +493,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
 struct GeneradoresPropiedadesTests {
     static let plantillas = bancoGeneradores.plantillas
 
-    @Test("Hay plantillas para los 23 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
+    @Test("Hay plantillas para los 25 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
     func cobertura() {
         let tipos = Set(Self.plantillas.map(\.tipo))
         #expect(tipos == Set(MotorGeneradores.generadores.keys))
@@ -494,7 +513,10 @@ struct GeneradoresPropiedadesTests {
         // Aprobadas en la 05E parte 2 (D-101): MCD, CENTRAL y LAPLACE (plantillas de la 05C que superan propiedades y anclas).
         let aprobadas05C: Set<String> = ["MAT.DIV.MCD.G01", "MAT.EST.CENTRAL.G01", "MAT.PRO.LAPLACE.G01"]
         #expect(Self.plantillas.filter { aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-25") })
-        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
+        // Juegos de la 05G (J46 y J63): aprobadas por la dirección (D-118, D-119).
+        let fase05G = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05G") == true }
+        #expect(fase05G.count == 9 && fase05G.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-26") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -538,6 +560,8 @@ struct GeneradoresPropiedadesTests {
         }
         // Los generadores de Lengua dependen del tamaño del léxico y del banco de prueba: con
         // recursos pequeños varios niveles comparten palabras (no decrece y el 6 supera al 1).
+        // J46 (05G): el paso fija la consigna y el texto lo elige la semilla; no hay niveles.
+        if base.tipo == "evidenciaResumen" { return }
         let recursosPequenos = ["colocarTilde", "clasificarAcentuacion", "silabaTonica", "fraseHueco", "analisisVerbal", "oracionSimple"].contains(base.tipo)
         for d in 1..<6 {
             if recursosPequenos { #expect(medias[d] >= medias[d - 1] - 1e-9, "\(clave): \(medias)") }
@@ -573,7 +597,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 83)
+        #expect(banco.plantillas.count == 92)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }

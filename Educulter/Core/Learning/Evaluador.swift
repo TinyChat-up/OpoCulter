@@ -24,6 +24,10 @@ enum Respuesta: Sendable, Equatable {
     case colocarTilde(Int?)
     /// Partes en que se ha dividido la barra y celdas coloreadas (su posición no importa).
     case fraccionBarras(partes: Int, coloreadas: Set<Int>)
+    /// 05G: id del fragmento tocado, recuerdo y figura.
+    case evidencia(String)
+    case recuerdo(RespuestaRecuerdo)
+    case figura(RespuestaFigura)
 
     struct ParRespuesta: Sendable, Equatable, Hashable {
         var izquierda: String
@@ -111,6 +115,14 @@ enum Evaluador {
             }
         case (.fraccionBarras(let p), .fraccionBarras(let partes, let coloreadas)):
             return evaluarFraccionBarras(p, partes: partes, coloreadas: coloreadas.filter { (0..<partes).contains($0) }.count)
+        case (.evidencia(let p), .evidencia(let r)):
+            if p.aceptados.contains(r) { return .acierto }
+            return .fallo([p.detalles.contains(r) ? "detalle" : "otro"])
+        case (.recuerdo(let p), .recuerdo(let r)):
+            // Autoevaluación: se completa siempre; la proporción es la de criterios marcados.
+            return Resultado(correcto: true, fraccionCorrecta: proporcion(r.cumplidos.count, max(p.criterios.count, 1)), errores: [])
+        case (.figuraArea(let p), .figura(let r)):
+            return evaluarFigura(p, r)
         default:
             return .fallo([Resultado.respuestaIncompatible])
         }
@@ -124,6 +136,27 @@ enum Evaluador {
     }
 
     // MARK: - Mecánicas con lógica propia
+
+    /// Figura: vale cualquier descomposición; manda el total (por valor) con su unidad cuadrada. Los
+    /// errores dicen qué falla: cada parte mal calculada (`parte_<id>`), el total, la unidad y los
+    /// errores típicos cuyo valor coincide con el total tecleado.
+    private static func evaluarFigura(_ p: Payload.FiguraArea, _ r: Respuesta.RespuestaFigura) -> Resultado {
+        func valor(_ t: String) -> Racional? { Racional.interpretar(t)?.valor }
+        let totalBien = valor(r.total) != nil && valor(r.total) == valor(p.total)
+        let unidadBien = r.unidad == p.unidad
+        var errores: [String] = []
+        if let d = p.descomposicion(estrategia: r.estrategia, cortes: r.cortes) {
+            for parte in d.partes where r.areas[parte.id].flatMap(valor) != valor(parte.area) { errores.append("parte_\(parte.id)") }
+        }
+        if !totalBien {
+            // El error típico reconocido va primero (su pista es la del reintento); si no hay, «total».
+            let tipicos = p.erroneos.sorted(by: { $0.key < $1.key }).filter { valor($0.value) == valor(r.total) }.map(\.key)
+            errores.insert(contentsOf: tipicos.isEmpty ? ["total"] : tipicos, at: 0)
+        }
+        if !unidadBien { errores.append(r.unidad.map { $0.contains("²") ? "unidad" : "unidadLineal" } ?? "unidad") }
+        let correcto = totalBien && unidadBien
+        return Resultado(correcto: correcto, fraccionCorrecta: correcto ? 1 : (totalBien || unidadBien ? 0.5 : 0), errores: correcto ? [] : errores)
+    }
 
     private static func evaluarEmparejar(_ p: Payload.Emparejar, _ r: [Respuesta.ParRespuesta]) -> Resultado {
         let esperado = Dictionary(p.pares.compactMap { $0.count == 2 ? ($0[0], $0[1]) : nil }, uniquingKeysWith: { a, _ in a })

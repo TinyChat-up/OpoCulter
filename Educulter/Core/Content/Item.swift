@@ -16,6 +16,10 @@ enum Mecanica: String, Codable, Sendable, CaseIterable {
     case colocarTilde
     /// Representar una fracción coloreando una barra dividida (Fase 05B).
     case fraccionBarras
+    /// Fase 05G: tocar la evidencia en un texto, recordar y autoevaluarse, y área de una figura.
+    case evidencia
+    case recuerdo
+    case figuraArea
 }
 
 /// Peldaños de la escalera de dominio.
@@ -70,6 +74,9 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
     /// Ejemplo resuelto (05E parte 2 §5): de 2 a 5 pasos calculados por el generador. Vacío en los
     /// estáticos y en los generadores sin pasos.
     var pasos: [PasoResuelto] = []
+    /// Actividad de juego a la que pertenece (05G: «J46», «J63»). Los ítems de juego siguen el
+    /// contrato de intento (pista de razonamiento y reintento).
+    var juego: String?
 
     var mecanica: Mecanica { payload.mecanica }
 
@@ -78,7 +85,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         enunciado: String, payload: Payload, pistas: [String] = [], explicacion: String,
         erroresHabituales: [ErrorHabitual] = [], referencia: Referencia? = nil,
         procedencia: Procedencia, validacion: Validacion, version: Int = 1, textoRef: String? = nil,
-        claveGenerada: String? = nil, pasos: [PasoResuelto] = []
+        claveGenerada: String? = nil, pasos: [PasoResuelto] = [], juego: String? = nil
     ) {
         self.id = id
         self.competencia = competencia
@@ -97,11 +104,12 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         self.textoRef = textoRef
         self.claveGenerada = claveGenerada
         self.pasos = pasos
+        self.juego = juego
     }
 
     private enum CodingKeys: String, CodingKey {
         case id, competencia, peldano, dificultad, objetivo, mecanica, enunciado, payload,
-             pistas, explicacion, erroresHabituales, referencia, procedencia, validacion, version, textoRef, claveGenerada, pasos
+             pistas, explicacion, erroresHabituales, referencia, procedencia, validacion, version, textoRef, claveGenerada, pasos, juego
     }
 
     init(from decoder: Decoder) throws {
@@ -124,6 +132,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         textoRef = try c.decodeIfPresent(String.self, forKey: .textoRef)
         claveGenerada = try c.decodeIfPresent(String.self, forKey: .claveGenerada)
         pasos = try c.decodeIfPresent([PasoResuelto].self, forKey: .pasos) ?? []
+        juego = try c.decodeIfPresent(String.self, forKey: .juego)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -146,6 +155,7 @@ struct Item: Codable, Sendable, Equatable, Identifiable {
         try c.encodeIfPresent(textoRef, forKey: .textoRef)
         try c.encodeIfPresent(claveGenerada, forKey: .claveGenerada)
         if !pasos.isEmpty { try c.encode(pasos, forKey: .pasos) }
+        try c.encodeIfPresent(juego, forKey: .juego)
     }
 }
 
@@ -177,6 +187,9 @@ enum Payload: Sendable, Equatable {
     case numerico(Numerico)
     case colocarTilde(ColocarTilde)
     case fraccionBarras(FraccionBarras)
+    case evidencia(Evidencia)
+    case recuerdo(Recuerdo)
+    case figuraArea(FiguraArea)
 
     var mecanica: Mecanica {
         switch self {
@@ -192,6 +205,9 @@ enum Payload: Sendable, Equatable {
         case .numerico: .numerico
         case .colocarTilde: .colocarTilde
         case .fraccionBarras: .fraccionBarras
+        case .evidencia: .evidencia
+        case .recuerdo: .recuerdo
+        case .figuraArea: .figuraArea
         }
     }
 
@@ -373,6 +389,9 @@ enum Payload: Sendable, Equatable {
         case .numerico: .numerico(try Numerico(from: decoder))
         case .colocarTilde: .colocarTilde(try ColocarTilde(from: decoder))
         case .fraccionBarras: .fraccionBarras(try FraccionBarras(from: decoder))
+        case .evidencia: .evidencia(try Evidencia(from: decoder))
+        case .recuerdo: .recuerdo(try Recuerdo(from: decoder))
+        case .figuraArea: .figuraArea(try FiguraArea(from: decoder))
         }
     }
 
@@ -390,6 +409,9 @@ enum Payload: Sendable, Equatable {
         case .numerico(let p): try p.encode(to: encoder)
         case .colocarTilde(let p): try p.encode(to: encoder)
         case .fraccionBarras(let p): try p.encode(to: encoder)
+        case .evidencia(let p): try p.encode(to: encoder)
+        case .recuerdo(let p): try p.encode(to: encoder)
+        case .figuraArea(let p): try p.encode(to: encoder)
         }
     }
 }

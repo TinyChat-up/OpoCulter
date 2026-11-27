@@ -17,6 +17,9 @@ enum RespuestaEjemplo {
         case .numerico(let p): .numerico(p.respuesta)
         case .colocarTilde(let p): .colocarTilde(p.indiceTilde)
         case .fraccionBarras(let p): .fraccionBarras(partes: p.solucion.partes, coloreadas: Set(0..<p.solucion.coloreadas))
+        case .evidencia(let p): .evidencia(p.aceptados.first ?? "")
+        case .recuerdo(let p): .recuerdo(.init(texto: "", enPapel: true, modeloVisto: true, cumplidos: Set(p.criterios.indices)))
+        case .figuraArea(let p): .figura(p.respuestaCorrecta)
         }
     }
 
@@ -68,6 +71,14 @@ enum RespuestaEjemplo {
             let (partes, coloreadas) = p.solucion
             let otra = coloreadas > 1 ? coloreadas - 1 : coloreadas + 1
             return .fraccionBarras(partes: partes, coloreadas: Set(0..<otra))
+        case .evidencia(let p):
+            return .evidencia(p.detalles.first ?? p.fragmentos.first { !p.aceptados.contains($0.id) }?.id ?? "")
+        case .recuerdo:
+            return correcta(payload)
+        case .figuraArea(let p):
+            var r = p.respuestaCorrecta
+            r.total = p.erroneos.sorted { $0.key < $1.key }.first { $0.value != p.total }?.value ?? "0"
+            return .figura(r)
         }
     }
 }
@@ -119,6 +130,13 @@ enum DescripcionSolucion {
             let (partes, coloreadas) = p.solucion
             let escrita = "\(coloreadas)/\(partes)"
             return escrita == p.objetivo ? p.objetivo : "\(escrita) = \(p.objetivo)"
+        case .evidencia(let p):
+            let textos = Dictionary(p.fragmentos.map { ($0.id, $0.texto) }, uniquingKeysWith: { a, _ in a })
+            return p.aceptados.compactMap { textos[$0] }.map { "«\($0)»" }.joined(separator: " o ")
+        case .recuerdo(let p):
+            return p.modelo
+        case .figuraArea(let p):
+            return "\(p.total) \(p.unidad)"
         }
     }
 }
@@ -140,6 +158,9 @@ extension Respuesta {
         case (.colocarTilde, .colocarTilde): true
         case (.fraccionBarras, .fraccionBarras(let partes, let coloreadas)):
             Payload.FraccionBarras.rangoPartes.contains(partes) && !coloreadas.isEmpty
+        case (.evidencia(let p), .evidencia(let id)): p.fragmentos.contains { $0.id == id }
+        case (.recuerdo, .recuerdo(let r)): r.modeloVisto && (r.enPapel || !r.texto.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty)
+        case (.figuraArea, .figura(let r)): r.unidad != nil && Racional.interpretar(r.total) != nil
         default: false
         }
     }

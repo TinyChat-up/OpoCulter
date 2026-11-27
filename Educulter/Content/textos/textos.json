@@ -103,5 +103,47 @@
       "fecha": "2026-11-24"
     },
     "texto": "Aquella noche la tormenta apagó todas las luces del pueblo. Lucía, la hija del farero, subió los ciento veinte escalones con una linterna temblando entre las manos. Arriba, el viento golpeaba los cristales. Encendió la lámpara de reserva justo cuando un pesquero aparecía entre las olas. Al amanecer, los marineros llamaron a la puerta del faro para darle las gracias; Lucía, agotada, solo pudo sonreír."
+  },
+  {
+    "id": "TXT.ORI.SUENO",
+    "titulo": "Dormir",
+    "autor": null,
+    "obra": null,
+    "tipo": "expositivo",
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (Fase 05G, ANEXO A)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "texto": "Dormir no es perder el tiempo. Mientras dormimos, el cerebro ordena lo que hemos aprendido durante el día y lo guarda en la memoria. También el cuerpo aprovecha esas horas para reparar los músculos y recuperar energía. Por eso, los especialistas recomiendan que un niño de Primaria duerma entre nueve y doce horas. Quien descansa poco se concentra peor, se irrita con facilidad y rinde menos en clase."
+  },
+  {
+    "id": "TXT.ORI.BICI",
+    "titulo": "La bicicleta en la ciudad",
+    "autor": null,
+    "obra": null,
+    "tipo": "argumentativo",
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (Fase 05G, ANEXO A)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-26"
+    },
+    "texto": "Las ciudades deberían reservar más calles para las bicicletas. La bicicleta no contamina, no hace ruido y ocupa poco espacio. Además, quien pedalea a diario hace ejercicio sin darse cuenta. Algunos comerciantes temen perder clientes si se limita el paso de coches; sin embargo, en algunas ciudades que lo han probado, los comercios de las calles tranquilas han ganado clientes. Apostar por la bicicleta es apostar por una ciudad más sana."
   }
 ]

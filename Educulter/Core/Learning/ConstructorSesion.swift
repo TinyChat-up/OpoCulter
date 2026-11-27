@@ -95,7 +95,8 @@ struct ConstructorSesion: Sendable {
 
     /// `plan`: competencias para lo nuevo, en orden (la en curso primero; en Mixto, áreas alternadas).
     func construir(n: Int, foco: FocoSesion, estados: [String: EstadoCompetencia], remedios: [RemedioPendiente],
-                   plan: [String], vistos: [String: Date], ahora: Date, calendario: Calendar, semilla: UInt64) -> SesionDiaria {
+                   plan: [String], vistos: [String: Date], ahora: Date, calendario: Calendar, semilla: UInt64,
+                   variantes: [(competencia: String, items: [ItemRonda])] = []) -> SesionDiaria {
         var rng = GeneradorConSemilla(semilla: semilla)
         let hoy = DiaCivil(ahora, calendario: calendario)
         let enFoco: (String) -> Bool = { c in foco.area.map { Catalogo.area(de: c) == $0 } ?? true }
@@ -127,6 +128,11 @@ struct ConstructorSesion: Sendable {
             cupo -= items.count
             remediosPendientes.append(Unidad(items.map { ItemRonda(itemId: $0.id, motivo: .remedio, errorId: r.error.id) },
                                              competencia: p.competencia, tipo: .remedio))
+        }
+        // Variantes sin ayudas de los juegos (05G §2): un bloque por competencia, tras los remedios.
+        for v in variantes where enFoco(v.competencia) && !v.items.isEmpty && v.items.count <= n {
+            remediosPendientes.append(Unidad(v.items, competencia: v.competencia, tipo: .variante))
+            for i in v.items { usados.insert(i.itemId) }
         }
         let ocupadoRemedios = remediosPendientes.reduce(0) { $0 + $1.items.count }
 
@@ -186,6 +192,9 @@ struct ConstructorSesion: Sendable {
                 if vuelta + 1 < 3 { colaNuevo.append((c, vuelta + 1)) }
                 enCurso = enCurso ?? c
                 var bloque = items.sorted { ($0.dificultad, $0.id) < ($1.dificultad, $1.id) }.map { ItemRonda(itemId: $0.id, motivo: .nuevo) }
+                // J46: el bloque pasa a ser la actividad completa sobre un mismo texto (05G §6).
+                bloque = ActividadesJuego.agrupar(bloque, competencia: c, banco: banco)
+                for i in bloque { usados.insert(i.itemId) }
                 // Peldaño 1 (Descubrir): el bloque empieza con un ejemplo resuelto y su gemelo (§5).
                 if peldano == Peldano.descubre.rawValue, bloque.count >= 2 {
                     bloque = EjemplosResueltos.aplicar(bloque, competencia: c, banco: banco, excluir: usados, rng: &rng)
@@ -217,7 +226,7 @@ struct ConstructorSesion: Sendable {
     // MARK: - Intercalado
 
     struct Unidad: Sendable, Equatable {
-        enum Tipo: Int, Sendable { case remedio, repaso, nuevo }
+        enum Tipo: Int, Sendable { case remedio, repaso, nuevo, variante }
         var items: [ItemRonda]
         var competencia: String
         var tipo: Tipo
@@ -255,7 +264,7 @@ struct ConstructorSesion: Sendable {
             var j = i
             while j + 1 < items.count, competencia(items[j + 1]) == competencia(items[i]) { j += 1 }
             let run = items[i...j]
-            let bloque = run.allSatisfy { $0.motivo == .nuevo || $0.motivo == .remedio } && run.count <= tamanoBloque
+            let bloque = run.allSatisfy { $0.motivo == .nuevo || $0.motivo == .remedio || $0.motivo == .variante } && run.count <= tamanoBloque
             if run.count > maxSeguidosCompetencia && !bloque { fallos.append("\(run.count) seguidos de \(competencia(items[i])) en \(i)") }
             i = j + 1
         }

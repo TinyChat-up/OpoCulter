@@ -304,24 +304,36 @@ final class ServicioSesion {
     /// Registra una respuesta y actualiza todo el progreso. `combo` incluye esta respuesta.
     @discardableResult
     func registrar(item: Item, resultado: Resultado, usoPista: Bool, combo: Int,
-                   motivo: ItemRonda.Motivo?, confianza: Int? = nil, errorRemedio: String? = nil) throws -> EfectoRespuesta {
+                   motivo: ItemRonda.Motivo?, confianza: Int? = nil, errorRemedio: String? = nil,
+                   actividad: IntentoActividad? = nil, primerIntento: Resultado? = nil) throws -> EfectoRespuesta {
         let ahora = reloj.ahora
         var efecto = EfectoRespuesta()
-        try registrarErrores(item: item, resultado: resultado, errorRemedio: errorRemedio, fecha: ahora, efecto: &efecto)
+        // Contrato de intento (05G §2): los errores se detectan en el primer intento; solo el acierto
+        // al primer intento y sin ayudas cuenta para el dominio. «En progreso» y la autoevaluación no
+        // mueven la escalera ni Leitner.
+        let final = actividad?.resultado
+        let cuentaDominio = final == nil || final == .dominio || final == .fallo
+        try registrarErrores(item: item, resultado: primerIntento ?? resultado, errorRemedio: errorRemedio, fecha: ahora, efecto: &efecto)
+        if let actividad { try repositorio.registrar(actividad) }
         var perfil = try repositorio.perfil()
         try asegurarMisiones(&perfil)
 
         // Escalera y Leitner.
         var estado = try repositorio.estadosCompetencia()[item.competencia] ?? EstadoCompetencia(competenciaId: item.competencia)
-        let cambios = estado.registrar(correcto: resultado.correcto, peldanoDelItem: item.peldano, hoy: hoy, config: configAprendizaje)
-        try repositorio.guardar(estado)
+        var cambios = EstadoCompetencia.Cambios()
+        if cuentaDominio {
+            cambios = estado.registrar(correcto: resultado.correcto, peldanoDelItem: item.peldano, hoy: hoy, config: configAprendizaje)
+            try repositorio.guardar(estado)
+        }
         efecto.subioPeldano = cambios.subioPeldano
         efecto.peldanoNuevo = cambios.subioPeldano ? estado.escalera.peldano : nil
         efecto.acabaDeDominarse = cambios.acabaDeDominarse
 
         // Rescate.
         var cola = try repositorio.colaRescate()
-        if resultado.correcto {
+        if final == .autoevaluacion {
+            // El recuerdo no entra en Rescate.
+        } else if resultado.correcto && final != .enProgreso {
             efecto.rescatado = cola.registrarAcierto(item, banco: banco) != nil
         } else {
             cola.registrarFallo(item, fecha: ahora)

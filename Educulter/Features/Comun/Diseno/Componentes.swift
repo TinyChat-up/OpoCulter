@@ -398,6 +398,8 @@ struct HojaFeedback: View {
     var subioPeldano = false
     var puedeVerRegla = false
     var verRegla: () -> Void = {}
+    /// Título propio (05G): «Correcto con ayuda» o la autoevaluación del recuerdo.
+    var titulo: String?
     let continuar: () -> Void
 
     @Environment(\.dynamicTypeSize) private var tamano
@@ -435,7 +437,7 @@ struct HojaFeedback: View {
                 Image(systemName: correcto ? "checkmark.circle.fill" : "xmark.circle.fill")
                     .font(.title2)
                     .accessibilityHidden(true)
-                Text(correcto ? "¡Correcto!" : "No es correcto")
+                Text(titulo ?? (correcto ? "¡Correcto!" : "No es correcto"))
                     .font(.exhibicion(.title3))
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader)

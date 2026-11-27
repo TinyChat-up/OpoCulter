@@ -1604,6 +1604,178 @@
      "patron": "^(En el mapa|En el plano|Para pasar de la realidad)"
     }
    ]
+  },
+  {
+   "id": "ERR.LEN.COM.TEMA.1",
+   "competencia": "LEN.COM.TEMA",
+   "descripcion": "Confundes un dato concreto con la idea central.",
+   "remedio": {
+    "plantilla": "LEN.COM.TEMA.G01",
+    "dificultad": 2,
+    "explicacion": "Un dato apoya la idea central; la idea central explica de qué trata el texto o por qué importa."
+   },
+   "detecta": [
+    {
+     "generador": "evidenciaResumen",
+     "patron": "^(Ese dato apoya|Busca la frase)"
+    },
+    {
+     "generador": "estatico",
+     "patron": "(?i)es un detalle|contraargumento|símbolos"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.COM.TEMA.2",
+   "competencia": "LEN.COM.TEMA",
+   "descripcion": "Eliges un tema demasiado concreto.",
+   "remedio": {
+    "plantilla": "LEN.COM.TEMA.G02",
+    "dificultad": 3,
+    "explicacion": "El tema cubre todo el texto: si solo nombra una parte, es demasiado concreto."
+   },
+   "detecta": [
+    {
+     "generador": "evidenciaResumen",
+     "patron": "^Ese tema es demasiado concreto"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.COM.TEMA.3",
+   "competencia": "LEN.COM.TEMA",
+   "descripcion": "Eliges un tema demasiado general.",
+   "remedio": {
+    "plantilla": "LEN.COM.TEMA.G02",
+    "dificultad": 3,
+    "explicacion": "Si el tema serviría para muchos textos distintos, es demasiado amplio."
+   },
+   "detecta": [
+    {
+     "generador": "evidenciaResumen",
+     "patron": "^Ese tema es demasiado amplio"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.AREA.1",
+   "competencia": "MAT.GEO.AREA",
+   "descripcion": "Sumas el hueco en vez de restarlo.",
+   "remedio": {
+    "plantilla": "MAT.GEO.AREA.G02",
+    "dificultad": 2,
+    "explicacion": "El hueco no forma parte de la región pintada: su área se resta."
+   },
+   "detecta": [
+    {
+     "generador": "areaCompuesta",
+     "patron": "^¿Esa parte pertenece a la región pintada"
+    },
+    {
+     "generador": "estatico",
+     "patron": "^¿Esa parte pertenece a la región pintada"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.AREA.2",
+   "competencia": "MAT.GEO.AREA",
+   "descripcion": "Calculas el perímetro en vez del área.",
+   "remedio": {
+    "plantilla": "MAT.GEO.AREA.G01",
+    "dificultad": 1,
+    "explicacion": "El perímetro suma los lados; el área mide la superficie: base por altura en cada rectángulo."
+   },
+   "detecta": [
+    {
+     "generador": "areaCompuesta",
+     "patron": "^Has sumado los lados"
+    },
+    {
+     "generador": "estatico",
+     "patron": "^Has sumado los lados"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.AREA.3",
+   "competencia": "MAT.GEO.AREA",
+   "descripcion": "Olvidas dividir entre 2 en triángulos y semicírculos.",
+   "remedio": {
+    "plantilla": "MAT.GEO.AREA.G03",
+    "dificultad": 3,
+    "explicacion": "Triángulo: base × altura : 2. Semicírculo: la mitad de π × radio × radio."
+   },
+   "detecta": [
+    {
+     "generador": "areaCompuesta",
+     "patron": "^(El área del triángulo es|Es medio círculo)"
+    },
+    {
+     "generador": "estatico",
+     "patron": "^(El área del triángulo es|Es medio círculo)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.AREA.4",
+   "competencia": "MAT.GEO.AREA",
+   "descripcion": "Das el área en unidades lineales.",
+   "remedio": {
+    "plantilla": "MAT.GEO.AREA.G01",
+    "dificultad": 1,
+    "explicacion": "Metros por metros dan metros cuadrados: el área va en m² o cm²."
+   },
+   "detecta": [
+    {
+     "generador": "areaCompuesta",
+     "patron": "^Multiplicas metros por metros"
+    },
+    {
+     "generador": "estatico",
+     "patron": "^Multiplicas metros por metros"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.AREA.5",
+   "competencia": "MAT.GEO.AREA",
+   "descripcion": "No conviertes las medidas mixtas a la misma unidad.",
+   "remedio": {
+    "plantilla": "MAT.GEO.AREA.G06",
+    "dificultad": 6,
+    "explicacion": "Antes de multiplicar, pasa todas las medidas a metros (o todas a centímetros)."
+   },
+   "detecta": [
+    {
+     "generador": "areaCompuesta",
+     "patron": "^Pasa todas las medidas a la misma unidad"
+    },
+    {
+     "generador": "estatico",
+     "patron": "^Pasa todas las medidas a la misma unidad"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.AREA.6",
+   "competencia": "MAT.GEO.AREA",
+   "descripcion": "Calculas mal el área de alguna parte.",
+   "remedio": {
+    "plantilla": "MAT.GEO.AREA.G01",
+    "dificultad": 1,
+    "explicacion": "En cada parte, toma la base y la altura de esa parte, no las de la figura entera."
+   },
+   "detecta": [
+    {
+     "generador": "areaCompuesta",
+     "patron": "^Revisa (qué dos medidas|la suma)"
+    },
+    {
+     "generador": "estatico",
+     "patron": "^Revisa (qué dos medidas|la suma)"
+    }
+   ]
   }
  ]
 }

@@ -26,6 +26,8 @@ struct ItemRonda: Sendable, Equatable {
         case pruebaNivel, reto, supervivencia, diagnostico, practica
         /// Sesión diaria (05E parte 2): ítem nuevo y remedio de un error típico activo.
         case nuevo, remedio
+        /// Variante sin ayudas de un juego (05G §2): misma plantilla, otra semilla.
+        case variante
     }
     var itemId: String
     var motivo: Motivo
@@ -34,6 +36,8 @@ struct ItemRonda: Sendable, Equatable {
     /// Ejemplo resuelto (05E parte 2 §5): los pasos aparecen uno a uno y el usuario completa el
     /// último. El ítem siguiente es su gemelo (misma plantilla, otra semilla, sin pasos).
     var ejemplo = false
+    /// Variante sin ayudas (05G §2): sin pista, sin colores ni cortes candidatos.
+    var sinAyudas = false
 }
 
 /// Ejemplos resueltos (05E parte 2 §5): en el peldaño 1 (Descubrir), lo nuevo empieza con un
