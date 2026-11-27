@@ -1,0 +1,62 @@
+[
+  {
+    "id": "LEN.REC.DEF.T01",
+    "competencia": "LEN.REC.DEF",
+    "titulo": "Definir un recurso literario",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Definir un recurso es decir qué es, qué lo distingue y dar un ejemplo."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Metáfora: identifica dos elementos sin nexo\nComparación: los relaciona con un nexo (como, igual que)\nPersonificación: atribuye rasgos humanos a lo no humano\nHipérbole: exagera\nAnáfora: repite palabras al comienzo de versos o frases"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Una buena definición tiene tres partes: «es una figura que…», «consiste en…» y «por ejemplo…»."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.REC.FIG.T01",
+    "competencia": "LEN.REC.FIG",
+    "titulo": "Identificar recursos literarios",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "De repetición: anáfora, aliteración, paralelismo, polisíndeton\nDe significado: metáfora, comparación, personificación, hipérbole, metonimia, sinestesia, oxímoron, antítesis\nDe orden: hipérbaton"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Busca lo que tiene de raro la frase. Si compara con «como», es comparación; si identifica sin nexo, metáfora; si exagera, hipérbole; si da vida humana a una cosa, personificación."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

@@ -687,3 +687,6 @@ Paleta v3 (tinta marina, coral, amarillo y azul) con variantes de texto AA y tes
 
 ### D-135 · 2026-11-27 · Fase 05I · Vigente
 **Decisiones de la 05H.** `frases.json` lleva `ambigua`: marcadas FR.0088 y FR.0089 (familia sabia/savia: «sabia» es variante de «sabía», una de las 70); el hueco y el Editor no las usan. El esquema final de Rayos X se titula «Esquema del análisis».
+
+### D-136 · 2026-11-27 · Lote 06 (sin Mac) · Vigente (numerada D-130 en la rama `contenido/lote-06`)
+**Lote 06 de la dirección convertido sin tocar Swift.** Las 36 tarjetas entran en `teoria/` (aprobadas): un esquema separado por «·» pasa a una línea por «Etiqueta: valor», conservando el «·» de multiplicar dentro de un valor. Las 118 frases de tilde en contexto se añaden en `pendiente/tildeContexto.json`, con `frase`, `correcta` y `opciones`. Lo que no cabe en los esquemas actuales queda en `pendiente/lote06/`, fuera de la carga: la plantilla `LEN.ORT.CTX.G01` (borrador; falta el generador `tildeContexto` y la competencia `LEN.ORT.CTX`) y los 8 errores con `remedio.tipo = "remedioEstatico"` (el decodificador y el validador exigen hoy una plantilla de remedio). El detalle y lo que debe hacer el Mac está en `docs/lotes/LOTE06_PENDIENTE.md`.

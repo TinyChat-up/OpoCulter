@@ -1,0 +1,38 @@
+[
+  {
+    "id": "MAT.DIV.MCD.T01",
+    "competencia": "MAT.DIV.MCD",
+    "titulo": "Máximo común divisor",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "El máximo común divisor (m.c.d.) es el mayor número que divide a la vez a dos o más números."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Paso 1: descompón en factores primos\nPaso 2: toma solo los factores comunes, con el menor exponente\nPaso 3: multiplícalos"
+      },
+      {
+        "tipo": "texto",
+        "contenido": "12 = 2² · 3 y 18 = 2 · 3², así que m.c.d.(12, 18) = 2 · 3 = 6."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "El m.c.d. sirve para repartir en partes iguales lo más grandes posible."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

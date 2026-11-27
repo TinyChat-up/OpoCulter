@@ -1,0 +1,34 @@
+[
+  {
+    "id": "LEN.CLA.JUST.T01",
+    "competencia": "LEN.CLA.JUST",
+    "titulo": "Justificar la categoría de una palabra",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Para justificar la categoría de una palabra se miran su forma (si varía en género, número, persona…) y su función en la frase."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Sustantivo: núcleo del grupo nominal; admite determinante\nAdjetivo: acompaña al sustantivo y concuerda con él\nVerbo: varía en persona, número, tiempo y modo\nAdverbio: invariable; modifica al verbo, al adjetivo o a otro adverbio\nPreposición: invariable; introduce un término"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Una misma forma puede cambiar de categoría: «rápido» es adjetivo en «un tren rápido» y adverbio en «llegó rápido»."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

@@ -1,0 +1,34 @@
+[
+  {
+    "id": "MAT.PRO.LAPLACE.T01",
+    "competencia": "MAT.PRO.LAPLACE",
+    "titulo": "Probabilidad de un suceso",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Si todos los resultados son igual de probables, P(A) = casos favorables / casos posibles."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Suceso seguro: P = 1\nSuceso imposible: P = 0\nSiempre: 0 ≤ P ≤ 1"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Antes de aplicar la regla, comprueba que todos los resultados tienen la misma probabilidad."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

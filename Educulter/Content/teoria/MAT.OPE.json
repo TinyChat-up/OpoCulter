@@ -26,5 +26,117 @@
       "revisor": "",
       "fecha": ""
     }
+  },
+  {
+    "id": "MAT.OPE.COMB.T01",
+    "competencia": "MAT.OPE.COMB",
+    "titulo": "Operaciones combinadas con paréntesis y corchetes",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Se resuelven primero los paréntesis, después los corchetes y por último las llaves, siempre de dentro hacia fuera."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Dentro de cada paréntesis se aplica también la jerarquía: primero las multiplicaciones y las divisiones."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.OPE.JER.T01",
+    "competencia": "MAT.OPE.JER",
+    "titulo": "Jerarquía de las operaciones",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "1.º: paréntesis, corchetes y llaves\n2.º: potencias y raíces\n3.º: multiplicaciones y divisiones, de izquierda a derecha\n4.º: sumas y restas, de izquierda a derecha"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Multiplicar y dividir tienen el mismo nivel: se hacen en el orden en que aparecen. 12 : 3 · 2 = 8, no 2."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.OPE.ECUAC.T01",
+    "competencia": "MAT.OPE.ECUAC",
+    "titulo": "Ecuaciones de primer grado",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Resolver una ecuación es encontrar el valor de x que hace cierta la igualdad. Lo que se hace en un miembro se hace también en el otro."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Paso 1: agrupa las x en un miembro y los números en el otro\nPaso 2: opera\nPaso 3: despeja x dividiendo por su coeficiente\nPaso 4: comprueba sustituyendo"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.OPE.INCOG.T01",
+    "competencia": "MAT.OPE.INCOG",
+    "titulo": "Término desconocido",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "El término desconocido se halla con la operación inversa: si a · x = N, x = N : a; si x − a = N, x = N + a."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Comprueba siempre sustituyendo el valor en la igualdad."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
   }
 ]
