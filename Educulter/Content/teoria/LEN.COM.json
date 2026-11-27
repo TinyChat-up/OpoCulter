@@ -102,5 +102,93 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     }
+  },
+  {
+    "id": "LEN.COM.GEN.T01",
+    "competencia": "LEN.COM.GEN",
+    "titulo": "Géneros y tipos de texto",
+    "bloques": [
+      {
+        "tipo": "texto",
+        "contenido": "Cada situación de comunicación usa un tipo de texto: noticia, receta, carta, cuento, entrevista, anuncio…"
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Narrativo: cuenta hechos (cuento, noticia)\nDescriptivo: muestra cómo es algo (retrato, guía)\nExpositivo: informa o explica (enciclopedia, libro de texto)\nArgumentativo: defiende una opinión (artículo de opinión)\nInstructivo: indica pasos (receta, normas)\nDialogado: intercambio entre hablantes (entrevista, teatro)"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Pregúntate para qué se escribió el texto: contar, describir, explicar, convencer u ordenar."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.COM.INFER.T01",
+    "competencia": "LEN.COM.INFER",
+    "titulo": "Inferencias",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Inferir es deducir lo que el texto no dice de forma explícita a partir de pistas del propio texto."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Antes de responder, señala la frase que apoya tu deducción. Si no la encuentras, no es una inferencia: es una suposición."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.COM.SITU.T01",
+    "competencia": "LEN.COM.SITU",
+    "titulo": "Elementos de la comunicación",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Emisor: quien envía el mensaje\nReceptor: quien lo recibe\nMensaje: lo que se comunica\nCódigo: el sistema de signos (la lengua)\nCanal: el medio físico (aire, papel, pantalla)\nContexto: la situación que rodea la comunicación"
+      },
+      {
+        "tipo": "texto",
+        "contenido": "En una llamada, el canal es la línea telefónica y el código, la lengua que comparten emisor y receptor."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
   }
 ]

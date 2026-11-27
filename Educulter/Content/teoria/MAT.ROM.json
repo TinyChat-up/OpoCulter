@@ -1,0 +1,62 @@
+[
+  {
+    "id": "MAT.ROM.ESCR.T01",
+    "competencia": "MAT.ROM.ESCR",
+    "titulo": "Escribir números romanos",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "I: 1\nV: 5\nX: 10\nL: 50\nC: 100\nD: 500\nM: 1000"
+      },
+      {
+        "tipo": "regla",
+        "contenido": "I, X, C y M se pueden repetir hasta tres veces; V, L y D nunca se repiten. Solo restan I (delante de V y X), X (delante de L y C) y C (delante de D y M)."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Escribe por partes: 1948 = M + CM + XL + VIII = MCMXLVIII."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.ROM.LEER.T01",
+    "competencia": "MAT.ROM.LEER",
+    "titulo": "Leer números romanos",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Si un símbolo es menor que el que le sigue, se resta; si no, se suma."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Agrupa primero las parejas que restan: CM = 900, XC = 90, IV = 4. Así, CMXCIV = 994."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

@@ -1,0 +1,114 @@
+[
+  {
+    "id": "MAT.POR.CALC.T01",
+    "competencia": "MAT.POR.CALC",
+    "titulo": "Tanto por ciento de una cantidad",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "El a % de N es N · a / 100."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "El 10 % es dividir entre 10; el 5 %, la mitad del 10 %; el 25 %, la cuarta parte."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.POR.PROP.T01",
+    "competencia": "MAT.POR.PROP",
+    "titulo": "Proporcionalidad directa",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Dos magnitudes son directamente proporcionales si, al multiplicar una por un número, la otra queda multiplicada por el mismo número."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Regla de tres directa: si a corresponde a b, a c le corresponde x = b · c / a\nReducción a la unidad: halla el valor de una unidad y multiplica"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.POR.TOTAL.T01",
+    "competencia": "MAT.POR.TOTAL",
+    "titulo": "Total a partir de una parte y su porcentaje",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Si conoces la parte y el porcentaje que representa, el total es parte · 100 / porcentaje."
+      },
+      {
+        "tipo": "texto",
+        "contenido": "Si 36 es el 15 % de una cantidad, la cantidad es 36 · 100 / 15 = 240."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.POR.VAR.T01",
+    "competencia": "MAT.POR.VAR",
+    "titulo": "Aumentos y descuentos porcentuales",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Aumento del a %: N · (1 + a/100)\nDescuento del a %: N · (1 − a/100)"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Dos variaciones seguidas se aplican una detrás de otra sobre la nueva cantidad: subir un 10 % y bajar un 10 % no deja el precio igual."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]
