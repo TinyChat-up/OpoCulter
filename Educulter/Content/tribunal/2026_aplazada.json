@@ -383,6 +383,30 @@
         "estado": "aprobado",
         "revisor": "direccion",
         "fecha": "2026-11-24"
+      },
+      "tabla": {
+        "cabecera": [
+          "Suceso",
+          "Probabilidad"
+        ],
+        "filas": [
+          [
+            "Sacar un número par",
+            "__"
+          ],
+          [
+            "Sacar un número primo",
+            "__"
+          ],
+          [
+            "Sacar un número mayor que 10",
+            "__"
+          ],
+          [
+            "Sacar un número menor que 13",
+            "__"
+          ]
+        ]
       }
     },
     {

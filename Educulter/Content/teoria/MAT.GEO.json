@@ -1,0 +1,30 @@
+[
+  {
+    "id": "MAT.GEO.AREA.T01",
+    "competencia": "MAT.GEO.AREA",
+    "titulo": "Áreas",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Rectángulo: b · h\nCuadrado: l²\nTriángulo: b · h / 2\nRombo: D · d / 2\nTrapecio: (B + b) · h / 2\nCírculo: π · r²"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "En una figura compuesta, divídela en partes conocidas y suma, o calcula el rectángulo completo y resta el hueco. El área va siempre en unidades cuadradas."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

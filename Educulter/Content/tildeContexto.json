@@ -1,0 +1,1855 @@
+{
+  "version": 1,
+  "nota": "Palabras del léxico que no se pueden preguntar sin contexto (Fase 05E, §4.1). Generado por scripts/ambiguas_tilde.py. Lote 06 (27/11/2026): frases con contexto de la dirección en «frases» (frase con ___, forma correcta y opciones = la correcta y las demás variantes de la palabra). Fase 05J: datos del generador «tildeContexto» (LEN.ORT.CTX).",
+  "palabras": [
+    {
+      "palabra": "mamá",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "mama",
+          "categoria": "sustantivo (glándula) / verbo mamar: presente, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Mi ___ trabaja en un hospital.",
+          "correcta": "mamá",
+          "opciones": [
+            "mamá",
+            "mama"
+          ]
+        },
+        {
+          "frase": "El ternero ___ leche de su madre.",
+          "correcta": "mama",
+          "opciones": [
+            "mama",
+            "mamá"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "papá",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "papa",
+          "categoria": "sustantivo (patata; pontífice)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Mi ___ prepara la cena.",
+          "correcta": "papá",
+          "opciones": [
+            "papá",
+            "papa"
+          ]
+        },
+        {
+          "frase": "En Canarias llaman ___ a la patata.",
+          "correcta": "papa",
+          "opciones": [
+            "papa",
+            "papá"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "bebé",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "bebe",
+          "categoria": "verbo beber: presente, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El ___ duerme en su cuna.",
+          "correcta": "bebé",
+          "opciones": [
+            "bebé",
+            "bebe"
+          ]
+        },
+        {
+          "frase": "Mi hermano ___ mucha agua.",
+          "correcta": "bebe",
+          "opciones": [
+            "bebe",
+            "bebé"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "dominó",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "domino",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (dominar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Jugamos al ___ después de comer.",
+          "correcta": "dominó",
+          "opciones": [
+            "dominó",
+            "domino"
+          ]
+        },
+        {
+          "frase": "Yo ___ tres idiomas.",
+          "correcta": "domino",
+          "opciones": [
+            "domino",
+            "dominó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "compás",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "compas",
+          "categoria": "sustantivo coloquial (plural de compa)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Usa el ___ para dibujar la circunferencia.",
+          "correcta": "compás",
+          "opciones": [
+            "compás",
+            "compas"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "inglés",
+      "categoria": "adjetivo / sustantivo",
+      "variantes": [
+        {
+          "forma": "ingles",
+          "categoria": "sustantivo (plural de ingle)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Estudia ___ en una academia.",
+          "correcta": "inglés",
+          "opciones": [
+            "inglés",
+            "ingles"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "cortés",
+      "categoria": "adjetivo",
+      "variantes": [
+        {
+          "forma": "cortes",
+          "categoria": "sustantivo (plural de corte) / verbo cortar: presente de subjuntivo, 2.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Fue muy ___ con los invitados.",
+          "correcta": "cortés",
+          "opciones": [
+            "cortés",
+            "cortes"
+          ]
+        },
+        {
+          "frase": "No ___ el papel todavía.",
+          "correcta": "cortes",
+          "opciones": [
+            "cortes",
+            "cortés"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "marqués",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "marques",
+          "categoria": "verbo marcar: presente de subjuntivo, 2.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El ___ vivía en un palacio.",
+          "correcta": "marqués",
+          "opciones": [
+            "marqués",
+            "marques"
+          ]
+        },
+        {
+          "frase": "Quiero que ___ el número.",
+          "correcta": "marques",
+          "opciones": [
+            "marques",
+            "marqués"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "llegó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "llego",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Ayer ___ tarde a casa.",
+          "correcta": "llegó",
+          "opciones": [
+            "llegó",
+            "llego"
+          ]
+        },
+        {
+          "frase": "Yo siempre ___ a tiempo a clase.",
+          "correcta": "llego",
+          "opciones": [
+            "llego",
+            "llegó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "cantó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "canto",
+          "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (cantar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Anoche ___ en el concierto.",
+          "correcta": "cantó",
+          "opciones": [
+            "cantó",
+            "canto"
+          ]
+        },
+        {
+          "frase": "Yo ___ en el coro del colegio.",
+          "correcta": "canto",
+          "opciones": [
+            "canto",
+            "cantó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "habló",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "hablo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Ayer ___ con su abuela por teléfono.",
+          "correcta": "habló",
+          "opciones": [
+            "habló",
+            "hablo"
+          ]
+        },
+        {
+          "frase": "Yo ___ despacio para que me entiendan.",
+          "correcta": "hablo",
+          "opciones": [
+            "hablo",
+            "habló"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "miró",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "miro",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Se asomó y ___ por la ventana.",
+          "correcta": "miró",
+          "opciones": [
+            "miró",
+            "miro"
+          ]
+        },
+        {
+          "frase": "Yo ___ el cielo cada mañana.",
+          "correcta": "miro",
+          "opciones": [
+            "miro",
+            "miró"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "jugó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "jugo",
+          "categoria": "sustantivo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El equipo ___ muy bien el domingo.",
+          "correcta": "jugó",
+          "opciones": [
+            "jugó",
+            "jugo"
+          ]
+        },
+        {
+          "frase": "El ___ de la carne mancha el plato.",
+          "correcta": "jugo",
+          "opciones": [
+            "jugo",
+            "jugó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "pasó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "paso",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular / sustantivo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El tren ___ a las ocho.",
+          "correcta": "pasó",
+          "opciones": [
+            "pasó",
+            "paso"
+          ]
+        },
+        {
+          "frase": "Doy un ___ adelante.",
+          "correcta": "paso",
+          "opciones": [
+            "paso",
+            "pasó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "dejó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "dejo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular / sustantivo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Ayer ___ las llaves en la mesa.",
+          "correcta": "dejó",
+          "opciones": [
+            "dejó",
+            "dejo"
+          ]
+        },
+        {
+          "frase": "Hoy yo ___ el coche en el garaje.",
+          "correcta": "dejo",
+          "opciones": [
+            "dejo",
+            "dejó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "terminó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "termino",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        },
+        {
+          "forma": "término",
+          "categoria": "sustantivo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "La película ___ a las diez.",
+          "correcta": "terminó",
+          "opciones": [
+            "terminó",
+            "termino",
+            "término"
+          ]
+        },
+        {
+          "frase": "Yo siempre ___ los deberes antes de cenar.",
+          "correcta": "termino",
+          "opciones": [
+            "termino",
+            "terminó",
+            "término"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "estudió",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "estudio",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular / sustantivo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El año pasado ___ Magisterio.",
+          "correcta": "estudió",
+          "opciones": [
+            "estudió",
+            "estudio"
+          ]
+        },
+        {
+          "frase": "Mi ___ tiene mucha luz.",
+          "correcta": "estudio",
+          "opciones": [
+            "estudio",
+            "estudió"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "cerró",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "cerro",
+          "categoria": "sustantivo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El viento ___ la puerta de golpe.",
+          "correcta": "cerró",
+          "opciones": [
+            "cerró",
+            "cerro"
+          ]
+        },
+        {
+          "frase": "Subimos al ___ para ver el pueblo.",
+          "correcta": "cerro",
+          "opciones": [
+            "cerro",
+            "cerró"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "llamó",
+      "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "llamo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Ayer me ___ mi amiga.",
+          "correcta": "llamó",
+          "opciones": [
+            "llamó",
+            "llamo"
+          ]
+        },
+        {
+          "frase": "Yo te ___ cuando llegue.",
+          "correcta": "llamo",
+          "opciones": [
+            "llamo",
+            "llamó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "cantará",
+      "categoria": "verbo: futuro simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "cantara",
+          "categoria": "verbo: pretérito imperfecto de subjuntivo, 1.ª y 3.ª persona del singular"
+        },
+        {
+          "forma": "cántara",
+          "categoria": "sustantivo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Mañana ___ en el teatro.",
+          "correcta": "cantará",
+          "opciones": [
+            "cantará",
+            "cantara",
+            "cántara"
+          ]
+        },
+        {
+          "frase": "Si ___ mejor, ganaría el concurso.",
+          "correcta": "cantara",
+          "opciones": [
+            "cantara",
+            "cantará",
+            "cántara"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "será",
+      "categoria": "verbo ser: futuro simple, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "sera",
+          "categoria": "sustantivo (espuerta grande)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "La reunión ___ el lunes.",
+          "correcta": "será",
+          "opciones": [
+            "será",
+            "sera"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "cantarán",
+      "categoria": "verbo: futuro simple, 3.ª persona del plural",
+      "variantes": [
+        {
+          "forma": "cantaran",
+          "categoria": "verbo: pretérito imperfecto de subjuntivo, 3.ª persona del plural"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El próximo domingo ___ en la plaza.",
+          "correcta": "cantarán",
+          "opciones": [
+            "cantarán",
+            "cantaran"
+          ]
+        },
+        {
+          "frase": "Les pedí que ___ más bajo.",
+          "correcta": "cantaran",
+          "opciones": [
+            "cantaran",
+            "cantarán"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "está",
+      "categoria": "verbo estar: presente, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "esta",
+          "categoria": "determinante / pronombre demostrativo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "La biblioteca ___ cerrada.",
+          "correcta": "está",
+          "opciones": [
+            "está",
+            "esta"
+          ]
+        },
+        {
+          "frase": "Me gusta ___ canción.",
+          "correcta": "esta",
+          "opciones": [
+            "esta",
+            "está"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "estás",
+      "categoria": "verbo estar: presente, 2.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "estas",
+          "categoria": "determinante / pronombre demostrativo"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "¿Dónde ___ ahora?",
+          "correcta": "estás",
+          "opciones": [
+            "estás",
+            "estas"
+          ]
+        },
+        {
+          "frase": "Me encantan ___ flores.",
+          "correcta": "estas",
+          "opciones": [
+            "estas",
+            "estás"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "esté",
+      "categoria": "verbo estar: presente de subjuntivo, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "este",
+          "categoria": "determinante / pronombre demostrativo / sustantivo (punto cardinal)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Espero que ___ bien.",
+          "correcta": "esté",
+          "opciones": [
+            "esté",
+            "este"
+          ]
+        },
+        {
+          "frase": "Quiero ___ libro.",
+          "correcta": "este",
+          "opciones": [
+            "este",
+            "esté"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "libro",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (librar)",
+      "variantes": [
+        {
+          "forma": "libró",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (librar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Leí un ___ de aventuras.",
+          "correcta": "libro",
+          "opciones": [
+            "libro",
+            "libró"
+          ]
+        },
+        {
+          "frase": "Se ___ del castigo.",
+          "correcta": "libró",
+          "opciones": [
+            "libró",
+            "libro"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "mano",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "manó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (manar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Levanta la ___ para hablar.",
+          "correcta": "mano",
+          "opciones": [
+            "mano",
+            "manó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "camino",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (caminar)",
+      "variantes": [
+        {
+          "forma": "caminó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (caminar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Este ___ lleva al río.",
+          "correcta": "camino",
+          "opciones": [
+            "camino",
+            "caminó"
+          ]
+        },
+        {
+          "frase": "Ayer ___ cinco kilómetros.",
+          "correcta": "caminó",
+          "opciones": [
+            "caminó",
+            "camino"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "aire",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "airé",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (airar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Abre la ventana para que entre ___.",
+          "correcta": "aire",
+          "opciones": [
+            "aire",
+            "airé"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "abrigo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (abrigar)",
+      "variantes": [
+        {
+          "forma": "abrigó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (abrigar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Ponte el ___, que hace frío.",
+          "correcta": "abrigo",
+          "opciones": [
+            "abrigo",
+            "abrigó"
+          ]
+        },
+        {
+          "frase": "La madre ___ al niño con una manta.",
+          "correcta": "abrigó",
+          "opciones": [
+            "abrigó",
+            "abrigo"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "recreo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (recrear)",
+      "variantes": [
+        {
+          "forma": "recreó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (recrear)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "En el ___ jugamos al fútbol.",
+          "correcta": "recreo",
+          "opciones": [
+            "recreo",
+            "recreó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "primo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (primar)",
+      "variantes": [
+        {
+          "forma": "primó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (primar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Mi ___ vive en Sevilla.",
+          "correcta": "primo",
+          "opciones": [
+            "primo",
+            "primó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "verso",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (versar)",
+      "variantes": [
+        {
+          "forma": "versó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (versar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Cada ___ del poema tiene ocho sílabas.",
+          "correcta": "verso",
+          "opciones": [
+            "verso",
+            "versó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "sujeto",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (sujetar)",
+      "variantes": [
+        {
+          "forma": "sujetó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (sujetar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El ___ concuerda con el verbo.",
+          "correcta": "sujeto",
+          "opciones": [
+            "sujeto",
+            "sujetó"
+          ]
+        },
+        {
+          "frase": "Él ___ la cuerda con fuerza.",
+          "correcta": "sujetó",
+          "opciones": [
+            "sujetó",
+            "sujeto"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "nombre",
+      "categoria": "sustantivo / verbo nombrar: presente de subjuntivo",
+      "variantes": [
+        {
+          "forma": "nombré",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (nombrar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Escribe tu ___ en la hoja.",
+          "correcta": "nombre",
+          "opciones": [
+            "nombre",
+            "nombré"
+          ]
+        },
+        {
+          "frase": "Ayer ___ a los delegados de clase.",
+          "correcta": "nombré",
+          "opciones": [
+            "nombré",
+            "nombre"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "tilde",
+      "categoria": "sustantivo / verbo tildar: presente de subjuntivo",
+      "variantes": [
+        {
+          "forma": "tildé",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (tildar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "La palabra «árbol» lleva ___.",
+          "correcta": "tilde",
+          "opciones": [
+            "tilde",
+            "tildé"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "entero",
+      "categoria": "adjetivo / verbo: presente de indicativo, 1.ª persona del singular (enterar)",
+      "variantes": [
+        {
+          "forma": "enteró",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (enterar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Se comió el pastel ___.",
+          "correcta": "entero",
+          "opciones": [
+            "entero",
+            "enteró"
+          ]
+        },
+        {
+          "frase": "Se ___ de la noticia por la radio.",
+          "correcta": "enteró",
+          "opciones": [
+            "enteró",
+            "entero"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "segundo",
+      "categoria": "sustantivo / adjetivo ordinal",
+      "variantes": [
+        {
+          "forma": "segundó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (segundar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Llegó en ___ lugar.",
+          "correcta": "segundo",
+          "opciones": [
+            "segundo",
+            "segundó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "canto",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (cantar)",
+      "variantes": [
+        {
+          "forma": "cantó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El ___ de los pájaros me despierta.",
+          "correcta": "canto",
+          "opciones": [
+            "canto",
+            "cantó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "paseo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (pasear)",
+      "variantes": [
+        {
+          "forma": "paseó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (pasear)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Damos un ___ por el parque.",
+          "correcta": "paseo",
+          "opciones": [
+            "paseo",
+            "paseó"
+          ]
+        },
+        {
+          "frase": "Ayer mi abuelo ___ por el parque.",
+          "correcta": "paseó",
+          "opciones": [
+            "paseó",
+            "paseo"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "deseo",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (desear)",
+      "variantes": [
+        {
+          "forma": "deseó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (desear)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Pide un ___ antes de soplar las velas.",
+          "correcta": "deseo",
+          "opciones": [
+            "deseo",
+            "deseó"
+          ]
+        },
+        {
+          "frase": "Ella ___ ganar la carrera.",
+          "correcta": "deseó",
+          "opciones": [
+            "deseó",
+            "deseo"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "reino",
+      "categoria": "sustantivo / verbo: presente de indicativo, 1.ª persona del singular (reinar)",
+      "variantes": [
+        {
+          "forma": "reinó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (reinar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El ___ animal es muy variado.",
+          "correcta": "reino",
+          "opciones": [
+            "reino",
+            "reinó"
+          ]
+        },
+        {
+          "frase": "Aquel rey ___ durante cuarenta años.",
+          "correcta": "reinó",
+          "opciones": [
+            "reinó",
+            "reino"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "peine",
+      "categoria": "sustantivo / verbo peinar: presente de subjuntivo",
+      "variantes": [
+        {
+          "forma": "peiné",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (peinar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Necesito un ___ para el pelo.",
+          "correcta": "peine",
+          "opciones": [
+            "peine",
+            "peiné"
+          ]
+        },
+        {
+          "frase": "Ayer me ___ antes de salir.",
+          "correcta": "peiné",
+          "opciones": [
+            "peiné",
+            "peine"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "aceite",
+      "categoria": "sustantivo / verbo aceitar: presente de subjuntivo",
+      "variantes": [
+        {
+          "forma": "aceité",
+          "categoria": "verbo: pretérito perfecto simple, 1.ª persona del singular (aceitar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Cocina con ___ de oliva.",
+          "correcta": "aceite",
+          "opciones": [
+            "aceite",
+            "aceité"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "revólver",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "revolver",
+          "categoria": "verbo (infinitivo)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El detective guardó el ___ en el cajón.",
+          "correcta": "revólver",
+          "opciones": [
+            "revólver",
+            "revolver"
+          ]
+        },
+        {
+          "frase": "No hay que ___ tanto el café.",
+          "correcta": "revolver",
+          "opciones": [
+            "revolver",
+            "revólver"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "médico",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "medico",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (medicar)"
+        },
+        {
+          "forma": "medicó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (medicar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El ___ me recetó un jarabe.",
+          "correcta": "médico",
+          "opciones": [
+            "médico",
+            "medico",
+            "medicó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "número",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "numero",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (numerar)"
+        },
+        {
+          "forma": "numeró",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (numerar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Apunta el ___ de teléfono.",
+          "correcta": "número",
+          "opciones": [
+            "número",
+            "numero",
+            "numeró"
+          ]
+        },
+        {
+          "frase": "Yo ___ las páginas del cuaderno.",
+          "correcta": "numero",
+          "opciones": [
+            "numero",
+            "número",
+            "numeró"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "último",
+      "categoria": "adjetivo",
+      "variantes": [
+        {
+          "forma": "ultimo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (ultimar)"
+        },
+        {
+          "forma": "ultimó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (ultimar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Es el ___ día del curso.",
+          "correcta": "último",
+          "opciones": [
+            "último",
+            "ultimo",
+            "ultimó"
+          ]
+        },
+        {
+          "frase": "Hoy yo ___ los detalles del viaje.",
+          "correcta": "ultimo",
+          "opciones": [
+            "ultimo",
+            "último",
+            "ultimó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "máquina",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "maquina",
+          "categoria": "verbo maquinar: presente, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "La ___ de café está estropeada.",
+          "correcta": "máquina",
+          "opciones": [
+            "máquina",
+            "maquina"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "página",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "pagina",
+          "categoria": "verbo paginar: presente, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Abre el libro por la ___ diez.",
+          "correcta": "página",
+          "opciones": [
+            "página",
+            "pagina"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "público",
+      "categoria": "adjetivo / sustantivo",
+      "variantes": [
+        {
+          "forma": "publico",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (publicar)"
+        },
+        {
+          "forma": "publicó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (publicar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El ___ aplaudió al final.",
+          "correcta": "público",
+          "opciones": [
+            "público",
+            "publico",
+            "publicó"
+          ]
+        },
+        {
+          "frase": "Este mes yo ___ mi primer libro.",
+          "correcta": "publico",
+          "opciones": [
+            "publico",
+            "público",
+            "publicó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "sílaba",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "silaba",
+          "categoria": "verbo silabar: presente, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "La ___ tónica es la que suena más fuerte.",
+          "correcta": "sílaba",
+          "opciones": [
+            "sílaba",
+            "silaba"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "órdenes",
+      "categoria": "sustantivo (plural)",
+      "variantes": [
+        {
+          "forma": "ordenes",
+          "categoria": "verbo ordenar: presente de subjuntivo, 2.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El capitán dio ___ a la tripulación.",
+          "correcta": "órdenes",
+          "opciones": [
+            "órdenes",
+            "ordenes"
+          ]
+        },
+        {
+          "frase": "Quiero que ___ tu habitación.",
+          "correcta": "ordenes",
+          "opciones": [
+            "ordenes",
+            "órdenes"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "azúcares",
+      "categoria": "sustantivo (plural)",
+      "variantes": [
+        {
+          "forma": "azucares",
+          "categoria": "verbo azucarar: presente de subjuntivo, 2.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Hay que reducir los ___ de la dieta.",
+          "correcta": "azúcares",
+          "opciones": [
+            "azúcares",
+            "azucares"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "triángulo",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "triangulo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (triangular)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Un ___ tiene tres lados.",
+          "correcta": "triángulo",
+          "opciones": [
+            "triángulo",
+            "triangulo"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "círculo",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "circulo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (circular)"
+        },
+        {
+          "forma": "circuló",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (circular)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Dibuja un ___ con el compás.",
+          "correcta": "círculo",
+          "opciones": [
+            "círculo",
+            "circulo",
+            "circuló"
+          ]
+        },
+        {
+          "frase": "El tráfico ___ con normalidad.",
+          "correcta": "circuló",
+          "opciones": [
+            "circuló",
+            "círculo",
+            "circulo"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "término",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "termino",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular"
+        },
+        {
+          "forma": "terminó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Ese ___ no aparece en el diccionario.",
+          "correcta": "término",
+          "opciones": [
+            "término",
+            "termino",
+            "terminó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "sábana",
+      "categoria": "sustantivo (ropa de cama)",
+      "variantes": [
+        {
+          "forma": "sabana",
+          "categoria": "sustantivo (llanura)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Cambia la ___ de la cama.",
+          "correcta": "sábana",
+          "opciones": [
+            "sábana",
+            "sabana"
+          ]
+        },
+        {
+          "frase": "Los leones viven en la ___ africana.",
+          "correcta": "sabana",
+          "opciones": [
+            "sabana",
+            "sábana"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "práctico",
+      "categoria": "adjetivo",
+      "variantes": [
+        {
+          "forma": "practico",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (practicar)"
+        },
+        {
+          "forma": "practicó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (practicar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Este método es muy ___.",
+          "correcta": "práctico",
+          "opciones": [
+            "práctico",
+            "practico",
+            "practicó"
+          ]
+        },
+        {
+          "frase": "Yo ___ natación los martes.",
+          "correcta": "practico",
+          "opciones": [
+            "practico",
+            "práctico",
+            "practicó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "líquido",
+      "categoria": "sustantivo / adjetivo",
+      "variantes": [
+        {
+          "forma": "liquido",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (liquidar)"
+        },
+        {
+          "forma": "liquidó",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (liquidar)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "El agua es un ___.",
+          "correcta": "líquido",
+          "opciones": [
+            "líquido",
+            "liquido",
+            "liquidó"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "artículo",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "articulo",
+          "categoria": "verbo: presente de indicativo, 1.ª persona del singular (articular)"
+        },
+        {
+          "forma": "articuló",
+          "categoria": "verbo: pretérito perfecto simple, 3.ª persona del singular (articular)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "«El» es un ___ determinado.",
+          "correcta": "artículo",
+          "opciones": [
+            "artículo",
+            "articulo",
+            "articuló"
+          ]
+        },
+        {
+          "frase": "Yo ___ bien las palabras al hablar.",
+          "correcta": "articulo",
+          "opciones": [
+            "articulo",
+            "artículo",
+            "articuló"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "río",
+      "categoria": "sustantivo",
+      "variantes": [
+        {
+          "forma": "rio",
+          "categoria": "verbo reír: pretérito perfecto simple, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Nos bañamos en el ___.",
+          "correcta": "río",
+          "opciones": [
+            "río",
+            "rio"
+          ]
+        },
+        {
+          "frase": "Mi hermano se ___ con el chiste.",
+          "correcta": "rio",
+          "opciones": [
+            "rio",
+            "río"
+          ],
+          "notaDireccion": "Nota para «rio» y «frio»: son monosílabos ortográficos y se escriben sin tilde (RAE, Ortografía de 2010). La explicación del ítem debe decirlo."
+        }
+      ]
+    },
+    {
+      "palabra": "frío",
+      "categoria": "adjetivo / sustantivo",
+      "variantes": [
+        {
+          "forma": "frio",
+          "categoria": "verbo freír: pretérito perfecto simple, 3.ª persona del singular"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "En invierno hace mucho ___.",
+          "correcta": "frío",
+          "opciones": [
+            "frío",
+            "frio"
+          ]
+        },
+        {
+          "frase": "Mi padre ___ un huevo para cenar.",
+          "correcta": "frio",
+          "opciones": [
+            "frio",
+            "frío"
+          ],
+          "notaDireccion": "Nota para «rio» y «frio»: son monosílabos ortográficos y se escriben sin tilde (RAE, Ortografía de 2010). La explicación del ítem debe decirlo."
+        }
+      ]
+    },
+    {
+      "palabra": "comisaría",
+      "categoria": "sustantivo (oficina)",
+      "variantes": [
+        {
+          "forma": "comisaria",
+          "categoria": "sustantivo (mujer comisario)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Denunció el robo en la ___.",
+          "correcta": "comisaría",
+          "opciones": [
+            "comisaría",
+            "comisaria"
+          ]
+        },
+        {
+          "frase": "La ___ Martínez dirigió la investigación.",
+          "correcta": "comisaria",
+          "opciones": [
+            "comisaria",
+            "comisaría"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "tenía",
+      "categoria": "verbo tener: pretérito imperfecto, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "tenia",
+          "categoria": "sustantivo (gusano)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Cuando ___ diez años, vivía en Toledo.",
+          "correcta": "tenía",
+          "opciones": [
+            "tenía",
+            "tenia"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "hacía",
+      "categoria": "verbo hacer: pretérito imperfecto, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "hacia",
+          "categoria": "preposición"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Ayer ___ mucho calor.",
+          "correcta": "hacía",
+          "opciones": [
+            "hacía",
+            "hacia"
+          ]
+        },
+        {
+          "frase": "Caminaba ___ el norte.",
+          "correcta": "hacia",
+          "opciones": [
+            "hacia",
+            "hacía"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "sabía",
+      "categoria": "verbo saber: pretérito imperfecto, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "sabia",
+          "categoria": "adjetivo (femenino de sabio)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "No ___ la respuesta.",
+          "correcta": "sabía",
+          "opciones": [
+            "sabía",
+            "sabia"
+          ]
+        },
+        {
+          "frase": "Es una mujer muy ___.",
+          "correcta": "sabia",
+          "opciones": [
+            "sabia",
+            "sabía"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "venía",
+      "categoria": "verbo venir: pretérito imperfecto, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "venia",
+          "categoria": "sustantivo (permiso)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Cuando ___ al colegio, vi a mi tutora.",
+          "correcta": "venía",
+          "opciones": [
+            "venía",
+            "venia"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "sería",
+      "categoria": "verbo ser: condicional, 1.ª y 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "seria",
+          "categoria": "adjetivo (femenino de serio)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "Dijo que ___ fácil.",
+          "correcta": "sería",
+          "opciones": [
+            "sería",
+            "seria"
+          ]
+        },
+        {
+          "frase": "Mi profesora es muy ___.",
+          "correcta": "seria",
+          "opciones": [
+            "seria",
+            "sería"
+          ]
+        }
+      ]
+    },
+    {
+      "palabra": "continúa",
+      "categoria": "verbo continuar: presente, 3.ª persona del singular",
+      "variantes": [
+        {
+          "forma": "continua",
+          "categoria": "adjetivo (femenino de continuo)"
+        }
+      ],
+      "frases": [
+        {
+          "frase": "La lluvia ___ sin parar.",
+          "correcta": "continúa",
+          "opciones": [
+            "continúa",
+            "continua"
+          ]
+        },
+        {
+          "frase": "Se oía una música ___.",
+          "correcta": "continua",
+          "opciones": [
+            "continua",
+            "continúa"
+          ]
+        }
+      ]
+    }
+  ]
+}

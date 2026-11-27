@@ -4,13 +4,30 @@ import Foundation
 /// descripción en segunda persona (≤ 12 palabras) y el remedio que lo trabaja.
 struct ErrorTipico: Codable, Sendable, Equatable, Identifiable {
     struct Remedio: Codable, Sendable, Equatable {
-        /// Plantilla que trabaja el error.
-        var plantilla: String
-        var dificultad: Int
+        /// `remedioEstatico` (lote 06, 05J): la tarjeta de teoría y los ítems estáticos aprobados de la
+        /// competencia, sin plantilla. `nil`: remedio con plantilla.
+        var tipo: String?
+        /// Plantilla que trabaja el error (obligatoria salvo en el remedio estático).
+        var plantilla: String?
+        var dificultad: Int?
         /// Regla breve que se muestra antes de los ítems del remedio.
         var explicacion: String
-        /// Tarjeta de teoría opcional.
+        /// Tarjeta de teoría (obligatoria en el remedio estático).
         var tarjeta: String?
+        /// Ítems estáticos del remedio estático.
+        var items: [String]?
+
+        static let estatico = "remedioEstatico"
+        var esEstatico: Bool { tipo == Self.estatico }
+
+        init(tipo: String? = nil, plantilla: String?, dificultad: Int?, explicacion: String, tarjeta: String? = nil, items: [String]? = nil) {
+            self.tipo = tipo
+            self.plantilla = plantilla
+            self.dificultad = dificultad
+            self.explicacion = explicacion
+            self.tarjeta = tarjeta
+            self.items = items
+        }
     }
 
     /// Distractor de un generador que delata el error: tipo de generador y expresión regular sobre

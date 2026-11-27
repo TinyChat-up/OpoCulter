@@ -464,6 +464,9 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
         #expect(f.isEmpty, "\(item.id): \(f)")
     case "fraseHueco":
         if let c = respuestaCorrecta(item) { #expect(c == d["correcta"]) }
+    case "tildeContexto":
+        // Oráculo: la forma correcta de la frase de la dirección (tildeContexto.json).
+        if let c = respuestaCorrecta(item) { #expect(c == d["correcta"], "\(item.id)") }
     case "areaCompuesta":
         // Oráculo independiente de los cortes: fórmula del área del polígono (JuegosTests, 05G).
         guard case .figuraArea(let f) = item.payload, let total = Racional.interpretar(f.total)?.valor else { Issue.record("payload"); return }
@@ -501,7 +504,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
 struct GeneradoresPropiedadesTests {
     static let plantillas = bancoGeneradores.plantillas
 
-    @Test("Hay plantillas para los 29 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
+    @Test("Hay plantillas para los 30 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
     func cobertura() {
         let tipos = Set(Self.plantillas.map(\.tipo))
         #expect(tipos == Set(MotorGeneradores.generadores.keys))
@@ -530,7 +533,10 @@ struct GeneradoresPropiedadesTests {
         // Fase 05I: redactar en el simulacro (recuerdo) con datos ya aprobados.
         let fase05I = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05I") == true }
         #expect(fase05I.count == 3 && fase05I.allSatisfy { $0.mecanica == .recuerdo && $0.validacion.estado == .aprobado })
-        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !fase05H.contains($0) && !fase05I.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
+        // Fase 05J: tilde en contexto del lote 06, aprobada al superar sus propiedades (Fase05JTests).
+        let fase05J = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05J") == true }
+        #expect(fase05J.count == 1 && fase05J.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-27") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !fase05H.contains($0) && !fase05I.contains($0) && !fase05J.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -574,9 +580,10 @@ struct GeneradoresPropiedadesTests {
         }
         // Los generadores de Lengua dependen del tamaño del léxico y del banco de prueba: con
         // recursos pequeños varios niveles comparten palabras (no decrece y el 6 supera al 1).
+        // tildeContexto (05J) es, como fraseHueco, un banco fijo de frases con 3 niveles (2, 3 y 4).
         // J46 (05G): el paso fija la consigna y el texto lo elige la semilla; no hay niveles.
         if base.tipo == "evidenciaResumen" { return }
-        let recursosPequenos = ["colocarTilde", "clasificarAcentuacion", "silabaTonica", "fraseHueco", "analisisVerbal", "oracionSimple"].contains(base.tipo)
+        let recursosPequenos = ["colocarTilde", "clasificarAcentuacion", "silabaTonica", "fraseHueco", "tildeContexto", "analisisVerbal", "oracionSimple"].contains(base.tipo)
         for d in 1..<6 {
             if recursosPequenos { #expect(medias[d] >= medias[d - 1] - 1e-9, "\(clave): \(medias)") }
             else { #expect(medias[d] > medias[d - 1], "\(clave): \(medias)") }
@@ -611,7 +618,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 119)
+        #expect(banco.plantillas.count == 120)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }

@@ -249,12 +249,44 @@ final class ExamenTribunalRegistro {
     }
 }
 
+/// Intento de un simulacro escrito (05J): campos propios, compatibles con CloudKit (valores por
+/// defecto y colecciones en JSON).
+@Model
+final class IntentoEscritoRegistro {
+    var uuid: UUID = UUID()
+    var simulacro: String = ""
+    var revision: Int = 0
+    /// `app` o `papel`.
+    var formato: String = "app"
+    /// `nil`: prueba en papel corregida sin tiempo.
+    var inicio: Date?
+    var entrega: Date?
+    var duracionSegundos: Int = 0
+    var entregaAutomatica: Bool = false
+    var respuestas: Data?
+    var marcas: Data?
+    var criterios: Data?
+    var faltasPalabras: Int = 0
+    var faltasTildes: Int = 0
+    var aplicarPenalizacion: Bool = true
+    var borradores: Data?
+    var actual: String?
+    var relojOculto: Bool = false
+    /// Orden estable (momento de creación).
+    var creado: Date = Date.distantPast
+
+    init(uuid: UUID, creado: Date) {
+        self.uuid = uuid
+        self.creado = creado
+    }
+}
+
 /// Esquema y contenedor del progreso.
 enum EsquemaProgreso {
     static var modelos: [any PersistentModel.Type] {
         [IntentoRegistro.self, EstadoCompetenciaRegistro.self, RescateRegistro.self,
          PerfilRegistro.self, LogroRegistro.self, DiagnosticoRegistro.self, PartidaRegistro.self, AjustesRegistro.self,
-         EventoErrorRegistro.self, IntentoActividadRegistro.self, ExamenTribunalRegistro.self]
+         EventoErrorRegistro.self, IntentoActividadRegistro.self, ExamenTribunalRegistro.self, IntentoEscritoRegistro.self]
     }
 
     /// Contenedor local (sin CloudKit). `enMemoria` para tests.

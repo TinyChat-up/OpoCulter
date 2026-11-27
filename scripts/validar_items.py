@@ -38,7 +38,9 @@ ANIOS_DOMINIO_PUBLICO = 80
 LICENCIAS = {"propia", "dominio publico"}
 MECANICAS = {"eleccion", "verdaderoFalso", "clasificar", "ordenar", "emparejar", "marcarTexto",
              "segmentar", "ruedas", "construir", "numerico", "colocarTilde", "fraccionBarras"}
-TIPOS_BLOQUE = {"texto", "regla", "ejemplo", "esquema"}
+# Mecánicas de juego (05G y 05H): su payload lo valida el validador de Swift.
+MECANICAS_JUEGO = {"evidencia", "recuerdo", "figuraArea", "rayosX", "editor"}
+TIPOS_BLOQUE = {"texto", "regla", "ejemplo", "esquema", "truco"}
 ESTADOS = {"borrador", "revisado", "aprobado"}
 VOCALES = set("aeiou")
 
@@ -383,7 +385,7 @@ def validar_item(it, competencias, anio, textos=None):
     if pistas and isinstance(it.get("peldano"), int) and it["peldano"] >= 3:
         m.append("los ítems de peldaño 3 o superior no pueden tener pistas (D-033)")
     mec = it.get("mecanica")
-    if mec not in MECANICAS:
+    if mec not in MECANICAS and mec not in MECANICAS_JUEGO:
         m.append(f"mecánica «{mec}» desconocida")
     errores = it.get("erroresHabituales") or []
     for e in errores:
@@ -544,6 +546,10 @@ def main(argv):
     for ruta, refs in archivos_items:
         nombre = f"{ruta.parent.name}/{ruta.name}"
         lista = cargar(ruta, errores) or []
+        if isinstance(lista, dict):
+            # Un objeto (p. ej. tildeContexto.json) no es una lista de ítems.
+            resumen.append(f"{nombre}: objeto, no es una lista de ítems (se omite)")
+            continue
         for it in lista:
             iid = it.get("id")
             if iid in ids_items:
@@ -579,6 +585,24 @@ def main(argv):
             errores += [f"simulacros/{ruta.name} · texto base: {e}" for e in validar_procedencia(base.get("procedencia"), anio)]
         errores += [f"simulacros/{ruta.name}: {e}" for e in validar_validacion(s.get("validacion"))]
         resumen.append(f"simulacros/{ruta.name}: 1 simulacro")
+
+    # Tilde en contexto (lote 06, 05J): objeto con palabras, variantes y frases.
+    ruta_ctx = raiz / "tildeContexto.json"
+    if ruta_ctx.exists():
+        ctx = cargar(ruta_ctx, errores) or {}
+        n = 0
+        for pal in ctx.get("palabras", []) if isinstance(ctx, dict) else []:
+            formas = {pal.get("palabra")} | {v.get("forma") for v in pal.get("variantes", [])}
+            for f in pal.get("frases", []):
+                n += 1
+                op = f.get("opciones", [])
+                if f.get("frase", "").count("___") != 1:
+                    errores.append(f"tildeContexto.json · {f.get('frase')}: debe tener un solo hueco ___")
+                if op.count(f.get("correcta")) != 1 or len(set(op)) != len(op):
+                    errores.append(f"tildeContexto.json · {f.get('frase')}: una sola opción correcta y sin repetir")
+                if not set(op) <= formas:
+                    errores.append(f"tildeContexto.json · {f.get('frase')}: opciones que no son formas de «{pal.get('palabra')}»")
+        resumen.append(f"tildeContexto.json: {n} frases")
 
     print(f"Contenido: {raiz} · año de referencia {anio}")
     for r in resumen:

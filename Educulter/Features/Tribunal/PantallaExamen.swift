@@ -46,6 +46,14 @@ struct PantallaExamen: View {
             pie
         }
         .background(Paleta.fondo.ignoresSafeArea())
+        .task {
+            // Un temporizador de 1 s mientras la sala está a la vista (05J: un TimelineView con
+            // `from: .now` se recreaba en cada render y disparaba sin parar).
+            while !Task.isCancelled {
+                modelo.tic(.now)
+                try? await Task.sleep(for: .seconds(1))
+            }
+        }
         .sheet(isPresented: $verMapa) { mapa }
         .sheet(isPresented: $verBorrador) {
             HojaBorrador(enunciado: modelo.enunciado(modelo.actual), dibujo: $modelo.borrador)
@@ -66,12 +74,10 @@ struct PantallaExamen: View {
             HStack {
                 Button { modelo.pausar(); cerrar() } label: { Image(systemName: "xmark").font(.headline) }
                     .frame(minWidth: Medidas.tactilMinimo, minHeight: Medidas.tactilMinimo)
-                    .accessibilityLabel("Salir (el examen se guarda)")
+                    .accessibilityLabel("Salir (se guarda y el tiempo sigue corriendo)")
                     .accessibilityIdentifier("botonSalirExamen")
                 Spacer()
-                TimelineView(.periodic(from: .now, by: 1)) { contexto in
-                    reloj.onChange(of: contexto.date) { _, ahora in modelo.tic(ahora) }
-                }
+                reloj
                 Spacer()
                 Button { verMapa = true } label: { Label("Mapa", systemImage: "square.grid.3x3") }
                     .frame(minHeight: Medidas.tactilMinimo)
@@ -118,6 +124,7 @@ struct PantallaExamen: View {
                 .foregroundStyle(Paleta.textoPrincipal)
                 .fixedSize(horizontal: false, vertical: true)
                 .accessibilityIdentifier("enunciadoExamen")
+            if let t = o.tabla { VistaTabla(tabla: t) }
             if o.esAnulada {
                 Label("Pregunta anulada por el tribunal: se muestra, pero no puntúa.", systemImage: "nosign")
                     .font(.footnote).foregroundStyle(Paleta.textoSecundario)

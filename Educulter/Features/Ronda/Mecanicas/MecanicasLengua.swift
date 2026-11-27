@@ -41,6 +41,7 @@ struct MecanicaRayosX: View {
         VStack(alignment: .leading, spacing: Espacio.m) {
             if !terminado {
                 Text(titulo).font(.subheadline.weight(.semibold)).foregroundStyle(Paleta.textoPrincipal)
+                    .fixedSize(horizontal: false, vertical: true)
                     .accessibilityAddTraits(.isHeader).accessibilityIdentifier("capaRayosX")
                 if preguntas, let g = p.guias["capa\(r.capa)"] {
                     Label(g, systemImage: "questionmark.circle").font(.footnote).foregroundStyle(Paleta.textoSecundario)
@@ -115,6 +116,8 @@ struct MecanicaRayosX: View {
                 .accessibilityHidden(true)
         }
         .accessibilityElement(children: .combine)
+        // La palabra sin la puntuación pegada («niños.» → «niños»), que VoiceOver lee mejor.
+        .accessibilityLabel(token.texto.trimmingCharacters(in: .punctuationCharacters))
         .accessibilityValue(f.map { GeneradorOracionSimple.nombres[$0] ?? $0 } ?? (seleccionada ? "marcada" : ""))
         .accessibilityIdentifier("rx_\(token.id)")
     }

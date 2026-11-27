@@ -1,0 +1,150 @@
+[
+  {
+    "id": "MAT.UNI.ESC.T01",
+    "competencia": "MAT.UNI.ESC",
+    "titulo": "Escalas",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "En la escala 1:n, 1 unidad del plano equivale a n unidades de la realidad."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Calcula en la misma unidad (por ejemplo, cm) y convierte al final."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.UNI.LMC.T01",
+    "competencia": "MAT.UNI.LMC",
+    "titulo": "Longitud, masa y capacidad",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Longitud: km, hm, dam, m, dm, cm, mm\nMasa: kg, hg, dag, g, dg, cg, mg\nCapacidad: kl, hl, dal, l, dl, cl, ml"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Cada peldaño hacia abajo multiplica por 10; cada peldaño hacia arriba divide entre 10."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.UNI.SUP.T01",
+    "competencia": "MAT.UNI.SUP",
+    "titulo": "Unidades de superficie",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "En superficie, cada peldaño multiplica por 100: 1 m² = 100 dm² = 10 000 cm²."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "1 km² = 100 hm²\n1 hm² = 1 ha = 10 000 m²\n1 a = 100 m²"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "El error típico es multiplicar solo por 10 en las unidades cuadradas."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.UNI.TIEM.T01",
+    "competencia": "MAT.UNI.TIEM",
+    "titulo": "Tiempo y sistema sexagesimal",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "1 h = 60 min = 3600 s\n1 min = 60 s\n1 día = 24 h"
+      },
+      {
+        "tipo": "regla",
+        "contenido": "Al sumar tiempos, cada 60 segundos forman 1 minuto y cada 60 minutos, 1 hora."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Para pasar todo a segundos: h · 3600 + min · 60 + s."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "MAT.UNI.VOL.T01",
+    "competencia": "MAT.UNI.VOL",
+    "titulo": "Volumen y capacidad",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "En volumen, cada peldaño multiplica por 1000: 1 m³ = 1000 dm³."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "1 dm³ = 1 l\n1 cm³ = 1 ml\n1 m³ = 1000 l"
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

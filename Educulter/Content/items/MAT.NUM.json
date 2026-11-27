@@ -353,7 +353,8 @@
     "erroresHabituales": [
       {
         "respuesta": "h1",
-        "feedback": "Sumar el mismo número no da una fracción equivalente: (1+3)/(2+3) = 4/5, que no es 1/2."
+        "feedback": "Sumar el mismo número no da una fracción equivalente: (1+3)/(2+3) = 4/5, que no es 1/2.",
+        "error": "ERR.MAT.NUM.FRAEQ.1"
       }
     ],
     "referencia": {

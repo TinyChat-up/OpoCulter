@@ -106,5 +106,117 @@
       "revisor": "direccion",
       "fecha": "2026-11-24"
     }
+  },
+  {
+    "id": "LEN.LEX.CTX.T01",
+    "competencia": "LEN.LEX.CTX",
+    "titulo": "Significado en contexto",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Muchas palabras tienen varios significados; las palabras que las rodean deciden cuál vale."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Sustituye la palabra por la opción propuesta: si la frase conserva su sentido, es correcta."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.LEX.DEN.T01",
+    "competencia": "LEN.LEX.DEN",
+    "titulo": "Denotación y connotación",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Denotación: el significado objetivo, el del diccionario («zorro»: animal)\nConnotación: el significado añadido, subjetivo o cultural («zorro»: persona astuta)"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "La denotación es la misma para todos; la connotación depende del uso y de la cultura."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.LEX.FRAS.T01",
+    "competencia": "LEN.LEX.FRAS",
+    "titulo": "Frases hechas",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "Una frase hecha es una expresión fija cuyo significado no se deduce de sus palabras: «estar en las nubes» significa estar distraído."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Sus palabras no se pueden cambiar: se dice «estar en las nubes», no «estar en el cielo»."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.LEX.REG.T01",
+    "competencia": "LEN.LEX.REG",
+    "titulo": "Registros, préstamos y extranjerismos",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Registro culto: cuidado y preciso\nRegistro coloquial: espontáneo y familiar\nPréstamo: palabra de otra lengua adaptada al español (fútbol, chófer)\nExtranjerismo crudo: sin adaptar, se escribe en cursiva (software, show)"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Si la palabra sigue las reglas de escritura del español, es un préstamo adaptado."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
   }
 ]

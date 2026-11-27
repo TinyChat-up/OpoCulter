@@ -1,0 +1,30 @@
+[
+  {
+    "id": "MAT.EST.CENTRAL.T01",
+    "competencia": "MAT.EST.CENTRAL",
+    "titulo": "Media, mediana, moda y rango",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Media: suma de los datos ÷ número de datos\nMediana: el valor central con los datos ordenados (si hay un número par, la media de los dos centrales)\nModa: el valor que más se repite\nRango: el mayor menos el menor"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Ordena siempre los datos antes de buscar la mediana."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

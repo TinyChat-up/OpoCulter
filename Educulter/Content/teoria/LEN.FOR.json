@@ -1,0 +1,118 @@
+[
+  {
+    "id": "LEN.FOR.CLAS.T01",
+    "competencia": "LEN.FOR.CLAS",
+    "titulo": "Clases de palabras según su formación",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Primitiva: solo lexema (y morfemas de género y número): mar, flor\nDerivada: lexema + prefijo o sufijo: florista, deshacer\nCompuesta: dos o más lexemas: girasol, sacapuntas\nParasintética: prefijo y sufijo a la vez (enrojecer) o composición más sufijo (quinceañero)"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Para reconocer una parasintética, quita el prefijo o el sufijo: si ninguna de las dos palabras existe (*enrojo, *rojecer), lo es."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.FOR.COMP.T01",
+    "competencia": "LEN.FOR.COMP",
+    "titulo": "Composición",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "La composición une dos o más palabras para formar una nueva: verbo + sustantivo (sacapuntas), sustantivo + adjetivo (pelirrojo), adjetivo + adjetivo (agridulce)."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "A veces la primera palabra cambia al unirse: pelo → peli- (pelirrojo); agrio → agri- (agridulce)."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.FOR.DER.T01",
+    "competencia": "LEN.FOR.DER",
+    "titulo": "Prefijos y sufijos",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Prefijos (delante): des- (negación), re- (repetición), pre- (antes), sub- (debajo), in-/im- (negación), anti- (contra), bi- (dos)\nSufijos (detrás): -ero/-ista (oficio), -ería (tienda), -eda (conjunto), -ito/-ita (diminutivo), -azo (aumentativo), -mente (adverbio de modo), -eza (cualidad), -oso (que tiene)"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Comprueba que al quitar el afijo queda una palabra de significado relacionado: re-leer → leer."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  },
+  {
+    "id": "LEN.FOR.ESTR.T01",
+    "competencia": "LEN.FOR.ESTR",
+    "titulo": "Lexema y morfemas",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "El lexema aporta el significado. Los morfemas aportan información gramatical (género, número, persona) o forman palabras nuevas (prefijos y sufijos)."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "lecheros: lech- (lexema) + -er- (sufijo) + -o (género) + -s (número)"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Busca la parte que se repite en toda la familia léxica: es el lexema."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (lote 06)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
+  }
+]

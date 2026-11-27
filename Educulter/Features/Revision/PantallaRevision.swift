@@ -255,6 +255,7 @@ struct VistaCaptura: View {
     let escena: String
     @State private var ronda: RondaViewModel?
     @State private var examen: ModeloExamen?
+    @State private var escrito: ModeloEscrito?
     @State private var listo = false
 
     var body: some View {
@@ -275,6 +276,12 @@ struct VistaCaptura: View {
                 if let examen { PantallaExamen(modelo: examen, cerrar: {}, hojaInicial: partes.first == "sala" ? "mapa" : (partes.first == "borrador" ? "borrador" : nil)) } else { Paleta.fondo }
             case "resultadoExamen", "informeExamen":
                 if let examen { PantallaCorreccionExamen(modelo: examen, cerrar: {}, alInforme: partes.first == "informeExamen") } else { Paleta.fondo }
+            case "escrito", "papel":
+                if let escrito { PantallaEscrito(modelo: escrito, cerrar: {}, hojaInicial: partes.dropFirst().first) } else { Paleta.fondo }
+            case "correccionEscrito", "informeEscrito":
+                if let escrito { PantallaCorreccionEscrito(modelo: escrito, cerrar: {}, alInforme: partes.first == "informeEscrito") } else { Paleta.fondo }
+            case "pdf":
+                if let s = entorno.banco?.tribunal.original("SIM.OR.01") { HojaPDF(simulacro: s, empezarEnPapel: {}, corregirEnPapel: {}) }
             case "item", "resumen", "partida", "finPartida", "diagnostico", "plan", "prueba", "sesion", "sesionInicio", "ejemplo", "fallo", "variante":
                 if let ronda { PantallaRonda(modelo: ronda) {} } else { Paleta.fondo }
             case "camino":
@@ -339,6 +346,28 @@ struct VistaCaptura: View {
             }
         }
         switch partes.first {
+        case "escrito", "papel", "correccionEscrito", "informeEscrito":
+            // Simulacro escrito original (05J): «La plaza a oscuras» empezado hace 37 min.
+            guard let original = banco.tribunal.original("SIM.OR.01"),
+                  var i = try? servicio.empezarEscrito(original.id, formato: partes.first == "papel" ? .papel : .app) else { return }
+            i.inicio = servicio.reloj.ahora.addingTimeInterval(-(37 * 60 + 12))
+            let respuestas = ["L01": "En la plaza se va la luz y los vecinos se organizan para iluminarla con lo que tienen en casa.",
+                              "L02": "Que la vecina mayor ya había vivido apagones: «sabía dónde estaba cada vela».",
+                              "L03": "Es un texto narrativo: cuenta hechos en orden, con personajes y un narrador.",
+                              "M01": "3/8 de 40 = 15; quedan 25. 2/5 de 25 = 10. Quedan 15."]
+            if partes.first != "papel" { i.respuestas = respuestas }
+            i.marcas = ["L04", "M02"]
+            i.actual = "L03"
+            if partes.first == "correccionEscrito" || partes.first == "informeEscrito" {
+                i.entrega = servicio.reloj.ahora
+                for (k, p) in original.datos.preguntas.enumerated() where partes.first == "informeEscrito" || k < 3 {
+                    i.criterios[p.id] = [true, k % 3 != 2, k % 4 != 3]
+                }
+                if partes.first == "informeEscrito" { i.faltasTildes = 2 }
+            }
+            try? servicio.guardar(i)
+            escrito = ModeloEscrito(servicio: servicio, simulacro: original, intento: i)
+            return
         case "sala", "borrador", "autoevaluacion", "resultadoExamen", "informeExamen":
             // Tribunal (05I): 2026 ordinaria con algunas respuestas; corregido según la escena.
             let area = partes.first == "autoevaluacion" ? "LEN" : nil

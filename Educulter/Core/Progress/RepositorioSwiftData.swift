@@ -151,6 +151,57 @@ final class RepositorioSwiftData: RepositorioProgreso {
         }
     }
 
+    func intentosEscritos() throws -> [IntentoEscrito] {
+        let d = JSONDecoder()
+        return try contexto.fetch(FetchDescriptor<IntentoEscritoRegistro>(sortBy: [SortDescriptor(\.creado)])).map { r in
+            var i = IntentoEscrito(simulacro: r.simulacro, revision: r.revision, formato: .init(rawValue: r.formato) ?? .app,
+                                   inicio: r.inicio, duracionSegundos: r.duracionSegundos)
+            i.id = r.uuid
+            i.entrega = r.entrega
+            i.entregaAutomatica = r.entregaAutomatica
+            i.respuestas = r.respuestas.flatMap { try? d.decode([String: String].self, from: $0) } ?? [:]
+            i.marcas = r.marcas.flatMap { try? d.decode(Set<String>.self, from: $0) } ?? []
+            i.criterios = r.criterios.flatMap { try? d.decode([String: [Bool]].self, from: $0) } ?? [:]
+            i.faltasPalabras = r.faltasPalabras
+            i.faltasTildes = r.faltasTildes
+            i.aplicarPenalizacion = r.aplicarPenalizacion
+            i.borradores = r.borradores.flatMap { try? d.decode([String: Data].self, from: $0) } ?? [:]
+            i.actual = r.actual
+            i.relojOculto = r.relojOculto
+            return i
+        }
+    }
+
+    func guardar(_ intento: IntentoEscrito) throws {
+        let id = intento.id
+        let e = JSONEncoder()
+        e.outputFormatting = .sortedKeys
+        let r: IntentoEscritoRegistro
+        if let existente = try contexto.fetch(FetchDescriptor<IntentoEscritoRegistro>(predicate: #Predicate { $0.uuid == id })).first {
+            r = existente
+        } else {
+            r = IntentoEscritoRegistro(uuid: id, creado: intento.inicio ?? intento.entrega ?? .now)
+            contexto.insert(r)
+        }
+        r.simulacro = intento.simulacro
+        r.revision = intento.revision
+        r.formato = intento.formato.rawValue
+        r.inicio = intento.inicio
+        r.entrega = intento.entrega
+        r.duracionSegundos = intento.duracionSegundos
+        r.entregaAutomatica = intento.entregaAutomatica
+        r.respuestas = try e.encode(intento.respuestas)
+        r.marcas = try e.encode(intento.marcas.sorted())
+        r.criterios = try e.encode(intento.criterios)
+        r.faltasPalabras = intento.faltasPalabras
+        r.faltasTildes = intento.faltasTildes
+        r.aplicarPenalizacion = intento.aplicarPenalizacion
+        r.borradores = try e.encode(intento.borradores)
+        r.actual = intento.actual
+        r.relojOculto = intento.relojOculto
+        try contexto.save()
+    }
+
     func guardar(_ examen: SesionExamen) throws {
         let id = examen.id
         let datos = try JSONEncoder().encode(examen)
@@ -185,6 +236,7 @@ final class RepositorioSwiftData: RepositorioProgreso {
         try contexto.delete(model: EventoErrorRegistro.self)
         try contexto.delete(model: IntentoActividadRegistro.self)
         try contexto.delete(model: ExamenTribunalRegistro.self)
+        try contexto.delete(model: IntentoEscritoRegistro.self)
         try contexto.save()
     }
 }

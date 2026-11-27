@@ -56,6 +56,8 @@ struct RecursosGeneradores: Sendable, Equatable {
     var formacion: BancoFormacion?
     var recursosLiterarios: BancoRecursos?
     var glosario: BancoGlosario?
+    /// Lote 06 (05J): frases de tilde en contexto (`tildeContexto.json`, generador `tildeContexto`).
+    var tildeContexto: BancoTildeContexto?
 
     init(lexico: [EntradaLexico] = [], formasVerbales: [String] = [], gramatica: PiezasGramatica = PiezasGramatica(),
          verbos: BancoVerbos = BancoVerbos(), frases: BancoFrases = BancoFrases(),
@@ -142,6 +144,8 @@ enum MotorGeneradores {
             GeneradorEvidenciaResumen(), GeneradorAreaCompuesta(),
             // Fase 05H: Editor, Fábrica de palabras, recursos literarios y glosario.
             GeneradorEditor(), GeneradorFormacion(), GeneradorRecursos(), GeneradorGlosario(),
+            // Fase 05J: tilde en contexto (lote 06).
+            GeneradorTildeContexto(),
         ]
         return Dictionary(uniqueKeysWithValues: todos.map { ($0.tipo, $0) })
     }()

@@ -80,6 +80,8 @@ struct SesionExamen: Codable, Sendable, Equatable, Identifiable {
     var resultado: ResultadoExamen?
     /// Se entregó solo al llegar a 0.
     var entregaAutomatica = false
+    /// Último instante contado (05J): al volver a la app, el tiempo fuera también cuenta.
+    var marca: Date?
 
     init(modo: Modo, preguntas: [Pregunta], duracionMin: Int, inicio: Date, noIncluye: [String] = []) {
         self.modo = modo
@@ -95,8 +97,8 @@ struct SesionExamen: Codable, Sendable, Equatable, Identifiable {
     /// Avisos discretos a los 15 y a los 5 minutos.
     static let avisos: [Double] = [15 * 60, 5 * 60]
 
-    /// Descuenta tiempo (solo mientras la app está activa: en segundo plano el reloj se pausa). Al
-    /// llegar a 0, el examen se entrega solo. Devuelve el aviso que se cruza, si alguno.
+    /// Descuenta tiempo (también el pasado fuera de la app, 05J). Al llegar a 0, el examen se
+    /// entrega solo. Devuelve el aviso que se cruza, si alguno.
     @discardableResult
     mutating func avanzar(_ segundos: Double, ahora: Date) -> Double? {
         guard estado == .enCurso, segundos > 0 else { return nil }

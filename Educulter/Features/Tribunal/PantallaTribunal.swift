@@ -1,128 +1,331 @@
 import SwiftUI
 
-/// Entrada del Tribunal (05I §3): examen oficial completo, medio examen, simulacro original y repaso
-/// de un examen oficial; el examen en curso (para reanudarlo) y el historial.
+/// Entrada del Tribunal (05J §2): el examen escrito, separado de los juegos. Arriba, una tarjeta
+/// principal (primero la muestra; luego el siguiente simulacro sin hacer) con «Continuar» si hay un
+/// intento activo o, si no, «Hacer en la app» e «Imprimir PDF» al mismo nivel. Debajo, los
+/// resultados anteriores y los bloques «Simulacros originales», «Convocatorias anteriores» y «Por
+/// bloques». Sin anuncios.
 struct PantallaTribunal: View {
     let servicio: ServicioSesion
-    @State private var convocatoria: String = ""
+    @Environment(EntornoApp.self) private var entorno
+    @State private var principal: SimulacroOriginal?
+    @State private var activo: IntentoEscrito?
+    @State private var entregados: [IntentoEscrito] = []
+    @State private var oficialEnCurso: SesionExamen?
+    @State private var escrito: ModeloEscrito?
     @State private var examen: ModeloExamen?
-    @State private var enCurso: SesionExamen?
-    @State private var historial: [SesionExamen] = []
+    @State private var pdf: SimulacroOriginal?
+    @State private var ronda: RondaViewModel?
     @State private var error: String?
-
-    private var examenes: [ExamenOficial] { servicio.banco.tribunal.examenes.sorted { ($0.anio, $0.convocatoria) > ($1.anio, $1.convocatoria) } }
 
     var body: some View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: Espacio.l) {
-                    Text("Exámenes oficiales de la prueba A1 y simulacros con su formato y su tiempo. Sin feedback hasta entregar.")
+                    Text("Tribunal").font(.exhibicion(.largeTitle)).accessibilityAddTraits(.isHeader)
+                    Text("El examen escrito de la prueba A1, aparte de los juegos: en la app o impreso en papel, con su tiempo y corregido con criterios.")
                         .font(.subheadline).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
-                    if let enCurso { tarjetaEnCurso(enCurso) }
-                    selectorConvocatoria
-                    modo("Examen oficial completo", detalle: "Lengua y Matemáticas · 90 min", icono: "doc.text", id: "modoOficial") {
-                        empezar(.oficial(convocatoria))
-                    }
-                    modo("Medio examen · Lengua", detalle: "Solo Lengua · 45 min", icono: "textformat", id: "modoMedioLEN") { empezar(.medio(convocatoria, area: "LEN")) }
-                    modo("Medio examen · Matemáticas", detalle: "Solo Matemáticas · 45 min", icono: "function", id: "modoMedioMAT") { empezar(.medio(convocatoria, area: "MAT")) }
-                    modo("Simulacro original", detalle: "20 preguntas según el plano del examen · 90 min", icono: "wand.and.stars", id: "modoSimulacro") {
-                        empezar(.simulacro(semilla: UInt64(servicio.reloj.ahora.timeIntervalSince1970)))
-                    }
-                    NavigationLink {
-                        if let e = servicio.banco.tribunal.examen(convocatoria) { PantallaRepasoOficial(examen: e) }
-                    } label: {
-                        filaModo("Repaso del examen oficial", detalle: "Cada pregunta con su solución, sus notas y su rúbrica, sin cronómetro", icono: "book")
-                    }
-                    .accessibilityIdentifier("modoRepaso")
+                    tarjetaPrincipal
+                    if let oficialEnCurso { tarjetaOficialEnCurso(oficialEnCurso) }
                     if let error { Text(error).font(.footnote).foregroundStyle(Paleta.fallo) }
-                    historialVista
+                    resultados
+                    seccion("Simulacros originales") {
+                        ForEach(servicio.originales) { s in
+                            NavigationLink { fichaSimulacro(s) } label: {
+                                fila(s.entrada.titulo, detalle: "\(s.etiqueta) · \(resumen(s))", icono: s.entrada.esMuestra ? "gift" : "doc.text",
+                                     estado: entregados.contains { $0.simulacro == s.id } ? "Hecho" : nil)
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("simulacro_\(s.id)")
+                        }
+                    }
+                    seccion("Convocatorias anteriores") {
+                        ForEach(convocatorias) { e in
+                            NavigationLink { PantallaConvocatoria(examen: e, empezar: { empezarOficial(e) }, bloqueado: oficialEnCurso != nil) } label: {
+                                fila(e.nombre, detalle: "Reproducción literal · Comunidad de Madrid", icono: "building.columns",
+                                     estado: e.completo ? "Modo examen" : "Solo repaso")
+                            }
+                            .buttonStyle(.plain)
+                            .accessibilityIdentifier("convocatoria_\(e.id)")
+                        }
+                    }
+                    seccion("Por bloques") {
+                        Text("Práctica de 12–20 minutos con ítems de juego, explicación y pistas. Su puntuación no se compara con la del examen.")
+                            .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                        ForEach([("LEN", "Bloque de Lengua", "textformat"), ("MAT", "Bloque de Matemáticas", "function")], id: \.0) { a in
+                            Button { empezarBloque(a.0) } label: { fila(a.1, detalle: "Unas 10 preguntas según el plano del examen", icono: a.2, estado: nil) }
+                                .buttonStyle(.plain)
+                                .accessibilityIdentifier("bloque_\(a.0)")
+                        }
+                    }
                 }
                 .foregroundStyle(Paleta.textoPrincipal)
                 .padding(Espacio.l)
             }
+            .contentMargins(.bottom, Espacio.xxl * 2, for: .scrollContent)
             .background(Paleta.fondo.ignoresSafeArea())
-            .navigationTitle("Tribunal")
+            .toolbar(.hidden, for: .navigationBar)
             .onAppear(perform: cargar)
-            .fullScreenCover(item: $examen, onDismiss: cargar) { m in PantallaExamen(modelo: m) { examen = nil } }
         }
+        .fullScreenCover(item: $escrito, onDismiss: cargar) { m in PantallaEscrito(modelo: m) { escrito = nil } }
+        .fullScreenCover(item: $examen, onDismiss: cargar) { m in PantallaExamen(modelo: m) { examen = nil } }
+        .fullScreenCover(item: $ronda, onDismiss: cargar) { r in
+            PantallaRonda(modelo: r, ayudasDePrueba: entorno.opciones.ayudasDePrueba) { ronda = nil }
+        }
+        .sheet(item: $pdf) { s in
+            HojaPDF(simulacro: s, empezarEnPapel: { pdf = nil; empezar(s, .papel) }, corregirEnPapel: { pdf = nil; corregirPapel(s) })
+        }
+        .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaTribunal")
     }
 
+    private var convocatorias: [ExamenOficial] {
+        servicio.banco.tribunal.examenes.sorted { ($0.completo ? 0 : 1, -$0.anio, $0.convocatoria) < ($1.completo ? 0 : 1, -$1.anio, $1.convocatoria) }
+    }
+
     private func cargar() {
-        if convocatoria.isEmpty { convocatoria = examenes.first?.id ?? "" }
-        enCurso = try? servicio.examenEnCurso()
-        historial = (try? servicio.historialExamenes()) ?? []
+        activo = try? servicio.intentoActivo()
+        principal = activo.flatMap { servicio.banco.tribunal.original($0.simulacro) } ?? (try? servicio.simulacroPrincipal())
+        entregados = (try? servicio.intentosEntregados()) ?? []
+        oficialEnCurso = try? servicio.examenEnCurso()
     }
 
-    private func empezar(_ modo: SesionExamen.Modo) {
-        guard AccesoTribunal.acceso(modo) == .permitido else { return }
-        do { examen = ModeloExamen(servicio: servicio, sesion: try servicio.empezarExamen(modo)) } catch { self.error = "No se ha podido preparar el examen." }
+    private func resumen(_ s: SimulacroOriginal) -> String {
+        "\(s.datos.preguntas.count) preguntas · \(s.entrada.minutos) min"
     }
 
-    private var selectorConvocatoria: some View {
-        VStack(alignment: .leading, spacing: Espacio.xs) {
-            Text("Convocatoria").font(.subheadline.weight(.semibold))
-            Picker("Convocatoria", selection: $convocatoria) {
-                ForEach(examenes) { e in Text(e.nombre).tag(e.id) }
+    // MARK: Acciones
+
+    private func abrir(_ i: IntentoEscrito) {
+        guard let s = servicio.banco.tribunal.original(i.simulacro) else { return }
+        escrito = ModeloEscrito(servicio: servicio, simulacro: s, intento: i)
+    }
+
+    private func empezar(_ s: SimulacroOriginal, _ formato: IntentoEscrito.Formato) {
+        guard AccesoTribunal.acceso(s.entrada) == .permitido else { return }
+        do { abrir(try servicio.empezarEscrito(s.id, formato: formato)) } catch { self.error = "No se ha podido preparar el simulacro." }
+    }
+
+    private func corregirPapel(_ s: SimulacroOriginal) {
+        guard AccesoTribunal.acceso(s.entrada) == .permitido else { return }
+        do { abrir(try servicio.corregirEnPapel(s.id)) } catch { self.error = "No se ha podido preparar la corrección." }
+    }
+
+    private func imprimir(_ s: SimulacroOriginal) {
+        guard AccesoTribunal.acceso(s.entrada) == .permitido else { return }
+        pdf = s
+    }
+
+    private func empezarOficial(_ e: ExamenOficial) {
+        guard e.completo, AccesoTribunal.acceso(.oficial(e.id)) == .permitido else { return }
+        do { examen = ModeloExamen(servicio: servicio, sesion: try servicio.empezarExamen(.oficial(e.id))) } catch { self.error = "No se ha podido preparar el examen." }
+    }
+
+    private func empezarBloque(_ area: String) {
+        guard let ids = try? servicio.bloquePractica(area: area), !ids.isEmpty else { error = "Aún no hay preguntas aprobadas para este bloque."; return }
+        ronda = RondaViewModel(servicio: servicio, tipo: .items(ids))
+    }
+
+    // MARK: Tarjeta principal
+
+    @ViewBuilder private var tarjetaPrincipal: some View {
+        if let s = principal {
+            let permitido = AccesoTribunal.acceso(s.entrada) == .permitido
+            TarjetaSuperficie {
+                VStack(alignment: .leading, spacing: Espacio.m) {
+                    Text(s.entrada.esMuestra ? "MUESTRA GRATUITA" : s.etiqueta.uppercased())
+                        .font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+                    Text(s.entrada.titulo).font(.exhibicion(.title2)).fixedSize(horizontal: false, vertical: true)
+                    Text("Lengua y Matemáticas · \(s.entrada.minutos) min · \(s.datos.preguntas.count) preguntas")
+                        .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                    if let a = activo, a.simulacro == s.id {
+                        Text(a.formato == .papel ? "En papel · quedan \(a.restante(servicio.reloj.ahora) / 60) min" : "Quedan \(a.restante(servicio.reloj.ahora) / 60) min")
+                            .font(.subheadline.weight(.semibold))
+                        BotonPrincipal(titulo: "Continuar", icono: "play.fill", acento: Paleta.primario) { abrir(a) }
+                            .accessibilityIdentifier("botonContinuar")
+                    } else if permitido {
+                        botonesFormato(s)
+                    } else {
+                        Label("Incluido en Premium", systemImage: "lock").font(.subheadline.weight(.semibold))
+                    }
+                }
             }
-            .pickerStyle(.menu)
-            .accessibilityIdentifier("selectorConvocatoria")
+            .accessibilityElement(children: .contain)
+            .accessibilityIdentifier("tarjetaPrincipal")
         }
     }
 
-    private func tarjetaEnCurso(_ s: SesionExamen) -> some View {
+    private func botonesFormato(_ s: SimulacroOriginal) -> some View {
+        HStack(spacing: Espacio.s) {
+            Button { empezar(s, .app) } label: { Label("Hacer en la app", systemImage: "iphone") }
+                .buttonStyle(EstiloBotonSecundario())
+                .accessibilityIdentifier("botonHacerApp")
+            Button { imprimir(s) } label: { Label("Imprimir PDF", systemImage: "printer") }
+                .buttonStyle(EstiloBotonSecundario())
+                .accessibilityIdentifier("botonImprimirPDF")
+        }
+    }
+
+    private func tarjetaOficialEnCurso(_ s: SesionExamen) -> some View {
         Button { examen = ModeloExamen(servicio: servicio, sesion: s) } label: {
-            filaModo("Continuar: \(s.modo.nombre)", detalle: "Quedan \(Int(s.restante / 60)) min · pregunta \(s.actual + 1) de \(s.preguntas.count)", icono: "play.fill")
+            fila("Continuar: \(s.modo.examenId.flatMap { servicio.banco.tribunal.examen($0)?.nombre } ?? s.modo.nombre)",
+                 detalle: "Convocatoria anterior · pregunta \(s.actual + 1) de \(s.preguntas.count)", icono: "play.fill", estado: nil)
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("botonContinuarExamen")
     }
 
-    private func modo(_ titulo: String, detalle: String, icono: String, id: String, accion: @escaping () -> Void) -> some View {
-        Button(action: accion) { filaModo(titulo, detalle: detalle, icono: icono) }
-            .buttonStyle(.plain)
-            .disabled(enCurso != nil)
-            .accessibilityIdentifier(id)
+    // MARK: Ficha de un simulacro
+
+    private func fichaSimulacro(_ s: SimulacroOriginal) -> some View {
+        let permitido = AccesoTribunal.acceso(s.entrada) == .permitido
+        let activoDe = activo?.simulacro == s.id ? activo : nil
+        return ScrollView {
+            VStack(alignment: .leading, spacing: Espacio.l) {
+                Text(s.etiqueta.uppercased()).font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+                Text(s.entrada.titulo).font(.exhibicion(.title2)).fixedSize(horizontal: false, vertical: true)
+                Text("Lengua y Matemáticas · \(resumen(s)) · puntuación sobre \(s.entrada.esMuestra ? 2 : 10)")
+                    .font(.subheadline).foregroundStyle(Paleta.textoSecundario)
+                if let a = activoDe {
+                    BotonPrincipal(titulo: "Continuar", icono: "play.fill", acento: Paleta.primario) { abrir(a) }
+                } else if permitido {
+                    botonesFormato(s)
+                    Button("Corregir una prueba hecha en papel") { corregirPapel(s) }
+                        .font(.subheadline.weight(.semibold)).frame(minHeight: Medidas.tactilMinimo)
+                } else {
+                    Label("Incluido en Premium", systemImage: "lock").font(.subheadline.weight(.semibold))
+                }
+                let propios = entregados.filter { $0.simulacro == s.id }
+                if !propios.isEmpty {
+                    Text("Tus intentos").font(.headline)
+                    ForEach(propios) { i in filaIntento(i) }
+                }
+            }
+            .foregroundStyle(Paleta.textoPrincipal)
+            .padding(Espacio.l)
+        }
+        .background(Paleta.fondo.ignoresSafeArea())
+        .navigationTitle(s.entrada.titulo)
+        .navigationBarTitleDisplayMode(.inline)
     }
 
-    private func filaModo(_ titulo: String, detalle: String, icono: String) -> some View {
-        HStack(spacing: Espacio.m) {
-            Image(systemName: icono).font(.title3).foregroundStyle(Paleta.primario).frame(width: 28).accessibilityHidden(true)
-            VStack(alignment: .leading, spacing: 2) {
-                Text(titulo).font(.headline).foregroundStyle(Paleta.textoPrincipal)
-                Text(detalle).font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+    // MARK: Resultados
+
+    @ViewBuilder private var resultados: some View {
+        if !entregados.isEmpty {
+            seccion("Resultados anteriores") {
+                ForEach(entregados.prefix(5)) { i in filaIntento(i) }
             }
-            Spacer(minLength: 0)
         }
-        .padding(Espacio.l)
-        .frame(maxWidth: .infinity, alignment: .leading)
-        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.tarjeta, style: .continuous))
-        .contornoTinta(radio: Radio.tarjeta)
+    }
+
+    private func filaIntento(_ i: IntentoEscrito) -> some View {
+        let s = servicio.banco.tribunal.original(i.simulacro)
+        let r = servicio.resultado(i)
+        return Button { abrir(i) } label: {
+            HStack {
+                VStack(alignment: .leading, spacing: 2) {
+                    Text(s?.entrada.titulo ?? i.simulacro).font(.subheadline.weight(.semibold))
+                    Text("\((i.entrega ?? .now).formatted(date: .abbreviated, time: .omitted)) · \(i.formato == .app ? "en la app" : "en papel")")
+                        .font(.caption).foregroundStyle(Paleta.textoSecundario)
+                }
+                Spacer()
+                if let r, let total = r.totalConPenalizacion {
+                    Text("\(CorrectorEscrito.texto(total)) / \(r.maximo / 100)").font(.numerica(.headline))
+                } else {
+                    Text("Revisión pendiente").font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+                }
+            }
+            .padding(Espacio.m)
+            .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha))
+            .contornoTinta(radio: Radio.ficha)
+        }
+        .buttonStyle(.plain)
         .accessibilityElement(children: .combine)
     }
 
-    @ViewBuilder private var historialVista: some View {
-        if !historial.isEmpty {
-            Text("Historial").font(.exhibicion(.title3)).accessibilityAddTraits(.isHeader)
-            ForEach(historial) { s in
-                Button { examen = ModeloExamen(servicio: servicio, sesion: s) } label: {
-                    HStack {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(s.modo.nombre + (s.modo.examenId.flatMap { servicio.banco.tribunal.examen($0)?.nombre }.map { " · \($0)" } ?? "")).font(.subheadline.weight(.semibold))
-                            Text(s.inicio.formatted(date: .abbreviated, time: .omitted)).font(.caption).foregroundStyle(Paleta.textoSecundario)
-                        }
-                        Spacer()
-                        if let r = s.resultado {
-                            Text(FormatoNumero.numero(Racional(numerador: Int((r.notaFinal * 100).rounded()), denominador: 100)!))
-                                .font(.numerica(.headline)).foregroundStyle(Paleta.textoPrincipal)
-                        }
+    // MARK: Piezas
+
+    private func seccion<C: View>(_ titulo: String, @ViewBuilder contenido: () -> C) -> some View {
+        VStack(alignment: .leading, spacing: Espacio.s) {
+            Text(titulo).font(.exhibicion(.title3)).accessibilityAddTraits(.isHeader)
+            contenido()
+        }
+    }
+
+    private func fila(_ titulo: String, detalle: String, icono: String, estado: String?) -> some View {
+        HStack(spacing: Espacio.m) {
+            Image(systemName: icono).font(.title3).foregroundStyle(Paleta.primario).frame(width: 28).accessibilityHidden(true)
+            VStack(alignment: .leading, spacing: 2) {
+                Text(titulo).font(.headline).foregroundStyle(Paleta.textoPrincipal).fixedSize(horizontal: false, vertical: true)
+                Text(detalle).font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+            }
+            Spacer(minLength: 0)
+            if let estado { Text(estado).font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario) }
+            Image(systemName: "chevron.right").font(.footnote).foregroundStyle(Paleta.textoSecundario).accessibilityHidden(true)
+        }
+        .padding(Espacio.m)
+        .frame(maxWidth: .infinity, alignment: .leading)
+        .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha, style: .continuous))
+        .contornoTinta(radio: Radio.ficha)
+        .accessibilityElement(children: .combine)
+    }
+}
+
+/// Una convocatoria anterior: fuente, reproducción literal y, si está completa, el modo examen
+/// (90 min, rúbrica B/R/M); si no, solo el repaso con soluciones y enlaces, y el motivo.
+struct PantallaConvocatoria: View {
+    let examen: ExamenOficial
+    let empezar: () -> Void
+    var bloqueado = false
+
+    var body: some View {
+        ScrollView {
+            VStack(alignment: .leading, spacing: Espacio.l) {
+                Text("Convocatoria \(examen.nombre)").font(.exhibicion(.title2))
+                Text(examen.cita).font(.footnote).fixedSize(horizontal: false, vertical: true)
+                if let url = URL(string: examen.fuente) { Link("Cuadernillo oficial (Comunidad de Madrid)", destination: url).font(.footnote.weight(.semibold)) }
+                if examen.completo {
+                    BotonPrincipal(titulo: "Hacer el examen (\(examen.duracionMin) min)", icono: "doc.text", acento: Paleta.primario, accion: empezar)
+                        .disabled(bloqueado)
+                        .accessibilityIdentifier("botonExamenOficial")
+                    if examen.penalizacionAplicable {
+                        Text(ResultadoEscrito.etiquetaPenalizacion + ": la penalización ortográfica se muestra aparte.")
+                            .font(.caption).foregroundStyle(Paleta.textoSecundario)
                     }
-                    .padding(Espacio.m)
-                    .background(Paleta.superficie, in: RoundedRectangle(cornerRadius: Radio.ficha))
+                } else if let motivo = examen.motivoSoloRepaso {
+                    Label("Solo repaso. \(motivo)", systemImage: "info.circle").font(.footnote).fixedSize(horizontal: false, vertical: true)
                 }
-                .buttonStyle(.plain)
+                NavigationLink { PantallaRepasoOficial(examen: examen) } label: {
+                    Label("Repaso con soluciones", systemImage: "book")
+                }
+                .buttonStyle(EstiloBotonSecundario())
+                .accessibilityIdentifier("botonRepasoOficial")
+            }
+            .foregroundStyle(Paleta.textoPrincipal)
+            .padding(Espacio.l)
+        }
+        .background(Paleta.fondo.ignoresSafeArea())
+        .navigationTitle(examen.nombre)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+/// Tabla de un enunciado oficial.
+struct VistaTabla: View {
+    let tabla: Tabla
+
+    var body: some View {
+        Grid(alignment: .leading, horizontalSpacing: Espacio.m, verticalSpacing: Espacio.xs) {
+            GridRow { ForEach(tabla.cabecera, id: \.self) { Text($0).font(.subheadline.weight(.semibold)) } }
+            Divider()
+            ForEach(Array(tabla.filas.enumerated()), id: \.offset) { _, fila in
+                GridRow { ForEach(Array(fila.enumerated()), id: \.offset) { _, c in Text(c).font(.subheadline).fixedSize(horizontal: false, vertical: true) } }
             }
         }
+        .padding(Espacio.m)
+        .background(Paleta.fondo, in: RoundedRectangle(cornerRadius: Radio.celda))
+        .accessibilityElement(children: .contain)
     }
 }
 
@@ -142,6 +345,7 @@ struct PantallaRepasoOficial: View {
                 VStack(alignment: .leading, spacing: Espacio.xs) {
                     Text("\(q.codigo)\(q.esAnulada ? " · anulada, no puntúa" : "")").font(.subheadline.weight(.semibold))
                     Text(q.enunciadoVisible).font(.system(.body, design: .serif)).fixedSize(horizontal: false, vertical: true)
+                    if let t = q.tabla { VistaTabla(tabla: t) }
                     if let f = q.figura {
                         Text("Figura: \(f)").font(.footnote).foregroundStyle(Paleta.textoSecundario)
                         if let url = URL(string: examen.fuente) { Link("Ver la figura en el cuadernillo oficial", destination: url).font(.footnote) }

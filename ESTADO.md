@@ -1,8 +1,26 @@
 # Estado del proyecto
 
-**Fase actual:** 05I (Modo Tribunal y borrador táctil) · **Terminada y fusionada en `main`**.
-**Siguiente:** lote 06 de la dirección (tarjetas de teoría) y fase 06 (monetización, con `AccesoTribunal`).
+**Fase actual:** 05J (Tribunal v2 y cierre del lote 06) · **Terminada y fusionada en `main`**.
+**Siguiente:** 05K (la define la dirección).
 **Última actualización:** 2026-11-27
+
+## Fase 05J — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| §1–§3 Tribunal v2 | ✅ Muestra SIM.DEMO.01 y SIM.OR.01–03 (catálogo con SHA-256 comprobado), en la app o en PDF A4; reloj desde la hora de inicio (no se pausa) y entrega automática; corrección con 3 criterios en centésimas, «revisión pendiente» y penalización aparte; intentos en SwiftData (uno activo por simulacro) | D-137, `SimulacrosEscritosTests` |
+| Convocatorias anteriores | ✅ Modo examen en 2017 O y 2026 A (completas); el resto, repaso con motivo; tabla de 2026 A · M6 estructurada | `ConvocatoriasTests` |
+| §4 Lote 06 | ✅ 36 tarjetas, LEN.ORT.CTX (118 frases, G01 aprobada), remedio estático y 8 errores etiquetados; + ERR.LEN.ORT.CTX.1 (121 errores) | D-138, `Lote06Tests` |
+| Tests unitarios | ✅ **764 en verde** y 1 omitido (informe opcional `ESTIMAR`). La pasada completa dio 2 fallos de la plantilla nueva (distractores sin error y complejidad por niveles), corregidos; se repitieron solo esas suites (134 en verde) | `xcodebuild test` |
+| Tests de interfaz | ✅ **13 de 13**: `TribunalUITests` (nuevo) y los de Piloto, Modos y SesionDiaria. Corregidos: botón Borrador de la ronda (área táctil), Rayos X (título recortado, etiqueta con puntuación) y un bucle de la cuenta atrás en las salas del Tribunal | `-only-testing` |
+| Avisos del compilador | ✅ 0 (Debug, tests y archive Release) | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, **no subido**; 94 archivos en el .app, **nada de `pendiente/`** | `find` sobre el .app |
+| iPhone físico | ⏳ Pendiente: el dispositivo aparece como no disponible (error 4016); se instala cuando el propietario lo conecte | `devicectl` |
+| Capturas | 6: tribunal, escrito-mapa, papel, pdf, correccionEscrito, informeEscrito (simulador) | [docs/capturas/05J/](docs/capturas/05J/) |
+
+## Pendiente (05J)
+1. Instalar la versión final en el iPhone del propietario.
+2. Accesibilidad del Tribunal v2 implementada, sin auditoría completa (Fase 07).
 
 ## Fase 05I — Resultado
 

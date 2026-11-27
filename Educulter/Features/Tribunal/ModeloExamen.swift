@@ -9,7 +9,7 @@ final class ModeloExamen: Identifiable {
     let id = UUID()
     let servicio: ServicioSesion
     private(set) var sesion: SesionExamen
-    /// Último instante en que se contó el tiempo (`nil` en segundo plano: el reloj se pausa).
+    /// Último instante en que se contó el tiempo (se guarda: el reloj no se detiene al salir, 05J).
     private var ultimoTick: Date?
     /// Aviso discreto de los 15 y los 5 minutos.
     private(set) var aviso: String?
@@ -18,6 +18,7 @@ final class ModeloExamen: Identifiable {
     init(servicio: ServicioSesion, sesion: SesionExamen) {
         self.servicio = servicio
         self.sesion = sesion
+        self.ultimoTick = sesion.marca
     }
 
     var banco: BancoContenido { servicio.banco }
@@ -79,19 +80,19 @@ final class ModeloExamen: Identifiable {
 
     // MARK: Tiempo
 
-    /// Cuenta el tiempo transcurrido desde el último tic (solo con la app activa).
+    /// Cuenta el tiempo transcurrido desde el último tic (también el pasado fuera de la app).
     func tic(_ ahora: Date) {
         guard sesion.estado == .enCurso else { return }
         if let ultimo = ultimoTick, let a = sesion.avanzar(ahora.timeIntervalSince(ultimo), ahora: ahora) {
             aviso = "Quedan \(Int(a / 60)) minutos"
         }
         ultimoTick = ahora
+        sesion.marca = ahora
         if Int(sesion.restante) % 10 == 0 || sesion.estado != .enCurso { guardar() }
     }
 
-    /// La app pasa a segundo plano: el examen se guarda y el reloj se pausa (es práctica).
+    /// La app pasa a segundo plano o se sale: el examen se guarda; el reloj sigue contando.
     func pausar() {
-        ultimoTick = nil
         guardar()
     }
 

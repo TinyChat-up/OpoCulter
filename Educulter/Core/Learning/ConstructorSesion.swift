@@ -123,7 +123,17 @@ struct ConstructorSesion: Sendable {
         var remediosPendientes: [Unidad] = []
         var cupo = Self.cupoRemedios(n)
         for r in remedios where cupo > 0 && enFoco(r.error.competencia) {
-            guard let p = banco.plantilla(id: r.error.remedio.plantilla) else { continue }
+            if r.error.remedio.esEstatico {
+                // Remedio estático (05J): ítems estáticos aprobados de la competencia.
+                let candidatos = r.error.remedio.items?.compactMap { banco.item(id: $0) }.filter { $0.validacion.estado == .aprobado } ?? []
+                let items = tomar(candidatos, min(Self.tamanoBloque, cupo))
+                guard !items.isEmpty else { continue }
+                cupo -= items.count
+                remediosPendientes.append(Unidad(items.map { ItemRonda(itemId: $0.id, motivo: .remedio, errorId: r.error.id) },
+                                                 competencia: r.error.competencia, tipo: .remedio))
+                continue
+            }
+            guard let p = banco.plantilla(id: r.error.remedio.plantilla ?? "") else { continue }
             let ajustada = MotorGeneradores.ajustada(p, dificultad: min(max(r.dificultad, 1), 6))
             let items = tomar(banco.variantes(de: ajustada), min(Self.tamanoBloque, cupo))
             guard !items.isEmpty else { continue }
@@ -280,5 +290,13 @@ struct ConstructorSesion: Sendable {
             }
         }
         return fallos
+    }
+}
+
+extension ConstructorSesion {
+    /// Ítems de un remedio estático (05J): hasta 3 de sus ítems estáticos aprobados, al azar.
+    static func itemsRemedioEstatico<R: RandomNumberGenerator>(_ e: ErrorTipico, banco: BancoContenido, rng: inout R) -> [Item] {
+        let candidatos = (e.remedio.items ?? []).compactMap { banco.item(id: $0) }.filter { $0.validacion.estado == .aprobado }
+        return Array(candidatos.sorted { $0.id < $1.id }.shuffled(using: &rng).prefix(tamanoBloque))
     }
 }

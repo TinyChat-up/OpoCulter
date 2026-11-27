@@ -108,6 +108,7 @@ struct ValidadorContenido: Sendable {
         let competencias = Set(banco.catalogo.todasLasCompetencias.map(\.id))
         let plantillas = Set(banco.plantillas.map(\.id))
         let tarjetas = Set(banco.teoria.map(\.id))
+        let asignadosAMano = Set(banco.itemsEstaticos.flatMap { $0.erroresHabituales.compactMap(\.error) })
         var vistos = Set<String>()
         for e in c.errores {
             if !vistos.insert(e.id).inserted { error(e.id, "id duplicado") }
@@ -122,10 +123,22 @@ struct ValidadorContenido: Sendable {
             if e.remedio.explicacion.isEmpty || e.remedio.explicacion.count > Self.maxCaracteresRegla {
                 error(e.id, "la regla del remedio tiene \(e.remedio.explicacion.count) caracteres (1–\(Self.maxCaracteresRegla))")
             }
-            if !plantillas.contains(e.remedio.plantilla) { error(e.id, "la plantilla del remedio «\(e.remedio.plantilla)» no existe o no está cargada") }
-            if !Self.rangoDificultad.contains(e.remedio.dificultad) { error(e.id, "dificultad del remedio fuera de 1–6") }
+            if e.remedio.esEstatico {
+                // Remedio estático (05J): tarjeta y ítems estáticos aprobados de la competencia.
+                if e.remedio.tarjeta == nil { error(e.id, "el remedio estático necesita tarjeta") }
+                let items = e.remedio.items ?? []
+                if items.isEmpty { error(e.id, "el remedio estático no tiene ítems") }
+                for id in items {
+                    guard let i = banco.itemsEstaticos.first(where: { $0.id == id }) else { error(e.id, "el ítem del remedio «\(id)» no existe o no está cargado"); continue }
+                    if i.competencia != e.competencia { error(e.id, "el ítem del remedio «\(id)» es de otra competencia") }
+                }
+            } else {
+                if let p = e.remedio.plantilla, plantillas.contains(p) {} else { error(e.id, "la plantilla del remedio «\(e.remedio.plantilla ?? "")» no existe o no está cargada") }
+                if !Self.rangoDificultad.contains(e.remedio.dificultad ?? 0) { error(e.id, "dificultad del remedio fuera de 1–6") }
+            }
             if let t = e.remedio.tarjeta, !tarjetas.contains(t) { error(e.id, "la tarjeta «\(t)» no existe") }
-            if e.detecta.isEmpty { error(e.id, "sin patrones de detección") }
+            // `detecta` es opcional si el error se asigna a mano en los distractores de los ítems estáticos.
+            if e.detecta.isEmpty && !asignadosAMano.contains(e.id) { error(e.id, "sin patrones de detección") }
         }
         for p in c.patronesInvalidos { error("patrón", "expresión regular no válida: \(p)") }
         for item in banco.itemsEstaticos {
