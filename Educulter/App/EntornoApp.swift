@@ -36,6 +36,12 @@ struct OpcionesArranque: Equatable {
     /// Tests de interfaz (Debug): modo oscuro, para la auditoría. El texto grande se pide con el
     /// argumento del sistema `-UIPreferredContentSizeCategoryName` (no fija el tamaño).
     var modoOscuro = false
+    /// Premium simulado (fase 06 §1.6): `-premium` lo concede y `-gratis` lo quita; sin ninguno, StoreKit.
+    var simularPremium: Bool?
+    /// Anuncios (capturas y tests de interfaz): día de uso desde la primera apertura (`-diaUso 3`) y
+    /// rondas ya terminadas desde el último anuncio (`-rondasAnuncio 1`).
+    var diaUso: Int?
+    var rondasAnuncio: Int?
 
     static func desde(_ argumentos: [String]) -> OpcionesArranque {
         #if DEBUG
@@ -56,6 +62,10 @@ struct OpcionesArranque: Equatable {
         o.progresoDemo = argumentos.contains("-progresoDemo")
         o.errorDemo = argumentos.contains("-errorDemo")
         o.modoOscuro = argumentos.contains("-modoOscuro")
+        if argumentos.contains("-premium") { o.simularPremium = true }
+        if argumentos.contains("-gratis") { o.simularPremium = false }
+        if let i = argumentos.firstIndex(of: "-diaUso"), i + 1 < argumentos.count { o.diaUso = Int(argumentos[i + 1]) }
+        if let i = argumentos.firstIndex(of: "-rondasAnuncio"), i + 1 < argumentos.count { o.rondasAnuncio = Int(argumentos[i + 1]) }
         o.sinAvisoRecordatorio = argumentos.contains("-sinAvisoRecordatorio") || o.captura != nil
         return o
         #else
@@ -77,14 +87,32 @@ final class EntornoApp {
     let recordatorio: ProgramadorRecordatorio
     /// Copia observable de los ajustes (vibración y sonido se leen en las vistas).
     var ajustes = Ajustes()
+    /// Acceso Premium (StoreKit 2): lo único que consultan las vistas (fase 06 §1.3).
+    let acceso: ServicioAcceso
+    /// Anuncios de la versión gratuita (fase 06 §2).
+    let anuncios: ServicioAnuncios
 
     var banco: BancoContenido? { servicio?.banco }
 
     init(opciones: OpcionesArranque, servicio: ServicioSesion?, errorCarga: String?,
-         centro: any CentroNotificaciones = CentroNotificacionesSistema()) {
+         centro: any CentroNotificaciones = CentroNotificacionesSistema(),
+         proveedorAnuncios: (any ProveedorAnuncios)? = nil) {
         self.opciones = opciones
         self.servicio = servicio
         self.errorCarga = errorCarga
+        // Con `-enMemoria` o `-almacenPruebas` (tests y capturas), el acceso y los anuncios tampoco tocan
+        // lo guardado: cada arranque es el día 1, sin Premium simulado salvo que se pida.
+        let almacen: any AlmacenClaves = opciones.enMemoria || opciones.almacenPruebas != nil ? AlmacenEnMemoria() : AlmacenUserDefaults()
+        let acceso = ServicioAcceso(almacen: almacen)
+        let anuncios = ServicioAnuncios(acceso: acceso, proveedor: proveedorAnuncios ?? ProveedorGoogle(), almacen: almacen, conexion: ConexionSistema())
+        #if DEBUG
+        if let s = opciones.simularPremium { acceso.simulacion = s }
+        anuncios.simular(diaDeUso: opciones.diaUso, rondas: opciones.rondasAnuncio)
+        // Debug: geografía de depuración del EEE, para ver el formulario de UMP.
+        anuncios.depuracionEEE = true
+        #endif
+        self.acceso = acceso
+        self.anuncios = anuncios
         self.recordatorio = ProgramadorRecordatorio(centro: centro, calendario: .current)
         let base: any ServicioSonido = opciones.captura == nil ? SonidoSintetizado() : SonidoSilencioso()
         var lector: (() -> Bool)?
@@ -158,7 +186,9 @@ final class EntornoApp {
                 a.recordatorioPreguntado = true
                 try servicio.guardar(a)
             }
-            return EntornoApp(opciones: opciones, servicio: servicio, errorCarga: nil)
+            let entorno = EntornoApp(opciones: opciones, servicio: servicio, errorCarga: nil)
+            entorno.acceso.empezar()
+            return entorno
         } catch {
             return EntornoApp(opciones: opciones, servicio: nil, errorCarga: "\(error)")
         }

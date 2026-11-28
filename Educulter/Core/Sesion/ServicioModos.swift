@@ -93,6 +93,12 @@ extension ServicioSesion {
         RecordsSupervivencia(partidas: try repositorio.partidas())
     }
 
+    /// Partidas de Supervivencia empezadas hoy (día natural del dispositivo), terminadas o
+    /// abandonadas: la versión gratuita tiene 1 al día (fase 06 §1.2).
+    func partidasSupervivenciaHoy() throws -> Int {
+        try repositorio.partidas().filter { DiaCivil($0.inicio, calendario: calendario) == hoy }.count
+    }
+
     /// Cierra la partida: la guarda con su historial y, si no está abandonada, calcula récords,
     /// cuenta como ronda (racha) y concede los logros. Las abandonadas no cuentan para
     /// el récord.

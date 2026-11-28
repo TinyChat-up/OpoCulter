@@ -1,0 +1,4 @@
+// Identificadores de AdMob para Debug (fase 06 §2.4): siempre los de prueba de Google para iOS.
+// El código de Debug usa además sus propias constantes de prueba; Release nunca los lleva.
+ADMOB_APP_ID = ca-app-pub-3940256099942544~1458002511
+ADMOB_INTERSTICIAL_ID = ca-app-pub-3940256099942544/4411468910

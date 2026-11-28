@@ -754,3 +754,101 @@ Paleta v3 (tinta marina, coral, amarillo y azul) con variantes de texto AA y tes
 - **Sigue en «no»:** 2026 O 15 (frecuencia relativa).
 
 Resultado: «sí» pasa de 40,3 % a **42,4 %** y «sí + parcial», de 77,7 % a **83,5 %**.
+
+## Fase 06 — Monetización
+
+> El prompt pedía numerar desde la D-145, pero la D-145–D-148 ya existen (fase 05K). Se sigue desde la D-149.
+
+### D-149 · 2026-11-28 · Fase 06 · Vigente
+**Decisiones sobre la 05K.** La dirección confirma con su texto literal la D-137, la D-138 y la D-139 (la D-137 queda sustituida por la D-155), la D-143 (excepción por id en el validador) y la D-144 (sobre, para y entre fuera de las invariables). Los 23 errores típicos de la 05K se recogen en `docs/revision/ERRORES_05K.md` para que los revise la dirección; no se cambian hasta entonces.
+
+### D-150 · 2026-11-28 · Fase 06 · Vigente
+**Pronombres en LEN.CLA.VAR.**
+- **Lista de la dirección:** él, ella, ellos, ellas, mío, mía, tuyo, tuya, suyo, suya, alguno, alguna, ninguno, ninguna, otro, otra, otros, otras.
+- **Etiqueta:** variable. En «justificar» van a la casilla «Varía en género y número».
+- **Niveles:** salen desde el nivel 4, el de todas las clases.
+- **Excluidos a propósito:** alguien, nadie, algo y nada, que no cambian de forma, y lo, se, me y te. No salen en ninguna lista, tampoco como formas verbales («nada», de nadar).
+- **Test:** ningún pronombre de la lista aparece entre las invariables, y el oráculo comprueba la clase de cada uno.
+
+### D-151 · 2026-11-28 · Fase 06 · Vigente
+**Recuento precalculado.** «Preguntas disponibles» ya no se calcula en la app: se lee de `Content/recuento.json`, que da total, exacto, estáticos, generados, por área y la versión del catálogo. El test `DebugYRecuentoTests/recuento` lo compara con el recuento real del contenido aprobado, que tarda unos 56 s. Con `TEST_RUNNER_REGENERAR_RECUENTO=1 xcodebuild test …` lo reescribe. Hoy son 297 613 preguntas, «al menos», porque algunas plantillas se cuentan por muestreo. `PantallaRevision` (Debug) conserva el recuento completo.
+
+### D-152 · 2026-11-28 · Fase 06 · Vigente
+**Qué incluye cada versión** (tabla de la 06 §1.2, con la corrección de la dirección).
+
+| Función | Gratis | Premium |
+|---|---|---|
+| Aprendizaje: Camino, sesión diaria, Rescate, juegos, teoría y Glosario | Todo | Todo |
+| Anuncios | Sí (D-157) | No |
+| Tribunal: la muestra SIM.DEMO.01 (hacerla, imprimirla y corregirla) | Sí | Sí |
+| Tribunal: convocatorias anteriores (los 7 exámenes oficiales, también para consultar sus enunciados) | **No** | Sí |
+| Tribunal: simulacros, modo examen, corrección, informe y «Por bloques» | No | Sí |
+| Supervivencia | 1 partida al día (empezada, terminada o abandonada) | Ilimitada |
+
+La tabla es un tipo puro, `TablaAcceso`, con `FuncionApp`. En la versión gratuita, las convocatorias, los simulacros de pago y «Por bloques» se ven con candado y, al tocarlos, abren la hoja de bloqueo. El modo Supervivencia ya existía: sin la partida del día, su pantalla lo explica con «Ver Premium» y el fin de partida no ofrece «Otra partida». Un intento de pago hecho durante la beta se puede ver en la lista, pero abrirlo pide Premium.
+
+### D-153 · 2026-11-28 · Fase 06 · Vigente
+**Servicio de acceso con StoreKit 2.** `ServicioAcceso` (`@MainActor`, `@Observable`) sustituye a `AccesoTribunal` y es lo único que consulta StoreKit.
+- **Fuente de verdad:** `Transaction.currentEntitlements` verificadas de los dos productos. Cuenta el derecho que dura más, y no cuenta uno revocado (reembolso) ni caducado.
+- **Escucha y caché:** escucha `Transaction.updates` desde el arranque. Guarda el último estado (`EstadoPremium`, con su caducidad) para funcionar sin conexión y no ver un instante la app bloqueada.
+- **Productos:** grupo «Premium», con `<bundleID>.premium.mensual` a 9,99 €/mes y `.anual` a 49,99 €/año, los dos con 7 días gratis (StoreKit la ofrece una vez por grupo). Están en `Educulter.storekit` (es-ES, tienda ESP), que usa el esquema en la acción Ejecutar y los tests con `SKTestSession`. Hoy el bundle es `com.educulter.dev`.
+- **Datos de prueba aislados:** con `-enMemoria` o `-almacenPruebas`, el estado se guarda en memoria.
+
+### D-154 · 2026-11-28 · Fase 06 · Vigente
+**Pantalla Premium y puntos de entrada.**
+- **Pantalla:** `SubscriptionStoreView` (por ids de producto, porque el id del grupo lo asigna App Store Connect) con estilo de botones, para que no haya ningún plan preseleccionado. Lleva una cabecera propia (marca v5, «Educulter Premium» y lo que incluye en 3 líneas).
+- **Precios:** las condiciones salen del servicio con precio y periodo de StoreKit: «Premium mensual: 7 días gratis. Después, 9,99 € al mes.», más «Se renueva sola. Puedes cancelar…». La prueba solo se menciona si el usuario aún tiene derecho a ella.
+- **Pie:** Restaurar compras, Términos de uso (EULA estándar de Apple) y Política de privacidad, siempre visibles en un pie propio. La URL de privacidad es provisional (`EnlacesLegales.privacidad`, en `example.com`) y queda pendiente para la fase 08.
+- **Entradas:** Ajustes > Premium, y la hoja de bloqueo al tocar algo bloqueado. Ajustes ofrece además «Gestionar suscripción» (`.manageSubscriptionsSheet`).
+- **Nunca sola:** ninguna pantalla de venta salta sola, ni al abrir la app ni en una ronda.
+- **Textos:** un test comprueba que no hay urgencias («solo hoy», «oferta», «quedan»…).
+
+### D-155 · 2026-11-28 · Fase 06 · Vigente (sustituye a la D-137)
+**Beta sin Premium gratis.** En Release (TestFlight y App Store) nadie recibe Premium gratis: los probadores compran en sandbox, que para ellos es gratis. En Debug, Ajustes > Desarrollador tiene «Premium simulado: StoreKit / Sí / No», y los argumentos `-premium` y `-gratis` hacen lo mismo en los tests de interfaz. Todo eso está dentro de `#if DEBUG`. Lo comprueban un test que recorre el código fuente y la búsqueda de cadenas en el binario del archive de Release.
+
+### D-156 · 2026-11-28 · Fase 06 · Vigente
+**SDK de terceros: Google Mobile Ads y UMP** (excepción a «sin SDKs de terceros» de CLAUDE.md, autorizada por la dirección en la fase 06).
+- **Versiones:** Google Mobile Ads 13.13.0 y User Messaging Platform 3.1.0, por Swift Package Manager, con **versión exacta** en el `.pbxproj`. Así no hace falta subir `Package.resolved`, que vive en `project.xcworkspace/` y no se sube.
+- **Un solo archivo con los SDK:** solo `ProveedorGoogle.swift` los importa. El resto habla con el protocolo `ProveedorAnuncios`, que en los tests es falso.
+- **Formato:** solo intersticiales, sin banners ni anuncios recompensados.
+
+### D-157 · 2026-11-28 · Fase 06 · Vigente
+**Política de anuncios** (`PoliticaAnuncios`, pura, con fecha, calendario y estado inyectados).
+- **Quién:** nunca con Premium.
+- **Desde cuándo:** nunca los días naturales 1 y 2 desde la primera apertura. Las rondas de esos días no cuentan.
+- **Cuándo:** solo al dejar el resultado de una ronda terminada. En la app no hay un botón «Continuar»: cuentan «Otra ronda», «5 minutos más», «Otra partida» y «Terminar». Nunca al abrir la app, a mitad de ronda, en la bienvenida, en el diagnóstico ni en el Tribunal, tampoco en sus rondas de «Por bloques».
+- **Cuántos:** uno cada 2 rondas terminadas desde el último, y como mucho 4 por día natural (zona horaria del dispositivo).
+- **Si no se puede:** sin conexión, sin consentimiento de UMP o con identificadores pendientes, ninguno. Si no está cargado, se sigue en el acto y se vuelve a cargar.
+- **Recarga:** después de cada anuncio se precarga el siguiente.
+
+### D-158 · 2026-11-28 · Fase 06 · Vigente
+**Consentimiento.**
+- **Cuándo:** desde el día 3 y sin Premium, con Hoy ya visible y fuera de la bienvenida y de las rondas. Se hace una vez por arranque, como pide Google.
+- **Orden:** `requestConsentInfoUpdate` y `loadAndPresentIfRequired` de UMP; después, si `canRequestAds` y el ATT no se ha pedido, el permiso de seguimiento con el texto de la dirección; después, `MobileAds.shared.start()` y la precarga.
+- **Sin permiso de UMP:** no se inicializa el SDK ni sale ningún anuncio.
+- **Ajustes > «Privacidad y anuncios»:** explica cuándo hay anuncios y quién los sirve. Muestra «Opciones de privacidad» cuando UMP lo exige (`privacyOptionsRequirementStatus == .required`).
+- **Debug:** geografía de depuración del EEE. Para la captura, `-diaUso 3` simula el día de uso y `-rondasAnuncio 1` las rondas ya hechas.
+
+### D-159 · 2026-11-28 · Fase 06 · Vigente
+**Identificadores que fallan en seguro.**
+- **Debug:** usa siempre los de prueba de Google para iOS; las constantes solo existen dentro de `#if DEBUG`.
+- **Release:** lee `ADMOB_APP_ID` y `ADMOB_INTERSTICIAL_ID` de `Config/Anuncios-Release.xcconfig` a través del Info.plist (`GADApplicationIdentifier` y `EduculterAdMobIntersticial`). Hoy están pendientes (D-161).
+- **Validación en Release:** los ids deben tener el formato de AdMob y el mismo editor, y no pueden ser del editor de prueba. Ese editor se compara por su SHA-256, para que su número no viaje en el binario. Si no pasan la validación, no hay UMP ni anuncios, y la app no se cierra ni avisa.
+- **Info.plist:** lleva además `NSUserTrackingUsageDescription` y los 50 `SKAdNetworkItems` de la lista oficial de Google (actualizada el 30/01/2026).
+
+### D-160 · 2026-11-28 · Fase 06 · Vigente
+**Privacidad y rendimiento.**
+- **Manifiesto:** `Resources/PrivacyInfo.xcprivacy` declara `UserDefaults` (CA92.1), `NSPrivacyTracking = true` y los tipos que recoge el SDK de anuncios según el manifiesto de Google: ID del dispositivo (con rastreo), datos de publicidad, interacción, ubicación aproximada, rendimiento, fallos y otros diagnósticos.
+- **Cuestionario:** la propuesta está en `docs/legal/ETIQUETAS_PRIVACIDAD.md`. El código confirma que la app no tiene servidor ni cuentas y que no abre conexiones propias.
+- **Arranque:** el SDK nunca se inicializa en el arranque; lo hace después de UMP, desde la pantalla de inicio ya visible y de forma asíncrona.
+
+### D-161 · 2026-11-28 · Fase 06 · Vigente
+**El ID de la app de AdMob pendiente es un marcador de ceros.** Con `GADApplicationIdentifier = PENDIENTE`, la app de Release se cerraba al arrancar. El SDK, enlazado de forma estática, comprueba el formato al iniciarse aunque nunca se llame a `start()` (`GADApplicationVerifyPublisherInitializedCorrectly`). Se vio en el test de arranque en Release. Por eso `ADMOB_APP_ID` pendiente vale `ca-app-pub-0000000000000000~0000000000`, y `ADMOB_INTERSTICIAL_ID` sigue en `PENDIENTE`. La validación de Release rechaza un editor con todo ceros, así que no hay UMP ni anuncios. Comprobado: con el marcador, la app de Release arranca y sigue abierta en el simulador. Completa la D-159.
+
+### D-162 · 2026-11-28 · Fase 06 · Vigente
+**Accesibilidad de la pantalla Premium y de la hoja de bloqueo** (añadidas a `AccesibilidadUITests`).
+- **Hoja de bloqueo:** a toda altura y con `presentationBackground` de papel. A media altura, el texto quedaba recortado y el material translúcido no daba el contraste.
+- **Pantalla Premium:** el pie (Restaurar y enlaces) va en una pila debajo de `SubscriptionStoreView`. Superpuesto tapaba los planes, y dentro de la cabecera desaparecía sin conexión. Cada enlace tiene 44 pt de alto.
+- **Filas bloqueadas del Tribunal:** solo llevan el candado, que VoiceOver lee como «Premium».
+- **Test:** usa `Educulter.storekit` con `SKTestSession`. Descarta solo los avisos de tipografía y recorte de los textos que dibuja StoreKit en los botones de los planes, el nombre y «1 semana gratis y luego …».
+

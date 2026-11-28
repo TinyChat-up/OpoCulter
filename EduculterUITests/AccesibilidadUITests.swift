@@ -1,3 +1,4 @@
+import StoreKitTest
 import XCTest
 
 /// Pasada corta de accesibilidad (D-141, anexo a la 05K): `performAccessibilityAudit()` en Inicio,
@@ -57,6 +58,12 @@ final class AccesibilidadUITests: CasoUI {
             if problema.auditType == .contrast, let e = problema.element, e.frame.maxY > borde || e.frame.minY < techo { return true }
             // Desplazada, el auditor no identifica algunos nodos de arriba (los 7 días de la semana de Inicio).
             if problema.auditType == .contrast, desplazada, problema.element == nil { return true }
+            // Fase 06: los botones de los planes (nombre y subtítulo con el precio) los dibuja
+            // `SubscriptionStoreView` (StoreKit) con su propia tipografía y su tamaño; la app no puede cambiarlos.
+            if [.dynamicType, .textClipped].contains(problema.auditType), let e = problema.element,
+               ["Premium mensual", "Premium anual"].contains(e.label) || e.label.range(of: #"^\d+\s\w+ gratis y luego .+ al (mes|año)$"#, options: .regularExpression) != nil {
+                return true
+            }
             let e = problema.element
             XCTContext.runActivity(named: "PROBLEMA \(pantalla): \(problema.compactDescription) · tipo \(e?.elementType.rawValue ?? 0) · id «\(e?.identifier ?? "")» · etiqueta «\(e?.label ?? "")» · \(e?.frame ?? .zero)") { _ in }
             return false
@@ -97,5 +104,31 @@ final class AccesibilidadUITests: CasoUI {
                              ("item:LEN.LEX.DICC.G01@d5#2:antes", "mecanica_ordenar")] {
             try auditar(self.escena(escena, espera: id), escena)
         }
+    }
+
+    /// Fase 06: la hoja de bloqueo del Tribunal y la pantalla Premium (usuario gratis), con la tienda
+    /// de pruebas `Educulter.storekit` (sin ella, StoreKit muestra su propio aviso de «no disponible»).
+    @MainActor
+    func testHojaBloqueoYPantallaPremium() throws {
+        let sesion = try SKTestSession(contentsOf: URL(filePath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            .appending(path: "Educulter.storekit"))
+        sesion.resetToDefaultState()
+        sesion.clearTransactions()
+        sesion.disableDialogs = true
+        let app = lanzar(["-gratis"])
+        app.tabBars.buttons["Tribunal"].firstMatch.tap()
+        let simulacro = app.buttons["simulacro_SIM.OR.01"]
+        XCTAssertTrue(simulacro.waitForExistence(timeout: 15))
+        var vueltas = 0
+        while !simulacro.isHittable && vueltas < 6 { app.scrollViews.firstMatch.swipeUp(velocity: .slow); vueltas += 1 }
+        simulacro.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["hojaBloqueoPremium"].waitForExistence(timeout: 10))
+        RunLoop.current.run(until: Date().addingTimeInterval(1.5))
+        try auditarVista(app, "Hoja de bloqueo")
+        app.buttons["botonVerPremium"].tap()
+        XCTAssertTrue(app.buttons["botonRestaurarCompras"].waitForExistence(timeout: 15))
+        // Que termine de cargar la tienda (o su aviso) antes de auditar.
+        RunLoop.current.run(until: Date().addingTimeInterval(4))
+        try auditarVista(app, "Pantalla Premium")
     }
 }

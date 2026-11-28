@@ -173,10 +173,10 @@ struct SimulacrosEscritosTests {
     func acceso() throws {
         let demo = try #require(banco.tribunal.original("SIM.DEMO.01")).entrada
         let or1 = try #require(banco.tribunal.original("SIM.OR.01")).entrada
-        #expect(AccesoTribunal.acceso(demo, premium: false) == .permitido)
-        #expect(AccesoTribunal.acceso(or1, premium: false) == .soloPremium)
-        #expect(AccesoTribunal.acceso(or1, premium: true) == .permitido)
-        #expect(AccesoTribunal.acceso(.oficial("OF.2017.O"), premium: false) == .soloPremium)
+        #expect(TablaAcceso.acceso(demo, premium: false) == .permitido)
+        #expect(TablaAcceso.acceso(or1, premium: false) == .soloPremium)
+        #expect(TablaAcceso.acceso(or1, premium: true) == .permitido)
+        #expect(TablaAcceso.acceso(.oficial("OF.2017.O"), premium: false) == .soloPremium)
     }
 }
 

@@ -137,6 +137,8 @@ struct TribunalTests {
         let cola = try repo.colaRescate()
         #expect(Set(cola.entradas.map(\.competencia)) == Set(enviadas))
         #expect(try servicio.historialExamenes().first?.id == corregido.id)
-        #expect(AccesoTribunal.acceso(.oficial("OF.2017.O")) == .permitido)
+        // Fase 06 §1.6 (sustituye a la D-137): sin Premium no hay modo examen; la beta ya no lo concede.
+        #expect(TablaAcceso.acceso(.oficial("OF.2017.O"), premium: true) == .permitido)
+        #expect(TablaAcceso.acceso(.oficial("OF.2017.O"), premium: false) == .soloPremium)
     }
 }

@@ -29,4 +29,30 @@ final class TribunalUITests: CasoUI {
         }
         XCTAssertFalse(app.buttons["mapa_L03"].exists, "La muestra tiene 4 preguntas")
     }
+
+    /// Fase 06: un usuario gratis toca un simulacro de pago → hoja de bloqueo → «Ver Premium» → la
+    /// pantalla Premium con Restaurar compras y los enlaces a Términos de uso y Política de privacidad.
+    @MainActor
+    func testGratisSimulacroAbreHojaYPantallaPremium() throws {
+        let app = lanzar(["-gratis"])
+        app.tabBars.buttons["Tribunal"].firstMatch.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["tarjetaPrincipal"].waitForExistence(timeout: 15))
+        let simulacro = app.buttons["simulacro_SIM.OR.01"]
+        XCTAssertTrue(simulacro.waitForExistence(timeout: 10))
+        var vueltas = 0
+        while !simulacro.isHittable && vueltas < 6 { app.scrollViews.firstMatch.swipeUp(velocity: .slow); vueltas += 1 }
+        XCTAssertTrue(simulacro.label.contains("Premium"), "Con candado: \(simulacro.label)")
+        simulacro.tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["hojaBloqueoPremium"].waitForExistence(timeout: 10))
+        XCTAssertTrue(app.buttons["botonAhoraNo"].exists)
+        app.buttons["botonVerPremium"].tap()
+
+        XCTAssertTrue(app.descendants(matching: .any)["pantallaPremium"].waitForExistence(timeout: 15))
+        XCTAssertTrue(app.buttons["botonRestaurarCompras"].waitForExistence(timeout: 10))
+        // Los `Link` de SwiftUI se exponen como botones o como enlaces según la versión del sistema.
+        for id in ["enlaceTerminos", "enlacePrivacidad"] {
+            XCTAssertTrue(app.descendants(matching: .any)[id].exists, "Falta \(id)")
+        }
+    }
 }

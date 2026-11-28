@@ -61,7 +61,9 @@ struct PantallaInicioSupervivencia: View {
     let servicio: ServicioSesion
     let jugar: (String?) -> Void
     @State private var area = "MIX"
+    @State private var verPremium = false
     @Environment(\.dismiss) private var cerrar
+    @Environment(EntornoApp.self) private var entorno
 
     var body: some View {
         let records = (try? servicio.recordsSupervivencia()) ?? RecordsSupervivencia(partidas: [])
@@ -96,13 +98,27 @@ struct PantallaInicioSupervivencia: View {
                 }
                 .padding(Espacio.l)
             }
-            BotonPrincipal(titulo: "Jugar", icono: "play.fill", acento: Paleta.recompensa) {
-                jugar(area == "MIX" ? nil : area)
-                cerrar()
+            // Versión gratuita: 1 partida al día; con Premium, sin límite (fase 06 §1.2).
+            if entorno.acceso.acceso(.supervivencia, partidasSupervivenciaHoy: (try? servicio.partidasSupervivenciaHoy()) ?? 0) == .permitido {
+                BotonPrincipal(titulo: "Jugar", icono: "play.fill", acento: Paleta.recompensa) {
+                    jugar(area == "MIX" ? nil : area)
+                    cerrar()
+                }
+                .padding(Espacio.l)
+                .accessibilityIdentifier("botonJugarSupervivencia")
+            } else {
+                VStack(spacing: Espacio.s) {
+                    Text("Hoy ya has jugado tu partida gratuita. Mañana tienes otra; con Premium, juegas sin límite.")
+                        .font(.subheadline).foregroundStyle(Paleta.textoPrincipal).fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("textoLimiteSupervivencia")
+                    Button("Ver Premium") { verPremium = true }
+                        .buttonStyle(EstiloBotonSecundario())
+                        .accessibilityIdentifier("botonVerPremium")
+                }
+                .padding(Espacio.l)
             }
-            .padding(Espacio.l)
-            .accessibilityIdentifier("botonJugarSupervivencia")
         }
+        .sheet(isPresented: $verPremium) { NavigationStack { PantallaPremium() }.presentationBackground(Paleta.fondo) }
         .background(Paleta.fondo.ignoresSafeArea())
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaInicioSupervivencia")
@@ -131,7 +147,8 @@ struct PantallaInicioSupervivencia: View {
 struct PantallaFinPartida: View {
     let resultado: ResultadoPartida
     let servicio: ServicioSesion
-    let otraPartida: () -> Void
+    /// `nil` en la versión gratuita cuando ya se ha jugado la partida del día (fase 06 §1.2).
+    let otraPartida: (() -> Void)?
     let terminar: () -> Void
 
     var body: some View {
@@ -179,8 +196,14 @@ struct PantallaFinPartida: View {
                 .padding(Espacio.l)
             }
             VStack(spacing: Espacio.s) {
-                BotonPrincipal(titulo: "Otra partida", icono: "arrow.clockwise", acento: Paleta.recompensa, accion: otraPartida)
-                    .accessibilityIdentifier("botonOtraPartida")
+                if let otraPartida {
+                    BotonPrincipal(titulo: "Otra partida", icono: "arrow.clockwise", acento: Paleta.recompensa, accion: otraPartida)
+                        .accessibilityIdentifier("botonOtraPartida")
+                } else {
+                    Text("Mañana tienes otra partida gratis. Con Premium, juegas sin límite.")
+                        .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("textoLimiteSupervivencia")
+                }
                 Button("Terminar", action: terminar).buttonStyle(EstiloBotonSecundario())
                     .accessibilityIdentifier("botonTerminar")
             }

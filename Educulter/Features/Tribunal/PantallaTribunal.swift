@@ -4,7 +4,8 @@ import SwiftUI
 /// principal (primero la muestra; luego el siguiente simulacro sin hacer) con «Continuar» si hay un
 /// intento activo o, si no, «Hacer en la app» e «Imprimir PDF» al mismo nivel. Debajo, los
 /// resultados anteriores y los bloques «Simulacros originales», «Convocatorias anteriores» y «Por
-/// bloques». Sin anuncios.
+/// bloques». Sin anuncios. Versión gratuita (fase 06 §1.2): solo la muestra SIM.DEMO.01; lo demás
+/// se ve con candado y, al tocarlo, abre la hoja de bloqueo con «Ver Premium».
 struct PantallaTribunal: View {
     let servicio: ServicioSesion
     @Environment(EntornoApp.self) private var entorno
@@ -17,6 +18,9 @@ struct PantallaTribunal: View {
     @State private var pdf: SimulacroOriginal?
     @State private var ronda: RondaViewModel?
     @State private var error: String?
+    @State private var bloqueo: MotivoBloqueo?
+
+    private var acceso: ServicioAcceso { entorno.acceso }
 
     var body: some View {
         NavigationStack {
@@ -31,9 +35,15 @@ struct PantallaTribunal: View {
                     resultados
                     seccion("Simulacros originales") {
                         ForEach(servicio.originales) { s in
-                            NavigationLink { fichaSimulacro(s) } label: {
-                                fila(s.entrada.titulo, detalle: "\(s.etiqueta) · \(resumen(s))", icono: s.entrada.esMuestra ? "gift" : "doc.text",
-                                     estado: entregados.contains { $0.simulacro == s.id } ? "Hecho" : nil)
+                            let filaSimulacro = fila(s.entrada.titulo, detalle: "\(s.etiqueta) · \(resumen(s))", icono: s.entrada.esMuestra ? "gift" : "doc.text",
+                                                     estado: entregados.contains { $0.simulacro == s.id } ? "Hecho" : nil,
+                                                     bloqueada: acceso.acceso(s.entrada) != .permitido)
+                            Group {
+                                if acceso.acceso(s.entrada) == .permitido {
+                                    NavigationLink { fichaSimulacro(s) } label: { filaSimulacro }
+                                } else {
+                                    Button { bloqueo = .simulacro } label: { filaSimulacro }
+                                }
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("simulacro_\(s.id)")
@@ -41,9 +51,15 @@ struct PantallaTribunal: View {
                     }
                     seccion("Convocatorias anteriores") {
                         ForEach(convocatorias) { e in
-                            NavigationLink { PantallaConvocatoria(examen: e, empezar: { empezarOficial(e) }, bloqueado: oficialEnCurso != nil) } label: {
-                                fila(e.nombre, detalle: "Reproducción literal · Comunidad de Madrid", icono: "building.columns",
-                                     estado: e.completo ? "Modo examen" : "Solo repaso")
+                            let libre = acceso.permitido(.convocatoriasAnteriores)
+                            let filaConvocatoria = fila(e.nombre, detalle: "Reproducción literal · Comunidad de Madrid", icono: "building.columns",
+                                                        estado: e.completo ? "Modo examen" : "Solo repaso", bloqueada: !libre)
+                            Group {
+                                if libre {
+                                    NavigationLink { PantallaConvocatoria(examen: e, empezar: { empezarOficial(e) }, bloqueado: oficialEnCurso != nil) } label: { filaConvocatoria }
+                                } else {
+                                    Button { bloqueo = .convocatorias } label: { filaConvocatoria }
+                                }
                             }
                             .buttonStyle(.plain)
                             .accessibilityIdentifier("convocatoria_\(e.id)")
@@ -53,7 +69,9 @@ struct PantallaTribunal: View {
                         Text("Práctica de 12–20 minutos con ítems de juego, explicación y pistas. Su puntuación no se compara con la del examen.")
                             .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
                         ForEach([("LEN", "Bloque de Lengua", "textformat"), ("MAT", "Bloque de Matemáticas", "function")], id: \.0) { a in
-                            Button { empezarBloque(a.0) } label: { fila(a.1, detalle: "Unas 10 preguntas según el plano del examen", icono: a.2, estado: nil) }
+                            Button { empezarBloque(a.0) } label: {
+                                fila(a.1, detalle: "Unas 10 preguntas según el plano del examen", icono: a.2, estado: nil, bloqueada: !acceso.permitido(.porBloques))
+                            }
                                 .buttonStyle(.plain)
                                 .accessibilityIdentifier("bloque_\(a.0)")
                         }
@@ -70,8 +88,9 @@ struct PantallaTribunal: View {
         .fullScreenCover(item: $escrito, onDismiss: cargar) { m in PantallaEscrito(modelo: m) { escrito = nil } }
         .fullScreenCover(item: $examen, onDismiss: cargar) { m in PantallaExamen(modelo: m) { examen = nil } }
         .fullScreenCover(item: $ronda, onDismiss: cargar) { r in
-            PantallaRonda(modelo: r, ayudasDePrueba: entorno.opciones.ayudasDePrueba) { ronda = nil }
+            PantallaRonda(modelo: r, ayudasDePrueba: entorno.opciones.ayudasDePrueba, enTribunal: true) { ronda = nil }
         }
+        .sheet(item: $bloqueo) { m in HojaBloqueoPremium(motivo: m) }
         .sheet(item: $pdf) { s in
             HojaPDF(simulacro: s, empezarEnPapel: { pdf = nil; empezar(s, .papel) }, corregirEnPapel: { pdf = nil; corregirPapel(s) })
         }
@@ -98,30 +117,33 @@ struct PantallaTribunal: View {
 
     private func abrir(_ i: IntentoEscrito) {
         guard let s = servicio.banco.tribunal.original(i.simulacro) else { return }
+        guard acceso.acceso(s.entrada) == .permitido else { bloqueo = .resultado; return }
         escrito = ModeloEscrito(servicio: servicio, simulacro: s, intento: i)
     }
 
     private func empezar(_ s: SimulacroOriginal, _ formato: IntentoEscrito.Formato) {
-        guard AccesoTribunal.acceso(s.entrada) == .permitido else { return }
+        guard acceso.acceso(s.entrada) == .permitido else { bloqueo = .simulacro; return }
         do { abrir(try servicio.empezarEscrito(s.id, formato: formato)) } catch { self.error = "No se ha podido preparar el simulacro." }
     }
 
     private func corregirPapel(_ s: SimulacroOriginal) {
-        guard AccesoTribunal.acceso(s.entrada) == .permitido else { return }
+        guard acceso.acceso(s.entrada) == .permitido else { bloqueo = .simulacro; return }
         do { abrir(try servicio.corregirEnPapel(s.id)) } catch { self.error = "No se ha podido preparar la corrección." }
     }
 
     private func imprimir(_ s: SimulacroOriginal) {
-        guard AccesoTribunal.acceso(s.entrada) == .permitido else { return }
+        guard acceso.acceso(s.entrada) == .permitido else { bloqueo = .simulacro; return }
         pdf = s
     }
 
     private func empezarOficial(_ e: ExamenOficial) {
-        guard e.completo, AccesoTribunal.acceso(.oficial(e.id)) == .permitido else { return }
+        guard e.completo else { return }
+        guard acceso.acceso(.oficial(e.id)) == .permitido else { bloqueo = .convocatorias; return }
         do { examen = ModeloExamen(servicio: servicio, sesion: try servicio.empezarExamen(.oficial(e.id))) } catch { self.error = "No se ha podido preparar el examen." }
     }
 
     private func empezarBloque(_ area: String) {
+        guard acceso.permitido(.porBloques) else { bloqueo = .bloques; return }
         guard let ids = try? servicio.bloquePractica(area: area), !ids.isEmpty else { error = "Aún no hay preguntas aprobadas para este bloque."; return }
         ronda = RondaViewModel(servicio: servicio, tipo: .items(ids))
     }
@@ -130,7 +152,7 @@ struct PantallaTribunal: View {
 
     @ViewBuilder private var tarjetaPrincipal: some View {
         if let s = principal {
-            let permitido = AccesoTribunal.acceso(s.entrada) == .permitido
+            let permitido = acceso.acceso(s.entrada) == .permitido
             TarjetaSuperficie {
                 VStack(alignment: .leading, spacing: Espacio.m) {
                     Text(s.entrada.esMuestra ? "MUESTRA GRATUITA" : s.etiqueta.uppercased())
@@ -146,7 +168,7 @@ struct PantallaTribunal: View {
                     } else if permitido {
                         botonesFormato(s)
                     } else {
-                        Label("Incluido en Premium", systemImage: "lock").font(.subheadline.weight(.semibold))
+                        botonBloqueado(.simulacro)
                     }
                 }
             }
@@ -167,7 +189,10 @@ struct PantallaTribunal: View {
     }
 
     private func tarjetaOficialEnCurso(_ s: SesionExamen) -> some View {
-        Button { examen = ModeloExamen(servicio: servicio, sesion: s) } label: {
+        Button {
+            guard acceso.acceso(s.modo) == .permitido else { bloqueo = .convocatorias; return }
+            examen = ModeloExamen(servicio: servicio, sesion: s)
+        } label: {
             fila("Continuar: \(s.modo.examenId.flatMap { servicio.banco.tribunal.examen($0)?.nombre } ?? s.modo.nombre)",
                  detalle: "Convocatoria anterior · pregunta \(s.actual + 1) de \(s.preguntas.count)", icono: "play.fill", estado: nil)
         }
@@ -178,7 +203,7 @@ struct PantallaTribunal: View {
     // MARK: Ficha de un simulacro
 
     private func fichaSimulacro(_ s: SimulacroOriginal) -> some View {
-        let permitido = AccesoTribunal.acceso(s.entrada) == .permitido
+        let permitido = acceso.acceso(s.entrada) == .permitido
         let activoDe = activo?.simulacro == s.id ? activo : nil
         return ScrollView {
             VStack(alignment: .leading, spacing: Espacio.l) {
@@ -193,7 +218,7 @@ struct PantallaTribunal: View {
                     Button("Corregir una prueba hecha en papel") { corregirPapel(s) }
                         .font(.subheadline.weight(.semibold)).frame(minHeight: Medidas.tactilMinimo)
                 } else {
-                    Label("Incluido en Premium", systemImage: "lock").font(.subheadline.weight(.semibold))
+                    botonBloqueado(.simulacro)
                 }
                 let propios = entregados.filter { $0.simulacro == s.id }
                 if !propios.isEmpty {
@@ -253,7 +278,14 @@ struct PantallaTribunal: View {
         }
     }
 
-    private func fila(_ titulo: String, detalle: String, icono: String, estado: String?) -> some View {
+    /// «Incluido en Premium» con candado: abre la hoja de bloqueo.
+    private func botonBloqueado(_ motivo: MotivoBloqueo) -> some View {
+        Button { bloqueo = motivo } label: { Label("Incluido en Premium", systemImage: "lock") }
+            .buttonStyle(EstiloBotonSecundario())
+            .accessibilityIdentifier("botonIncluidoPremium")
+    }
+
+    private func fila(_ titulo: String, detalle: String, icono: String, estado: String?, bloqueada: Bool = false) -> some View {
         HStack(spacing: Espacio.m) {
             Image(systemName: icono).font(.title3).foregroundStyle(Paleta.primario).frame(width: 28).accessibilityHidden(true)
             VStack(alignment: .leading, spacing: 2) {
@@ -261,7 +293,13 @@ struct PantallaTribunal: View {
                 Text(detalle).font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
             }
             Spacer(minLength: 0)
-            if let estado { Text(estado).font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario) }
+            if bloqueada {
+                // Solo el candado (con texto, recortaba el título); VoiceOver lo lee como «Premium».
+                Image(systemName: "lock").font(.footnote.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+                    .accessibilityLabel("Premium")
+            } else if let estado {
+                Text(estado).font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+            }
             Image(systemName: "chevron.right").font(.footnote).foregroundStyle(Paleta.textoSecundario).accessibilityHidden(true)
         }
         .padding(Espacio.m)
