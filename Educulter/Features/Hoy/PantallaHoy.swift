@@ -111,6 +111,12 @@ struct PantallaHoy: View {
         .onAppear {
             modelo.cargar(forzarBienvenida: entorno.opciones.forzarBienvenida)
         }
+        // Anuncios (fase 06 §2.3): desde el día 3, con Hoy ya visible y fuera de la bienvenida y de
+        // las rondas, se actualiza el consentimiento (UMP), se pide ATT si procede y se prepara el SDK.
+        .task(id: modelo.mostrarBienvenida) {
+            guard !modelo.mostrarBienvenida, modelo.rondaActiva == nil else { return }
+            await entorno.anuncios.prepararEnInicio()
+        }
         .fullScreenCover(item: $modelo.rondaActiva) { ronda in
             PantallaRonda(modelo: ronda, ayudasDePrueba: entorno.opciones.ayudasDePrueba) { modelo.cerrarRonda() }
         }

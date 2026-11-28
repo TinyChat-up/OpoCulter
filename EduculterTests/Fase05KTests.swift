@@ -181,7 +181,12 @@ enum Oraculo05K {
         "aquí", "allí", "cerca", "lejos", "hoy", "ayer", "siempre", "nunca", "despacio", "muy", "sí", "no", "también", "tampoco", "enseguida",
         "ay", "oh", "eh", "uf",
     ]
-    static let excluidas: Set<String> = ["bajo", "bien", "mal", "mañana", "poco", "bastante", "medio", "mucho", "demasiado", "sobre", "para", "entre"]
+    static let excluidas: Set<String> = ["bajo", "bien", "mal", "mañana", "poco", "bastante", "medio", "mucho", "demasiado", "sobre", "para", "entre",
+                                         // Pronombres excluidos a propósito por la dirección (fase 06 §0.4).
+                                         "alguien", "nadie", "algo", "nada", "lo", "se", "me", "te"]
+    /// Pronombres de la dirección (fase 06 §0.4): variables, en género y número.
+    static let pronombres: Set<String> = ["él", "ella", "ellos", "ellas", "mío", "mía", "tuyo", "tuya", "suyo", "suya",
+                                          "alguno", "alguna", "ninguno", "ninguna", "otro", "otra", "otros", "otras"]
 
     static func variables(_ m: Muestra, _ item: Item) -> [String] {
         guard case .clasificar(let c) = item.payload else { return ["payload"] }
@@ -195,6 +200,7 @@ enum Oraculo05K {
             if excluidas.contains(texto) { f.append("«\(texto)» está excluida") }
             let variable = ["sustantivo", "adjetivo", "verbo", "determinante", "pronombre"].contains(clase)
             if variable == invariablesDireccion.contains(texto) { f.append("«\(texto)» (\(clase)) no casa con la lista de la dirección") }
+            if clase == "pronombre" && !pronombres.contains(texto) { f.append("«\(texto)» no es un pronombre de la lista de la dirección") }
             let esperada = justificar ? (clase == "verbo" ? "personaNumero" : (variable ? "generoNumero" : "ninguna")) : (variable ? "variable" : "invariable")
             if ficha.categoria != esperada { f.append("«\(texto)»: \(ficha.categoria) ≠ \(esperada)") }
         }
@@ -349,6 +355,20 @@ struct Fase05KCasosTests {
         #expect(vars.allSatisfy { !Oraculo05K.invariablesDireccion.contains($0.texto) && !Oraculo05K.excluidas.contains($0.texto) })
         for clase in ["sustantivo", "adjetivo", "verbo", "determinante"] { #expect(vars.contains { $0.clase == clase }, "\(clase)") }
         #expect(!vars.contains { $0.texto == "lunes" || $0.texto == "como" })
+    }
+
+    @Test("Pronombres de la dirección (fase 06 §0.4): variables en género y número; ninguno entre las invariables")
+    func pronombres() {
+        let inv = Set(GeneradorPalabrasVariables.invariables().map(\.texto))
+        #expect(inv.isDisjoint(with: Oraculo05K.pronombres))
+        let vars = GeneradorPalabrasVariables.variables(banco.recursos)
+        let pron = vars.filter { $0.clase == "pronombre" }
+        #expect(!pron.isEmpty && pron.allSatisfy { Oraculo05K.pronombres.contains($0.texto) && $0.variacion == .generoNumero })
+        // Cada pronombre de la lista sale como variable (como pronombre o, si el léxico ya lo tiene, como determinante).
+        #expect(Oraculo05K.pronombres.allSatisfy { p in vars.contains { $0.texto == p } })
+        for w in ["alguien", "nadie", "algo", "nada", "lo", "se", "me", "te"] {
+            #expect(!inv.contains(w) && !vars.contains { $0.texto == w }, "\(w)")
+        }
     }
 
     @Test("Volumen: evaluación del resultado, la unidad aparte, los pasos y los errores típicos")

@@ -21,10 +21,10 @@
 | 05I | Modo Tribunal y borrador táctil | Terminada (fusionada en `main`, 27/11/2026) | Exámenes oficiales completos, medio examen, simulacros según el plano y repaso; sala con cuenta atrás, mapa y borrador PencilKit; autoevaluación con rúbrica, nota orientativa, sello «Apto», informe y «Repasar ahora»; `AccesoTribunal` para la fase 06 |
 | 05J | Tribunal v2 y cierre del lote 06 | Terminada (fusionada en `main`, 27/11/2026) | Examen escrito aparte de los juegos: muestra gratuita y 3 simulacros originales, en la app (reloj sin pausa, mapa, símbolos, borrador) o en PDF A4 (papel); corrección con 3 criterios en centésimas y penalización aparte; convocatorias anteriores (modo examen en 2017 y 2026 A); «Por bloques»; lote 06: 36 tarjetas, LEN.ORT.CTX y remedio estático |
 | 05K | Las 4 competencias del plano sin contenido | Terminada (fusionada en `main`, 27/11/2026) | «Capas y sólidos» (volúmenes en isométrica, cubos por capas, litros, cilindro y unidades mixtas); tipos de sucesos con dado, ruleta, urna y baraja española; palabras variables e invariables; diccionario (lema y orden alfabético RAE 2010); 14 plantillas aprobadas, 4 tarjetas y 23 errores; cobertura del examen: sí 42,4 %, sí + parcial 83,5 %; pasada corta de accesibilidad |
-| 05L | Siguiente fase | Pendiente | La define la dirección |
+| 05L | Datos vivos | Pendiente (siguiente) | Estadística con datos vivos |
 | Post-MVP | Editor de personalización del avatar | Pendiente | Hoy hay 12 avatares cerrados; el editor completo queda para después del MVP (D-054) |
-| 06 | Monetización | Pendiente | Suscripción con StoreKit 2 y muro de pago |
-| 07 | Calidad | Pendiente | Tests, accesibilidad, rendimiento, iOS 17 |
+| 06 | Monetización | Terminada (fusionada en `main`, 28/11/2026) | Premium con StoreKit 2 (mensual 9,99 € y anual 49,99 €, 7 días gratis), tabla de acceso (del Tribunal solo es gratis la muestra; Supervivencia 1 al día), pantalla Premium y hoja de bloqueo; intersticiales de AdMob con UMP y ATT en la versión gratuita (desde el día 3, 1 cada 2 rondas, máx. 4 al día); IDs que fallan en seguro; recuento precalculado; pronombres en LEN.CLA.VAR |
+| 07 | Calidad y TestFlight | Pendiente | Tests, accesibilidad, rendimiento, iOS 17; beta en TestFlight (compras en sandbox) |
 | 08 | TestFlight | Pendiente | Beta con usuarios reales |
 | 09 | App Store | Pendiente | Bundle ID definitivo, ficha, privacidad y revisión |
 | 10 | Lanzamiento y cobros | Pendiente | Publicación y acuerdos de pago |

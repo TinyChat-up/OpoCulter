@@ -98,4 +98,24 @@ final class AccesibilidadUITests: CasoUI {
             try auditar(self.escena(escena, espera: id), escena)
         }
     }
+
+    /// Fase 06: la hoja de bloqueo del Tribunal y la pantalla Premium (usuario gratis).
+    @MainActor
+    func testHojaBloqueoYPantallaPremium() throws {
+        let app = lanzar(["-gratis"])
+        app.tabBars.buttons["Tribunal"].firstMatch.tap()
+        let simulacro = app.buttons["simulacro_SIM.OR.01"]
+        XCTAssertTrue(simulacro.waitForExistence(timeout: 15))
+        var vueltas = 0
+        while !simulacro.isHittable && vueltas < 6 { app.scrollViews.firstMatch.swipeUp(velocity: .slow); vueltas += 1 }
+        simulacro.tap()
+        XCTAssertTrue(app.descendants(matching: .any)["hojaBloqueoPremium"].waitForExistence(timeout: 10))
+        RunLoop.current.run(until: Date().addingTimeInterval(1.5))
+        try auditarVista(app, "Hoja de bloqueo")
+        app.buttons["botonVerPremium"].tap()
+        XCTAssertTrue(app.buttons["botonRestaurarCompras"].waitForExistence(timeout: 15))
+        // Que termine de cargar la tienda (o su aviso) antes de auditar.
+        RunLoop.current.run(until: Date().addingTimeInterval(4))
+        try auditarVista(app, "Pantalla Premium")
+    }
 }

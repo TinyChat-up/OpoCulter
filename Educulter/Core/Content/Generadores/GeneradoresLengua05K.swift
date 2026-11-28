@@ -30,7 +30,9 @@ final class CacheRecursos05K<V>: @unchecked Sendable {
 /// Clasificar palabras en variables e invariables, o justificar en qué varían (LEN.CLA.VAR, 05K §3).
 ///
 /// - Variables: los sustantivos, adjetivos y verbos de `gramatica/piezas.json` (los verbos, en formas
-///   conjugadas) y sus determinantes. El léxico no tiene pronombres etiquetados, así que no salen.
+///   conjugadas), sus determinantes y los pronombres de la dirección (fase 06 §0.4), que varían en
+///   género y número. Los que no cambian de forma (alguien, nadie, algo, nada) y lo, se, me, te no
+///   salen en ninguna lista.
 /// - Invariables: la lista de la dirección (05K §3), sin las palabras que también son variables en
 ///   otros usos (las 9 que excluye la dirección y, con su mismo criterio, «sobre», «para» y
 ///   «entre», que también son sustantivo o formas verbales; D-144).
@@ -40,7 +42,7 @@ final class CacheRecursos05K<V>: @unchecked Sendable {
 /// | 1 | sustantivos y adjetivos; preposiciones |
 /// | 2 | más verbos; más conjunciones |
 /// | 3 | más determinantes; más adverbios |
-/// | 4 | todas las clases |
+/// | 4 | todas las clases (también pronombres) |
 /// | 5 | todas, con al menos un verbo y un adverbio |
 /// | 6 | todas, con palabras cortas (determinantes, interjecciones y conjunciones de una o dos letras) |
 struct GeneradorPalabrasVariables: GeneradorItems {
@@ -64,6 +66,12 @@ struct GeneradorPalabrasVariables: GeneradorItems {
         "adverbio": ["aquí", "allí", "cerca", "lejos", "hoy", "ayer", "siempre", "nunca", "despacio", "muy", "sí", "no", "también", "tampoco", "enseguida"],
         "interjección": ["ay", "oh", "eh", "uf"],
     ]
+    /// Pronombres de la dirección (fase 06 §0.4): variables, «varía en género y número».
+    static let pronombresDireccion = ["él", "ella", "ellos", "ellas", "mío", "mía", "tuyo", "tuya", "suyo", "suya",
+                                      "alguno", "alguna", "ninguno", "ninguna", "otro", "otra", "otros", "otras"]
+    /// Excluidos a propósito por la dirección: son pronombres pero no cambian de forma (alguien,
+    /// nadie, algo, nada), o son átonos (lo, se, me, te). No salen ni como variables ni como invariables.
+    static let excluidosPronombres: Set<String> = ["alguien", "nadie", "algo", "nada", "lo", "se", "me", "te"]
     /// Excluidas por la dirección por ser también variables en otros usos.
     static let excluidasDireccion: Set<String> = ["bajo", "bien", "mal", "mañana", "poco", "bastante", "medio", "mucho", "demasiado"]
     /// Excluidas aquí con el mismo criterio (D-144): «el sobre», «para» (parar) y «entre» (entrar).
@@ -73,14 +81,14 @@ struct GeneradorPalabrasVariables: GeneradorItems {
     /// Sustantivos con variación de género (niño/niña, vecino/vecina…).
     static let sustantivosConGenero: Set<String> = ["niño", "niña", "niños", "niñas", "alumna", "alumnas", "abuela", "abuelas", "cocinero",
                                                     "cocineros", "profesora", "profesoras", "vecino", "vecinos", "médico", "médicos", "gata"]
-    static let generoClase = ["sustantivo": "un", "adjetivo": "un", "verbo": "un", "determinante": "un", "adverbio": "un",
+    static let generoClase = ["sustantivo": "un", "adjetivo": "un", "verbo": "un", "determinante": "un", "pronombre": "un", "adverbio": "un",
                               "preposición": "una", "conjunción": "una", "interjección": "una"]
 
     static let listaInvariables: [Palabra] = invariables()
 
     static func invariables() -> [Palabra] {
         invariablesDireccion.flatMap { clase, ws in
-            ws.filter { !excluidasDireccion.contains($0) && !excluidasHomografas.contains($0) }.map { Palabra(texto: $0, clase: clase, variacion: .ninguna) }
+            ws.filter { !excluidasDireccion.contains($0) && !excluidasHomografas.contains($0) && !excluidosPronombres.contains($0) }.map { Palabra(texto: $0, clase: clase, variacion: .ninguna) }
         }.sorted { $0.texto < $1.texto }
     }
 
@@ -92,7 +100,8 @@ struct GeneradorPalabrasVariables: GeneradorItems {
 
     private static func calcularVariables(_ r: RecursosGeneradores) -> [Palabra] {
         var out: [Palabra] = []
-        let invariablesTexto = Set(invariablesDireccion.values.flatMap { $0 }).union(excluidasDireccion).union(["como", "cuando", "donde", "mientras", "pues"])
+        let invariablesTexto = Set(invariablesDireccion.values.flatMap { $0 }).union(excluidasDireccion).union(excluidosPronombres)
+            .union(["como", "cuando", "donde", "mientras", "pues"])
         var sustantivos = Set<String>(), determinantes = Set<String>()
         func recorrer(_ s: Sintagma) {
             for tk in s.tokens where tk.count == 2 {
@@ -110,8 +119,13 @@ struct GeneradorPalabrasVariables: GeneradorItems {
             let genero = a.formas["ms"] != a.formas["fs"]
             for f in Set(a.formas.values).sorted() { out.append(Palabra(texto: f, clase: "adjetivo", variacion: genero ? .generoNumero : .numero)) }
         }
-        for d in determinantes.sorted() {
+        for d in determinantes.sorted() where !invariablesTexto.contains(d) {
             out.append(Palabra(texto: d, clase: "determinante", variacion: d == "su" ? .numero : .generoNumero))
+        }
+        // Pronombres: los que ya salen como determinantes (otro, otra…) se quedan en su clase.
+        let yaVistos = Set(out.map(\.texto))
+        for pr in pronombresDireccion where !yaVistos.contains(pr) {
+            out.append(Palabra(texto: pr, clase: "pronombre", variacion: .generoNumero))
         }
         // Formas conjugadas (presente, pretérito perfecto simple y futuro de indicativo).
         var vistas = Set(out.map(\.texto))
@@ -132,7 +146,7 @@ struct GeneradorPalabrasVariables: GeneradorItems {
         case 1: return (["sustantivo", "adjetivo"], ["preposición"])
         case 2: return (["sustantivo", "adjetivo", "verbo"], ["preposición", "conjunción"])
         case 3: return (["sustantivo", "adjetivo", "verbo", "determinante"], ["preposición", "conjunción", "adverbio"])
-        default: return (["sustantivo", "adjetivo", "verbo", "determinante"], ["preposición", "conjunción", "adverbio", "interjección"])
+        default: return (["sustantivo", "adjetivo", "verbo", "determinante", "pronombre"], ["preposición", "conjunción", "adverbio", "interjección"])
         }
     }
 

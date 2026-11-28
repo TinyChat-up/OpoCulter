@@ -111,3 +111,45 @@ enum CatalogoPreguntas {
         return r
     }
 }
+
+// MARK: - Recuento precalculado (fase 06 §0.5)
+
+/// Cifra de «Preguntas disponibles» calculada al generar la versión y guardada en
+/// `Content/recuento.json`: la app solo lee el archivo (recorrer las plantillas tardaba hasta 51 s en
+/// el simulador). La regenera `RecuentoPrecalculadoTests` con `REGENERAR_RECUENTO=1`, y el mismo test
+/// comprueba que el archivo coincide con el recuento real.
+struct RecuentoPrecalculado: Codable, Sendable, Equatable {
+    static let archivo = "recuento.json"
+
+    /// Versión del catálogo de contenido con la que se calculó.
+    var version: Int
+    var total: Int
+    var exacto: Bool
+    var estaticos: Int
+    var generados: Int
+    var porArea: [String: Int]
+
+    init(version: Int, recuento r: RecuentoCatalogo) {
+        self.version = version
+        total = r.total
+        exacto = r.exacto
+        estaticos = r.estaticos
+        generados = r.generados
+        porArea = r.porArea
+    }
+
+    /// Lee el archivo de la carpeta de contenido (del bundle, por defecto). `nil` si falta o no se entiende.
+    static func cargar(raiz: URL? = Bundle.main.url(forResource: CargadorContenido.carpetaEnBundle, withExtension: nil)) -> RecuentoPrecalculado? {
+        guard let url = raiz?.appendingPathComponent(archivo), let datos = try? Data(contentsOf: url) else { return nil }
+        return try? JSONDecoder().decode(RecuentoPrecalculado.self, from: datos)
+    }
+
+    /// JSON estable (claves ordenadas, 2 espacios) para que el diff del archivo sea legible.
+    func codificado() throws -> Data {
+        let e = JSONEncoder()
+        e.outputFormatting = [.prettyPrinted, .sortedKeys, .withoutEscapingSlashes]
+        let texto = String(decoding: try e.encode(self), as: UTF8.self)
+        // JSONEncoder sangra con 2 espacios; se termina con salto de línea.
+        return Data((texto + "\n").utf8)
+    }
+}

@@ -4,6 +4,8 @@ import SwiftUI
 struct PantallaRonda: View {
     @Bindable var modelo: RondaViewModel
     var ayudasDePrueba = false
+    /// Ronda lanzada desde el Tribunal («Por bloques»): nunca muestra anuncios.
+    var enTribunal = false
     let cerrar: () -> Void
 
     @State private var confirmarSalida = false
@@ -32,11 +34,13 @@ struct PantallaRonda: View {
                     PantallaPlan(plan: plan, servicio: modelo.servicio, terminar: cerrar)
                         .transition(Movimiento.transicion(reducir: reducir))
                 } else if let r = modelo.resultadoPartida {
-                    PantallaFinPartida(resultado: r, servicio: modelo.servicio, otraPartida: { modelo.otraRonda() }, terminar: cerrar)
+                    PantallaFinPartida(resultado: r, servicio: modelo.servicio,
+                                       otraPartida: otraPartidaPermitida ? trasResultado { modelo.otraRonda() } : nil,
+                                       terminar: trasResultado(cerrar))
                         .transition(Movimiento.transicion(reducir: reducir))
                 } else if let resumen = modelo.resumen {
                     PantallaResumen(resumen: resumen, nombreCompetencia: modelo.nombreCompetencia,
-                                    resultadoModo: textoModo, otraRonda: { modelo.otraRonda() }, terminar: cerrar)
+                                    resultadoModo: textoModo, otraRonda: trasResultado { modelo.otraRonda() }, terminar: trasResultado(cerrar))
                         .transition(Movimiento.transicion(reducir: reducir))
                 }
             case .vacia:
@@ -376,6 +380,20 @@ struct PantallaRonda: View {
                 }
             }
         }
+    }
+
+    // MARK: Anuncios y acceso (fase 06)
+
+    /// Al dejar el resultado de una ronda terminada («Otra ronda» o «Terminar»): la política de
+    /// anuncios decide si sale un intersticial antes de seguir. En el Tribunal, nunca.
+    private func trasResultado(_ accion: @escaping () -> Void) -> () -> Void {
+        let momento: MomentoAnuncio = enTribunal ? .tribunal : .continuarTrasRonda
+        return { entorno.anuncios.continuar(momento) { accion() } }
+    }
+
+    /// Supervivencia gratis: 1 partida al día (la que acaba de terminar ya cuenta).
+    private var otraPartidaPermitida: Bool {
+        entorno.acceso.acceso(.supervivencia, partidasSupervivenciaHoy: (try? modelo.servicio.partidasSupervivenciaHoy()) ?? 0) == .permitido
     }
 
     // MARK: Teoría previa y vacío

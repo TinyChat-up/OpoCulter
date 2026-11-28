@@ -242,23 +242,6 @@ enum MapaRepaso {
     }
 }
 
-// MARK: - Acceso (05J §1)
+// MARK: - Acceso
 
-/// Punto único de decisión del acceso al Tribunal: un solo Premium (sin anuncios y Tribunal
-/// completo). La muestra (SIM.DEMO.01) es gratis en los dos formatos; sin derecho, un simulacro de
-/// pago no se hace, ni se imprime ni se comparte. El Tribunal nunca muestra anuncios.
-enum AccesoTribunal {
-    enum Acceso: Sendable, Equatable { case permitido, soloPremium }
-
-    /// Derecho Premium. Hasta la fase de compras (StoreKit 2), la beta lo concede (D-137).
-    static let premium = true
-
-    static func acceso(_ entrada: CatalogoTribunal.Entrada, premium: Bool = AccesoTribunal.premium) -> Acceso {
-        entrada.esMuestra || premium ? .permitido : .soloPremium
-    }
-
-    /// Exámenes oficiales (modo examen) y bloques: con el Premium.
-    static func acceso(_ modo: SesionExamen.Modo, premium: Bool = AccesoTribunal.premium) -> Acceso {
-        premium ? .permitido : .soloPremium
-    }
-}
+// El acceso al Tribunal lo decide `TablaAcceso` a través de `ServicioAcceso` (fase 06 §1.3).

@@ -9,7 +9,7 @@ struct PantallaProgreso: View {
     @Environment(\.dynamicTypeSize) private var tamanoTexto
     @State private var estadisticas: EstadisticasProgreso?
     @State private var logros: [(logro: Logro, obtenido: Date?)] = []
-    @State private var preguntas: RecuentoCatalogo?
+    @State private var preguntas: RecuentoPrecalculado?
     @State private var estados: [String: EstadoCompetencia] = [:]
     @State private var errores: (activos: [ServicioSesion.ErrorSeguido], corregidos: [ServicioSesion.ErrorSeguido]) = ([], [])
     @State private var nivelesExamen: [NivelExamen] = []
@@ -56,7 +56,6 @@ struct PantallaProgreso: View {
             .toolbar(.hidden, for: .navigationBar)
         }
         .onAppear(perform: cargar)
-        .task { await contarPreguntas() }
         // Doble confirmación: primero un diálogo y después una alerta.
         .confirmationDialog("¿Borrar todo tu progreso?", isPresented: $confirmarBorrado, titleVisibility: .visible) {
             Button("Continuar", role: .destructive) { confirmarBorradoFinal = true }
@@ -81,14 +80,8 @@ struct PantallaProgreso: View {
         estados = (try? servicio.repositorio.estadosCompetencia()) ?? [:]
         errores = (try? servicio.erroresSeguidos()) ?? ([], [])
         nivelesExamen = (try? servicio.nivelesExamen()) ?? []
-    }
-
-    /// Recuento de preguntas disponibles en segundo plano (recorre todas las plantillas: en el hilo
-    /// principal congelaba la pantalla). Mientras, se ve «Contando…».
-    private func contarPreguntas() async {
-        guard preguntas == nil else { return }
-        let banco = servicio.banco
-        preguntas = await Task.detached(priority: .utility) { ServicioSesion.preguntasDisponibles(banco: banco) }.value
+        // Recuento precalculado al generar la versión (fase 06 §0.5): solo se lee el archivo.
+        if preguntas == nil { preguntas = RecuentoPrecalculado.cargar() }
     }
 
     // MARK: Secciones
@@ -279,7 +272,7 @@ struct PantallaProgreso: View {
     private var seccionPreguntas: some View {
         VStack(alignment: .leading, spacing: Espacio.xs) {
             titulo("Preguntas disponibles")
-            Text(preguntas.map { "\($0.exacto ? "" : "Al menos ")\($0.total.formatted()) preguntas distintas" } ?? "Contando…")
+            Text(preguntas.map { "\($0.exacto ? "" : "Al menos ")\($0.total.formatted()) preguntas distintas" } ?? "Sin datos")
                 .font(.numerica(.title3)).foregroundStyle(Paleta.textoPrincipal)
             Text("Solo cuenta el contenido revisado y aprobado. Crece con cada lote.")
                 .font(.footnote).foregroundStyle(Paleta.textoSecundario)
@@ -350,10 +343,12 @@ struct DescriptorEvolucion: AXChartDescriptorRepresentable {
     }
 }
 
-/// Ajustes: sonido, vibración, recordatorio (con hora), hacer el diagnóstico (rehace el plan), avatar y créditos.
+/// Ajustes: sonido, vibración, recordatorio (con hora), Premium y su gestión, privacidad y anuncios,
+/// hacer el diagnóstico (rehace el plan), avatar y créditos; en Debug, también las opciones de pruebas.
 struct PantallaAjustes: View {
     let servicio: ServicioSesion
     @Environment(EntornoApp.self) private var entorno
+    @State private var gestionarSuscripcion = false
     @State private var ronda: RondaViewModel?
     @State private var mostrarPerfil = false
     @State private var descanso = false
@@ -413,6 +408,26 @@ struct PantallaAjustes: View {
                     Text("Un aviso local al día, sin servidor. Si ese día ya has completado una sesión, no suena.")
                         .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
                 }
+                grupo("Premium") {
+                    Text(entorno.acceso.premium ? "Tienes Premium: Tribunal completo, sin anuncios y Supervivencia sin límite."
+                         : "Estás en la versión gratuita: todo el aprendizaje, la muestra del Tribunal y una partida de Supervivencia al día.")
+                        .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                        .accessibilityIdentifier("textoEstadoPremium")
+                    NavigationLink { PantallaPremium() } label: { Text("Premium") }
+                        .buttonStyle(EstiloBotonSecundario())
+                        .accessibilityIdentifier("botonPremium")
+                    Button("Gestionar suscripción") { gestionarSuscripcion = true }
+                        .buttonStyle(EstiloBotonSecundario())
+                        .accessibilityHint("Cambia de plan o cancela la suscripción")
+                        .accessibilityIdentifier("botonGestionarSuscripcion")
+                }
+                grupo("Privacidad y anuncios") {
+                    Text("Qué anuncios ves, cuándo y cómo cambiar tus opciones de privacidad.")
+                        .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                    NavigationLink { PantallaPrivacidadAnuncios() } label: { Text("Privacidad y anuncios") }
+                        .buttonStyle(EstiloBotonSecundario())
+                        .accessibilityIdentifier("botonPrivacidadAnuncios")
+                }
                 grupo("Tu cuenta") {
                     Button("Hacer el diagnóstico") { ronda = RondaViewModel(servicio: servicio, tipo: .diagnostico) }
                         .accessibilityHint("Rehace tu plan de estudio con el resultado")
@@ -425,6 +440,20 @@ struct PantallaAjustes: View {
                         .buttonStyle(EstiloBotonSecundario())
                         .accessibilityIdentifier("botonCreditos")
                 }
+                #if DEBUG
+                // Solo Debug (fase 06 §1.6): simular Premium sí/no. En Release este grupo no existe.
+                grupo("Desarrollador") {
+                    Picker("Premium simulado", selection: Binding(get: { entorno.acceso.simulacion }, set: { entorno.acceso.simulacion = $0 })) {
+                        Text("StoreKit").tag(Bool?.none)
+                        Text("Sí").tag(Bool?.some(true))
+                        Text("No").tag(Bool?.some(false))
+                    }
+                    .pickerStyle(.segmented)
+                    .accessibilityIdentifier("ajusteSimularPremium")
+                    Text("Solo en Debug. «StoreKit» usa el archivo Educulter.storekit del esquema.")
+                        .font(.footnote).foregroundStyle(Paleta.textoSecundario).fixedSize(horizontal: false, vertical: true)
+                }
+                #endif
             }
             .padding(Espacio.l)
         }
@@ -437,6 +466,7 @@ struct PantallaAjustes: View {
         .sheet(isPresented: $mostrarPerfil) {
             PantallaPerfil(avatar: try? servicio.repositorio.perfil().avatar) { id in try? servicio.elegirAvatar(id) }
         }
+        .manageSubscriptionsSheet(isPresented: $gestionarSuscripcion)
         .onAppear(perform: cargarDescanso)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaAjustes")

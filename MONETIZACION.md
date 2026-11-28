@@ -1,21 +1,46 @@
 # Monetización
 
-> **Propósito:** recoger el modelo de suscripción, los precios, la prueba gratuita y su implementación con StoreKit 2.
-> **Fuente aprobada:** [docs/DISENO_PRODUCTO_v1.md](docs/DISENO_PRODUCTO_v1.md) §9 (**hipótesis**; la decisión final se toma en la Fase 06).
-> No se crea ningún producto en App Store Connect sin autorización explícita.
+> **Propósito:** modelo de pago, anuncios y su implementación (fase 06). Las decisiones están en [DECISIONES.md](DECISIONES.md), D-149 a D-160.
+> No se crea ningún producto en App Store Connect ni en AdMob sin autorización explícita. Los pasos del propietario están en [docs/legal/PENDIENTES_PROPIETARIO.md](docs/legal/PENDIENTES_PROPIETARIO.md).
 
 ## 1. Modelo
-Suscripción mensual autorrenovable con prueba gratuita de 7 días.
+- **Premium:** un grupo de suscripción con dos suscripciones autorrenovables, las dos con 7 días gratis (una vez por grupo).
+  - `<bundleID>.premium.mensual`: 9,99 €/mes.
+  - `<bundleID>.premium.anual`: 49,99 €/año.
+- **Versión gratuita:** con anuncios intersticiales de Google AdMob y consentimiento de UMP.
 
-## 2. Qué es gratis y qué es de pago
-- **Gratis:** diagnóstico, el primer bloque completo de Lengua y de Matemáticas, Ortografía exprés (1 al día) y la racha.
-- **Premium:** todo el contenido, Rescate ilimitado, simulacros, plan personalizado y estadísticas.
+## 2. Qué es gratis y qué es de pago (D-152)
+| Función | Gratis | Premium |
+|---|---|---|
+| Aprendizaje: Camino, sesión diaria, Rescate, juegos, teoría y Glosario | Todo | Todo |
+| Anuncios | Sí, con las reglas del §3 | No |
+| Tribunal: la muestra SIM.DEMO.01 | Sí | Sí |
+| Tribunal: convocatorias anteriores (los 7 exámenes oficiales) | No | Sí |
+| Tribunal: simulacros, modo examen, corrección, informe y «Por bloques» | No | Sí |
+| Supervivencia | 1 partida al día | Ilimitada |
 
-## 3. Precios y prueba gratuita
-Rango a validar: 7,99–12,99 €/mes (Fase 06).
+## 3. Anuncios (D-157)
+- **Nunca:** con Premium, los 2 primeros días naturales, al abrir la app, a mitad de ronda, en la bienvenida ni en el Tribunal.
+- **Cuándo:** al dejar el resultado de una ronda terminada, uno cada 2 rondas y como mucho 4 al día.
+- **Sin espera:** si no hay anuncio cargado, se sigue sin él.
 
-## 4. Implementación técnica (StoreKit 2)
-El acceso premium se determinará con `Transaction.currentEntitlements`, sin backend ni cuentas (D-005). El núcleo de la Fase 04 no depende de StoreKit: la restricción de contenido se aplicará como un filtro sobre el banco en la Fase 06.
+## 4. Implementación
+- **Acceso:**
+  - `ServicioAcceso` (StoreKit 2) es lo único que consulta StoreKit.
+  - Las vistas preguntan a `ServicioAcceso`, que aplica `TablaAcceso`.
+- **Anuncios:**
+  - `ServicioAnuncios` aplica `PoliticaAnuncios`.
+  - `ProveedorGoogle` es el único archivo que importa los SDK de Google.
+- **Configuración:**
+  - `Educulter.storekit`: tienda local para Debug y para los tests.
+  - `Config/Anuncios-*.xcconfig`: identificadores de AdMob. En Release valen `PENDIENTE` hasta tener los reales.
 
-## 5. Pruebas (StoreKit Configuration y sandbox)
-Requisito previo: membresía de pago de Apple Developer antes de la Fase 06.
+## 5. Pruebas
+- **Unitarias:** `Fase06Tests`.
+  - Política de anuncios.
+  - Servicio de anuncios con proveedor falso.
+  - Tabla de acceso.
+  - Identificadores.
+  - StoreKitTest: compra, prueba, caducidad, reembolso, restaurar y actualizaciones.
+- **Interfaz:** `TribunalUITests.testGratisSimulacroAbreHojaYPantallaPremium`.
+- **Sandbox (TestFlight):** necesita la membresía de pago, el acuerdo de apps de pago y los productos creados en App Store Connect.
