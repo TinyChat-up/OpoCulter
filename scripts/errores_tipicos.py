@@ -25,10 +25,11 @@ for f in PLANTILLAS.glob("*.json"):
 ERRORES = []
 
 
-def error(competencia, descripcion, remedio, explicacion, *detecta, tarjeta=None, dificultad=None, otra=False):
+def error(competencia, descripcion, remedio, explicacion, *detecta, tarjeta=None, dificultad=None, otra=False, direccion=False):
+    """`direccion=True`: texto literal de la dirección; no se recorta aunque pase de los límites (D-143)."""
     n = sum(1 for e in ERRORES if e["competencia"] == competencia) + 1
-    assert len(descripcion.split()) <= 12, descripcion
-    assert len(explicacion) <= 140, explicacion
+    assert direccion or len(descripcion.split()) <= 12, descripcion
+    assert direccion or len(explicacion) <= 140, explicacion
     assert otra or remedio.rsplit(".", 1)[0] == competencia, (remedio, competencia)
     r = {"plantilla": remedio, "dificultad": dificultad or DIFICULTAD[remedio], "explicacion": explicacion}
     if tarjeta:
@@ -425,9 +426,72 @@ estatico("ERR.MAT.NUM.FRAEQ.1", "MAT.NUM.FRAEQ", "Sumas en lugar de multiplicar 
          [f"MAT.NUM.FRAEQ.000{i}" for i in range(1, 6)])
 
 # Fase 05J: distractores del generador «tildeContexto» (LEN.ORT.CTX.G01, lote 06): la otra forma de la palabra.
-error("LEN.ORT.CTX", "Eliges la forma sin fijarte en su significado en la frase.", "LEN.ORT.CTX.G01",
-      "La tilde cambia la palabra: decide qué significa en la frase (qué clase de palabra, qué tiempo) y elige esa forma.",
-      ("tildeContexto", r"."), dificultad=2)
+# Texto de la dirección (anexo a la 05K, 0-bis.2), sin cambios.
+error("LEN.ORT.CTX", "Eliges la palabra por cómo suena, sin comprobar qué significa en la frase.", "LEN.ORT.CTX.G01",
+      "Hay palabras que suenan igual pero significan cosas distintas. Lee la frase entera, piensa qué quiere decir y elige la forma cuyo significado encaja.",
+      ("tildeContexto", r"."), dificultad=2, direccion=True)
+
+# Fase 05K §1: «Capas y sólidos» (MAT.GEO.VOL). Los 6 errores de la dirección y los de los pasos.
+V = "volumen"
+error("MAT.GEO.VOL", "Sumas las medidas en lugar de multiplicarlas.", "MAT.GEO.VOL.G02",
+      "El volumen se obtiene multiplicando: largo · ancho · alto.", (V, r"^Has sumado las medidas"))
+error("MAT.GEO.VOL", "Calculas el área de la base, no el volumen.", "MAT.GEO.VOL.G01",
+      "El área de la base es una capa: multiplícala por la altura para tener todas las capas.", (V, r"^Eso es el área de la base"))
+error("MAT.GEO.VOL", "Conviertes por 10 o por 100 entre unidades cúbicas.", "MAT.GEO.VOL.G03",
+      "Entre unidades cúbicas el salto es de 1000: 1 m³ = 1000 dm³ y 1 dm³ = 1000 cm³.", (V, r"^Entre unidades cúbicas"))
+error("MAT.GEO.VOL", "No pasas los dm³ (o cm³, m³) a litros.", "MAT.GEO.VOL.G03",
+      "1 dm³ = 1 l: pasa el volumen a dm³ y tendrás los litros.", (V, r"^Te falta pasar el volumen a litros"))
+error("MAT.GEO.VOL", "Usas el diámetro como si fuera el radio.", "MAT.GEO.VOL.G05",
+      "El radio es la mitad del diámetro: divide entre 2 antes de calcular π · r².", (V, r"^Has usado el diámetro como radio"))
+error("MAT.GEO.VOL", "No conviertes las medidas mixtas a la misma unidad.", "MAT.GEO.VOL.G06",
+      "Antes de multiplicar, pasa todas las medidas a la misma unidad (a dm, si quieres litros).",
+      (V, r"^Pasa todas las medidas a la misma unidad"))
+error("MAT.GEO.VOL", "Usas la altura del depósito, no la del agua.", "MAT.GEO.VOL.G04",
+      "El agua ocupa un ortoedro con la altura del agua, no con la del depósito.", (V, r"^Usa la altura del agua"))
+error("MAT.GEO.VOL", "Das lo que baja el agua, no la altura final.", "MAT.GEO.VOL.G06",
+      "Calcula cuánto baja el agua y réstalo de la altura que tenía.", (V, r"^Eso es lo que baja el agua"))
+error("MAT.GEO.VOL", "Te equivocas al calcular un paso del volumen.", "MAT.GEO.VOL.G02",
+      "Comprueba cada paso: área de la base (largo · ancho) y después, por la altura.", (V, r"^Revisa (ese paso|la operación)"))
+error("MAT.GEO.VOL", "Das el volumen en unidades lineales o cuadradas.", "MAT.GEO.VOL.G02",
+      "El volumen va en unidades cúbicas (cm³, m³) o en litros.", (V, r"^Revisa la unidad"))
+
+# Fase 05K §2: tipos de sucesos (MAT.PRO.SUCESOS).
+S = "sucesos"
+error("MAT.PRO.SUCESOS", "Incluyes resultados imposibles en el espacio muestral.", "MAT.PRO.SUCESOS.G01",
+      "El espacio muestral solo tiene los resultados que pueden salir de verdad.", (S, r"no puede salir en este experimento"))
+error("MAT.PRO.SUCESOS", "Olvidas resultados del espacio muestral.", "MAT.PRO.SUCESOS.G01",
+      "Recorre el experimento entero: cada resultado posible cuenta, aunque se parezca a otro.", (S, r"^Falta «"))
+error("MAT.PRO.SUCESOS", "Confundes sucesos seguros, posibles e imposibles.", "MAT.PRO.SUCESOS.G02",
+      "Seguro: ocurre con todos los resultados. Imposible: con ninguno. Posible: solo con algunos.",
+      (S, r"^«[^»]*» es (seguro|posible|imposible):"))
+error("MAT.PRO.SUCESOS", "Tomas como contrario un suceso que deja resultados fuera.", "MAT.PRO.SUCESOS.G03",
+      "El contrario reúne todos los resultados en que no ocurre el suceso, sin dejarse ninguno.", (S, r"no cubre todos los resultados"))
+error("MAT.PRO.SUCESOS", "Tomas como contrario un suceso que comparte resultados.", "MAT.PRO.SUCESOS.G03",
+      "El contrario no comparte ningún resultado con el suceso.", (S, r"puede ocurrir a la vez que A"))
+error("MAT.PRO.SUCESOS", "Confundes sucesos compatibles e incompatibles.", "MAT.PRO.SUCESOS.G04",
+      "Son compatibles si hay algún resultado en que ocurren los dos a la vez.", (S, r"son (in)?compatibles\.$"))
+
+# Fase 05K §3: palabras variables e invariables (LEN.CLA.VAR).
+error("LEN.CLA.VAR", "Confundes palabras variables e invariables.", "LEN.CLA.VAR.G01",
+      "Prueba a ponerla en plural o en femenino: si no admite ningún cambio, es invariable.",
+      ("palabrasVariables", r"^«[^»]*» es (in)?variable:"))
+error("LEN.CLA.VAR", "Confundes en qué cambia cada clase de palabra.", "LEN.CLA.VAR.G02",
+      "Adjetivos y determinantes varían en género y número; los verbos, en persona y número.",
+      ("palabrasVariables", r"(varía en|no admite cambios)"))
+
+# Fase 05K §4: el diccionario (LEN.LEX.DICC): lema y orden alfabético.
+error("LEN.LEX.DICC", "Buscas la palabra tal como aparece, no por su forma de diccionario.", "LEN.LEX.DICC.G02",
+      "Verbos en infinitivo; sustantivos en singular; adjetivos en masculino singular.",
+      ("lema", r"^No se busca la forma tal como aparece|es otra forma de la misma palabra"))
+error("LEN.LEX.DICC", "Ordenas ch y ll como si fueran letras aparte.", "LEN.LEX.DICC.G01",
+      "Desde 2010, ch y ll se ordenan como c + h y l + l: «chocolate» va entre «cesta» y «cielo».",
+      ("ordenAlfabetico", r"ch y ll no son letras aparte"))
+error("LEN.LEX.DICC", "Colocas mal las palabras con ñ.", "LEN.LEX.DICC.G01",
+      "La ñ es una letra propia: va después de la n y antes de la o.", ("ordenAlfabetico", r"la ñ va después de la n"))
+error("LEN.LEX.DICC", "Crees que la tilde cambia el orden alfabético.", "LEN.LEX.DICC.G01",
+      "Las tildes no cuentan al ordenar: «cámara» se ordena como «camara».", ("ordenAlfabetico", r"las tildes no cambian"))
+error("LEN.LEX.DICC", "Ordenas solo por la primera letra.", "LEN.LEX.DICC.G01",
+      "Si la primera letra coincide, mira la segunda, y así hasta la primera que cambie.", ("ordenAlfabetico", r"compara letra a letra"))
 
 SALIDA.write_text(json.dumps({"version": 1, "errores": ERRORES}, ensure_ascii=False, indent=1) + "\n")
 print(f"{len(ERRORES)} errores en {len({e['competencia'] for e in ERRORES})} competencias → {SALIDA.relative_to(RAIZ)}")

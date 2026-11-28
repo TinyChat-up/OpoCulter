@@ -699,3 +699,58 @@ Paleta v3 (tinta marina, coral, amarillo y azul) con variantes de texto AA y tes
 
 ### D-139 · 2026-11-27 · Fase 05J · Vigente
 **«Por bloques».** La práctica «Por bloques» del Tribunal funciona con las rondas normales de ítems de juego (los simulacros generados de la 05I). Las pistas solo aparecen en los ítems de los peldaños 1–2. Su puntuación no se compara con la del examen.
+
+### D-140 · 2026-11-27 · Fase 05K · Vigente
+**LEN.ORT.CTX con 3 niveles.** La competencia se queda con los niveles 2, 3 y 4 de la dirección. Se acepta el ajuste del test de complejidad para los bancos fijos de frases (como `fraseHueco`): la complejidad media no decrece con el nivel y la del 6 supera a la del 1.
+
+### D-141 · 2026-11-27 · Fase 05K · Vigente
+**Pasada corta de accesibilidad.** Un test de interfaz (`AccesibilidadUITests`) ejecuta `performAccessibilityAudit()` en Inicio, Camino, la sesión diaria, una ronda, Tribunal y las pantallas nuevas de la 05K (cubos en capas, volumen de nivel 4, espacio muestral con baraja, palabras variables y orden alfabético). Se corrige lo que sale y no se amplía el alcance: la auditoría completa sigue en la fase 07.
+
+**Resultado:** cada pantalla se audita arriba del todo y, tras desplazarla y esperar a que se detenga, otra vez. Solo dio avisos de contraste en textos tapados a medias por la barra de pestañas flotante, la barra de acciones de la ronda o el difuminado superior (el auditor mide contra el material translúcido). Esos mismos textos pasan en la otra pasada, así que no hubo nada que corregir en la app. El test descarta solo ese caso, que queda documentado.
+
+### D-142 · 2026-11-27 · Fase 05K · Vigente
+**Pistas en «Por bloques».** Se mantiene la D-139: las pistas solo salen en los ítems de los peldaños 1–2. Los ítems de dificultad 4 y 5 van sin pistas.
+
+### D-143 · 2026-11-27 · Fase 05K · Vigente
+**Los textos literales de la dirección no se recortan.** ERR.LEN.ORT.CTX.1 lleva el texto de la dirección sin cambios: descripción «Eliges la palabra por cómo suena, sin comprobar qué significa en la frase.» y explicación «Hay palabras que suenan igual pero significan cosas distintas. Lee la frase entera, piensa qué quiere decir y elige la forma cuyo significado encaja.». Pasa de los límites del validador (13 palabras frente a 12; 149 caracteres frente a 140), así que el validador lo admite por su id (`textosDeLaDireccion`) y el script lo marca con `direccion=True`. Para el resto de errores, los límites siguen igual.
+
+### D-144 · 2026-11-27 · Fase 05K · Vigente
+**Palabras variables e invariables (LEN.CLA.VAR).**
+- **Variables:** los sustantivos, adjetivos, determinantes y verbos de `gramatica/piezas.json`; los verbos, en formas conjugadas de presente, pretérito perfecto simple y futuro. El léxico no tiene pronombres etiquetados, así que no salen.
+- **Invariables:** la lista de la dirección, sin sus 9 exclusiones. Con su mismo criterio («también variables en otros usos») se quitan además «sobre» (el sobre), «para» (parar) y «entre» (entrar).
+- **Sustantivos que no salen:** los que no cambian de forma o tienen otro uso frecuente (lunes, cuidado, silencio, leche, alegría).
+- **Justificar:** solo usa palabras que caben en una única casilla, así que no salen las que varían solo en número (mesa, amable, su).
+
+### D-145 · 2026-11-27 · Fase 05K · Vigente
+**«Capas y sólidos» (MAT.GEO.VOL).** Es una mecánica nueva, `figuraVolumen` (patrón `modelo`, juego «Capas», contrato de intento con pista, reintento y variante sin ayudas).
+- **Dibujo:** sólidos en perspectiva isométrica con `Path`. En los peldaños 1–2, los ortoedros de medidas enteras se ven como cubos y las capas se apilan al indicarlas (solo un fundido si Reducir movimiento está activo).
+- **Corrección:** manda el resultado, por su valor, junto con la unidad, que se elige aparte. Los pasos intermedios ayudan y, si tienen un error, se señalan.
+- **Unidades:** las opciones nunca incluyen dos unidades equivalentes (dm³ no aparece junto a l).
+- **Errores:** a los 6 de la dirección se suman 4 que necesitan los distractores: la altura del depósito en lugar de la del agua, dar lo que baja el agua, un paso mal calculado y la unidad. Son 10 errores en total.
+- **VoiceOver:** el sólido se describe con sus medidas y sin la operación.
+
+### D-146 · 2026-11-27 · Fase 05K · Vigente
+**Tipos de sucesos y diccionario.**
+- **Sucesos:** cada suceso lleva una especificación (`par`, `mayor:3`, `palo:oros&!figura`…) con la que se calcula su conjunto. El oráculo de los tests la interpreta con su propio código.
+  - Espacio muestral de la baraja: por palo (nivel 4) y por valor (nivel 5).
+  - Nivel 6: dos monedas.
+  - «Compatibles o incompatibles» es una elección entre dos opciones.
+  - Seis errores típicos nuevos.
+- **Diccionario:**
+  - **Lema:** sustantivos en plural, adjetivos con variación de género y verbos. Los irregulares, solo en los tiempos escritos en `verbos.json`, y sin las formas de dos verbos.
+  - **Orden alfabético:** palabras del léxico, con la clave de la RAE (*Ortografía*, 2010): ch y ll no son letras aparte, la ñ va después de la n y las tildes no cuentan. Comprobado con la intercalación del sistema en español y con los casos fijos de la dirección.
+  - Cinco errores típicos nuevos; en total el catálogo tiene 144.
+
+### D-147 · 2026-11-27 · Fase 05K · Vigente
+**Decisiones sobre la 05I.**
+- **Convocatorias anteriores:** son material de contraste autoevaluado, sin claves automáticas.
+- **Figuras:** las 4 tienen su página del cuadernillo oficial, comprobada en los PDF de `docs/examenes/oficiales/` (SHA-256 iguales a los de `FUENTES.md`). Son 2022 M5 en la página 11, 2022 M10 en la 13, 2024 M7 en la 12 y 2026 O M7 en la 14.
+- **FR.0088 y FR.0089:** vuelven a `ambigua: false`, porque dentro de la familia sabia/savia solo hay una respuesta válida. Sustituye a esa parte de la D-135. El Editor ya solo cambia una forma por otra de su misma familia.
+
+### D-148 · 2026-11-27 · Fase 05K · Vigente
+**Cobertura del examen real.** Las 4 competencias entran en el Camino, en la sesión diaria y en el plano de «Por bloques», que ya no las anota como «no incluye». En `equivalencias.json`, la valoración se ha revisado pregunta a pregunta:
+- **Pasan a «sí»:** 2019 O 15, 2022 O 20 y 2026 A 17.
+- **Pasan a «parcial»:** 2019 A 17 (pirámide), 2024 O 17 (prisma pentagonal), 2024 O 19 (definir), 2026 O 6 (análisis morfológico) y 2026 O 9 (definiciones).
+- **Sigue en «no»:** 2026 O 15 (frecuencia relativa).
+
+Resultado: «sí» pasa de 40,3 % a **42,4 %** y «sí + parcial», de 77,7 % a **83,5 %**.

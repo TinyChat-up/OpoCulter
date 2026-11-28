@@ -30,5 +30,33 @@
       "revisor": "direccion",
       "fecha": "2026-11-27"
     }
+  },
+  {
+    "id": "MAT.PRO.SUCESOS.T01",
+    "competencia": "MAT.PRO.SUCESOS",
+    "titulo": "Tipos de sucesos",
+    "bloques": [
+      {
+        "tipo": "esquema",
+        "contenido": "Espacio muestral: todos los resultados posibles\nSuceso seguro: ocurre siempre\nSuceso imposible: no ocurre nunca\nSuceso contrario: ocurre cuando no ocurre el otro\nCompatibles: pueden ocurrir a la vez"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Escribe primero el espacio muestral completo; después marca los resultados de cada suceso."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (PROMPT 05K §5, aprobada el 2026-11-27)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
   }
 ]

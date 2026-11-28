@@ -63,6 +63,7 @@ extension Item {
         switch juego {
         case "J46": "idea central y resumen"
         case "J63": "área de figuras compuestas"
+        case "Capas": "volumen y capacidad"
         case "RayosX": "análisis sintáctico por capas"
         case "Editor": "detectar y corregir faltas"
         case "Fabrica": "formación de palabras"
@@ -85,6 +86,8 @@ extension Respuesta {
             ([f.estrategia?.rawValue ?? "-", f.cortes.sorted().joined(separator: "+")]
              + f.areas.sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value)" } + ["total=\(f.total)", f.unidad ?? "-"])
                 .joined(separator: " ")
+        case .volumen(let v):
+            (v.valores.sorted { $0.key < $1.key }.map { "\($0.key)=\($0.value)" } + ["resultado=\(v.resultado)", v.unidad ?? "-"]).joined(separator: " ")
         default: String(describing: self)
         }
     }

@@ -23,6 +23,8 @@ enum Mecanica: String, Codable, Sendable, CaseIterable {
     /// Fase 05H: sintaxis por capas y detectar y corregir faltas.
     case rayosX
     case editor
+    /// Fase 05K: volumen de un sólido por capas («Capas y sólidos»).
+    case figuraVolumen
 }
 
 /// Peldaños de la escalera de dominio.
@@ -201,6 +203,7 @@ enum Payload: Sendable, Equatable {
     case figuraArea(FiguraArea)
     case rayosX(RayosX)
     case editor(Editor)
+    case figuraVolumen(FiguraVolumen)
 
     var mecanica: Mecanica {
         switch self {
@@ -221,6 +224,7 @@ enum Payload: Sendable, Equatable {
         case .figuraArea: .figuraArea
         case .rayosX: .rayosX
         case .editor: .editor
+        case .figuraVolumen: .figuraVolumen
         }
     }
 
@@ -407,6 +411,7 @@ enum Payload: Sendable, Equatable {
         case .figuraArea: .figuraArea(try FiguraArea(from: decoder))
         case .rayosX: .rayosX(try RayosX(from: decoder))
         case .editor: .editor(try Editor(from: decoder))
+        case .figuraVolumen: .figuraVolumen(try FiguraVolumen(from: decoder))
         }
     }
 
@@ -429,6 +434,7 @@ enum Payload: Sendable, Equatable {
         case .figuraArea(let p): try p.encode(to: encoder)
         case .rayosX(let p): try p.encode(to: encoder)
         case .editor(let p): try p.encode(to: encoder)
+        case .figuraVolumen(let p): try p.encode(to: encoder)
         }
     }
 }

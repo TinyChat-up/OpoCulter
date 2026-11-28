@@ -146,6 +146,8 @@ enum MotorGeneradores {
             GeneradorEditor(), GeneradorFormacion(), GeneradorRecursos(), GeneradorGlosario(),
             // Fase 05J: tilde en contexto (lote 06).
             GeneradorTildeContexto(),
+            // Fase 05K: volúmenes, sucesos, palabras variables y diccionario.
+            GeneradorVolumen(), GeneradorSucesos(), GeneradorPalabrasVariables(), GeneradorLema(), GeneradorOrdenAlfabetico(),
         ]
         return Dictionary(uniqueKeysWithValues: todos.map { ($0.tipo, $0) })
     }()

@@ -467,6 +467,10 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
     case "tildeContexto":
         // Oráculo: la forma correcta de la frase de la dirección (tildeContexto.json).
         if let c = respuestaCorrecta(item) { #expect(c == d["correcta"], "\(item.id)") }
+    case "volumen", "sucesos", "palabrasVariables", "lema", "ordenAlfabetico":
+        // Fase 05K: oráculos independientes (Fase05KTests).
+        let f = Oraculo05K.comprobar(p.tipo, m, item)
+        #expect(f.isEmpty, "\(item.id): \(f)")
     case "areaCompuesta":
         // Oráculo independiente de los cortes: fórmula del área del polígono (JuegosTests, 05G).
         guard case .figuraArea(let f) = item.payload, let total = Racional.interpretar(f.total)?.valor else { Issue.record("payload"); return }
@@ -504,7 +508,7 @@ private func comprobarOraculo(_ p: Plantilla, _ m: Muestra, _ item: Item) {
 struct GeneradoresPropiedadesTests {
     static let plantillas = bancoGeneradores.plantillas
 
-    @Test("Hay plantillas para los 30 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
+    @Test("Hay plantillas para los 35 tipos y todas sus mecánicas; las del lote 02, 02b y 05E aprobadas están aprobadas")
     func cobertura() {
         let tipos = Set(Self.plantillas.map(\.tipo))
         #expect(tipos == Set(MotorGeneradores.generadores.keys))
@@ -536,7 +540,10 @@ struct GeneradoresPropiedadesTests {
         // Fase 05J: tilde en contexto del lote 06, aprobada al superar sus propiedades (Fase05JTests).
         let fase05J = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05J") == true }
         #expect(fase05J.count == 1 && fase05J.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-27") })
-        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !fase05H.contains($0) && !fase05I.contains($0) && !fase05J.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
+        // Fase 05K: volúmenes, sucesos, palabras variables y diccionario, aprobadas al superar sus propiedades (Fase05KTests).
+        let fase05K = Self.plantillas.filter { $0.procedencia.notas?.hasPrefix("Fase 05K") == true }
+        #expect(fase05K.count == 14 && fase05K.allSatisfy { $0.validacion == Validacion(estado: .aprobado, revisor: "direccion", fecha: "2026-11-27") })
+        #expect(Self.plantillas.filter { !lote02.contains($0) && !lote02b.contains($0) && !fase05E.contains($0) && !fase05G.contains($0) && !fase05H.contains($0) && !fase05I.contains($0) && !fase05J.contains($0) && !fase05K.contains($0) && !aprobadas05C.contains($0.id) }.allSatisfy { $0.validacion.estado == .borrador })
     }
 
     @Test("Validador, oráculo, distractores, determinismo y clave enumerable", arguments: bancoGeneradores.plantillas)
@@ -618,7 +625,7 @@ struct GeneradoresMotorTests {
     @Test("Release carga solo las plantillas aprobadas (lote 02), no las de prueba")
     func release() throws {
         let banco = try CargadorContenido.desdeBundle().cargar(politica: .soloAprobados)
-        #expect(banco.plantillas.count == 120)
+        #expect(banco.plantillas.count == 134)
         #expect(banco.plantillas.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(validador.validar(banco).isEmpty, "\(validador.validar(banco).prefix(5))")
     }

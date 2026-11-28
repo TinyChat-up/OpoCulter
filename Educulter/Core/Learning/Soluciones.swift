@@ -22,6 +22,7 @@ enum RespuestaEjemplo {
         case .figuraArea(let p): .figura(p.respuestaCorrecta)
         case .rayosX(let p): .rayosX(p.respuestaCorrecta)
         case .editor(let p): .editor(p.respuestaCorrecta)
+        case .figuraVolumen(let p): .volumen(p.respuestaCorrecta)
         }
     }
 
@@ -90,6 +91,10 @@ enum RespuestaEjemplo {
             var r = p.respuestaCorrecta
             if let f = p.faltas.first { r.cambios[f.token] = p.formas[f.token]?.first { $0 != f.correcta } ?? "" }
             return .editor(r)
+        case .figuraVolumen(let p):
+            var r = p.respuestaCorrecta
+            r.resultado = p.erroneos.sorted { $0.key < $1.key }.first { $0.value != p.resultado }?.value ?? "0"
+            return .volumen(r)
         }
     }
 }
@@ -159,6 +164,8 @@ enum DescripcionSolucion {
             return t
         case .editor(let p):
             return p.faltas.map { "«\($0.correcta.trimmingCharacters(in: .punctuationCharacters))»: \($0.uso)" }.joined(separator: "; ")
+        case .figuraVolumen(let p):
+            return "\(p.resultado) \(p.unidad)"
         }
     }
 }
@@ -185,6 +192,7 @@ extension Respuesta {
         case (.figuraArea, .figura(let r)): r.unidad != nil && Racional.interpretar(r.total) != nil
         case (.rayosX(let p), .rayosX(let r)): r.capa > p.capas
         case (.editor, .editor(let r)): !r.marcadas.isEmpty && r.marcadas.allSatisfy { r.cambios[$0] != nil }
+        case (.figuraVolumen, .volumen(let r)): r.unidad != nil && Racional.interpretar(r.resultado) != nil
         default: false
         }
     }

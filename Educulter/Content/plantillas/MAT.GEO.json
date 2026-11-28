@@ -142,5 +142,149 @@
       "fecha": "2026-11-26"
     },
     "version": 1
+  },
+  {
+    "id": "MAT.GEO.VOL.G01",
+    "competencia": "MAT.GEO.VOL",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "figuraVolumen",
+    "tipo": "volumen",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Capas y sólidos: Ortoedro de cubos (contar capas)",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §1); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.VOL.G02",
+    "competencia": "MAT.GEO.VOL",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "figuraVolumen",
+    "tipo": "volumen",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Capas y sólidos: Ortoedro con medidas enteras en cm",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §1); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.VOL.G03",
+    "competencia": "MAT.GEO.VOL",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "figuraVolumen",
+    "tipo": "volumen",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Capas y sólidos: Capacidad en litros",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §1); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.VOL.G04",
+    "competencia": "MAT.GEO.VOL",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "figuraVolumen",
+    "tipo": "volumen",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Capas y sólidos: Perfil del examen: dos ortoedros o depósito con agua",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §1); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.VOL.G05",
+    "competencia": "MAT.GEO.VOL",
+    "peldano": 5,
+    "dificultad": 5,
+    "mecanica": "figuraVolumen",
+    "tipo": "volumen",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Capas y sólidos: Cilindro (π = 3,14)",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §1); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.GEO.VOL.G06",
+    "competencia": "MAT.GEO.VOL",
+    "peldano": 5,
+    "dificultad": 6,
+    "mecanica": "figuraVolumen",
+    "tipo": "volumen",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Capas y sólidos: Unidades mixtas o nueva altura del agua",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §1); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
   }
 ]

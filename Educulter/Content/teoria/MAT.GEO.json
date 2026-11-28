@@ -26,5 +26,37 @@
       "revisor": "direccion",
       "fecha": "2026-11-27"
     }
+  },
+  {
+    "id": "MAT.GEO.VOL.T01",
+    "competencia": "MAT.GEO.VOL",
+    "titulo": "Volúmenes",
+    "bloques": [
+      {
+        "tipo": "regla",
+        "contenido": "El volumen de un prisma es el área de la base por la altura. En un ortoedro: largo · ancho · alto."
+      },
+      {
+        "tipo": "esquema",
+        "contenido": "Ortoedro: a · b · c\nCubo: a³\nCilindro: π · r² · h\n1 dm³: 1 l\n1 m³: 1000 l"
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Piensa en capas: el área de la base es una capa y la altura dice cuántas capas hay."
+      }
+    ],
+    "procedencia": {
+      "tipo": "original",
+      "autorTexto": null,
+      "anioMuerteAutor": null,
+      "fuente": null,
+      "licencia": "propia",
+      "notas": "Redacción original de la dirección del proyecto (PROMPT 05K §5, aprobada el 2026-11-27)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    }
   }
 ]

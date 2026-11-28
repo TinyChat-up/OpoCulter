@@ -2111,16 +2111,384 @@
   {
    "id": "ERR.LEN.ORT.CTX.1",
    "competencia": "LEN.ORT.CTX",
-   "descripcion": "Eliges la forma sin fijarte en su significado en la frase.",
+   "descripcion": "Eliges la palabra por cómo suena, sin comprobar qué significa en la frase.",
    "remedio": {
     "plantilla": "LEN.ORT.CTX.G01",
     "dificultad": 2,
-    "explicacion": "La tilde cambia la palabra: decide qué significa en la frase (qué clase de palabra, qué tiempo) y elige esa forma."
+    "explicacion": "Hay palabras que suenan igual pero significan cosas distintas. Lee la frase entera, piensa qué quiere decir y elige la forma cuyo significado encaja."
    },
    "detecta": [
     {
      "generador": "tildeContexto",
      "patron": "."
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.1",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "Sumas las medidas en lugar de multiplicarlas.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G02",
+    "dificultad": 2,
+    "explicacion": "El volumen se obtiene multiplicando: largo · ancho · alto."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Has sumado las medidas"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.2",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "Calculas el área de la base, no el volumen.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G01",
+    "dificultad": 1,
+    "explicacion": "El área de la base es una capa: multiplícala por la altura para tener todas las capas."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Eso es el área de la base"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.3",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "Conviertes por 10 o por 100 entre unidades cúbicas.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G03",
+    "dificultad": 3,
+    "explicacion": "Entre unidades cúbicas el salto es de 1000: 1 m³ = 1000 dm³ y 1 dm³ = 1000 cm³."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Entre unidades cúbicas"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.4",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "No pasas los dm³ (o cm³, m³) a litros.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G03",
+    "dificultad": 3,
+    "explicacion": "1 dm³ = 1 l: pasa el volumen a dm³ y tendrás los litros."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Te falta pasar el volumen a litros"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.5",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "Usas el diámetro como si fuera el radio.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G05",
+    "dificultad": 5,
+    "explicacion": "El radio es la mitad del diámetro: divide entre 2 antes de calcular π · r²."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Has usado el diámetro como radio"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.6",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "No conviertes las medidas mixtas a la misma unidad.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G06",
+    "dificultad": 6,
+    "explicacion": "Antes de multiplicar, pasa todas las medidas a la misma unidad (a dm, si quieres litros)."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Pasa todas las medidas a la misma unidad"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.7",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "Usas la altura del depósito, no la del agua.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G04",
+    "dificultad": 4,
+    "explicacion": "El agua ocupa un ortoedro con la altura del agua, no con la del depósito."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Usa la altura del agua"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.8",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "Das lo que baja el agua, no la altura final.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G06",
+    "dificultad": 6,
+    "explicacion": "Calcula cuánto baja el agua y réstalo de la altura que tenía."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Eso es lo que baja el agua"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.9",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "Te equivocas al calcular un paso del volumen.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G02",
+    "dificultad": 2,
+    "explicacion": "Comprueba cada paso: área de la base (largo · ancho) y después, por la altura."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Revisa (ese paso|la operación)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.GEO.VOL.10",
+   "competencia": "MAT.GEO.VOL",
+   "descripcion": "Das el volumen en unidades lineales o cuadradas.",
+   "remedio": {
+    "plantilla": "MAT.GEO.VOL.G02",
+    "dificultad": 2,
+    "explicacion": "El volumen va en unidades cúbicas (cm³, m³) o en litros."
+   },
+   "detecta": [
+    {
+     "generador": "volumen",
+     "patron": "^Revisa la unidad"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.PRO.SUCESOS.1",
+   "competencia": "MAT.PRO.SUCESOS",
+   "descripcion": "Incluyes resultados imposibles en el espacio muestral.",
+   "remedio": {
+    "plantilla": "MAT.PRO.SUCESOS.G01",
+    "dificultad": 1,
+    "explicacion": "El espacio muestral solo tiene los resultados que pueden salir de verdad."
+   },
+   "detecta": [
+    {
+     "generador": "sucesos",
+     "patron": "no puede salir en este experimento"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.PRO.SUCESOS.2",
+   "competencia": "MAT.PRO.SUCESOS",
+   "descripcion": "Olvidas resultados del espacio muestral.",
+   "remedio": {
+    "plantilla": "MAT.PRO.SUCESOS.G01",
+    "dificultad": 1,
+    "explicacion": "Recorre el experimento entero: cada resultado posible cuenta, aunque se parezca a otro."
+   },
+   "detecta": [
+    {
+     "generador": "sucesos",
+     "patron": "^Falta «"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.PRO.SUCESOS.3",
+   "competencia": "MAT.PRO.SUCESOS",
+   "descripcion": "Confundes sucesos seguros, posibles e imposibles.",
+   "remedio": {
+    "plantilla": "MAT.PRO.SUCESOS.G02",
+    "dificultad": 2,
+    "explicacion": "Seguro: ocurre con todos los resultados. Imposible: con ninguno. Posible: solo con algunos."
+   },
+   "detecta": [
+    {
+     "generador": "sucesos",
+     "patron": "^«[^»]*» es (seguro|posible|imposible):"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.PRO.SUCESOS.4",
+   "competencia": "MAT.PRO.SUCESOS",
+   "descripcion": "Tomas como contrario un suceso que deja resultados fuera.",
+   "remedio": {
+    "plantilla": "MAT.PRO.SUCESOS.G03",
+    "dificultad": 3,
+    "explicacion": "El contrario reúne todos los resultados en que no ocurre el suceso, sin dejarse ninguno."
+   },
+   "detecta": [
+    {
+     "generador": "sucesos",
+     "patron": "no cubre todos los resultados"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.PRO.SUCESOS.5",
+   "competencia": "MAT.PRO.SUCESOS",
+   "descripcion": "Tomas como contrario un suceso que comparte resultados.",
+   "remedio": {
+    "plantilla": "MAT.PRO.SUCESOS.G03",
+    "dificultad": 3,
+    "explicacion": "El contrario no comparte ningún resultado con el suceso."
+   },
+   "detecta": [
+    {
+     "generador": "sucesos",
+     "patron": "puede ocurrir a la vez que A"
+    }
+   ]
+  },
+  {
+   "id": "ERR.MAT.PRO.SUCESOS.6",
+   "competencia": "MAT.PRO.SUCESOS",
+   "descripcion": "Confundes sucesos compatibles e incompatibles.",
+   "remedio": {
+    "plantilla": "MAT.PRO.SUCESOS.G04",
+    "dificultad": 4,
+    "explicacion": "Son compatibles si hay algún resultado en que ocurren los dos a la vez."
+   },
+   "detecta": [
+    {
+     "generador": "sucesos",
+     "patron": "son (in)?compatibles\\.$"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.CLA.VAR.1",
+   "competencia": "LEN.CLA.VAR",
+   "descripcion": "Confundes palabras variables e invariables.",
+   "remedio": {
+    "plantilla": "LEN.CLA.VAR.G01",
+    "dificultad": 2,
+    "explicacion": "Prueba a ponerla en plural o en femenino: si no admite ningún cambio, es invariable."
+   },
+   "detecta": [
+    {
+     "generador": "palabrasVariables",
+     "patron": "^«[^»]*» es (in)?variable:"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.CLA.VAR.2",
+   "competencia": "LEN.CLA.VAR",
+   "descripcion": "Confundes en qué cambia cada clase de palabra.",
+   "remedio": {
+    "plantilla": "LEN.CLA.VAR.G02",
+    "dificultad": 3,
+    "explicacion": "Adjetivos y determinantes varían en género y número; los verbos, en persona y número."
+   },
+   "detecta": [
+    {
+     "generador": "palabrasVariables",
+     "patron": "(varía en|no admite cambios)"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LEX.DICC.2",
+   "competencia": "LEN.LEX.DICC",
+   "descripcion": "Buscas la palabra tal como aparece, no por su forma de diccionario.",
+   "remedio": {
+    "plantilla": "LEN.LEX.DICC.G02",
+    "dificultad": 3,
+    "explicacion": "Verbos en infinitivo; sustantivos en singular; adjetivos en masculino singular."
+   },
+   "detecta": [
+    {
+     "generador": "lema",
+     "patron": "^No se busca la forma tal como aparece|es otra forma de la misma palabra"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LEX.DICC.3",
+   "competencia": "LEN.LEX.DICC",
+   "descripcion": "Ordenas ch y ll como si fueran letras aparte.",
+   "remedio": {
+    "plantilla": "LEN.LEX.DICC.G01",
+    "dificultad": 2,
+    "explicacion": "Desde 2010, ch y ll se ordenan como c + h y l + l: «chocolate» va entre «cesta» y «cielo»."
+   },
+   "detecta": [
+    {
+     "generador": "ordenAlfabetico",
+     "patron": "ch y ll no son letras aparte"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LEX.DICC.4",
+   "competencia": "LEN.LEX.DICC",
+   "descripcion": "Colocas mal las palabras con ñ.",
+   "remedio": {
+    "plantilla": "LEN.LEX.DICC.G01",
+    "dificultad": 2,
+    "explicacion": "La ñ es una letra propia: va después de la n y antes de la o."
+   },
+   "detecta": [
+    {
+     "generador": "ordenAlfabetico",
+     "patron": "la ñ va después de la n"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LEX.DICC.5",
+   "competencia": "LEN.LEX.DICC",
+   "descripcion": "Crees que la tilde cambia el orden alfabético.",
+   "remedio": {
+    "plantilla": "LEN.LEX.DICC.G01",
+    "dificultad": 2,
+    "explicacion": "Las tildes no cuentan al ordenar: «cámara» se ordena como «camara»."
+   },
+   "detecta": [
+    {
+     "generador": "ordenAlfabetico",
+     "patron": "las tildes no cambian"
+    }
+   ]
+  },
+  {
+   "id": "ERR.LEN.LEX.DICC.6",
+   "competencia": "LEN.LEX.DICC",
+   "descripcion": "Ordenas solo por la primera letra.",
+   "remedio": {
+    "plantilla": "LEN.LEX.DICC.G01",
+    "dificultad": 2,
+    "explicacion": "Si la primera letra coincide, mira la segunda, y así hasta la primera que cambie."
+   },
+   "detecta": [
+    {
+     "generador": "ordenAlfabetico",
+     "patron": "compara letra a letra"
     }
    ]
   }

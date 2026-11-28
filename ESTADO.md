@@ -1,8 +1,30 @@
 # Estado del proyecto
 
-**Fase actual:** 05J (Tribunal v2 y cierre del lote 06) · **Terminada y fusionada en `main`**.
-**Siguiente:** 05K (la define la dirección).
-**Última actualización:** 2026-11-27
+**Fase actual:** 05K (las 4 competencias del plano sin contenido) · **Terminada y fusionada en `main`**.
+**Siguiente:** 05L (la define la dirección).
+**Última actualización:** 2026-11-28
+
+## Fase 05K — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| §1 MAT.GEO.VOL | ✅ «Capas y sólidos»: mecánica `figuraVolumen`, isométrica con `Path`, cubos por capas (peldaños 1–2), 6 niveles, 10 errores | D-145, `Fase05KTests` |
+| §2–§4 | ✅ Sucesos (4 plantillas, baraja de 40), palabras variables (2) y diccionario (lema y orden RAE 2010) | D-144, D-146 |
+| §5 Teoría | ✅ 3 tarjetas nuevas y DICC.T01 completa, con el texto literal | `Fase05KIntegracionTests` |
+| §6 Integración | ✅ Camino, sesión diaria y «Por bloques» (ya no anota «no incluye»); cobertura: sí 42,4 %, sí + parcial 83,5 % | D-148 |
+| Anexo de la 05J | ✅ ERR.LEN.ORT.CTX.1 literal (D-143), D-140, D-141, D-142; FR.0088/0089 y páginas de las figuras (D-147) | |
+| Tests unitarios | ✅ **816 en verde** y 1 omitido (`ESTIMAR`). Fallaron 2 y se corrigieron: gemelo del ejemplo resuelto (espacio muestral con un solo caso) y no determinismo del orden alfabético (orden de un `Dictionary`); se repitieron sus suites en verde | `xcodebuild test` |
+| Tests de interfaz | ✅ `AccesibilidadUITests` (nuevo, 4 de 4) y los afectados: Recorrido parte 2, Piloto y Tribunal (5 de 5) | `-only-testing` |
+| Rendimiento | ✅ Progreso se congelaba: el recuento de preguntas iba en el hilo principal (253 s en el simulador con los generadores nuevos). Ahora va en segundo plano y los generadores nuevos guardan sus listas en caché (51 s) | `PantallaProgreso` |
+| Avisos del compilador | ✅ 0 | logs |
+| Archive Release | ✅ `** ARCHIVE SUCCEEDED **`, no subido; 94 archivos, nada de `pendiente/` | |
+| iPhone físico | ❌ Vuelve a fallar: se desconecta durante la instalación (`com.apple.mobiledevice error -402652910 (0xE8000112)`, «The peer is no longer reachable») y después queda no disponible (`CoreDeviceError 4016`) | `devicectl` |
+| Capturas | 5 en el simulador: cubos, volumen-nivel4, espacio-baraja, palabras-variables, orden-alfabetico | [docs/capturas/05K/](docs/capturas/05K/) |
+
+## Pendiente (05K)
+1. Instalar en el iPhone del propietario (error de conexión del dispositivo, no de la app).
+2. El recuento de «Preguntas disponibles» sigue tardando (51 s en el simulador, en segundo plano).
+3. Auditoría completa de accesibilidad en la fase 07.
 
 ## Fase 05J — Resultado
 

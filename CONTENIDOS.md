@@ -444,3 +444,20 @@ Validación técnica: el lote pasa el validador sin cambios; en Release se carga
 - **Lote 06**: las **36 tarjetas** de teoría (62 en Debug, 60 en Release); los tres esquemas sin «Etiqueta: valor» (MAT.UNI.SUP, TIEM y VOL) se ven como filas de texto, sin cambios. Competencia nueva **LEN.ORT.CTX** «Tilde que cambia el significado» (bloque de Ortografía) con el generador `tildeContexto` sobre **`Content/tildeContexto.json` (70 palabras, 118 frases)**: dificultad 2 la frase de la palabra, 3 la de una variante y 4 «rio»/«frio» (monosílabos ortográficos sin tilde, RAE, *Ortografía*, 2010). Cambio de la dirección: «La ___ Martínez dirigió la investigación.» (comisaria). **LEN.ORT.CTX.G01** aprobada al pasar sus propiedades (una sola opción válida; distractores de la misma palabra).
 - **Errores típicos**: 112 → **121**: los 8 del lote 06 y **ERR.LEN.ORT.CTX.1** («Eliges la forma sin fijarte en su significado en la frase»; remedio LEN.ORT.CTX.G01), que etiqueta los distractores del generador `tildeContexto` como exige el test de etiquetado. Los **8 errores** del lote 06 llevan **remedio estático** (`remedio.tipo = "remedioEstatico"`: tarjeta de la competencia e ítems estáticos aprobados, sin plantilla ni patrones) con las explicaciones del ANEXO D, y sus 8 distractores están etiquetados: LEN.COM.INFER.1–3, LEN.LEX.SIN.1–3, LEN.LEX.DICC.1 y MAT.NUM.FRAEQ.1. Distractores estáticos aprobados sin etiquetar: **0**.
 - **`pendiente/` sale de `Content/`** (D-138). Scripts: `validar_items.py` reconoce `truco`, las mecánicas de juego y `tildeContexto.json`; `ambiguas_tilde.py` conserva las `frases`; `errores_tipicos.py` genera también los 8 errores estáticos (salida idéntica).
+
+### Fase 05K · Volúmenes, sucesos, palabras variables y diccionario (27/11/2026)
+- **14 plantillas nuevas, aprobadas** (revisor `direccion`, 27/11/2026) tras superar sus propiedades: 200 semillas × 6 niveles con oráculo independiente (`Fase05KTests`) y 1000 semillas en el test general. Casos y redacciones, en los generadores (originales). Las plantillas pasan de 125 a 139 en Debug y de 120 a 134 en Release.
+  - **MAT.GEO.VOL.G01–G06** «Capas y sólidos» (`volumen`, mecánica `figuraVolumen`, D-145), 6 niveles:
+    1. cubos de 1 cm;
+    2. ortoedro de medidas enteras en cm;
+    3. capacidad en litros;
+    4. dos ortoedros unidos, o depósito con agua en m con decimales;
+    5. cilindro con π = 3,14 (a veces se da el diámetro);
+    6. unidades mixtas (m, cm y dm a litros), o sacar litros y calcular la nueva altura.
+  - **MAT.PRO.SUCESOS.G01–G04** (`sucesos`): espacio muestral, clasificar 4 sucesos, suceso contrario y compatibles o incompatibles. Experimentos: dado, ruleta de 4 a 10 sectores, urna y baraja española de 40 cartas.
+  - **LEN.CLA.VAR.G01–G02** (`palabrasVariables`): clasificar en variable o invariable, y justificar con las fichas de la dirección. Invariables: la lista de la dirección menos sus 9 exclusiones y «sobre», «para» y «entre» (D-144).
+  - **LEN.LEX.DICC.G01** (`ordenAlfabetico`, regla de la RAE de 2010) y **G02** (`lema`: verbo → infinitivo, plural → singular, adjetivo → masculino singular).
+- **Teoría**: MAT.GEO.VOL.T01, MAT.PRO.SUCESOS.T01 y LEN.CLA.VAR.T01, nuevas. LEN.LEX.DICC.T01 gana la regla y el truco que le faltaban. Todo con el texto de la dirección: en los esquemas, una línea por «Etiqueta: valor», conservando el «·» de multiplicar. Hay 65 tarjetas en Debug y 63 en Release.
+- **Errores típicos**: 121 → **144**: 10 de MAT.GEO.VOL (los 6 de la dirección y 4 de los pasos), 6 de MAT.PRO.SUCESOS, 2 de LEN.CLA.VAR y 5 de LEN.LEX.DICC. **ERR.LEN.ORT.CTX.1** lleva el texto de la dirección sin cambios (D-143). Ningún distractor de una plantilla aprobada queda sin etiquetar.
+- **Decisiones de la 05I**: FR.0088 y FR.0089 vuelven a `ambigua: false`, y las 4 figuras tienen su página del cuadernillo oficial (`paginaFigura`, D-147).
+- **Cobertura del examen real** (`equivalencias.json`, D-148): «sí» pasa de 40,3 % a 42,4 % y «sí + parcial», de 77,7 % a 83,5 %.

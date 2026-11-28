@@ -21,5 +21,109 @@
       "fecha": "2026-11-25"
     },
     "version": 1
+  },
+  {
+    "id": "MAT.PRO.SUCESOS.G01",
+    "competencia": "MAT.PRO.SUCESOS",
+    "peldano": 1,
+    "dificultad": 1,
+    "mecanica": "marcarTexto",
+    "tipo": "sucesos",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Espacio muestral: tocar todos los resultados posibles",
+    "parametros": {
+      "pregunta": "espacio"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §2); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.PRO.SUCESOS.G02",
+    "competencia": "MAT.PRO.SUCESOS",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "clasificar",
+    "tipo": "sucesos",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Clasificar sucesos en seguro, posible o imposible",
+    "parametros": {
+      "pregunta": "clasificar"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §2); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.PRO.SUCESOS.G03",
+    "competencia": "MAT.PRO.SUCESOS",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "sucesos",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Elegir el suceso contrario",
+    "parametros": {
+      "pregunta": "contrario"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §2); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "MAT.PRO.SUCESOS.G04",
+    "competencia": "MAT.PRO.SUCESOS",
+    "peldano": 4,
+    "dificultad": 4,
+    "mecanica": "eleccion",
+    "tipo": "sucesos",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Sucesos compatibles o incompatibles",
+    "parametros": {
+      "pregunta": "compatibles"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §2); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
   }
 ]

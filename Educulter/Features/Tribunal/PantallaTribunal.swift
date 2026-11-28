@@ -348,7 +348,7 @@ struct PantallaRepasoOficial: View {
                     if let t = q.tabla { VistaTabla(tabla: t) }
                     if let f = q.figura {
                         Text("Figura: \(f)").font(.footnote).foregroundStyle(Paleta.textoSecundario)
-                        if let url = URL(string: examen.fuente) { Link("Ver la figura en el cuadernillo oficial", destination: url).font(.footnote) }
+                        if let url = URL(string: examen.fuente) { Link("Ver la figura en el cuadernillo oficial" + (q.paginaFigura.map { ", página \($0)" } ?? ""), destination: url).font(.footnote) }
                     }
                     Text("Solución: \(q.solucionModelo)").font(.footnote).fixedSize(horizontal: false, vertical: true)
                     Text("Rúbrica \(q.fuenteRubrica == "oficial" ? "oficial" : "propia de la app"): B · \(q.rubrica.bien) R · \(q.rubrica.regular) M · \(q.rubrica.mal)")

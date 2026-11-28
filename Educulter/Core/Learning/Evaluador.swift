@@ -31,6 +31,8 @@ enum Respuesta: Codable, Sendable, Equatable {
     /// 05H: capas de Rayos X y correcciones del Editor.
     case rayosX(RespuestaRayosX)
     case editor(RespuestaEditor)
+    /// 05K: «Capas y sólidos».
+    case volumen(RespuestaVolumen)
 
     struct ParRespuesta: Codable, Sendable, Equatable, Hashable {
         var izquierda: String
@@ -126,6 +128,8 @@ enum Evaluador {
             return Resultado(correcto: true, fraccionCorrecta: proporcion(r.cumplidos.count, max(p.criterios.count, 1)), errores: [])
         case (.figuraArea(let p), .figura(let r)):
             return evaluarFigura(p, r)
+        case (.figuraVolumen(let p), .volumen(let r)):
+            return p.evaluar(r)
         case (.rayosX(let p), .rayosX(let r)):
             let errores = (1...p.capas).flatMap { p.errores(capa: $0, r) }
             let total = 2 + (p.capas >= 4 ? p.grupos.count : 0)

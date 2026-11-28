@@ -30,7 +30,7 @@ extension Mecanica {
         switch self {
         case .marcarTexto, .segmentar, .colocarTilde, .eleccion, .rayosX, .editor: .marcar
         case .evidencia: .evidencia
-        case .numerico, .fraccionBarras, .figuraArea: .modelo
+        case .numerico, .fraccionBarras, .figuraArea, .figuraVolumen: .modelo
         case .construir: .construir
         case .ordenar: .ordenar
         case .clasificar, .verdaderoFalso: .clasificar
@@ -41,5 +41,5 @@ extension Mecanica {
     }
 
     /// Las mecánicas de los juegos usan el flujo con pista y reintento del contrato de intento.
-    var conReintento: Bool { [.evidencia, .figuraArea, .rayosX, .editor].contains(self) }
+    var conReintento: Bool { [.evidencia, .figuraArea, .figuraVolumen, .rayosX, .editor].contains(self) }
 }
