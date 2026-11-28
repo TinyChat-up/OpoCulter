@@ -1,3 +1,4 @@
+import StoreKitTest
 import XCTest
 
 /// Pasada corta de accesibilidad (D-141, anexo a la 05K): `performAccessibilityAudit()` en Inicio,
@@ -105,9 +106,15 @@ final class AccesibilidadUITests: CasoUI {
         }
     }
 
-    /// Fase 06: la hoja de bloqueo del Tribunal y la pantalla Premium (usuario gratis).
+    /// Fase 06: la hoja de bloqueo del Tribunal y la pantalla Premium (usuario gratis), con la tienda
+    /// de pruebas `Educulter.storekit` (sin ella, StoreKit muestra su propio aviso de «no disponible»).
     @MainActor
     func testHojaBloqueoYPantallaPremium() throws {
+        let sesion = try SKTestSession(contentsOf: URL(filePath: #filePath).deletingLastPathComponent().deletingLastPathComponent()
+            .appending(path: "Educulter.storekit"))
+        sesion.resetToDefaultState()
+        sesion.clearTransactions()
+        sesion.disableDialogs = true
         let app = lanzar(["-gratis"])
         app.tabBars.buttons["Tribunal"].firstMatch.tap()
         let simulacro = app.buttons["simulacro_SIM.OR.01"]

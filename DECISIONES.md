@@ -845,3 +845,10 @@ La tabla es un tipo puro, `TablaAcceso`, con `FuncionApp`. En la versión gratui
 ### D-161 · 2026-11-28 · Fase 06 · Vigente
 **El ID de la app de AdMob pendiente es un marcador de ceros.** Con `GADApplicationIdentifier = PENDIENTE`, la app de Release se cerraba al arrancar. El SDK, enlazado de forma estática, comprueba el formato al iniciarse aunque nunca se llame a `start()` (`GADApplicationVerifyPublisherInitializedCorrectly`). Se vio en el test de arranque en Release. Por eso `ADMOB_APP_ID` pendiente vale `ca-app-pub-0000000000000000~0000000000`, y `ADMOB_INTERSTICIAL_ID` sigue en `PENDIENTE`. La validación de Release rechaza un editor con todo ceros, así que no hay UMP ni anuncios. Comprobado: con el marcador, la app de Release arranca y sigue abierta en el simulador. Completa la D-159.
 
+### D-162 · 2026-11-28 · Fase 06 · Vigente
+**Accesibilidad de la pantalla Premium y de la hoja de bloqueo** (añadidas a `AccesibilidadUITests`).
+- **Hoja de bloqueo:** a toda altura y con `presentationBackground` de papel. A media altura, el texto quedaba recortado y el material translúcido no daba el contraste.
+- **Pantalla Premium:** el pie (Restaurar y enlaces) va en una pila debajo de `SubscriptionStoreView`. Superpuesto tapaba los planes, y dentro de la cabecera desaparecía sin conexión. Cada enlace tiene 44 pt de alto.
+- **Filas bloqueadas del Tribunal:** solo llevan el candado, que VoiceOver lee como «Premium».
+- **Test:** usa `Educulter.storekit` con `SKTestSession`. Descarta solo los avisos de tipografía y recorte de los textos que dibuja StoreKit en los botones de los planes, el nombre y «1 semana gratis y luego …».
+

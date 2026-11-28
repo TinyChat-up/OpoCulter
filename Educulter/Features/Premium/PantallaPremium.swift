@@ -4,7 +4,7 @@ import SwiftUI
 /// Pantalla Premium (fase 06 §1.4): `SubscriptionStoreView` con una cabecera propia en la identidad
 /// v5. Lo que incluye en 3 líneas; precio y periodo de StoreKit (a través del servicio de acceso);
 /// la prueba de 7 días y qué pasa después; Restaurar compras, Términos de uso y Política de
-/// privacidad, al final de la cabecera (un pie fijo tapaba los botones de los planes). Sin cuentas atrás ni planes preseleccionados (cada plan es su
+/// privacidad, en un pie debajo de la tienda, siempre visible. Sin cuentas atrás ni planes preseleccionados (cada plan es su
 /// propio botón). Solo se abre a petición del usuario: Ajustes > Premium o «Ver Premium».
 struct PantallaPremium: View {
     @Environment(EntornoApp.self) private var entorno
@@ -14,19 +14,14 @@ struct PantallaPremium: View {
     @State private var mensaje: String?
 
     var body: some View {
-        SubscriptionStoreView(productIDs: ProductosPremium.todos) {
-            cabecera
+        // El pie va debajo de la tienda, no encima (un pie superpuesto tapaba los planes) ni dentro de
+        // la cabecera (sin conexión, la tienda no la muestra y desaparecían Restaurar y los enlaces).
+        VStack(spacing: 0) {
+            tienda
+            pie
+                .padding(.horizontal, Espacio.l)
+                .padding(.bottom, Espacio.s)
         }
-        .subscriptionStoreControlStyle(.buttons)
-        .subscriptionStoreButtonLabel(.multiline)
-        // Restaurar y los enlaces legales van al final de la cabecera propia.
-        .storeButton(.hidden, for: .restorePurchases)
-        .storeButton(.hidden, for: .policies)
-        .storeButton(.hidden, for: .cancellation)
-        .onInAppPurchaseCompletion { _, resultado in
-            if case .success(.success(let verificacion)) = resultado { await entorno.acceso.registrar(verificacion) }
-        }
-        .containerBackground(Paleta.fondo, for: .subscriptionStore)
         .background(Paleta.fondo.ignoresSafeArea())
         .tint(Paleta.matematicas)
         .navigationTitle("Premium")
@@ -34,6 +29,22 @@ struct PantallaPremium: View {
         .task { ofertas = await entorno.acceso.ofertas() }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaPremium")
+    }
+
+    private var tienda: some View {
+        SubscriptionStoreView(productIDs: ProductosPremium.todos) {
+            cabecera
+        }
+        .subscriptionStoreControlStyle(.buttons)
+        .subscriptionStoreButtonLabel(.multiline)
+        // Restaurar y los enlaces legales van en el pie propio, debajo de la tienda.
+        .storeButton(.hidden, for: .restorePurchases)
+        .storeButton(.hidden, for: .policies)
+        .storeButton(.hidden, for: .cancellation)
+        .onInAppPurchaseCompletion { _, resultado in
+            if case .success(.success(let verificacion)) = resultado { await entorno.acceso.registrar(verificacion) }
+        }
+        .containerBackground(Paleta.fondo, for: .subscriptionStore)
     }
 
     private var cabecera: some View {
@@ -74,7 +85,6 @@ struct PantallaPremium: View {
             }
             .accessibilityElement(children: .combine)
             .accessibilityIdentifier("condicionesPremium")
-            pie
         }
         .padding(.horizontal, Espacio.l)
         .padding(.top, Espacio.l)

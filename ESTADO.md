@@ -11,7 +11,20 @@
 | §0 Decisiones de la 05K | ✅ D-137–139, D-143 y D-144 confirmadas; D-137 sustituida (D-155); `docs/revision/ERRORES_05K.md` con los 23 errores; pronombres en LEN.CLA.VAR (D-150); recuento precalculado en `Content/recuento.json` (D-151) | `Fase05KCasosTests/pronombres`, `DebugYRecuentoTests` |
 | §1 Premium | ✅ StoreKit 2: grupo «Premium» (mensual 9,99 €, anual 49,99 €, 7 días gratis) en `Educulter.storekit`; `ServicioAcceso` sobre `currentEntitlements` y `Transaction.updates`, con caché sin conexión; tabla de acceso con la corrección de la dirección (D-152); pantalla Premium y hoja de bloqueo; Ajustes > Premium y «Gestionar suscripción»; Premium simulado solo en Debug | D-152–D-155, `ServicioAccesoStoreKitTests` |
 | §2 Anuncios | ✅ Google Mobile Ads 13.13.0 y UMP 3.1.0 (SPM, versión exacta); solo intersticiales; `PoliticaAnuncios` pura; UMP → ATT → SDK desde el día 3 en Hoy; IDs de Release `PENDIENTE` que fallan en seguro; Info.plist (GAD, 50 SKAdNetwork, ATT); `PrivacyInfo.xcprivacy`; propuesta de etiquetas | D-156–D-160 |
-@@RESULTADOS@@
+| Tests unitarios | ✅ **849 en verde**, 0 fallos y 1 omitido (`ESTIMAR`). Los 7 de StoreKit, repetidos 3 veces seguidas en verde | `xcodebuild test -only-testing:EduculterTests` |
+| Tests de interfaz | ✅ Nuevo: `TribunalUITests.testGratisSimulacroAbreHojaYPantallaPremium`. Afectados: Tribunal 2/2, Modos 5/5, Recorrido 1/1 y Accesibilidad 5/5 (con la hoja de bloqueo y la pantalla Premium) | `-only-testing` |
+| Accesibilidad | ✅ Corregido lo que salió: hoja a toda altura con fondo opaco (texto recortado y contraste), enlaces del pie con 44 pt y candado sin texto en las filas del Tribunal. Se descartan solo los textos que dibuja StoreKit en los botones de los planes. Inicio y la 05K fallaron en la pasada desplazada con el simulador en mal estado, igual que `main`; tras borrar el simulador, pasan | D-162 |
+| Arranque (simulador, Release, mediana de 5) | Antes 3,68–3,72 s; después 3,91–3,94 s (+0,2 s, 6 %), medidos seguidos en las mismas condiciones. El SDK no se inicializa los días 1–2: la diferencia es de enlazarlo | `RendimientoUITests` |
+| Fallar en seguro | ⚠️→✅ Con `GADApplicationIdentifier = PENDIENTE`, la app de Release se cerraba al arrancar (validación del SDK). Con el marcador de ceros arranca y no hay anuncios | D-161 |
+| Avisos del compilador | ✅ 0 en la app y en el archive. ⚠️ En los dos targets de tests, 1 aviso de la cabecera de Apple `StoreKitTest/SKTestTransaction.h` (`SKPaymentTransactionState` obsoleto en iOS 18), al importar StoreKitTest; no es código nuestro | `build-for-testing` limpio |
+| Archive Release | ✅ Sin `pendiente/`, sin `3940256099942544` en el `.app`, sin el interruptor de Debug (`ajusteSimularPremium`, «Desarrollador»: 0 apariciones en el binario), sin el `.storekit`; con `PrivacyInfo.xcprivacy`, `recuento.json` y 50 SKAdNetwork | `xcodebuild archive` |
+| iPhone físico | ✅ Instalada y abierta por cable («iPhone de Alejandro») | `devicectl` |
+| Capturas | 5 en el simulador: premium, hoja-bloqueo, ump-eee, intersticial (de prueba de Google) y privacidad-anuncios | [docs/capturas/06/](docs/capturas/06/) |
+
+## Pendiente (06)
+1. Lo del propietario: membresía, acuerdo de pago, productos e IDs de AdMob (`docs/legal/PENDIENTES_PROPIETARIO.md`).
+2. URL de la política de privacidad y cuestionario de App Store Connect (fase 08).
+3. Revisión de los 23 errores de la 05K por la dirección (`docs/revision/ERRORES_05K.md`).
 
 ## Fase 05K — Resultado
 

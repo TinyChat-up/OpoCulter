@@ -251,3 +251,15 @@ Opciones de arranque nuevas (solo Debug): `-errorDemo` y `-modoOscuro`. El texto
 **Resultados (26/11/2026):** 662 tests unitarios en verde; tests de interfaz en verde tras adaptar 9 a la interfaz nueva (repetidos solo los afectados); cobertura de Core 96,0 %; auditoría de accesibilidad sin incidencias en claro, oscuro y texto grande. En el iPhone 16 del propietario: recorrido completo (`RecorridoParte2UITests`) y arranque en frío de 0,97 / 0,86 / 0,85 / 0,86 / 0,87 s (mediana 0,86 s).
 
 **Excepción de auditoría añadida (D-048):** con `bordesDelScroll`, el «texto potencialmente inaccesible» sin elemento asociado es texto del scroll visto a través de la barra de pestañas translúcida (comprobado: al final del scroll, donde el contenido acaba por encima de la barra, desaparece).
+
+## Fase 06: monetización
+
+- **Opciones de arranque nuevas (solo Debug):**
+  - `-premium` y `-gratis`: simulan el Premium.
+  - `-diaUso N`: día de uso desde la primera apertura, para los anuncios.
+  - `-rondasAnuncio N`: rondas ya terminadas desde el último anuncio.
+  - Con `-enMemoria` o `-almacenPruebas`, el estado de acceso y de anuncios va en memoria y cada arranque es el día 1.
+- **StoreKit:** `Educulter.storekit` (formato 6.3). Lo usan la acción Ejecutar del esquema, los tests unitarios (`SKTestSession`, con una sola sesión para toda la suite y copiada al contenedor del simulador) y los de interfaz que lo necesitan.
+- **Recuento:** `TEST_RUNNER_REGENERAR_RECUENTO=1 xcodebuild test -only-testing:EduculterTests/DebugYRecuentoTests` reescribe `Educulter/Content/recuento.json`.
+- **Capturas de la fase 06:** `TEST_RUNNER_CAPTURAS=1 xcodebuild test -only-testing:EduculterUITests/CapturasFase06UITests`. Necesita red y los servidores de prueba de Google. Antes de ejecutarlo, desinstala la app del simulador para que vuelva a salir el formulario de UMP.
+- **Avisos de accesibilidad falsos:** si la pasada desplazada de `AccesibilidadUITests` da avisos de contraste en pantallas que no han cambiado, primero hay que borrar el simulador (`xcrun simctl erase`). En la 06 fallaba igual en `main` y, tras borrarlo, pasó.
