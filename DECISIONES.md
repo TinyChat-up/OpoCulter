@@ -706,6 +706,8 @@ Paleta v3 (tinta marina, coral, amarillo y azul) con variantes de texto AA y tes
 ### D-141 · 2026-11-27 · Fase 05K · Vigente
 **Pasada corta de accesibilidad.** Un test de interfaz (`AccesibilidadUITests`) ejecuta `performAccessibilityAudit()` en Inicio, Camino, la sesión diaria, una ronda, Tribunal y las pantallas nuevas de la 05K (cubos en capas, volumen de nivel 4, espacio muestral con baraja, palabras variables y orden alfabético). Se corrige lo que sale y no se amplía el alcance: la auditoría completa sigue en la fase 07.
 
+**Resultado:** cada pantalla se audita arriba del todo y, tras desplazarla y esperar a que se detenga, otra vez. Solo dio avisos de contraste en textos tapados a medias por la barra de pestañas flotante, la barra de acciones de la ronda o el difuminado superior (el auditor mide contra el material translúcido). Esos mismos textos pasan en la otra pasada, así que no hubo nada que corregir en la app. El test descarta solo ese caso, que queda documentado.
+
 ### D-142 · 2026-11-27 · Fase 05K · Vigente
 **Pistas en «Por bloques».** Se mantiene la D-139: las pistas solo salen en los ítems de los peldaños 1–2. Los ítems de dificultad 4 y 5 van sin pistas.
 
