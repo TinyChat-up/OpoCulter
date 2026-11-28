@@ -118,7 +118,7 @@ struct PantallaInicioSupervivencia: View {
                 .padding(Espacio.l)
             }
         }
-        .sheet(isPresented: $verPremium) { NavigationStack { PantallaPremium() } }
+        .sheet(isPresented: $verPremium) { NavigationStack { PantallaPremium() }.presentationBackground(Paleta.fondo) }
         .background(Paleta.fondo.ignoresSafeArea())
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("pantallaInicioSupervivencia")

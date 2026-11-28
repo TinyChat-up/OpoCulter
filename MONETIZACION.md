@@ -33,7 +33,7 @@
   - `ProveedorGoogle` es el único archivo que importa los SDK de Google.
 - **Configuración:**
   - `Educulter.storekit`: tienda local para Debug y para los tests.
-  - `Config/Anuncios-*.xcconfig`: identificadores de AdMob. En Release valen `PENDIENTE` hasta tener los reales.
+  - `Config/Anuncios-*.xcconfig`: identificadores de AdMob. En Release están pendientes (marcador de ceros y `PENDIENTE`, D-161) hasta tener los reales.
 
 ## 5. Pruebas
 - **Unitarias:** `Fase06Tests`.

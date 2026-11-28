@@ -75,14 +75,14 @@
 
 ## 6. Dónde se pegan los identificadores reales
 
-En el archivo `Config/Anuncios-Release.xcconfig` del proyecto. Hoy pone esto:
+En el archivo `Config/Anuncios-Release.xcconfig` del proyecto. Hoy pone esto (el primero es un marcador de ceros porque el SDK de Google no admite la palabra «PENDIENTE» ahí):
 
 ```
-ADMOB_APP_ID = PENDIENTE
+ADMOB_APP_ID = ca-app-pub-0000000000000000~0000000000
 ADMOB_INTERSTICIAL_ID = PENDIENTE
 ```
 
-1. Sustituye `PENDIENTE` por tus dos identificadores, así (con los tuyos):
+1. Sustituye las dos líneas por tus identificadores, así (con los tuyos):
 
 ```
 ADMOB_APP_ID = ca-app-pub-1234567890123456~1234567890
@@ -91,7 +91,7 @@ ADMOB_INTERSTICIAL_ID = ca-app-pub-1234567890123456/1234567890
 
 2. No pongas comillas ni espacios de más. No toques `Config/Anuncios-Debug.xcconfig`: Debug usa siempre los de prueba de Google.
 3. Si lo prefieres, mándale los dos identificadores a la dirección y Claude Code los pega.
-4. Mientras alguno valga `PENDIENTE`, tenga otro formato o sea de prueba, la versión de Release no muestra anuncios ni da error.
+4. Mientras alguno siga pendiente (los ceros o `PENDIENTE`), tenga otro formato o sea de prueba, la versión de Release no muestra anuncios ni da error.
 
 ## Otros pendientes para la fase 08
 

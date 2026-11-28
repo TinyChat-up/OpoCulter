@@ -307,6 +307,9 @@ struct IdentificadoresTests {
         let prueba = "ca-app-pub-" + "3940256099942544"
         #expect(!IdentificadoresAnuncios.validosParaProduccion(app: "PENDIENTE", intersticial: "PENDIENTE"))
         #expect(!IdentificadoresAnuncios.validosParaProduccion(app: "", intersticial: ""))
+        // Marcador pendiente del xcconfig de Release (D-161): formato válido para el SDK, pero no se usa.
+        #expect(!IdentificadoresAnuncios.validosParaProduccion(app: "ca-app-pub-0000000000000000~0000000000", intersticial: "PENDIENTE"))
+        #expect(!IdentificadoresAnuncios.validosParaProduccion(app: "ca-app-pub-0000000000000000~0000000000", intersticial: "ca-app-pub-0000000000000000/0000000000"))
         #expect(!IdentificadoresAnuncios.validosParaProduccion(app: prueba + "~1458002511", intersticial: prueba + "/4411468910"))
         #expect(!IdentificadoresAnuncios.validosParaProduccion(app: "ca-app-pub-1111111111111111~22", intersticial: "ca-app-pub-9999999999999999/33"))
         #expect(!IdentificadoresAnuncios.validosParaProduccion(app: "ca-app-pub-1111111111111111/22", intersticial: "ca-app-pub-1111111111111111/33"))
@@ -320,10 +323,10 @@ struct IdentificadoresTests {
         #expect(ids.app == "ca-app-pub-3940256099942544~1458002511" && ids.intersticial == "ca-app-pub-3940256099942544/4411468910" && ids.validos)
     }
 
-    @Test("El xcconfig de Release vale PENDIENTE y nunca lleva IDs de prueba; el Info.plist los toma de ahí")
+    @Test("El xcconfig de Release está pendiente (marcador de ceros y PENDIENTE) y nunca lleva IDs de prueba; el Info.plist los toma de ahí")
     func configuracion() throws {
         let release = try String(contentsOf: raizProyecto.appending(path: "Config/Anuncios-Release.xcconfig"), encoding: .utf8)
-        #expect(release.contains("ADMOB_APP_ID = PENDIENTE") && release.contains("ADMOB_INTERSTICIAL_ID = PENDIENTE"))
+        #expect(release.contains("ADMOB_APP_ID = ca-app-pub-0000000000000000~0000000000") && release.contains("ADMOB_INTERSTICIAL_ID = PENDIENTE"))
         #expect(!release.contains("3940256099942544"))
         let plist = try String(contentsOf: raizProyecto.appending(path: "Educulter-Info.plist"), encoding: .utf8)
         #expect(plist.contains("<string>$(ADMOB_APP_ID)</string>") && plist.contains("<string>$(ADMOB_INTERSTICIAL_ID)</string>"))

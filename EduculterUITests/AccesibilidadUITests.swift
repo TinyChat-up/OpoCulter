@@ -57,6 +57,12 @@ final class AccesibilidadUITests: CasoUI {
             if problema.auditType == .contrast, let e = problema.element, e.frame.maxY > borde || e.frame.minY < techo { return true }
             // Desplazada, el auditor no identifica algunos nodos de arriba (los 7 días de la semana de Inicio).
             if problema.auditType == .contrast, desplazada, problema.element == nil { return true }
+            // Fase 06: los botones de los planes (nombre y subtítulo con el precio) los dibuja
+            // `SubscriptionStoreView` (StoreKit) con su propia tipografía y su tamaño; la app no puede cambiarlos.
+            if [.dynamicType, .textClipped].contains(problema.auditType), let e = problema.element,
+               ["Premium mensual", "Premium anual"].contains(e.label) || e.label.range(of: #"^\d+\s\w+ gratis y luego .+ al (mes|año)$"#, options: .regularExpression) != nil {
+                return true
+            }
             let e = problema.element
             XCTContext.runActivity(named: "PROBLEMA \(pantalla): \(problema.compactDescription) · tipo \(e?.elementType.rawValue ?? 0) · id «\(e?.identifier ?? "")» · etiqueta «\(e?.label ?? "")» · \(e?.frame ?? .zero)") { _ in }
             return false

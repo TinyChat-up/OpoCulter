@@ -4,7 +4,7 @@ import SwiftUI
 /// Pantalla Premium (fase 06 §1.4): `SubscriptionStoreView` con una cabecera propia en la identidad
 /// v5. Lo que incluye en 3 líneas; precio y periodo de StoreKit (a través del servicio de acceso);
 /// la prueba de 7 días y qué pasa después; Restaurar compras, Términos de uso y Política de
-/// privacidad siempre visibles abajo. Sin cuentas atrás ni planes preseleccionados (cada plan es su
+/// privacidad, al final de la cabecera (un pie fijo tapaba los botones de los planes). Sin cuentas atrás ni planes preseleccionados (cada plan es su
 /// propio botón). Solo se abre a petición del usuario: Ajustes > Premium o «Ver Premium».
 struct PantallaPremium: View {
     @Environment(EntornoApp.self) private var entorno
@@ -19,14 +19,13 @@ struct PantallaPremium: View {
         }
         .subscriptionStoreControlStyle(.buttons)
         .subscriptionStoreButtonLabel(.multiline)
-        // Restaurar y los enlaces legales van en el pie propio, siempre visibles.
+        // Restaurar y los enlaces legales van al final de la cabecera propia.
         .storeButton(.hidden, for: .restorePurchases)
         .storeButton(.hidden, for: .policies)
         .storeButton(.hidden, for: .cancellation)
         .onInAppPurchaseCompletion { _, resultado in
             if case .success(.success(let verificacion)) = resultado { await entorno.acceso.registrar(verificacion) }
         }
-        .safeAreaInset(edge: .bottom, spacing: 0) { pie }
         .containerBackground(Paleta.fondo, for: .subscriptionStore)
         .background(Paleta.fondo.ignoresSafeArea())
         .tint(Paleta.matematicas)
@@ -75,6 +74,7 @@ struct PantallaPremium: View {
             }
             .accessibilityElement(children: .combine)
             .accessibilityIdentifier("condicionesPremium")
+            pie
         }
         .padding(.horizontal, Espacio.l)
         .padding(.top, Espacio.l)
@@ -82,29 +82,35 @@ struct PantallaPremium: View {
     }
 
     private var pie: some View {
-        VStack(spacing: Espacio.xs) {
+        VStack(alignment: .leading, spacing: Espacio.xs) {
             if let mensaje {
-                Text(mensaje).font(.footnote).foregroundStyle(Paleta.textoPrincipal).multilineTextAlignment(.center)
+                Text(mensaje).font(.footnote).foregroundStyle(Paleta.textoPrincipal)
                     .fixedSize(horizontal: false, vertical: true)
                     .accessibilityIdentifier("mensajeRestaurar")
             }
             DisposicionFlujo(espacioH: Espacio.l, espacioV: Espacio.xs) {
-                Button(restaurando ? "Restaurando…" : "Restaurar compras") { Task { await restaurar() } }
+                Button { Task { await restaurar() } } label: { enlace(restaurando ? "Restaurando…" : "Restaurar compras") }
                     .disabled(restaurando)
                     .accessibilityIdentifier("botonRestaurarCompras")
-                Link("Términos de uso", destination: EnlacesLegales.terminos)
+                Link(destination: EnlacesLegales.terminos) { enlace("Términos de uso") }
                     .accessibilityIdentifier("enlaceTerminos")
-                Link("Política de privacidad", destination: EnlacesLegales.privacidad)
+                Link(destination: EnlacesLegales.privacidad) { enlace("Política de privacidad") }
                     .accessibilityIdentifier("enlacePrivacidad")
             }
+            // Estilo plano: dentro de la tienda, los botones heredarían el relleno de los planes.
+            .buttonStyle(.plain)
             .font(.footnote.weight(.semibold))
             .foregroundStyle(Paleta.textoPrincipal)
-            .frame(minHeight: Medidas.tactilMinimo)
         }
-        .padding(.horizontal, Espacio.l)
-        .padding(.vertical, Espacio.s)
-        .frame(maxWidth: .infinity)
-        .background(Paleta.fondo)
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    /// Texto del pie con una zona táctil de 44 pt de alto.
+    private func enlace(_ texto: String) -> some View {
+        Text(texto).underline()
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(minHeight: Medidas.tactilMinimo)
+            .contentShape(Rectangle())
     }
 
     private func restaurar() async {
@@ -159,7 +165,10 @@ struct HojaBloqueoPremium: View {
             .navigationDestination(isPresented: $verPremium) { PantallaPremium() }
             .toolbar(.hidden, for: .navigationBar)
         }
-        .presentationDetents([.medium, .large])
+        // A toda altura y con el papel opaco: a media altura el texto quedaba recortado y el material
+        // translúcido de la hoja no daba el contraste (auditoría de la fase 06).
+        .presentationDetents([.large])
+        .presentationBackground(Paleta.fondo)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hojaBloqueoPremium")
     }

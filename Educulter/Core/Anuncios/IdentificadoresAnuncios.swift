@@ -5,8 +5,8 @@ import Foundation
 ///
 /// - Debug: siempre los de prueba de Google para iOS (solo existen dentro de `#if DEBUG`).
 /// - Release: los reales del xcconfig (`Config/Anuncios-Release.xcconfig` → Info.plist). Mientras
-///   valgan `PENDIENTE`, o si no tienen el formato de AdMob, no se muestra ningún anuncio y la app no
-///   se cierra ni avisa (falla en seguro).
+///   estén pendientes (`PENDIENTE` o el marcador de ceros, D-161), o si no tienen el formato de AdMob,
+///   no se muestra ningún anuncio y la app no se cierra ni avisa (falla en seguro).
 /// - Nunca se envían IDs de prueba a producción: en Release, un identificador del editor de prueba
 ///   de Google se rechaza. Se compara por su huella SHA-256 para que el número del editor de prueba
 ///   no viaje en el binario de Release.
@@ -39,10 +39,10 @@ struct IdentificadoresAnuncios: Sendable, Equatable {
     }
 
     /// Reglas de Release: formato de AdMob (`ca-app-pub-<editor>~<app>` y `ca-app-pub-<editor>/<bloque>`),
-    /// el mismo editor en los dos y que no sea el de prueba de Google.
+    /// el mismo editor en los dos, que no sea el marcador de ceros ni el de prueba de Google.
     static func validosParaProduccion(app: String, intersticial: String) -> Bool {
         guard let a = partes(app, separador: "~"), let i = partes(intersticial, separador: "/"),
-              a.editor == i.editor else { return false }
+              a.editor == i.editor, a.editor.contains(where: { $0 != "0" }) else { return false }
         return huella(a.editor) != huellaEditorPrueba
     }
 

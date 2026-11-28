@@ -294,7 +294,9 @@ struct PantallaTribunal: View {
             }
             Spacer(minLength: 0)
             if bloqueada {
-                Label("Premium", systemImage: "lock").font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+                // Solo el candado (con texto, recortaba el título); VoiceOver lo lee como «Premium».
+                Image(systemName: "lock").font(.footnote.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
+                    .accessibilityLabel("Premium")
             } else if let estado {
                 Text(estado).font(.caption.weight(.semibold)).foregroundStyle(Paleta.textoSecundario)
             }

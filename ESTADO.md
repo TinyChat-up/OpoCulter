@@ -1,8 +1,17 @@
 # Estado del proyecto
 
-**Fase actual:** 05K (las 4 competencias del plano sin contenido) · **Terminada y fusionada en `main`**.
-**Siguiente:** 05L (la define la dirección).
+**Fase actual:** 06 (monetización) · **Terminada y fusionada en `main`**.
+**Siguiente:** 05L «Datos vivos» (estadística) y fase 07 (calidad y TestFlight).
 **Última actualización:** 2026-11-28
+
+## Fase 06 — Resultado
+
+| Verificación | Resultado | Evidencia |
+|---|---|---|
+| §0 Decisiones de la 05K | ✅ D-137–139, D-143 y D-144 confirmadas; D-137 sustituida (D-155); `docs/revision/ERRORES_05K.md` con los 23 errores; pronombres en LEN.CLA.VAR (D-150); recuento precalculado en `Content/recuento.json` (D-151) | `Fase05KCasosTests/pronombres`, `DebugYRecuentoTests` |
+| §1 Premium | ✅ StoreKit 2: grupo «Premium» (mensual 9,99 €, anual 49,99 €, 7 días gratis) en `Educulter.storekit`; `ServicioAcceso` sobre `currentEntitlements` y `Transaction.updates`, con caché sin conexión; tabla de acceso con la corrección de la dirección (D-152); pantalla Premium y hoja de bloqueo; Ajustes > Premium y «Gestionar suscripción»; Premium simulado solo en Debug | D-152–D-155, `ServicioAccesoStoreKitTests` |
+| §2 Anuncios | ✅ Google Mobile Ads 13.13.0 y UMP 3.1.0 (SPM, versión exacta); solo intersticiales; `PoliticaAnuncios` pura; UMP → ATT → SDK desde el día 3 en Hoy; IDs de Release `PENDIENTE` que fallan en seguro; Info.plist (GAD, 50 SKAdNetwork, ATT); `PrivacyInfo.xcprivacy`; propuesta de etiquetas | D-156–D-160 |
+@@RESULTADOS@@
 
 ## Fase 05K — Resultado
 

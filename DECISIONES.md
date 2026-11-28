@@ -832,7 +832,7 @@ La tabla es un tipo puro, `TablaAcceso`, con `FuncionApp`. En la versión gratui
 ### D-159 · 2026-11-28 · Fase 06 · Vigente
 **Identificadores que fallan en seguro.**
 - **Debug:** usa siempre los de prueba de Google para iOS; las constantes solo existen dentro de `#if DEBUG`.
-- **Release:** lee `ADMOB_APP_ID` y `ADMOB_INTERSTICIAL_ID` de `Config/Anuncios-Release.xcconfig` a través del Info.plist (`GADApplicationIdentifier` y `EduculterAdMobIntersticial`). Hoy valen `PENDIENTE`.
+- **Release:** lee `ADMOB_APP_ID` y `ADMOB_INTERSTICIAL_ID` de `Config/Anuncios-Release.xcconfig` a través del Info.plist (`GADApplicationIdentifier` y `EduculterAdMobIntersticial`). Hoy están pendientes (D-161).
 - **Validación en Release:** los ids deben tener el formato de AdMob y el mismo editor, y no pueden ser del editor de prueba. Ese editor se compara por su SHA-256, para que su número no viaje en el binario. Si no pasan la validación, no hay UMP ni anuncios, y la app no se cierra ni avisa.
 - **Info.plist:** lleva además `NSUserTrackingUsageDescription` y los 50 `SKAdNetworkItems` de la lista oficial de Google (actualizada el 30/01/2026).
 
@@ -841,3 +841,7 @@ La tabla es un tipo puro, `TablaAcceso`, con `FuncionApp`. En la versión gratui
 - **Manifiesto:** `Resources/PrivacyInfo.xcprivacy` declara `UserDefaults` (CA92.1), `NSPrivacyTracking = true` y los tipos que recoge el SDK de anuncios según el manifiesto de Google: ID del dispositivo (con rastreo), datos de publicidad, interacción, ubicación aproximada, rendimiento, fallos y otros diagnósticos.
 - **Cuestionario:** la propuesta está en `docs/legal/ETIQUETAS_PRIVACIDAD.md`. El código confirma que la app no tiene servidor ni cuentas y que no abre conexiones propias.
 - **Arranque:** el SDK nunca se inicializa en el arranque; lo hace después de UMP, desde la pantalla de inicio ya visible y de forma asíncrona.
+
+### D-161 · 2026-11-28 · Fase 06 · Vigente
+**El ID de la app de AdMob pendiente es un marcador de ceros.** Con `GADApplicationIdentifier = PENDIENTE`, la app de Release se cerraba al arrancar. El SDK, enlazado de forma estática, comprueba el formato al iniciarse aunque nunca se llame a `start()` (`GADApplicationVerifyPublisherInitializedCorrectly`). Se vio en el test de arranque en Release. Por eso `ADMOB_APP_ID` pendiente vale `ca-app-pub-0000000000000000~0000000000`, y `ADMOB_INTERSTICIAL_ID` sigue en `PENDIENTE`. La validación de Release rechaza un editor con todo ceros, así que no hay UMP ni anuncios. Comprobado: con el marcador, la app de Release arranca y sigue abierta en el simulador. Completa la D-159.
+

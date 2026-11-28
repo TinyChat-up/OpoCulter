@@ -61,11 +61,15 @@ final class CapturasFase06UITests: CasoUI {
     func testConsentimientoIntersticialYPrivacidad() throws {
         let app = lanzar(["-gratis", "-diaUso", "3", "-rondasAnuncio", "1", "-rondaItems", "LEN.ORT.AGU.0010"])
         // UMP: el formulario es una vista web.
-        let web = app.webViews.firstMatch
-        XCTAssertTrue(web.waitForExistence(timeout: 45), "No ha aparecido el formulario de UMP")
-        esperar(3)
+        // Se espera a que el formulario esté cargado y visible (su botón de consentimiento).
+        var aceptar: XCUIElement?
+        for _ in 0..<60 where aceptar == nil {
+            aceptar = boton(app.webViews.firstMatch, ["Consentir", "Consent", "Aceptar", "Accept"]).flatMap { $0.isHittable ? $0 : nil }
+            if aceptar == nil { esperar(1) }
+        }
+        esperar(1.5)
         captura("ump-eee")
-        if let aceptar = boton(app, ["Consentir", "Consent", "Aceptar", "Accept"]) { aceptar.tap() } else { XCTFail("Sin botón de consentimiento") }
+        if let aceptar { aceptar.tap() } else { XCTFail("No ha aparecido el formulario de UMP") }
         // ATT: alerta del sistema.
         let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
         let alerta = springboard.alerts.firstMatch

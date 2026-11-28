@@ -1,6 +1,9 @@
-// Identificadores reales de AdMob para Release (TestFlight y App Store), fase 06 §2.4.
+// Identificadores reales de AdMob para Release (TestFlight y App Store), fase 06 §2.4 y D-161.
 // Los pega aquí el propietario cuando tenga la cuenta de AdMob (docs/legal/PENDIENTES_PROPIETARIO.md).
-// Mientras valgan PENDIENTE, en Release no se muestra ningún anuncio (la app falla en seguro).
+// Mientras estén pendientes, en Release no se muestra ningún anuncio (la app falla en seguro).
 // Nunca se ponen aquí los identificadores de prueba de Google.
-ADMOB_APP_ID = PENDIENTE
+//
+// ADMOB_APP_ID pendiente = el marcador de ceros. No puede ser «PENDIENTE»: el SDK de Google comprueba
+// al arrancar el formato de GADApplicationIdentifier y, si no es de AdMob, cierra la app.
+ADMOB_APP_ID = ca-app-pub-0000000000000000~0000000000
 ADMOB_INTERSTICIAL_ID = PENDIENTE
