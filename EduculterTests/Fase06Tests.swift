@@ -443,9 +443,9 @@ struct ServicioAccesoStoreKitTests {
     }
 
     /// La caducidad y el reembolso de `SKTestSession` llegan a StoreKit un instante después: se
-    /// recalcula hasta que se cumple la condición (como mucho 5 s).
+    /// recalcula hasta que se cumple la condición (como mucho 10 s).
     func actualizarHasta(_ s: ServicioAcceso, _ condicion: () -> Bool) async throws {
-        for _ in 0..<50 {
+        for _ in 0..<100 {
             await s.actualizar()
             if condicion() { return }
             try await Task.sleep(for: .milliseconds(100))
@@ -501,7 +501,7 @@ struct ServicioAccesoStoreKitTests {
         #expect(s.premium)
         try sesion.expireSubscription(productIdentifier: ProductosPremium.mensual)
         try await actualizarHasta(s) { !s.premium }
-        #expect(!s.premium && s.acceso(.simulacros) == .soloPremium)
+        #expect(!s.premium && s.acceso(.simulacros) == .soloPremium, "Queda el derecho de \(s.estado.producto ?? "-") hasta \(String(describing: s.estado.caducidad))")
     }
 
     @Test("Reembolso → gratis")
