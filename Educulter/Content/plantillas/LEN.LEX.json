@@ -76,5 +76,53 @@
       "fecha": "2026-11-27"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.LEX.DICC.G01",
+    "competencia": "LEN.LEX.DICC",
+    "peldano": 1,
+    "dificultad": 2,
+    "mecanica": "ordenar",
+    "tipo": "ordenAlfabetico",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Ordenar palabras como en el diccionario",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §4); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.LEX.DICC.G02",
+    "competencia": "LEN.LEX.DICC",
+    "peldano": 2,
+    "dificultad": 3,
+    "mecanica": "eleccion",
+    "tipo": "lema",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Buscar una forma en el diccionario (lema)",
+    "parametros": {},
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §4); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
   }
 ]

@@ -190,7 +190,7 @@ final class EntornoApp {
     /// el primero de esa mecánica.
     static func itemsDemostracion(_ banco: BancoContenido) -> [String] {
         // Las mecánicas de los juegos (05G y 05H) no entran en la demostración: tienen su propio flujo.
-        Mecanica.allCases.filter { ![.evidencia, .recuerdo, .figuraArea, .rayosX, .editor].contains($0) }.compactMap { m in
+        Mecanica.allCases.filter { ![.evidencia, .recuerdo, .figuraArea, .figuraVolumen, .rayosX, .editor].contains($0) }.compactMap { m in
             if let id = demostracionPreferida[m], banco.item(id: id)?.mecanica == m { return id }
             return banco.items.first { $0.mecanica == m && $0.peldano <= 4 }?.id
         }

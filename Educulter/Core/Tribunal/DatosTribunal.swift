@@ -32,7 +32,7 @@ struct ExamenOficial: Codable, Sendable, Equatable, Identifiable {
         var validacion: Validacion
         var notaRubrica: String?
         var anulada: Bool?
-        /// Página de la figura en el cuadernillo oficial, si consta (hoy no consta en ninguna).
+        /// Página de la figura en el cuadernillo oficial, si consta (05K: las 4 figuras, comprobadas en los PDF).
         var paginaFigura: Int?
         /// Tabla del enunciado como tabla real (05J): mismos valores que el texto plano «(A | B: …)».
         var tabla: Tabla?

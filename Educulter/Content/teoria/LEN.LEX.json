@@ -89,8 +89,16 @@
         "contenido": "Recoge las palabras de una lengua en orden alfabético y explica sus significados (acepciones), su categoría y otros datos."
       },
       {
+        "tipo": "regla",
+        "contenido": "En el diccionario, los verbos aparecen en infinitivo; los sustantivos, en singular; y los adjetivos, en masculino singular."
+      },
+      {
         "tipo": "esquema",
         "contenido": "Verbos: en infinitivo (cantar)\nSustantivos y adjetivos con variación de género: en masculino singular (bonito, niño)\nSin variación: tal cual, en singular (casa, árbol)\nAbreviaturas: m., f., adj., tr., intr., adv."
+      },
+      {
+        "tipo": "truco",
+        "contenido": "Desde 2010, «ch» y «ll» no son letras aparte: «chocolate» va entre «cesta» y «cielo»."
       }
     ],
     "procedencia": {
@@ -99,7 +107,7 @@
       "anioMuerteAutor": null,
       "fuente": null,
       "licencia": "propia",
-      "notas": "Redacción original de la dirección del proyecto."
+      "notas": "Redacción original de la dirección del proyecto; regla y truco añadidos en la 05K (PROMPT 05K §5, aprobados el 2026-11-27)."
     },
     "validacion": {
       "estado": "aprobado",

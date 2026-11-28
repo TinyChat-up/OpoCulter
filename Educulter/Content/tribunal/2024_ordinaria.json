@@ -387,6 +387,7 @@
       "numeroEnArea": 7,
       "area": "MAT",
       "enunciado": "Verónica tiene el recipiente A lleno de agua, y quiere trasvasarla al recipiente B.\nResponda razonadamente:\na) ¿Cuántos litros de agua tiene en el recipiente A?\nb) ¿Le faltará, le sobrará, o tendrá el agua justa para llenar el recipiente B?\nTéngase en cuenta que las bases de los recipientes son regulares.\n[Figura: recipiente A, prisma de base cuadrada de 130 mm de lado y 22 cm de altura; recipiente B, prisma de base pentagonal de 12,5 cm de lado, 85,7 mm de apotema y 120 mm de altura.]",
+      "paginaFigura": 12,
       "competencias": [
         "MAT.GEO.VOLUMEN"
       ],

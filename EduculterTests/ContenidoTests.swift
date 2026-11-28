@@ -21,9 +21,10 @@ struct ContenidoEmpaquetadoTests {
         // + 05G: 3 pasos de J46 y 6 niveles de J63.
         // + 05H: 24 de Editor, Fábrica, recursos y glosario.
         // + 05I: 3 de redactar con el patrón recuerdo (simulacros). + 05J: LEN.ORT.CTX.G01 (lote 06).
-        #expect(banco.plantillas.count == 125)
+        // + 05K: 6 de volúmenes, 4 de sucesos, 2 de palabras variables y 2 del diccionario.
+        #expect(banco.plantillas.count == 139)
         #expect(banco.items.count > 133)
-        #expect(banco.teoria.count == 62, "17 + las 9 del ANEXO B (05E parte 2) + las 36 del lote 06")
+        #expect(banco.teoria.count == 65, "17 + las 9 del ANEXO B (05E parte 2) + las 36 del lote 06 + 3 de la 05K")
         #expect(banco.textos.count == 7 && banco.literatura?.autores.count == 142)
         #expect(banco.simulacros.count == 1)
         #expect(Set(banco.items.map(\.mecanica)) == Set(Mecanica.allCases), "Debe haber ítems de todas las mecánicas")
@@ -50,7 +51,7 @@ struct ContenidoEmpaquetadoTests {
         #expect(!todos.items.isEmpty, "El bundle debe tener borradores para que el test tenga sentido")
         let release = try cargador.cargar(politica: .soloAprobados)
         #expect(release.items.allSatisfy { $0.validacion.estado == .aprobado })
-        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 120)
+        #expect(release.plantillas.allSatisfy { $0.validacion.estado == .aprobado } && release.plantillas.count == 134)
         #expect(release.teoria.allSatisfy { $0.validacion.estado == .aprobado })
         #expect(release.simulacros.allSatisfy { $0.validacion.estado == .aprobado })
         // Aprobado: LEN.ORT (50 ítems y 5 tarjetas), MAT.NUM (9 y 2), LEN.LEX (30 y 4) y LEN.COM (19 y 4,
@@ -65,7 +66,7 @@ struct ContenidoEmpaquetadoTests {
         #expect(release.teoria.filter { $0.competencia.hasPrefix("MAT.NUM.") }.count == 5)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.LEX.") }.count == 8)
         #expect(release.teoria.filter { $0.competencia.hasPrefix("LEN.COM.") }.count == 7)
-        #expect(release.teoria.count == 60, "15 + las 9 del ANEXO B (05E parte 2) + las 36 del lote 06")
+        #expect(release.teoria.count == 63, "15 + las 9 del ANEXO B (05E parte 2) + las 36 del lote 06 + 3 de la 05K")
         #expect(release.textos.count == 7)
         #expect(release.items.allSatisfy { $0.validacion.revisor == "direccion" })
         #expect(release.simulacros.isEmpty)

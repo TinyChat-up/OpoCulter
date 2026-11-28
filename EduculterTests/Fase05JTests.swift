@@ -239,7 +239,7 @@ struct Lote06Tests {
     @MainActor
     func remedioEstatico() throws {
         let errores = release.recursos.errores
-        #expect(errores.errores.count == 121, "112 + 8 estáticos del lote 06 + ERR.LEN.ORT.CTX.1")
+        #expect(errores.errores.count == 144, "112 + 8 estáticos del lote 06 + ERR.LEN.ORT.CTX.1 + 23 de la 05K")
         let estaticos = errores.errores.filter(\.remedio.esEstatico)
         #expect(estaticos.map(\.id) == ["ERR.LEN.COM.INFER.1", "ERR.LEN.COM.INFER.2", "ERR.LEN.COM.INFER.3", "ERR.LEN.LEX.SIN.1",
                                         "ERR.LEN.LEX.SIN.2", "ERR.LEN.LEX.SIN.3", "ERR.LEN.LEX.DICC.1", "ERR.MAT.NUM.FRAEQ.1"])

@@ -1172,7 +1172,7 @@
       "correcta": "savia",
       "dificultad": 3,
       "competencia": "LEN.ORT.HOM",
-      "ambigua": true
+      "ambigua": false
     },
     {
       "id": "FR.0089",
@@ -1181,7 +1181,7 @@
       "correcta": "sabia",
       "dificultad": 3,
       "competencia": "LEN.ORT.HOM",
-      "ambigua": true
+      "ambigua": false
     },
     {
       "id": "FR.0090",

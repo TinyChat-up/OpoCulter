@@ -180,7 +180,10 @@ extension ServicioSesion {
     }
 
     /// Cifra real de preguntas disponibles: solo contenido aprobado (lo que ve la app en Release).
-    func preguntasDisponibles() -> RecuentoCatalogo {
+    func preguntasDisponibles() -> RecuentoCatalogo { Self.preguntasDisponibles(banco: banco) }
+
+    /// El recuento recorre todas las plantillas aprobadas: la interfaz lo pide fuera del hilo principal.
+    nonisolated static func preguntasDisponibles(banco: BancoContenido) -> RecuentoCatalogo {
         let aprobados = Array(banco.itemsEstaticos.filter { $0.validacion.estado == .aprobado })
         let plantillas = banco.plantillas.filter { $0.validacion.estado == .aprobado }
         let soloAprobado = BancoContenido(catalogo: banco.catalogo, items: aprobados, teoria: banco.teoria,

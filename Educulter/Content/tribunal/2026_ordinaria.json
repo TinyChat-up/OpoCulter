@@ -389,6 +389,7 @@
       "numeroEnArea": 7,
       "area": "MAT",
       "enunciado": "En esta zona ajardinada se plantarán margaritas en la parte sombreada y césped en el resto. Calcule el área exacta de la superficie destinada al césped. Tómese π = 3,14.\n[Figura: zona en forma de L de 10 m de ancho total; parte izquierda de 8 m de alto; a la derecha, un rectángulo de 4 m de ancho y 3 m de alto; dentro de la parte izquierda, un círculo sombreado de r = 2 m.]",
+      "paginaFigura": 14,
       "competencias": [
         "MAT.GEO.AREAS"
       ],

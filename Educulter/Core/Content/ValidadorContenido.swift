@@ -99,6 +99,9 @@ struct ValidadorContenido: Sendable {
 
     static let maxPalabrasDescripcionError = 12
     static let maxCaracteresRegla = 140
+    /// Errores con el texto literal de la dirección (D-143): no se recortan, así que no se les
+    /// aplican los dos límites de arriba.
+    static let textosDeLaDireccion: Set<String> = ["ERR.LEN.ORT.CTX.1"]
 
     /// Catálogo de errores: ids, competencias, textos, remedios y patrones; y que los errores
     /// puestos a mano en los ítems estáticos existan.
@@ -117,10 +120,11 @@ struct ValidadorContenido: Sendable {
                 error(e.id, "el id debe ser ERR.<competencia>.<n>")
             }
             let palabras = Self.contarPalabras(e.descripcion)
-            if palabras == 0 || palabras > Self.maxPalabrasDescripcionError {
+            let literal = Self.textosDeLaDireccion.contains(e.id)
+            if palabras == 0 || (palabras > Self.maxPalabrasDescripcionError && !literal) {
                 error(e.id, "la descripción tiene \(palabras) palabras (1–\(Self.maxPalabrasDescripcionError))")
             }
-            if e.remedio.explicacion.isEmpty || e.remedio.explicacion.count > Self.maxCaracteresRegla {
+            if e.remedio.explicacion.isEmpty || (e.remedio.explicacion.count > Self.maxCaracteresRegla && !literal) {
                 error(e.id, "la regla del remedio tiene \(e.remedio.explicacion.count) caracteres (1–\(Self.maxCaracteresRegla))")
             }
             if e.remedio.esEstatico {
@@ -308,6 +312,7 @@ struct ValidadorContenido: Sendable {
         case .evidencia(let p): validarEvidencia(p)
         case .recuerdo(let p): validarRecuerdo(p)
         case .figuraArea(let p): validarFigura(p)
+        case .figuraVolumen(let p): validarVolumen(p)
         case .rayosX(let p): validarRayosX(p)
         case .editor(let p): validarEditor(p)
         }
@@ -358,6 +363,23 @@ struct ValidadorContenido: Sendable {
             if p.tokens.first(where: { $0.id == f.token })?.texto == f.correcta { m.append("editor: la falta ya está bien escrita") }
             if f.uso.isEmpty { m.append("editor: falta sin uso") }
         }
+        return m
+    }
+
+    private func validarVolumen(_ p: Payload.FiguraVolumen) -> [String] {
+        var m: [String] = []
+        guard let r = Racional.interpretar(p.resultado)?.valor, r.numerador > 0 else { return ["volumen con un resultado que no es un número positivo"] }
+        if p.solidos.isEmpty { m.append("volumen sin sólidos") }
+        if p.solidos.contains(where: { $0.largo <= 0 || $0.ancho <= 0 || $0.alto <= 0 }) { m.append("sólido con una medida no positiva") }
+        let ids = Set(p.solidos.map(\.id))
+        if p.rotulos.contains(where: { !ids.contains($0.solido) }) { m.append("rótulo de un sólido inexistente") }
+        m += Self.idsUnicos(p.campos.map(\.id), "campos")
+        if p.campos.contains(where: { Racional.interpretar($0.valor) == nil }) { m.append("paso intermedio sin valor numérico") }
+        if !p.unidadesOpciones.contains(p.unidad) { m.append("la unidad correcta no está entre las opciones") }
+        if Set(p.unidadesOpciones).count != p.unidadesOpciones.count { m.append("unidades repetidas") }
+        if p.erroneos.values.contains(where: { Racional.interpretar($0)?.valor == r }) { m.append("un error típico da el resultado correcto") }
+        if p.descripcion.isEmpty { m.append("sólido sin descripción para VoiceOver") }
+        if let a = p.agua, let s = p.solidos.first, a <= 0 || a > s.alto { m.append("agua fuera del depósito") }
         return m
     }
 

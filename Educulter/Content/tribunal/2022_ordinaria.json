@@ -342,6 +342,7 @@
       "numeroEnArea": 5,
       "area": "MAT",
       "enunciado": "Calcule cuánto costaría pintar la fachada del siguiente edificio, teniendo en cuenta que el precio por pintar un metro cuadrado es de 3,5 €.\n[Figura: fachada formada por un rectángulo de 12 m de base y 8,5 m de altura; encima, un rectángulo de 4 m de ancho y 3 m de alto rematado por un triángulo de 4 m de base y 2,5 m de altura.]",
+      "paginaFigura": 11,
       "competencias": [
         "MAT.GEO.AREAS"
       ],
@@ -457,6 +458,7 @@
       "numeroEnArea": 10,
       "area": "MAT",
       "enunciado": "Ana ha estado jugando a las construcciones. Calcule el volumen total de la figura que ha creado, expresado en cm³.\n[Figura: tres ortoedros apilados. Superior: c = 0,1 dm, b = 2 cm, a = 80 mm. Central: d = 0,3 dm, e = 2,5 cm, f = 0,09 m. Inferior: g = 0,0012 hm, i = 11 cm, h = 30 mm.]",
+      "paginaFigura": 13,
       "competencias": [
         "MAT.GEO.VOLUMEN"
       ],

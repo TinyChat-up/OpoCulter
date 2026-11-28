@@ -56,6 +56,7 @@ struct PantallaProgreso: View {
             .toolbar(.hidden, for: .navigationBar)
         }
         .onAppear(perform: cargar)
+        .task { await contarPreguntas() }
         // Doble confirmación: primero un diálogo y después una alerta.
         .confirmationDialog("¿Borrar todo tu progreso?", isPresented: $confirmarBorrado, titleVisibility: .visible) {
             Button("Continuar", role: .destructive) { confirmarBorradoFinal = true }
@@ -80,7 +81,14 @@ struct PantallaProgreso: View {
         estados = (try? servicio.repositorio.estadosCompetencia()) ?? [:]
         errores = (try? servicio.erroresSeguidos()) ?? ([], [])
         nivelesExamen = (try? servicio.nivelesExamen()) ?? []
-        if preguntas == nil { preguntas = servicio.preguntasDisponibles() }
+    }
+
+    /// Recuento de preguntas disponibles en segundo plano (recorre todas las plantillas: en el hilo
+    /// principal congelaba la pantalla). Mientras, se ve «Contando…».
+    private func contarPreguntas() async {
+        guard preguntas == nil else { return }
+        let banco = servicio.banco
+        preguntas = await Task.detached(priority: .utility) { ServicioSesion.preguntasDisponibles(banco: banco) }.value
     }
 
     // MARK: Secciones

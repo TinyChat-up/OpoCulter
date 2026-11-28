@@ -395,8 +395,8 @@
         "MAT.GEO.VOLUMEN"
       ],
       "competencia": "MAT.GEO.VOL",
-      "entrena": "no",
-      "nota": "Provisional MAT.GEO.VOLUMEN."
+      "entrena": "parcial",
+      "nota": "Provisional MAT.GEO.VOLUMEN. El cilindro se practica (05K, nivel 5); la pirámide, no."
     },
     {
       "examen": "OF.2019.A",
@@ -593,8 +593,8 @@
         "MAT.UNI.VOLCAP"
       ],
       "competencia": "MAT.GEO.VOL",
-      "entrena": "no",
-      "nota": "Provisional MAT.UNI.VOLCAP: el paso a litros se practica en MAT.UNI.VOL, pero el volumen del prisma no."
+      "entrena": "si",
+      "nota": "Provisional MAT.UNI.VOLCAP. Ortoedro con unidades mixtas a litros (05K, nivel 6)."
     },
     {
       "examen": "OF.2019.O",
@@ -868,8 +868,8 @@
         "MAT.GEO.VOLUMEN"
       ],
       "competencia": "MAT.GEO.VOL",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "si",
+      "nota": "Suma de ortoedros (05K, nivel 4) con medidas que hay que convertir (nivel 6)."
     },
     {
       "examen": "OF.2024.O",
@@ -1055,8 +1055,8 @@
         "MAT.GEO.VOLUMEN"
       ],
       "competencia": "MAT.GEO.VOL",
-      "entrena": "no",
-      "nota": ""
+      "entrena": "parcial",
+      "nota": "a) capacidad de un prisma en litros (05K); b) el prisma de base pentagonal no se practica."
     },
     {
       "examen": "OF.2024.O",
@@ -1077,8 +1077,8 @@
         "MAT.PRO.CONCEPTOS"
       ],
       "competencia": "MAT.PRO.SUCESOS",
-      "entrena": "no",
-      "nota": "Provisional MAT.PRO.CONCEPTOS."
+      "entrena": "parcial",
+      "nota": "Provisional MAT.PRO.CONCEPTOS. Definir y poner ejemplos; la app pide reconocer los tipos (05K)."
     },
     {
       "examen": "OF.2024.O",
@@ -1276,8 +1276,8 @@
         "MAT.GEO.VOLUMEN"
       ],
       "competencia": "MAT.GEO.VOL",
-      "entrena": "no",
-      "nota": "El paso de m³ a litros se practica en MAT.UNI.VOL, pero el volumen del prisma no."
+      "entrena": "si",
+      "nota": "Depósito en m con medidas decimales a litros (05K, nivel 4)."
     },
     {
       "examen": "OF.2026.A",
@@ -1375,8 +1375,8 @@
         "LEN.CLA.VERBO"
       ],
       "competencia": "LEN.CLA.VAR",
-      "entrena": "no",
-      "nota": "Análisis morfológico (antes LEN.CLA.VERBO)."
+      "entrena": "parcial",
+      "nota": "Análisis morfológico (antes LEN.CLA.VERBO). La app clasifica y justifica cómo varía cada palabra (05K), sin el análisis completo."
     },
     {
       "examen": "OF.2026.O",
@@ -1408,8 +1408,8 @@
         "LEN.CLA.SUSTADJ"
       ],
       "competencia": "LEN.CLA.VAR",
-      "entrena": "no",
-      "nota": "Clases de palabras por su definición."
+      "entrena": "parcial",
+      "nota": "Clases de palabras por su definición; la app clasifica palabras (05K) y define las clases en el glosario."
     },
     {
       "examen": "OF.2026.O",
@@ -1475,7 +1475,7 @@
       ],
       "competencia": "MAT.PRO.SUCESOS",
       "entrena": "no",
-      "nota": "Probabilidad estimada por la frecuencia relativa."
+      "nota": "Probabilidad estimada por la frecuencia relativa: la 05K no la practica."
     },
     {
       "examen": "OF.2026.O",

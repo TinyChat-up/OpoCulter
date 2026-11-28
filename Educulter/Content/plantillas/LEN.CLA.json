@@ -97,5 +97,57 @@
       "fecha": "2026-11-27"
     },
     "version": 1
+  },
+  {
+    "id": "LEN.CLA.VAR.G01",
+    "competencia": "LEN.CLA.VAR",
+    "peldano": 2,
+    "dificultad": 2,
+    "mecanica": "clasificar",
+    "tipo": "palabrasVariables",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Clasificar palabras en variables e invariables",
+    "parametros": {
+      "pregunta": "variable"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §3); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
+  },
+  {
+    "id": "LEN.CLA.VAR.G02",
+    "competencia": "LEN.CLA.VAR",
+    "peldano": 3,
+    "dificultad": 3,
+    "mecanica": "clasificar",
+    "tipo": "palabrasVariables",
+    "enunciados": [
+      "{{pregunta}}"
+    ],
+    "objetivo": "Justificar en qué varía cada palabra",
+    "parametros": {
+      "pregunta": "justificar"
+    },
+    "procedencia": {
+      "tipo": "original",
+      "licencia": "propia",
+      "notas": "Fase 05K: especificación de la dirección (PROMPT 05K §3); casos y redacciones en el generador. Aprobada al superar sus tests de propiedades con oráculo independiente (Fase05KTests)."
+    },
+    "validacion": {
+      "estado": "aprobado",
+      "revisor": "direccion",
+      "fecha": "2026-11-27"
+    },
+    "version": 1
   }
 ]
